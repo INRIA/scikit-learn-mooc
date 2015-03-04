@@ -37,3 +37,39 @@ and dataset size, as well as discussing complexity of learning algorithms and
 how to cope with very large datasets. The session will conclude by stepping
 through the process of building machine learning pipelines consisting of
 feature extraction, preprocessing and supervised learning.
+
+
+Outline
+========
+
+Morning Session
+----------------
+
+- What is machine learning? (Sample applications)
+
+- Kinds of machine learning: unsupervise vs supervised.
+
+- Data formats and preparation.
+
+- Supervised learning: interface, Training and Test data
+- Supervised learning: Classification
+- Supervised learning: Regression
+
+- Unsupervised Learning: Unsupervised Transformers
+- Unsupervised Learning: preprocessing and scaling
+- Unsupervised Learning: Dimensionality Reduction
+- Unsupervised Learning: Clustering
+
+- Cross-Validation
+- Model Complexity : Overfitting and underfitting
+- Grid Search for adjusting Hyper Parameters 
+
+- Preparing a real dataset
+- Working with text data, Bag of Words
+- Application :  Insult detection
+
+
+Afternoon Session
+------------------
+
+

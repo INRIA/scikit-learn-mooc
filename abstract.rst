@@ -50,7 +50,7 @@ Morning Session
 - Data formats and preparation.
 
 - Supervised learning: Interface
-- Superised learning: Training and test data
+- Supervised learning: Training and test data
 - Supervised learning: Classification
 - Supervised learning: Regression
 
@@ -63,7 +63,7 @@ Morning Session
 - Basic unsupervised learning
 - Application : Eigenfaces
 
-- Preparing a real dataset
+- Preparing a "real" dataset (Titanic)
 - Working with text data, Bag of Words
 - Application : Insult detection
 
@@ -77,5 +77,15 @@ Afternoon Session
 - Basic regression with cross-validation
 - Application : Titanic survival with Random Forest
 
-- Pipelines and their usage
+- Building Pipelines: Motivation and Basics
+- Building Pipelines: Preprocessing and Classification
+- Building Pipelines: Grid-searching Parameters of the feature extraction
 - Application : Image classification
+
+- Model complexity, learning curves and validation curves
+- In-Depth: Linear Models
+- In-Depth: Kernel SVMs
+- In-Depth: trees and Forests
+
+- Learning with Big Data: Out-Of-Core learning
+- Learning with Big Data: The hashing trick for large text corpuses

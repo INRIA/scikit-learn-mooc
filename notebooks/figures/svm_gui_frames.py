@@ -7,15 +7,14 @@ of the support vector machine GUI.
 """
 
 import numpy as np
-import pylab as pl
 import matplotlib
+import matplotlib.pyplot as plt
 
 from sklearn import svm
 
 
 def linear_model(rseed=42, Npts=30):
     np.random.seed(rseed)
-
 
     data = np.random.normal(0, 10, (Npts, 2))
     data[:Npts / 2] -= 15
@@ -51,9 +50,9 @@ def plot_linear_model():
                   gamma=0.01, coef0=0, degree=3)
     clf.fit(X, y)
 
-    fig = pl.figure()
-    ax = pl.subplot(111, xticks=[], yticks=[])
-    ax.scatter(X[:, 0], X[:, 1], c=y, cmap=pl.cm.bone)
+    plt.figure()
+    ax = plt.subplot(111, xticks=[], yticks=[])
+    ax.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.bone)
 
     ax.scatter(clf.support_vectors_[:, 0],
                clf.support_vectors_[:, 1],
@@ -82,9 +81,9 @@ def plot_rbf_model():
                   gamma=0.001, coef0=0, degree=3)
     clf.fit(X, y)
 
-    fig = pl.figure()
-    ax = pl.subplot(111, xticks=[], yticks=[])
-    ax.scatter(X[:, 0], X[:, 1], c=y, cmap=pl.cm.bone, zorder=2)
+    plt.figure()
+    ax = plt.subplot(111, xticks=[], yticks=[])
+    ax.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.bone, zorder=2)
 
     ax.scatter(clf.support_vectors_[:, 0],
                clf.support_vectors_[:, 1],
@@ -99,10 +98,6 @@ def plot_rbf_model():
     Z = clf.decision_function(np.c_[X1.ravel(), X2.ravel()])
     Z = Z.reshape(X1.shape)
 
-    levels = [-1.0, 0.0, 1.0]
-    linestyles = ['dashed', 'solid', 'dashed']
-    colors = 'k'
-
     ax.contourf(X1, X2, Z, 10,
                 cmap=matplotlib.cm.bone,
                 origin='lower',
@@ -115,5 +110,4 @@ def plot_rbf_model():
 if __name__ == '__main__':
     plot_linear_model()
     plot_rbf_model()
-    pl.show()
-    
+    plt.show()

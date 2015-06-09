@@ -13,6 +13,9 @@ Instructors
 This repository will contain files and other info associated with our Scipy
 2015 scikit-learn tutorial.
 
+Parts 1 to 5 make up the morning session, while
+parts 6 to 9 will be presented in the afternoon.
+
 Installation Notes
 ------------------
 
@@ -40,7 +43,7 @@ I would highly recommend using git, not only for this tutorial, but for the
 general betterment of your life.  Once git is installed, you can clone the
 material in this tutorial by using the git address shown above:
 
-    git clone git://github.com/jakevdp/sklearn_scipy2013.git
+    git clone git://github.com/amueller/scipy_2015_sklearn_tutorial.git
 
 If you can't or don't want to install git, there is a link above to download
 the contents of this repository as a zip file.  I may make minor changes to
@@ -56,16 +59,6 @@ includes code which automatically downloads and caches these
 data.  Because the wireless network
 at conferences can often be spotty, it would be a good idea to download these
 data sets before arriving at the conference.
-
-
-Notebook Listing
-----------------
-These notebooks in this repository can be statically viewed using the
-excellent [nbviewer](http://nbviewer.ipython.org) site.  They will not
-be able to be modified within nbviewer.  To modify them, first download
-the tutorial repository, change to the notebooks directory, and type
-``ipython notebook``.  You should see the list in the ipython notebook
-launch page in your web browser.
 
 
 Detailed Outline Tutorial 1 (intermediate track)

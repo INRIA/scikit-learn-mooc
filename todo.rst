@@ -9,3 +9,5 @@ add roc curve to classifier evaluation, discuss asymmetic loss and imbalanced da
 add calibration notebook
 connect 4.03 (validation) and 6.01 (cross-validation and model selection)
 more elaborate intro of cross-validation and grid-searching
+something on single machine parallelization? n_jobs?
+model persistence

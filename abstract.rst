@@ -63,9 +63,10 @@ Morning Session
 - Basic unsupervised learning
 - Application : Eigenfaces
 
-- Preparing a "real" dataset (Titanic)
+- Preparing a "real" dataset (Titanic/ Adult?)
 - Working with text data, Bag of Words
 - Application : Insult detection
+- Summary : model building and generalization, estimator interface
 
 Afternoon Session
 ------------------

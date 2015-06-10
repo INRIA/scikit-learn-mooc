@@ -11,3 +11,5 @@ connect 4.03 (validation) and 6.01 (cross-validation and model selection)
 more elaborate intro of cross-validation and grid-searching
 something on single machine parallelization? n_jobs?
 model persistence
+
+maybe use adult dataset? That looks cool for preprocessing!!!

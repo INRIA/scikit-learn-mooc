@@ -13,3 +13,5 @@ something on single machine parallelization? n_jobs?
 model persistence
 
 maybe use adult dataset? That looks cool for preprocessing!!!
+
+features selection?

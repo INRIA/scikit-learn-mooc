@@ -6,7 +6,10 @@ This example downloads and plots the filters from the Sloan Digital Sky
 Survey, along with a reference spectrum.
 """
 import os
-import urllib2
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib import urlopen
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,18 +23,16 @@ FILTER_URL = 'http://www.sdss.org/dr7/instruments/imager/filters/%s.dat'
 def fetch_filter(filt):
     assert filt in 'ugriz'
     url = FILTER_URL % filt
-    
     if not os.path.exists(DOWNLOAD_DIR):
         os.makedirs(DOWNLOAD_DIR)
 
     loc = os.path.join(DOWNLOAD_DIR, '%s.dat' % filt)
     if not os.path.exists(loc):
-        print "downloading from %s" % url
-        F = urllib2.urlopen(url)
+        print("downloading from %s" % url)
+        F = urlopen(url)
         open(loc, 'w').write(F.read())
 
     F = open(loc)
-        
     data = np.loadtxt(F)
     return data
 
@@ -43,8 +44,8 @@ def fetch_vega_spectrum():
     refspec_file = os.path.join(DOWNLOAD_DIR, REFSPEC_URL.split('/')[-1])
 
     if  not os.path.exists(refspec_file):
-        print "downloading from %s" % REFSPEC_URL
-        F = urllib2.urlopen(REFSPEC_URL)
+        print("downloading from %s" % REFSPEC_URL)
+        F = urlopen(REFSPEC_URL)
         open(refspec_file, 'w').write(F.read())
 
     F = open(refspec_file)

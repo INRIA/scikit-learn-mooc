@@ -1,5 +1,9 @@
 import os
-import urllib
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib import urlopen
+
 import tarfile
 import zipfile
 
@@ -45,7 +49,7 @@ def check_twenty_newsgroups(datasets_folder):
 
     if not os.path.exists(archive_path):
         print("Downloading dataset from %s (14 MB)" % TWENTY_URL)
-        opener = urllib.urlopen(TWENTY_URL)
+        opener = urlopen(TWENTY_URL)
         open(archive_path, 'wb').write(opener.read())
     else:
         print("Found archive: " + archive_path)
@@ -72,7 +76,7 @@ def check_sentiment140(datasets_folder):
     if not os.path.exists(sentiment140_path):
         if not os.path.exists(archive_path):
             print("Downloading dataset from %s (77MB)" % SENTIMENT140_URL)
-            opener = urllib.urlopen(SENTIMENT140_URL)
+            opener = urlopen(SENTIMENT140_URL)
             open(archive_path, 'wb').write(opener.read())
         else:
             print("Found archive: " + archive_path)
@@ -91,7 +95,7 @@ if __name__ == "__main__":
     check_twenty_newsgroups(datasets_folder)
     check_sentiment140(datasets_folder)
 
-    print "Loading Labeled Faces Data (~200MB)"
+    print("Loading Labeled Faces Data (~200MB)")
     from sklearn.datasets import fetch_lfw_people
     fetch_lfw_people(min_faces_per_person=70, resize=0.4,
                      data_home=datasets_folder)

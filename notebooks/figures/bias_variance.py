@@ -11,20 +11,20 @@ def compute_error(x, y, p):
     return np.sqrt(np.mean((y - yfit) ** 2))
 
 
-def plot_bias_variance(N=8, random_seed=42, err=0.5):
+def plot_underfit_overfit_polynomial(N=8, random_seed=42, err=0.5):
     np.random.seed(random_seed)
     x = 10 ** np.linspace(-2, 0, N)
     y = test_func(x)
 
     xfit = np.linspace(-0.2, 1.2, 1000)
 
-    titles = ['d = 1 (under-fit; high bias)',
+    titles = ['d = 1 (under-fit)',
               'd = 2',
-              'd = 6 (over-fit; high variance)']
+              'd = 6 (over-fit)']
     degrees = [1, 2, 6]
 
-    fig = plt.figure(figsize = (9, 3.5))
-    fig.subplots_adjust(left = 0.06, right=0.98,
+    fig = plt.figure(figsize=(9, 3.5))
+    fig.subplots_adjust(left=0.06, right=0.98,
                         bottom=0.15, top=0.85,
                         wspace=0.05)
     for i, d in enumerate(degrees):
@@ -44,5 +44,5 @@ def plot_bias_variance(N=8, random_seed=42, err=0.5):
         ax.set_title(titles[i])
 
 if __name__ == '__main__':
-    plot_bias_variance()
+    plot_underfit_overfit_polynomial()
     plt.show()

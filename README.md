@@ -20,7 +20,7 @@ Installation Notes
 ------------------
 
 This tutorial will require recent installations of *numpy*, *scipy*,
-*matplotlib*, *scikit-learn*, *psutil*, *pyrallel* and *ipython* with ipython
+*matplotlib*, *scikit-learn* and *ipython* with ipython
 notebook.
 
 The last one is important, you should be able to type:
@@ -28,9 +28,7 @@ The last one is important, you should be able to type:
     ipython notebook
 
 in your terminal window and see the notebook panel load in your web browser.
-Because Python 3 compatibility is still being ironed-out for these packages
-(we're getting close, I promise!) participants should plan to use Python 2.6
-or 2.7 for this tutorial.
+Pythoni 2.7 and 3.4 should both work.
 
 For users who do not yet have these  packages installed, a relatively
 painless way to install all the requirements is to use a package such as
@@ -46,7 +44,7 @@ material in this tutorial by using the git address shown above:
     git clone git://github.com/amueller/scipy_2015_sklearn_tutorial.git
 
 If you can't or don't want to install git, there is a link above to download
-the contents of this repository as a zip file.  I may make minor changes to
+the contents of this repository as a zip file.  We may make minor changes to
 the repository in the days before the tutorial, however, so cloning the
 repository is a much better option.
 

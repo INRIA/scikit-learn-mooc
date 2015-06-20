@@ -2,6 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def plot_2d_decision_function(classifier, X):
+    pass
+
+
 def plot_2d_separator(classifier, X):
     x_min, x_max = X[:, 0].min(), X[:, 0].max()
     y_min, y_max = X[:, 1].min(), X[:, 1].max()
@@ -9,22 +13,19 @@ def plot_2d_separator(classifier, X):
     yy = np.linspace(y_min, y_max, 10)
 
     X1, X2 = np.meshgrid(xx, yy)
-    Z = np.empty(X1.shape)
-    for (i, j), val in np.ndenumerate(X1):
-        x1 = val
-        x2 = X2[i, j]
-        try:
-            p = classifier.decision_function([x1, x2])
-        except AttributeError:
-            # no decision_function
-            p = classifier.predict_proba([x1, x2])[:, 0]
-        Z[i, j] = p[0]
+    X_grid = np.c_[X1.ravel(), X2.ravel()]
+    try:
+        decision_values = classifier.decision_function(X_grid)
+    except AttributeError:
+        # no decision_function
+        decision_values = classifier.predict_proba(X_grid)[:, 0]
     levels = [0.0]
-    linestyles = ['dashed', 'solid', 'dashed']
+    linestyles = ['solid']
     colors = 'k'
 
     ax = plt.axes()
-    ax.contour(X1, X2, Z, levels, colors=colors, linestyles=linestyles)
+    ax.contour(X1, X2, decision_values.reshape(X1.shape), levels, colors=colors,
+               linestyles=linestyles)
 
 
 if __name__ == '__main__':

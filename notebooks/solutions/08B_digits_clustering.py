@@ -2,7 +2,7 @@ from sklearn.cluster import KMeans
 kmeans = KMeans(n_clusters=10)
 clusters = kmeans.fit_predict(digits.data)
 
-print kmeans.cluster_centers_.shape
+print(kmeans.cluster_centers_.shape)
 
 #------------------------------------------------------------
 # visualize the cluster centers

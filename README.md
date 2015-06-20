@@ -1,7 +1,7 @@
 SciPy 2015 Scikit-learn Tutorial
 ================================
 
-Based on the SciPy [2013 tutorial](https://https://github.com/jakevdp/sklearn_scipy2013) by [Gael Varoquaux](http://gael-varoquaux.info), [Olivier Grisel](http://ogrisel.com) and [Jake VanderPlas](http://jakevdp.github.com
+Based on the SciPy [2013 tutorial](https://github.com/jakevdp/sklearn_scipy2013) by [Gael Varoquaux](http://gael-varoquaux.info), [Olivier Grisel](http://ogrisel.com) and [Jake VanderPlas](http://jakevdp.github.com
 ).
 
 Instructors

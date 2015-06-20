@@ -5,22 +5,27 @@ import matplotlib.pyplot as plt
 def plot_2d_separator(classifier, X, fill=False):
     x_min, x_max = X[:, 0].min() - .1, X[:, 0].max() + .1
     y_min, y_max = X[:, 1].min() - .1, X[:, 1].max() + .1
-    xx = np.linspace(x_min, x_max, 10)
-    yy = np.linspace(y_min, y_max, 10)
+    xx = np.linspace(x_min, x_max, 100)
+    yy = np.linspace(y_min, y_max, 100)
 
     X1, X2 = np.meshgrid(xx, yy)
     X_grid = np.c_[X1.ravel(), X2.ravel()]
     try:
         decision_values = classifier.decision_function(X_grid)
+        levels = [0]
+        fill_levels = [decision_values.min(), 0, decision_values.max()]
     except AttributeError:
         # no decision_function
-        decision_values = classifier.predict_proba(X_grid)[:, 0]
+        decision_values = classifier.predict_proba(X_grid)[:, 1]
+        levels = [.5]
+        fill_levels = [0, .5, 1]
 
     ax = plt.axes()
     if fill:
-        ax.contourf(X1, X2, decision_values.reshape(X1.shape))
+        ax.contourf(X1, X2, decision_values.reshape(X1.shape),
+                    levels=fill_levels, colors=['blue', 'red'])
     else:
-        ax.contour(X1, X2, decision_values.reshape(X1.shape), levels=[0],
+        ax.contour(X1, X2, decision_values.reshape(X1.shape), levels=levels,
                    colors="black")
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)

@@ -53,20 +53,18 @@ Morning Session
 - Supervised learning: Training and test data
 - Supervised learning: Classification
 - Supervised learning: Regression
-
 - Unsupervised Learning: Unsupervised transformers
 - Unsupervised Learning: Preprocessing and scaling
 - Unsupervised Learning: Dimensionality reduction
 - Unsupervised Learning: Clustering
-- Unsupervised Learning: Generative models
+- Summary : Estimator interface
 
-- Basic unsupervised learning
+- Application: Classification of digits
+- Methods: Unsupervised learning
 - Application : Eigenfaces
-
-- Preparing a "real" dataset (Titanic/ Adult?)
-- Working with text data, Bag of Words
+- Methods: Text feature abstraction, bag of words
 - Application : Insult detection
-- Summary : model building and generalization, estimator interface
+- Summary : Model building and generalization
 
 Afternoon Session
 ------------------

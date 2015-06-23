@@ -71,19 +71,18 @@ Morning Session
 - What is machine learning? (Sample applications)
 - Kinds of machine learning: unsupervised vs supervised.
 - Data formats and preparation.
-
-- Supervised learning: Interface
-- Supervised learning: Training and test data
-- Supervised learning: Classification
-- Supervised learning: Regression
-- Unsupervised Learning: Unsupervised transformers
-- Unsupervised Learning: Preprocessing and scaling
-- Unsupervised Learning: Dimensionality reduction
-- Unsupervised Learning: Clustering
+- Supervised learning
+    - Interface
+    - Training and test data
+    - Classification
+    - Regression
+- Unsupervised Learning
+    - Unsupervised transformers
+    - Preprocessing and scaling
+    - Dimensionality reduction
+    - Clustering
 - Summary : Estimator interface
-
-- Application: Classification of digits
-- Methods: Unsupervised learning
+- Application : Classification of digits
 - Application : Eigenfaces
 - Methods: Text feature abstraction, bag of words
 - Application : Insult detection
@@ -96,19 +95,18 @@ Afternoon Session
 - Model Complexity: Overfitting and underfitting
 - Complexity of various model types
 - Grid search for adjusting hyperparameters 
-
 - Basic regression with cross-validation
 - Application : Titanic survival with Random Forest
-
-- Building Pipelines: Motivation and Basics
-- Building Pipelines: Preprocessing and Classification
-- Building Pipelines: Grid-searching Parameters of the feature extraction
+- Building Pipelines
+    - Motivation and Basics
+    - Preprocessing and Classification
+    - Grid-searching Parameters of the feature extraction
 - Application : Image classification
-
 - Model complexity, learning curves and validation curves
-- In-Depth: Linear Models
-- In-Depth: Kernel SVMs
-- In-Depth: trees and Forests
-
-- Learning with Big Data: Out-Of-Core learning
-- Learning with Big Data: The hashing trick for large text corpuses
+- In-Depth supervised models
+    - Linear Models
+    - Kernel SVMs
+    - trees and Forests
+- Learning with Big Data
+    - Out-Of-Core learning
+    - The hashing trick for large text corpuses

@@ -63,55 +63,52 @@ at conferences can often be spotty, it would be a good idea to download these
 data sets before arriving at the conference.
 Run ``fetch_data.py`` to download all necessary data beforehand.
 
+Outline
+=======
 
-Detailed Outline Tutorial 1 (intermediate track)
-------------------------------------------------
-- 0:00 - 0:15 -- Setup and Introduction
-- 0:15 - 0:30 -- Quick review of data visualization with matplotlib and numpy
-- 0:30 - 1:15 -- Representation of data in machine learning
-  + Downloading data within scikit-learn
-  + Categorical & Image data
-  + Feature extraction
-- 1:15 - 2:00 -- Basic principles of Machine Learning & the scikit-learn interface
-  + Supervised Learning: Classification & Regression
-  + Unsupervised Learning: Clustering & Dimensionality Reduction
-  + Example of PCA for data visualization
-  + Flow chart: how do I choose what to do with my data set?
-  + Exercise: Interactive Demo on linearly separable data
-  + Regularization: what it is and why it is necessary
-    - Training set vs test set error
-- 2:00 - 2:15 -- Break (possibly in the middle of the previous section)
-- 2:15 - 3:00 -- Supervised Learning
-  + Example of Classification: hand-written digits
-  + Measuring prediction performance
-  + Example of Regression: boston house prices
-- 3:00 - 4:15 -- Applications
-  + Examples from text mining
-  + Examples from image processing
+Morning Session
+----------------
+- What is machine learning? (Sample applications)
+- Kinds of machine learning: unsupervised vs supervised.
+- Data formats and preparation.
+
+- Supervised learning: Interface
+- Supervised learning: Training and test data
+- Supervised learning: Classification
+- Supervised learning: Regression
+- Unsupervised Learning: Unsupervised transformers
+- Unsupervised Learning: Preprocessing and scaling
+- Unsupervised Learning: Dimensionality reduction
+- Unsupervised Learning: Clustering
+- Summary : Estimator interface
+
+- Application: Classification of digits
+- Methods: Unsupervised learning
+- Application : Eigenfaces
+- Methods: Text feature abstraction, bag of words
+- Application : Insult detection
+- Summary : Model building and generalization
 
 
-Detailed Outline Tutorial 2 (advanced track)
---------------------------------------------
-- 0:00 - 0:30 -- Model validation and testing
-  + Bias, Variance, Over-fitting, Under-fitting
-  + Using validation curves & learning  to improve your model
-  + Exercise: Tuning a random forest for the digits data
-- 0:30 - 1:30 -- In depth with a few learners
-  + SVMs and kernels
-  + Trees and forests
-  + Sparse and non-sparse linear models
-- 1:30 - 2:00 -- Unsupervised Learning
-  + Example of Dimensionality Reduction: hand-written digits
-  + Example of Clustering: Olivetti Faces
-- 2:00 - 2:15 -- Pipelining learners
-  + Examples of unsupervised data reduction followed by supervised learning.
-- 2:15 - 2:30 -- Break (possibly in the middle of the previous section)
-- 2:30 - 3:15 -- Parallel Machine Learning with IPython
-  + IPython.parallel, a short primer
-  + Parallel Model Assessment and Selection
-  + Running a cluster on the EC2 cloud using StarCluster
-- 3:15 - 4:00 -- Scaling Text Classification
-  + The hashing trick
-  + Online learning and out-of-core learning
-  + Stochastic Gradient Descent for linear models
-  + The Partition / Distribute / Average scaling scheme
+Afternoon Session
+------------------
+- Cross-Validation
+- Model Complexity: Overfitting and underfitting
+- Complexity of various model types
+- Grid search for adjusting hyperparameters 
+
+- Basic regression with cross-validation
+- Application : Titanic survival with Random Forest
+
+- Building Pipelines: Motivation and Basics
+- Building Pipelines: Preprocessing and Classification
+- Building Pipelines: Grid-searching Parameters of the feature extraction
+- Application : Image classification
+
+- Model complexity, learning curves and validation curves
+- In-Depth: Linear Models
+- In-Depth: Kernel SVMs
+- In-Depth: trees and Forests
+
+- Learning with Big Data: Out-Of-Core learning
+- Learning with Big Data: The hashing trick for large text corpuses

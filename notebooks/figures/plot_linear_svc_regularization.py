@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.svm import SVC
 from sklearn.datasets import make_blobs
-from plot_2d_separator import plot_2d_separator
+from .plot_2d_separator import plot_2d_separator
 
 
 def plot_linear_svc_regularization():
@@ -19,7 +19,3 @@ def plot_linear_svc_regularization():
         svm = SVC(kernel='linear', C=C).fit(X, y)
         plot_2d_separator(svm, X, ax=ax, eps=.5)
         ax.set_title("C = %f" % C)
-
-if __name__ == "__main__":
-    plot_linear_svc_regularization()
-    plt.show()

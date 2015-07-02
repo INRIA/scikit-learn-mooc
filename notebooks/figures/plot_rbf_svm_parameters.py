@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.svm import SVC
 from sklearn.datasets import make_blobs
-from plot_2d_separator import plot_2d_separator
+from .plot_2d_separator import plot_2d_separator
 
 
 def make_handcrafted_dataset():
@@ -57,7 +57,3 @@ def plot_svm_interactive():
     C_slider = FloatSlider(min=-3, max=3, step=.1, value=0, readout=False)
     gamma_slider = FloatSlider(min=-2, max=2, step=.1, value=0, readout=False)
     return interactive(plot_svm, log_C=C_slider, log_gamma=gamma_slider)
-
-if __name__ == "__main__":
-    plot_rbf_svm_parameters()
-    plt.show()

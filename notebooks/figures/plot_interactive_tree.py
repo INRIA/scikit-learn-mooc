@@ -5,7 +5,6 @@ from sklearn.datasets import make_blobs
 from sklearn.tree import DecisionTreeClassifier
 
 from sklearn.externals.six import StringIO  # doctest: +SKIP
-import pydot
 from sklearn.tree import export_graphviz
 from scipy.misc import imread
 from scipy import ndimage
@@ -16,6 +15,10 @@ X, y = make_blobs(centers=[[0, 0], [1, 1]], random_state=61526, n_samples=50)
 
 
 def tree_image(tree, fout=None):
+    try:
+        import pydot
+    except ImportError:
+        return np.zeros(10, 10)
     dot_data = StringIO()
     export_graphviz(tree, out_file=dot_data)
     data = re.sub(r"gini = 0\.[0-9]+\\n", "", dot_data.getvalue())

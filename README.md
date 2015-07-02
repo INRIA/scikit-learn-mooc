@@ -85,7 +85,7 @@ Morning Session
 - Application : Classification of digits
 - Application : Eigenfaces
 - Methods: Text feature abstraction, bag of words
-- Application : Insult detection
+- Application : SMS spam detection
 - Summary : Model building and generalization
 
 

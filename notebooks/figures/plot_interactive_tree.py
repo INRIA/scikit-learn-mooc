@@ -60,6 +60,6 @@ def plot_tree(max_depth=1):
 
 
 def plot_tree_interactive():
-    from IPython.html.widgets import interactive, IntSliderWidget
-    slider = IntSliderWidget(min=0, max=8, step=1, value=0)
+    from IPython.html.widgets import interactive, IntSlider
+    slider = IntSlider(min=0, max=8, step=1, value=0)
     return interactive(plot_tree, max_depth=slider)

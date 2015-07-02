@@ -5,11 +5,18 @@ from sklearn.datasets import make_blobs
 from plot_2d_separator import plot_2d_separator
 
 
-def plot_rbf_svm_parameters():
-    X, y = make_blobs(centers=2, random_state=4, n_samples=30)
+def make_handcrafted_dataset():
     # a carefully hand-designed dataset lol
-    y[7] = 0
-    y[27] = 0
+    X, y = make_blobs(centers=2, random_state=4, n_samples=30)
+    y[np.array([7, 27])] = 0
+    mask = np.ones(len(X), dtype=np.bool)
+    mask[np.array([0, 1, 5, 26])] = 0
+    X, y = X[mask], y[mask]
+    return X, y
+
+
+def plot_rbf_svm_parameters():
+    X, y = make_handcrafted_dataset()
 
     fig, axes = plt.subplots(1, 3, figsize=(12, 4))
     for ax, C in zip(axes, [1e0, 5, 10, 100]):
@@ -37,7 +44,11 @@ def plot_svm(log_C, log_gamma):
     svm = SVC(kernel='rbf', C=C, gamma=gamma).fit(X, y)
     ax = plt.gca()
     plot_2d_separator(svm, X, ax=ax, eps=.5)
+    # plot data
     ax.scatter(X[:, 0], X[:, 1], s=150, c=np.array(['red', 'blue'])[y])
+    # plot support vectors
+    sv = svm.support_vectors_
+    ax.scatter(sv[:, 0], sv[:, 1], s=230, facecolors='none', zorder=10, linewidth=3)
     ax.set_title("C = %.4f gamma = %.4f" % (C, gamma))
 
 

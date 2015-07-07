@@ -18,7 +18,10 @@ def tree_image(tree, fout=None):
     try:
         import pydot
     except ImportError:
-        return np.zeros(10, 10)
+        # make a hacky white plot
+        x = np.ones((10, 10))
+        x[0, 0] = 0
+        return x
     dot_data = StringIO()
     export_graphviz(tree, out_file=dot_data)
     data = re.sub(r"gini = 0\.[0-9]+\\n", "", dot_data.getvalue())

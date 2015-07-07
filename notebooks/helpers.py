@@ -46,13 +46,13 @@ def load_titanic(test_size=.25, feature_skip_tuple=(), random_state=1999):
     string_keys = ['name', 'sex', 'ticket', 'cabin', 'embarked', 'boat',
                    'homedest']
     string_keys = [s for s in string_keys if s not in feature_skip_tuple]
-    numeric_keys = ['pclass', 'survived', 'age', 'sibsp', 'parch', 'fare']
+    numeric_keys = ['pclass', 'age', 'sibsp', 'parch', 'fare']
     numeric_keys = [n for n in numeric_keys if n not in feature_skip_tuple]
     train_vectorizer_list = []
     test_vectorizer_list = []
 
     n_samples = len(lines)
-    numeric_data = np.zeros((n_samples, len(numeric_keys) - 1))
+    numeric_data = np.zeros((n_samples, len(numeric_keys)))
     numeric_labels = np.zeros((n_samples,), dtype=int)
 
     # Doing this twice is horribly inefficient but the file is small...
@@ -77,7 +77,7 @@ def load_titanic(test_size=.25, feature_skip_tuple=(), random_state=1999):
         else:
             test_vectorizer_list.append(strings)
         numeric_data[n] = np.asarray([line_dict[k]
-                                      for k in numeric_keys if k != "survived"])
+                                      for k in numeric_keys])
 
     train_numeric = numeric_data[train_idx]
     test_numeric = numeric_data[test_idx]

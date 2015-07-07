@@ -18,16 +18,17 @@ except ImportError:
 from distutils.version import LooseVersion as Version
 
 
-def import_version(pkg, min_ver):
+def import_version(pkg, min_ver, fail_msg=""):
     mod = None
     try:
         mod = importlib.import_module(pkg)
         if Version(mod.__version__) < min_ver:
-            print(FAIL, "%s version %s or higher required, but %s installed." % (lib, min_ver, mod.__version__))
+            print(FAIL, "%s version %s or higher required, but %s installed."
+                  % (lib, min_ver, mod.__version__))
         else:
             print(OK, '%s version %s' % (pkg, mod.__version__))
     except ImportError:
-        print(FAIL, '%s not installed' % pkg)
+        print(FAIL, '%s not installed. %s' % (pkg, fail_msg))
     return mod
 
 
@@ -51,3 +52,9 @@ requirements = {'numpy': "1.6.1", 'scipy': "0.9", 'matplotlib': "1.0",
 # now the dependencies
 for lib, required_version in list(requirements.items()):
     import_version(lib, required_version)
+
+# pydot is a bit different
+import_version("pydot", "0", fail_msg="pydot is not installed. It is not required "
+               "but you will miss out on some plots. \nYou can install it using "
+               "'pip install pydot' on python2, and 'pip install "
+               "git+https://github.com/nlhepler/pydot.git' on python3.")

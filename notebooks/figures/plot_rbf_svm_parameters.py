@@ -35,10 +35,7 @@ def plot_rbf_svm_parameters():
 
 
 def plot_svm(log_C, log_gamma):
-    X, y = make_blobs(centers=2, random_state=4, n_samples=30)
-    # a carefully hand-designed dataset lol
-    y[7] = 0
-    y[27] = 0
+	X, y = make_handcrafted_dataset()
     C = 10. ** log_C
     gamma = 10. ** log_gamma
     svm = SVC(kernel='rbf', C=C, gamma=gamma).fit(X, y)

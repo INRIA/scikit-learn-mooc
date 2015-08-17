@@ -1,8 +1,15 @@
 SciPy 2015 Scikit-learn Tutorial
 ================================
 
+You can find the video recordings on youtube:
+
+- [Part 1](https://www.youtube.com/watch?v=80fZrVMurPM)
+- [Part 2](https://www.youtube.com/watch?v=Ud-FsEWegmA)
+
+
 Based on the SciPy [2013 tutorial](https://github.com/jakevdp/sklearn_scipy2013) by [Gael Varoquaux](http://gael-varoquaux.info), [Olivier Grisel](http://ogrisel.com) and [Jake VanderPlas](http://jakevdp.github.com
 ).
+
 
 Instructors
 -----------

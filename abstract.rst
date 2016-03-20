@@ -15,8 +15,8 @@ Machine learning is the task of extracting knowledge from data, often with the
 goal of generalizing to new and unseen data. Applications of machine learning 
 now touch nearly every aspect of everyday life, from the face detection in our
 phones and the streams of social media we consume to picking restaurants,
-partners, and movies. It has also become indispensable to many empirical
-sciences, including physics, astronomy, biology, and the social sciences.
+partners, and movies. Machine learning has also become indispensable to many
+empirical sciences, from physics, astronomy and biology to social sciences.
 
 Scikit-learn has emerged as one of the most popular toolkits for machine
 learning, and is now widely used in industry and academia.
@@ -45,26 +45,33 @@ Outline
 
 Morning Session
 ----------------
-- What is machine learning? (Sample applications)
-- Kinds of machine learning: unsupervised vs supervised.
-- Data formats and preparation.
 
-- Supervised learning: Interface
+- Introduction to machine learning with sample applications
+
+- Types of machine learning: Unsupervised vs. supervised learning
+
+- Scientific Computing Tools for Python: NumPy, SciPy, and matplotlib
+
+- Data formats, preparation, and representation
+
 - Supervised learning: Training and test data
-- Supervised learning: Classification
-- Supervised learning: Regression
-- Unsupervised Learning: Unsupervised transformers
-- Unsupervised Learning: Preprocessing and scaling
-- Unsupervised Learning: Dimensionality reduction
-- Unsupervised Learning: Clustering
-- Summary : Estimator interface
+- Supervised learning: The scikit-learn estimator interface
+- Supervised learning: Estimators for classification
+- Supervised learning: Estimators for regression analysis
 
-- Application: Classification of digits
-- Methods: Unsupervised learning
-- Application : Eigenfaces
-- Methods: Text feature abstraction, bag of words
-- Application : Insult detection
-- Summary : Model building and generalization
+- Unsupervised learning: Unsupervised Transformers
+- Unsupervised learning: Preprocessing and scaling
+- Unsupervised learning: Feature extraction and dimensionality reduction
+- Unsupervised learning: Clustering
+
+- Cross-Validation
+- Model complexity, and the problems of overfitting and underfitting
+- Grid search and random search for hyperparameter tuning
+
+- Preparing a real-world dataset
+- Working with text data via the bag-of-words model
+- Application: Insult detection
+
 
 Afternoon Session
 ------------------
@@ -73,18 +80,18 @@ Afternoon Session
 - Complexity of various model types
 - Grid search for adjusting hyperparameters 
 
-- Basic regression with cross-validation
-- Application : Titanic survival with Random Forest
+- Scikit-learn Pipelines
 
-- Building Pipelines: Motivation and Basics
-- Building Pipelines: Preprocessing and Classification
-- Building Pipelines: Grid-searching Parameters of the feature extraction
-- Application : Image classification
+- Supervised learning: Performance metrics for classification
+- Supervised learning: Support Vector Machines
+- Supervised learning: Algorithm and model selection via nested cross-validation
+- Supervised learning: Decision trees and random forests, and ensemble methods
 
-- Model complexity, learning curves and validation curves
-- In-Depth: Linear Models
-- In-Depth: Kernel SVMs
-- In-Depth: trees and Forests
+- Unsupervised learning: Non-linear regression analysis
+- Unsupervised learning: Hierarchical and density-based clustering algorithms
+- Unsupervised learning: Non-linear dimensionality reduction
 
-- Learning with Big Data: Out-Of-Core learning
-- Learning with Big Data: The hashing trick for large text corpuses
+- Wrapper, filter, and embedded approaches for feature selection
+
+- Supervised learning: Artificial neural networks: Multi-layer perceptrons
+- Supervised learning: Out-of-core learning

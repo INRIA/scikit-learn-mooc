@@ -1,7 +1,7 @@
 SciPy 2016 Scikit-learn Tutorial
 ================================
 
-Based on the SciPy [2015 tutorial](https://github.com/amueller/sklearn_scipy2013) by [Gael Varoquaux](http://gael-varoquaux.info), [Olivier Grisel](http://ogrisel.com) and [Jake VanderPlas](http://jakevdp.github.com
+Based on the SciPy [2015 tutorial](https://github.com/amueller/scipy_2015_sklearn_tutorial) by [Kyle Kastner](http://https://kastnerkyle.github.io/) and [Andreas Mueller](http://amueller.github.io)
 ).
 
 

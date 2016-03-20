@@ -64,13 +64,9 @@ Morning Session
 - Unsupervised learning: Feature extraction and dimensionality reduction
 - Unsupervised learning: Clustering
 
-- Cross-Validation
-- Model complexity, and the problems of overfitting and underfitting
-- Grid search and random search for hyperparameter tuning
-
 - Preparing a real-world dataset
 - Working with text data via the bag-of-words model
-- Application: Insult detection
+- Application: IMDB Movie Review Sentiment Analysis
 
 
 Afternoon Session

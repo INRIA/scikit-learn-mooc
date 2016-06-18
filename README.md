@@ -17,6 +17,16 @@ at [SciPy 2016](http://scipy2016.scipy.org/ehome/index.php?eventid=146062&tabid=
 Parts 1 to 5 make up the morning session, while
 parts 6 to 9 will be presented in the afternoon.
 
+### Schedule:
+ 
+The 2-part tutorial will be held on Tuesday, July 12, 2016.
+
+- Parts 1 to 5: 8:00 AM - 12:00 PM (Room 105)
+- Parts 6 to 9: 1:30 PM - 5:30 PM (Room 105)
+
+(You can find the full SciPy 2016 tutorial schedule [here](http://scipy2016.scipy.org/ehome/146062/332960/).)
+
+
 Installation Notes
 ------------------
 

@@ -8,7 +8,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import offsetbox
-from sklearn import (manifold, datasets, decomposition, ensemble, lda,
+from sklearn import (manifold, datasets, decomposition, ensemble,
                      random_projection)
 
 def digits_plot():
@@ -27,8 +27,8 @@ def digits_plot():
         ax = plt.subplot(111)
         for i in range(X.shape[0]):
             plt.text(X[i, 0], X[i, 1], str(digits.target[i]),
-                    color=plt.cm.Set1(y[i] / 10.),
-                    fontdict={'weight': 'bold', 'size': 9})
+                     color=plt.cm.Set1(y[i] / 10.),
+                     fontdict={'weight': 'bold', 'size': 9})
 
         if hasattr(offsetbox, 'AnnotationBbox'):
             # only print thumbnails with matplotlib > 1.0

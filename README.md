@@ -85,10 +85,15 @@ The data for this tutorial is not included in the repository.  We will be
 using several data sets during the tutorial: most are built-in to
 scikit-learn, which
 includes code that automatically downloads and caches these
-data.  Because the wireless network
+data.  
+
+**Because the wireless network
 at conferences can often be spotty, it would be a good idea to download these
 data sets before arriving at the conference.
-Please run ``python fetch_data.py`` to download all necessary data beforehand.
+Please run ``python fetch_data.py`` to download all necessary data beforehand.**
+
+()Combined, the datasets have a file size of ~135 Mb, and are stored in the `./notebook` subdirectory after running the `python fetch_data.py` script from this directory.)
+
 
 Outline
 =======

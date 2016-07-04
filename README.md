@@ -34,9 +34,11 @@ Obtaining the Tutorial Material
 If you have a GitHub account, it is probably most convenient if you fork the GitHub repository. If you don’t have an GitHub account, you can download the repository as a .zip file by heading over to the GitHub repository (https://github.com/amueller/scipy-2016-sklearn) in your browser and click the green “Download” button in the upper right.
 Please note that we may add and improve the material until shortly before the tutorial session, and we recommend you to update your copy of the materials one day before the tutorials. If you have an GitHub account and forked/cloned the repository via GitHub, you can sync your existing fork with via the following commands:
 
+```
 git remote add upstream https://github.com/amueller/scipy-2016-sklearn.git
 git fetch upstream
 git checkout master merge upstream/master
+```
 
 If you don’t have a GitHub account, you may have to re-download the .zip archive from GitHub.
 

@@ -32,6 +32,9 @@ Obtaining the Tutorial Material
 
 
 If you have a GitHub account, it is probably most convenient if you fork the GitHub repository. If you don’t have an GitHub account, you can download the repository as a .zip file by heading over to the GitHub repository (https://github.com/amueller/scipy-2016-sklearn) in your browser and click the green “Download” button in the upper right.
+
+![](images/download-repo.png)
+
 Please note that we may add and improve the material until shortly before the tutorial session, and we recommend you to update your copy of the materials one day before the tutorials. If you have an GitHub account and forked/cloned the repository via GitHub, you can sync your existing fork with via the following commands:
 
 ```
@@ -90,22 +93,6 @@ Although not required, we also recommend you to update the required Python packa
 - or `conda update [package-name]`
 
 
-
-
-
-Downloading the Tutorial Materials
-----------------------------------
-
-We would highly recommend using git, not only for this tutorial, but for the
-general betterment of your life.  Once git is installed, you can clone the
-material in this tutorial by using the git address below:
-
-    git clone git://github.com/amueller/scipy-2016-sklearn.git
-
-If you can't or don't want to install git, there is a [link](https://github.com/amueller/scipy-2016-sklearn/archive/master.zip) above to download
-the contents of this repository as a zip file.  We may make minor changes to
-the repository in the days before the tutorial, however, so cloning the
-repository is a much better option. To pull the latest changes, run `git pull`.
 
 Data Downloads
 --------------

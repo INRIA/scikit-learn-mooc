@@ -124,4 +124,41 @@ Please run ``python fetch_data.py`` to download all necessary data beforehand.**
 Outline
 =======
 
-Coming soon
+Morning Session
+---------------
+
+    Introduction to machine learning with sample applications
+    Types of machine learning: Unsupervised vs. supervised learning
+    Scientific Computing Tools for Python: NumPy, SciPy, and matplotlib
+    Data formats, preparation, and representation
+    Supervised learning: Training and test data
+    Supervised learning: The scikit-learn estimator interface
+    Supervised learning: Estimators for classification
+    Supervised learning: Estimators for regression analysis
+    Unsupervised learning: Unsupervised Transformers
+    Unsupervised learning: Preprocessing and scaling
+    Unsupervised learning: Feature extraction and dimensionality reduction
+    Unsupervised learning: Clustering
+    Preparing a real-world dataset
+    Working with text data via the bag-of-words model
+    Application: IMDB Movie Review Sentiment Analysis
+
+Afternoon Session
+-----------------
+
+    Cross-Validation
+    Model Complexity: Overfitting and underfitting
+    Complexity of various model types
+    Grid search for adjusting hyperparameters
+    Scikit-learn Pipelines
+    Supervised learning: Performance metrics for classification
+    Supervised learning: Support Vector Machines
+    Supervised learning: Algorithm and model selection via nested cross-validation
+    Supervised learning: Decision trees and random forests, and ensemble methods
+    Supervised learning: Non-linear regression analysis
+    Unsupervised learning: Hierarchical and density-based clustering algorithms
+    Unsupervised learning: Non-linear dimensionality reduction
+    Wrapper, filter, and embedded approaches for feature selection
+    Supervised learning: Artificial neural networks: Multi-layer perceptrons
+    Supervised learning: Out-of-core learning
+

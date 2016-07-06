@@ -49,8 +49,16 @@ If you don’t have a GitHub account, you may have to re-download the .zip archi
 Installation Notes
 ------------------
 
-This tutorial will require recent installations of *[NumPy](http://www.numpy.org)*, *[SciPy](http://www.scipy.org)*,
-*[matplotlib](http://matplotlib.org)*, *[scikit-learn](http://scikit-learn.org/stable/)* and *[IPython](http://ipython.readthedocs.org/en/stable/)* together with the *[Jupyter Notebook](http://jupyter.org)*.
+This tutorial will require recent installations of 
+
+- [NumPy](http://www.numpy.org)
+- [SciPy](http://www.scipy.org)
+- [matplotlib](http://matplotlib.org)
+- [pillow](https://python-pillow.org)
+- [scikit-learn](http://scikit-learn.org/stable/)
+- [PyYaml](http://pyyaml.org/wiki/PyYAML)
+- [IPython](http://ipython.readthedocs.org/en/stable/)
+- [Jupyter Notebook](http://jupyter.org)
 
 The last one is important, you should be able to type:
 
@@ -69,7 +77,7 @@ The code examples in this tutorial should be compatible to Python 2.7,
 Python 3.4, and Python 3.5.
 
 After obtaining the material, we **strongly recommend** you to open and execute the Jupyter Notebook
-`python check_env.ipynb` that is located at the top level of this repository. Inside the repository, you can open the notebook
+`jupter notebook check_env.ipynb` that is located at the top level of this repository. Inside the repository, you can open the notebook
 by executing
 
 ```bash
@@ -108,7 +116,7 @@ at conferences can often be spotty, it would be a good idea to download these
 data sets before arriving at the conference.
 Please run ``python fetch_data.py`` to download all necessary data beforehand.**
 
-(Combined, the datasets have a file size of ~135 MB, and are stored in the `./notebook` subdirectory after running the `python fetch_data.py` script from this directory.)
+(Combined, the datasets have a file size of ~456 MB, and are stored in the `./notebook` subdirectory after running the `python fetch_data.py` script from this directory.)
 
 
 

@@ -147,7 +147,6 @@ Afternoon Session
 
 - 15 Cross-Validation
 - 16 Model Complexity: Overfitting and underfitting
-- 17 Complexity of various model types
 - 18 Grid search for adjusting hyperparameters
 - 19 Scikit-learn Pipelines
 - 20 Supervised learning: Performance metrics for classification

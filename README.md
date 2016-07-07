@@ -127,37 +127,35 @@ Outline
 Morning Session
 ---------------
 
-- Introduction to machine learning with sample applications
-- Types of machine learning: Unsupervised vs. supervised learning
-- Scientific Computing Tools for Python: NumPy, SciPy, and matplotlib
-- Data formats, preparation, and representation
-- Supervised learning: Training and test data
-- Supervised learning: The scikit-learn estimator interface
-- Supervised learning: Estimators for classification
-- Supervised learning: Estimators for regression analysis
-- Unsupervised learning: Unsupervised Transformers
-- Unsupervised learning: Preprocessing and scaling
-- Unsupervised learning: Feature extraction and dimensionality reduction
-- Unsupervised learning: Clustering
-- Preparing a real-world dataset
-- Working with text data via the bag-of-words model
-- Application: IMDB Movie Review Sentiment Analysis
+- 01 Introduction to machine learning with sample applications, Supervised and Unsupervised learning
+- 02 Scientific Computing Tools for Python: NumPy, SciPy, and matplotlib
+- 03 Data formats, preparation, and representation
+- 04 Supervised learning: Training and test data
+- 05 Supervised learning: Estimators for classification
+- 06 Supervised learning: Estimators for regression analysis
+- 07 Unsupervised learning: Unsupervised Transformers
+- 08 Unsupervised learning: Preprocessing and scaling
+- 09 Unsupervised learning: Feature extraction and dimensionality reduction
+- 10 Unsupervised learning: Clustering
+- 11 The scikit-learn estimator interface
+- 12 Preparing a real-world dataset (titanic)
+- 13 Working with text data via the bag-of-words model
+- 14 Application: IMDB Movie Review Sentiment Analysis
 
 Afternoon Session
 -----------------
 
-- Cross-Validation
-- Model Complexity: Overfitting and underfitting
-- Complexity of various model types
-- Grid search for adjusting hyperparameters
-- Scikit-learn Pipelines
-- Supervised learning: Performance metrics for classification
-- Supervised learning: Support Vector Machines
-- Supervised learning: Algorithm and model selection via nested cross-validation
-- Supervised learning: Decision trees and random forests, and ensemble methods
-- Supervised learning: Non-linear regression analysis
-- Unsupervised learning: Hierarchical and density-based clustering algorithms
-- Unsupervised learning: Non-linear dimensionality reduction
-- Wrapper, filter, and embedded approaches for feature selection
-- Supervised learning: Out-of-core learning
-
+- 15 Cross-Validation
+- 16 Model Complexity: Overfitting and underfitting
+- 17 Complexity of various model types
+- 18 Grid search for adjusting hyperparameters
+- 19 Scikit-learn Pipelines
+- 20 Supervised learning: Performance metrics for classification
+- 21 Supervised learning: Linear Models
+- 22 Supervised learning: Support Vector Machines
+- 23 Supervised learning: Decision trees and random forests, and ensemble methods
+- 24 Supervised learning: Non-linear regression analysis
+- 25 Unsupervised learning: Hierarchical and density-based clustering algorithms
+- 26 Unsupervised learning: Non-linear dimensionality reduction
+- 27 Wrapper, filter, and embedded approaches for feature selection
+- 28 Supervised learning: Out-of-core learning

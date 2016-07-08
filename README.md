@@ -156,5 +156,5 @@ Afternoon Session
 - 24 Supervised learning: Non-linear regression analysis
 - 25 Unsupervised learning: Hierarchical and density-based clustering algorithms
 - 26 Unsupervised learning: Non-linear dimensionality reduction
-- 27 Wrapper, filter, and embedded approaches for feature selection
+- 27 Supervised learning: feature selection
 - 28 Supervised learning: Out-of-core learning

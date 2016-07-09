@@ -154,8 +154,7 @@ Afternoon Session
 - 21 Supervised learning: Linear Models
 - 22 Supervised learning: Support Vector Machines
 - 23 Supervised learning: Decision trees and random forests, and ensemble methods
-- 24 Supervised learning: Non-linear regression analysis
+- 24 Supervised learning: feature selection
 - 25 Unsupervised learning: Hierarchical and density-based clustering algorithms
 - 26 Unsupervised learning: Non-linear dimensionality reduction
-- 27 Supervised learning: feature selection
-- 28 Supervised learning: Out-of-core learning
+- 27 Supervised learning: Out-of-core learning

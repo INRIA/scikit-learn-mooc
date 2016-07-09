@@ -49,7 +49,7 @@ If you don’t have a GitHub account, you may have to re-download the .zip archi
 Installation Notes
 ------------------
 
-This tutorial will require recent installations of 
+This tutorial will require recent installations of
 
 - [NumPy](http://www.numpy.org)
 - [SciPy](http://www.scipy.org)
@@ -59,6 +59,7 @@ This tutorial will require recent installations of
 - [PyYaml](http://pyyaml.org/wiki/PyYAML)
 - [IPython](http://ipython.readthedocs.org/en/stable/)
 - [Jupyter Notebook](http://jupyter.org)
+- [Watermark](https://pypi.python.org/pypi/watermark)
 
 The last one is important, you should be able to type:
 

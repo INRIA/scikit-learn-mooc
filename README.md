@@ -122,16 +122,6 @@ extracted the data on your disk, the ./notebook/dataset folder will take 480 MB
 of your local solid state or hard drive.
 
 
-
- and the uncompressed
-(the `fetch_data.py` script )
-
-
-(Combined, the datasets have a file size of ~456 MB, and are stored in the `./notebook` subdirectory after running the `python fetch_data.py` script from this directory.)
-
-
-
-
 Outline
 =======
 

@@ -117,9 +117,9 @@ at conferences can often be spotty, it would be a good idea to download these
 data sets before arriving at the conference.
 Please run ``python fetch_data.py`` to download all necessary data beforehand.**
 
-(Combined, the datasets have a file size of ~456 MB, and are stored in the `./notebook` subdirectory after running the `python fetch_data.py` script from this directory.)
-
-
+The download size of the data files are approx. 280 MB, and after `fetch_data.py`
+extracted the data on your disk, the ./notebook/dataset folder will take 480 MB
+of your local solid state or hard drive.
 
 
 Outline

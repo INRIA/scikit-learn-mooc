@@ -135,8 +135,6 @@ Morning Session
 - 05 Supervised learning: Estimators for classification
 - 06 Supervised learning: Estimators for regression analysis
 - 07 Unsupervised learning: Unsupervised Transformers
-- 08 Unsupervised learning: Preprocessing and scaling
-- 09 Unsupervised learning: Feature extraction and dimensionality reduction
 - 10 Unsupervised learning: Clustering
 - 11 The scikit-learn estimator interface
 - 12 Preparing a real-world dataset (titanic)

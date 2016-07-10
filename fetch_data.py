@@ -5,13 +5,8 @@ try:
 except ImportError:
     from urllib import urlopen
 
-import zipfile
 import tarfile
 
-
-SENTIMENT140_URL = ("http://cs.stanford.edu/people/alecmgo/"
-                    "trainingandtestdata.zip")
-SENTIMENT140_ARCHIVE_NAME = "trainingandtestdata.zip"
 
 IMDB_URL = "http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
 IMDB_ARCHIVE_NAME = "aclImdb_v1.tar.gz"
@@ -37,32 +32,6 @@ def get_datasets_folder():
     return datasets_folder
 
 
-def check_sentiment140(datasets_folder):
-    print("\nChecking availability of the sentiment 140 dataset")
-    archive_path = os.path.join(datasets_folder, SENTIMENT140_ARCHIVE_NAME)
-    sentiment140_path = os.path.join(datasets_folder, 'sentiment140')
-    train_path = os.path.join(sentiment140_path,
-                              'training.1600000.processed.noemoticon.csv')
-    test_path = os.path.join(sentiment140_path,
-                             'testdata.manual.2009.06.14.csv')
-
-    if not os.path.exists(sentiment140_path):
-        if not os.path.exists(archive_path):
-            print("Downloading dataset from %s (77MB)" % SENTIMENT140_URL)
-            opener = urlopen(SENTIMENT140_URL)
-            open(archive_path, 'wb').write(opener.read())
-        else:
-            print("Found archive: " + archive_path)
-
-        print("Extracting %s to %s" % (archive_path, sentiment140_path))
-        zf = zipfile.ZipFile(archive_path)
-        zf.extractall(sentiment140_path)
-    print("Checking that the sentiment 140 CSV files exist...")
-    assert os.path.exists(train_path)
-    assert os.path.exists(test_path)
-    print("=> Success!")
-
-
 def check_imdb(datasets_folder):
     print("\nChecking availability of the IMDb dataset")
     archive_path = os.path.join(datasets_folder, IMDB_ARCHIVE_NAME)
@@ -84,6 +53,7 @@ def check_imdb(datasets_folder):
         tar = tarfile.open(archive_path, "r:gz")
         tar.extractall(path=imdb_path)
         tar.close()
+        os.remove(archive_path)
 
     print("Checking that the IMDb train & test directories exist...")
     assert os.path.exists(train_path)
@@ -93,7 +63,6 @@ def check_imdb(datasets_folder):
 
 if __name__ == "__main__":
     datasets_folder = get_datasets_folder()
-    check_sentiment140(datasets_folder)
     check_imdb(datasets_folder)
 
     print("\nLoading Labeled Faces Data (~200MB)")

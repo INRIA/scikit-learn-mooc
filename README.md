@@ -141,7 +141,7 @@ Morning Session
 - 11 The scikit-learn estimator interface
 - 12 Preparing a real-world dataset (titanic)
 - 13 Working with text data via the bag-of-words model
-- 14 Application: IMDB Movie Review Sentiment Analysis
+- 14 Application: IMDb Movie Review Sentiment Analysis
 
 Afternoon Session
 -----------------

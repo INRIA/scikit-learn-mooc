@@ -145,14 +145,13 @@ Afternoon Session
 -----------------
 
 - 13 Cross-Validation
-- 14 Model Complexity: Overfitting and underfitting
-- 15 Grid search for adjusting hyperparameters
-- 16 Scikit-learn Pipelines
-- 17 Supervised learning: Performance metrics for classification
-- 18 Supervised learning: Linear Models
-- 19 Supervised learning: Support Vector Machines
-- 20 Supervised learning: Decision trees and random forests, and ensemble methods
-- 21 Supervised learning: feature selection
-- 22 Unsupervised learning: Hierarchical and density-based clustering algorithms
-- 23 Unsupervised learning: Non-linear dimensionality reduction
-- 24 Supervised learning: Out-of-core learning
+- 14 Model complexity and grid search for adjusting hyperparameters
+- 15 Scikit-learn Pipelines
+- 16 Supervised learning: Performance metrics for classification
+- 17 Supervised learning: Linear Models
+- 18 Supervised learning: Support Vector Machines
+- 19 Supervised learning: Decision trees and random forests, and ensemble methods
+- 20 Supervised learning: feature selection
+- 21 Unsupervised learning: Hierarchical and density-based clustering algorithms
+- 22 Unsupervised learning: Non-linear dimensionality reduction
+- 23 Supervised learning: Out-of-core learning

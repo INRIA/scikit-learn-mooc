@@ -128,30 +128,30 @@ Outline
 Morning Session
 ---------------
 
-- 01 Introduction to machine learning with sample applications, Supervised and Unsupervised learning
-- 02 Scientific Computing Tools for Python: NumPy, SciPy, and matplotlib
-- 03 Data formats, preparation, and representation
-- 04 Supervised learning: Training and test data
-- 05 Supervised learning: Estimators for classification
-- 06 Supervised learning: Estimators for regression analysis
-- 07 Unsupervised learning: Unsupervised Transformers
-- 08 Unsupervised learning: Clustering
-- 09 The scikit-learn estimator interface
-- 10 Preparing a real-world dataset (titanic)
-- 11 Working with text data via the bag-of-words model
-- 12 Application: IMDb Movie Review Sentiment Analysis
+- 01 Introduction to machine learning with sample applications, Supervised and Unsupervised learning [[view](notebooks/01\ Introduction\ to\ Machine\ Learning.ipynb)]
+- 02 Scientific Computing Tools for Python: NumPy, SciPy, and matplotlib [[view](notebooks/02\ Scientific\ Computing\ Tools\ in\ Python.ipynb)]
+- 03 Data formats, preparation, and representation [[view](notebooks/03\ Data\ Representation\ for\ Machine\ Learning.ipynb)]
+- 04 Supervised learning: Training and test data [[view](notebooks/04\ Training\ and\ Testing\ Data.ipynb)]
+- 05 Supervised learning: Estimators for classification [[view](notebooks/05\ Supervised\ Learning\ -\ Classification.ipynb)]
+- 06 Supervised learning: Estimators for regression analysis [[view](notebooks/06\ Supervised\ Learning\ -\ Regression.ipynb)]
+- 07 Unsupervised learning: Unsupervised Transformers [[view](notebooks/07\ Unsupervised\ Learning\ -\ Transformations\ and\ Dimensionality\ Reduction.ipynb)]
+- 08 Unsupervised learning: Clustering [[view](notebooks/08\ Unsupervised\ Learning\ -\ Clustering.ipynb)]
+- 09 The scikit-learn estimator interface [[view](notebooks/09\ Review\ of\ Scikit-learn\ API.ipynb)]
+- 10 Preparing a real-world dataset (titanic) [[view](notebooks/10\ Case\ Study\ -\ Titanic\ Survival.ipynb)]
+- 11 Working with text data via the bag-of-words model [[view](notebooks/11\ Text\ Feature\ Extraction.ipynb)]
+- 12 Application: IMDb Movie Review Sentiment Analysis [[view](notebooks/12\ Case\ Study\ -\ SMS\ Spam\ Detection.ipynb)]
 
 Afternoon Session
 -----------------
 
-- 13 Cross-Validation
-- 14 Model complexity and grid search for adjusting hyperparameters
-- 15 Scikit-learn Pipelines
-- 16 Supervised learning: Performance metrics for classification
-- 17 Supervised learning: Linear Models
-- 18 Supervised learning: Support Vector Machines
-- 19 Supervised learning: Decision trees and random forests, and ensemble methods
-- 20 Supervised learning: feature selection
-- 21 Unsupervised learning: Hierarchical and density-based clustering algorithms
-- 22 Unsupervised learning: Non-linear dimensionality reduction
-- 23 Supervised learning: Out-of-core learning
+- 13 Cross-Validation [[view](notebooks/13\ Cross\ Validation.ipynb)]
+- 14 Model complexity and grid search for adjusting hyperparameters [[view](notebooks/14\ Model\ Complexity\ and\ GridSearchCV.ipynb)]
+- 15 Scikit-learn Pipelines [[view](notebooks/15\ Pipelining\ Estimators.ipynb)]
+- 16 Supervised learning: Performance metrics for classification [[view](notebooks/16\ Performance\ metrics\ and\ Model\ Evaluation.ipynb)]
+- 17 Supervised learning: Linear Models [[view](notebooks/17\ In\ Depth\ -\ Linear\ Models.ipynb)]
+- 18 Supervised learning: Support Vector Machines [[view](notebooks/18\ In\ Depth\ -\ Support\ Vector\ Machines.ipynb)]
+- 19 Supervised learning: Decision trees and random forests, and ensemble methods [[view](notebooks/19\ In\ Depth\ -\ Trees\ and\ Forests.ipynb)]
+- 20 Supervised learning: feature selection [[view](notebooks/20\ Feature\ Selection.ipynb)]
+- 21 Unsupervised learning: Hierarchical and density-based clustering algorithms [[view](notebooks/21\ Unsupervised\ learning\ -\ Hierarchical\ and\ density-based\ clustering\ algorithms.ipynb)]
+- 22 Unsupervised learning: Non-linear dimensionality reduction [[view](notebooks/22\ Unsupervised\ learning\ -\ Non-linear\ dimensionality\ reduction.ipynb)]
+- 23 Supervised learning: Out-of-core learning [[view](notebooks/23\ Out-of-core\ Learning\ Large\ Scale\ Text\ Classification.ipynb)]

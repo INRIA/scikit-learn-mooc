@@ -135,24 +135,24 @@ Morning Session
 - 05 Supervised learning: Estimators for classification
 - 06 Supervised learning: Estimators for regression analysis
 - 07 Unsupervised learning: Unsupervised Transformers
-- 10 Unsupervised learning: Clustering
-- 11 The scikit-learn estimator interface
-- 12 Preparing a real-world dataset (titanic)
-- 13 Working with text data via the bag-of-words model
-- 14 Application: IMDb Movie Review Sentiment Analysis
+- 08 Unsupervised learning: Clustering
+- 09 The scikit-learn estimator interface
+- 10 Preparing a real-world dataset (titanic)
+- 11 Working with text data via the bag-of-words model
+- 12 Application: IMDb Movie Review Sentiment Analysis
 
 Afternoon Session
 -----------------
 
-- 15 Cross-Validation
-- 16 Model Complexity: Overfitting and underfitting
-- 18 Grid search for adjusting hyperparameters
-- 19 Scikit-learn Pipelines
-- 20 Supervised learning: Performance metrics for classification
-- 21 Supervised learning: Linear Models
-- 22 Supervised learning: Support Vector Machines
-- 23 Supervised learning: Decision trees and random forests, and ensemble methods
-- 24 Supervised learning: feature selection
-- 25 Unsupervised learning: Hierarchical and density-based clustering algorithms
-- 26 Unsupervised learning: Non-linear dimensionality reduction
-- 27 Supervised learning: Out-of-core learning
+- 13 Cross-Validation
+- 14 Model Complexity: Overfitting and underfitting
+- 15 Grid search for adjusting hyperparameters
+- 16 Scikit-learn Pipelines
+- 17 Supervised learning: Performance metrics for classification
+- 18 Supervised learning: Linear Models
+- 19 Supervised learning: Support Vector Machines
+- 20 Supervised learning: Decision trees and random forests, and ensemble methods
+- 21 Supervised learning: feature selection
+- 22 Unsupervised learning: Hierarchical and density-based clustering algorithms
+- 23 Unsupervised learning: Non-linear dimensionality reduction
+- 24 Supervised learning: Out-of-core learning

@@ -7,8 +7,9 @@ Based on the SciPy [2015 tutorial](https://github.com/amueller/scipy_2015_sklear
 Instructors
 -----------
 
-- [Sebastian Raschka](http://sebastianraschka.com)  [@rasbt](https://twitter.com/rasbt) - Michigan State University, Computational Biology
-- [Andreas Mueller](http://amuller.github.io) [@amuellerml](https://twitter.com/t3kcit) - NYU Center for Data Science
+- [Sebastian Raschka](http://sebastianraschka.com)  [@rasbt](https://twitter.com/rasbt) - Michigan State University, Computational Biology;  [Book: Python Machine Learning](https://www.amazon.com/Python-Machine-Learning-Sebastian-Raschka/dp/1783555130/ref=sr_1_1?ie=UTF8&qid=1468347805&sr=8-1&keywords=sebastian+raschka)
+- [Andreas Mueller](http://amuller.github.io) [@amuellerml](https://twitter.com/t3kcit) - NYU Center for Data Science; [Book: Introduction to Machine Learning with Python](http://shop.oreilly.com/product/0636920030515.do)
+
 
 
 This repository will contain the teaching material and other info associated with our scikit-learn tutorial

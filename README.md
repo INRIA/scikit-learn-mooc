@@ -10,7 +10,14 @@ Instructors
 - [Sebastian Raschka](http://sebastianraschka.com)  [@rasbt](https://twitter.com/rasbt) - Michigan State University, Computational Biology;  [Book: Python Machine Learning](https://www.amazon.com/Python-Machine-Learning-Sebastian-Raschka/dp/1783555130/ref=sr_1_1?ie=UTF8&qid=1468347805&sr=8-1&keywords=sebastian+raschka)
 - [Andreas Mueller](http://amuller.github.io) [@amuellerml](https://twitter.com/t3kcit) - NYU Center for Data Science; [Book: Introduction to Machine Learning with Python](http://shop.oreilly.com/product/0636920030515.do)
 
+---
 
+**The video recording of the tutorial is now available via YouTube:**
+
+- [Part 1](https://www.youtube.com/watch?list=PLYx7XA2nY5Gf37zYZMw6OqGFRPjB1jCy6&v=OB1reY6IX-o)
+- [Part 2](https://www.youtube.com/watch?v=Cte8FYCpylk&list=PLYx7XA2nY5Gf37zYZMw6OqGFRPjB1jCy6&index=90)
+
+---
 
 This repository will contain the teaching material and other info associated with our scikit-learn tutorial
 at [SciPy 2016](http://scipy2016.scipy.org/ehome/index.php?eventid=146062&tabid=332930&) held July 11-17 in Austin, Texas.
@@ -26,6 +33,7 @@ The 2-part tutorial will be held on Tuesday, July 12, 2016.
 - Parts 6 to 9: 1:30 PM - 5:30 PM (Room 105)
 
 (You can find the full SciPy 2016 tutorial schedule [here](http://scipy2016.scipy.org/ehome/146062/332960/).)
+
 
 
 Obtaining the Tutorial Material

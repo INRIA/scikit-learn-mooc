@@ -1,2 +1,2 @@
-cv = KFold(n=len(iris.target), n_folds=3)
+cv = KFold(n_splits=3)
 cross_val_score(classifier, iris.data, iris.target, cv=cv)

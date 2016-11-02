@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, Normalizer, RobustScaler
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from .plot_helpers import cm2
 
 

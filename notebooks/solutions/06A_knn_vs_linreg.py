@@ -1,5 +1,5 @@
 from sklearn.datasets import load_boston
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
 
@@ -21,6 +21,6 @@ print('Linear Regression Train/Test: %.3f/%.3f' %
        linreg.score(X_test, y_test)))
 
 knnreg.fit(X_train, y_train)
-print('Linear Regression Train/Test: %.3f/%.3f' %
+print('KNeighborsRegressor Train/Test: %.3f/%.3f' %
       (knnreg.score(X_train, y_train),
        knnreg.score(X_test, y_test)))

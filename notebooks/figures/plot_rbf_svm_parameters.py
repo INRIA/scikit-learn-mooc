@@ -39,6 +39,7 @@ def plot_svm(log_C, log_gamma):
     C = 10. ** log_C
     gamma = 10. ** log_gamma
     svm = SVC(kernel='rbf', C=C, gamma=gamma).fit(X, y)
+    plt.figure()
     ax = plt.gca()
     plot_2d_separator(svm, X, ax=ax, eps=.5)
     # plot data

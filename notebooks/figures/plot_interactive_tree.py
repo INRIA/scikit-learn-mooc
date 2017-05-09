@@ -40,7 +40,7 @@ def tree_image(tree, fout=None):
 
 
 def plot_tree(max_depth=1):
-    fig, ax = plt.subplots(1, 2, figsize=(15, 7))
+    fig, ax = plt.subplots(1, 2)
     h = 0.02
 
     x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
@@ -54,7 +54,7 @@ def plot_tree(max_depth=1):
         faces = tree.tree_.apply(np.c_[xx.ravel(), yy.ravel()].astype(np.float32))
         faces = faces.reshape(xx.shape)
         border = ndimage.laplace(faces) != 0
-        ax[0].contourf(xx, yy, Z, alpha=.4)
+        ax[0].contourf(xx, yy, Z, alpha=.4, cmap='RdBu_r')
         ax[0].scatter(xx[border], yy[border], marker='.', s=1)
         ax[0].set_title("max_depth = %d" % max_depth)
         ax[1].imshow(tree_image(tree))

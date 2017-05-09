@@ -22,7 +22,7 @@ def plot_forest(max_depth=1):
                                         random_state=1).fit(X, y)
         Z = forest.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
         Z = Z.reshape(xx.shape)
-        ax.contourf(xx, yy, Z, alpha=.4)
+        ax.contourf(xx, yy, Z, alpha=.4, cmap='RdBu_r')
         ax.set_title("max_depth = %d" % max_depth)
     else:
         ax.set_title("data set")

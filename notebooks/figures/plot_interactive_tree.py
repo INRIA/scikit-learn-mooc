@@ -28,7 +28,11 @@ def tree_image(tree, fout=None):
     data = re.sub(r"samples = [0-9]+\\n", "", data)
     data = re.sub(r"\\nsamples = [0-9]+", "", data)
 
-    graph = pydot.graph_from_dot_data(data)[0]
+    try:
+        graph = pydot.graph_from_dot_data(data)[0]
+    except TypeError: # If the version of pydot doesn't return a list of objects
+        graph = pydot.graph_from_dot_data(data)
+
     if fout is None:
         fout = "tmp.png"
     graph.write_png(fout)

@@ -39,6 +39,7 @@ def plot_svm(log_C, log_gamma):
     C = 10. ** log_C
     gamma = 10. ** log_gamma
     svm = SVC(kernel='rbf', C=C, gamma=gamma).fit(X, y)
+    plt.figure()
     ax = plt.gca()
     plot_2d_separator(svm, X, ax=ax, eps=.5)
     # plot data
@@ -50,7 +51,7 @@ def plot_svm(log_C, log_gamma):
 
 
 def plot_svm_interactive():
-    from IPython.html.widgets import interactive, FloatSlider
+    from ipywidgets import interactive, FloatSlider
     C_slider = FloatSlider(min=-3, max=3, step=.1, value=0, readout=False)
     gamma_slider = FloatSlider(min=-2, max=2, step=.1, value=0, readout=False)
     return interactive(plot_svm, log_C=C_slider, log_gamma=gamma_slider)

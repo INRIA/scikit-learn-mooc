@@ -8,7 +8,7 @@ scikit-learn "from the ground up". We will start with core concepts of machine
 learning, some example uses of machine learning, and how to implement them
 using scikit-learn. Going in detail through the characteristics of several
 methods, we will discuss how to pick an algorithm for your application, how to
-set its parameters, and how to evaluate performance.
+set its hyper-parameters, and how to evaluate performance.
 
 Please provide a more detailed abstract of your tutorial (again, see last years tutorials).
 ---------------------------------------------------------------------------------------------

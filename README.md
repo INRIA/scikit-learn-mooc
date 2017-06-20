@@ -1,38 +1,28 @@
 SciPy 2016 Scikit-learn Tutorial
 ================================
 
-Based on the SciPy [2015 tutorial](https://github.com/amueller/scipy_2015_sklearn_tutorial) by [Kyle Kastner](https://kastnerkyle.github.io/) and [Andreas Mueller](http://amueller.github.io).
-
 
 Instructors
 -----------
 
-- [Sebastian Raschka](http://sebastianraschka.com)  [@rasbt](https://twitter.com/rasbt) - Michigan State University, Computational Biology;  [Book: Python Machine Learning](https://www.amazon.com/Python-Machine-Learning-Sebastian-Raschka/dp/1783555130/ref=sr_1_1?ie=UTF8&qid=1468347805&sr=8-1&keywords=sebastian+raschka)
-- [Andreas Mueller](http://amuller.github.io) [@amuellerml](https://twitter.com/t3kcit) - NYU Center for Data Science; [Book: Introduction to Machine Learning with Python](http://shop.oreilly.com/product/0636920030515.do)
+- [Alexandre Gramfort](http://http://alexandre.gramfort.net/)  [@agramfort](https://twitter.com/agramfort)
+- [Andreas Mueller](http://amuller.github.io) [@amuellerml](https://twitter.com/amuellerml) - Columbia University; [Book: Introduction to Machine Learning with Python](http://shop.oreilly.com/product/0636920030515.do)
 
 ---
 
-**The video recording of the tutorial is now available via YouTube:**
-
-- [Part 1](https://www.youtube.com/watch?list=PLYx7XA2nY5Gf37zYZMw6OqGFRPjB1jCy6&v=OB1reY6IX-o)
-- [Part 2](https://www.youtube.com/watch?v=Cte8FYCpylk&list=PLYx7XA2nY5Gf37zYZMw6OqGFRPjB1jCy6&index=90)
-
----
 
 This repository will contain the teaching material and other info associated with our scikit-learn tutorial
-at [SciPy 2016](http://scipy2016.scipy.org/ehome/index.php?eventid=146062&tabid=332930&) held July 11-17 in Austin, Texas.
+at [SciPy 2017](http://scipy2017.scipy.org/) held July 10-16 in Austin, Texas.
 
 Parts 1 to 5 make up the morning session, while
 parts 6 to 9 will be presented in the afternoon.
 
 ### Schedule:
 
-The 2-part tutorial will be held on Tuesday, July 12, 2016.
+The 2-part tutorial will be held on Tuesday, July 11, 2017.
 
-- Parts 1 to 5: 8:00 AM - 12:00 PM (Room 105)
-- Parts 6 to 9: 1:30 PM - 5:30 PM (Room 105)
-
-(You can find the full SciPy 2016 tutorial schedule [here](http://scipy2016.scipy.org/ehome/146062/332960/).)
+- Parts 1 to 5: 8:00 AM - 12:00 PM (Room 203)
+- Parts 6 to 9: 1:30 PM - 5:30 PM (Room 203)
 
 
 
@@ -40,14 +30,22 @@ Obtaining the Tutorial Material
 ------------------
 
 
-If you have a GitHub account, it is probably most convenient if you fork the GitHub repository. If you don’t have an GitHub account, you can download the repository as a .zip file by heading over to the GitHub repository (https://github.com/amueller/scipy-2016-sklearn) in your browser and click the green “Download” button in the upper right.
+If you have a GitHub account, it is probably most convenient if you fork the
+GitHub repository. If you don’t have an GitHub account, you can download the
+repository as a .zip file by heading over to the GitHub repository
+(https://github.com/amueller/scipy-2016-sklearn) in your browser and click the
+green “Download” button in the upper right.
 
 ![](images/download-repo.png)
 
-Please note that we may add and improve the material until shortly before the tutorial session, and we recommend you to update your copy of the materials one day before the tutorials. If you have an GitHub account and forked/cloned the repository via GitHub, you can sync your existing fork with via the following commands:
+Please note that we may add and improve the material until shortly before the
+tutorial session, and we recommend you to update your copy of the materials one
+day before the tutorials. If you have an GitHub account and forked/cloned the
+repository via GitHub, you can sync your existing fork with via the following
+commands:
 
 ```
-git remote add upstream https://github.com/amueller/scipy-2016-sklearn.git
+git remote add upstream https://github.com/amueller/scipy-2017-sklearn.git
 git fetch upstream
 git checkout master merge upstream/master
 ```
@@ -86,8 +84,9 @@ including commercial use and redistribution.
 The code examples in this tutorial should be compatible to Python 2.7,
 Python 3.4, and Python 3.5.
 
-After obtaining the material, we **strongly recommend** you to open and execute the Jupyter Notebook
-`jupter notebook check_env.ipynb` that is located at the top level of this repository. Inside the repository, you can open the notebook
+After obtaining the material, we **strongly recommend** you to open and execute
+the Jupyter Notebook `jupter notebook check_env.ipynb` that is located at the
+top level of this repository. Inside the repository, you can open the notebook
 by executing
 
 ```bash
@@ -100,12 +99,14 @@ clicking on the "Run Cells" button as illustrated in the figure below:
 ![](images/check_env-1.png)
 
 
-Finally, if your environment satisfies the requirements for the tutorials, the executed code cell will produce an output message as shown below:
+Finally, if your environment satisfies the requirements for the tutorials, the
+executed code cell will produce an output message as shown below:
 
 ![](images/check_env-2.png)
 
-
-Although not required, we also recommend you to update the required Python packages to their latest versions to ensure best compatibility with the teaching material. Please upgrade already installed packages by executing
+Although not required, we also recommend you to update the required Python
+packages to their latest versions to ensure best compatibility with the
+teaching material. Please upgrade already installed packages by executing
 
 - `pip install [package-name] --upgrade`  
 - or `conda update [package-name]`

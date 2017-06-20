@@ -170,7 +170,6 @@ Afternoon Session
 - 15 Scikit-learn Pipelines [[view](notebooks/15.Pipelining_Estimators.ipynb)]
 - 16 Supervised learning: Performance metrics for classification [[view](notebooks/16.Performance_metrics_and_Model_Evaluation.ipynb)]
 - 17 Supervised learning: Linear Models [[view](notebooks/17.In_Depth-Linear_Models.ipynb)]
-- 18 Supervised learning: Support Vector Machines [[view](notebooks/18.In_Depth-Support_Vector_Machines.ipynb)]
 - 19 Supervised learning: Decision trees and random forests, and ensemble methods [[view](notebooks/19.In_Depth-Trees_and_Forests.ipynb)]
 - 20 Supervised learning: feature selection [[view](notebooks/20.Feature_Selection.ipynb)]
 - 21 Unsupervised learning: Hierarchical and density-based clustering algorithms [[view](notebooks/21.Unsupervised_learning-Hierarchical_and_density-based_clustering_algorithms.ipynb)]

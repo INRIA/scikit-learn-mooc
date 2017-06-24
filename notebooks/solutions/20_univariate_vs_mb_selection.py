@@ -12,8 +12,9 @@ fs_modelbased = SelectFromModel(RandomForestClassifier(n_estimators=100), thresh
 fs_univariate.fit(X, y)
 print('Features selected by univariate selection:')
 print(fs_univariate.get_support())
-print('')
+plt.matshow(fs_univariate.get_support().reshape(1, -1), cmap='gray_r')
 
 fs_modelbased.fit(X, y)
 print('Features selected by model-based selection:')
 print(fs_modelbased.get_support())
+plt.matshow(fs_modelbased.get_support().reshape(1, -1), cmap='gray_r');

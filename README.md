@@ -14,8 +14,8 @@ Instructors
 This repository will contain the teaching material and other info associated with our scikit-learn tutorial
 at [SciPy 2017](http://scipy2017.scipy.org/) held July 10-16 in Austin, Texas.
 
-Parts 1 to 5 make up the morning session, while
-parts 6 to 9 will be presented in the afternoon.
+Parts 1 to 12 make up the morning session, while
+parts 13 to 23 will be presented in the afternoon (approximately)
 
 ### Schedule:
 
@@ -93,7 +93,7 @@ If you do not use conda, you need to install graphviz via your package manager
 (brew, apt, ...) and install the python graphviz library via
 ```bash
 pip install graphviz
-``
+```
 
 After obtaining the material, we **strongly recommend** you to open and execute
 the Jupyter Notebook `jupter notebook check_env.ipynb` that is located at the

@@ -145,7 +145,7 @@ Please run ``python fetch_data.py`` to download all necessary data beforehand.**
 
 The download size of the data files are approx. 280 MB, and after `fetch_data.py`
 extracted the data on your disk, the ./notebook/dataset folder will take 480 MB
-of your local solid state or hard drive.
+of your local hard drive.
 
 
 Outline

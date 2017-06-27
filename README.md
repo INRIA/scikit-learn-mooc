@@ -141,7 +141,11 @@ data.
 **Because the wireless network
 at conferences can often be spotty, it would be a good idea to download these
 data sets before arriving at the conference.
-Please run ``python fetch_data.py`` to download all necessary data beforehand.**
+Please run**
+```bash
+python fetch_data.py
+```
+to download all necessary data beforehand.**
 
 The download size of the data files are approx. 280 MB, and after `fetch_data.py`
 extracted the data on your disk, the ./notebook/dataset folder will take 480 MB

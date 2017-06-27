@@ -1,8 +1,8 @@
 import numpy as np
-from collections import defaultdict
 import os
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.feature_extraction import DictVectorizer
+
 
 # Can also use pandas!
 def process_titanic_line(line):
@@ -31,8 +31,9 @@ def process_titanic_line(line):
     embarked = str(vals[10])
     boat = str(vals[11])
     homedest = str(vals[12])
-    line_dict = {'pclass': pclass, 'survived': survived, 'name': name, 'sex': sex, 'age': age, 'sibsp': sibsp,
-                 'parch': parch, 'ticket': ticket, 'fare': fare, 'cabin': cabin, 'embarked': embarked,
+    line_dict = {'pclass': pclass, 'survived': survived, 'name': name, 'sex':
+                 sex, 'age': age, 'sibsp': sibsp, 'parch': parch, 'ticket':
+                 ticket, 'fare': fare, 'cabin': cabin, 'embarked': embarked,
                  'boat': boat, 'homedest': homedest}
     return line_dict
 
@@ -61,7 +62,8 @@ def load_titanic(test_size=.25, feature_skip_tuple=(), random_state=1999):
         strings = {k: line_dict[k] for k in string_keys}
         numeric_labels[n] = line_dict["survived"]
 
-    sss = StratifiedShuffleSplit(n_iter=1, test_size=test_size, random_state=12)
+    sss = StratifiedShuffleSplit(n_iter=1, test_size=test_size,
+                                 random_state=12)
     # This is a weird way to get the indices but it works
     train_idx = None
     test_idx = None
@@ -95,9 +97,12 @@ def load_titanic(test_size=.25, feature_skip_tuple=(), random_state=1999):
 
 FIELDNAMES = ('polarity', 'id', 'date', 'query', 'author', 'text')
 
+
 def read_sentiment_csv(csv_file, fieldnames=FIELDNAMES, max_count=None,
-             n_partitions=1, partition_id=0):
+                       n_partitions=1, partition_id=0):
+
     import csv  # put the import inside for use in IPython.parallel
+
     def file_opener(csv_file):
         try:
             open(csv_file, 'r', encoding="latin1").close()

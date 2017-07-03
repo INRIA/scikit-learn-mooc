@@ -66,6 +66,7 @@ This tutorial will require recent installations of
 - [NumPy](http://www.numpy.org)
 - [SciPy](http://www.scipy.org)
 - [matplotlib](http://matplotlib.org)
+- [pandas](http://pandas.pydata.org)
 - [pillow](https://python-pillow.org)
 - [scikit-learn](http://scikit-learn.org/stable/)
 - [IPython](http://ipython.readthedocs.org/en/stable/)

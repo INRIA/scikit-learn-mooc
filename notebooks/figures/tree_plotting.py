@@ -272,7 +272,7 @@ class _MPLTreeExporter(_BaseTreeExporter):
         self.special_characters = special_characters
         self.precision = precision
         self.fontsize = fontsize
-        self._scaley = 1
+        self._scaley = 10
 
         # validate
         if isinstance(precision, Integral):
@@ -309,24 +309,45 @@ class _MPLTreeExporter(_BaseTreeExporter):
     def export(self, decision_tree, ax=None):
         import matplotlib.pyplot as plt
         from matplotlib.text import Annotation
+
         if ax is None:
             ax = plt.gca()
-        ax.set_axis_off()
+        # ax.set_axis_off()
         my_tree = self._make_tree(0, decision_tree.tree_)
         dt = buchheim(my_tree)
         self._scalex = 1
         self.recurse(dt, decision_tree.tree_, ax)
 
-        # get all the annotated points
-        xys = [ann.xyann for ann in ax.get_children()
-               if isinstance(ann, Annotation)]
+        anns = [ann for ann in ax.get_children()
+                if isinstance(ann, Annotation)]
 
-        # set axis limits with slight margin of .5
+        # get all the annotated points
+        xys = [ann.xyann for ann in anns]
+
         mins = np.min(xys, axis=0)
         maxs = np.max(xys, axis=0)
 
         ax.set_xlim(mins[0], maxs[0])
         ax.set_ylim(maxs[1], mins[1])
+
+        if self.fontsize is None:
+            # try to fit everything into current axis
+            # draw so we get actual sizes
+            ax.figure.canvas.draw()
+
+            # get figure to data transform
+            inv = ax.transData.inverted()
+            # get max box width
+            widths = [np.diff(inv.transform(
+                ann.get_bbox_patch().get_window_extent())[:, 0])
+                for ann in anns]
+            max_width = max(widths)
+            # adjust fontsize to avoid overlap
+            # width should be around 1 in data coordinates
+            size = anns[0].get_fontsize() / max_width
+            print(size)
+            for ann in anns:
+                ann.set_fontsize(size)
 
     def recurse(self, node, tree, ax, depth=0):
         kwargs = dict(bbox=self.bbox_args, ha='center', va='center',

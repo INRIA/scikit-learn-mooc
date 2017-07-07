@@ -32,8 +32,7 @@ def plot_tree(max_depth=1):
         ax[0].contourf(xx, yy, Z, alpha=.4, cmap='RdBu_r')
         ax[0].scatter(xx[border], yy[border], marker='.', s=1)
         ax[0].set_title("max_depth = %d" % max_depth)
-        plot_tree_mpl(tree, ax=ax[1], impurity=False, filled=True,
-                      fontsize=10 - max_depth)
+        plot_tree_mpl(tree, ax=ax[1], impurity=False, filled=True)
         # ax[1].axis("off")
     else:
         ax[0].set_title("data set")

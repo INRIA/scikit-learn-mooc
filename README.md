@@ -5,7 +5,7 @@ SciPy 2016 Scikit-learn Tutorial
 Instructors
 -----------
 
-- [Alexandre Gramfort](http://http://alexandre.gramfort.net/)  [@agramfort](https://twitter.com/agramfort)
+- [Alexandre Gramfort](http://http://alexandre.gramfort.net/)  [@agramfort](https://twitter.com/agramfort) - Inria, Université Paris-Saclay
 - [Andreas Mueller](http://amuller.github.io) [@amuellerml](https://twitter.com/amuellerml) - Columbia University; [Book: Introduction to Machine Learning with Python](http://shop.oreilly.com/product/0636920030515.do)
 
 ---

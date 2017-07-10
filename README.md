@@ -172,5 +172,5 @@ Afternoon Session
 - 19 Supervised learning: feature selection [[view](notebooks/19.Feature_Selection.ipynb)]
 - 20 Unsupervised learning: Hierarchical and density-based clustering algorithms [[view](notebooks/20.Unsupervised_learning-Hierarchical_and_density-based_clustering_algorithms.ipynb)]
 - 21 Unsupervised learning: Non-linear dimensionality reduction [[view](notebooks/21.Unsupervised_learning-Non-linear_dimensionality_reduction.ipynb)]
-- 22 Supervised learning: Out-of-core learning [[view](notebooks/22.Out-of-core_Learning_Large_Scale_Text_Classification.ipynb)]
-- 23 Anomaly Detection [[view](notebooks/23.anomaly_detection.ipynb)]
+- 22 Unsupervised learning: Anomaly Detection [[view](notebooks/22.Unsupervised_learning-anomaly_detection.ipynb)]
+- 23 Supervised learning: Out-of-core learning [[view](notebooks/23.Out-of-core_Learning_Large_Scale_Text_Classification.ipynb)]

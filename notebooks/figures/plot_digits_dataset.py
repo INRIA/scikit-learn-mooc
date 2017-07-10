@@ -8,8 +8,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import offsetbox
-from sklearn import (manifold, datasets, decomposition, ensemble,
-                     random_projection)
+from sklearn import datasets, decomposition
+
 
 def digits_plot():
     digits = datasets.load_digits(n_class=6)
@@ -17,7 +17,6 @@ def digits_plot():
     X = digits.data[:n_digits]
     y = digits.target[:n_digits]
     n_samples, n_features = X.shape
-    n_neighbors = 30
 
     def plot_embedding(X, title=None):
         x_min, x_max = np.min(X, 0), np.max(X, 0)
@@ -65,9 +64,11 @@ def digits_plot():
     X_pca = pca.transform(X)
     plot_embedding(X_pca, "Principal Components projection of the digits")
     plt.figure()
+    plt.title("First Principal Component")
     plt.matshow(pca.components_[0, :].reshape(8, 8), cmap="gray")
     plt.axis('off')
     plt.figure()
+    plt.title("Second Principal Component")
     plt.matshow(pca.components_[1, :].reshape(8, 8), cmap="gray")
     plt.axis('off')
     plt.show()

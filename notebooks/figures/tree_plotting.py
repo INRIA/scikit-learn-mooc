@@ -312,7 +312,7 @@ class _MPLTreeExporter(_BaseTreeExporter):
 
         if ax is None:
             ax = plt.gca()
-        # ax.set_axis_off()
+        ax.set_axis_off()
         my_tree = self._make_tree(0, decision_tree.tree_)
         dt = buchheim(my_tree)
         self._scalex = 1
@@ -331,21 +331,21 @@ class _MPLTreeExporter(_BaseTreeExporter):
         ax.set_ylim(maxs[1], mins[1])
 
         if self.fontsize is None:
-            # try to fit everything into current axis
-            # draw so we get actual sizes
-            ax.figure.canvas.draw()
-
             # get figure to data transform
             inv = ax.transData.inverted()
+            renderer = ax.figure.canvas.get_renderer()
+            # update sizes of all bboxes
+            for ann in anns:
+                ann.update_bbox_position_size(renderer)
             # get max box width
-            widths = [np.diff(inv.transform(
-                ann.get_bbox_patch().get_window_extent())[:, 0])
-                for ann in anns]
-            max_width = max(widths)
+            widths = [inv.get_matrix()[0, 0]
+                      * ann.get_bbox_patch().get_window_extent().width
+                      for ann in anns]
+            # get minimum max size to not be too big.
+            max_width = max(max(widths), 1)
             # adjust fontsize to avoid overlap
             # width should be around 1 in data coordinates
             size = anns[0].get_fontsize() / max_width
-            print(size)
             for ann in anns:
                 ann.set_fontsize(size)
 

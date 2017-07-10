@@ -89,18 +89,6 @@ including commercial use and redistribution.
 The code examples in this tutorial should be compatible to Python 2.7,
 Python 3.4-3.6.
 
-For some of the plots in the tutorial, you will also need the graphviz library.
-If you are using Anaconda or conda, you can install it via
-```bash
-conda install graphviz python-graphviz
-```
-
-If you do not use conda, you need to install graphviz via your package manager
-(brew, apt, ...) and install the python graphviz library via
-```bash
-pip install graphviz
-```
-
 After obtaining the material, we **strongly recommend** you to open and execute
 the Jupyter Notebook `jupter notebook check_env.ipynb` that is located at the
 top level of this repository. Inside the repository, you can open the notebook

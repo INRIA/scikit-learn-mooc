@@ -21,8 +21,8 @@ parts 13 to 23 will be presented in the afternoon (approximately)
 
 The 2-part tutorial will be held on Tuesday, July 11, 2017.
 
-- Parts 1 to 5: 8:00 AM - 12:00 PM (Room 203)
-- Parts 6 to 9: 1:30 PM - 5:30 PM (Room 203)
+- [Parts 1 to 5: 8:00 AM - 12:00 PM (Room 203)](https://www.youtube.com/watch?v=2kT6QOVSgSg)
+- [Parts 6 to 9: 1:30 PM - 5:30 PM (Room 203)](https://www.youtube.com/watch?v=WLYzSas511I)
 
 
 

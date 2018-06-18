@@ -1,41 +1,37 @@
-SciPy 2016 Scikit-learn Tutorial
+SciPy 2018 Scikit-learn Tutorial
 ================================
 
 
 Instructors
 -----------
 
-- [Alexandre Gramfort](http://http://alexandre.gramfort.net/)  [@agramfort](https://twitter.com/agramfort) - Inria, Université Paris-Saclay
+- [Guillaume Lemaitre](https://glemaitre.github.io/)  [@glemaitre](https://github.com/glemaitre) - Inria, Université Paris-Saclay
 - [Andreas Mueller](http://amuller.github.io) [@amuellerml](https://twitter.com/amuellerml) - Columbia University; [Book: Introduction to Machine Learning with Python](http://shop.oreilly.com/product/0636920030515.do)
 
 ---
 
 
 This repository will contain the teaching material and other info associated with our scikit-learn tutorial
-at [SciPy 2017](http://scipy2017.scipy.org/) held July 10-16 in Austin, Texas.
+at [SciPy 2018](http://scipy2018.scipy.org/) held July 9-15 in Austin, Texas.
 
 Parts 1 to 12 make up the morning session, while
 parts 13 to 23 will be presented in the afternoon (approximately)
 
 ### Schedule:
 
-The 2-part tutorial will be held on Tuesday, July 11, 2017.
-
-- [Parts 1 to 5: 8:00 AM - 12:00 PM (Room 203)](https://www.youtube.com/watch?v=2kT6QOVSgSg)
-- [Parts 6 to 9: 1:30 PM - 5:30 PM (Room 203)](https://www.youtube.com/watch?v=WLYzSas511I)
+The 2-part tutorial will be held on Tuesday, July 10, 2018.
 
 
 
 Obtaining the Tutorial Material
-------------------
+--------------------------------
 
 
 If you have a GitHub account, it is probably most convenient if you clone or
 fork the GitHub repository. You can clone the repository by running:
 
 ```bash
-git clone https://github.com/amueller/scipy-2017-sklearn.git
-
+git clone https://github.com/amueller/scipy-2018-sklearn.git
 ```
 
  If you are not familiar with git or don’t have an
@@ -73,16 +69,16 @@ This tutorial will require recent installations of
 - [Jupyter Notebook](http://jupyter.org)
 
 
-The last one is important, you should be able to type:
+The last one is important and you should be able to type:
 
     jupyter notebook
 
 in your terminal window and see the notebook panel load in your web browser.
-Try opening and running a notebook from the material to see check that it works.
+Try opening and running a notebook from the material to see check that it works. Alternatively you can use Jupyter lab.
 
-For users who do not yet have these  packages installed, a relatively
+For users who do not yet have the required packages installed, a relatively
 painless way to install all the requirements is to use a Python distribution
-such as [Anaconda CE](http://store.continuum.io/ "Anaconda CE"), which includes
+such as [Anaconda](https://www.anaconda.com/download/ "Anaconda"), which includes
 the most relevant Python packages for science, math, engineering, and
 data analysis; Anaconda can be downloaded and installed for free
 including commercial use and redistribution.
@@ -109,13 +105,12 @@ executed code cell will produce an output message as shown below:
 
 ![](images/check_env-2.png)
 
-Although not required, we also recommend you to update the required Python
-packages to their latest versions to ensure best compatibility with the
-teaching material. Please upgrade already installed packages by executing
+Although not required, we also recommend you to update the scikit-learn the latest release version to ensure best compatibility with the teaching material. Please upgrade already installed packages by executing
 
-- `pip install [package-name] --upgrade`  
+- `pip install --no-deps --upgrade [package-name]`  
 - or `conda update [package-name]`
 
+Depending on how you installed ``scikit-learn``.
 
 
 Data Downloads

@@ -12,7 +12,7 @@ def plot_scaling():
     X += 3
 
     plt.figure(figsize=(15, 8))
-    main_ax = plt.subplot2grid((2, 5), (0, 0), rowspan=2, colspan=3)
+    main_ax = plt.subplot2grid((2, 5), (0, 0), rowspan=2, colspan=2)
 
     main_ax.scatter(X[:, 0], X[:, 1], c=y, cmap=cm2, s=60)
     maxx = np.abs(X[:, 0]).max()

@@ -36,7 +36,7 @@ git clone https://github.com/amueller/scipy-2018-sklearn.git
 
  If you are not familiar with git or don’t have an
 GitHub account, you can download the repository as a .zip file by heading over
-to the GitHub repository (https://github.com/amueller/scipy-2017-sklearn) in
+to the GitHub repository (https://github.com/amueller/scipy-2018-sklearn) in
 your browser and click the green “Download” button in the upper right.
 
 ![](images/download-repo.png)

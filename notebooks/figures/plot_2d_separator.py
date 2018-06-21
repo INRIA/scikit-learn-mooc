@@ -26,7 +26,8 @@ def plot_2d_separator(classifier, X, fill=False, ax=None, eps=None):
         ax = plt.gca()
     if fill:
         ax.contourf(X1, X2, decision_values.reshape(X1.shape),
-                    levels=fill_levels, colors=['blue', 'red'])
+                    levels=fill_levels, colors=['blue', 'red'],
+                    alpha=0.5)
     else:
         ax.contour(X1, X2, decision_values.reshape(X1.shape), levels=levels,
                    colors="black")

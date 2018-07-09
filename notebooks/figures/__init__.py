@@ -9,10 +9,12 @@ from .plot_rbf_svm_parameters import plot_svm_interactive
 from .plot_scaling import plot_scaling, plot_relative_scaling
 from .plot_digits_dataset import digits_plot
 from .plot_pca import plot_pca_illustration
+from .plot_helpers import cm2, cm3
 
 __all__ = ['plot_2d_separator', 'plot_kneighbors_regularization',
            'plot_linear_svc_regularization', 'plot_tree_interactive',
            'plot_tree', 'plot_regression_datasets', 'make_dataset',
            "plot_forest_interactive", "plot_forest", "plot_rbf_svm_parameters",
            "plot_svm_interactive", 'plot_scaling', 'digits_plot',
-           'plot_relative_scaling', 'plot_pca_illustration']
+           'plot_relative_scaling', 'plot_pca_illustration',
+           'cm2', 'cm3']

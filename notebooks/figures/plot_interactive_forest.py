@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import make_blobs
 from sklearn.ensemble import RandomForestClassifier
 
-
 X, y = make_blobs(centers=[[0, 0], [1, 1]], random_state=61526, n_samples=50)
 
 
@@ -26,7 +25,7 @@ def plot_forest(max_depth=1):
         ax.set_title("max_depth = %d" % max_depth)
     else:
         ax.set_title("data set")
-    ax.scatter(X[:, 0], X[:, 1], c=np.array(['b', 'r'])[y], s=60)
+    ax.scatter(X[:, 0], X[:, 1], c=np.array(['tab:blue', 'tab:red'])[y], s=60)
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
     ax.set_xticks(())

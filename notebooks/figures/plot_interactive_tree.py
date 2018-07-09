@@ -37,7 +37,8 @@ def plot_tree(max_depth=1):
     else:
         ax[0].set_title("data set")
         ax[1].set_visible(False)
-    ax[0].scatter(X[:, 0], X[:, 1], c=np.array(['b', 'r'])[y], s=60)
+    ax[0].scatter(X[:, 0], X[:, 1], c=np.array(['tab:blue', 'tab:red'])[y],
+                  s=60)
     ax[0].set_xlim(x_min, x_max)
     ax[0].set_ylim(y_min, y_max)
     ax[0].set_xticks(())

@@ -1,4 +1,4 @@
 from matplotlib.colors import ListedColormap
 
-cm3 = ListedColormap(['#0000aa', '#ff2020', '#50ff50'])
-cm2 = ListedColormap(['#0000aa', '#ff2020'])
+cm3 = ListedColormap(['#1f77b4', '#ff7f0e', '#2ca02c'])
+cm2 = ListedColormap(['#1f77b4', '#ff7f0e'])

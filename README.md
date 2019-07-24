@@ -13,7 +13,7 @@ jupytext --to ../notebooks//ipynb notebook_input_text_files/*.md
 For generating markdown files from the notebooks:
 
 ```
-jupytext --to ../notebooks//ipynb notebook_input_text_files/*.md
+jupytext --to ../markdown_files//md notebooks/*.ipynb
 
 ```
 
@@ -22,4 +22,9 @@ input cells content is modified in the notebooks):
 
 ```
 jupytext --sync notebooks/*.ipynb
+```
+
+If you create a new notebook, you need to set-up the text files it is going to be paired with:
+```
+jupytext --set-formats notebooks//ipynb,markdown_files//md,python_scripts//py:percent notebooks/*.ipynb
 ```

@@ -117,7 +117,7 @@ start = time.time()
 model.fit(df_train, target_train)
 print(f"Time elapsed: {time.time() - start} sec")
 
-#%%
+# %%
 # hyper parameters search in nested cross-validation
 model = make_pipeline(preprocessor, RidgeCV())
 start = time.time()
@@ -125,4 +125,4 @@ score = cross_val_score(model, data, target)
 print(f"Time elapsed: {time.time() - start} sec")
 print(score)
 
-#%%
+# %%

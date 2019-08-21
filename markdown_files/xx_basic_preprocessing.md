@@ -128,11 +128,11 @@ print(
 ```
 
 
-We will build a linear classification model called "Logistic [markdown]
-Regression". The `fit` method is called to train the data and only the
-training data should be given for this purpose.
+We will build a linear classification model called "Logistic Regression". The
+`fit` method is called to train the model from the input and target data. Only
+the training data should be given for this purpose.
 
-In addition, we checking the time required to train the model and internally
+In addition, when checking the time required to train the model and internally
 check the number of iterations done by the solver to find a solution.
 ```python
 from sklearn.linear_model import LogisticRegression
@@ -286,6 +286,7 @@ cross-validation where `K` corresponds to the number of splits.
 # TODO add CV diagram for 5-fold CV from the gallery
 ```
 
+
 ## Work with categorical data
 
 In the previous section, we dealt with data for which numerical algorithms are
@@ -315,8 +316,9 @@ categorical_columns = [
     'race', 'sex', 'native-country'
 ]
 data_categorical = data[categorical_columns]
-print(data_categorical.head())
+data_categorical.head()
 ```
+
 
 ### Encode categories having an ordering
 
@@ -335,22 +337,22 @@ print(f"The dataset encoded contains {data_encoded.shape[1]} features")
 print(data_encoded[:5])
 ```
 
+
 We can see that all categories have been encoded for each feature
 independently. We can also notice that the number of feature before and after
 the encoding is the same.
 
-However, one has to be careful when using this encoding strategy. The
-encoding imposed an order regarding the categories: 0 is smaller than 1 which
-is smaller than 2, etc. If the original categories did not have such order
-then this encoding is not adequate and you should use one-hot encoding
-instead.
+However, one has to be careful when using this encoding strategy. The encoding
+imposed an order regarding the categories: 0 is smaller than 1 which is
+smaller than 2, etc. If the original categories did not have such order then
+this encoding is not adequate and you should use one-hot encoding instead.
 
 ### Encode categories which do not have an ordering
 
-As previously stated, `OrdinalEncoder` is encoding categorical data having
-an ordering. In this case, the `OneHotEncoder` should be used. For a given
-feature, it will create as many new columns as categories. For a sample,
-the column corresponding to the category will be set to `1` while the other
+As previously stated, `OrdinalEncoder` is encoding categorical data having an
+ordering. In this case, the `OneHotEncoder` should be used. For a given
+feature, it will create as many new columns as categories. For a sample, the
+column corresponding to the category will be set to `1` while the other
 columns will be set to `0`.
 
 ```python
@@ -364,6 +366,7 @@ data_encoded = encoder.fit_transform(data_categorical)
 print(f"The dataset encoded contains {data_encoded.shape[1]} features")
 print(data_encoded[:5])
 ```
+
 
 One can notice that the number of features after the encoding is larger than
 in the original data.
@@ -380,6 +383,7 @@ score = cross_val_score(model, data_categorical, target)
 print(f"The accuracy is: {score.mean():.3f} +/- {score.std():.3f}")
 print(f"The different scores obtained are: \n{score}")
 ```
+
 
 ## Combining different transformers used for different column types
 
@@ -426,12 +430,40 @@ preprocessor = ColumnTransformer([
     ('standard-scaler', StandardScaler(), scaling_columns)
 ])
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
+```
+
+
+
+The final model is more complex than the previous models but still follows the
+same API:
+- the `fit` method is called to preprocess the data then train the classifier;
+- the `predict` method can make predictions on new data;
+- the `score` method is used to predict on the test data and compare the
+  predictions to the expected test labels to compute the accuracy.
+
+```python
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=42
+)
+model.fit(data_train, target_train)
+model.predict(data_test[:5])
+```
+
+```python
+target_test[:5]
+```
+
+```python
+
+data_test.head()
+```
+
+
+The final can therefore be cross-validated as usual:
+
+```python
+
 score = cross_val_score(model, data, target, cv=5)
 print(f"The accuracy is: {score.mean():.3f} +- {score.std():.3f}")
 print(f"The different scores obtained are: \n{score}")
 ```
-
-
-One can notice that the model, even more complex than in the previous
-sections, follow the same API meaning that it `fit` is called to preprocess
-the data and `score` is used to predict and check the model performance.

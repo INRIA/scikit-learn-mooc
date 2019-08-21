@@ -25,6 +25,13 @@ target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=target_name)
 
+# %%
+# preprocessing for rare category
+
+mask_rare_category = data['native-country'] == ' Holand-Netherlands'
+data = data[~mask_rare_category]
+target = target[~mask_rare_category]
+
 # %% [markdown]
 # Once the dataset is loaded, we will split it into a training and testing sets
 
@@ -214,6 +221,61 @@ start = time.time()
 model.fit(df_train, target_train)
 print(f"Time elapsed to make a grid-search on LogisticRegression: "
       f"{time.time() - start:.3f} seconds")
+
+# %% [markdown]
+# ## Fine tuning a model with several parameters
+#
+# In the previous example, we presented how to optimized a single parameter.
+# However, one can optimize several parameters. We will take an example where
+# we will use the `HistGradientBoostingClassifier` in which different set of
+# parameters will influence the predictive performance.
+
+# %%
+# This line is currently required to import HistGradientBoostingClassifier.
+from sklearn.experimental import enable_hist_gradient_boosting
+from sklearn.ensemble import HistGradientBoostingClassifier
+
+# note that we implicitely drop the column "fnlwgt"
+binary_encoding_columns = ['sex']
+ordinal_encoding_columns = ['workclass', 'education', 'marital-status',
+                            'occupation', 'relationship', 'race',
+                            'native-country']
+scaling_columns = ['age', 'capital-gain', 'capital-loss', 'hours-per-week',
+                   'education-num']
+
+preprocessor = ColumnTransformer([
+    ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
+    ('ordinal-encoder', OrdinalEncoder(), ordinal_encoding_columns),
+    ('scaling', StandardScaler(), scaling_columns)
+])
+
+model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
+model.fit(df_train, target_train)
+print(model.score(df_test, target_test))
+
+# %%
+from sklearn.pipeline import Pipeline
+
+model = Pipeline(
+    [('preprocessor', preprocessor),
+     ('gbrt', HistGradientBoostingClassifier(n_iter_no_change=10))]
+)
+param_distributions = {
+    'gbrt__learning_rate': uniform(loc=0.001, scale=5),
+    'gbrt__l2_regularization': uniform(loc=0, scale=0.5),
+    'gbrt__max_leaf_nodes': uniform(loc=5, scale=30),
+    'gbrt__min_samples_leaf': uniform(loc=5, scale=30)
+}
+model_grid_search = RandomizedSearchCV(
+    model, param_distributions=param_distributions, n_iter=5
+)
+model_grid_search.fit(df_train, target_train)
+print(
+    f"The R2 score using a {model_grid_search.__class__.__name__} is "
+    f"{model_grid_search.score(df_test, target_test):.2f}"
+)
+print(f"The best set of parameters is: {model_grid_search.best_params_}")
+
 
 # %% [markdown]
 # ## Combining evaluation and hyper-parameters search

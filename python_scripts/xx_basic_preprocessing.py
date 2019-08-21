@@ -125,7 +125,9 @@ print(
     f"{data_test.shape[1]} features"
 )
 
-# %% [markdown] We will build a linear classification model called "Logistic
+# %% [markdown]
+#
+# We will build a linear classification model called "Logistic [markdown]
 # Regression". The `fit` method is called to train the data and only the
 # training data should be given for this purpose.
 #
@@ -169,6 +171,7 @@ target_test[:3]
 # compute the classification accuracy when dealing with a classificiation
 # problem.
 
+# %%
 print(
     f"The test accuracy using a {model.__class__.__name__} is "
     f"{model.score(data_test, target_test):.3f}"

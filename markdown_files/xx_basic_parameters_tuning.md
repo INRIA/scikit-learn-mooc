@@ -7,9 +7,9 @@ In this lecture note, we aim at:
 
 ## Recall of basic preprocessing and model fitting
 
-In the previous lecture note, we show how to preprocessed different type of
-data and integrate this preprocessing in a machine learning pipeline
-containing a predictor.
+In the previous notebook, we show how to preprocessed different type of data
+and integrate this preprocessing in a machine learning pipeline containing a
+predictor.
 
 We will recall this example. First, we will load the data and organize it
 into a `data` and a `target` variable. The ultimate goal is to train a
@@ -19,8 +19,8 @@ predictor able to estimate the wages from different censing data.
 import os
 import pandas as pd
 
-df = pd.read_csv(os.path.join('datasets', 'cps_85_wages.csv'))
-target_name = "WAGE"
+df = pd.read_csv(os.path.join('datasets', 'adult-census.csv'))
+target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=target_name)
 ```
@@ -44,9 +44,13 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
-binary_encoding_columns = ['MARR', 'SEX', 'SOUTH', 'UNION']
-one_hot_encoding_columns = ['OCCUPATION', 'SECTOR', 'RACE']
-scaling_columns = ['AGE', 'EDUCATION', 'EXPERIENCE']
+# note that we implicitely drop the column "fnlwgt"
+binary_encoding_columns = ['sex']
+one_hot_encoding_columns = ['workclass', 'education', 'marital-status',
+                            'occupation', 'relationship', 'race',
+                            'native-country']
+scaling_columns = ['age', 'capital-gain', 'capital-loss', 'hours-per-week',
+                   'education-num']
 
 preprocessor = ColumnTransformer([
     ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
@@ -56,14 +60,15 @@ preprocessor = ColumnTransformer([
 ])
 ```
 
-After defining the preprocessing, we will use a linear regressor (i.e. ridge)
-to predict wages.
+After defining the preprocessing, we will use a linear classifier (i.e.
+logistic regression) to predict whether or not a person earn more than 50,000
+dollars a year.
 
 ```python
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-model = make_pipeline(preprocessor, Ridge())
+model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
 model.fit(df_train, target_train)
 print(
     f"The R2 score using a {model.__class__.__name__} is "
@@ -73,39 +78,39 @@ print(
 
 ## The issue of having the best model parameters
 
-When using the `Ridge` regressor, one could notice that we are using the
-default parameters by omitting setting explicitly these parameters.
+When using the `LoghisticRegression` classifier, one could notice that we are
+using the default parameters by omitting setting explicitly these parameters.
 
-For such regressor, the parameter `alpha` is governing the penalty; in other
+For such classifier, the parameter `C` is governing the penalty; in other
 words, how much our model should "trust" (or fit) the training data.
 
-Therefore, the default value of `alpha` is never certified to give the best
+Therefore, the default value of `C` is never certified to give the best
 model.
 
-We can make a quick experiment by changing the value of `alpha` and see the
+We can make a quick experiment by changing the value of `C` and see the
 impact of this parameter on the model performance.
 
 ```python
-alpha = 1
-model = make_pipeline(preprocessor, Ridge(alpha=alpha))
+C = 1
+model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
 model.fit(df_train, target_train)
 print(
     f"The R2 score using a {model.__class__.__name__} is "
-    f"{model.score(df_test, target_test):.2f} with alpha={alpha}"
+    f"{model.score(df_test, target_test):.2f} with alpha={C}"
 )
 
-alpha = 10000
-model = make_pipeline(preprocessor, Ridge(alpha=alpha))
+C = 1e-5
+model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
 model.fit(df_train, target_train)
 print(
     f"The R2 score using a {model.__class__.__name__} is "
-    f"{model.score(df_test, target_test):.2f}  with alpha={alpha}"
+    f"{model.score(df_test, target_test):.2f} with alpha={C}"
 )
 ```
 
 ## Finding the best model hyper-parameters via exhaustive parameters search
 
-We see that the parameter `alpha` as a significative impact on the model
+We see that the parameter `C` as a significative impact on the model
 performance and that finding the best value for this parameter is crucial.
 However, this parameter should be tuned with cross-validation such that
 we find a parameter. In short, we will set the parameter, train our model
@@ -117,7 +122,7 @@ estimator which will handle the cross-validation for us.
 ```python
 from sklearn.model_selection import GridSearchCV
 
-model = make_pipeline(preprocessor, Ridge())
+model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
 ```
 
 We will see that we need to provide the name of the parameter to be set.
@@ -129,14 +134,14 @@ print("The model hyper-parameters are:")
 print(model.get_params())
 ```
 
-The parameter `'ridge__alpha'` is the parameter for which we would like
-different values. Let see how to use the `GridSearchCV` estimator for doing
-such search.
+The parameter `'logisticregression__C'` is the parameter for which we would
+like different values. Let see how to use the `GridSearchCV` estimator for
+doing such search.
 
 ```python
 import numpy as np
 
-param_grid = {'ridge__alpha': np.linspace(0.001, 1000, num=20)}
+param_grid = {'logisticregression__C': np.linspace(1e-5, 1, num=5)}
 model_grid_search = GridSearchCV(model, param_grid=param_grid)
 model_grid_search.fit(df_train, target_train)
 print(
@@ -153,7 +158,7 @@ Internally, it will use the model with the best parameters found during
 `best_params_`
 
 ```python
-print(f"The best set of parameters is: {model_grid_search.best_params_:.1f}")
+print(f"The best set of parameters is: {model_grid_search.best_params_}")
 ```
 
 The parameters during the grid-search need to be specificy. Instead, one
@@ -166,45 +171,48 @@ distributions instead of the parameter values.
 from scipy.stats import uniform
 from sklearn.model_selection import RandomizedSearchCV
 
-param_distributions = {'ridge__alpha': uniform(loc=50, scale=100)}
+param_distributions = {'logisticregression__C': uniform(loc=50, scale=100)}
 model_grid_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions, n_iter=20
+    model, param_distributions=param_distributions, n_iter=5
 )
 model_grid_search.fit(df_train, target_train)
 print(
     f"The R2 score using a {model_grid_search.__class__.__name__} is "
     f"{model_grid_search.score(df_test, target_test):.2f}"
 )
-print(f"The best set of parameters is: {model_grid_search.best_params_:.1f}")
+print(f"The best set of parameters is: {model_grid_search.best_params_}")
 ```
 
 ## Notes on search efficiency
 
 Be aware that sometimes, scikit-learn provides some `EstimatorCV` classes
 which will perform internally the cross-validation in such way that it will
-more computationally efficient. We can give the example of the `RidgeCV`
-which can be used to find the best `alpha` in a more efficient way than what
-we previously did with the `GridSearchCV`.
+more computationally efficient. We can give the example of the
+`LogisticRegressionCV` which can be used to find the best `alpha` in a more
+efficient way than what we previously did with the `GridSearchCV`.
 
 ```python
 import time
-from sklearn.linear_model import RidgeCV
+from sklearn.linear_model import LogisticRegressionCV
 
 # define the different alphas to try out
-param_grid = {"alpha": (0.1, 1.0, 10.0)}
+param_grid = {"C": (0.1, 1.0, 10.0)}
 
-model = make_pipeline(preprocessor, RidgeCV(alphas=param_grid['alpha']))
+model = make_pipeline(preprocessor, LogisticRegressionCV(Cs=param_grid['C'],
+                                                         max_iter=1000))
 start = time.time()
 model.fit(df_train, target_train)
-print(f"Time elapsed to train RidgeCV: {time.time() - start:.3f} seconds")
+print(f"Time elapsed to train LogisticRegressionCV: "
+      f"{time.time() - start:.3f} seconds")
 
 model = make_pipeline(
-    preprocessor, GridSearchCV(Ridge(), param_grid=param_grid)
+    preprocessor, GridSearchCV(LogisticRegression(max_iter=1000),
+                               param_grid=param_grid)
 )
 start = time.time()
 model.fit(df_train, target_train)
-print(f"Time elapsed to make a grid-search on Ridge: {time.time() - start:.3f} "
-      f"seconds")
+print(f"Time elapsed to make a grid-search on LogisticRegression: "
+      f"{time.time() - start:.3f} seconds")
 ```
 
 ## Combining evaluation and hyper-parameters search
@@ -222,7 +230,7 @@ cross-validation. In practice, it is equivalent of including, `GridSearchCV`,
 ```python
 from sklearn.model_selection import cross_val_score
 
-model = make_pipeline(preprocessor, RidgeCV())
+model = make_pipeline(preprocessor, LogisticRegressionCV(max_iter=1000))
 score = cross_val_score(model, data, target)
 print(f"The R2 score is: {score.mean():.2f} +- {score.std():.2f}")
 print(f"The different scores obtained are: \n{score}")

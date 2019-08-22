@@ -156,17 +156,18 @@ of the held out test set:
 
 ```python
 
-data_test[:3]
+target_predicted = model.predict(data_test)
+target_predicted[:5]
 ```
 
 ```python
 
-model.predict(data_test[:3])
+target_test[:5]
 ```
 
 ```python
 
-target_test[:3]
+data_test.head()
 ```
 
 
@@ -179,6 +180,15 @@ print(
     f"The test accuracy using a {model.__class__.__name__} is "
     f"{model.score(data_test, target_test):.3f}"
 )
+```
+
+
+This is mathematically equivalent as computing the average number of time
+the model makes a correct prediction on the test set:
+
+```python
+
+(target_test == target_predicted).mean()
 ```
 
 
@@ -269,12 +279,19 @@ defines the splitting strategy.
 ```python
 from sklearn.model_selection import cross_val_score
 
-score = cross_val_score(model, data_numeric, target, cv=5)
+scores = cross_val_score(model, data_numeric, target, cv=5)
 print(f"The accuracy (mean +/- 1 std. dev.) is: "
-      f"{score.mean():.3f} +/- {score.std():.3f}")
-print(f"The different scores obtained are: \n{score}")
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+print(f"The different scores obtained are: \n{scores}")
 ```
 
+
+
+Note that by computing the standard-deviation of the cross-validation scores
+we can get an idea of the uncertainty of our estimation of the predictive
+performance of the model: in the above results, only the first 2 decimals seem
+to be trustworthy. Using a single train / test split would not allow us to
+know anything about the level of uncertainty of the accuracy of the model.
 
 Setting `cv=5` created 5 distinct splits to get 5 variations for the training
 and testing sets. Each training set is used to fit one model which is then
@@ -287,7 +304,7 @@ cross-validation where `K` corresponds to the number of splits.
 ```
 
 
-## Work with categorical data
+## Working with categorical data
 
 In the previous section, we dealt with data for which numerical algorithms are
 mathematically designed to work natively. However, real datasets contain type
@@ -320,7 +337,7 @@ data_categorical.head()
 ```
 
 
-### Encode categories having an ordering
+### Encoding categories having an ordering
 
 The most intuitive strategy is to encode each category by a numerical value.
 The `OrdinalEncoder` will transform the data in such manner.
@@ -339,27 +356,41 @@ print(data_encoded[:5])
 
 
 We can see that all categories have been encoded for each feature
-independently. We can also notice that the number of feature before and after
+independently. We can also notice that the number of features before and after
 the encoding is the same.
 
-However, one has to be careful when using this encoding strategy. The encoding
-imposed an order regarding the categories: 0 is smaller than 1 which is
-smaller than 2, etc. If the original categories did not have such order then
-this encoding is not adequate and you should use one-hot encoding instead.
+However, one has to be careful when using this encoding strategy. Using this
+integer representation makes the assumption that the categories are ordered: 0
+is smaller than 1 which is smaller than 2, etc. Furthermore the
+lexicographical order used by `OrdinalEncoder` by default to map from string
+labels to integer might be meaningless. For instance if you have a "size"
+categorical variable with categories such as "S", "M", "L", "XL", it is better
+to map those to 0, 1, 2, 3 rather than 2, 1, 0, 3 as would the lexicographical
+strategy would do. The `OrdinalEncoder` class accepts a "catogries"
+constructor argument to pass an the correct ordering explicitly.
 
-### Encode categories which do not have an ordering
+If a categorical variable does not carry any meaningful order information then
+this encoding might be not adequate and you should consider using one-hot
+encoding instead (see below).
 
-As previously stated, `OrdinalEncoder` is encoding categorical data having an
-ordering. In this case, the `OneHotEncoder` should be used. For a given
-feature, it will create as many new columns as categories. For a sample, the
-column corresponding to the category will be set to `1` while the other
-columns will be set to `0`.
+Note however that the impact a violation of this ordering assumption is really
+dependent on the downstream models (for instance linear models are much more
+sensitive than models built from a ensemble of decision trees).
+
+### Encode categories without assuming any order
+
+`OneHotEncoder` is an alternative encoder that can prevent the dowstream
+models to make a false assumption about the ordering of categories. For a
+given feature, it will create as many new columns as there are possible
+categories. For a given sample, the value of the column corresponding to the
+category will be set to `1` while all the columns of the other categories will
+be set to `0`.
 
 ```python
 from sklearn.preprocessing import OneHotEncoder
 
 print(data_categorical.head())
-print(f"The datasets is composed of {data_categorical.shape[1]} features")
+print(f"The dataset is composed of {data_categorical.shape[1]} features")
 encoder = OneHotEncoder(sparse=False)
 data_encoded = encoder.fit_transform(data_categorical)
 
@@ -368,32 +399,43 @@ print(data_encoded[:5])
 ```
 
 
-One can notice that the number of features after the encoding is larger than
-in the original data.
+The number of features after the encoding is larger than in the original data.
 
-Once the encoding is done, we could integrate it inside a machine learning
-pipeline as in the case with numerical data. In the following, we train a
-linear classifier on the encoded data and check the performance of this
-machine learning pipeline using cross-validation.
+We can integrate it inside a machine learning pipeline as in the case with
+numerical data. In the following, we train a linear classifier on the encoded
+data and check the performance of this machine learning pipeline using
+cross-validation.
 
 ```python
 model = make_pipeline(OneHotEncoder(handle_unknown='ignore'),
                       LogisticRegression(max_iter=1000))
-score = cross_val_score(model, data_categorical, target)
-print(f"The accuracy is: {score.mean():.3f} +/- {score.std():.3f}")
-print(f"The different scores obtained are: \n{score}")
+scores = cross_val_score(model, data_categorical, target)
+print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
+print(f"The different scores obtained are: \n{scores}")
 ```
+
+
+Exercise:
+- Try to use the OrdinalEncoder instead. What do you observe?
+
+In case you have issues of with unknown categories, try to precompute the list
+of possible categories ahead of time and pass it explicitly to the constructor
+of the encoder:
+
+ categories = [data[column].unique() for column in data[categorical_columns]]
+ OrdinalEncoder(categories=categories)
+
+
 
 
 ## Combining different transformers used for different column types
 
-In the previous section, we saw that we need to treat data specifically
-depending of their nature (i.e. numerical or categorical) and trained one
-pipeline (transformer + classifier) for each kind of dataset.
+In the previous sections, we saw that we need to treat data specifically
+depending of their nature (i.e. numerical or categorical).
 
 Scikit-learn provides a `ColumnTransformer` class which will dispatch some
 specific columns to a specific transformer making it easy to fit a single
-predictive model on a data that combines both kinds of variable together
+predictive model on a dataset that combines both kinds of variables together
 (heterogeneously typed tabular data).
 
 We can first define the columns depending on their data type:
@@ -446,7 +488,7 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=42
 )
 model.fit(data_train, target_train)
-model.predict(data_test[:5])
+model.predict(data_test)[:5]
 ```
 
 ```python
@@ -458,12 +500,68 @@ target_test[:5]
 data_test.head()
 ```
 
+```python
+model.score(data_test, target_test)
+```
 
-The final can therefore be cross-validated as usual:
+
+This model can also be cross-validated as usual (instead of using a single
+train-test split):
 
 ```python
 
-score = cross_val_score(model, data, target, cv=5)
-print(f"The accuracy is: {score.mean():.3f} +- {score.std():.3f}")
-print(f"The different scores obtained are: \n{score}")
+scores = cross_val_score(model, data, target, cv=5)
+print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+print(f"The different scores obtained are: \n{scores}")
 ```
+
+
+# Fitting a more powerful model
+
+Linear models are very nice because they are usually very cheap to train and
+give a good baseline.
+
+However it is often useful to check whether more complex models such as
+ensemble of decision trees can lead to higher predictive performance.
+
+In the following we try a scalable implementation of the Gradient Boosting
+Machine algorithm. For this class of models, we know that contrary to linear
+models, it is useless to scale the numerical features and furthermore it is
+both safe and significantly more computationally efficient use an arbitrary
+integer encoding for the categorical variable. Therefore we adapt the
+preprocessing pipeline as follows:
+
+```python
+from sklearn.experimental import enable_hist_gradient_boosting
+from sklearn.ensemble import HistGradientBoostingClassifier
+
+# For each categorical column, extract the list of all possible categories
+# in some arbritrary order.
+categories = [data[column].unique() for column in data[categorical_columns]]
+
+preprocessor = ColumnTransformer([
+    ('categorical', OrdinalEncoder(categories=categories), categorical_columns),
+], remainder="passthrough")
+
+model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
+model.fit(data_train, target_train)
+print(model.score(data_test, target_test))
+```
+
+
+We can observe that we get significantly higher accuracies with the Gradient
+Boosting model. This is often what we observe whenever the dataset has a large
+number of samples and limited number of informative features (e.g. less than
+1000) with a mix of numerical and categorical variables.
+
+This explains why Gradient Boosted Machines are very popular among datascience
+practitioners who work with tabular data.
+
+
+
+
+Exercises:
+- check that scaling the numerical features does not impact the speed or
+  accuracy of HistGradientBoostingClassifier
+- check that one-hot encoding the categorical variable does not improve the
+  accuracy of HistGradientBoostingClassifier but slows down the training.

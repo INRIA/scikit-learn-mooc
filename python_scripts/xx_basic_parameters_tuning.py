@@ -24,6 +24,7 @@ df = pd.read_csv(os.path.join('datasets', 'adult-census.csv'))
 target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=target_name)
+data = data.drop(columns="fnlwgt")
 
 # %%
 # preprocessing for rare category
@@ -52,7 +53,6 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
-# note that we implicitely drop the column "fnlwgt"
 binary_encoding_columns = ['sex']
 one_hot_encoding_columns = ['workclass', 'education', 'marital-status',
                             'occupation', 'relationship', 'race',
@@ -79,7 +79,7 @@ from sklearn.pipeline import make_pipeline
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
 model.fit(df_train, target_train)
 print(
-    f"The R2 score using a {model.__class__.__name__} is "
+    f"The accuracy score using a {model.__class__.__name__} is "
     f"{model.score(df_test, target_test):.2f}"
 )
 
@@ -103,7 +103,7 @@ C = 1
 model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
 model.fit(df_train, target_train)
 print(
-    f"The R2 score using a {model.__class__.__name__} is "
+    f"The accuracy score using a {model.__class__.__name__} is "
     f"{model.score(df_test, target_test):.2f} with alpha={C}"
 )
 
@@ -111,7 +111,7 @@ C = 1e-5
 model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
 model.fit(df_train, target_train)
 print(
-    f"The R2 score using a {model.__class__.__name__} is "
+    f"The accuracy score using a {model.__class__.__name__} is "
     f"{model.score(df_test, target_test):.2f} with alpha={C}"
 )
 
@@ -153,7 +153,7 @@ param_grid = {'logisticregression__C': np.linspace(1e-5, 1, num=5)}
 model_grid_search = GridSearchCV(model, param_grid=param_grid)
 model_grid_search.fit(df_train, target_train)
 print(
-    f"The R2 score using a {model_grid_search.__class__.__name__} is "
+    f"The accuracy score using a {model_grid_search.__class__.__name__} is "
     f"{model_grid_search.score(df_test, target_test):.2f}"
 )
 
@@ -185,7 +185,7 @@ model_grid_search = RandomizedSearchCV(
 )
 model_grid_search.fit(df_train, target_train)
 print(
-    f"The R2 score using a {model_grid_search.__class__.__name__} is "
+    f"The accuracy score using a {model_grid_search.__class__.__name__} is "
     f"{model_grid_search.score(df_test, target_test):.2f}"
 )
 print(f"The best set of parameters is: {model_grid_search.best_params_}")
@@ -235,47 +235,29 @@ print(f"Time elapsed to make a grid-search on LogisticRegression: "
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 
-# note that we implicitely drop the column "fnlwgt"
-binary_encoding_columns = ['sex']
-ordinal_encoding_columns = ['workclass', 'education', 'marital-status',
-                            'occupation', 'relationship', 'race',
-                            'native-country']
-scaling_columns = ['age', 'capital-gain', 'capital-loss', 'hours-per-week',
-                   'education-num']
-
-preprocessor = ColumnTransformer([
-    ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
-    ('ordinal-encoder', OrdinalEncoder(), ordinal_encoding_columns),
-    ('scaling', StandardScaler(), scaling_columns)
-])
-
-model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-model.fit(df_train, target_train)
-print(model.score(df_test, target_test))
-
-# %%
+from scipy.stats import expon
+from scipy.stats import randint
 from sklearn.pipeline import Pipeline
 
 model = Pipeline(
     [('preprocessor', preprocessor),
-     ('gbrt', HistGradientBoostingClassifier(n_iter_no_change=10))]
+     ('gbrt', HistGradientBoostingClassifier(max_iter=50))]
 )
 param_distributions = {
-    'gbrt__learning_rate': uniform(loc=0.001, scale=5),
+    'gbrt__learning_rate': expon(loc=0.001, scale=0.5),
     'gbrt__l2_regularization': uniform(loc=0, scale=0.5),
-    'gbrt__max_leaf_nodes': uniform(loc=5, scale=30),
-    'gbrt__min_samples_leaf': uniform(loc=5, scale=30)
+    'gbrt__max_leaf_nodes': randint(5, 30),
+    'gbrt__min_samples_leaf': randint(5, 30)
 }
 model_grid_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=5
 )
 model_grid_search.fit(df_train, target_train)
 print(
-    f"The R2 score using a {model_grid_search.__class__.__name__} is "
+    f"The accuracy score using a {model_grid_search.__class__.__name__} is "
     f"{model_grid_search.score(df_test, target_test):.2f}"
 )
 print(f"The best set of parameters is: {model_grid_search.best_params_}")
-
 
 # %% [markdown]
 # ## Combining evaluation and hyper-parameters search
@@ -295,7 +277,7 @@ from sklearn.model_selection import cross_val_score
 
 model = make_pipeline(preprocessor, LogisticRegressionCV(max_iter=1000))
 score = cross_val_score(model, data, target)
-print(f"The R2 score is: {score.mean():.2f} +- {score.std():.2f}")
+print(f"The accuracy score is: {score.mean():.2f} +- {score.std():.2f}")
 print(f"The different scores obtained are: \n{score}")
 
 # %% [markdown]

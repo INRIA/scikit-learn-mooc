@@ -270,6 +270,7 @@ print(
 # the model, the data and the target. Since there exists several
 # cross-validation strategies, `cross_val_score` takes a parameter `cv` which
 # defines the splitting strategy.
+#
 
 
 # %%
@@ -335,6 +336,7 @@ data_categorical.head()
 #
 # The most intuitive strategy is to encode each category by a numerical value.
 # The `OrdinalEncoder` will transform the data in such manner.
+#
 
 
 # %%
@@ -427,6 +429,7 @@ print(f"The different scores obtained are: \n{scores}")
 #  OrdinalEncoder(categories=categories)
 #
 #
+#
 
 
 # %% [markdown]
@@ -449,6 +452,7 @@ print(f"The different scores obtained are: \n{scores}")
 #   two possible categories. This encoding will create one additional column for
 #   each possible categorical value.
 # * **numerical scaling** numerical features which will be standardized.
+#
 
 
 # %%
@@ -555,6 +559,7 @@ print(model.score(data_test, target_test))
 #
 # This explains why Gradient Boosted Machines are very popular among datascience
 # practitioners who work with tabular data.
+#
 
 
 # %% [markdown]

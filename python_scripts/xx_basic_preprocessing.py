@@ -38,7 +38,7 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv('datasets/adult-census.csv')
+df = pd.read_csv('../datasets/adult-census.csv')
 # df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 
 
@@ -165,7 +165,11 @@ target_test[:5]
 
 
 # %%
-data_test.head()
+predictions = data_test.copy()
+predictions['predicted-class'] = target_predicted
+predictions['expected-class'] = target_test
+predictions['correct'] = target_predicted == target_test
+predictions.head()
 
 
 # %% [markdown]
@@ -271,6 +275,10 @@ print(
 # cross-validation strategies, `cross_val_score` takes a parameter `cv` which
 # defines the splitting strategy.
 #
+#
+#
+#
+#
 
 
 # %%
@@ -295,7 +303,6 @@ print(f"The different scores obtained are: \n{scores}")
 # cross-validation where `K` corresponds to the number of splits.
 
 # %%
-
 # TODO add CV diagram for 5-fold CV from the gallery
 
 
@@ -336,6 +343,10 @@ data_categorical.head()
 #
 # The most intuitive strategy is to encode each category by a numerical value.
 # The `OrdinalEncoder` will transform the data in such manner.
+#
+#
+#
+#
 #
 
 
@@ -396,18 +407,23 @@ from sklearn.preprocessing import OneHotEncoder
 
 encoder = OneHotEncoder(sparse=False)
 data_encoded = encoder.fit_transform(data_categorical)
-
 print(f"The dataset encoded contains {data_encoded.shape[1]} features")
-data_encoded[:5]
+data_encoded
 
+
+# %%
+columns_encoded = encoder.get_feature_names(data_categorical.columns)
+pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]
-# The number of features after the encoding is larger than in the original data.
 #
-# We can integrate it inside a machine learning pipeline as in the case with
-# numerical data. In the following, we train a linear classifier on the encoded
-# data and check the performance of this machine learning pipeline using
-# cross-validation.
+# The number of features after the encoding is than 10 times larger than in the
+# original data because some variables have many possible categories.
+#
+# We can integrate this encoder inside a machine learning pipeline as in the
+# case with numerical data. In the following, we train a linear classifier on
+# the encoded data and check the performance of this machine learning pipeline
+# using cross-validation.
 
 # %%
 model = make_pipeline(OneHotEncoder(handle_unknown='ignore'),
@@ -427,6 +443,10 @@ print(f"The different scores obtained are: \n{scores}")
 #
 #  categories = [data[column].unique() for column in data[categorical_columns]]
 #  OrdinalEncoder(categories=categories)
+#
+#
+#
+#
 #
 #
 #
@@ -452,6 +472,10 @@ print(f"The different scores obtained are: \n{scores}")
 #   two possible categories. This encoding will create one additional column for
 #   each possible categorical value.
 # * **numerical scaling** numerical features which will be standardized.
+#
+#
+#
+#
 #
 
 
@@ -512,7 +536,6 @@ model.score(data_test, target_test)
 # train-test split):
 
 # %%
-
 scores = cross_val_score(model, data, target, cv=5)
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 print(f"The different scores obtained are: \n{scores}")
@@ -559,6 +582,10 @@ print(model.score(data_test, target_test))
 #
 # This explains why Gradient Boosted Machines are very popular among datascience
 # practitioners who work with tabular data.
+#
+#
+#
+#
 #
 
 

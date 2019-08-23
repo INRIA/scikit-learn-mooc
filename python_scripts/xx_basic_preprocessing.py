@@ -41,15 +41,15 @@ import pandas as pd
 df = pd.read_csv('datasets/adult-census.csv')
 # df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 
+
 # %% [markdown]
-#
 # Let's have a look at the first records of this data frame:
 
 # %%
 df.head()
 
+
 # %% [markdown]
-#
 # The target variable in our study will be the "class" column while we will use
 # the other columns as input variables for our model. This target column divides
 # the samples (also known as records) into two groups: high income (>50K) vs low
@@ -65,8 +65,8 @@ target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=[target_name, "fnlwgt"])
 
+
 # %% [markdown]
-#
 # We can check the number of samples and the number of features available in
 # the dataset:
 
@@ -76,8 +76,8 @@ print(
     "features"
 )
 
+
 # %% [markdown]
-#
 # ## Working with numerical data
 #
 # The numerical data is the most natural type of data used in machine learning
@@ -90,8 +90,10 @@ print(
 # %%
 data.columns
 
+
 # %%
 data.dtypes
+
 
 # %%
 numerical_columns = ['age', 'education-num', 'hours-per-week',
@@ -125,8 +127,8 @@ print(
     f"{data_test.shape[1]} features"
 )
 
+
 # %% [markdown]
-#
 # We will build a linear classification model called "Logistic Regression". The
 # `fit` method is called to train the model from the input and target data. Only
 # the training data should be given for this purpose.
@@ -147,27 +149,26 @@ print(
     f"{elapsed_time:.3f} seconds for {model.n_iter_} iterations"
 )
 
+
 # %% [markdown]
-#
 # Let's ignore the convergence warning for now and instead let's try
 # to use our model to make some predictions on the first three records
 # of the held out test set:
 
 # %%
-
 target_predicted = model.predict(data_test)
 target_predicted[:5]
 
-# %%
 
+# %%
 target_test[:5]
 
-# %%
 
+# %%
 data_test.head()
 
+
 # %% [markdown]
-#
 # To quantitatively evaluate our model, we can use the method `score`. It will
 # compute the classification accuracy when dealing with a classificiation
 # problem.
@@ -178,17 +179,16 @@ print(
     f"{model.score(data_test, target_test):.3f}"
 )
 
+
 # %% [markdown]
-#
 # This is mathematically equivalent as computing the average number of time
 # the model makes a correct prediction on the test set:
 
 # %%
-
 (target_test == target_predicted).mean()
 
+
 # %% [markdown]
-#
 # Let's now consider the `ConvergenceWarning` message that was raised previously
 # when calling the `fit` method to train our model. This warning informs us that
 # our model stopped learning becaused it reached the maximum number of
@@ -207,8 +207,8 @@ print(
     f"{elapsed_time:.3f} seconds in {model.n_iter_} iterations"
 )
 
+
 # %% [markdown]
-#
 # We can observe now a longer training time but not significant improvement in
 # the predictive performance. Instead of increasing the number of iterations, we
 # can try to help fit the model faster by scaling the data first. A range of
@@ -224,6 +224,7 @@ print(
 # %%
 data_train.describe()
 
+
 # %%
 from sklearn.preprocessing import StandardScaler
 
@@ -235,8 +236,8 @@ data_train_scaled
 data_train_scaled = pd.DataFrame(data_train_scaled, columns=data_train.columns)
 data_train_scaled.describe()
 
-# %%
 
+# %%
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(StandardScaler(), LogisticRegression())
@@ -249,8 +250,8 @@ print(
     f"{elapsed_time:.3f} seconds in {model[-1].n_iter_} iterations"
 )
 
+
 # %% [markdown]
-#
 # We can see that the training time and the number of iterations is much shorter
 # while the predictive performance is equivalent.
 #
@@ -270,6 +271,7 @@ print(
 # cross-validation strategies, `cross_val_score` takes a parameter `cv` which
 # defines the splitting strategy.
 
+
 # %%
 from sklearn.model_selection import cross_val_score
 
@@ -280,7 +282,6 @@ print(f"The different scores obtained are: \n{scores}")
 
 
 # %% [markdown]
-#
 # Note that by computing the standard-deviation of the cross-validation scores
 # we can get an idea of the uncertainty of our estimation of the predictive
 # performance of the model: in the above results, only the first 2 decimals seem
@@ -296,8 +297,8 @@ print(f"The different scores obtained are: \n{scores}")
 
 # TODO add CV diagram for 5-fold CV from the gallery
 
+
 # %% [markdown]
-#
 # ## Working with categorical data
 #
 # In the previous section, we dealt with data for which numerical algorithms are
@@ -328,26 +329,30 @@ categorical_columns = [
 data_categorical = data[categorical_columns]
 data_categorical.head()
 
+
 # %% [markdown]
-#
 # ### Encoding categories having an ordering
 #
 # The most intuitive strategy is to encode each category by a numerical value.
 # The `OrdinalEncoder` will transform the data in such manner.
 
+
+# %%
+print(f"The datasets is composed of {data_categorical.shape[1]} features")
+data_categorical.head()
+
+
 # %%
 from sklearn.preprocessing import OrdinalEncoder
 
-print(data_categorical.head())
-print(f"The datasets is composed of {data_categorical.shape[1]} features")
 encoder = OrdinalEncoder()
 data_encoded = encoder.fit_transform(data_categorical)
 
 print(f"The dataset encoded contains {data_encoded.shape[1]} features")
-print(data_encoded[:5])
+data_encoded[:5]
+
 
 # %% [markdown]
-#
 # We can see that all categories have been encoded for each feature
 # independently. We can also notice that the number of features before and after
 # the encoding is the same.
@@ -380,18 +385,21 @@ print(data_encoded[:5])
 # be set to `0`.
 
 # %%
+print(f"The dataset is composed of {data_categorical.shape[1]} features")
+data_categorical.head()
+
+
+# %%
 from sklearn.preprocessing import OneHotEncoder
 
-print(data_categorical.head())
-print(f"The dataset is composed of {data_categorical.shape[1]} features")
 encoder = OneHotEncoder(sparse=False)
 data_encoded = encoder.fit_transform(data_categorical)
 
 print(f"The dataset encoded contains {data_encoded.shape[1]} features")
-print(data_encoded[:5])
+data_encoded[:5]
+
 
 # %% [markdown]
-#
 # The number of features after the encoding is larger than in the original data.
 #
 # We can integrate it inside a machine learning pipeline as in the case with
@@ -406,8 +414,8 @@ scores = cross_val_score(model, data_categorical, target)
 print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 print(f"The different scores obtained are: \n{scores}")
 
+
 # %% [markdown]
-#
 # Exercise:
 # - Try to use the OrdinalEncoder instead. What do you observe?
 #
@@ -417,10 +425,11 @@ print(f"The different scores obtained are: \n{scores}")
 #
 #  categories = [data[column].unique() for column in data[categorical_columns]]
 #  OrdinalEncoder(categories=categories)
+#
+#
 
 
 # %% [markdown]
-#
 # ## Combining different transformers used for different column types
 #
 # In the previous sections, we saw that we need to treat data specifically
@@ -441,6 +450,7 @@ print(f"The different scores obtained are: \n{scores}")
 #   each possible categorical value.
 # * **numerical scaling** numerical features which will be standardized.
 
+
 # %%
 binary_encoding_columns = ['sex']
 one_hot_encoding_columns = ['workclass', 'education', 'marital-status',
@@ -450,7 +460,6 @@ scaling_columns = ['age', 'education-num', 'hours-per-week',
                    'capital-gain', 'capital-loss']
 
 # %% [markdown]
-#
 # We can now create our `ColumnTransfomer` by specifying a list of triplet
 # (preprocessor name, transformer, columns). Finally, we can define a pipeline
 # to stack this "preprocessor" with our classifier (logistic regression).
@@ -466,9 +475,7 @@ preprocessor = ColumnTransformer([
 ])
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
 
-
 # %% [markdown]
-#
 # The final model is more complex than the previous models but still follows the
 # same API:
 # - the `fit` method is called to preprocess the data then train the classifier;
@@ -483,18 +490,20 @@ data_train, data_test, target_train, target_test = train_test_split(
 model.fit(data_train, target_train)
 model.predict(data_test)[:5]
 
+
 # %%
 target_test[:5]
 
-# %%
 
+# %%
 data_test.head()
+
 
 # %%
 model.score(data_test, target_test)
 
+
 # %% [markdown]
-#
 # This model can also be cross-validated as usual (instead of using a single
 # train-test split):
 
@@ -504,8 +513,8 @@ scores = cross_val_score(model, data, target, cv=5)
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 print(f"The different scores obtained are: \n{scores}")
 
+
 # %% [markdown]
-#
 # # Fitting a more powerful model
 #
 # Linear models are very nice because they are usually very cheap to train and
@@ -537,8 +546,8 @@ model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 model.fit(data_train, target_train)
 print(model.score(data_test, target_test))
 
+
 # %% [markdown]
-#
 # We can observe that we get significantly higher accuracies with the Gradient
 # Boosting model. This is often what we observe whenever the dataset has a large
 # number of samples and limited number of informative features (e.g. less than
@@ -549,7 +558,6 @@ print(model.score(data_test, target_test))
 
 
 # %% [markdown]
-#
 # Exercises:
 # - check that scaling the numerical features does not impact the speed or
 #   accuracy of HistGradientBoostingClassifier

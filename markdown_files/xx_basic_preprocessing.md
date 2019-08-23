@@ -90,9 +90,11 @@ predict the income class.
 data.columns
 ```
 
+
 ```python
 data.dtypes
 ```
+
 
 ```python
 numerical_columns = ['age', 'education-num', 'hours-per-week',
@@ -155,18 +157,17 @@ to use our model to make some predictions on the first three records
 of the held out test set:
 
 ```python
-
 target_predicted = model.predict(data_test)
 target_predicted[:5]
 ```
 
-```python
 
+```python
 target_test[:5]
 ```
 
-```python
 
+```python
 data_test.head()
 ```
 
@@ -187,7 +188,6 @@ This is mathematically equivalent as computing the average number of time
 the model makes a correct prediction on the test set:
 
 ```python
-
 (target_test == target_predicted).mean()
 ```
 
@@ -228,6 +228,7 @@ regression model on that new version of the dataset set.
 data_train.describe()
 ```
 
+
 ```python
 from sklearn.preprocessing import StandardScaler
 
@@ -241,8 +242,8 @@ data_train_scaled = pd.DataFrame(data_train_scaled, columns=data_train.columns)
 data_train_scaled.describe()
 ```
 
-```python
 
+```python
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(StandardScaler(), LogisticRegression())
@@ -276,6 +277,7 @@ the model, the data and the target. Since there exists several
 cross-validation strategies, `cross_val_score` takes a parameter `cv` which
 defines the splitting strategy.
 
+
 ```python
 from sklearn.model_selection import cross_val_score
 
@@ -284,7 +286,6 @@ print(f"The accuracy (mean +/- 1 std. dev.) is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 print(f"The different scores obtained are: \n{scores}")
 ```
-
 
 
 Note that by computing the standard-deviation of the cross-validation scores
@@ -342,16 +343,21 @@ data_categorical.head()
 The most intuitive strategy is to encode each category by a numerical value.
 The `OrdinalEncoder` will transform the data in such manner.
 
+
+```python
+print(f"The datasets is composed of {data_categorical.shape[1]} features")
+data_categorical.head()
+```
+
+
 ```python
 from sklearn.preprocessing import OrdinalEncoder
 
-print(data_categorical.head())
-print(f"The datasets is composed of {data_categorical.shape[1]} features")
 encoder = OrdinalEncoder()
 data_encoded = encoder.fit_transform(data_categorical)
 
 print(f"The dataset encoded contains {data_encoded.shape[1]} features")
-print(data_encoded[:5])
+data_encoded[:5]
 ```
 
 
@@ -387,15 +393,19 @@ category will be set to `1` while all the columns of the other categories will
 be set to `0`.
 
 ```python
+print(f"The dataset is composed of {data_categorical.shape[1]} features")
+data_categorical.head()
+```
+
+
+```python
 from sklearn.preprocessing import OneHotEncoder
 
-print(data_categorical.head())
-print(f"The dataset is composed of {data_categorical.shape[1]} features")
 encoder = OneHotEncoder(sparse=False)
 data_encoded = encoder.fit_transform(data_categorical)
 
 print(f"The dataset encoded contains {data_encoded.shape[1]} features")
-print(data_encoded[:5])
+data_encoded[:5]
 ```
 
 
@@ -428,6 +438,7 @@ of the encoder:
 
 
 
+
 ## Combining different transformers used for different column types
 
 In the previous sections, we saw that we need to treat data specifically
@@ -448,6 +459,7 @@ We can first define the columns depending on their data type:
   each possible categorical value.
 * **numerical scaling** numerical features which will be standardized.
 
+
 ```python
 binary_encoding_columns = ['sex']
 one_hot_encoding_columns = ['workclass', 'education', 'marital-status',
@@ -456,7 +468,6 @@ one_hot_encoding_columns = ['workclass', 'education', 'marital-status',
 scaling_columns = ['age', 'education-num', 'hours-per-week',
                    'capital-gain', 'capital-loss']
 ```
-
 
 We can now create our `ColumnTransfomer` by specifying a list of triplet
 (preprocessor name, transformer, columns). Finally, we can define a pipeline
@@ -474,8 +485,6 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
 ```
 
-
-
 The final model is more complex than the previous models but still follows the
 same API:
 - the `fit` method is called to preprocess the data then train the classifier;
@@ -491,14 +500,16 @@ model.fit(data_train, target_train)
 model.predict(data_test)[:5]
 ```
 
+
 ```python
 target_test[:5]
 ```
 
-```python
 
+```python
 data_test.head()
 ```
+
 
 ```python
 model.score(data_test, target_test)
@@ -556,7 +567,6 @@ number of samples and limited number of informative features (e.g. less than
 
 This explains why Gradient Boosted Machines are very popular among datascience
 practitioners who work with tabular data.
-
 
 
 

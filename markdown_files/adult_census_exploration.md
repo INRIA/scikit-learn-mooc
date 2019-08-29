@@ -69,15 +69,15 @@ The dataset contains both numerical and categorical data. Numerical values
 can take continuous values for example `age`. Categorical values can have a
 finite number of values, for exemple `native-country`.
 
-# %
+```python
 numerical_columns = ['age', 'education-num', 'capital-gain', 'capital-loss',
                      'hours-per-week']
-categorical_columns = ['workclass', 'marital-status', 'occupation',
+categorical_columns = ['workclass', 'education', 'marital-status', 'occupation',
                        'relationship', 'race', 'sex', 'native-country']
 all_columns = numerical_columns + categorical_columns + [target_column]
 
 adult_census = adult_census[all_columns]
-
+```
 
 Note that for simplicity, we have ignored the "fnlwgt" (final weight) column
 that was crafted by the creators of the dataset when sampling the dataset to
@@ -106,7 +106,7 @@ adult_census.profile_report()
 
 TODO: some comments about a few variables?
 * age: retired people are not in the dataset (`hours-per-week > 0`).
-  
+
 * education num: peak at TODO and TODO probably correspond to under-graduate and masters?
 * hours per week around 40, this was probably the standard at the time
 

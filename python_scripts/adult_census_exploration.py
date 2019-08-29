@@ -70,10 +70,10 @@ adult_census[target_column].unique()
 # can take continuous values for example `age`. Categorical values can have a
 # finite number of values, for exemple `native-country`.
 
-## %
+# %%
 numerical_columns = ['age', 'education-num', 'capital-gain', 'capital-loss',
                      'hours-per-week']
-categorical_columns = ['workclass', 'marital-status', 'occupation',
+categorical_columns = ['workclass', 'education', 'marital-status', 'occupation',
                        'relationship', 'race', 'sex', 'native-country']
 all_columns = numerical_columns + categorical_columns + [target_column]
 
@@ -107,10 +107,10 @@ adult_census.profile_report()
 # %% [markdown]
 # TODO: some comments about a few variables?
 # * age: retired people are not in the dataset (`hours-per-week > 0`).
-  
+#
 # * education num: peak at TODO and TODO probably correspond to under-graduate and masters?
 # * hours per week around 40, this was probably the standard at the time
-
+#
 # TODO: show categorical variables distribution maybe?
 
 # %% [markdown]
@@ -139,13 +139,13 @@ sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age', y_vars='hours-
              hue=target_column, markers=['o', 'v'], plot_kws={'alpha': 0.2}, height=12);
 
 # %% [markdown]
-
+#
 # By looking at the data you could infer some hand-written rules to predict the
 # class:
 # * if you are young (less than 25 year-old roughly), you are in the `<= 50K` class.
 # * if you are old (more than 70 year-old roughly), you are in the `<= 50K` class.
 # * if you work part-time (less than 40 hours roughly) you are in the `<= 50K` class.
-
+#
 # These hand-writen rules could work reasonably well without the need for any
 # machine learning. Note however that it is not very easy to create rules for
 # the region `40 < hours-per-week < 60` and `30 < age < 70`. We can hope that
@@ -153,7 +153,7 @@ sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age', y_vars='hours-
 # help creating hand-written rules but is limited to 2 dimensions (maybe 3
 # dimensions), whereas machine learning models can build models in
 # high-dimensional spaces.
-
+#
 # Another thing worth mentioning in this plot: if you are young (less than 25
 # year-old roughly) you tend to work less and if you are old (more than 70
 # year-old roughly). This is a non-linear relationship between age and hours

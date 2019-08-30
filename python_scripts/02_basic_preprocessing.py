@@ -2,7 +2,7 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: notebooks//ipynb,markdown_files//md,python_scripts//py:percent
+#     formats: notebooks//ipynb,python_scripts//py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent

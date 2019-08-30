@@ -110,7 +110,7 @@ model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
 model.fit(df_train, target_train)
 print(
     f"The accuracy score using a {model.__class__.__name__} is "
-    f"{model.score(df_test, target_test):.2f} with alpha={C}"
+    f"{model.score(df_test, target_test):.2f} with C={C}"
 )
 
 # %%
@@ -119,7 +119,7 @@ model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
 model.fit(df_train, target_train)
 print(
     f"The accuracy score using a {model.__class__.__name__} is "
-    f"{model.score(df_test, target_test):.2f} with alpha={C}"
+    f"{model.score(df_test, target_test):.2f} with C={C}"
 )
 
 # %% [markdown]
@@ -214,13 +214,13 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 # Be aware that sometimes, scikit-learn provides some `EstimatorCV` classes
 # which will perform internally the cross-validation in such way that it will
 # more computationally efficient. We can give the example of the
-# `LogisticRegressionCV` which can be used to find the best `alpha` in a more
+# `LogisticRegressionCV` which can be used to find the best `C` in a more
 # efficient way than what we previously did with the `GridSearchCV`.
 
 # %%
 from sklearn.linear_model import LogisticRegressionCV
 
-# define the different alphas to try out
+# define the different Cs to try out
 param_grid = {"C": (0.1, 1.0, 10.0)}
 
 model = make_pipeline(preprocessor, LogisticRegressionCV(Cs=param_grid['C'],

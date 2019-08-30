@@ -1,20 +1,17 @@
 # %% [markdown]
 # # Introduction to scikit-learn: basic model hyper-parameters tuning
 #
-# In this lecture note, we aim at:
-# * illustrate the influence of changing model parameters;
-# * illustrate how to tune these hyper-parameters;
-# * evaluate the model performance together with hyper-parameters tuning.
+# The process to learn a predictive model is driven by a set of internal
+# parameters and a set of training data. These internal parameters are called
+# hyper-parameters and are specific for each family of models. In addition,
+# a set of parameters are optimal for a specific dataset and thus they need
+# to be optimized.
 #
-# ## Recall of basic preprocessing and model fitting
-#
-# In the previous notebook, we show how to preprocessed different type of data
-# and integrate this preprocessing in a machine learning pipeline containing a
-# predictor.
-#
-# We will recall this example. First, we will load the data and organize it
-# into a `data` and a `target` variable. The ultimate goal is to train a
-# predictor able to estimate the wages from different censing data.
+# This notebook shows:
+# * the influence of changing model parameters;
+# * how to tune these hyper-parameters;
+# * how to evaluate the model performance together with hyper-parameters
+#   tuning.
 
 # %%
 import os
@@ -34,7 +31,7 @@ data = data[~mask_rare_category]
 target = target[~mask_rare_category]
 
 # %% [markdown]
-# Once the dataset is loaded, we will split it into a training and testing sets
+# Once the dataset is loaded, we split it into a training and testing sets.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -44,8 +41,8 @@ df_train, df_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# Once the data split, we can define our preprocessing to transform differently
-# the numerical and categorical data
+# Then, we define the preprocessing pipeline to transform differently
+# the numerical and categorical data.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -68,9 +65,8 @@ preprocessor = ColumnTransformer([
 ])
 
 # %% [markdown]
-# After defining the preprocessing, we will use a linear classifier (i.e.
-# logistic regression) to predict whether or not a person earn more than 50,000
-# dollars a year.
+# Finally, we use a linear classifier (i.e. logistic regression) to predict
+# whether or not a person earn more than 50,000 dollars a year.
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -84,16 +80,15 @@ print(
 )
 
 # %% [markdown]
-# ## The issue of having the best model parameters
+# ## The issue of finding the best model parameters
 #
-# When using the `LoghisticRegression` classifier, one could notice that we are
-# using the default parameters by omitting setting explicitly these parameters.
+# In the previous example, we created a `LogisticRegression` classifier using
+# the default parameters by omitting setting explicitly these parameters.
 #
-# For such classifier, the parameter `C` is governing the penalty; in other
+# For this classifier, the parameter `C` governes the penalty; in other
 # words, how much our model should "trust" (or fit) the training data.
-#
 # Therefore, the default value of `C` is never certified to give the best
-# model.
+# performing model.
 #
 # We can make a quick experiment by changing the value of `C` and see the
 # impact of this parameter on the model performance.
@@ -119,13 +114,14 @@ print(
 # ## Finding the best model hyper-parameters via exhaustive parameters search
 #
 # We see that the parameter `C` as a significative impact on the model
-# performance and that finding the best value for this parameter is crucial.
-# However, this parameter should be tuned with cross-validation such that
-# we find a parameter. In short, we will set the parameter, train our model
-# on some data, and evaluate the performance of our model on some left out
-# data. Ideally, we will select the parameter leading to the optimal
-# performance on the testing set. Scikit-learn provides a `GridSearchCV`
-# estimator which will handle the cross-validation for us.
+# performance. This parameter should be tuned to get the best cross-validation
+# score, so as to avoid over-fitting problems.
+#
+# In short, we will set the parameter, train our model on some data, and
+# evaluate the model performance on some left out data. Ideally, we will select
+# the parameter leading to the optimal performance on the testing set.
+# Scikit-learn provides a `GridSearchCV` estimator which will handle the
+# cross-validation and hyper-parameter search for us.
 
 # %%
 from sklearn.model_selection import GridSearchCV
@@ -133,18 +129,18 @@ from sklearn.model_selection import GridSearchCV
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
 
 # %% [markdown]
-# We will see that we need to provide the name of the parameter to be set.
-# Thus, we can use the method `get_params()` to have the list of the parameters
-# of the model which can set during the grid-search
+# We need to provide the name of the parameter to be set. We use the
+# `get_params()` method to have the list of model parameters which can be
+# set during the search.
 
 # %%
 print("The model hyper-parameters are:")
 print(model.get_params())
 
 # %% [markdown]
-# The parameter `'logisticregression__C'` is the parameter for which we would
-# like different values. Let see how to use the `GridSearchCV` estimator for
-# doing such search.
+# We want to try several values for the `'logisticregression__C'` parameter.
+# Let see how to use the `GridSearchCV` estimator to optimize the `C`
+# parameter.
 
 # %%
 import numpy as np
@@ -162,18 +158,18 @@ print(
 # all possible parameters combination. Once the grid-search fitted, it can be
 # used as any other predictor by calling `predict` and `predict_proba`.
 # Internally, it will use the model with the best parameters found during
-# `fit`. You can now about these parameters by looking at the attribute
-# `best_params_`
+# `fit`. You can know about these parameters by looking at the `best_params_`
+# attribute.
 
 # %%
 print(f"The best set of parameters is: {model_grid_search.best_params_}")
 
 # %% [markdown]
-# The parameters during the grid-search need to be specificy. Instead, one
-# could randomly generate (following a specific distribution) the parameter
-# candidates. The `RandomSearchCV` allows for such stochastic search. It can
-# be used similarly to the `GridSearchCV` but one has to specified the
-# distributions instead of the parameter values.
+# With the `GridSearchCV` estimator, the parameters need to be specified
+# explicitely. Instead, one could randomly generate (following a specific
+# distribution) the parameter candidates. The `RandomSearchCV` allows for such
+# stochastic search. It is used similarly to the `GridSearchCV` but the
+# sampling distributions need to be specified instead of the parameter values.
 
 # %%
 from scipy.stats import uniform
@@ -195,7 +191,7 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 #
 # Be aware that sometimes, scikit-learn provides some `EstimatorCV` classes
 # which will perform internally the cross-validation in such way that it will
-# more computationally efficient. We can give the example of the
+# be more computationally efficient. We can give the example of the
 # `LogisticRegressionCV` which can be used to find the best `alpha` in a more
 # efficient way than what we previously did with the `GridSearchCV`.
 
@@ -226,7 +222,7 @@ print(f"Time elapsed to make a grid-search on LogisticRegression: "
 # ## Fine tuning a model with several parameters
 #
 # In the previous example, we presented how to optimized a single parameter.
-# However, one can optimize several parameters. We will take an example where
+# However, we can optimize several parameters. We will take an example where
 # we will use the `HistGradientBoostingClassifier` in which different set of
 # parameters will influence the predictive performance.
 
@@ -238,6 +234,15 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from scipy.stats import expon
 from scipy.stats import randint
 from sklearn.pipeline import Pipeline
+
+ordinal_encoding_columns = ['workclass', 'education', 'marital-status',
+                            'occupation', 'relationship', 'race',
+                            'native-country', 'sex']
+
+preprocessor = ColumnTransformer(
+    [('ordinal-encoder', OrdinalEncoder(), ordinal_encoding_columns)],
+    remainder='passthrough', sparse_threshold=0
+)
 
 model = Pipeline(
     [('preprocessor', preprocessor),
@@ -262,15 +267,14 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 # %% [markdown]
 # ## Combining evaluation and hyper-parameters search
 #
-# We saw that we are using a cross-validation for searching the best model
-# parameters. In addition, we previously saw that we can use cross-validation
-# to evaluate the model performance. If we would like to combine both aspects,
-# one needs to perform "nested" cross-validation. The "outer" cross-validation
-# will be applied to assess the model while the "inner" cross-validation will
-# set the hyper-parameters of the model on the data set provided by the "outer"
-# cross-validation. In practice, it is equivalent of including, `GridSearchCV`,
-# `RandomSearchCV`, or any `EstimatorCV` in a `cross_val_score` or
-# `cross_validate` function call.
+# Cross-validation was used for searching the best model parameters. We
+# previously evaluate model performance through cross-validation as well. If we
+# would like to combine both aspects, we need to perform a "nested"
+# cross-validation. The "outer" cross-validation is applied to assess the
+# model while the "inner" cross-validation set the hyper-parameters of the
+# model on the data set provided by the "outer" cross-validation. In practice,
+# it is equivalent of including, `GridSearchCV`, `RandomSearchCV`, or any
+# `EstimatorCV` in a `cross_val_score` or `cross_validate` function call.
 
 # %%
 from sklearn.model_selection import cross_val_score

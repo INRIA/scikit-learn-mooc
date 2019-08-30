@@ -37,8 +37,10 @@ Let's first load the data located in the `datasets` folder.
 ```python
 import pandas as pd
 
-df = pd.read_csv('../datasets/adult-census.csv')
-# df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+
+# Or use the local copy:
+# df = pd.read_csv('../datasets/adult-census.csv')
 ```
 
 
@@ -287,6 +289,7 @@ defines the splitting strategy.
 
 
 
+
 ```python
 from sklearn.model_selection import cross_val_score
 
@@ -350,6 +353,7 @@ data_categorical.head()
 
 The most intuitive strategy is to encode each category by a numerical value.
 The `OrdinalEncoder` will transform the data in such manner.
+
 
 
 
@@ -463,6 +467,7 @@ of the encoder:
 
 
 
+
 ## Combining different transformers used for different column types
 
 In the previous sections, we saw that we need to treat data specifically
@@ -482,6 +487,7 @@ We can first define the columns depending on their data type:
   two possible categories. This encoding will create one additional column for
   each possible categorical value.
 * **numerical scaling** numerical features which will be standardized.
+
 
 
 
@@ -603,8 +609,13 @@ practitioners who work with tabular data.
 
 
 
+
 Exercises:
-- check that scaling the numerical features does not impact the speed or
+- Check that scaling the numerical features does not impact the speed or
   accuracy of HistGradientBoostingClassifier
-- check that one-hot encoding the categorical variable does not improve the
+- Check that one-hot encoding the categorical variable does not improve the
   accuracy of HistGradientBoostingClassifier but slows down the training.
+
+```python
+
+```

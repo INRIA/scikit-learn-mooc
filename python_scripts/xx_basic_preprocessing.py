@@ -38,8 +38,10 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv('../datasets/adult-census.csv')
-# df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+
+# Or use the local copy:
+# df = pd.read_csv('../datasets/adult-census.csv')
 
 
 # %% [markdown]
@@ -279,6 +281,7 @@ print(
 #
 #
 #
+#
 
 
 # %%
@@ -343,6 +346,7 @@ data_categorical.head()
 #
 # The most intuitive strategy is to encode each category by a numerical value.
 # The `OrdinalEncoder` will transform the data in such manner.
+#
 #
 #
 #
@@ -415,8 +419,8 @@ data_encoded
 columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
+
 # %% [markdown]
-#
 # The number of features after the encoding is than 10 times larger than in the
 # original data because some variables have many possible categories.
 #
@@ -450,6 +454,7 @@ print(f"The different scores obtained are: \n{scores}")
 #
 #
 #
+#
 
 
 # %% [markdown]
@@ -472,6 +477,7 @@ print(f"The different scores obtained are: \n{scores}")
 #   two possible categories. This encoding will create one additional column for
 #   each possible categorical value.
 # * **numerical scaling** numerical features which will be standardized.
+#
 #
 #
 #
@@ -587,11 +593,14 @@ print(model.score(data_test, target_test))
 #
 #
 #
+#
 
 
 # %% [markdown]
 # Exercises:
-# - check that scaling the numerical features does not impact the speed or
+# - Check that scaling the numerical features does not impact the speed or
 #   accuracy of HistGradientBoostingClassifier
-# - check that one-hot encoding the categorical variable does not improve the
+# - Check that one-hot encoding the categorical variable does not improve the
 #   accuracy of HistGradientBoostingClassifier but slows down the training.
+
+# %%

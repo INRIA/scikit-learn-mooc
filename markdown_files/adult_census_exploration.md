@@ -62,8 +62,15 @@ we want to predict). The two possible classes are `<= 50K` (low-revenue) and
 
 ```python
 target_column = 'class'
-adult_census[target_column].unique()
+adult_census[target_column].value_counts()
 ```
+
+Note: classes are slighly imbalanced. Class imbalance happens often in
+practice and may need special techniques for machine learning. For example in
+a medical setting, if we are trying to predict whether patients will develop
+a rare disease, there will be a lot more sane patients than ill patients in
+the dataset.
+
 
 The dataset contains both numerical and categorical data. Numerical values
 can take continuous values for example `age`. Categorical values can have a
@@ -84,12 +91,13 @@ that was crafted by the creators of the dataset when sampling the dataset to
 be representative of the full census database.
 
 
-## Visualize the data
+## Inspect the data
 Before building a machine learning model, it is a good idea to look at the
 data:
 * maybe the task you are trying to achieve can be solved without machine
   learning
-* you need to check that the data you need for your task is indeed present in the dataset
+* you need to check that the data you need for your task is indeed present in
+the dataset
 * inspecting the data is a good way to find peculiarities. These can can
   arise in the data collection (for example, malfunctioning sensor or missing
   values), or the way the data is processed afterwards (for example capped
@@ -97,20 +105,59 @@ data:
 
 
 Let's look at the distribution of individual variables, to get some insights
-about the data. `pandas_profiling` is a nice tool for this.
+about the data. We can start by plotting histograms, note that this only
+works for numerical variables:
+
+```python
+adult_census.hist(figsize=(20, 10));
+```
+
+
+We can already make a few comments about some of the variables:
+* age: there are not that many points for 'age > 70'. The dataset description
+does indicate that retired people have been filtered out (`hours-per-week >
+0`).
+* education-num: peak at 10 and 13, hard to tell what it corresponds to
+without looking much further. We'll do that later in this notebook.
+* hours per week at 40, this was very likely the standard of working hours at
+the time of the data collection
+* most values of capital-gain and capital-loss are close to zero
+
+
+For categorical variables, we can look at the distribution of values:
+
+
+```python
+adult_census['sex'].value_counts()
+```
+
+```python
+adult_census['education'].value_counts()
+# TODO: can I do a countplot for all the categorical variables (is it even
+# useful for categories with many values?)
+```
+
+`pandas_profiling` is a nice tool for inspecting the data (both numerical and
+categorical variables).
 
 ```python
 import pandas_profiling
 adult_census.profile_report()
 ```
 
-TODO: some comments about a few variables?
-* age: retired people are not in the dataset (`hours-per-week > 0`).
+As noted above, `education-num` distribution has two clear peaks around 10
+and 13. It would be reasonable to expect that 'education-num' is the number of
+years of education. Let's look at the relationship between education and
+education-num.
+```python
+pd.crosstab(index=adult_census['education'], columns=adult_census['education-num'])
+```
 
-* education num: peak at TODO and TODO probably correspond to under-graduate and masters?
-* hours per week around 40, this was probably the standard at the time
-
-TODO: show categorical variables distribution maybe?
+This shows that education and education-num are redundant. For
+example, `education-num=2` is equivalent to `education='1st-4th'`. In
+practice that means we can remove `education-num` without losing information.
+Note that having redundant (or highly correlated) columns can be a problem
+for machine learning algorithms.
 
 
 Another way to inspect the data is to do a pairplot and show how variable
@@ -124,16 +171,8 @@ columns = ['age', 'education-num', 'hours-per-week']
 sns.pairplot(data=adult_census[:n_samples_to_plot] , vars=columns,
              hue=target_column, plot_kws={'alpha': 0.2}, height=4,
              diag_kind='hist');
-
-# TODO talk about a few expected things that make sense:
-# * hours per week around 40, high-revenue work more, low-revenue part-time work
-# * education-num peak at TODO and TODO probably for undergraduate and masters?? low-revenue tail on the lhs
-# * age: young people have low-revenue.
-# * classes are slighly imbalanced. Class imbalance happens often in practice
-#   and may need special techniques for machine learning. For example in a
-#   medical setting, there are a lot less patients with a rare disease than sane
-#   patients.
 ```
+
 ```python
 sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age', y_vars='hours-per-week',
              hue=target_column, markers=['o', 'v'], plot_kws={'alpha': 0.2}, height=12);
@@ -157,8 +196,8 @@ high-dimensional spaces.
 Another thing worth mentioning in this plot: if you are young (less than 25
 year-old roughly) you tend to work less and if you are old (more than 70
 year-old roughly). This is a non-linear relationship between age and hours
-per week. Some machine learning models can capture only linear interaction so
-this may be important when deciding which model to chose.
+per week. Some machine learning models can only capture linear interaction so
+this may be a factor when deciding which model to chose.
 
 
 
@@ -167,6 +206,6 @@ In this notebook we have:
 * loaded the data from a CSV file using `pandas`
 * looked at the kind of variables in the dataset, and make the difference
   between categorical and numerical variables.
-* inspected the data with `pandas_profiling` and `seaborn`. Data inspection
+* inspected the data with `pandas`, `seaborn` and `pandas_profiling`. Data inspection
   can allow you to decide whether using machine learning is appropriate for
   your data and to notice potential peculiarities in your data.

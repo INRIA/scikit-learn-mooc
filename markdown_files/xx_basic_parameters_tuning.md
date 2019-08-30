@@ -16,10 +16,16 @@ into a `data` and a `target` variable. The ultimate goal is to train a
 predictor able to estimate the wages from different censing data.
 
 ```python
-import os
 import pandas as pd
 
-df = pd.read_csv(os.path.join('datasets', 'adult-census.csv'))
+df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+# Or use the local copy:
+# df = pd.read_csv('../datasets/adult-census.csv')
+```
+
+```python
+import os
+
 target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=target_name)
@@ -130,8 +136,15 @@ Thus, we can use the method `get_params()` to have the list of the parameters
 of the model which can set during the grid-search
 
 ```python
-print("The model hyper-parameters are:")
-print(model.get_params())
+print("The hyper-parameters are for a logistic regression model are:")
+for param_name in LogisticRegression().get_params().keys():
+    print(param_name)
+```
+
+```python
+print("The hyper-parameters are for the full-pipeline are:")
+for param_name in model.get_params().keys():
+    print(param_name)
 ```
 
 The parameter `'logisticregression__C'` is the parameter for which we would

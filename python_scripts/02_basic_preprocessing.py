@@ -305,10 +305,54 @@ print(f"The different scores obtained are: \n{scores}")
 # and testing sets. Each training set is used to fit one model which is then
 # scored on the matching test set. This strategy is called K-fold
 # cross-validation where `K` corresponds to the number of splits.
+#
+# The following matplotlib code helps visualize how the datasets is partitionned
+# between train and test samples at each iteration of the cross-validation
+# procedure:
 
 # %%
-# TODO add CV diagram for 5-fold CV from the gallery
+# %matplotlib inline
+from sklearn.model_selection import KFold
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import Patch
 
+cmap_cv = plt.cm.coolwarm
+
+def plot_cv_indices(cv, X, y, ax, lw=20):
+    """Create a sample plot for indices of a cross-validation object."""
+    splits = list(cv.split(X=X, y=y))
+    n_splits = len(splits)
+
+    # Generate the training/testing visualizations for each CV split
+    for ii, (train, test) in enumerate(splits):
+        # Fill in indices with the training/test groups
+        indices = np.zeros(shape=X.shape[0], dtype=np.int32)
+        indices[train] = 1
+
+        # Visualize the results
+        ax.scatter(range(len(indices)), [ii + .5] * len(indices),
+                   c=indices, marker='_', lw=lw, cmap=cmap_cv,
+                   vmin=-.2, vmax=1.2)
+
+    # Formatting
+    yticklabels = list(range(n_splits))
+    ax.set(yticks=np.arange(n_splits+2) + .5, yticklabels=yticklabels,
+           xlabel='Sample index', ylabel="CV iteration",
+           ylim=[n_splits + .2, -.2], xlim=[0, 100])
+    ax.set_title('{}'.format(type(cv).__name__), fontsize=15)
+    return ax
+
+
+# %%
+# Some random data points
+n_points = 100
+X = np.random.randn(n_points, 10)
+y = np.random.randn(n_points)
+
+fig, ax = plt.subplots(figsize=(10, 6))
+cv = KFold(5)
+plot_cv_indices(cv, X, y, ax);
 
 # %% [markdown]
 # ## Working with categorical data

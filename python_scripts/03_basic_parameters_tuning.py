@@ -36,8 +36,6 @@ df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 # df = pd.read_csv('../datasets/adult-census.csv')
 
 # %%
-import os
-
 target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=target_name)
@@ -115,6 +113,7 @@ print(
     f"{model.score(df_test, target_test):.2f} with alpha={C}"
 )
 
+# %%
 C = 1e-5
 model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
 model.fit(df_train, target_train)
@@ -162,14 +161,18 @@ for param_name in model.get_params().keys():
 # doing such search.
 
 # %%
+import time
 import numpy as np
 
-param_grid = {'logisticregression__C': np.linspace(1e-5, 1, num=3)}
-model_grid_search = GridSearchCV(model, param_grid=param_grid)
+param_grid = {'logisticregression__C': (0.1, 1.0, 10.0)}
+model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=4)
+start = time.time()
 model_grid_search.fit(df_train, target_train)
+elapsed_time = time.time() - start
 print(
-    f"The R2 score using a {model_grid_search.__class__.__name__} is "
-    f"{model_grid_search.score(df_test, target_test):.2f}"
+    f"The accuracy score using a {model_grid_search.__class__.__name__} is "
+    f"{model_grid_search.score(df_test, target_test):.2f} in "
+    f"{elapsed_time:.3f} seconds"
 )
 
 # %% [markdown]
@@ -196,7 +199,7 @@ from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {'logisticregression__C': uniform(loc=50, scale=100)}
 model_grid_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions, n_iter=5
+    model, param_distributions=param_distributions, n_iter=3, n_jobs=4
 )
 model_grid_search.fit(df_train, target_train)
 print(
@@ -215,27 +218,19 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 # efficient way than what we previously did with the `GridSearchCV`.
 
 # %%
-import time
 from sklearn.linear_model import LogisticRegressionCV
 
 # define the different alphas to try out
 param_grid = {"C": (0.1, 1.0, 10.0)}
 
 model = make_pipeline(preprocessor, LogisticRegressionCV(Cs=param_grid['C'],
-                                                         max_iter=1000))
+                                                         max_iter=1000,
+                                                         n_jobs=4))
 start = time.time()
 model.fit(df_train, target_train)
+elapsed_time = time.time() - start
 print(f"Time elapsed to train LogisticRegressionCV: "
-      f"{time.time() - start:.3f} seconds")
-
-model = make_pipeline(
-    preprocessor, GridSearchCV(LogisticRegression(max_iter=1000),
-                               param_grid=param_grid)
-)
-start = time.time()
-model.fit(df_train, target_train)
-print(f"Time elapsed to make a grid-search on LogisticRegression: "
-      f"{time.time() - start:.3f} seconds")
+      f"{elapsed_time:.3f} seconds")
 
 # %% [markdown]
 # ## Combining evaluation and hyper-parameters search
@@ -253,7 +248,7 @@ print(f"Time elapsed to make a grid-search on LogisticRegression: "
 from sklearn.model_selection import cross_val_score
 
 model = make_pipeline(preprocessor, LogisticRegressionCV(max_iter=1000))
-score = cross_val_score(model, data, target)
+score = cross_val_score(model, data, target, n_jobs=4)
 print(f"The accuracy score is: {score.mean():.2f} +- {score.std():.2f}")
 print(f"The different scores obtained are: \n{score}")
 

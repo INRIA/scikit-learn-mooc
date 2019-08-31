@@ -2,6 +2,15 @@
 
 ## Getting started
 
+You can consider using the following binder link:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)
+
+You will be required to have an internet connection but you will not have to
+install any package locally.
+
+### Dependencies
+
 The tutorials will require the following packages:
 
 * python>=3.6
@@ -11,6 +20,8 @@ The tutorials will require the following packages:
 * pandas-profiling
 * matplotlib
 * seaborn
+
+### Local install
 
 We provide both `requirements.txt` and `environment.yml` to install packages.
 

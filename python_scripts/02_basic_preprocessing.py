@@ -15,10 +15,12 @@
 # ---
 
 # %% [markdown]
-# # Introduction to scikit-learn: basic preprocessing for basic model fitting
+# # Introduction to scikit-learn
 #
-# In this notebook, we will aim at introducing a typical approach to build
-# predictive models on tabular datasets.
+# ## Basic preprocessing and model fitting
+#
+# In this notebook, we present how to build predictive models on tabular
+# datasets.
 #
 # In particular we will highlight:
 # * the difference between numerical and categorical variables;
@@ -27,7 +29,7 @@
 # * train predictive models on different kinds of data;
 # * evaluate the performance of a model via cross-validation.
 #
-# ## Introduce the dataset
+# ## Introducing the dataset
 #
 # To this aim, we will use data from the 1994 Census bureau database. The goal
 # with this data is to regress wages from heterogeneous data such as age,
@@ -65,8 +67,12 @@ df.head()
 # %%
 target_name = "class"
 target = df[target_name].to_numpy()
-data = df.drop(columns=[target_name, "fnlwgt"])
+target
 
+
+# %%
+data = df.drop(columns=[target_name, "fnlwgt"])
+data.head()
 
 # %% [markdown]
 # We can check the number of samples and the number of features available in
@@ -98,8 +104,11 @@ data.dtypes
 
 
 # %%
-numerical_columns = ['age', 'education-num', 'hours-per-week',
-                     'capital-gain', 'capital-loss']
+numerical_columns = [c for c in data.columns
+                     if data[c].dtype.kind in ["i", "f"]]
+numerical_columns
+
+# %%
 data_numeric = data[numerical_columns]
 data_numeric.head()
 
@@ -259,7 +268,7 @@ print(
 
 # %% [markdown]
 # We can see that the training time and the number of iterations is much shorter
-# while the predictive performance is equivalent.
+# while the predictive performance (accuracy) stays the same.
 #
 # In the previous example, we split the original data into a training set and a
 # testing set. This strategy has several issues: in the setting where the amount
@@ -289,10 +298,12 @@ print(
 from sklearn.model_selection import cross_val_score
 
 scores = cross_val_score(model, data_numeric, target, cv=5)
-print(f"The accuracy (mean +/- 1 std. dev.) is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 print(f"The different scores obtained are: \n{scores}")
 
+
+# %%
+print(f"The accuracy (mean +/- 1 std. dev.) is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # Note that by computing the standard-deviation of the cross-validation scores
@@ -355,20 +366,23 @@ cv = KFold(5)
 plot_cv_indices(cv, X, y, ax);
 
 # %% [markdown]
-# ## Working with categorical data
+# ## Working with categorical variables
 #
-# In the previous section, we dealt with data for which numerical algorithms are
-# mathematically designed to work natively. However, real datasets contain type
-# of data which do not belong to this category and will require some
-# preprocessing. Such preprocessing will transform these data to be numerical
-# and thus natively handled by machine learning algorithms.
+# As we have seen in the previous section, a numerical variable is a continuous
+# quantity represented by a real or integer number. Those variables can be
+# naturally handled by machine learning algorithms that typically composed of
+# a sequence of arithmetic instructions such as additions and multiplications.
 #
-# Categorical data are broadly encountered in data science. Numerical data is a
-# continuous quantity corresponding to a real numbers while categorical data are
-# represented as discrete values. For instance, the variable `SEX` in our
-# previous dataset is a categorical variable because it encodes the data with
-# the two categories `male` and `female`.
-#
+# By opposition, categorical variables have discrete values typically represented
+# by string labels taken in a finite list of possible choices. For instance, the
+# variable `native-country` in our dataset is a categorical variable because it
+# encodes the data using a finite list of possible countries (along with the `?`
+# marker when this information is missing):
+
+# %%
+data["native-country"].value_counts()
+
+# %% [markdown]
 # In the remainder of this section, we will present different strategies to
 # encode categorical data into numerical data which can be used by a
 # machine-learning algorithm.
@@ -378,31 +392,24 @@ data.dtypes
 
 
 # %%
-categorical_columns = [
-    'workclass', 'education', 'marital-status', 'occupation', 'relationship',
-    'race', 'sex', 'native-country'
-]
+categorical_columns = [c for c in data.columns
+                       if data[c].dtype.kind not in ["i", "f"]]
+categorical_columns
+
+# %%
 data_categorical = data[categorical_columns]
 data_categorical.head()
 
 
-# %% [markdown]
-# ### Encoding categories having an ordering
-#
-# The most intuitive strategy is to encode each category by a numerical value.
-# The `OrdinalEncoder` will transform the data in such manner.
-#
-#
-#
-#
-#
-#
-#
-
-
 # %%
 print(f"The datasets is composed of {data_categorical.shape[1]} features")
-data_categorical.head()
+
+
+# %% [markdown]
+# ### Encoding ordinal categories
+#
+# The most intuitive strategy is to encode each category with a number.
+# The `OrdinalEncoder` will transform the data in such manner.
 
 
 # %%
@@ -421,24 +428,30 @@ data_encoded[:5]
 # the encoding is the same.
 #
 # However, one has to be careful when using this encoding strategy. Using this
-# integer representation makes the assumption that the categories are ordered: 0
-# is smaller than 1 which is smaller than 2, etc. Furthermore the
-# lexicographical order used by `OrdinalEncoder` by default to map from string
-# labels to integer might be meaningless. For instance if you have a "size"
-# categorical variable with categories such as "S", "M", "L", "XL", it is better
-# to map those to 0, 1, 2, 3 rather than 2, 1, 0, 3 as would the lexicographical
-# strategy would do. The `OrdinalEncoder` class accepts a "catogries"
-# constructor argument to pass an the correct ordering explicitly.
+# integer representation can lead the downstream models to make the assumption
+# that the categories are ordered: 0 is smaller than 1 which is smaller than 2,
+# etc.
+#
+# By default, `OrdinalEncoder` uses a lexicographical strategy to map string
+# category labels to integers. This strategy is completely arbitrary and often be
+# meaningless. For instance suppose the dataset has a categorical variable named
+# "size" with categories such as "S", "M", "L", "XL". We would like the integer
+# representation to respect the meaning of the sizes by mapping them to increasing
+# integers such as 0, 1, 2, 3. However lexicographical strategy used by default
+# would map the labels "S", "M", "L", "XL" to 2, 1, 0, 3.
+#
+# The `OrdinalEncoder` class accepts a "categories" constructor argument to pass
+# an the correct ordering explicitly.
 #
 # If a categorical variable does not carry any meaningful order information then
-# this encoding might be not adequate and you should consider using one-hot
-# encoding instead (see below).
+# this encoding might be misleading to downstream statistical models and you might
+# consider using one-hot encoding instead (see below).
 #
 # Note however that the impact a violation of this ordering assumption is really
 # dependent on the downstream models (for instance linear models are much more
 # sensitive than models built from a ensemble of decision trees).
 #
-# ### Encode categories without assuming any order
+# ### Encoding nominal categories (without assuming any order)
 #
 # `OneHotEncoder` is an alternative encoder that can prevent the dowstream
 # models to make a false assumption about the ordering of categories. For a
@@ -461,17 +474,23 @@ print(f"The dataset encoded contains {data_encoded.shape[1]} features")
 data_encoded
 
 
+# %% [markdown]
+# Let's wrap this numpy array in a dataframe with informative column names as provided by the encoder object:
+
 # %%
 columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 
 # %% [markdown]
-# The number of features after the encoding is than 10 times larger than in the
-# original data because some variables have many possible categories.
+# Look at how the workclass variable of the first 3 records has been encoded and compare this to the original string representation.
 #
-# We can integrate this encoder inside a machine learning pipeline as in the
-# case with numerical data. In the following, we train a linear classifier on
+# The number of features after the encoding is than 10 times larger than in the
+# original data because some variables such as `occupation` and `native-country`
+# have many possible categories.
+#
+# We can now integrate this encoder inside a machine learning pipeline as in the
+# case with numerical data: let's train a linear classifier on
 # the encoded data and check the performance of this machine learning pipeline
 # using cross-validation.
 
@@ -479,33 +498,32 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 model = make_pipeline(OneHotEncoder(handle_unknown='ignore'),
                       LogisticRegression(max_iter=1000))
 scores = cross_val_score(model, data_categorical, target)
-print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 print(f"The different scores obtained are: \n{scores}")
 
 
+# %%
+print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
+
 # %% [markdown]
-# Exercise:
+# As you can see, this representation of the categorical variables of the data is slightly more predictive of the revenue than the numerical variables that we used previously.
+
+# %% [markdown]
+# ## Exercise:
 # - Try to use the OrdinalEncoder instead. What do you observe?
 #
 # In case you have issues of with unknown categories, try to precompute the list
 # of possible categories ahead of time and pass it explicitly to the constructor
 # of the encoder:
 #
-#  categories = [data[column].unique() for column in data[categorical_columns]]
-#  OrdinalEncoder(categories=categories)
-#
-#
-#
-#
-#
-#
-#
-#
-#
+# ```python
+# categories = [data[column].unique()
+#               for column in data[categorical_columns]]
+# OrdinalEncoder(categories=categories)
+# ```
 
 
 # %% [markdown]
-# ## Combining different transformers used for different column types
+# ## Using numerical and categorical variables together
 #
 # In the previous sections, we saw that we need to treat data specifically
 # depending of their nature (i.e. numerical or categorical).
@@ -591,15 +609,22 @@ model.score(data_test, target_test)
 
 # %%
 scores = cross_val_score(model, data, target, cv=5)
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 print(f"The different scores obtained are: \n{scores}")
 
+
+# %%
+print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+
+# %% [markdown]
+# The compound model has a higher predictive accuracy than the
+# two models that used numerical and categorical variables in
+# isolation.
 
 # %% [markdown]
 # # Fitting a more powerful model
 #
-# Linear models are very nice because they are usually very cheap to train and
-# give a good baseline.
+# Linear models are very nice because they are usually very cheap to train,
+# small to deploy, fast to predict and give a good baseline.
 #
 # However it is often useful to check whether more complex models such as
 # ensemble of decision trees can lead to higher predictive performance.
@@ -608,8 +633,8 @@ print(f"The different scores obtained are: \n{scores}")
 # Machine algorithm. For this class of models, we know that contrary to linear
 # models, it is useless to scale the numerical features and furthermore it is
 # both safe and significantly more computationally efficient use an arbitrary
-# integer encoding for the categorical variable. Therefore we adapt the
-# preprocessing pipeline as follows:
+# integer encoding for the categorical variable even if the ordering is
+# arbitrary. Therefore we adapt the preprocessing pipeline as follows:
 
 # %%
 from sklearn.experimental import enable_hist_gradient_boosting
@@ -646,7 +671,8 @@ print(model.score(data_test, target_test))
 
 
 # %% [markdown]
-# Exercises:
+# ## Exercises:
+#
 # - Check that scaling the numerical features does not impact the speed or
 #   accuracy of HistGradientBoostingClassifier
 # - Check that one-hot encoding the categorical variable does not improve the

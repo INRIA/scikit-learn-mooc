@@ -82,7 +82,9 @@ preprocessor = ColumnTransformer([
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
+model = make_pipeline(
+    preprocessor,LogisticRegression(max_iter=1000, solver='lbfgs')
+)
 model.fit(df_train, target_train)
 print(
     f"The accuracy score using a {model.__class__.__name__} is "
@@ -106,7 +108,9 @@ print(
 
 # %%
 C = 1
-model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
+model = make_pipeline(
+    preprocessor, LogisticRegression(C=C, max_iter=1000, solver='lbfgs')
+)
 model.fit(df_train, target_train)
 print(
     f"The accuracy score using a {model.__class__.__name__} is "
@@ -115,7 +119,9 @@ print(
 
 # %%
 C = 1e-5
-model = make_pipeline(preprocessor, LogisticRegression(C=C, max_iter=1000))
+model = make_pipeline(
+    preprocessor, LogisticRegression(C=C, max_iter=1000, solver='lbfgs')
+)
 model.fit(df_train, target_train)
 print(
     f"The accuracy score using a {model.__class__.__name__} is "
@@ -138,7 +144,9 @@ print(
 # %%
 from sklearn.model_selection import GridSearchCV
 
-model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
+model = make_pipeline(
+    preprocessor, LogisticRegression(max_iter=1000, solver='lbfgs')
+)
 
 # %% [markdown]
 # We will see that we need to provide the name of the parameter to be set.
@@ -165,7 +173,7 @@ import time
 import numpy as np
 
 param_grid = {'logisticregression__C': (0.1, 1.0, 10.0)}
-model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=4)
+model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=4, cv=5)
 start = time.time()
 model_grid_search.fit(df_train, target_train)
 elapsed_time = time.time() - start
@@ -199,7 +207,7 @@ from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {'logisticregression__C': uniform(loc=50, scale=100)}
 model_grid_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions, n_iter=3, n_jobs=4
+    model, param_distributions=param_distributions, n_iter=3, n_jobs=4, cv=5
 )
 model_grid_search.fit(df_train, target_train)
 print(
@@ -223,14 +231,21 @@ from sklearn.linear_model import LogisticRegressionCV
 # define the different Cs to try out
 param_grid = {"C": (0.1, 1.0, 10.0)}
 
-model = make_pipeline(preprocessor, LogisticRegressionCV(Cs=param_grid['C'],
-                                                         max_iter=1000,
-                                                         n_jobs=4))
+model = make_pipeline(
+    preprocessor,
+    LogisticRegressionCV(Cs=param_grid['C'], max_iter=1000, solver='lbfgs',
+                         n_jobs=4, cv=5)
+)
 start = time.time()
 model.fit(df_train, target_train)
 elapsed_time = time.time() - start
 print(f"Time elapsed to train LogisticRegressionCV: "
       f"{elapsed_time:.3f} seconds")
+
+# %% [markdown]
+# The `fit` time for the `CV` version of `LogisticRegression` give a speed-up
+# x2. This speed-up is provided by re-using the values of coefficients to
+# warm-start the estimator for the different `C` values.
 
 # %% [markdown]
 # ## Combining evaluation and hyper-parameters search
@@ -247,8 +262,10 @@ print(f"Time elapsed to train LogisticRegressionCV: "
 # %%
 from sklearn.model_selection import cross_val_score
 
-model = make_pipeline(preprocessor, LogisticRegressionCV(max_iter=1000))
-score = cross_val_score(model, data, target, n_jobs=4)
+model = make_pipeline(
+    preprocessor, LogisticRegressionCV(max_iter=1000, solver='lbfgs', cv=5)
+)
+score = cross_val_score(model, data, target, n_jobs=4, cv=5)
 print(f"The accuracy score is: {score.mean():.2f} +- {score.std():.2f}")
 print(f"The different scores obtained are: \n{score}")
 

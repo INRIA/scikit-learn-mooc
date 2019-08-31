@@ -204,6 +204,15 @@ print(
 
 
 # %% [markdown]
+# ## Exercise 1
+#
+# - What would be the score of a model that always predicts `' >50K'`?
+# - What would be the score of a model that always predicts `' <= 50K'`?
+# - Is 81% accuracy a good score for this problem?
+#
+# Hint: You can compute the cross-validated of a [DummyClassifier](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators) the performance of such baselines.
+
+# %% [markdown]
 # Let's now consider the `ConvergenceWarning` message that was raised previously
 # when calling the `fit` method to train our model. This warning informs us that
 # our model stopped learning becaused it reached the maximum number of

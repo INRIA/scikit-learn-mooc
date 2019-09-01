@@ -211,6 +211,8 @@ print(
 # - Is 81% or 82% accuracy a good score for this problem?
 #
 # Hint: You can compute the cross-validated of a [DummyClassifier](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators) the performance of such baselines.
+#
+# Use the dedicated notebook to do this exercise.
 
 # %% [markdown]
 # Let's now consider the `ConvergenceWarning` message that was raised previously
@@ -528,15 +530,7 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 # - Try to fit a logistic regression model on categorical data transformed by
 #   the OrdinalEncoder instead. What do you observe?
 #
-# In case you have issues of with unknown categories, try to precompute the list
-# of possible categories ahead of time and pass it explicitly to the constructor
-# of the encoder:
-#
-# ```python
-# categories = [data[column].unique()
-#               for column in data[categorical_columns]]
-# OrdinalEncoder(categories=categories)
-# ```
+# Use the dedicated notebook to do this exercise.
 
 
 # %% [markdown]
@@ -697,3 +691,5 @@ print(model.score(data_test, target_test))
 #   accuracy of HistGradientBoostingClassifier
 # - Check that one-hot encoding the categorical variable does not improve the
 #   accuracy of HistGradientBoostingClassifier but slows down the training.
+#
+# Use the dedicated notebook to do this exercise.

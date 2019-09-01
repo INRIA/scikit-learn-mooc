@@ -38,7 +38,11 @@ df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 # %%
 target_name = "class"
 target = df[target_name].to_numpy()
-data = df.drop(columns=target_name)
+target
+
+# %%
+data = df.drop(columns=[target_name, "fnlwgt"])
+data.head()
 
 # %% [markdown]
 # Once the dataset is loaded, we split it into a training and testing sets.
@@ -83,7 +87,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(
-    preprocessor,LogisticRegression(max_iter=1000, solver='lbfgs')
+    preprocessor, LogisticRegression(max_iter=1000, solver='lbfgs')
 )
 model.fit(df_train, target_train)
 print(
@@ -246,6 +250,34 @@ print(f"Time elapsed to train LogisticRegressionCV: "
 # The `fit` time for the `CV` version of `LogisticRegression` give a speed-up
 # x2. This speed-up is provided by re-using the values of coefficients to
 # warm-start the estimator for the different `C` values.
+
+# %% [markdown]
+# ## Exercises:
+#
+# - Build a machine learning pipeline:
+#       * preprocess the categorical columns using an `OrdinalEncoder` and let
+#         the numerical columns as they are.
+#       * use an `HistGradientBoostingClassifier` as a predictive model.
+# - Make an hyper-parameters search using `RandomizedSearchCV` and tuning the
+#   parameters:
+#       * `learning_rate` with values ranging from 0.001 to 0.5. You can use
+#         an exponential distribution to sample the possible values.
+#       * `l2_regularization` with values ranging from 0 to 0.5. You can use
+#         a uniform distribution.
+#       * `max_lead_nodes` with values ranging from 5 to 30. The values should
+#         be integer following a uniform distribution.
+#       * `min_samples_leaf` with values ranging from 5 to 30. The values
+#         should be integer following a uniform distribution.
+#
+# In case you have issues of with unknown categories, try to precompute the
+# list of possible categories ahead of time and pass it explicitly to the
+# constructor of the encoder:
+#
+# ```python
+# categories = [data[column].unique()
+#               for column in data[categorical_columns]]
+# OrdinalEncoder(categories=categories)
+# ```
 
 # %% [markdown]
 # ## Combining evaluation and hyper-parameters search

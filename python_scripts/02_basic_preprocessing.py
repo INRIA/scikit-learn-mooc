@@ -150,7 +150,7 @@ print(
 from sklearn.linear_model import LogisticRegression
 import time
 
-model = LogisticRegression()
+model = LogisticRegression(solver='lbfgs')
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start
@@ -208,9 +208,11 @@ print(
 #
 # - What would be the score of a model that always predicts `' >50K'`?
 # - What would be the score of a model that always predicts `' <= 50K'`?
-# - Is 81% accuracy a good score for this problem?
+# - Is 81% or 82% accuracy a good score for this problem?
 #
 # Hint: You can compute the cross-validated of a [DummyClassifier](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators) the performance of such baselines.
+#
+# Use the dedicated notebook to do this exercise.
 
 # %% [markdown]
 # Let's now consider the `ConvergenceWarning` message that was raised previously
@@ -221,16 +223,18 @@ print(
 # and increase the maximum number of iterations allowed.
 
 # %%
-model = LogisticRegression(max_iter=50000)
+model = LogisticRegression(solver='lbfgs', max_iter=50000)
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start
+
+
+# %%
 print(
     f"The accuracy using a {model.__class__.__name__} is "
     f"{model.score(data_test, target_test):.3f} with a fitting time of "
     f"{elapsed_time:.3f} seconds in {model.n_iter_} iterations"
 )
-
 
 # %% [markdown]
 # We can observe now a longer training time but not significant improvement in
@@ -264,16 +268,18 @@ data_train_scaled.describe()
 # %%
 from sklearn.pipeline import make_pipeline
 
-model = make_pipeline(StandardScaler(), LogisticRegression())
+model = make_pipeline(StandardScaler(), LogisticRegression(solver='lbfgs'))
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start
+
+
+# %%
 print(
     f"The accuracy using a {model.__class__.__name__} is "
     f"{model.score(data_test, target_test):.3f} with a fitting time of "
     f"{elapsed_time:.3f} seconds in {model[-1].n_iter_} iterations"
 )
-
 
 # %% [markdown]
 # We can see that the training time and the number of iterations is much shorter
@@ -311,7 +317,7 @@ print(f"The different scores obtained are: \n{scores}")
 
 
 # %%
-print(f"The accuracy (mean +/- 1 std. dev.) is: "
+print(f"The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
@@ -504,8 +510,10 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # using cross-validation.
 
 # %%
-model = make_pipeline(OneHotEncoder(handle_unknown='ignore'),
-                      LogisticRegression(max_iter=1000))
+model = make_pipeline(
+    OneHotEncoder(handle_unknown='ignore'),
+    LogisticRegression(solver='lbfgs', max_iter=1000)
+)
 scores = cross_val_score(model, data_categorical, target)
 print(f"The different scores obtained are: \n{scores}")
 
@@ -517,18 +525,12 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 # As you can see, this representation of the categorical variables of the data is slightly more predictive of the revenue than the numerical variables that we used previously.
 
 # %% [markdown]
-# ## Exercise:
-# - Try to use the OrdinalEncoder instead. What do you observe?
+# ## Exercise 2:
 #
-# In case you have issues of with unknown categories, try to precompute the list
-# of possible categories ahead of time and pass it explicitly to the constructor
-# of the encoder:
+# - Try to fit a logistic regression model on categorical data transformed by
+#   the OrdinalEncoder instead. What do you observe?
 #
-# ```python
-# categories = [data[column].unique()
-#               for column in data[categorical_columns]]
-# OrdinalEncoder(categories=categories)
-# ```
+# Use the dedicated notebook to do this exercise.
 
 
 # %% [markdown]
@@ -582,7 +584,10 @@ preprocessor = ColumnTransformer([
      one_hot_encoding_columns),
     ('standard-scaler', StandardScaler(), scaling_columns)
 ])
-model = make_pipeline(preprocessor, LogisticRegression(max_iter=1000))
+model = make_pipeline(
+    preprocessor,
+    LogisticRegression(solver='lbfgs', max_iter=1000)
+)
 
 # %% [markdown]
 # The final model is more complex than the previous models but still follows the
@@ -680,11 +685,11 @@ print(model.score(data_test, target_test))
 
 
 # %% [markdown]
-# ## Exercises:
+# ## Exercise 3:
 #
 # - Check that scaling the numerical features does not impact the speed or
 #   accuracy of HistGradientBoostingClassifier
 # - Check that one-hot encoding the categorical variable does not improve the
 #   accuracy of HistGradientBoostingClassifier but slows down the training.
-
-# %%
+#
+# Use the dedicated notebook to do this exercise.

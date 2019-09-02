@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.2'
-#       jupytext_version: 1.2.2
+#       jupytext_version: 1.2.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -39,7 +39,10 @@ sns.set_context('talk')
 # %%
 import pandas as pd
 
-adult_census = pd.read_csv('datasets/adult-census.csv')
+adult_census = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+
+# Or use the local copy:
+# adult_census = pd.read_csv('../datasets/adult-census.csv')
 
 # %% [markdown]
 # We can look at the OpenML webpage to know more about this dataset.

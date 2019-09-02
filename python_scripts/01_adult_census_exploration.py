@@ -27,7 +27,6 @@
 
 # plotting style
 import seaborn as sns
-sns.set_context('talk')
 
 # %% [markdown]
 # ## Loading the adult census dataset
@@ -119,8 +118,7 @@ adult_census.hist(figsize=(20, 10));
 # %% [markdown]
 # We can already make a few comments about some of the variables:
 # * age: there are not that many points for 'age > 70'. The dataset description
-# does indicate that retired people have been filtered out (`hours-per-week >
-# 0`).
+# does indicate that retired people have been filtered out (`hours-per-week > 0`).
 # * education-num: peak at 10 and 13, hard to tell what it corresponds to
 # without looking much further. We'll do that later in this notebook.
 # * hours per week at 40, this was very likely the standard of working hours at
@@ -185,7 +183,7 @@ sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age', y_vars='hours-
 # * if you are old (more than 70 year-old roughly), you are in the `<= 50K` class.
 # * if you work part-time (less than 40 hours roughly) you are in the `<= 50K` class.
 #
-# These hand-writen rules could work reasonably well without the need for any
+# These hand-written rules could work reasonably well without the need for any
 # machine learning. Note however that it is not very easy to create rules for
 # the region `40 < hours-per-week < 60` and `30 < age < 70`. We can hope that
 # machine learning can help in this region. Also note that visualization can
@@ -198,7 +196,104 @@ sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age', y_vars='hours-
 # year-old roughly). This is a non-linear relationship between age and hours
 # per week. Some machine learning models can only capture linear interaction so
 # this may be a factor when deciding which model to chose.
+#
+# In a machine-learning setting, we will use an algorithm to automatically
+# decide what should be the "rules" in order to predict on new data. We can
+# check which set of simple rule a decision tree would grasp using the same
+# data.
 
+
+# %%
+def plot_tree_decision_function(tree, X, y, ax):
+    """Plot the different decision rules found by a `DecisionTreeClassifier`.
+
+    Parameters
+    ----------
+    tree : DecisionTreeClassifier instance
+        The decision tree to inspect.
+    X : dataframe of shape (n_samples, n_features)
+        The data used to train the `tree` estimator.
+    y : ndarray of shape (n_samples,)
+        The target used to train the `tree` estimator.
+    ax : matplotlib axis
+        The matplotlib axis where to plot the different decision rules.
+    """
+    import numpy as np
+    from scipy import ndimage
+
+    h = 0.02
+    x_min, x_max = 0, 100
+    y_min, y_max = 0, 100
+    xx, yy = np.meshgrid(
+        np.arange(x_min, x_max, h), np.arange(y_min, y_max, h)
+    )
+
+    Z = tree.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
+    Z = Z.reshape(xx.shape)
+    faces = tree.tree_.apply(
+        np.c_[xx.ravel(), yy.ravel()].astype(np.float32)
+    )
+    faces = faces.reshape(xx.shape)
+    border = ndimage.laplace(faces) != 0
+    ax.scatter(
+        X.iloc[:, 0], X.iloc[:, 1], c=np.array(['tab:blue', 'tab:red'])[y],
+        s=60, alpha=0.7
+    )
+    ax.contourf(xx, yy, Z, alpha=.4, cmap='RdBu_r')
+    ax.scatter(xx[border], yy[border], marker='.', s=1)
+    ax.set_xlabel(X.columns[0])
+    ax.set_ylabel(X.columns[1])
+    ax.set_xlim([x_min, x_max])
+    ax.set_ylim([y_min, y_max])
+    sns.despine(offset=10)
+
+
+# %%
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+mpl.rcParams.update(mpl.rcParamsDefault)  # reset the plotting style
+
+# %%
+from sklearn.preprocessing import LabelEncoder
+
+# select a subset of data
+data_subset = adult_census[:n_samples_to_plot]
+X = data_subset[["age", "hours-per-week"]]
+y = LabelEncoder().fit_transform(data_subset[target_column].to_numpy())
+
+# %% [markdown]
+# We will create a decision tree which we will keep really simple on purpose.
+# We will only allow a maximum of 2 rules to interpret the results.
+
+# %%
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import plot_tree
+
+max_leaf_nodes = 3
+tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes, random_state=0)
+tree.fit(X, y)
+
+# %% [markdown]
+# We can now first check the set of rules learnt by the tree and check
+# visually what theses rules look like.
+#
+# plot the tree structure
+# fig, ax = plt.subplots()
+# plot_tree(tree, ax=ax)
+#
+# plot the decision function learned by the tree
+# fig, ax = plt.subplots()
+# plot_tree_decision_function(tree, X, y, ax=ax)
+
+# %% [markdown]
+# Allowing only 3 leaves in the tree, we get similar rules than the one
+# designed by hand:
+# * the persons younger than 28.5 year-old will be considered in the class
+#   earning `<= 50K`.
+# * the persons older than 28.5 and working more than 40.5 hours-per-week
+#   will be considered in the class earning `> 50K`, while the one working
+#   below 40.5 hours-per-week, will be considered in the class
+#   earning `<= 50K`.
 
 # %% [markdown]
 #
@@ -209,3 +304,4 @@ sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age', y_vars='hours-
 # * inspected the data with `pandas`, `seaborn` and `pandas_profiling`. Data inspection
 #   can allow you to decide whether using machine learning is appropriate for
 #   your data and to notice potential peculiarities in your data.
+

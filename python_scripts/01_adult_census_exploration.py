@@ -276,14 +276,15 @@ tree.fit(X, y)
 # %% [markdown]
 # We can now first check the set of rules learnt by the tree and check
 # visually what theses rules look like.
-#
+
+# %%
 # plot the tree structure
-# fig, ax = plt.subplots()
-# plot_tree(tree, ax=ax)
-#
+fig, ax = plt.subplots()
+plot_tree(tree, ax=ax)
+
 # plot the decision function learned by the tree
-# fig, ax = plt.subplots()
-# plot_tree_decision_function(tree, X, y, ax=ax)
+fig, ax = plt.subplots()
+plot_tree_decision_function(tree, X, y, ax=ax)
 
 # %% [markdown]
 # Allowing only 3 leaves in the tree, we get similar rules than the one

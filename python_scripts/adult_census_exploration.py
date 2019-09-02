@@ -133,8 +133,6 @@ adult_census['sex'].value_counts()
 
 # %%
 adult_census['education'].value_counts()
-# TODO: can I do a countplot for all the categorical variables (is it even
-# useful for categories with many values?)
 
 # %% [markdown]
 # `pandas_profiling` is a nice tool for inspecting the data (both numerical and

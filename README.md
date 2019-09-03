@@ -6,12 +6,8 @@ Some intro slides: http://ogrisel.github.io/decks/2017_intro_sklearn
 
 ## Follow the tutorial online
 
-- Launch a online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
-               https://mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master):
-
-  - [GKE Binder](https://gke.mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)
-
-  - [OVH Binder](https://ovh.mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)
+- Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
+               https://mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)
 
 - Browse the static content online (pre-rendered outputs) using [nbviewer](
   https://nbviewer.jupyter.org/github/lesteve/euroscipy-2019-scikit-learn-tutorial/tree/master/rendered_notebooks/)
@@ -97,3 +93,10 @@ To render all the notebooks (from time to time, slow to run):
 ```
 $ make render
 ```
+
+
+## Direct binder links to GKE and OVH to trigger and cache builds
+
+- [GKE Binder](https://gke.mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)
+
+- [OVH Binder](https://ovh.mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)

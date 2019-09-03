@@ -1,13 +1,20 @@
 # EuroSciPy 2019 - scikit-learn tutorial
 
-## Getting started
 
-You can consider using the following binder link:
+## Follow the tutorial online
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)
 
-You will be required to have an internet connection but you will not have to
-install any package locally.
+- Launch a online notebook environment using: [![Binder](https://mybinder.org/badge_logo.svg)](
+  https://mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master)
+
+- Browse the static content online (pre-rendered outputs) using [nbviewer](
+  https://nbviewer.jupyter.org/github/lesteve/euroscipy-2019-scikit-learn-tutorial/tree/master/rendered_notebooks/)
+
+You need an internet connection but you will not have to install any package
+locally.
+
+
+## Running the tutorial locally
 
 ### Dependencies
 

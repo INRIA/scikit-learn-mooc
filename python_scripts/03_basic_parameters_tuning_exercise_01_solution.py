@@ -91,7 +91,7 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 df_results = pd.DataFrame(model_grid_search.cv_results_)
 columns = (['mean_test_score', 'std_test_score'] +
            [col for col in df_results.columns if 'param_' in col])
-df_results.sort_values(by='rank_test_score', ascending=False)[
+df_results.sort_values(by='mean_test_score', ascending=False)[
     columns
 ]
 

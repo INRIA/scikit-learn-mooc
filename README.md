@@ -38,7 +38,7 @@ You can install the packages using `pip`:
 $ pip install -r requirements.txt
 ```
 
-You can create an `sklearn-tutorial` conda environment executing:
+You can create an `scikit-learn-tutorial` conda environment executing:
 
 ```
 $ conda env create -f environment.yml
@@ -47,7 +47,7 @@ $ conda env create -f environment.yml
 and later activate the environment:
 
 ```
-$ conda activate sklearn-tutorial
+$ conda activate scikit-learn-tutorial
 ```
 
 You might also only update your current environment using:

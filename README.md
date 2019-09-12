@@ -1,16 +1,14 @@
-# EuroSciPy 2019 - scikit-learn tutorial
+# scikit-learn tutorial
 
-All notebook material: https://github.com/lesteve/euroscipy-2019-scikit-learn-tutorial/
-
-Some intro slides: http://ogrisel.github.io/decks/2017_intro_sklearn
+All notebook material: https://github.com/lesteve/scikit-learn-tutorial/
 
 ## Follow the tutorial online
 
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
-               https://mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master?urlpath=lab)
+               https://mybinder.org/v2/gh/lesteve/scikit-learn-tutorial/master?urlpath=lab)
 
 - Browse the static content online (pre-rendered outputs) using [nbviewer](
-  https://nbviewer.jupyter.org/github/lesteve/euroscipy-2019-scikit-learn-tutorial/tree/master/rendered_notebooks/)
+  https://nbviewer.jupyter.org/github/lesteve/scikit-learn-tutorial/tree/master/rendered_notebooks/)
 
 You need an internet connection but you will not have to install any package
 locally.
@@ -97,6 +95,6 @@ $ make render
 
 ## Direct binder links to GKE and OVH to trigger and cache builds
 
-- [GKE Binder](https://gke.mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master?urlpath=lab)
+- [GKE Binder](https://gke.mybinder.org/v2/gh/lesteve/scikit-learn-tutorial/master?urlpath=lab)
 
-- [OVH Binder](https://ovh.mybinder.org/v2/gh/lesteve/euroscipy-2019-scikit-learn-tutorial/master?urlpath=lab)
+- [OVH Binder](https://ovh.mybinder.org/v2/gh/lesteve/scikit-learn-tutorial/master?urlpath=lab)

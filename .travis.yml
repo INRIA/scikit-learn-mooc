@@ -1,18 +1,15 @@
 language: python
 before_install:
-    - wget -q http://repo.continuum.io/miniconda/Miniconda-3.6.0-Linux-x86_64.sh -O miniconda.sh
+    - MINICONDA_PATH=/home/travis/miniconda
+    - wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
     - chmod +x miniconda.sh
-    - ./miniconda.sh -b -p /home/travis/miniconda
-    - export PATH=/home/travis/miniconda/bin:$PATH
+    - ./miniconda.sh -b -p $MINICONDA_PATH
+    - source $MINICONDA_PATH/etc/profile.d/conda.sh
     - conda update --yes --quiet conda
 install:
     - conda create -n testenv --yes pip python=3.6
-    - source activate testenv
+    - conda activate testenv
     - pip install -r requirements.txt
 script:
-    - python fetch_data.py
-    - jupyter nbconvert --execute check_env.ipynb
     - cd notebooks
     - for i in *.ipynb; do jupyter nbconvert --ExecutePreprocessor.timeout=None --execute $i; done
-notifications:
-  email: true

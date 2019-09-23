@@ -2,12 +2,12 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: notebooks//ipynb,python_scripts//py:percent
+#     formats: python_scripts//py:percent,notebooks//ipynb
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.2'
-#       jupytext_version: 1.2.2
+#       jupytext_version: 1.2.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -181,7 +181,7 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 # As you can see, this representation of the categorical variables of the data is slightly more predictive of the revenue than the numerical variables that we used previously.
 
 # %% [markdown]
-# ## Exercise 2:
+# ## Exercise 1:
 #
 # - Try to fit a logistic regression model on categorical data transformed by
 #   the OrdinalEncoder instead. What do you observe?
@@ -344,7 +344,7 @@ print(model.score(data_test, target_test))
 
 
 # %% [markdown]
-# ## Exercise 3:
+# ## Exercise 2:
 #
 # - Check that scaling the numerical features does not impact the speed or
 #   accuracy of HistGradientBoostingClassifier

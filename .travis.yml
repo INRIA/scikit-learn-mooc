@@ -10,6 +10,6 @@ install:
     - conda create -n testenv --yes pip python=3.6
     - conda activate testenv
     - pip install -r requirements.txt
+    - pip install jupytext
 script:
-    - cd notebooks
-    - for i in *.ipynb; do jupyter nbconvert --ExecutePreprocessor.timeout=None --execute $i; done
+    - make --always-make

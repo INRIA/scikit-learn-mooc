@@ -58,40 +58,34 @@ $ conda env update --prefix ./env --file environment.yml  --prune
 
 ## Contributing
 
-This repo uses: [Jupytext doc](https://jupytext.readthedocs.io/)
-
 To synchronize the notebooks and the Python scripts (based on filestamps, only
 input cells content is modified in the notebooks):
 
 ```
-$ jupytext --sync notebooks/*.ipynb
-```
-
-or simply use:
-
-```
-$ make sync
-```
-
-If you create a new notebook, you need to set-up the text files it is going to
-be paired with:
-
-```
-$ jupytext --set-formats notebooks//ipynb,python_scripts//py:percent notebooks/*.ipynb
-```
-
-or simply use:
-
-```
-$ make format
+$ make notebooks
 ```
 
 To render all the notebooks (from time to time, slow to run):
 
 ```
-$ make render
+$ make
 ```
 
+This repo uses [Jupytext](https://jupytext.readthedocs.io/). In some cases you
+may need to use a `jupytext` command directly rather than using the provided
+`Makefile`. Here are a few useful `jupytext` commands:
+- pair a notebook with a Python script:
+```
+$ jupytext --set-formats python_scripts//py:percent,notebooks//ipynb notebooks/your_notebook.ipynb
+```
+- sync a paired Python script and notebook:
+```
+$ jupytext --sync notebooks/your_notebook.ipynb
+```
+- create an empty notebook from a Python script:
+```
+$ jupytext --to ../notebooks//ipynb python_scripts/your_python_script.py
+```
 
 ## Direct binder links to GKE and OVH to trigger and cache builds
 

@@ -6,6 +6,7 @@
 - understand difference between memorization and generalization
 - familiarity with main machine learning concepts and vocabulary
 
+## Content
 Why and when? Example applications.
 
 Descriptive vs predictive analysis
@@ -33,7 +34,6 @@ Propose a quantitative evaluation of the success of this decision rule.
 
 # The Predictive Modeling Pipeline
 
-
 ## Notebook module #1: exploratory analysis
 ### Learning objectives:
     
@@ -51,6 +51,15 @@ Simple exploratory data analysis with pandas and matplotlib
 
 ## Notebook module #2: basic preprocessing for minimal model fit
 
+### Learning objectives:
+- Know the difference between a numerical and a categorical variable
+- use a scaler
+- convert category labels to dummy variables
+- combine feature preprocessing and model with pipeline
+- evaluate generalization of model with cross-validation
+
+### Content
+
 Prepare a train  / test split
 
 Basic model on numerical features only
@@ -59,30 +68,23 @@ Basic processing: missing values and scaling
 
 Use a pipeline to evaluate model with cross-validation with and without scaling
 
-    Handling categorical variables with one-hot encoding
+Handling categorical variables with one-hot encoding
 
-        Use the column transformer to build pipeline with heterogeneous dtype
+Use the column transformer to build pipeline with heterogeneous dtype
 
-        Model fitting and performance evaluation with cross-validation
+Model fitting and performance evaluation with cross-validation
 
-    Learning objectives:
- Know the difference between a numerical and a categorical variable
-    - use a scaler
-
-- convert category labels to dummy variables
-
-- combine feature preprocessing and model with pipeline
-
-- evaluate generalization of model with cross-validation
 
 ## Notebook module #3: basic parameter tuning and final test score evaluation
 
+### Learning objectives:
+- Learn to no trust blindly the default parameters of scikit-learn estimators
+
+### Content
 Parameter tuning with Grid and Random hyperparameter search
 Nested cross-validation
 
 Confirmation of performance with final test set
-Learning objectives:
-    - Learn to no trust blindly the default parameters of scikit-learn estimators
 
 # Supervised learning
 ## Learning objectives:

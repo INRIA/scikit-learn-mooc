@@ -2,10 +2,25 @@ import os
 import sys
 import difflib
 
+# TODO: we could get the list from .gitignore
+IGNORE_LIST = [
+    '.ipynb_checkpoints',
+]
+
 folder1, folder2 = sys.argv[1:3]
 
-basenames1 = sorted(os.path.splitext(os.path.basename(fn))[0] for fn in os.listdir(folder1))
-basenames2 = sorted(os.path.splitext(os.path.basename(fn))[0] for fn in os.listdir(folder2))
+
+def get_basename(folder):
+    contents = []
+    for fn in os.listdir(folder):
+        content = os.path.splitext(os.path.basename(fn))[0]
+        if content not in IGNORE_LIST:
+            contents.append(content)
+    return contents
+
+
+basenames1 = sorted(get_basename(folder1))
+basenames2 = sorted(get_basename(folder2))
 
 if basenames1 != basenames2:
     only_in_folder1 = set(basenames1) - set(basenames2)

@@ -23,7 +23,8 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+df = pd.read_csv(
+    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 # Or use the local copy:
 # df = pd.read_csv('../datasets/adult-census.csv')
 
@@ -57,20 +58,19 @@ data["native-country"].value_counts()
 # %%
 data.dtypes
 
-
 # %%
-categorical_columns = [c for c in data.columns
-                       if data[c].dtype.kind not in ["i", "f"]]
+categorical_columns = [
+    c for c in data.columns if data[c].dtype.kind not in ["i", "f"]]
 categorical_columns
 
 # %%
 data_categorical = data[categorical_columns]
 data_categorical.head()
 
-
 # %%
-print(f"The datasets is composed of {data_categorical.shape[1]} features")
-
+print(
+    f"The datasets is composed of {data_categorical.shape[1]} features"
+)
 
 # %% [markdown]
 # ### Encoding ordinal categories
@@ -85,9 +85,9 @@ from sklearn.preprocessing import OrdinalEncoder
 encoder = OrdinalEncoder()
 data_encoded = encoder.fit_transform(data_categorical)
 
-print(f"The dataset encoded contains {data_encoded.shape[1]} features")
+print(
+    f"The dataset encoded contains {data_encoded.shape[1]} features")
 data_encoded[:5]
-
 
 # %% [markdown]
 # We can see that all categories have been encoded for each feature
@@ -128,18 +128,19 @@ data_encoded[:5]
 # be set to `0`.
 
 # %%
-print(f"The dataset is composed of {data_categorical.shape[1]} features")
+print(
+    f"The dataset is composed of {data_categorical.shape[1]} features"
+)
 data_categorical.head()
-
 
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
 encoder = OneHotEncoder(sparse=False)
 data_encoded = encoder.fit_transform(data_categorical)
-print(f"The dataset encoded contains {data_encoded.shape[1]} features")
+print(
+    f"The dataset encoded contains {data_encoded.shape[1]} features")
 data_encoded
-
 
 # %% [markdown]
 # Let's wrap this numpy array in a dataframe with informative column names as provided by the encoder object:
@@ -147,7 +148,6 @@ data_encoded
 # %%
 columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
-
 
 # %% [markdown]
 # Look at how the workclass variable of the first 3 records has been encoded and compare this to the original string representation.
@@ -168,11 +168,9 @@ from sklearn.model_selection import cross_val_score
 
 model = make_pipeline(
     OneHotEncoder(handle_unknown='ignore'),
-    LogisticRegression(solver='lbfgs', max_iter=1000)
-)
+    LogisticRegression(solver='lbfgs', max_iter=1000))
 scores = cross_val_score(model, data_categorical, target)
 print(f"The different scores obtained are: \n{scores}")
-
 
 # %%
 print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
@@ -220,11 +218,12 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %%
 binary_encoding_columns = ['sex']
-one_hot_encoding_columns = ['workclass', 'education', 'marital-status',
-                            'occupation', 'relationship',
-                            'race', 'native-country']
-scaling_columns = ['age', 'education-num', 'hours-per-week',
-                   'capital-gain', 'capital-loss']
+one_hot_encoding_columns = [
+    'workclass', 'education', 'marital-status', 'occupation',
+    'relationship', 'race', 'native-country']
+scaling_columns = [
+    'age', 'education-num', 'hours-per-week', 'capital-gain',
+    'capital-loss']
 
 # %% [markdown]
 # We can now create our `ColumnTransfomer` by specifying a list of triplet
@@ -239,12 +238,9 @@ preprocessor = ColumnTransformer([
     ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
     ('one-hot-encoder', OneHotEncoder(handle_unknown='ignore'),
      one_hot_encoding_columns),
-    ('standard-scaler', StandardScaler(), scaling_columns)
-])
+    ('standard-scaler', StandardScaler(), scaling_columns)])
 model = make_pipeline(
-    preprocessor,
-    LogisticRegression(solver='lbfgs', max_iter=1000)
-)
+    preprocessor, LogisticRegression(solver='lbfgs', max_iter=1000))
 
 # %% [markdown]
 # The final model is more complex than the previous models but still follows the
@@ -258,23 +254,18 @@ model = make_pipeline(
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42
-)
+    data, target, random_state=42)
 model.fit(data_train, target_train)
 model.predict(data_test)[:5]
-
 
 # %%
 target_test[:5]
 
-
 # %%
 data_test.head()
 
-
 # %%
 model.score(data_test, target_test)
-
 
 # %% [markdown]
 # This model can also be cross-validated as usual (instead of using a single
@@ -283,7 +274,6 @@ model.score(data_test, target_test)
 # %%
 scores = cross_val_score(model, data, target, cv=5)
 print(f"The different scores obtained are: \n{scores}")
-
 
 # %%
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
@@ -315,16 +305,16 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 
 # For each categorical column, extract the list of all possible categories
 # in some arbritrary order.
-categories = [data[column].unique() for column in data[categorical_columns]]
+categories = [
+    data[column].unique() for column in data[categorical_columns]]
 
 preprocessor = ColumnTransformer([
-    ('categorical', OrdinalEncoder(categories=categories), categorical_columns),
-], remainder="passthrough")
+    ('categorical', OrdinalEncoder(categories=categories),
+     categorical_columns),], remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 model.fit(data_train, target_train)
 print(model.score(data_test, target_test))
-
 
 # %% [markdown]
 # We can observe that we get significantly higher accuracies with the Gradient

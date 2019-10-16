@@ -24,10 +24,10 @@ $(RENDERED_NOTEBOOKS_DIR)/%.ipynb: $(NOTEBOOKS_DIR)/%.ipynb
 
 sanity_check_$(PYTHON_SCRIPTS_DIR):
 	python build_scripts/check-python-scripts.py $(PYTHON_SCRIPTS_DIR)
+	yapf --recursive --in-place --parallel $(PYTHON_SCRIPTS_DIR)
 
 sanity_check_$(NOTEBOOKS_DIR):
 	python build_scripts/sanity-check.py $(PYTHON_SCRIPTS_DIR) $(NOTEBOOKS_DIR)
 
 sanity_check_$(RENDERED_NOTEBOOKS_DIR):
 	python build_scripts/sanity-check.py $(NOTEBOOKS_DIR) $(RENDERED_NOTEBOOKS_DIR)
-

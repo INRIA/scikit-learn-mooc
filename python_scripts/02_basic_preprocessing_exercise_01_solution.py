@@ -21,26 +21,29 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+df = pd.read_csv(
+    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 
 # %%
 target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=[target_name, "fnlwgt"])
-numerical_columns = [c for c in data.columns
-                     if data[c].dtype.kind in ["i", "f"]]
+numerical_columns = [
+    c for c in data.columns if data[c].dtype.kind in ["i", "f"]]
 data_numeric = data[numerical_columns]
 
 # %%
 from sklearn.model_selection import cross_val_score
 from sklearn.dummy import DummyClassifier
 
-high_revenue_clf = DummyClassifier(strategy="constant", constant=" >50K")
+high_revenue_clf = DummyClassifier(strategy="constant",
+                                   constant=" >50K")
 scores = cross_val_score(high_revenue_clf, data_numeric, target)
 print(f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %%
-low_revenue_clf = DummyClassifier(strategy="constant", constant=" <=50K")
+low_revenue_clf = DummyClassifier(strategy="constant",
+                                  constant=" <=50K")
 scores = cross_val_score(low_revenue_clf, data_numeric, target)
 print(f"{scores.mean():.3f} +/- {scores.std():.3f}")
 

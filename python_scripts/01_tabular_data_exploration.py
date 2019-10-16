@@ -10,7 +10,7 @@
 # ---
 
 # %% [markdown]
-# In this notebook, we will look at necessary steps that happen before any machine learning takes place. 
+# In this notebook, we will look at necessary steps that happen before any machine learning takes place.
 # * load the data
 # * look at the variables in the dataset, in particular make the difference
 #   between numerical and categorical variables, which need different
@@ -34,7 +34,8 @@ import seaborn as sns
 # %%
 import pandas as pd
 
-adult_census = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+adult_census = pd.read_csv(
+    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 
 # Or use the local copy:
 # adult_census = pd.read_csv('../datasets/adult-census.csv')
@@ -45,7 +46,6 @@ adult_census = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-ce
 # %%
 from IPython.display import IFrame
 IFrame('https://www.openml.org/d/1590', width=1200, height=600)
-
 
 # %% [markdown]
 # ## Look at the variables in the dataset
@@ -76,11 +76,14 @@ adult_census[target_column].value_counts()
 # finite number of values, for exemple `native-country`.
 
 # %%
-numerical_columns = ['age', 'education-num', 'capital-gain', 'capital-loss',
-                     'hours-per-week']
-categorical_columns = ['workclass', 'education', 'marital-status', 'occupation',
-                       'relationship', 'race', 'sex', 'native-country']
-all_columns = numerical_columns + categorical_columns + [target_column]
+numerical_columns = [
+    'age', 'education-num', 'capital-gain', 'capital-loss',
+    'hours-per-week']
+categorical_columns = [
+    'workclass', 'education', 'marital-status', 'occupation',
+    'relationship', 'race', 'sex', 'native-country']
+all_columns = numerical_columns + categorical_columns + [
+    target_column]
 
 adult_census = adult_census[all_columns]
 
@@ -108,8 +111,7 @@ adult_census = adult_census[all_columns]
 # works for numerical variables:
 
 # %%
-adult_census.hist(figsize=(20, 10));
-
+adult_census.hist(figsize=(20, 10))
 
 # %% [markdown]
 # We can already make a few comments about some of the variables:
@@ -145,7 +147,8 @@ adult_census.profile_report()
 # years of education. Let's look at the relationship between education and
 # education-num.
 # %%
-pd.crosstab(index=adult_census['education'], columns=adult_census['education-num'])
+pd.crosstab(index=adult_census['education'],
+            columns=adult_census['education-num'])
 
 # %% [markdown]
 # This shows that education and education-num are redundant. For
@@ -163,13 +166,14 @@ pd.crosstab(index=adult_census['education'], columns=adult_census['education-num
 # %%
 n_samples_to_plot = 5000
 columns = ['age', 'education-num', 'hours-per-week']
-sns.pairplot(data=adult_census[:n_samples_to_plot] , vars=columns,
+sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
              hue=target_column, plot_kws={'alpha': 0.2}, height=4,
-             diag_kind='hist');
+             diag_kind='hist')
 
 # %%
-sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age', y_vars='hours-per-week',
-             hue=target_column, markers=['o', 'v'], plot_kws={'alpha': 0.2}, height=12);
+sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age',
+             y_vars='hours-per-week', hue=target_column,
+             markers=['o', 'v'], plot_kws={'alpha': 0.2}, height=12)
 
 # %% [markdown]
 #
@@ -220,21 +224,18 @@ def plot_tree_decision_function(tree, X, y, ax):
     h = 0.02
     x_min, x_max = 0, 100
     y_min, y_max = 0, 100
-    xx, yy = np.meshgrid(
-        np.arange(x_min, x_max, h), np.arange(y_min, y_max, h)
-    )
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
 
     Z = tree.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
     Z = Z.reshape(xx.shape)
     faces = tree.tree_.apply(
-        np.c_[xx.ravel(), yy.ravel()].astype(np.float32)
-    )
+        np.c_[xx.ravel(), yy.ravel()].astype(np.float32))
     faces = faces.reshape(xx.shape)
     border = ndimage.laplace(faces) != 0
-    ax.scatter(
-        X.iloc[:, 0], X.iloc[:, 1], c=np.array(['tab:blue', 'tab:red'])[y],
-        s=60, alpha=0.7
-    )
+    ax.scatter(X.iloc[:, 0], X.iloc[:, 1],
+               c=np.array(['tab:blue',
+                           'tab:red'])[y], s=60, alpha=0.7)
     ax.contourf(xx, yy, Z, alpha=.4, cmap='RdBu_r')
     ax.scatter(xx[border], yy[border], marker='.', s=1)
     ax.set_xlabel(X.columns[0])
@@ -255,7 +256,8 @@ from sklearn.preprocessing import LabelEncoder
 # select a subset of data
 data_subset = adult_census[:n_samples_to_plot]
 X = data_subset[["age", "hours-per-week"]]
-y = LabelEncoder().fit_transform(data_subset[target_column].to_numpy())
+y = LabelEncoder().fit_transform(
+    data_subset[target_column].to_numpy())
 
 # %% [markdown]
 # We will create a decision tree which we will keep really simple on purpose.
@@ -266,7 +268,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import plot_tree
 
 max_leaf_nodes = 3
-tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes, random_state=0)
+tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes,
+                              random_state=0)
 tree.fit(X, y)
 
 # %% [markdown]

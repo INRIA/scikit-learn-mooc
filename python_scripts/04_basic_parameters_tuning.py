@@ -31,7 +31,8 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+df = pd.read_csv(
+    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 # Or use the local copy:
 # df = pd.read_csv('../datasets/adult-census.csv')
 
@@ -51,8 +52,7 @@ data.head()
 from sklearn.model_selection import train_test_split
 
 df_train, df_test, target_train, target_test = train_test_split(
-    data, target, random_state=42
-)
+    data, target, random_state=42)
 
 # %% [markdown]
 # Then, we define the preprocessing pipeline to transform differently
@@ -65,18 +65,18 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
 binary_encoding_columns = ['sex']
-one_hot_encoding_columns = ['workclass', 'education', 'marital-status',
-                            'occupation', 'relationship', 'race',
-                            'native-country']
-scaling_columns = ['age', 'capital-gain', 'capital-loss', 'hours-per-week',
-                   'education-num']
+one_hot_encoding_columns = [
+    'workclass', 'education', 'marital-status', 'occupation',
+    'relationship', 'race', 'native-country']
+scaling_columns = [
+    'age', 'capital-gain', 'capital-loss', 'hours-per-week',
+    'education-num']
 
 preprocessor = ColumnTransformer([
     ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
     ('one-hot-encoder', OneHotEncoder(handle_unknown='ignore'),
      one_hot_encoding_columns),
-    ('standard-scaler', StandardScaler(), scaling_columns)
-])
+    ('standard-scaler', StandardScaler(), scaling_columns)])
 
 # %% [markdown]
 # Finally, we use a linear classifier (i.e. logistic regression) to predict
@@ -87,13 +87,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(
-    preprocessor, LogisticRegression(max_iter=1000, solver='lbfgs')
-)
+    preprocessor, LogisticRegression(max_iter=1000, solver='lbfgs'))
 model.fit(df_train, target_train)
-print(
-    f"The accuracy score using a {model.__class__.__name__} is "
-    f"{model.score(df_test, target_test):.2f}"
-)
+print(f"The accuracy score using a {model.__class__.__name__} is "
+      f"{model.score(df_test, target_test):.2f}")
 
 # %% [markdown]
 # ## The issue of finding the best model parameters
@@ -113,24 +110,20 @@ print(
 # %%
 C = 1
 model = make_pipeline(
-    preprocessor, LogisticRegression(C=C, max_iter=1000, solver='lbfgs')
-)
+    preprocessor,
+    LogisticRegression(C=C, max_iter=1000, solver='lbfgs'))
 model.fit(df_train, target_train)
-print(
-    f"The accuracy score using a {model.__class__.__name__} is "
-    f"{model.score(df_test, target_test):.2f} with C={C}"
-)
+print(f"The accuracy score using a {model.__class__.__name__} is "
+      f"{model.score(df_test, target_test):.2f} with C={C}")
 
 # %%
 C = 1e-5
 model = make_pipeline(
-    preprocessor, LogisticRegression(C=C, max_iter=1000, solver='lbfgs')
-)
+    preprocessor,
+    LogisticRegression(C=C, max_iter=1000, solver='lbfgs'))
 model.fit(df_train, target_train)
-print(
-    f"The accuracy score using a {model.__class__.__name__} is "
-    f"{model.score(df_test, target_test):.2f} with C={C}"
-)
+print(f"The accuracy score using a {model.__class__.__name__} is "
+      f"{model.score(df_test, target_test):.2f} with C={C}")
 
 # %% [markdown]
 # ## Finding the best model hyper-parameters via exhaustive parameters search
@@ -149,8 +142,7 @@ print(
 from sklearn.model_selection import GridSearchCV
 
 model = make_pipeline(
-    preprocessor, LogisticRegression(max_iter=1000, solver='lbfgs')
-)
+    preprocessor, LogisticRegression(max_iter=1000, solver='lbfgs'))
 
 # %% [markdown]
 # We will see that we need to provide the name of the parameter to be set.
@@ -158,7 +150,8 @@ model = make_pipeline(
 # of the model which can set during the grid-search.
 
 # %%
-print("The hyper-parameters are for a logistic regression model are:")
+print(
+    "The hyper-parameters are for a logistic regression model are:")
 for param_name in LogisticRegression().get_params().keys():
     print(param_name)
 
@@ -177,15 +170,15 @@ import time
 import numpy as np
 
 param_grid = {'logisticregression__C': (0.1, 1.0, 10.0)}
-model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=4, cv=5)
+model_grid_search = GridSearchCV(model, param_grid=param_grid,
+                                 n_jobs=4, cv=5)
 start = time.time()
 model_grid_search.fit(df_train, target_train)
 elapsed_time = time.time() - start
 print(
     f"The accuracy score using a {model_grid_search.__class__.__name__} is "
     f"{model_grid_search.score(df_test, target_test):.2f} in "
-    f"{elapsed_time:.3f} seconds"
-)
+    f"{elapsed_time:.3f} seconds")
 
 # %% [markdown]
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines
@@ -196,7 +189,9 @@ print(
 # attribute.
 
 # %%
-print(f"The best set of parameters is: {model_grid_search.best_params_}")
+print(
+    f"The best set of parameters is: {model_grid_search.best_params_}"
+)
 
 # %% [markdown]
 # With the `GridSearchCV` estimator, the parameters need to be specified
@@ -209,16 +204,18 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 from scipy.stats import uniform
 from sklearn.model_selection import RandomizedSearchCV
 
-param_distributions = {'logisticregression__C': uniform(loc=50, scale=100)}
+param_distributions = {
+    'logisticregression__C': uniform(loc=50, scale=100)}
 model_grid_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions, n_iter=3, n_jobs=4, cv=5
-)
+    model, param_distributions=param_distributions, n_iter=3,
+    n_jobs=4, cv=5)
 model_grid_search.fit(df_train, target_train)
 print(
     f"The accuracy score using a {model_grid_search.__class__.__name__} is "
-    f"{model_grid_search.score(df_test, target_test):.2f}"
+    f"{model_grid_search.score(df_test, target_test):.2f}")
+print(
+    f"The best set of parameters is: {model_grid_search.best_params_}"
 )
-print(f"The best set of parameters is: {model_grid_search.best_params_}")
 
 # %% [markdown]
 # ## Notes on search efficiency
@@ -237,9 +234,8 @@ param_grid = {"C": (0.1, 1.0, 10.0)}
 
 model = make_pipeline(
     preprocessor,
-    LogisticRegressionCV(Cs=param_grid['C'], max_iter=1000, solver='lbfgs',
-                         n_jobs=4, cv=5)
-)
+    LogisticRegressionCV(Cs=param_grid['C'], max_iter=1000,
+                         solver='lbfgs', n_jobs=4, cv=5))
 start = time.time()
 model.fit(df_train, target_train)
 elapsed_time = time.time() - start
@@ -295,10 +291,12 @@ print(f"Time elapsed to train LogisticRegressionCV: "
 from sklearn.model_selection import cross_val_score
 
 model = make_pipeline(
-    preprocessor, LogisticRegressionCV(max_iter=1000, solver='lbfgs', cv=5)
-)
+    preprocessor,
+    LogisticRegressionCV(max_iter=1000, solver='lbfgs', cv=5))
 score = cross_val_score(model, data, target, n_jobs=4, cv=5)
-print(f"The accuracy score is: {score.mean():.2f} +- {score.std():.2f}")
+print(
+    f"The accuracy score is: {score.mean():.2f} +- {score.std():.2f}"
+)
 print(f"The different scores obtained are: \n{score}")
 
 # %% [markdown]

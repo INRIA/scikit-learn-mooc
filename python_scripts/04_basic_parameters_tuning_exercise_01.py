@@ -33,7 +33,8 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 from scipy.stats import expon, uniform
 from scipy.stats import randint
 
-df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+df = pd.read_csv(
+    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 # Or use the local copy:
 # df = pd.read_csv('../datasets/adult-census.csv')
 
@@ -42,8 +43,7 @@ target = df[target_name].to_numpy()
 data = df.drop(columns=target_name)
 
 df_train, df_test, target_train, target_test = train_test_split(
-    data, target, random_state=42
-)
+    data, target, random_state=42)
 
 # %% [markdown]
 # TODO: write your solution here

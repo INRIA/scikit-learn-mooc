@@ -31,7 +31,8 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 
-df = pd.read_csv("https://www.openml.org/data/get_csv/1595261/adult-census.csv")
+df = pd.read_csv(
+    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
 
 # Or use the local copy:
 # df = pd.read_csv('../datasets/adult-census.csv')
@@ -42,13 +43,13 @@ target = df[target_name].to_numpy()
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 # %%
-numerical_columns = [c for c in data.columns
-                     if data[c].dtype.kind in ["i", "f"]]
-categorical_columns = [c for c in data.columns
-                       if data[c].dtype.kind not in ["i", "f"]]
+numerical_columns = [
+    c for c in data.columns if data[c].dtype.kind in ["i", "f"]]
+categorical_columns = [
+    c for c in data.columns if data[c].dtype.kind not in ["i", "f"]]
 
-categories = [data[column].unique()
-              for column in data[categorical_columns]]
+categories = [
+    data[column].unique() for column in data[categorical_columns]]
 
 # %% [markdown]
 # ## Reference pipeline (no numerical scaling and integer-coded categories)
@@ -59,14 +60,10 @@ categories = [data[column].unique()
 # %%time
 
 preprocessor = ColumnTransformer([
-    ('categorical', OrdinalEncoder(categories=categories), categorical_columns),
-], remainder="passthrough")
+    ('categorical', OrdinalEncoder(categories=categories),
+     categorical_columns),], remainder="passthrough")
 
-
-model = make_pipeline(
-    preprocessor,
-    HistGradientBoostingClassifier()
-)
+model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 scores = cross_val_score(model, data, target)
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")

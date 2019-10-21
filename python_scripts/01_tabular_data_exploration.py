@@ -64,7 +64,7 @@ target_column = 'class'
 adult_census[target_column].value_counts()
 
 # %% [markdown]
-# Note: classes are slighly imbalanced. Class imbalance happens often in
+# Note: classes are slightly imbalanced. Class imbalance happens often in
 # practice and may need special techniques for machine learning. For example in
 # a medical setting, if we are trying to predict whether patients will develop
 # a rare disease, there will be a lot more sane patients than ill patients in
@@ -73,7 +73,7 @@ adult_census[target_column].value_counts()
 # %% [markdown]
 # The dataset contains both numerical and categorical data. Numerical values
 # can take continuous values for example `age`. Categorical values can have a
-# finite number of values, for exemple `native-country`.
+# finite number of values, for example `native-country`.
 
 # %%
 numerical_columns = [
@@ -111,7 +111,7 @@ adult_census = adult_census[all_columns]
 # works for numerical variables:
 
 # %%
-adult_census.hist(figsize=(20, 10))
+_ = adult_census.hist(figsize=(20, 10))
 
 # %% [markdown]
 # We can already make a few comments about some of the variables:
@@ -166,14 +166,15 @@ pd.crosstab(index=adult_census['education'],
 # %%
 n_samples_to_plot = 5000
 columns = ['age', 'education-num', 'hours-per-week']
-sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
-             hue=target_column, plot_kws={'alpha': 0.2}, height=4,
-             diag_kind='hist')
+_ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
+                 hue=target_column, plot_kws={'alpha': 0.2},
+                 height=4, diag_kind='hist')
 
 # %%
-sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age',
-             y_vars='hours-per-week', hue=target_column,
-             markers=['o', 'v'], plot_kws={'alpha': 0.2}, height=12)
+_ = sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age',
+                 y_vars='hours-per-week', hue=target_column,
+                 markers=['o',
+                          'v'], plot_kws={'alpha': 0.2}, height=12)
 
 # %% [markdown]
 #

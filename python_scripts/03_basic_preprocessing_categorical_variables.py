@@ -310,7 +310,7 @@ categories = [
 
 preprocessor = ColumnTransformer([
     ('categorical', OrdinalEncoder(categories=categories),
-     categorical_columns),], remainder="passthrough")
+     categorical_columns)], remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 model.fit(data_train, target_train)
@@ -337,8 +337,8 @@ print(model.score(data_test, target_test))
 # ## Exercise 2:
 #
 # - Check that scaling the numerical features does not impact the speed or
-#   accuracy of HistGradientBoostingClassifier
+#   accuracy of `HistGradientBoostingClassifier`
 # - Check that one-hot encoding the categorical variable does not improve the
-#   accuracy of HistGradientBoostingClassifier but slows down the training.
+#   accuracy of `HistGradientBoostingClassifier` but slows down the training.
 #
 # Use the dedicated notebook to do this exercise.

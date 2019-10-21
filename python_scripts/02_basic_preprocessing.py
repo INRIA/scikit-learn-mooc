@@ -270,7 +270,7 @@ print(
 # Instead, we can use what cross-validation. Cross-validation consists in
 # repeating this random splitting into training and testing sets and aggregate
 # the model performance. By repeating the experiment, one can get an estimate of
-# the variabilty of the model performance.
+# the variability of the model performance.
 #
 # The function `cross_val_score` allows for such experimental protocol by giving
 # the model, the data and the target. Since there exists several
@@ -355,6 +355,6 @@ y = np.random.randn(n_points)
 
 fig, ax = plt.subplots(figsize=(10, 6))
 cv = KFold(5)
-plot_cv_indices(cv, X, y, ax)
+_ = plot_cv_indices(cv, X, y, ax)
 
 # TODO: add summary here

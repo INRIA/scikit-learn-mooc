@@ -260,7 +260,7 @@ print(f"Time elapsed to train LogisticRegressionCV: "
 #         an exponential distribution to sample the possible values.
 #       * `l2_regularization` with values ranging from 0 to 0.5. You can use
 #         a uniform distribution.
-#       * `max_lead_nodes` with values ranging from 5 to 30. The values should
+#       * `max_leaf_nodes` with values ranging from 5 to 30. The values should
 #         be integer following a uniform distribution.
 #       * `min_samples_leaf` with values ranging from 5 to 30. The values
 #         should be integer following a uniform distribution.

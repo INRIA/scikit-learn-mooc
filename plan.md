@@ -1,3 +1,5 @@
+Note: to edit on HackMD https://hackmd.io/6fFy3_y6SOWonOYeGaNiHw?edit
+
 # Intro module: What is Machine Learning
  (only slides / videos i.e. no code)
 ## Learning objectives:
@@ -20,7 +22,6 @@ Supervised vs Unsupervised
 Regression vs Classification
 
 Features and samples
-    
 
 
 ## Quizz:

@@ -15,18 +15,12 @@ Why and when? Example applications.
   The benefit of this example is that it forces to think about
   measurement, but also because it has one class that is easy to separate
   only one feature
-    - Aurelie: real irises for the video?
+    - Aurelie: real irises for the video? artificial flowers ordered (thanks Anne)
 - The "adult" dataset
     - Maybe looking at it with excel, to be in an environment familiar to
       people
     - Mention the importance of data visualization: intuitions about the
       data can be very helpful
-
-Learning from data vs expertly engineered decision rules
-- One the iris example, show that cutting on one specific feature
-  separates well one class
-- How do we automate this? How do we achieve this on more complex data
-  such as the census dataset?
 
 Descriptive vs predictive analysis
 - Generalization (Out of sample properties)
@@ -34,12 +28,14 @@ Descriptive vs predictive analysis
   variables, such as expressing the education level as the name of the
   degree or the corresponding number of years of education
 
+Learning from data vs expertly engineered decision rules
+- One the iris example, show that cutting on one specific feature
+  separates well one class
+- How do we automate this? How do we achieve this on more complex data
+  such as the census dataset?
+
 Generalization vs memorization: the need for a train / test split
 - The nearest neighbors example to illustrate this
-
-Features and samples
-- The data matrix
-  - Build the data matrix of Iris
 
 Supervised vs Unsupervised
 - Formalize supervised learning (define "X" and "y")
@@ -52,6 +48,10 @@ Regression vs Classification
 - In the adult data: it would make more sense to do a continuous
   prediction
 - In the iris example, it is naturally a classification problem
+
+Features and samples
+- The data matrix
+  - Build the data matrix of Iris
 
 A few words about the style and scope of this course: it is centered
 around code, though we strive to keep it simple

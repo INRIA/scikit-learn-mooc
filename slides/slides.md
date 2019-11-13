@@ -82,7 +82,6 @@ measure*
 | 6.5cm        | 3.2cm       | 5.1cm        | 2cm         | virginica  |
 | 5cm          | 3.cm        | 1.6cm        | 0.2cm       | setosa     |
 
-
 ???
 
 Now I have a set of numbers describing irises. Can I build decision rules
@@ -107,7 +106,7 @@ US Census data:
 
 .very-small[
 
-| age | workclass | education    | marital-status     | occupation         | relationship | race  | sex  | capital-gain | hours-per-week | native-country | class |
+| Age | Workclass | Education    | Marital-status     | Occupation         | Relationship | Race  | Sex  | Capital-gain | Hours-per-week | Native-country | Class |
 | --- | --------- | ------------ | ------------------ | ------------------ | ------------ | ----- | ---- | ------------ | -------------- | -------------- | ----- |
 | 25  | Private   | 11th         | Never-married      | Machine-op-inspct  | Own-child    | Black | Male | 0            | 40             | United-States  | <=50K |
 | 38  | Private   | HS-grad      | Married-civ-spouse | Farming-fishing    | Husband     | White  | Male | 0            | 50             | United-States   | <=50K |
@@ -328,5 +327,68 @@ They are different because there might be different noise, but also
 because there might be individuals with new configuration of features
 that we have not observed: different combinations of occupation, age, and
 marital status.
+
+---
+
+# The machine-learning workflow
+
+<img src="workflow.png" width="90%">
+
+???
+
+The typical workflow in machine-learning is to use a given dataset to
+learn a predictive model, for instance predicting the type of iris, and
+then to apply it to new data, or what we will call a "test" set, to put
+the model in production, or to check it's validity.
+
+---
+
+class: center, middle
+
+# Some vocabulary
+
+???
+
+To go further, it is useful to define a bit the concepts of machine
+learning
+
+---
+
+# The data matrix
+
+We deal with a table of data:
+
+* Rows are different observations, or **samples**
+* Columns are different descriptors, or **features**
+
+.small[
+| Sepal length | Sepal width | Petal length | Petal width | Iris type  |
+| ------------ | ----------- | ------------ | ----------- | ---------- |
+| 6cm          | 3.4cm       | 4.5cm        | 1.6cm       | versicolor |
+| 5.7cm        | 3.8cm       | 1.7cm        | 0.3cm       | setosa     |
+| 6.5cm        | 3.2cm       | 5.1cm        | 2cm         | virginica  |
+| 5cm          | 3.cm        | 1.6cm        | 0.2cm       | setosa     |
+]
+
+???
+
+All the data that we will consider will be in what we call a "data
+matrix". It can be seen as describing our problem in a 2D table: 
+
+* the different rows of this table are different observations, for
+  instance different irises. We call these "samples"
+
+* the columns of this table give the different measures or descriptors
+  that we have for these samples. We call them "features".
+
+---
+
+# Supervised machine learning
+
+
+* A data matrix *X* with *n* observations
+
+* A **target** *y*, a characteristic of each observation
+  which must be predicted
 
 

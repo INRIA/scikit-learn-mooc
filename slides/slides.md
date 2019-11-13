@@ -56,9 +56,11 @@ This is an iris. But what type?
 
 --
 
+.tight[
 * Setosa
 * Versicolor
 * Virginica
+]
 
 ???
 
@@ -211,7 +213,7 @@ never seen.
 
 Many sources of variability:
 
-.columns[
+.tight.columns[
 * age
 * workclass
 * education 
@@ -429,3 +431,20 @@ generalize to new data.
 Unsupervised learning covers a very wide variety of different problems. We
 will not cover them for now.
 
+---
+
+# Regression and classification
+
+Supervised learning: predicting a target *y*
+
+* **Classification**: *y* is discrete, made of different classes
+
+  *eg* irises: Setosa, Versicolor, Virginica
+
+* **Regression**: *y* is continuous, a numerical quantity
+
+  *eg* wage prediction
+
+???
+
+Going back to supervised learning, we have to predict a target *y*

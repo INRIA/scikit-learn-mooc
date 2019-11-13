@@ -465,9 +465,25 @@ sitation, we way that it is a regression task.
 # Take home messages
 ]
 
-* Machine learning is about extracting rules on *data* that *generalize*
+* Machine learning is about extracting from *data* rules that *generalize*
   to new observations
 
-* We work with a data matrix *n_samples* x *n_features*
+* We work with:
+
+  - a data matrix *X* *n_samples* x *n_features*
+  - a target *y* of length *n_samples*, made of numbers for *regression*
+    and of discrete classes for *classification*
 
 <img src="workflow.png" width="40%">
+
+???
+
+To summarize, machine learning is about extracting from data rules that
+generalize to new observations.
+
+In practice, we will work with a data matrix, that we will call *X*, with
+a *n_samples* rows times *n_features* columns. For supervised learning,
+we have a target vector *y*, of length *n_samples*, which is made of
+numbers characterizing each observation for regression problems and of
+discrete classes for classification problems.
+

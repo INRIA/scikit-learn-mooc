@@ -390,7 +390,7 @@ matrix". It can be seen as describing our problem in a 2D table:
 
 * A data matrix *X* with *n* observations
 
-* A **target** *y*: a characteristic of each observation
+* A **target** *y*: a property of each observation
 
 <img src="supervised.png" width="40%" style="float: left">
 
@@ -447,4 +447,27 @@ Supervised learning: predicting a target *y*
 
 ???
 
-Going back to supervised learning, we have to predict a target *y*
+Going back to supervised learning, we have to predict a target *y*. This
+target is a property of our data.
+
+It may be discrete, describing different classes of the data. For
+instance with irises, we are trying to predict the type of iris. In such
+a situation, we say that it is a classification task.
+
+It may be continuous, describing a numerical property of our observation.
+For instance, when trying to predict from the census who is rich, it
+would be interesting to predict the income, in dollars. In such a
+sitation, we way that it is a regression task.
+
+---
+
+.center[
+# Take home messages
+]
+
+* Machine learning is about extracting rules on *data* that *generalize*
+  to new observations
+
+* We work with a data matrix *n_samples* x *n_features*
+
+<img src="workflow.png" width="40%">

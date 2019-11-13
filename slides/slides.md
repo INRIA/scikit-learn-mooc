@@ -391,4 +391,5 @@ matrix". It can be seen as describing our problem in a 2D table:
 * A **target** *y*, a characteristic of each observation
   which must be predicted
 
+<img src="supervised.png" width="40%">
 

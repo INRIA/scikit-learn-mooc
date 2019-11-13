@@ -1,8 +1,8 @@
 # Compilation is done via remarker and htmlark, both pip instalable
 
-all: slides.html
+all: ml_concepts.html overfit.html
 
-slides.html: slides.md custom.css
+%.html: %.md custom.css
 	# HTMLArk is to embed images and css
-	remarker slides.md -c custom.css | htmlark --ignore-js > slides.html
+	remarker $< -c custom.css | htmlark --ignore-js > $@
 

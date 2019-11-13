@@ -10,18 +10,31 @@ Hi, welcome to the MOOC on machine learning with scikit-learn
 
 ---
 
+class: titlepage
+
+.header[Lesson 1, MOOC Machine learning with scikit-learn]
+
 # What is machine learning?
+
+A first, introductory lesson, focusing on general concepts rather than
+coding or maths.
+
+<img src="../scikit-learn-logo.svg">
 
 ???
 
-In this first course, we will discover what is machine learning and its
-general underlying concepts.
+In this first lesson, we will discover what is machine learning and its
+general underlying concepts. This lesson is an introduction and focuses
+on general concepts, rather than coding or maths.
 
---
+---
+# What is machine learning?
 
 Machine learning deals with building predictive models
 
 ???
+
+So, what is machine learning?
 
 In a nutshell, machine learning is about building predictive models. I
 will explain what we mean by that.

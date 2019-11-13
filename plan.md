@@ -22,17 +22,17 @@ Why and when? Example applications.
     - Mention the importance of data visualization: intuitions about the
       data can be very helpful
 
-Descriptive vs predictive analysis
-- Generalization (Out of sample properties)
-- An example of where it makes a difference: if the data has redundant
-  variables, such as expressing the education level as the name of the
-  degree or the corresponding number of years of education
-
 Learning from data vs expertly engineered decision rules
 - One the iris example, show that cutting on one specific feature
   separates well one class
 - How do we automate this? How do we achieve this on more complex data
   such as the census dataset?
+
+Descriptive vs predictive analysis
+- Generalization (Out of sample properties)
+- An example of where it makes a difference: if the data has redundant
+  variables, such as expressing the education level as the name of the
+  degree or the corresponding number of years of education
 
 Generalization vs memorization: the need for a train / test split
 - The nearest neighbors example to illustrate this

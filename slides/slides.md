@@ -388,8 +388,44 @@ matrix". It can be seen as describing our problem in a 2D table:
 
 * A data matrix *X* with *n* observations
 
-* A **target** *y*, a characteristic of each observation
-  which must be predicted
+* A **target** *y*: a characteristic of each observation
 
-<img src="supervised.png" width="40%">
+<img src="supervised.png" width="40%" style="float: left">
+
+The goal is to **predict** *y*
+
+???
+
+In supervised machine learning, we are given 
+
+* a data matrix, that we shall denote *X*, with *n* observations
+
+* and a **target** *y*, which gives a characteristic for each observation
+
+The goal of supervised learning is to predict y from *X*.
+
+---
+
+# Unsupervised machine learning
+
+
+* A data matrix *X* with *n* observations
+
+
+The goal is to extract from *X* structure that generalizes.
+
+<img src="unsupervised.png" width="40%" style="float: left">
+
+Very wide variety of different problems.
+
+???
+
+In unsupervised learning, we are given the data matrix *X*, but we have
+no available target. 
+
+The goal is then to extract some form of structure from *X* that
+generalize to new data.
+
+Unsupervised learning covers a very wide variety of different problems. We
+will not cover them for now.
 

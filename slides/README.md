@@ -2,7 +2,7 @@
 
 To preview slides `https://lesteve.github.io/scikit-learn-tutorial/slides/?file=[FILENAME].md`
 
-Example : https://lesteve.github.io/scikit-learn-tutorial/slides/?file=slides.md
+Example : https://lesteve.github.io/scikit-learn-tutorial/slides/?file=ml_concepts.md
 
 # Export
 

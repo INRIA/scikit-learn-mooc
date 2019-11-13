@@ -37,6 +37,10 @@ Descriptive vs predictive analysis
 Generalization vs memorization: the need for a train / test split
 - The nearest neighbors example to illustrate this
 
+Features and samples
+- The data matrix
+  - Build the data matrix of Iris
+
 Supervised vs Unsupervised
 - Formalize supervised learning (define "X" and "y")
 - Introduce unsupervised learning, for instance dimensionality reduction
@@ -48,10 +52,6 @@ Regression vs Classification
 - In the adult data: it would make more sense to do a continuous
   prediction
 - In the iris example, it is naturally a classification problem
-
-Features and samples
-- The data matrix
-  - Build the data matrix of Iris
 
 A few words about the style and scope of this course: it is centered
 around code, though we strive to keep it simple

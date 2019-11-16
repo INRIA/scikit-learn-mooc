@@ -11,6 +11,13 @@ why a model generalizes well or not to new data
 
 ???
 
+---
+# Which model do you prefer?
+
+.pull-left[<img src="../figures/ols_simple.svg" width="100%">]
+
+.pull-right[<img src="../figures/splines_cubic.svg" width="100%">]
+
 
 ---
 # Varying model complexity

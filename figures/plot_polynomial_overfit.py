@@ -66,32 +66,34 @@ plt.savefig('polynomial_overfit.svg', facecolor='none', edgecolor='none')
 # %%
 # A figure with the true model and the estimated one
 
-plt.figure(figsize=[.5 * 6.4, .5 * 4.8])
+plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
 plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
          label='$\hat{f}$')
 
 plt.plot(t, f(t), 'k--', label='$f^{\star}$')
 style_figs.no_axis()
+plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
-           labelspacing=.2, fontsize=26)
-plt.subplots_adjust(top=.96)
+           labelspacing=.4, fontsize=26)
+plt.subplots_adjust(top=.98)
 
 plt.savefig('polynomial_overfit_simple.svg', facecolor='none', edgecolor='none')
 
 # %%
 # A figure with the true model and the estimated one
 
-plt.figure(figsize=[.5 * 6.4, .5 * 4.8])
+plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
 plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
-         label='$\hat{f}$')
+         label='Fitted model')
 
-plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+plt.plot(t, f(t), 'k--', label='Best possible fit\n=generative process')
 style_figs.no_axis()
-plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
-           labelspacing=.2, fontsize=26)
-plt.subplots_adjust(top=.96)
+plt.ylim(-1.25, 2.5)
+plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
+           labelspacing=.4, fontsize=16)
+plt.subplots_adjust(top=.98)
 
 
 # More detailed legend
@@ -109,18 +111,20 @@ y = f(x) + .4 * rng.normal(size=10 * N_SAMPLES)
 model = make_pipeline(PolynomialFeatures(degree=1), LinearRegression())
 model.fit(x.reshape(-1, 1), y)
 
-plt.figure(figsize=[.5 * 6.4, .5 * 4.8])
+plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
 plt.scatter(x, y, s=20, color='k', alpha=.3)
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
-         label='$\hat{f} \\approx f^{\star}$')
+         label='Fitted model\n= best possible fit')
 
-plt.plot(t, f(t), 'k--', label='$g$')
+plt.plot(t, f(t), 'k--', label='Generative process')
 style_figs.no_axis()
-plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
-           labelspacing=.2, fontsize=26)
-plt.subplots_adjust(top=.96)
+plt.ylim(-1.25, 2.5)
+plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
+           labelspacing=.4, fontsize=16)
+plt.subplots_adjust(top=.98)
 
 plt.savefig('polynomial_overfit_assymptotic.svg', facecolor='none', edgecolor='none')
+
 
 # %%
 # Validation curves
@@ -217,4 +221,57 @@ plt.legend(loc='right',
            title='Degree of polynomial', ncol=2)
 plt.gca().add_artist(leg1)
 savefig('polynomial_learning_curve.svg')
+
+# %%
+# Simple figure to demo overfit
+
+plt.figure(figsize=(.8*4, .8*3), facecolor='none')
+plt.clf()
+ax = plt.axes([.1, .1, .9, .9])
+
+from sklearn import linear_model
+# Create linear regression object
+regr = linear_model.LinearRegression()
+regr.fit(x.reshape((-1, 1)), y)
+
+plt.scatter(x, y,  color='k', s=9)
+
+plt.plot([-1, 1], regr.predict([[-1, ], [1, ]]),
+        linewidth=3)
+
+plt.axis('tight')
+plt.xlim(-1, 1)
+ymin, ymax = plt.ylim()
+style_figs.light_axis()
+plt.ylabel('y', size=16, weight=600)
+plt.xlabel('x', size=16, weight=600)
+
+plt.savefig('ols_simple.svg', facecolor='none', edgecolor='none')
+
+# %%
+# Plot cubic splines
+plt.clf()
+ax = plt.axes([.1, .1, .9, .9])
+
+from scipy import interpolate
+f = interpolate.interp1d(x, y,
+                         kind="quadratic",
+                         bounds_error=False, fill_value="extrapolate")
+plt.scatter(x, y,  color='k', s=9, zorder=20)
+x_spline = np.linspace(-1, 1, 600)
+y_spline = f(x_spline)
+plt.plot(x_spline, y_spline, linewidth=3)
+
+plt.axis('tight')
+plt.xlim(-1, 1)
+plt.ylim(ymin, ymax)
+
+style_figs.light_axis()
+
+plt.ylabel('y', size=16, weight=600)
+plt.xlabel('x', size=16, weight=600)
+
+
+plt.savefig('splines_cubic.svg', facecolor='none', edgecolor='none')
+
 

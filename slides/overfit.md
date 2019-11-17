@@ -14,9 +14,14 @@ why a model generalizes well or not to new data
 ---
 # Which model do you prefer?
 
-.pull-left[<img src="../figures/ols_simple.svg" width="100%">]
+.pull-left[<img src="../figures/ols_simple.svg" width="110%">]
 
-.pull-right[<img src="../figures/splines_cubic.svg" width="100%">]
+.pull-right[<img src="../figures/splines_cubic.svg" width="110%">]
+
+??
+
+Let me start with a simple question: given the following data, which of
+the two models do you prefer?
 
 
 ---
@@ -101,5 +106,13 @@ And if we go all the way up to degree 9, the fit looks really bad
 
 The actual function that the data was generated from looks like this,
 though we added observational noise.
+
+---
+# Overfit versus underfit
+
+.pull-left[<img src="../figures/polynomial_overfit_simple_legend.svg" width="110%">]
+
+.pull-right[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
+
 
 

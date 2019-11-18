@@ -44,7 +44,8 @@ t = np.linspace(-1, 1, 100)
 for d in (1, 2, 5, 9):
     model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())
     model.fit(x.reshape(-1, 1), y)
-    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d)
+    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d,
+             linewidth=4)
 
     style_figs.no_axis()
     plt.legend(loc='upper center', borderaxespad=0, borderpad=0)
@@ -76,7 +77,7 @@ style_figs.no_axis()
 plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
            labelspacing=.4, fontsize=26)
-plt.subplots_adjust(top=.98)
+plt.subplots_adjust(top=1)
 
 plt.savefig('polynomial_overfit_simple.svg', facecolor='none', edgecolor='none')
 
@@ -88,40 +89,34 @@ plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
          label='Fitted model')
 
-plt.plot(t, f(t), 'k--', label='Best possible fit\n=generative process')
+plt.plot(t, f(t), 'k--', label='Best possible fit\n$\\approx$generative process')
 style_figs.no_axis()
 plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
-           labelspacing=.4, fontsize=16)
-plt.subplots_adjust(top=.98)
+           labelspacing=.6, fontsize=16)
+plt.subplots_adjust(top=1)
 
 
 # More detailed legend
 plt.savefig('polynomial_overfit_simple_legend.svg', facecolor='none', edgecolor='none')
 
 # %%
-# Assymptotic settings
-
-rng = np.random.RandomState(0)
-x = 2 * rng.rand(10 * N_SAMPLES) - 1
-
-y = f(x) + .4 * rng.normal(size=10 * N_SAMPLES)
-
+# Underfit settings
 
 model = make_pipeline(PolynomialFeatures(degree=1), LinearRegression())
 model.fit(x.reshape(-1, 1), y)
 
 plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
-plt.scatter(x, y, s=20, color='k', alpha=.3)
+plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
-         label='Fitted model\n= best possible fit')
+         label='Fitted model\n$\\approx$best possible fit')
 
 plt.plot(t, f(t), 'k--', label='Generative process')
 style_figs.no_axis()
 plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
            labelspacing=.4, fontsize=16)
-plt.subplots_adjust(top=.98)
+plt.subplots_adjust(top=1)
 
 plt.savefig('polynomial_overfit_assymptotic.svg', facecolor='none', edgecolor='none')
 
@@ -223,7 +218,18 @@ plt.gca().add_artist(leg1)
 savefig('polynomial_learning_curve.svg')
 
 # %%
-# Simple figure to demo overfit
+# Simple figure to demo overfit: with our polynomial data
+
+N_SAMPLES = 50
+
+rng = np.random.RandomState(0)
+x = 2 * rng.rand(N_SAMPLES) - 1
+
+y = f(x) + .4 * rng.normal(size=N_SAMPLES)
+
+x_test = 2 * rng.rand(10*N_SAMPLES) - 1
+
+y_test = f(x_test) + .4 * rng.normal(size=10*N_SAMPLES)
 
 plt.figure(figsize=(.8*4, .8*3), facecolor='none')
 plt.clf()
@@ -247,6 +253,13 @@ plt.ylabel('y', size=16, weight=600)
 plt.xlabel('x', size=16, weight=600)
 
 plt.savefig('ols_simple.svg', facecolor='none', edgecolor='none')
+
+plt.scatter(x_test, y_test,  color='C1', s=9, zorder=20, alpha=.4)
+plt.xlim(-1, 1)
+plt.ylim(ymin, ymax)
+
+plt.savefig('ols_simple_test.svg', facecolor='none', edgecolor='none')
+
 
 # %%
 # Plot cubic splines
@@ -273,5 +286,88 @@ plt.xlabel('x', size=16, weight=600)
 
 
 plt.savefig('splines_cubic.svg', facecolor='none', edgecolor='none')
+
+plt.scatter(x_test, y_test,  color='C1', s=9, zorder=20, alpha=.4)
+plt.xlim(-1, 1)
+plt.ylim(ymin, ymax)
+
+plt.savefig('splines_cubic_test.svg', facecolor='none', edgecolor='none')
+
+# %%
+# Simple figure to demo overfit: with linearly-generated data
+
+N_SAMPLES = 50
+
+rng = np.random.RandomState(0)
+x = 2 * rng.rand(N_SAMPLES) - 1
+
+y = regr.coef_ * x + regr.intercept_ + .4 * rng.normal(size=N_SAMPLES)
+
+x_test = 2 * rng.rand(10*N_SAMPLES) - 1
+
+y_test = regr.coef_ * x_test + regr.intercept_ + .4 * rng.normal(size=10*N_SAMPLES)
+
+plt.figure(figsize=(.8*4, .8*3), facecolor='none')
+plt.clf()
+ax = plt.axes([.1, .1, .9, .9])
+
+from sklearn import linear_model
+# Create linear regression object
+regr = linear_model.LinearRegression()
+regr.fit(x.reshape((-1, 1)), y)
+
+plt.scatter(x, y,  color='k', s=9)
+
+plt.plot([-1, 1], regr.predict([[-1, ], [1, ]]),
+        linewidth=3)
+
+plt.axis('tight')
+plt.xlim(-1, 1)
+plt.ylim(ymin, ymax)
+style_figs.light_axis()
+plt.ylabel('y', size=16, weight=600)
+plt.xlabel('x', size=16, weight=600)
+
+plt.savefig('linear_ols.svg', facecolor='none', edgecolor='none')
+
+plt.scatter(x_test, y_test,  color='C1', s=9, zorder=20, alpha=.4)
+plt.xlim(-1, 1)
+plt.ylim(ymin, ymax)
+
+plt.savefig('linear_ols_test.svg', facecolor='none', edgecolor='none')
+
+
+# %%
+# Plot cubic splines
+plt.clf()
+ax = plt.axes([.1, .1, .9, .9])
+
+from scipy import interpolate
+f = interpolate.interp1d(x, y,
+                         kind="quadratic",
+                         bounds_error=False, fill_value="extrapolate")
+plt.scatter(x, y,  color='k', s=9, zorder=20)
+x_spline = np.linspace(-1, 1, 600)
+y_spline = f(x_spline)
+plt.plot(x_spline, y_spline, linewidth=3)
+
+plt.axis('tight')
+plt.xlim(-1, 1)
+plt.ylim(ymin, ymax)
+
+style_figs.light_axis()
+
+plt.ylabel('y', size=16, weight=600)
+plt.xlabel('x', size=16, weight=600)
+
+
+plt.savefig('linear_splines.svg', facecolor='none', edgecolor='none')
+
+plt.scatter(x_test, y_test,  color='C1', s=9, zorder=20, alpha=.4)
+plt.xlim(-1, 1)
+plt.ylim(ymin, ymax)
+
+plt.savefig('linear_splines_test.svg', facecolor='none', edgecolor='none')
+
 
 

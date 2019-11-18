@@ -188,12 +188,20 @@ too much noise.
 ???
 
 At the opposit end of the spectrum, when we are fitting a polynomial of
-degree 
+degree 1, the model is too simple for the data at hand. We say that it
+underfit. Its best possible fit does not approximate well the data
+generative process. On the positive side, it captures little noise, and
+as a consequence the fit on the limited data gets very to the best
+possible fit on an infinite amount of data.
 
 --
 
 .reversed[**Plenty of data** &nbsp; &nbsp; **Low noise**]
 
+???
+
+Underfit is more common when there is plenty of data compared to the
+complexity of the model, or in low-noise situations.
 
 ---
 # Overfit versus underfit

@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.2'
-#       jupytext_version: 1.2.3
+#       jupytext_version: 1.2.4
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -16,16 +16,16 @@
 # %% [markdown]
 # # Introduction to scikit-learn: basic model hyper-parameters tuning
 #
-# The process to learn a predictive model is driven by a set of internal
+# The process of learning a predictive model is driven by a set of internal
 # parameters and a set of training data. These internal parameters are called
 # hyper-parameters and are specific for each family of models. In addition,
-# a set of parameters are optimal for a specific dataset and thus they need
+# a specific set of parameters are optimal for a specific dataset and thus they need
 # to be optimized.
 #
 # This notebook shows:
 # * the influence of changing model parameters;
 # * how to tune these hyper-parameters;
-# * how to evaluate the model performance together with hyper-parameters
+# * how to evaluate the model performance together with hyper-parameter
 #   tuning.
 
 # %%
@@ -80,7 +80,7 @@ preprocessor = ColumnTransformer([
 
 # %% [markdown]
 # Finally, we use a linear classifier (i.e. logistic regression) to predict
-# whether or not a person earn more than 50,000 dollars a year.
+# whether or not a person earns more than 50,000 dollars a year.
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -96,9 +96,9 @@ print(f"The accuracy score using a {model.__class__.__name__} is "
 # ## The issue of finding the best model parameters
 #
 # In the previous example, we created a `LogisticRegression` classifier using
-# the default parameters by omitting setting explicitly these parameters.
+# the default parameters by omitting to explicitly set these parameters.
 #
-# For this classifier, the parameter `C` governes the penalty; in other
+# For this classifier, the parameter `C` governs the penalty; in other
 # words, how much our model should "trust" (or fit) the training data.
 #
 # Therefore, the default value of `C` is never certified to give the best
@@ -113,7 +113,7 @@ model = make_pipeline(
     preprocessor,
     LogisticRegression(C=C, max_iter=1000, solver='lbfgs'))
 model.fit(df_train, target_train)
-print(f"The accuracy score using a {model.__class__.__name__} is "
+print(f"The accuracy score using a {model[1].__class__.__name__} is "
       f"{model.score(df_test, target_test):.2f} with C={C}")
 
 # %%
@@ -122,7 +122,7 @@ model = make_pipeline(
     preprocessor,
     LogisticRegression(C=C, max_iter=1000, solver='lbfgs'))
 model.fit(df_train, target_train)
-print(f"The accuracy score using a {model.__class__.__name__} is "
+print(f"The accuracy score using a {model[1].__class__.__name__} is "
       f"{model.score(df_test, target_test):.2f} with C={C}")
 
 # %% [markdown]
@@ -146,24 +146,24 @@ model = make_pipeline(
 
 # %% [markdown]
 # We will see that we need to provide the name of the parameter to be set.
-# Thus, we can use the method `get_params()` to have the list of the parameters
+# Thus, we can use the method `get_params()` to obtain the list of the parameters
 # of the model which can set during the grid-search.
 
 # %%
 print(
-    "The hyper-parameters are for a logistic regression model are:")
+    "The hyper-parameters for a logistic regression model are:")
 for param_name in LogisticRegression().get_params().keys():
     print(param_name)
 
 # %%
-print("The hyper-parameters are for the full-pipeline are:")
+print("The hyper-parameters for the full-pipeline are:")
 for param_name in model.get_params().keys():
     print(param_name)
 
 # %% [markdown]
 # The parameter `'logisticregression__C'` is the parameter for which we would
-# like different values. Let see how to use the `GridSearchCV` estimator for
-# doing such search.
+# like different values. Let's see how to use the `GridSearchCV` estimator for
+# doing such a search.
 
 # %%
 import time
@@ -182,7 +182,7 @@ print(
 
 # %% [markdown]
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines
-# all possible parameters combination. Once the grid-search fitted, it can be
+# all possible parameter combinations. Once the grid-search is fitted, it can be
 # used as any other predictor by calling `predict` and `predict_proba`.
 # Internally, it will use the model with the best parameters found during
 # `fit`. You can know about these parameters by looking at the `best_params_`
@@ -195,9 +195,9 @@ print(
 
 # %% [markdown]
 # With the `GridSearchCV` estimator, the parameters need to be specified
-# explicitely. Instead, one could randomly generate (following a specific
+# explicitly. Alternatively, one can also randomly generate (following a specific
 # distribution) the parameter candidates. The `RandomSearchCV` allows for such
-# stochastic search. It is used similarly to the `GridSearchCV` but the
+# a stochastic search. It is used similarly to the `GridSearchCV` but the
 # sampling distributions need to be specified instead of the parameter values.
 
 # %%
@@ -220,9 +220,9 @@ print(
 # %% [markdown]
 # ## Notes on search efficiency
 #
-# Be aware that sometimes, scikit-learn provides some `EstimatorCV` classes
-# which will perform internally the cross-validation in such way that it will
-# more computationally efficient. We can give the example of the
+# Be aware that sometimes, scikit-learn provides `EstimatorCV` classes
+# which will internally perform the cross-validation in such way that it will
+# be more computationally efficient. We can give the example of the
 # `LogisticRegressionCV` which can be used to find the best `C` in a more
 # efficient way than what we previously did with the `GridSearchCV`.
 
@@ -243,7 +243,7 @@ print(f"Time elapsed to train LogisticRegressionCV: "
       f"{elapsed_time:.3f} seconds")
 
 # %% [markdown]
-# The `fit` time for the `CV` version of `LogisticRegression` give a speed-up
+# The `fit` time for the `CV` version of `LogisticRegression` gives a speed-up
 # x2. This speed-up is provided by re-using the values of coefficients to
 # warm-start the estimator for the different `C` values.
 
@@ -278,13 +278,13 @@ print(f"Time elapsed to train LogisticRegressionCV: "
 # %% [markdown]
 # ## Combining evaluation and hyper-parameters search
 #
-# Cross-validation was used for searching the best model parameters. We
-# previously evaluate model performance through cross-validation as well. If we
+# Cross-validation was used for searching for the best model parameters. We
+# previously evaluated model performance through cross-validation as well. If we
 # would like to combine both aspects, we need to perform a "nested"
 # cross-validation. The "outer" cross-validation is applied to assess the
-# model while the "inner" cross-validation set the hyper-parameters of the
+# model while the "inner" cross-validation sets the hyper-parameters of the
 # model on the data set provided by the "outer" cross-validation. In practice,
-# it is equivalent of including, `GridSearchCV`, `RandomSearchCV`, or any
+# it is equivalent to including, `GridSearchCV`, `RandomSearchCV`, or any
 # `EstimatorCV` in a `cross_val_score` or `cross_validate` function call.
 
 # %%

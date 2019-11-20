@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.2'
-#       jupytext_version: 1.2.3
+#       jupytext_version: 1.2.4
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -26,7 +26,7 @@
 # * the difference between numerical and categorical variables;
 # * the importance of scaling numerical variables;
 # * typical ways to deal categorical variables;
-# * train predictive models on different kinds of data;
+# * how to train predictive models on different types of data;
 # * evaluate the performance of a model via cross-validation.
 #
 # ## Introducing the dataset
@@ -84,9 +84,10 @@ print(
 # %% [markdown]
 # ## Working with numerical data
 #
-# The numerical data is the most natural type of data used in machine learning
+# Numerical data is the most natural type of data used in machine learning
 # and can (almost) directly be fed to predictive models. We can quickly have a
-# look at such data by selecting the subset of columns from the original data.
+# look at such data by selecting the subset of numerical columns from the
+# original data.
 #
 # We will use this subset of data to fit a linear classification model to
 # predict the income class.
@@ -98,6 +99,8 @@ data.columns
 data.dtypes
 
 # %%
+
+# "i" denotes integer type, "f" denotes float type
 numerical_columns = [
     c for c in data.columns if data[c].dtype.kind in ["i", "f"]]
 numerical_columns
@@ -131,11 +134,11 @@ print(
 
 # %% [markdown]
 # We will build a linear classification model called "Logistic Regression". The
-# `fit` method is called to train the model from the input and target data. Only
-# the training data should be given for this purpose.
+# `fit` method is called to train the model from the input (features) and
+# target data. Only the training data should be given for this purpose.
 #
-# In addition, when checking the time required to train the model and internally
-# check the number of iterations done by the solver to find a solution.
+# In addition, check the time required to train the model and the number of
+# iterations done by the solver to find a solution.
 # %%
 from sklearn.linear_model import LogisticRegression
 import time
@@ -197,7 +200,7 @@ print(f"The test accuracy using a {model.__class__.__name__} is "
 # %% [markdown]
 # Let's now consider the `ConvergenceWarning` message that was raised previously
 # when calling the `fit` method to train our model. This warning informs us that
-# our model stopped learning becaused it reached the maximum number of
+# our model stopped learning because it reached the maximum number of
 # iterations allowed by the user. This could potentially be detrimental for the
 # model accuracy. We can follow the (bad) advice given in the warning message
 # and increase the maximum number of iterations allowed.
@@ -215,14 +218,15 @@ print(
     f"{elapsed_time:.3f} seconds in {model.n_iter_} iterations")
 
 # %% [markdown]
-# We can observe now a longer training time but not significant improvement in
+# We now observe a longer training time but not significant improvement in
 # the predictive performance. Instead of increasing the number of iterations, we
 # can try to help fit the model faster by scaling the data first. A range of
-# preprocessing algorithms in scikit-learn allows to transform the input data
-# before training a model. We can easily combine these sequential operation with
-# a scikit-learn `Pipeline` which will chain the operations and can be used as
-# any other classifier or regressor. The helper function `make_pipeline` will
-# create a `Pipeline` by giving the successive transformations to perform.
+# preprocessing algorithms in scikit-learn allows us to transform the input data
+# before training a model. We can easily combine these sequential operations
+# with a scikit-learn `Pipeline`, which chain together operations and can be
+# used like any other classifier or regressor. The helper function
+# `make_pipeline` will create a `Pipeline` by giving as arguments the successive
+# transformations to perform followed by the classifier or regressor model.
 #
 # In our case, we will standardize the data and then train a new logistic
 # regression model on that new version of the dataset set.
@@ -267,8 +271,8 @@ print(
 # and the splitting was done in a random manner and we have no information
 # regarding the confidence of the results obtained.
 #
-# Instead, we can use what cross-validation. Cross-validation consists in
-# repeating this random splitting into training and testing sets and aggregate
+# Instead, we can use cross-validation. Cross-validation consists of
+# repeating this random splitting into training and testing sets and aggregating
 # the model performance. By repeating the experiment, one can get an estimate of
 # the variability of the model performance.
 #
@@ -307,8 +311,8 @@ print(f"The mean cross-validation accuracy is: "
 # scored on the matching test set. This strategy is called K-fold
 # cross-validation where `K` corresponds to the number of splits.
 #
-# The following matplotlib code helps visualize how the datasets is partitionned
-# between train and test samples at each iteration of the cross-validation
+# The following matplotlib code helps visualize how the dataset is partitioned
+# into train and test samples at each iteration of the cross-validation
 # procedure:
 
 # %%

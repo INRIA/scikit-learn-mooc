@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.2'
-#       jupytext_version: 1.2.3
+#       jupytext_version: 1.2.4
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -37,15 +37,16 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 # ## Working with categorical variables
 #
 # As we have seen in the previous section, a numerical variable is a continuous
-# quantity represented by a real or integer number. Those variables can be
-# naturally handled by machine learning algorithms that typically composed of
-# a sequence of arithmetic instructions such as additions and multiplications.
+# quantity represented by a real or integer number. These variables can be
+# naturally handled by machine learning algorithms that are typically composed
+# of a sequence of arithmetic instructions such as additions and
+# multiplications.
 #
-# By opposition, categorical variables have discrete values typically represented
-# by string labels taken in a finite list of possible choices. For instance, the
-# variable `native-country` in our dataset is a categorical variable because it
-# encodes the data using a finite list of possible countries (along with the `?`
-# marker when this information is missing):
+# In contrast, categorical variables have discrete values typically represented
+# by string labels taken from a finite list of possible choices. For instance,
+# the variable `native-country` in our dataset is a categorical variable because
+# it encodes the data using a finite list of possible countries (along with the
+# `?` symbol when this information is missing):
 
 # %%
 data["native-country"].value_counts()
@@ -75,8 +76,8 @@ print(
 # %% [markdown]
 # ### Encoding ordinal categories
 #
-# The most intuitive strategy is to encode each category with a number.
-# The `OrdinalEncoder` will transform the data in such manner.
+# The most intuitive strategy is to encode each category with a different
+# number. The `OrdinalEncoder` will transform the data in such manner.
 
 
 # %%
@@ -90,8 +91,8 @@ print(
 data_encoded[:5]
 
 # %% [markdown]
-# We can see that all categories have been encoded for each feature
-# independently. We can also notice that the number of features before and after
+# We can see that the categories have been encoded for each feature (column)
+# independently. We can also note that the number of features before and after
 # the encoding is the same.
 #
 # However, one has to be careful when using this encoding strategy. Using this
@@ -108,13 +109,13 @@ data_encoded[:5]
 # would map the labels "S", "M", "L", "XL" to 2, 1, 0, 3.
 #
 # The `OrdinalEncoder` class accepts a "categories" constructor argument to pass
-# an the correct ordering explicitly.
+# in the correct ordering explicitly.
 #
 # If a categorical variable does not carry any meaningful order information then
 # this encoding might be misleading to downstream statistical models and you might
 # consider using one-hot encoding instead (see below).
 #
-# Note however that the impact a violation of this ordering assumption is really
+# Note however that the impact of violating this ordering assumption is really
 # dependent on the downstream models (for instance linear models are much more
 # sensitive than models built from a ensemble of decision trees).
 #
@@ -150,9 +151,9 @@ columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]
-# Look at how the workclass variable of the first 3 records has been encoded and compare this to the original string representation.
+# Look at how the "workclass" variable of the first 3 records has been encoded and compare this to the original string representation.
 #
-# The number of features after the encoding is than 10 times larger than in the
+# The number of features after the encoding is more than 10 times larger than in the
 # original data because some variables such as `occupation` and `native-country`
 # have many possible categories.
 #
@@ -190,11 +191,11 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 # %% [markdown]
 # ## Using numerical and categorical variables together
 #
-# In the previous sections, we saw that we need to treat data specifically
-# depending of their nature (i.e. numerical or categorical).
+# In the previous sections, we saw that we need to treat data differently
+# depending on their nature (i.e. numerical or categorical).
 #
-# Scikit-learn provides a `ColumnTransformer` class which will dispatch some
-# specific columns to a specific transformer making it easy to fit a single
+# Scikit-learn provides a `ColumnTransformer` class which will send
+# specific columns to a specific transformer, making it easy to fit a single
 # predictive model on a dataset that combines both kinds of variables together
 # (heterogeneously typed tabular data).
 #
@@ -289,10 +290,10 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # Linear models are very nice because they are usually very cheap to train,
 # small to deploy, fast to predict and give a good baseline.
 #
-# However it is often useful to check whether more complex models such as
+# However, it is often useful to check whether more complex models such as an
 # ensemble of decision trees can lead to higher predictive performance.
 #
-# In the following we try a scalable implementation of the Gradient Boosting
+# In the following cell we try a scalable implementation of the Gradient Boosting
 # Machine algorithm. For this class of models, we know that contrary to linear
 # models, it is useless to scale the numerical features and furthermore it is
 # both safe and significantly more computationally efficient use an arbitrary

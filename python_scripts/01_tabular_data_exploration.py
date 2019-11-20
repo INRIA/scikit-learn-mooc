@@ -6,16 +6,16 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.2'
-#       jupytext_version: 1.2.3
+#       jupytext_version: 1.2.4
 # ---
 
 # %% [markdown]
-# In this notebook, we will look at necessary steps that happen before any machine learning takes place.
+# In this notebook, we will look at the necessary steps required before any machine learning takes place.
 # * load the data
-# * look at the variables in the dataset, in particular make the difference
+# * look at the variables in the dataset, in particular, differentiate
 #   between numerical and categorical variables, which need different
 #   preprocessing in most machine learning workflows
-# * visualize the distribution of the variables to gain some insights into the dataset.
+# * visualize the distribution of the variables to gain some insights into the dataset
 
 # %%
 # Inline plots
@@ -67,7 +67,7 @@ adult_census[target_column].value_counts()
 # Note: classes are slightly imbalanced. Class imbalance happens often in
 # practice and may need special techniques for machine learning. For example in
 # a medical setting, if we are trying to predict whether patients will develop
-# a rare disease, there will be a lot more sane patients than ill patients in
+# a rare disease, there will be a lot more healthy patients than ill patients in
 # the dataset.
 
 # %% [markdown]
@@ -101,8 +101,8 @@ adult_census = adult_census[all_columns]
 # * you need to check that the data you need for your task is indeed present in
 # the dataset
 # * inspecting the data is a good way to find peculiarities. These can can
-#   arise in the data collection (for example, malfunctioning sensor or missing
-#   values), or the way the data is processed afterwards (for example capped
+#   arise during data collection (for example, malfunctioning sensor or missing
+#   values), or from the way the data is processed afterwards (for example capped
 #   values).
 
 # %% [markdown]
@@ -119,8 +119,8 @@ _ = adult_census.hist(figsize=(20, 10))
 # does indicate that retired people have been filtered out (`hours-per-week > 0`).
 # * education-num: peak at 10 and 13, hard to tell what it corresponds to
 # without looking much further. We'll do that later in this notebook.
-# * hours per week at 40, this was very likely the standard of working hours at
-# the time of the data collection
+# * hours per week peaks at 40, this was very likely the standard number of
+# working hours at the time of the data collection
 # * most values of capital-gain and capital-loss are close to zero
 
 # %% [markdown]
@@ -143,25 +143,25 @@ adult_census.profile_report()
 
 # %% [markdown]
 # As noted above, `education-num` distribution has two clear peaks around 10
-# and 13. It would be reasonable to expect that 'education-num' is the number of
-# years of education. Let's look at the relationship between education and
-# education-num.
+# and 13. It would be reasonable to expect that `education-num` is the number of
+# years of education. Let's look at the relationship between `education` and
+# `education-num`.
 # %%
 pd.crosstab(index=adult_census['education'],
             columns=adult_census['education-num'])
 
 # %% [markdown]
-# This shows that education and education-num are redundant. For
-# example, `education-num=2` is equivalent to `education='1st-4th'`. In
+# This shows that education and education-num gives you the same information.
+# For example, `education-num=2` is equivalent to `education='1st-4th'`. In
 # practice that means we can remove `education-num` without losing information.
 # Note that having redundant (or highly correlated) columns can be a problem
 # for machine learning algorithms.
 
 # %% [markdown]
-# Another way to inspect the data is to do a pairplot and show how variable
-# differ according to the class. In the diagonal you can see the distribution
-# of individual variables. The plots on the off-diagonal can reveal interesting
-# interactions between variables.
+# Another way to inspect the data is to do a pairplot and show how each variable
+# differs according to our target, `class`. Plots along the diagonal show the
+# distribution of individual variables for each `class`. The plots on the
+# off-diagonal can reveal interesting interactions between variables.
 
 # %%
 n_samples_to_plot = 5000
@@ -193,15 +193,15 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age',
 # high-dimensional spaces.
 #
 # Another thing worth mentioning in this plot: if you are young (less than 25
-# year-old roughly) you tend to work less and if you are old (more than 70
-# year-old roughly). This is a non-linear relationship between age and hours
-# per week. Some machine learning models can only capture linear interaction so
+# year-old roughly) or old (more than 70 year-old roughly) you tend to work
+# less. This is a non-linear relationship between age and hours
+# per week. Some machine learning models can only capture linear interactions so
 # this may be a factor when deciding which model to chose.
 #
 # In a machine-learning setting, we will use an algorithm to automatically
-# decide what should be the "rules" in order to predict on new data. We can
-# check which set of simple rule a decision tree would grasp using the same
-# data.
+# decide what should be the "rules" in order to make predictions on new data.
+# We can check which set of simple rules a decision tree would grasp using the
+# same data.
 
 
 # %%
@@ -274,8 +274,8 @@ tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes,
 tree.fit(X, y)
 
 # %% [markdown]
-# We can now first check the set of rules learnt by the tree and check
-# visually what theses rules look like.
+# We can now check the set of rules learnt by the tree then visually check
+# what theses rules look like.
 
 # %%
 # plot the tree structure
@@ -287,12 +287,12 @@ fig, ax = plt.subplots()
 plot_tree_decision_function(tree, X, y, ax=ax)
 
 # %% [markdown]
-# Allowing only 3 leaves in the tree, we get similar rules than the one
+# Allowing only 3 leaves in the tree, we get similar rules to the ones we
 # designed by hand:
 # * the persons younger than 28.5 year-old will be considered in the class
 #   earning `<= 50K`.
 # * the persons older than 28.5 and working more than 40.5 hours-per-week
-#   will be considered in the class earning `> 50K`, while the one working
+#   will be considered in the class earning `> 50K`, while the persons working
 #   below 40.5 hours-per-week, will be considered in the class
 #   earning `<= 50K`.
 
@@ -300,9 +300,18 @@ plot_tree_decision_function(tree, X, y, ax=ax)
 #
 # In this notebook we have:
 # * loaded the data from a CSV file using `pandas`
-# * looked at the kind of variables in the dataset, and make the difference
-#   between categorical and numerical variables.
+# * looked at the kind of variables in the dataset, and differentiated
+#   between categorical and numerical variables
 # * inspected the data with `pandas`, `seaborn` and `pandas_profiling`. Data inspection
 #   can allow you to decide whether using machine learning is appropriate for
-#   your data and to notice potential peculiarities in your data.
+#   your data and to highlight potential peculiarities in your data
+#
+# Key ideas discussed:
+# * if your target variable is imbalanced (e.g., you have more samples from one
+#   target category than another), you may need special techniques for machine
+#   learning
+# * having redundant (or highly correlated) columns can be a problem for
+#   machine learning algorithms
+# * some machine learning models can only capture linear interaction so be
+#   aware of non-linear relationships in your data
 

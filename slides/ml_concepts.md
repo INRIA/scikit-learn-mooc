@@ -12,6 +12,8 @@ Hi, welcome to the MOOC on machine learning with scikit-learn
 
 class: titlepage
 
+.header[MOOC Machine learning with scikit-learn]
+
 # What is machine learning?
 
 A first, introductory lesson, focusing on general concepts rather than
@@ -21,7 +23,7 @@ coding or maths.
 
 ???
 
-In this video, we will discover what is machine learning and its
+In this lesson, we will discover what is machine learning and its
 general underlying concepts. This lesson is an introduction and focuses
 on general concepts, rather than coding or maths.
 

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+        architecture: 'x64'
+
+    - name: Install python dependencies
+      working-directory: ./slides
+      run: pip install -r requirements.txt
+
+    - name: Install npm dependencies
+      run: npm install -g bellbind/remarkjs-pdf
+
+    - name: Export html
+      working-directory: ./slides
+      run: make && mkdir ../dist && mv *.html ../dist/
+    - name: Export pdf
+      working-directory: ./dist
+      run: for f in *.html ; do remarkjs-pdf "$f"; done
+
+    - name: Upload distributed files
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: dist/

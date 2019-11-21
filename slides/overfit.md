@@ -174,6 +174,18 @@ This problem is typically encountered when there is not enough data, or
 too much noise.
 
 ---
+# Overfit: variance 
+
+.pull-left.shift-left[<img src="../figures/polynomial_overfit_simple_legend.svg" width="110%">]
+
+.pull-right.width50.shift-left[<img src="target_variance.svg" width="90%">]
+
+???
+
+The problem of overfit is one of variance: the prediction are not really
+off on average, but each tends to fall far from the target.
+
+---
 # Underfit: model too simple
 
 .pull-left.shift-left[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
@@ -202,6 +214,20 @@ possible fit on an infinite amount of data.
 
 Underfit is more common when there is plenty of data compared to the
 complexity of the model, or in low-noise situations.
+
+.pull-right.width50.shift-left[<img src="target_variance.svg" width="90%">]
+
+---
+# Underfit: bias
+
+.pull-left.shift-left[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
+
+.pull-right.width50.shift-left[<img src="target_bias.svg" width="90%">]
+
+???
+
+Unlike overfit, underfit leads to systematic biases: the predictions do
+are on average off from the target.
 
 ---
 # Overfit versus underfit

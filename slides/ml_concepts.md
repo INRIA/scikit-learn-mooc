@@ -12,8 +12,6 @@ Hi, welcome to the MOOC on machine learning with scikit-learn
 
 class: titlepage
 
-.header[Lesson 1, MOOC Machine learning with scikit-learn]
-
 # What is machine learning?
 
 A first, introductory lesson, focusing on general concepts rather than
@@ -23,7 +21,7 @@ coding or maths.
 
 ???
 
-In this first lesson, we will discover what is machine learning and its
+In this video, we will discover what is machine learning and its
 general underlying concepts. This lesson is an introduction and focuses
 on general concepts, rather than coding or maths.
 
@@ -37,7 +35,7 @@ Machine learning deals with building predictive models
 So, what is machine learning?
 
 In a nutshell, machine learning is about building predictive models. I
-will explain what we mean by that.
+will explain what we mean by predictive models later on.
 
 
 ---
@@ -49,7 +47,7 @@ Some examples of machine learning
 
 ???
 
-Why and when would we use machine learning?
+First of all, I would like to discuss : Why and when would we use machine learning?
 
 Let me start with a couple examples.
 
@@ -134,8 +132,7 @@ US Census data:
 
 For this, we can use data from the US census.
 
-As you see, it gives is fairly diverse information about individuals, as
-well as whether they earn more or less than 50 thousand dollars a year.
+As you see, it gives is fairly diverse information about individuals : *age, workclass, education, marital-statut, occupation, relationship...*, as well as whether they earn more or less than 50 thousand dollars a year.
 We can use machine learning to build rules that will predict this income
 information from the rest of the demographic information.
 
@@ -191,9 +188,15 @@ This rule can also be inferred by looking at the data. If we look at the
 distribution of the sepal and petal measurements for the different iris
 species, we can see that petal length and width single well out setosa.
 
-The benefit of machine-learning is that it automates the creation of
-these rules from the data, including their details, such as where exactly
-to set the threshold.
+
+*But how can we deal with more complex, more numerous data? *
+
+
+**The benefit of machine-learning is that it automates the creation of rules from the data, including their details, such as where exactly
+to set the threshold.**
+
+
+*In concrete terms, machine learning allow predictions from data, based for instance on predictive analyses.* 
 
 ---
 class: center, middle
@@ -203,8 +206,10 @@ class: center, middle
 Beyond classic statistical tools
 
 ???
+We will now get to the heart of the matter by focusing on predictive models.
 
-To build predictive models, we are going to rely on statistical
+
+To build predictive models we are going to rely on statistical
 properties of the data. However, there questions and the tools that we
 will use differ a bit from those traditionally used in statistics.
 
@@ -411,7 +416,12 @@ The goal is to **predict** *y*
 
 ???
 
-In supervised machine learning, we are given 
+In supervised machine learning, 
+the data we have are annotated, i.e. they are associated with a label or a target class.
+As for our Iris, each data is associated with a type of Iris: our target class.
+The purpose of supervised learning is to predict this target (i.e. the type of iris) on new unannotated data (by entering only petal and sepal dimensions).
+
+With a mathematical representation : in supervised machine learning, we are given 
 
 * a data matrix, that we shall denote *X*, with *n* observations
 
@@ -440,6 +450,9 @@ no available target.
 
 The goal is then to extract some form of structure from *X* that
 generalize to new data.
+
+If we take the example of the Iris, in unsupervised learning, the input data would not include the type of Iris because the data is not annotated. 
+The goal will therefore be to find alone the similarities and distinctions within the data, and to group together data that share common characteristics. 
 
 Unsupervised learning covers a very wide variety of different problems. We
 will not cover them for now.

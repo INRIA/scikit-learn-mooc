@@ -286,15 +286,18 @@ it?
 
 .shift-left.pull-left[<img src="../figures/linear_splines_test.svg" width=110%>]
 .width50.pull-right[
-Compare:
+Measure:
 
-* errors on the training data
+* errors on test data
 
-* errors on the testing data
-
-vary model complexity
+* errors on the train data
 ]
 
+???
+
+To probe the tradeoff between underfit and overfit, our central
+ingredient will be to measure both the generalization error, on unseen
+test data, and the error on the data used to train de model
 
 
 ---
@@ -305,6 +308,11 @@ vary model complexity
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_1.svg"
 		width="100%">]
 
+???
+
+We can look at those error while varying model complexity.
+
+If we start with a very simple model
 
 ---
 

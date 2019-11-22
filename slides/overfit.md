@@ -267,3 +267,16 @@ little bit of bias helps reducing the variance. For instance, as with
 throwing darts at a target, where throwing the darts less strong might
 lead to being below the target on average, but with less scatter.
 
+---
+class: center, middle
+
+# How to choose this tradeoff
+
+Between underfit and overfit
+
+???
+
+So, now that we understand that there is tradeoff between underfit and
+overfit, the question is: from a practical standpoint, how do we choose
+it?
+

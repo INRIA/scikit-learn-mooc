@@ -178,12 +178,15 @@ too much noise.
 
 .pull-left.shift-left[<img src="../figures/polynomial_overfit_simple_legend.svg" width="110%">]
 
-.pull-right.width50.shift-left[<img src="target_variance.svg" width="90%">]
+.pull-right.width50.shift-left[<img src="target_variance.svg"
+				class="shift-up" width="90%">]
 
 ???
 
-The problem of overfit is one of variance: the prediction are not really
-off on average, but each tends to fall far from the target.
+The problem of overfit is one of variance: on average, the predictions
+are not really off, but each tends to fall far from the target. This can
+be seen by their large spread around the best possible, and a useful
+mental picture is that of the spread of arrows on a target.
 
 ---
 # Underfit: model too simple
@@ -201,10 +204,10 @@ off on average, but each tends to fall far from the target.
 
 At the opposit end of the spectrum, when we are fitting a polynomial of
 degree 1, the model is too simple for the data at hand. We say that it
-underfit. Its best possible fit does not approximate well the data
-generative process. On the positive side, it captures little noise, and
-as a consequence the fit on the limited data gets very to the best
-possible fit on an infinite amount of data.
+underfits. Its best possible fit cannot approximate well the
+data-generating process. On the positive side, it captures little noise,
+As a consequence even with limited data, the empirical fit is close to
+the best possible fit on an infinite amount of data.
 
 --
 
@@ -215,26 +218,52 @@ possible fit on an infinite amount of data.
 Underfit is more common when there is plenty of data compared to the
 complexity of the model, or in low-noise situations.
 
-.pull-right.width50.shift-left[<img src="target_variance.svg" width="90%">]
-
 ---
 # Underfit: bias
 
 .pull-left.shift-left[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
 
-.pull-right.width50.shift-left[<img src="target_bias.svg" width="90%">]
+.pull-right.width50.shift-left[<img src="target_bias.svg"
+				class="shift-up" width="90%">]
 
 ???
 
-Unlike overfit, underfit leads to systematic biases: the predictions do
-are on average off from the target.
+Unlike overfit, underfit leads to systematic biases: 
+the predictions cannot be on target on average, because the model that we
+use to predict is systematically off the data-generating process.
 
 ---
-# Overfit versus underfit
+# Underfit versus overfit
 
-.shift-left.pull-left[<img src="../figures/polynomial_overfit_simple_legend.svg" width="110%">]
+.shift-left.pull-left[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
 
-.pull-right[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
+.pull-right[<img src="../figures/polynomial_overfit_simple_legend.svg" width="110%">]
 
+.shift-up.pull-left.shift-left[.centered.reversed[Bias]]
+.shift-up.pull-right.width50[.centered.reversed[Variance]]
 
+???
+
+So we have these two opposit behaviors:
+* and underfit, with systematic bias
+* overfit, with large variance
+
+The challenge is to find the right tradeoff between the two.
+
+---
+# Underfit versus overfit
+
+.pull-left.width50[<img src="target_bias.svg" width="80%">]
+.pull-right.width50.shift-left[<img src="target_variance.svg"
+				width="80%">]
+
+.shift-up.pull-left.shift-left[.centered.reversed[Bias]]
+.shift-up.pull-right.width50[.centered.reversed[Variance]]
+
+???
+
+This bias-variance tradeoff is classic in statistics. Often, adding a
+little bit of bias helps reducing the variance. For instance, as with
+throwing darts at a target, where throwing the darts less strong might
+lead to being below the target on average, but with less scatter.
 

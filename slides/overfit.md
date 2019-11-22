@@ -282,9 +282,9 @@ it?
 
 ---
 
-# Increasing complexity: test vs train error
+# Train vs test error
 
-.pull-left[<img src="../figures/linear_splines_test.svg" width=100%>]
+.shift-left.pull-left[<img src="../figures/linear_splines_test.svg" width=110%>]
 .width50.pull-right[
 Compare:
 
@@ -299,27 +299,27 @@ vary model complexity
 
 ---
 
-# Increasing complexity: test vs train error
+# Train vs test error: increasing complexity
 
-.pull-left[<img src="../figures/polynomial_overfit_test_1.svg" width=100%>]
+.shift-left.pull-left[<img src="../figures/polynomial_overfit_test_1.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_1.svg"
 		width="100%">]
 
 
 ---
 
-# Increasing complexity: test vs train error
+# Train vs test error: increasing complexity
 
-.pull-left[<img src="../figures/polynomial_overfit_test_2.svg" width=100%>]
+.shift-left.pull-left[<img src="../figures/polynomial_overfit_test_2.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_2.svg"
 		width="100%">]
 
 
 ---
 
-# Increasing complexity: test vs train error
+# Train vs test error: increasing complexity
 
-.pull-left[<img src="../figures/polynomial_overfit_test_5.svg" width=100%>]
+.shift-left.pull-left[<img src="../figures/polynomial_overfit_test_5.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_5.svg"
 		width="100%">]
 
@@ -327,9 +327,9 @@ vary model complexity
 
 ---
 
-# Increasing complexity: test vs train error
+# Train vs test error: increasing complexity
 
-.pull-left[<img src="../figures/polynomial_overfit_test_9.svg" width=100%>]
+.shift-left.pull-left[<img src="../figures/polynomial_overfit_test_9.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_15.svg"
 		width="100%">]
 

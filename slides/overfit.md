@@ -288,7 +288,7 @@ it?
 .width50.pull-right[
 Measure:
 
-* errors on test data
+* errors on test data (generalization)
 
 * errors on the train data
 ]
@@ -312,7 +312,9 @@ test data, and the error on the data used to train de model
 
 We can look at those error while varying model complexity.
 
-If we start with a very simple model
+If we start with a very simple model, the training error is similar to
+the testing error: the model does not have enough capacity to capture
+noise.
 
 ---
 
@@ -322,6 +324,10 @@ If we start with a very simple model
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_2.svg"
 		width="100%">]
 
+???
+
+As we increase model complexity, both the train and the test errors go
+down: the model explains well the data, but does not capture noise yet.
 
 ---
 
@@ -331,7 +337,11 @@ If we start with a very simple model
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_5.svg"
 		width="100%">]
 
+???
 
+Even more complex models fit the training data better, but they start
+capturing noise in their model fit. As a result, their error on the test
+data is larger.
 
 ---
 
@@ -341,4 +351,8 @@ If we start with a very simple model
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_15.svg"
 		width="100%">]
 
+???
+
+As we keep increasing model complexity, the train error keeps going done,
+but the test increases sharply. The model is overfitting.
 

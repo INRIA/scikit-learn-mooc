@@ -183,11 +183,11 @@ for i, degree in enumerate(plotted_degrees):
     plt.plot(param_range[:degree],
              -np.mean(test_scores, axis=1)[:degree],
              symbol_test, color='C1',
-             label='Generalization\nerror')
+             label='Test\nerror')
     plt.plot(param_range[:degree],
              -np.mean(train_scores, axis=1)[:degree],
              symbol_train, color='k',
-             label='Training\nerror')
+             label='Train\nerror')
 
     ax = plt.gca()
     for s in ('top', 'right'):

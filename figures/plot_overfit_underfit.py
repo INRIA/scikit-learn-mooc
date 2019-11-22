@@ -17,6 +17,11 @@ x = 2 * rng.rand(N_SAMPLES) - 1
 
 y = f(x) + .4 * rng.normal(size=N_SAMPLES)
 
+x_test = 2 * rng.rand(N_SAMPLES) - 1
+
+y_test = f(x_test) + .4 * rng.normal(size=N_SAMPLES)
+
+
 plt.figure()
 plt.scatter(x, y, s=20, color='k')
 
@@ -120,40 +125,88 @@ plt.subplots_adjust(top=1)
 
 plt.savefig('polynomial_overfit_assymptotic.svg', facecolor='none', edgecolor='none')
 
+# %%
+# Train and test set with various complexity in the polynomial degree
+
+plt.figure()
+plt.scatter(x, y, s=20, color='k')
+plt.scatter(x_test, y_test, s=20, color='C1')
+
+t = np.linspace(-1, 1, 100)
+
+for d in (1, 2, 5, 9):
+    model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())
+    model.fit(x.reshape(-1, 1), y)
+    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d,
+             linewidth=4)
+
+    style_figs.no_axis()
+    plt.legend(loc='upper center', borderaxespad=0, borderpad=0)
+    plt.subplots_adjust(top=.96)
+    plt.ylim(-.74, 2.1)
+
+    plt.savefig('polynomial_overfit_test_%d.svg' % d, facecolor='none',
+                edgecolor='none')
+
 
 # %%
 # Validation curves
 from sklearn import model_selection
-plt.figure()
 
-param_range = np.arange(1, 20)
+N_SAMPLES = 150
+
+rng = np.random.RandomState(0)
+x = 2 * rng.rand(N_SAMPLES) - 1
+
+y = f(x) + .4 * rng.normal(size=N_SAMPLES)
+
+
+param_range = np.arange(1, 15)
 
 train_scores, test_scores = model_selection.validation_curve(
     model, x[::2].reshape((-1, 1)), y[::2],
     param_name='polynomialfeatures__degree',
     param_range=param_range,
-    cv=model_selection.ShuffleSplit(n_splits=20))
+    cv=model_selection.ShuffleSplit(n_splits=20, test_size=.5,
+                                    random_state=1),
+    scoring='r2')
 
-plt.plot(param_range, -np.mean(test_scores, axis=1), 'k',
-         label='Generalization error')
-plt.plot(param_range, -np.mean(train_scores, axis=1), 'k--',
-         label='Training error')
+plotted_degrees = [1, 2, 5, 9, 15]
+for i, degree in enumerate(plotted_degrees):
+    plt.figure(figsize=(4.5, 3))
+    if degree > 1:
+        symbol_train = '--'
+        symbol_test = ''
+    else:
+        symbol_train = 'o'
+        symbol_test = 'o'
+    plt.plot(param_range[:degree],
+             -np.mean(test_scores, axis=1)[:degree],
+             symbol_test, color='C1',
+             label='Generalization\nerror')
+    plt.plot(param_range[:degree],
+             -np.mean(train_scores, axis=1)[:degree],
+             symbol_train, color='k',
+             label='Training\nerror')
 
-ax = plt.gca()
-for s in ('top', 'right'):
-    ax.spines[s].set_visible(False)
+    ax = plt.gca()
+    for s in ('top', 'right'):
+        ax.spines[s].set_visible(False)
 
-plt.ylim(ymax=.05)
+    plt.ylim(ymin=-.8, ymax=.5)
+    plt.xlim(0.5, 15)
+    plt.legend(loc='upper right', labelspacing=1.5)
 
-plt.legend(loc='center')
+    plt.yticks(())
+    plt.xticks(plotted_degrees[:i+1])
+    plt.ylabel('Error')
+    plt.xlabel('Polynomial degree')
+    plt.subplots_adjust(left=.08, bottom=.23, top=.99, right=1.04)
 
-plt.yticks(())
-plt.ylabel('Error')
-plt.xlabel('Polynomial degree')
-plt.subplots_adjust(left=.07, bottom=.18, top=.99, right=.99)
+    plt.savefig('polynomial_validation_curve_%i.svg' % degree,
+                facecolor='none', edgecolor='none')
 
-plt.savefig('polynomial_validation_curve.svg', facecolor='none',
-            edgecolor='none')
+
 
 # %%
 # Learning curves

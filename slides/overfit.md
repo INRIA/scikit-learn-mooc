@@ -280,3 +280,57 @@ So, now that we understand that there is tradeoff between underfit and
 overfit, the question is: from a practical standpoint, how do we choose
 it?
 
+---
+
+# Increasing complexity: test vs train error
+
+.pull-left[<img src="../figures/linear_splines_test.svg" width=100%>]
+.width50.pull-right[
+Compare:
+
+* errors on the training data
+
+* errors on the testing data
+
+vary model complexity
+]
+
+
+
+---
+
+# Increasing complexity: test vs train error
+
+.pull-left[<img src="../figures/polynomial_overfit_test_1.svg" width=100%>]
+.width50.pull-right[<img src="../figures/polynomial_validation_curve_1.svg"
+		width="100%">]
+
+
+---
+
+# Increasing complexity: test vs train error
+
+.pull-left[<img src="../figures/polynomial_overfit_test_2.svg" width=100%>]
+.width50.pull-right[<img src="../figures/polynomial_validation_curve_2.svg"
+		width="100%">]
+
+
+---
+
+# Increasing complexity: test vs train error
+
+.pull-left[<img src="../figures/polynomial_overfit_test_5.svg" width=100%>]
+.width50.pull-right[<img src="../figures/polynomial_validation_curve_5.svg"
+		width="100%">]
+
+
+
+---
+
+# Increasing complexity: test vs train error
+
+.pull-left[<img src="../figures/polynomial_overfit_test_9.svg" width=100%>]
+.width50.pull-right[<img src="../figures/polynomial_validation_curve_15.svg"
+		width="100%">]
+
+

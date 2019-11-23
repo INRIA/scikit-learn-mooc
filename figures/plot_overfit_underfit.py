@@ -200,7 +200,7 @@ for i, degree in enumerate(plotted_degrees):
     plt.yticks(())
     plt.xticks(plotted_degrees[:i+1])
     plt.ylabel('Error')
-    plt.xlabel('Polynomial degree')
+    plt.xlabel('Polynomial degree             ')
     plt.subplots_adjust(left=.08, bottom=.23, top=.99, right=1.04)
 
     plt.savefig('polynomial_validation_curve_%i.svg' % degree,
@@ -219,21 +219,19 @@ X = x.reshape((-1, 1))
 
 np.random.seed(42)
 
-plt.figure()
-
 def savefig(name):
     " Ajust layout, and then save"
     ax = plt.gca()
     for s in ('top', 'right'):
         ax.spines[s].set_visible(False)
-    plt.ylim(-.65, .15)
-    plt.xlim(train_sizes.min(), train_sizes.max())
+    plt.ylim(-.65, .0)
+    plt.xlim(.5*train_sizes.min(), train_sizes.max())
     plt.xticks((100, 1000), ('100', '1000'), size=13)
     plt.yticks(())
 
     plt.ylabel('Error')
-    plt.xlabel('Number of samples')
-    plt.subplots_adjust(left=.07, bottom=.16, top=.99, right=.99)
+    plt.xlabel('Number of samples      ')
+    plt.subplots_adjust(left=.07, bottom=.22, top=.99, right=.99)
     plt.savefig(name, edgecolor='none', facecolor='none')
 
 
@@ -242,33 +240,95 @@ model = make_pipeline(PolynomialFeatures(degree=9), LinearRegression())
 train_sizes, train_scores, test_scores = model_selection.learning_curve(
     model, X, y, cv=model_selection.ShuffleSplit(n_splits=20),
     train_sizes=np.logspace(-2.5, -.3, 30))
-test_plot = plt.semilogx(train_sizes, -np.mean(test_scores, axis=1),
-                            label='9',
-                            color='C3')
-savefig('polynomial_learning_curve_0.svg')
-train_plot = plt.semilogx(train_sizes, -np.mean(train_scores, axis=1), '--',
-                            color='C3')
 
-leg1 = plt.legend(['Generalization error', 'Training error'],
-                    loc='upper right', borderaxespad=-.2)
-savefig('polynomial_learning_curve_1.svg')
+idx_to_plot = [0, 7, 19, 29]
 
-# Degree 1
-model = make_pipeline(PolynomialFeatures(degree=1), LinearRegression())
-train_sizes, train_scores, test_scores = model_selection.learning_curve(
-    model, X, y, cv=model_selection.ShuffleSplit(n_splits=20),
-    train_sizes=np.logspace(-2.5, -.3, 30))
-test_plot = plt.semilogx(train_sizes, -np.mean(test_scores, axis=1),
-                            label='1',
-                            color='C0')
-train_plot = plt.semilogx(train_sizes, -np.mean(train_scores, axis=1), '--',
-                            color='C0')
+for i in idx_to_plot:
+    n_train = train_sizes[i]
+    if i > 0:
+        symbol_train = '--'
+        symbol_test = ''
+    else:
+        symbol_train = 'o'
+        symbol_test = 'o'
+    plt.figure(figsize=(4.5, 3))
+    test_plot = plt.semilogx(train_sizes[:i+1],
+                             -np.mean(test_scores, axis=1)[:i+1],
+                             symbol_test,
+                             color='C1')
+    train_plot = plt.semilogx(train_sizes[:i+1],
+                              -np.mean(train_scores, axis=1)[:i+1],
+                              symbol_train, color='k')
+    leg1 = plt.legend(['Test error', 'Train error'],
+                      loc='upper right', borderaxespad=-.2)
+    savefig('polynomial_learning_curve_%i.svg' % n_train)
+
+# %%
+# Training with varying sample size
+t = np.linspace(-1, 1, 100)
+
+d = 9
+model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())
+for i in idx_to_plot:
+    plt.figure()
+    n_train = train_sizes[i]
+    plt.scatter(x[::2], y[::2], marker='.', s=20, color='C1', alpha=.1)
+    plt.scatter(x[:min(n_train, 3000)], y[:min(n_train, 3000)], s=20, color='k')
+
+    model.fit(x[:n_train].reshape(-1, 1), y[:n_train])
+    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d,
+             linewidth=4, color='C3')
+
+    style_figs.no_axis()
+    plt.legend(loc='upper center', borderaxespad=0, borderpad=0)
+    plt.subplots_adjust(top=.96)
+    plt.ylim(-.74, 2.1)
+
+    plt.savefig('polynomial_overfit_ntrain_%i.svg' % n_train,
+                facecolor='none',
+                edgecolor='none')
 
 
-plt.legend(loc='right',
-           title='Degree of polynomial', ncol=2)
-plt.gca().add_artist(leg1)
-savefig('polynomial_learning_curve.svg')
+# %%
+# Various notions of model complexity
+N_SAMPLES = 50
+
+rng = np.random.RandomState(0)
+x = 2 * rng.rand(N_SAMPLES) - 1
+
+y = f(x) + .4 * rng.normal(size=N_SAMPLES)
+
+from sklearn import tree
+
+for degree in (4, 16):
+    plt.figure(figsize=(.8*4, .8*3), facecolor='none')
+    plt.clf()
+    ax = plt.axes([.1, .1, .9, .9])
+
+    poly = make_pipeline(PolynomialFeatures(degree=degree),
+                                            LinearRegression())
+    decision_tree = tree.DecisionTreeRegressor(
+        max_depth=int(np.log2(degree)))
+
+    poly.fit(x.reshape((-1, 1)), y)
+    decision_tree.fit(x.reshape((-1, 1)), y)
+
+    plt.scatter(x, y,  color='k', s=9, alpha=.8)
+
+    plt.plot(t, poly.predict(t.reshape((-1, 1))),
+            color='C3', linewidth=3, label='Polynome')
+    plt.plot(t, decision_tree.predict(t.reshape((-1, 1))),
+            color='C0', linewidth=3, label='Decision Tree')
+
+    plt.axis('tight')
+    plt.ylim(-.74, 2.1)
+    style_figs.no_axis()
+    plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+               handlelength=1)
+
+    plt.savefig('different_models_complex_%i.svg' % degree,
+                facecolor='none', edgecolor='none')
+
 
 # %%
 # Simple figure to demo overfit: with our polynomial data

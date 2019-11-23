@@ -202,7 +202,7 @@ mental picture is that of the spread of arrows on a target.
 
 ???
 
-At the opposit end of the spectrum, when we are fitting a polynomial of
+At the opposite end of the spectrum, when we are fitting a polynomial of
 degree 1, the model is too simple for the data at hand. We say that it
 underfits. Its best possible fit cannot approximate well the
 data-generating process. On the positive side, it captures little noise,
@@ -355,4 +355,270 @@ data is larger.
 
 As we keep increasing model complexity, the train error keeps going done,
 but the test increases sharply. The model is overfitting.
+
+---
+
+# Train vs test error: increasing complexity
+
+.centered[.shift-left[<img src="../figures/polynomial_validation_curve_15.svg" width=110%>]]
+
+.shift-up.centered[
+.reversed[Underfit]
+.reversed[Sweet spot]
+.reversed[Overfit]
+]
+
+???
+
+The big picture is that models that are too simple have similar train and
+test error, while models that are too complex have a small train error
+but a very large test error. There is a sweet spot in the middle, and
+this is where good machine-learning models lie.
+
+---
+class: center, middle
+
+# With varying sample size
+
+Learning curves
+
+
+???
+
+Another useful way to look at the tradeoff between underfit and overfit
+is with varying sample size. Such an analysis is often known as a
+learning curve.
+
+
+---
+
+# Train vs test error: varying sample size
+
+.shift-left.pull-left[<img
+		       src="../figures/polynomial_overfit_ntrain_42.svg"
+		       width=110%>]
+.width50.pull-right[<img
+		     src="../figures/polynomial_learning_curve_42.svg"
+		     width="100%">]
+
+.reversed[Overfit]
+
+???
+
+If we fit a polynomial of degree 9 on a small dataset, we will not have
+enough data and we will be in an overfit situation. As a result the train
+error will be low, but the test error will be high.
+
+---
+
+# Train vs test error: varying sample size
+
+.shift-left.pull-left[<img
+		       src="../figures/polynomial_overfit_ntrain_145.svg"
+		       width=110%>]
+.width50.pull-right[<img
+		     src="../figures/polynomial_learning_curve_145.svg"
+		     width="100%">]
+
+???
+
+As we increase the sample size, the test error decreases while
+the train error increase: the models are less overfitting.
+
+---
+
+# Train vs test error: varying sample size
+
+.shift-left.pull-left[<img
+		       src="../figures/polynomial_overfit_ntrain_1179.svg"
+		       width=110%>]
+.width50.pull-right[<img
+		     src="../figures/polynomial_learning_curve_1179.svg"
+		     width="100%">]
+
+.reversed[Sweet spot?]
+
+???
+
+With enough data, the train and test errors converge: the model is no
+longer overfit.
+
+---
+
+# Train vs test error: varying sample size
+
+.shift-left.pull-left[<img
+		       src="../figures/polynomial_overfit_ntrain_6766.svg"
+		       width=110%>]
+.width50.pull-right[<img
+		     src="../figures/polynomial_learning_curve_6766.svg"
+		     width="100%">]
+
+.reversed[Diminishing returns]
+
+???
+
+After a while, we reach diminishing returns: the test and the train error
+are no longer changing: more data does no bring any benefits.
+
+--
+
+Try more complex models?
+
+???
+
+Given that more data are not improving model prediction, it may be useful
+to try more complex models.
+
+---
+
+# Bayes rate: no improvement possible
+
+.shift-left.pull-left[<img
+		       src="../figures/polynomial_overfit_ntrain_6766.svg"
+		       width=110%>]
+.width50.pull-right[
+Here, the data-generating process is a degree-9 polynomial 
+
+We cannot do better
+
+Predictions limited by noise
+
+]
+
+???
+
+In general, when adding more data does not provide improvements,
+it is useful to try more complex models.
+
+However, in the specific case of our example, the data-generating process
+in a degree-9 polynomial. As a result, more complex models will not
+improve the prediction: the present model has already captured all the
+non-random link between X and y.
+
+The corresponding prediction is imperfect. Yet, we cannot do better: the
+prediction is limited by the intrinsic randomness of the link between X
+and y.
+
+---
+class: middle
+
+.center[
+# Model families
+]
+
+.centered[
+Crucial to match
+
+.tight[
+* statistical model
+
+* data-generating process
+]
+]
+
+.centered[So far: polynomes for both]
+
+???
+
+The excellent performance that we just observed for degree-9 polynomes
+when there is plenty of data comes from the perfect match between the
+statistical model and the data-generating process. So far, we have used
+polynomes for both of them. But in practice, given data, we seldom known
+a simple form of model in which it is drawn. 
+
+For this reason, the choice of family of model is crucial.
+
+---
+
+# Different model families
+
+.shift-left.pull-left[<img
+		       src="../figures/different_models_complex_4.svg"
+		       width=100%>]
+.pull-right.width[
+* Different "inductive bias"
+
+* Different notion of "complexity"
+]
+
+???
+
+Different model families come with different form of bias, which we call
+inductive bias, and of complexity.
+
+For instance, polynomial regression tend to be smooth, and their
+complexity is controlled by the degree of the polynome used to fit the
+data. On the other hand, decision tree are locally constant. There
+complexity is controlled by the number of constant regions that they fit.
+
+---
+
+# Different model families
+
+.shift-left.pull-left[<img
+		       src="../figures/different_models_complex_4.svg"
+		       width=100%>]
+.pull-right[<img
+		       src="../figures/different_models_complex_16.svg"
+		       width=100%>]
+
+.shift-up.pull-left[.reversed[Simple variant]]
+.shift-up.pull-right[.reversed[Complex variant]]
+
+.centered[⇦ regularization ⇦]
+
+???
+
+Varying model complexity for these different families of model explores
+different underfit and overfit behavior.
+
+In general forcing a model towards a simpler fit is called
+"regularization". In scikit-learn, and in machine learning in general,
+almost every model comes with a specific regularization strategy. Part of
+machine-learning practice is about understanding the inductive biases and
+the regularization strategy to choose the right model. We will cover this
+later, as we explore various models.
+
+---
+
+.center[
+# Take home messages
+]
+
+Models too complex for the data **overfit**:
+
+.tight[
+- they explain too well the data that they have seen
+- they do not generalize
+]
+
+Models too simple for the data **underfit**:
+
+.tight[
+- they capture no noise
+- but are limited by their expressivity
+]
+
+Comparing train and test error reveals this tradeoff
+
+Different models = different complexity and bias
+
+???
+
+Let me conclude this lesson by recapitulating the take home messages.
+
+When the models are too complex for the data at hand, they overfit. This
+means that they explain too well the data that they have seen as they
+capture noise, and thus do not generalize to new data.
+
+On the opposite, when models are too simple for the data at hand, they
+underfit. This means that they capture no noise, but their ability to
+generalize is then limited by their expressivity.
+
+Comparing train and test error, for instance varying model complexity, or
+amount of data, can reveal this tradeoff.
+
+The notion of complexity, or the bias imposed by a model, are both
+specific to a model family. We will later study different model families.
 

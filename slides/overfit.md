@@ -298,7 +298,7 @@ Measure:
 ???
 
 To probe the tradeoff between underfit and overfit, our central
-ingredient will be to measure both the generalization error, on unseen
+tool will be to measure both the generalization error, on unseen
 test data, and the error on the data used to train de model
 
 

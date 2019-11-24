@@ -187,7 +187,7 @@ too much noise.
 
 The problem of overfit is one of variance: on average, the predictions
 are not really off, but each tends to fall far from the target. This can
-be seen by their large spread around the best possible, and a useful
+be seen by their large spread around the best possible prediction. A useful
 mental picture is that of the spread of arrows on a target.
 
 ---

@@ -226,7 +226,7 @@ Concluding on new instances
 
 In machine learning, we want to conclude on new instances. In the 
 example on the census, I want to be able to predict the income of new
-individuals, which a combination of jobs and demographics that I have
+individuals, with a combination of jobs and demographics that I have
 never seen.
 
 --
@@ -260,9 +260,9 @@ vary, even within the limited description given by our data.
 ???
 
 An additional difficulty is the noise in the data. By noise, we mean the
-aspects that cannot by explained by solely from the data. For instance,
+aspects that cannot by explained solely from the data. For instance,
 an individual's income may have been influenced by the mood of his manager 
-during his annual review.
+during his annual review, which is not in our database.
 
 ---
 # Memorizing

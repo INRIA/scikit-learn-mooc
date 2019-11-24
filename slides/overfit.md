@@ -526,8 +526,8 @@ Crucial to match
 The excellent performance that we just observed for degree-9 polynomes
 when there is plenty of data comes from the perfect match between the
 statistical model used to analyse the data and the data-generating process. So far, we have used
-polynomes for both of them. But in practice, given data, we seldom known
-a simple form of model in which it is drawn. 
+polynomes for both of them. But in practice, given data, we seldom know
+a simple form of model in which the data is drawn. 
 
 For this reason, the choice of family of model is crucial.
 

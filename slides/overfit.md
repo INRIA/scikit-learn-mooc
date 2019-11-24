@@ -55,8 +55,9 @@ the question is: how will the model perform on new data?
 ???
 
 How about a slightly harder example? Which one should we choose?
+This is a difficult question.
 
-In this course, we will the useful concepts to understand these
+In this lesson, we will study useful concepts to understand these
 tradeoffs.
 
 

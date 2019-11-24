@@ -425,7 +425,7 @@ error will be low, but the test error will be high.
 ???
 
 As we increase the sample size, the test error decreases while
-the train error increase: the models are less overfitting.
+the train error increases: the models are less overfitting.
 
 ---
 
@@ -461,7 +461,7 @@ longer overfit.
 ???
 
 After a while, we reach diminishing returns: the test and the train error
-are no longer changing: more data does no bring any benefits.
+are no longer changing: more data does not bring any benefits.
 
 --
 
@@ -525,7 +525,7 @@ Crucial to match
 
 The excellent performance that we just observed for degree-9 polynomes
 when there is plenty of data comes from the perfect match between the
-statistical model and the data-generating process. So far, we have used
+statistical model used to analyse the data and the data-generating process. So far, we have used
 polynomes for both of them. But in practice, given data, we seldom known
 a simple form of model in which it is drawn. 
 

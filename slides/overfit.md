@@ -127,7 +127,8 @@ better or not
 
 ???
 
-And if we go all the way up to degree 9, the fit looks really bad
+And if we go all the way up to degree 9, the fit actually looks really
+bad
 
 ---
 # Varying model complexity

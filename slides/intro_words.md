@@ -2,10 +2,10 @@
 Hi,
 
 Welcome to the Machine-learning with scikit-learn course. The goal of
-this course is to teach you practical aspects of machine learning, with a
-focus on tabular data, as it is often uncountered in the industry. The
-course is light on maths, and focuses on practical aspects, non only
-about pure machine learning, but also about the basics of data
+this course is to teach you practical aspects of machine learning. It
+focuses on tabular data, as such data is often uncountered in the
+industry. The course is light on maths, and focuses on practical aspects,
+non only about pure machine learning, but also about the basics of data
 preparation and visualization for machine learning. Most of it is
 centered on executable Python code that teaches how to analyse the data,
 with tools such as scikit-learn.

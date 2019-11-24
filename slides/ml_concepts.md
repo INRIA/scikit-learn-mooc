@@ -278,7 +278,7 @@ during his annual review, which is not in our database.
 One possibility for prediction is to memorize the whole available data.
 
 Given the problem of predicting income, we can store all known
-individuals, the census. Then, give a new individual, we predict the
+individuals, the census. Then, given a new individual, we predict the
 income of its closest match in our database.
 
 This strategy is known is machine learning as a "nearest neighbor"
@@ -312,7 +312,7 @@ have zero prediction error.
 ???
 
 However, if we try our strategy on unseen data, it will not be able to
-find exact match. Hence, it is likely to make some errors.
+find exact matches. Hence, it is likely to make some errors.
 
 ---
 
@@ -347,7 +347,7 @@ model, known as the train data.
 
 They are different because there might be different noise, but also
 because there might be individuals with new configuration of features
-that we have not observed: different combinations of occupation, age, and
+that we have not observed: different combinations of occupation, age, or
 marital status.
 
 ---
@@ -361,7 +361,7 @@ marital status.
 The typical workflow in machine-learning is to use a given dataset to
 learn a predictive model, for instance predicting the type of iris, and
 then to apply it to new data, or what we will call a "test" set, to put
-the model in production, or to check it's validity.
+the model in production, or to check its validity.
 
 ---
 
@@ -419,11 +419,11 @@ The goal is to **predict** *y*
 ???
 
 In supervised machine learning, 
-the data we have are annotated, i.e. they are associated with a label or a target class.
-As for our Iris, each data is associated with a type of Iris: our target class.
-The purpose of supervised learning is to predict this target (i.e. the type of iris) on new unannotated data (by entering only petal and sepal dimensions).
+the data that we have are annotated. In other words, they are associated with a label or a target class.
+For Irises, each data point is associated with a type of Iris: our target class.
+The purpose of supervised learning is to predict this target (here the type of iris) on new data without annotation: entering only petal and sepal dimensions.
 
-With a mathematical representation : in supervised machine learning, we are given 
+In mathematical terms, for supervised machine learning, we are given 
 
 * a data matrix, that we shall denote *X*, with *n* observations
 
@@ -453,8 +453,8 @@ no available target.
 The goal is then to extract some form of structure from *X* that
 generalize to new data.
 
-If we take the example of the Iris, in unsupervised learning, the input data would not include the type of Iris because the data is not annotated. 
-The goal will therefore be to find alone the similarities and distinctions within the data, and to group together data that share common characteristics. 
+If we take the example of Irises, in unsupervised learning, the input data would not include the type of Iris because the data is not annotated. 
+The goal could therefore be to find similarities and structures within the data, or to group together observations that share common characteristics. 
 
 Unsupervised learning covers a very wide variety of different problems. We
 will not cover them for now.
@@ -485,7 +485,7 @@ a situation, we say that it is a classification task.
 It may be continuous, describing a numerical property of our observation.
 For instance, when trying to predict from the census who is rich, it
 would be interesting to predict the income, in dollars. In such a
-sitation, we way that it is a regression task.
+sitation, we say that it is a regression task.
 
 ---
 

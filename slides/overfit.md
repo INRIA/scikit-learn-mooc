@@ -299,7 +299,7 @@ Measure:
 
 To probe the tradeoff between underfit and overfit, our central
 tool will be to measure both the generalization error, on unseen
-test data, and the error on the data used to train de model
+test data, and the error on the data used to train the model
 
 
 ---

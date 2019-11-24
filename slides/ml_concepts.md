@@ -85,7 +85,7 @@ Maybe I can use machine learning to build mathematical rules to set them
 apart?
 
 For this, I will describe the irises with numbers. I can measure the
-dimensions of there sepal and petal. *Pick up a ruler, and pretend to
+dimensions of their sepal and petal. *Pick up a ruler, and pretend to
 measure*
 
 --
@@ -100,7 +100,7 @@ measure*
 ???
 
 Now I have a set of numbers describing irises. Can I build decision rules
-from them? Maybe. See, for instance, it seems that setosa irises have a
+from these numbers? Maybe. See, for instance, it seems that setosa irises have a
 very small petal.
 
 ---
@@ -134,12 +134,12 @@ US Census data:
 
 For this, we can use data from the US census.
 
-As you see, it gives is fairly diverse information about individuals : *age, workclass, education, marital-statut, occupation, relationship...*, as well as whether they earn more or less than 50 thousand dollars a year.
+As you see, it gives is fairly diverse information about individuals : *age, workclass, education, marital-statut, occupation, relationship, and more information*, as well as whether they earn more or less than 50 thousand dollars a year.
 We can use machine learning to build rules that will predict this income
 information from the rest of the demographic information.
 
 You can also see that, even in a simple example like this, having
-intuition about the information available on many individuals can be a
+intuitions about the information available on many individuals can be a
 bit challenging. Data visualization will come in handy.
 
 ---
@@ -154,7 +154,7 @@ Expert knowledge: setosa irises have small petals
 
 So, machine learning is about engineering decision rules from the data.
 But experts can also engineer decision rules from their knowledge of the
-problem. For instance, experts know that setosa irises have small petals.
+problem. For instance, flower experts know that setosa irises have small petals.
 
 --
 
@@ -188,17 +188,17 @@ This rule can be inferred from the data
 
 This rule can also be inferred by looking at the data. If we look at the
 distribution of the sepal and petal measurements for the different iris
-species, we can see that petal length and width single well out setosa.
+species, we can see that petal length and width single out well setosa.
 
 
 *But how can we deal with more complex, more numerous data? *
 
 
-**The benefit of machine-learning is that it automates the creation of rules from the data, including their details, such as where exactly
-to set the threshold.**
+**The benefit of machine-learning is that it automates the creation of rules from the data, including their details, such here as where exactly
+to set the threshold on the petal length.**
 
 
-*In concrete terms, machine learning allow predictions from data, based for instance on predictive analyses.* 
+*In concrete terms, machine learning builds the prediction rules from the data.* 
 
 ---
 class: center, middle
@@ -212,7 +212,7 @@ We will now get to the heart of the matter by focusing on predictive models.
 
 
 To build predictive models we are going to rely on statistical
-properties of the data. However, there questions and the tools that we
+properties of the data. However, the questions and the tools that we
 will use differ a bit from those traditionally used in statistics.
 
 ---

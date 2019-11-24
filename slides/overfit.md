@@ -312,7 +312,7 @@ test data, and the error on the data used to train the model
 
 ???
 
-We can look at those error while varying model complexity.
+We can look at these errors while varying model complexity.
 
 If we start with a very simple model, the training error is similar to
 the testing error: the model does not have enough capacity to capture
@@ -355,7 +355,7 @@ data is larger.
 
 ???
 
-As we keep increasing model complexity, the train error keeps going done,
+As we keep increasing model complexity, the train error keeps going down,
 but the test increases sharply. The model is overfitting.
 
 ---

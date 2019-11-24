@@ -510,7 +510,7 @@ To summarize, machine learning is about extracting from data rules that
 generalize to new observations.
 
 In practice, we will work with a data matrix, that we will call *X*, with
-a *n_samples* rows times *n_features* columns. For supervised learning,
+*n_samples* rows times *n_features* columns. For supervised learning,
 we have a target vector *y*, of length *n_samples*, which is made of
 numbers characterizing each observation for regression problems and of
 discrete classes for classification problems.

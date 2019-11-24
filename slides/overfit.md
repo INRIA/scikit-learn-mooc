@@ -247,8 +247,8 @@ use to predict is systematically off the data-generating process.
 ???
 
 So we have these two opposit behaviors:
-* and underfit, with systematic bias
-* overfit, with large variance
+* underfit, with systematic bias
+* and overfit, with large variance
 
 The challenge is to find the right tradeoff between the two.
 

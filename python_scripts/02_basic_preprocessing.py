@@ -172,7 +172,7 @@ predictions.head()
 
 # %% [markdown]
 # To quantitatively evaluate our model, we can use the method `score`. It will
-# compute the classification accuracy when dealing with a classificiation
+# compute the classification accuracy when dealing with a classification
 # problem.
 
 # %%
@@ -193,7 +193,9 @@ print(f"The test accuracy using a {model.__class__.__name__} is "
 # - What would be the score of a model that always predicts `' <= 50K'`?
 # - Is 81% or 82% accuracy a good score for this problem?
 #
-# Hint: You can compute the cross-validated of a [DummyClassifier](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators) the performance of such baselines.
+# Hint: You can compute the cross-validated of a
+# [DummyClassifier](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
+# the performance of such baselines.
 #
 # Use the dedicated notebook to do this exercise.
 
@@ -280,13 +282,6 @@ print(
 # the model, the data and the target. Since there exists several
 # cross-validation strategies, `cross_val_score` takes a parameter `cv` which
 # defines the splitting strategy.
-#
-#
-#
-#
-#
-#
-#
 
 
 # %%

@@ -5,8 +5,8 @@
 #     text_representation:
 #       extension: .py
 #       format_name: percent
-#       format_version: '1.2'
-#       jupytext_version: 1.2.4
+#       format_version: '1.3'
+#       jupytext_version: 1.3.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -66,30 +66,51 @@ categorical_columns = [
     'workclass', 'education', 'marital-status', 'occupation',
     'relationship', 'race', 'native-country', 'sex']
 
-categories = [data[column].unique()
-              for column in data[categorical_columns]]
+categories = [
+    data[column].unique() for column in data[categorical_columns]]
 
 categorical_preprocessor = OrdinalEncoder(categories=categories)
 
-preprocessor = ColumnTransformer(
-    [('cat-preprocessor', categorical_preprocessor, categorical_columns)],
-    remainder='passthrough', sparse_threshold=0)
+preprocessor = ColumnTransformer([
+    ('cat-preprocessor', categorical_preprocessor,
+     categorical_columns),], remainder='passthrough',
+                                 sparse_threshold=0)
 
 # %% [markdown]
 # Finally, we use a tree-based classifier (i.e. histogram gradient-boosting) to
 # predict whether or not a person earns more than 50,000 dollars a year.
 
 # %%
+# %%time
 # for the moment this line is required to import HistGradientBoostingClassifier
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import Pipeline
 
-model = make_pipeline(
-    preprocessor, HistGradientBoostingClassifier(random_state=42))
+model = Pipeline([
+    ("preprocessor", preprocessor),
+    ("classifier",
+     HistGradientBoostingClassifier(max_leaf_nodes=16,
+                                    learning_rate=0.05,
+                                    random_state=42)),])
 model.fit(df_train, target_train)
-print(f"The accuracy score using a {model.__class__.__name__} is "
-      f"{model.score(df_test, target_test):.2f}")
+
+print(
+    f"The test accuracy score of the gradient boosting pipeline is: "
+    f"{model.score(df_test, target_test):.2f}")
+
+# %% [markdown]
+# ## Quizz
+#
+# 1. What is the default value of the `learning_rate` parameter of the `HistGradientBoostingClassifier` class? ([link to the API documentation](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html#sklearn-ensemble-histgradientboostingclassifier))
+#
+# 2. Try to edit the code of the previous cell to set the learning rate parameter to 10. Does this increase the accuracy of the model?
+#
+# 3. Decrease progressively value of `learning_rate`: can you find a value that yields an accuracy higher than 0.87?
+#
+# 4. Fix `learning_rate` to 0.05 and try setting the value of `max_leaf_nodes` to the minimum value of 2. Does not improve the accuracy?
+#
+# 5. Try to progressively increase the value of `max_leaf_nodes` to 256 by taking powers of 2. What do you observe?
 
 # %% [markdown]
 # ## The issue of finding the best model parameters
@@ -125,7 +146,8 @@ print(f"The accuracy score using a {model.__class__.__name__} is "
 
 # %%
 print("The hyper-parameters are for a histogram GBDT model are:")
-for param_name in HistGradientBoostingClassifier().get_params().keys():
+for param_name in HistGradientBoostingClassifier().get_params().keys(
+):
     print(param_name)
 
 # %% [markdown]
@@ -141,10 +163,10 @@ for param_name in model.get_params().keys():
 
 # %% [markdown]
 # The parameters that we want to set are:
-# - `'histgradientboostingclassifier__learning_rate'`: this parameter will
+# - `'classifier__learning_rate'`: this parameter will
 #   control the ability of a new tree to correct the error of the previous
 #   sequence of trees;
-# - `'histgradientboostingclassifier__max_leaf_nodes'`: this parameter will
+# - `'classifier__max_leaf_nodes'`: this parameter will
 #   control the depth of each tree.
 
 # %% [markdown]
@@ -160,6 +182,8 @@ for param_name in model.get_params().keys():
 # - `max_leaf_nodes` for the values 5, 25, 45.
 
 # %% [markdown]
+# ## Automated parameter tuning via grid-search
+#
 # Instead of manually writting the two `for` loops, scikit-learn provides a
 # class called `GridSearchCV` which implement the exhaustive search implemented
 # during the exercise.
@@ -169,19 +193,19 @@ for param_name in model.get_params().keys():
 # learning-rate and the maximum number of nodes.
 
 # %%
+# %%time
 import numpy as np
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {
-    'histgradientboostingclassifier__learning_rate': (0.01, 0.1, 1),
-    'histgradientboostingclassifier__max_leaf_nodes': (5, 43, 63),
-}
+    'classifier__learning_rate': (0.05, 0.1, 0.5, 1, 5),
+    'classifier__max_leaf_nodes': (3, 10, 30, 100),}
 model_grid_search = GridSearchCV(model, param_grid=param_grid,
-                                 n_jobs=4, cv=5)
+                                 n_jobs=4, cv=2)
 model_grid_search.fit(df_train, target_train)
-print(
-    f"The accuracy score using a {model_grid_search.__class__.__name__} is "
-    f"{model_grid_search.score(df_test, target_test):.2f}")
+
+print(f"The test accuracy score of the grid-searched pipeline is: "
+      f"{model_grid_search.score(df_test, target_test):.2f}")
 
 # %% [markdown]
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines
@@ -217,18 +241,29 @@ print(f"The best set of parameters is: "
 # from these results
 
 # %%
-# get the parameter names
-column_results = [f"param_{name}"for name in param_grid.keys()]
-column_results += ["mean_test_score", "std_test_score", "rank_test_score"]
-
-cv_results = pd.DataFrame(model_grid_search.cv_results_)
-cv_results = cv_results[column_results].sort_values(
+cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
     "mean_test_score", ascending=False)
-cv_results = cv_results.rename(
-    columns={"param_histgradientboostingclassifier__learning_rate":
-             "learning-rate",
-             "param_histgradientboostingclassifier__max_leaf_nodes":
-             "max leaf nodes"})
+cv_results.head()
+
+# %% [markdown]
+# Let us focus on the most interesting columns and shorten the parameter names to remove the `"param_classifier__"` prefix for readability:
+
+# %%
+# get the parameter names
+column_results = [f"param_{name}" for name in param_grid.keys()]
+column_results += [
+    "mean_test_score", "std_test_score", "rank_test_score"]
+cv_results = cv_results[column_results]
+
+
+# %%
+def shorten_param(param_name):
+    if "__" in param_name:
+        return param_name.rsplit("__", 1)[1]
+    return param_name
+
+
+cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
 # %% [markdown]
@@ -239,20 +274,35 @@ cv_results
 # will be the mean test scores.
 
 # %%
-heatmap_cv_results = cv_results.pivot_table(
-    values="mean_test_score",
-    index=["learning-rate"], columns=["max leaf nodes"])
+pivoted_cv_results = cv_results.pivot_table(
+    values="mean_test_score", index=["learning_rate"],
+    columns=["max_leaf_nodes"])
 
+pivoted_cv_results
+
+# %%
 import matplotlib.pyplot as plt
 from seaborn import heatmap
 
-ax = heatmap(heatmap_cv_results, annot=True, cmap="YlGnBu", vmin=0.7, vmax=0.9)
-# FIXME: temporary fix since matplotlib 3.1.1 broke seaborn heatmap. Remove
-# with matplotlib 3.2
+ax = heatmap(pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7,
+             vmax=0.9)
 ax.invert_yaxis()
-_ = ax.set_ylim([0, heatmap_cv_results.shape[0]])
 
 # %% [markdown]
+# The above tables highlights the following things:
+#
+# - for too high values of the value of `learning_rate`, the performance of the model is degraded and adjusting the value of `max_leaf_nodes` cannot fix that problem;
+# - outside of this pathological region, we observe that the optimal choice of `max_leaf_nodes` depends on the value of `learning_rate`;
+# - in particular, we observe a "diagonal" of good models with an accuracy close to the maximal of 0.87: when the value of `max_leaf_nodes` is increased, one should increase the value of `learning_rate` accordingly to preserve a good accuracy.
+#
+# The precise meaning of those two parameters will be explained in a latter notebook.
+#
+# For now we will note that, in general, **there is no unique optimal parameter setting**: 6 models out of the 16 parameter configuration reach the maximal accuracy (up to smal random fluctuations caused by the sampling of the training set).
+
+# %% [markdown]
+# ## Hyper-parameter tuning with Random Search
+#
+#
 # With the `GridSearchCV` estimator, the parameters need to be specified
 # explicitely. We mentioned that exploring a large number of values for
 # different parameters will be quickly untractable.
@@ -270,32 +320,36 @@ _ = ax.set_ylim([0, heatmap_cv_results.shape[0]])
 # %%
 from scipy.stats import reciprocal
 from sklearn.model_selection import RandomizedSearchCV
+from pprint import pprint
 
 
 class reciprocal_int:
+    """Integer valued version of the log-uniform distribution"""
     def __init__(self, a, b):
         self._distribution = reciprocal(a, b)
 
     def rvs(self, *args, **kwargs):
+        """Random variable sample"""
         return self._distribution.rvs(*args, **kwargs).astype(int)
 
 
 param_distributions = {
-    'histgradientboostingclassifier__l2_regularization': reciprocal(1e-6, 1),
-    'histgradientboostingclassifier__learning_rate': reciprocal(0.001, 1),
-    'histgradientboostingclassifier__max_leaf_nodes': reciprocal_int(5, 63),
-    'histgradientboostingclassifier__min_samples_leaf': reciprocal_int(3, 40),
-}
+    'classifier__l2_regularization': reciprocal(1e-6, 1e3),
+    'classifier__learning_rate': reciprocal(0.001, 10),
+    'classifier__max_leaf_nodes': reciprocal_int(2, 256),
+    'classifier__min_samples_leaf': reciprocal_int(1, 100),
+    'classifier__max_bins': reciprocal_int(2, 255),}
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=10,
     n_jobs=4, cv=5)
 model_random_search.fit(df_train, target_train)
-print(
-    f"The accuracy score using a {model_random_search.__class__.__name__} is "
-    f"{model_random_search.score(df_test, target_test):.2f}")
-print(
-    f"The best set of parameters is: {model_random_search.best_params_}"
-)
+
+print(f"The test accuracy score of the best model is "
+      f"{model_random_search.score(df_test, target_test):.2f}")
+
+# %%
+print("The best parameters are:")
+pprint(model_random_search.best_params_)
 
 # %% [markdown]
 # We can inspect the results using the attributes `cv_results` as we previously
@@ -303,53 +357,56 @@ print(
 
 # %%
 # get the parameter names
-column_results = [f"param_{name}"for name in param_distributions.keys()]
-column_results += ["mean_test_score", "std_test_score", "rank_test_score"]
+column_results = [
+    f"param_{name}" for name in param_distributions.keys()]
+column_results += [
+    "mean_test_score", "std_test_score", "rank_test_score"]
 
 cv_results = pd.DataFrame(model_random_search.cv_results_)
 cv_results = cv_results[column_results].sort_values(
     "mean_test_score", ascending=False)
-cv_results = cv_results.rename(
-    columns={"param_histgradientboostingclassifier__l2_regularization":
-             "l2 regularization",
-             "param_histgradientboostingclassifier__learning_rate":
-             "learning-rate",
-             "param_histgradientboostingclassifier__max_leaf_nodes":
-             "max leaf nodes",
-             "param_histgradientboostingclassifier__min_samples_leaf":
-             "min samples leaf",
-             "mean_test_score": "mean test accuracy",
-             "rank_test_score": "ranking"})
-cv_results.head()
+cv_results = cv_results.rename(shorten_param, axis=1)
+cv_results
 
 # %% [markdown]
-# In practice, a randomized grid-search is usually run with a large number of
+# In practice, a randomized hyper-parameter search is usually run with a large number of
 # iterations. In order to avoid the computation cost and still make a decent
 # analysis, we load the results obtained from a similar search with 200
 # iterations.
 
 # %%
-import os
+# model_random_search = RandomizedSearchCV(
+#     model, param_distributions=param_distributions, n_iter=500,
+#     n_jobs=4, cv=5)
+# model_random_search.fit(df_train, target_train)
+# cv_results =  pd.DataFrame(model_random_search.cv_results_)
+# cv_results.to_csv("../figures/randomized_search_results.csv")
 
-cv_results = pd.read_csv(
-    os.path.join(
-        "..", "figures", "randomized_search_results.csv"),
-    index_col=0)
+# %%
+cv_results = pd.read_csv("../figures/randomized_search_results.csv",
+                         index_col=0)
 
 # %% [markdown]
 # As we have more than 2 paramters in our grid-search, we cannot visualize the
 # results using a heatmap. However, we can us a parallel coordinates plot.
 
 # %%
+(cv_results[column_results].rename(
+    shorten_param, axis=1).sort_values("mean_test_score"))
+
+# %%
 import plotly.express as px
 
 fig = px.parallel_coordinates(
-    cv_results.drop(columns=["ranking", "std_test_score"]),
-    color="mean test accuracy",
-    dimensions=["learning-rate", "l2 regularization",
-                "max leaf nodes", "min samples leaf",
-                "mean test accuracy"],
-    color_continuous_scale=px.colors.diverging.Tealrose,
+    cv_results.rename(shorten_param, axis=1).apply({
+        "learning_rate": np.log10,
+        "max_leaf_nodes": np.log2,
+        "max_bins": np.log2,
+        "min_samples_leaf": np.log10,
+        "l2_regularization": np.log10,
+        "mean_test_score": lambda x: x,}),
+    color="mean_test_score",
+    color_continuous_scale=px.colors.sequential.Viridis,
 )
 fig.show()
 
@@ -359,27 +416,56 @@ fig.show()
 # are able to quickly inspect if there is a range of hyper-parameters which is
 # working or not.
 #
-# You can select a subset of searches by selecting for instance a range of
-# value in the mean test accuracy metric.
+# Note that we **transformed most axis values by taking a log10 or log2** to
+# spread the active ranges and improve the readability of the plot.
 #
-# For instance, we observe that a small learning-rate (< 0.1)
-# is not a good choice since a lot of the blue line (i.e. low accuracy) are
-# emerging from this range of low values.
+# It is possible to **select a range of results by clicking and holding on
+# any axis** of the parallel coordinate plot. You can then slide (move)
+# the range selection and cross two selections to see the intersections.
+
+# %% [markdown]
+# **Quizz**
+#
+#
+# Select the worst performing models (for instance models with a "mean_test_score" lower than 0.7): what do have all these moels in common (choose one):
+#
+#
+# |                               |      |
+# |-------------------------------|------|
+# | too large `l2_regularization` |      |
+# | too small `l2_regularization` |      |
+# | too large `learning_rate`     |      |
+# | too low `learning_rate`       |      |
+# | too large `max_bins`          |      |
+# | too large `max_bins`          |      |
+#
+#
+# Using the above plot, identify ranges of values for hyperparameter that always prevent the model to reach a test score higher than 0.86, irrespective of the other values:
+#
+#
+# |                               | True | False |
+# |-------------------------------|------|-------|
+# | too large `l2_regularization` |      |       |
+# | too small `l2_regularization` |      |       |
+# | too large `learning_rate`     |      |       |
+# | too low `learning_rate`       |      |       |
+# | too large `max_bins`          |      |       |
+# | too large `max_bins`          |      |       |
 
 # %% [markdown]
 # ## Exercises:
 #
 # - Build a machine learning pipeline:
-#       * preprocess the categorical columns using a `OneHotEncoder` and use
-#         a `StandardScaler` to normalize the numerical data.
-#       * use a `LogisticRegression` as a predictive model.
+#   * preprocess the categorical columns using a `OneHotEncoder` and use
+#     a `StandardScaler` to normalize the numerical data.
+#   * use a `LogisticRegression` as a predictive model.
 # - Make an hyper-parameters search using `RandomizedSearchCV` and tuning the
 #   parameters:
-#       * `C` with values ranging from 0.001 to 10. You can use a reciprocal
-#         distribution (i.e. `scipy.stats.reciprocal`);
-#       * `solver` with possible values being `"liblinear"` and `"lbfgs"`;
-#       * `penalty` with possible values being `"l2"` and `"l1"`;
-#       * `drop` with possible values being `None` or `"first"`.
+#   * `C` with values ranging from 0.001 to 10. You can use a reciprocal
+#     distribution (i.e. `scipy.stats.reciprocal`);
+#   * `solver` with possible values being `"liblinear"` and `"lbfgs"`;
+#   * `penalty` with possible values being `"l2"` and `"l1"`;
+#   * `drop` with possible values being `None` or `"first"`.
 #
 # You might get some `FitFailedWarning` and try to explain why.
 
@@ -388,53 +474,67 @@ fig.show()
 #
 # Cross-validation was used for searching for the best model parameters. We
 # previously evaluated model performance through cross-validation as well. If
-# we would like to combine both aspects, we need to perform a "nested"
-# cross-validation. The "outer" cross-validation is applied to assess the model
+# we would like to combine both aspects, we need to perform a **"nested"
+# cross-validation**. The "outer" cross-validation is applied to assess the model
 # while the "inner" cross-validation sets the hyper-parameters of the model on
-# the data set provided by the "outer" cross-validation. In practice, it is
-# equivalent to including, `GridSearchCV`, `RandomSearchCV`, or any
-# `EstimatorCV` in a `cross_val_score` or `cross_validate` function call.
+# the data set provided by the "outer" cross-validation.
+#
+#
+# In practice, it can be implemented by calling `cross_val_score` or
+# `cross_validate` on an instance of `GridSearchCV`, `RandomSearchCV`, or any
+# other `EstimatorCV` class.
 
 # %%
 from sklearn.model_selection import cross_val_score
 
 # recall the definition of our grid-search
 param_distributions = {
-    'histgradientboostingclassifier__max_iter': reciprocal_int(10, 50),
-    'histgradientboostingclassifier__learning_rate': reciprocal(0.01, 1),
-    'histgradientboostingclassifier__max_leaf_nodes': reciprocal_int(15, 35),
-    'histgradientboostingclassifier__min_samples_leaf': reciprocal_int(3, 15),
-}
+    'classifier__max_iter': reciprocal_int(10, 50),
+    'classifier__learning_rate': reciprocal(0.01, 10),
+    'classifier__max_leaf_nodes': reciprocal_int(2, 16),
+    'classifier__min_samples_leaf': reciprocal_int(1, 50),}
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=10,
     n_jobs=4, cv=5)
-score = cross_val_score(model_random_search, data, target, n_jobs=4, cv=5)
-print(
-    f"The accuracy score is: {score.mean():.3f} +- {score.std():.3f}"
-)
-print(f"The different scores obtained are: \n{score}")
+
+scores = cross_val_score(model_random_search, data, target, n_jobs=4,
+                         cv=5)
+
+# %%
+print(f"The cross-validated accuracy score is:"
+      f" {scores.mean():.3f} +- {scores.std():.3f}")
+
+# %%
+print("The scores obtained for each CV split are:")
+print(scores)
 
 # %% [markdown]
-# Be aware that such training might involve a variation of the hyper-parameters
-# of the model. When analyzing such model, you should not only look at the
+# Be aware that the best model found for each split of the outer cross-validation loop might not share the same hyper-parameter values.
+#
+# When analyzing such model, you should not only look at the
 # overall model performance but look at the hyper-parameters variations as
 # well.
 
 # %% [markdown]
+# ## In this notebook, we have:
 #
-# In this notebook, we have:
 # * manually tuned the hyper-parameters of a machine-learning pipeline;
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
 #   by exhaustively searching the best combination of parameters from a defined
 #   grid;
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
 #   drawing values candidates from some predefined distributions;
-# * integrate an hyper-parameters tuning within a cross-validation.
+# * nested an hyper-parameters tuning procedure within an cross-validation
+#   evaluation procedure.
 #
-# Key ideas discussed:
-# * a grid-search is a costly search and does scale with the number of
+# ## Main take-away points
+#
+# * a grid-search is a costly exhaustive search and does scale with the number of
 #   parameters to search;
-# * a randomized-search will run with a fixed given budget;
+# * a randomized-search will always run with a fixed given budget;
 # * when assessing the performance of a model, hyper-parameters search should
-#   be computed on the training data or can be integrated within another
+#   be tuned on the training data of a predifined train test split;
+# * alternatively it is possible to nest parameter tuning within a
 #   cross-validation scheme.
+
+# %%

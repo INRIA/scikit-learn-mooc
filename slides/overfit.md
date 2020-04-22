@@ -549,9 +549,9 @@ For this reason, the choice of family of model is crucial.
 Different model families come with different form of bias, which we call
 inductive bias, and of complexity.
 
-For instance, polynomial regression tend to be smooth, and their
+For instance, polynomial regressions tend to be smooth, and their
 complexity is controlled by the degree of the polynome used to fit the
-data. On the other hand, decision tree are locally constant. There
+data. On the other hand, decision trees are locally constant. Their
 complexity is controlled by the number of constant regions that they fit.
 
 ---

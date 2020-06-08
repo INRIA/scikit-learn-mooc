@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.2'
-#       jupytext_version: 1.2.3
+#       jupytext_version: 1.2.4
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,8 +15,8 @@
 
 # %% [markdown]
 # #  Exercise 01
-# The goal is to find the best set of hyper-parameters which maximize the
-# performance on a training set.
+# The goal is to write an exhaustive search to find the best parameters
+# combination maximizing the model performance
 
 # %%
 import pandas as pd
@@ -45,52 +45,58 @@ data = df.drop(columns=target_name)
 df_train, df_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
 
-# %% [markdown]
-# You should:
-# - create a preprocessor using an `OrdinalEncoder`
-# - use a `HistGradientBoostingClassifier` to make predictions
-# - use a `RandomizedSearchCV` to find the best set of hyper-parameters by
-#   tuning the following parameters: `learning_rate`, `l2_regularization`,
-#   `max_leaf_nodes`, and `min_samples_leaf`.
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OrdinalEncoder
 
-# %%
-ordinal_encoding_columns = [
+categorical_columns = [
     'workclass', 'education', 'marital-status', 'occupation',
     'relationship', 'race', 'native-country', 'sex']
 
-categories = [
-    data[column].unique()
-    for column in data[ordinal_encoding_columns]]
+categories = [data[column].unique()
+              for column in data[categorical_columns]]
 
-preprocessor = ColumnTransformer([
-    ('ordinal-encoder', OrdinalEncoder(categories=categories),
-     ordinal_encoding_columns)], remainder='passthrough',
-                                 sparse_threshold=0)
+categorical_preprocessor = OrdinalEncoder(categories=categories)
 
-model = Pipeline([
-    ('preprocessor', preprocessor),
-    ('gbrt', HistGradientBoostingClassifier(max_iter=50))])
-param_distributions = {
-    'gbrt__learning_rate': expon(loc=0.001, scale=0.5),
-    'gbrt__l2_regularization': uniform(loc=0, scale=0.5),
-    'gbrt__max_leaf_nodes': randint(5, 30),
-    'gbrt__min_samples_leaf': randint(5, 30)}
-model_grid_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions, n_iter=10,
-    n_jobs=4)
-model_grid_search.fit(df_train, target_train)
-print(
-    f"The accuracy score using a {model_grid_search.__class__.__name__} is "
-    f"{model_grid_search.score(df_test, target_test):.2f}")
-print(
-    f"The best set of parameters is: {model_grid_search.best_params_}"
-)
+preprocessor = ColumnTransformer(
+    [('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    remainder='passthrough', sparse_threshold=0)
 
-# %%
-df_results = pd.DataFrame(model_grid_search.cv_results_)
-columns = (['mean_test_score', 'std_test_score'] +
-           [col for col in df_results.columns if 'param_' in col])
-df_results.sort_values(by='mean_test_score',
-                       ascending=False)[columns]
+from sklearn.experimental import enable_hist_gradient_boosting
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.pipeline import make_pipeline
+
+model = make_pipeline(
+    preprocessor, HistGradientBoostingClassifier(random_state=42))
+
+# %% [markdown]
+# TODO: write your solution here
+#
+# Use the previously defined model (called `model`) and using two nested `for`
+# loops, make a search of the best combinations of the `learning_rate` and
+# `max_leaf_nodes` parameters. In this regard, you will need to train and test
+# the model by setting the parameters. The evaluation of the model should be
+# performed using `cross_val_score`. We can propose to define the following
+# parameters search:
+# - `learning_rate` for the values 0.01, 0.1, and 1;
+# - `max_leaf_nodes` for the values 5, 25, 45.
 
 # %%
+from sklearn.model_selection import cross_val_score
+
+learning_rate = [0.01, 0.1, 1, 10]
+max_leaf_nodes = [5, 25, 45]
+
+best_score = 0
+best_params = {}
+for lr in learning_rate:
+    for mln in max_leaf_nodes:
+        model.set_params(
+            histgradientboostingclassifier__learning_rate=lr,
+            histgradientboostingclassifier__max_leaf_nodes=mln
+        )
+        scores = cross_val_score(model, df_train, target_train, cv=3)
+        if scores.mean() > best_score:
+            best_score = scores.mean()
+            best_params = {'learning-rate': lr, 'max leaf nodes': mln}
+print(f"The best accuracy obtained is {best_score:.3f}")
+print(f"The best parameters found are:\n {best_params}")

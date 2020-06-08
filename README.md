@@ -1,6 +1,6 @@
 # scikit-learn tutorial
 
-All notebook material: https://github.com/lesteve/scikit-learn-tutorial/
+All notebook material: https://github.com/INRIA/scikit-learn-mooc/
 
 ## Follow the tutorial online
 

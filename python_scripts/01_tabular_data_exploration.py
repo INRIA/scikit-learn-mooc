@@ -5,8 +5,12 @@
 #     text_representation:
 #       extension: .py
 #       format_name: percent
-#       format_version: '1.2'
-#       jupytext_version: 1.2.4
+#       format_version: '1.3'
+#       jupytext_version: 1.5.0
+#   kernelspec:
+#     display_name: Python 3
+#     language: python
+#     name: python3
 # ---
 
 # %% [markdown]
@@ -44,8 +48,23 @@ adult_census = pd.read_csv(
 # We can look at the OpenML webpage to know more about this dataset.
 
 # %%
+# %%HTML
+
+<style>
+    div.hider + div.cell {
+        display: none;
+    }
+</style>
+
+<div class="hider"></div>
+
+# %%
+# %%HTML
+<iframe src="http://www.openml.org/d/1590" width="100%" height="600"></iframe>
+
+# %%
 from IPython.display import IFrame
-IFrame('https://www.openml.org/d/1590', width=1200, height=600)
+IFrame('http://www.openml.org/d/1590', width="100%", height=600)
 
 # %% [markdown]
 # ## Look at the variables in the dataset

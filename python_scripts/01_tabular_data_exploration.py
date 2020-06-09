@@ -14,19 +14,14 @@
 # ---
 
 # %% [markdown]
+# # Loading data into machine learning
+#
 # In this notebook, we will look at the necessary steps required before any machine learning takes place.
 # * load the data
 # * look at the variables in the dataset, in particular, differentiate
 #   between numerical and categorical variables, which need different
 #   preprocessing in most machine learning workflows
 # * visualize the distribution of the variables to gain some insights into the dataset
-
-# %%
-# Inline plots
-# %matplotlib inline
-
-# plotting style
-import seaborn as sns
 
 # %% [markdown]
 # ## Loading the adult census dataset
@@ -45,33 +40,19 @@ adult_census = pd.read_csv(
 # adult_census = pd.read_csv('../datasets/adult-census.csv')
 
 # %% [markdown]
-# We can look at the OpenML webpage to know more about this dataset.
-
-# %%
-# %%HTML
-
-<style>
-    div.hider + div.cell {
-        display: none;
-    }
-</style>
-
-<div class="hider"></div>
-
-# %%
-# %%HTML
-<iframe src="http://www.openml.org/d/1590" width="100%" height="600"></iframe>
-
-# %%
-from IPython.display import IFrame
-IFrame('http://www.openml.org/d/1590', width="100%", height=600)
+# We can look at the OpenML webpage to learn more about this dataset: http://www.openml.org/d/1590
+#
+# It tells us that the typical prediction task is to determine whether a person makes over 50K a year.
 
 # %% [markdown]
-# ## Look at the variables in the dataset
+# ## The variables (columns) in the dataset
+#
 # The data are stored in a pandas dataframe.
+#
+# Pandas is a Python library to manipulate tables, a bit like Excel but programming: https://pandas.pydata.org/
 
 # %%
-adult_census.head()
+adult_census.head()  # Look at the first few lines of our dataframe
 
 # %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which
@@ -112,7 +93,7 @@ adult_census = adult_census[all_columns]
 # be representative of the full census database.
 
 # %% [markdown]
-# ## Inspect the data
+# ## Visual inspection of the data
 # Before building a machine learning model, it is a good idea to look at the
 # data:
 # * maybe the task you are trying to achieve can be solved without machine
@@ -163,8 +144,9 @@ adult_census.profile_report()
 # %% [markdown]
 # As noted above, `education-num` distribution has two clear peaks around 10
 # and 13. It would be reasonable to expect that `education-num` is the number of
-# years of education. Let's look at the relationship between `education` and
-# `education-num`.
+# years of education.
+#
+# Let's look at the relationship between `education` and `education-num`.
 # %%
 pd.crosstab(index=adult_census['education'],
             columns=adult_census['education-num'])
@@ -185,15 +167,15 @@ pd.crosstab(index=adult_census['education'],
 # %%
 n_samples_to_plot = 5000
 columns = ['age', 'education-num', 'hours-per-week']
+
+# reset the plotting style
+import matplotlib.pyplot as plt
+plt.rcdefaults()
+
+import seaborn as sns
 _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
                  hue=target_column, plot_kws={'alpha': 0.2},
-                 height=4, diag_kind='hist')
-
-# %%
-_ = sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age',
-                 y_vars='hours-per-week', hue=target_column,
-                 markers=['o',
-                          'v'], plot_kws={'alpha': 0.2}, height=12)
+                 height=3, diag_kind='hist')
 
 # %% [markdown]
 #
@@ -224,7 +206,7 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], x_vars='age',
 
 
 # %%
-def plot_tree_decision_function(tree, X, y, ax):
+def plot_tree_decision_function(tree, X, y, ax=None):
     """Plot the different decision rules found by a `DecisionTreeClassifier`.
 
     Parameters
@@ -253,6 +235,8 @@ def plot_tree_decision_function(tree, X, y, ax):
         np.c_[xx.ravel(), yy.ravel()].astype(np.float32))
     faces = faces.reshape(xx.shape)
     border = ndimage.laplace(faces) != 0
+    if ax is None:
+        ax = plt.gca()
     ax.scatter(X.iloc[:, 0], X.iloc[:, 1],
                c=np.array(['tab:blue',
                            'tab:red'])[y], s=60, alpha=0.7)
@@ -264,11 +248,6 @@ def plot_tree_decision_function(tree, X, y, ax):
     ax.set_ylim([y_min, y_max])
     sns.despine(offset=10)
 
-
-# %%
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-mpl.rcParams.update(mpl.rcParamsDefault)  # reset the plotting style
 
 # %%
 from sklearn.preprocessing import LabelEncoder
@@ -297,13 +276,11 @@ tree.fit(X, y)
 # what theses rules look like.
 
 # %%
-# plot the tree structure
-fig, ax = plt.subplots()
-plot_tree(tree, ax=ax)
+_ = plot_tree(tree)
 
+# %%
 # plot the decision function learned by the tree
-fig, ax = plt.subplots()
-plot_tree_decision_function(tree, X, y, ax=ax)
+plot_tree_decision_function(tree, X, y)
 
 # %% [markdown]
 # Allowing only 3 leaves in the tree, we get similar rules to the ones we

@@ -139,14 +139,14 @@ Feature engineering to limit underfitting
 Confusion matrix for classifiers / precision / recall / ROC AUC curve (Mention imbalanced classes)
 Predict vs True plot for regressors
 
-## Olivier: Linear models in depth
+## Gael: Linear models in depth
 Logistic Regression, linear regression, classification vs regression, multi-class, linear separability. Pros and cons
         L1 and L2 penalty for linear models
         Learning curves and validation curves (video: how to read curves)
 
 ## Baselines: majority class classifier (already in second module) and k-nearest neighbors
 
-## Feature engineering to augment the expressivity of linear models:
+## Gaël: Feature engineering to augment the expressivity of linear models:
 
 Binning / Polynomial feature extraction / Nystroem method
         

@@ -107,11 +107,42 @@ classifier.score(X_test, y_test)
 from sklearn.metrics import plot_confusion_matrix
 
 plot_confusion_matrix(classifier, X_test, y_test)
+# %% [markdown] The in-diagonal numbers are related to predictions that agree
+# with the true labels while off-diagonal numbers are related to
+# misclassification. Besides, we now know the type of true or erroneous
+# predictions the classifier did:
+#
+# * the top left corner is called true positive (TP) and correspond to a person
+#   who gave blood and was predicted as such by the classifier;
+# * the bottom right corner is called the true negative (TN) and correspond to
+#   a person who did not gave blood and was predicted as such by the
+#   classifier;
+# * the top right corner is called false negative (FN) and correspond to a
+#   person who gave blood but was predicted as not giving blood;
+# * the bottom left corner is called false positive (FP) and correspond to a
+#   person who did not give blood but was predicted as giving blood.
+#
+# Once that we have split these information, we can compute statistic for a
+# highlighting the performance of our classifier in a particular setting. For
+# instance, one could be interested in the fraction of persons who really gave
+# blood when the classifier predicted so or the fraction of people predicted as
+# giving blood among the total population that actually did so.
+#
+# The former statistic is known as the precision defined as TP / (TP + FP)
+# while the latter statistic is known as the recall defined as TP / (TP + FN)
+# We could, similarly than with the accuracy, manually compute these values.
+# But scikit-learn provides functions to compute these statistics.
+from sklearn.metrics import precision_score, recall_score
+
+print(
+    f"Precision score: {precision_score(y_test, y_pred, pos_label='donated')}"
+    f"\nRecall score: {recall_score(y_test, y_pred, pos_label='donated')}"
+)
 # %% [markdown]
-# The in-diagonal numbers are related to predictions that agree with the true
-# labels while off-diagonal numbers are related to misclassification. However,
-# now we now exactly the sort of error made by our classifier.
-# %% [markdown]
+# These results are in line with what we could see in the confusion matrix.
+# In the left column, more than half of the predictions were corrected leading
+# to a precision above 0.5. However, our classifier mislabeled a lot of persons
+# who gave blood as "not donated" leading to a very low recall of around 0.1.
 # ## Regression
 
 # %% [markdown]

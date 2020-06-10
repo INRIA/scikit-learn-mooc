@@ -86,6 +86,7 @@ y_pred = classifier.predict(X_test)
 y_pred
 
 # %% [markdown]
+# ### Accuracy as a baseline
 # Now that we have these predictions, we could compare them with the true
 # predictions (sometimes called ground-truth) which we did not use up to now.
 
@@ -125,6 +126,7 @@ accuracy_score(y_test, y_pred)
 classifier.score(X_test, y_test)
 
 # %% [markdown]
+# ### Confusion matrix and derived metrics
 # The comparison that we did above and the accuracy that we deducted did not
 # take into account which type of error our classifier was doing. The accuracy
 # is an aggregate of the error. However, we might be interested in a lower
@@ -177,6 +179,68 @@ print(
 # to a precision above 0.5. However, our classifier mislabeled a lot of persons
 # who gave blood as "not donated" leading to a very low recall of around 0.1.
 #
+# The precision and recall can be combined in a single score called the F1
+# score
+
+# %%
+from sklearn.metrics import f1_score
+
+f1_score(y_test, y_pred, pos_label='donated')
+
+# %% [markdown]
+# ### The issue of class imbalance
+# At this stage, we could ask ourself a reasonable question. While the accuracy
+# did not look bad (i.e. 77%), the F1 score is relatively low (i.e. 21%).
+#
+# As we mentioned, precision and recall only focus on the positive label while
+# the accuracy is taking into account both aspects into account. In addition,
+# we important thing that we omit up to know is to look at the ratio class
+# occurrence. We could check this ratio in the training set.
+
+# %%
+from collections import Counter
+
+class_counts = pd.Series(Counter(y_train))
+class_counts /= class_counts.sum()
+class_counts
+
+# %% [markdown]
+# So we can observed that the positive class `'donated'` is only 24% of the
+# total number of instances. The good accuracy of our classifier is then linked
+# to its capability of predicting correctly the negative class `'not donated'`
+# which could be relevant or not depending of the application. We can
+# illustrate the issue using a dummy classifier as a baseline.
+
+# %%
+from sklearn.dummy import DummyClassifier
+
+dummy_classifier = DummyClassifier(
+    strategy="constant", constant="not donated"
+)
+dummy_classifier.fit(X_train, y_train).score(X_test, y_test)
+
+# %% [markdown]
+# This dummy classifier will always predict the negative class `'not donated'`.
+# We obtain an accuracy score of 76%. Therefore, it means that this classifier,
+# without learning anything from the data `X` is capable of predicting as
+# accurately than our logistic regression. 76% represents the baseline that
+# any classifier should overperform to not be a random classifier.
+#
+# The problem illustrated above is also known as the class imbalance problem
+# where the accuracy should not be used. In this case, one should either use
+# the precision, recall, or F1 score as presented above or the balanced
+# accuracy score instead of the accuracy.
+
+# %%
+from sklearn.metrics import balanced_accuracy_score
+
+balanced_accuracy_score(y_test, y_pred)
+
+# %% [markdown]
+# The balanced accuracy is equivalent to the accuracy in the context of
+# balanced classes. It is defined as the average recall obtained on each class.
+#
+
 
 # %% [markdown]
 # ## Regression

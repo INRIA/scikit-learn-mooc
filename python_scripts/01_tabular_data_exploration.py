@@ -64,6 +64,10 @@ target_column = 'class'
 adult_census[target_column].value_counts()
 
 # %% [markdown]
+# Note: classes are slightly imbalanced, it may require special techniques 
+# that we will discuss in another notebook on model evaluation
+
+# %% [markdown]
 # The dataset contains both numerical and categorical data. Numerical values
 # can take continuous values for example `age`. Categorical values can have a
 # finite number of values, for example `native-country`.
@@ -114,7 +118,7 @@ _ = adult_census.hist(figsize=(20, 10))
 # without looking much further. We'll do that later in this notebook.
 # * hours per week peaks at 40, this was very likely the standard number of
 # working hours at the time of the data collection
-# * most values of capital-gain and capital-loss are in the first bin (close to zero)
+# * some values of capital-gain and capital-loss are far appart from the rest
 
 # %% [markdown]
 # For categorical variables, we can look at the distribution of values:
@@ -132,7 +136,7 @@ adult_census['education'].value_counts()
 
 # %%
 import pandas_profiling
-# adult_census.profile_report()
+adult_census.profile_report()
 
 # %% [markdown]
 # As noted above, `education-num` distribution has two clear peaks around 10
@@ -280,10 +284,10 @@ plot_tree_decision_function(tree, X, y)
 # designed by hand:
 # * the persons younger than 28.5 year-old (X[0] < 28.5) will be considered in the class
 #   earning `<= 50K`.
-# * the persons older than 28.5 and working more than 40.5 hours-per-week (X[1] > 40.5)
-#   will be considered in the class earning `> 50K`, while the persons working
-#   below 40.5 hours-per-week, will be considered in the class
-#   earning `<= 50K`.
+# * the persons older than 28.5 and working less than 40.5 hours-per-week (X[1] <= 40.5)
+#   will be considered in the class earning `<= 50K`, while the persons working
+#   above 40.5 hours-per-week, will be considered in the class
+#   earning `> 50K`.
 
 # %% [markdown]
 #
@@ -299,13 +303,12 @@ plot_tree_decision_function(tree, X, y)
 # * A first glance to the data can give some insights of features importance
 # * It is possible to visualize the decision rules from a decision tree
 # 
-# 
-# Ideas not discussed in this notebook:
+# Ideas which will be discussed more in details later:
 # * if your target variable is imbalanced (e.g., you have more samples from one
-#   target category than another), you may need special techniques for machine
-#   learning
+#   target category than another), you may need special techniques for training and
+#  evaluating your machine learning model
 # * having redundant (or highly correlated) columns can be a problem for
-#   machine learning algorithms
-# * some machine learning models can only capture linear interaction so be
+#   some machine learning algorithms
+# * contrary to decision tree, linear models can only capture linear interaction, so be
 #   aware of non-linear relationships in your data
 

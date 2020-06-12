@@ -98,7 +98,7 @@ adult_census = adult_census[all_columns]
 # data:
 # * maybe the task you are trying to achieve can be solved without machine
 #   learning
-# * you need to check that the data you need for your task is indeed present in
+# * you need to check that the information you need for your task is indeed present in
 # the dataset
 # * inspecting the data is a good way to find peculiarities. These can can
 #   arise during data collection (for example, malfunctioning sensor or missing

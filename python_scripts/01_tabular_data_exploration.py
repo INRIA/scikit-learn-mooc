@@ -43,7 +43,9 @@ adult_census = pd.read_csv(
 # We can look at the OpenML webpage to learn more about this dataset: http://www.openml.org/d/1590
 #
 # It tells us that the typical prediction task is to determine whether a person makes over 50K a year.
-
+ 
+# The goal with this data is to regress wages from heterogeneous data such as age,
+# employment, education, family information, etc.
 # %% [markdown]
 # ## The variables (columns) in the dataset
 #
@@ -58,7 +60,8 @@ adult_census.head()  # Look at the first few lines of our dataframe
 # The column named **class** is our target variable (i.e., the variable which
 # we want to predict). The two possible classes are `<= 50K` (low-revenue) and
 # `> 50K` (high-revenue).
-
+# The resulting prediction problem is therefore a binary
+# classification problem.
 # %%
 target_column = 'class'
 adult_census[target_column].value_counts()
@@ -88,6 +91,15 @@ adult_census = adult_census[all_columns]
 # Note that for simplicity, we have ignored the "fnlwgt" (final weight) column
 # that was crafted by the creators of the dataset when sampling the dataset to
 # be representative of the full census database.
+
+# %% [markdown]
+# We can check the number of samples and the number of features available in
+# the dataset:
+
+# %%
+print(
+    f"The dataset contains {data.shape[0]} samples and {data.shape[1]} "
+    "features")
 
 # %% [markdown]
 # ## Visual inspection of the data

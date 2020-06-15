@@ -25,8 +25,8 @@
 #
 # In particular we will highlight:
 # * working with numerical features
-# * the importance of scaling numerical variables;
-# * evaluate the performance of a model via cross-validation.
+# * the importance of scaling numerical variables
+# * evaluate the performance of a model via cross-validation
 #
 # ## Loading the dataset
 #
@@ -335,4 +335,12 @@ fig, ax = plt.subplots(figsize=(10, 6))
 cv = KFold(5)
 _ = plot_cv_indices(cv, X, y, ax)
 
-# TODO: add summary here
+
+# %% [markdown]
+#
+# In this notebook we have:
+# * split our dataset into a training dataset and a testing dataset
+# * fitted a logistic regression model
+# * seen the importance of scaling numerical variables
+# * used the **pipeline** method to fit both the scaler and the logistic regression
+# * assessed the performance of our model via cross-validation

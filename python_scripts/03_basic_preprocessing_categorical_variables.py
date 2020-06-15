@@ -16,13 +16,12 @@
 
 # %%
 # TODO add intro with objectives
-## Working with numerical & categorical variables
+## Working with both numerical & categorical variables
 
-# In this notebook, we present how to build predictive models on tabular
-# datasets, with categorical features.
-# * the difference between numerical and categorical variables
+# In this notebook, we present how to deal with categorical features.
 # * typical ways to deal with categorical variables
 # * how to train predictive models on different types of data
+# (i.e. numerical and categorical)
 
 # ## [markdown]
 # Let's first load the data as we did in the previous notebook. TODO add link.

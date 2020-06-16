@@ -67,8 +67,11 @@ target_column = 'class'
 adult_census[target_column].value_counts()
 
 # %% [markdown]
-# Note: classes are slightly imbalanced, it may require special techniques 
-# that we will discuss in another notebook on model evaluation
+# Note: classes are slightly imbalanced. Class imbalance happens often in
+# practice and may need special techniques for machine learning. For example in
+# a medical setting, if we are trying to predict whether patients will develop
+# a rare disease, there will be a lot more healthy patients than ill patients in
+# the dataset.
 
 # %% [markdown]
 # The dataset contains both numerical and categorical data. Numerical values
@@ -197,9 +200,9 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # These hand-written rules could work reasonably well without the need for any
 # machine learning. Note however that it is not very easy to create rules for
 # the region `40 < hours-per-week < 60` and `30 < age < 70`. We can hope that
-# machine learning can help in this region. If visualization can
-# help creating hand-written rules, it is limited to 2 or 3 dimensions, 
-# when machine learning models can learn rules in
+# machine learning can help in this region. Also note that visualization can
+# help creating hand-written rules but is limited to 2 dimensions (maybe 3
+# dimensions), whereas machine learning models can build models in
 # high-dimensional spaces.
 #
 # Another thing worth mentioning in this plot: if you are young (less than 25
@@ -292,7 +295,7 @@ _ = plot_tree(tree)
 plot_tree_decision_function(tree, X, y)
 
 # %% [markdown]
-# By allowing only 3 leaves in the tree, we get similar rules that the ones we
+# By allowing only 3 leaves in the tree, we get similar rules to the ones we
 # designed by hand:
 # * the persons younger than 28.5 year-old (X[0] < 28.5) will be considered in the class
 #   earning `<= 50K`.
@@ -305,7 +308,7 @@ plot_tree_decision_function(tree, X, y)
 #
 # In this notebook we have:
 # * loaded the data from a CSV file using `pandas`
-# * looked the differents kind of variables to differentiate
+# * looked at the differents kind of variables to differentiate
 #   between categorical and numerical variables
 # * inspected the data with `pandas`, `seaborn` and `pandas_profiling`. Data inspection
 #   can allow you to decide whether using machine learning is appropriate for

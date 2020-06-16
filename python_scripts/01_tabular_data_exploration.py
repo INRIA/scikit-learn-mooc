@@ -59,7 +59,7 @@ adult_census.head()  # Look at the first few lines of our dataframe
 # The column named **class** is our target variable (i.e., the variable which
 # we want to predict). The two possible classes are `<= 50K` (low-revenue) and
 # `> 50K` (high-revenue). The resulting prediction problem is therefore a binary
-# classification problem.
+# classification problem,
 # while we will use the other columns as input variables for our model.
 
 # %%
@@ -321,9 +321,8 @@ plot_tree_decision_function(tree, X, y)
 # Ideas which will be discussed more in details later:
 # * if your target variable is imbalanced (e.g., you have more samples from one
 #   target category than another), you may need special techniques for training and
-#  evaluating your machine learning model
+#   evaluating your machine learning model
 # * having redundant (or highly correlated) columns can be a problem for
 #   some machine learning algorithms
 # * contrary to decision tree, linear models can only capture linear interaction, so be
 #   aware of non-linear relationships in your data
-

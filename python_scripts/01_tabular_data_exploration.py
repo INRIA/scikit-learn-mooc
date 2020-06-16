@@ -318,7 +318,7 @@ plot_tree_decision_function(tree, X, y)
 # Ideas which will be discussed more in details later:
 # * if your target variable is imbalanced (e.g., you have more samples from one
 #   target category than another), you may need special techniques for training and
-#  evaluating your machine learning model
+#   evaluating your machine learning model
 # * having redundant (or highly correlated) columns can be a problem for
 #   some machine learning algorithms
 # * contrary to decision tree, linear models can only capture linear interaction, so be

@@ -1,8 +1,8 @@
 # Preview
 
-To preview slides `https://lesteve.github.io/scikit-learn-tutorial/slides/?file=[FILENAME].md`
+To preview slides `https://inria.github.io/scikit-learn-mooc/slides/?file=[FILENAME].md`
 
-Example : https://lesteve.github.io/scikit-learn-tutorial/slides/?file=ml_concepts.md
+Example : https://inria.github.io/scikit-learn-mooc/slides/?file=ml_concepts.md
 
 # Export
 

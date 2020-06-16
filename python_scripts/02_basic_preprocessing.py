@@ -53,8 +53,12 @@ target_name = "class"
 target = df[target_name].to_numpy()
 target
 
+# %% [markdown]
+# For simplicity, we will ignore the "fnlwgt" (final weight) column that was
+# crafted by the creators of the dataset when sampling the dataset to be
+# representative of the full census database.
+
 # %%
-# For simplicity, we will ignore the "fnlwgt" (final weight) column
 data = df.drop(columns=[target_name, "fnlwgt"])
 data.head()
 

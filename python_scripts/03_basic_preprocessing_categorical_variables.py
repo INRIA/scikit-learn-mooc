@@ -14,8 +14,7 @@
 #     name: python3
 # ---
 
-# %%
-# TODO add intro with objectives
+# %% [markdown]
 ## Working with both numerical & categorical variables
 
 # In this notebook, we will present:

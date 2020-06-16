@@ -133,7 +133,7 @@ _ = adult_census.hist(figsize=(20, 10))
 # without looking much further. We'll do that later in this notebook.
 # * hours per week peaks at 40, this was very likely the standard number of
 # working hours at the time of the data collection
-# * some values of capital-gain and capital-loss are far appart from the rest
+# * most values of capital-gain and capital-loss are close to zero
 
 # %% [markdown]
 # For categorical variables, we can look at the distribution of values:

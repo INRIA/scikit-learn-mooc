@@ -22,7 +22,7 @@
 # * how to train a predictive model on different types of data
 # (i.e. numerical and categorical)
 
-# ## [markdown]
+# %% [markdown]
 # Let's first load the data as we did in the previous notebook. TODO add link.
 
 # %%

@@ -361,6 +361,112 @@ plt.legend()
 # of the ROC-AUC is 0.5. Indeed, we represented the performance of a dummy
 # classifier (i.e. green dashed line) to show that the worse performance
 # obtained will always be above this line.
+#
+# ### Link between confusion matrix, precision-recall curve and ROC curve
+#
+# TODO: ipywidgets to play with interactive curve
+
+# %%
+def plot_pr_curve(classifier, X_test, y_test, pos_label, probability_threshold, ax):
+    y_pred = classifier.predict_proba(X_test)
+    precision, recall, threshold = precision_recall_curve(
+        y_test, y_pred[:, 0], pos_label=pos_label,
+    )
+    average_precision = average_precision_score(
+        y_test, y_pred[:, 0], pos_label=pos_label,
+    )
+    ax.plot(
+        recall, precision,
+        color="tab:orange", linewidth=3,
+        label=f"Average Precision: {average_precision:.2f}",
+    )
+    threshold_idx = np.searchsorted(
+        threshold, probability_threshold,
+    )
+    ax.plot(
+        recall[threshold_idx], precision[threshold_idx],
+        color="tab:blue", marker=".", markersize=10,
+    )
+    ax.plot(
+        [recall[threshold_idx], recall[threshold_idx]],
+        [0, precision[threshold_idx]],
+        '--', color="tab:blue",
+    )
+    ax.plot(
+        [0, recall[threshold_idx]],
+        [precision[threshold_idx], precision[threshold_idx]],
+        '--', color="tab:blue",
+    )
+    ax.set_xlabel(f"Recall")
+    ax.set_ylabel(f"Precision")
+    ax.set_xlim([0, 1])
+    ax.set_ylim([0, 1])
+    ax.legend()
+    return ax
+
+
+# %%
+def plot_roc_curve(classifier, X_test, y_test, pos_label, probability_threshold, ax):
+    y_pred = classifier.predict_proba(X_test)
+    fpr, tpr, threshold = roc_curve(y_test, y_pred[:, 0], pos_label=pos_label)
+    roc_auc = roc_auc_score(y_test, y_pred[:, 1])
+    ax.plot(
+        fpr, tpr,
+        color="tab:orange", linewidth=3,
+        label=f"ROC-AUC: {roc_auc:.2f}"
+    )
+    ax.plot([0, 1], [0, 1], "--", color="tab:green", label="Chance")
+    threshold_idx = np.searchsorted(
+        threshold[::-1], probability_threshold,
+    )
+    threshold_idx = len(threshold) - threshold_idx - 1
+    ax.plot(
+        fpr[threshold_idx], tpr[threshold_idx],
+        color="tab:blue", marker=".", markersize=10,
+    )
+    ax.plot(
+        [fpr[threshold_idx], fpr[threshold_idx]],
+        [0, tpr[threshold_idx]],
+        '--', color="tab:blue",
+    )
+    ax.plot(
+        [0, fpr[threshold_idx]],
+        [tpr[threshold_idx], tpr[threshold_idx]],
+        '--', color="tab:blue",
+    )
+    ax.set_xlabel(f"1 - Specificity")
+    ax.set_ylabel(f"Sensitivity")
+    ax.set_xlim([0, 1])
+    ax.set_ylim([0, 1])
+    ax.legend()
+    return ax
+
+
+# %%
+def plot_pr_roc(threshold):
+    # FIXME: we could optimize the plotting by only updating the the
+    fig, axs = plt.subplots(ncols=2, figsize=(14, 6))
+    plot_pr_curve(
+        classifier, X_test, y_test, pos_label="donated",
+        probability_threshold=threshold, ax=axs[0],
+    )
+    plot_roc_curve(
+        classifier, X_test, y_test, pos_label="donated",
+        probability_threshold=threshold, ax=axs[1]
+    )
+    fig.suptitle("Overall performance with positive class 'donated'")
+
+
+# %%
+from ipywidgets import interactive, FloatSlider
+
+def plot_pr_roc_interactive():
+    slider = FloatSlider(min=0, max=1, step=0.01, value=0.5)
+    return interactive(plot_pr_roc, threshold=slider)
+
+
+# %%
+plot_pr_roc_interactive()
 
 # %% [markdown]
 # ## Regression

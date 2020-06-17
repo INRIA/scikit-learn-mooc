@@ -366,8 +366,10 @@ plt.legend()
 #
 # TODO: ipywidgets to play with interactive curve
 
+
 # %%
-def plot_pr_curve(classifier, X_test, y_test, pos_label, probability_threshold, ax):
+def plot_pr_curve(classifier, X_test, y_test, pos_label,
+                  probability_threshold, ax):
     y_pred = classifier.predict_proba(X_test)
     precision, recall, threshold = precision_recall_curve(
         y_test, y_pred[:, 0], pos_label=pos_label,
@@ -406,7 +408,8 @@ def plot_pr_curve(classifier, X_test, y_test, pos_label, probability_threshold, 
 
 
 # %%
-def plot_roc_curve(classifier, X_test, y_test, pos_label, probability_threshold, ax):
+def plot_roc_curve(classifier, X_test, y_test, pos_label,
+                   probability_threshold, ax):
     y_pred = classifier.predict_proba(X_test)
     fpr, tpr, threshold = roc_curve(y_test, y_pred[:, 0], pos_label=pos_label)
     roc_auc = roc_auc_score(y_test, y_pred[:, 1])
@@ -443,9 +446,57 @@ def plot_roc_curve(classifier, X_test, y_test, pos_label, probability_threshold,
 
 
 # %%
+def plot_confusion_matrix_with_threshold(classifier, X_test, y_test, pos_label,
+                                         probability_threshold, ax):
+    from itertools import product
+    from sklearn.metrics import confusion_matrix
+
+    class_idx = np.where(classifier.classes_ == pos_label)[0][0]
+    n_classes = len(classifier.classes_)
+
+    y_pred = classifier.predict_proba(X_test)
+    y_pred = (y_pred[:, class_idx] > probability_threshold).astype(int)
+
+    cm = confusion_matrix(
+        (y_test == pos_label).astype(int), y_pred,
+    )
+    im_ = ax.imshow(cm, interpolation='nearest')
+
+    text_ = None
+    cmap_min, cmap_max = im_.cmap(0), im_.cmap(256)
+
+    text_ = np.empty_like(cm, dtype=object)
+
+    # print text with appropriate color depending on background
+    thresh = (cm.max() + cm.min()) / 2.0
+
+    for i, j in product(range(n_classes), range(n_classes)):
+        color = cmap_max if cm[i, j] < thresh else cmap_min
+
+        text_cm = format(cm[i, j], '.2g')
+        if cm.dtype.kind != 'f':
+            text_d = format(cm[i, j], 'd')
+            if len(text_d) < len(text_cm):
+                text_cm = text_d
+
+        text_[i, j] = ax.text(
+            j, i, text_cm, ha="center", va="center", color=color
+        )
+
+    ax.set(
+        xticks=np.arange(n_classes),
+        yticks=np.arange(n_classes),
+        xticklabels=classifier.classes_[[int(not bool(class_idx)), class_idx]],
+        yticklabels=classifier.classes_[[int(not bool(class_idx)), class_idx]],
+        ylabel="True label",
+        xlabel="Predicted label"
+    )
+
+
+# %%
 def plot_pr_roc(threshold):
     # FIXME: we could optimize the plotting by only updating the the
-    fig, axs = plt.subplots(ncols=2, figsize=(14, 6))
+    fig, axs = plt.subplots(ncols=3, figsize=(21, 6))
     plot_pr_curve(
         classifier, X_test, y_test, pos_label="donated",
         probability_threshold=threshold, ax=axs[0],
@@ -454,13 +505,16 @@ def plot_pr_roc(threshold):
         classifier, X_test, y_test, pos_label="donated",
         probability_threshold=threshold, ax=axs[1]
     )
+    plot_confusion_matrix_with_threshold(
+        classifier, X_test, y_test, pos_label="donated",
+        probability_threshold=threshold, ax=axs[2]
+    )
     fig.suptitle("Overall performance with positive class 'donated'")
 
 
 # %%
-from ipywidgets import interactive, FloatSlider
-
 def plot_pr_roc_interactive():
+    from ipywidgets import interactive, FloatSlider
     slider = FloatSlider(min=0, max=1, step=0.01, value=0.5)
     return interactive(plot_pr_roc, threshold=slider)
 
@@ -470,6 +524,26 @@ plot_pr_roc_interactive()
 
 # %% [markdown]
 # ## Regression
+# Unlike in the classification problem, the target `y` is a continuous
+# variable in regression problem. Therefore, the classification metrics can be
+# used to evaluate the performance of a model. Instead, there exists a set of
+# metric dedicated to regression.
+
+data = pd.read_csv(
+    ("https://raw.githubusercontent.com/christophM/interpretable-ml-book/"
+     "master/data/bike.csv"),
+)
+data = data.rename(columns={
+    "yr": "year", "mnth": "month", "temp": "temperature", "hum": "humidity",
+    "cnt": "count"
+})
+for col in data.columns:
+    if data[col].dtype.kind == "O":
+        data[col] = data[col].astype("category")
+
+X = data.drop(columns=["count", "days_since_2011"])
+y = data["count"]
+
 
 # %% [markdown]
 # ## Clustering

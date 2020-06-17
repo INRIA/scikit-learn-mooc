@@ -42,13 +42,46 @@ Here the target value is expected to be a linear combination of the features
 ---
 # Linear regression
 
-Once fitted :y = a*x + b
+We look for the best fit. 
+Learning w_0 and w_1 such that 
+\sum_i | y_i - w_o + w_1 * x_i|^2 is minimal
+
 
 .shift-left.pull-left[<img src="../figures/linear_fit.svg" width="100%">]
 
 ???
-Here the target value is expected to be a linear combination of the features
- 
+
+---
+# Error in linear regression
+
+For each sample x_i, we have an error which correspond to |y_i - ŷ_i|^2
+That correspond to the red bar in the figure below
+.shift-left.pull-left[<img src="../figures/linear_fit.svg" width="100%">]
+
+???
+
+---
+# Linear regerssion in higher dimension
+
+If **X** has two dimensions, we obtain a plot like that:
+
+---
+# Logistic regression
+
+With Logistic regression, we learn a linear model for classification (and not regresion).
+So **y** is either +1 or -1
+
+.shift-left.pull-left[<img src="../figures/categorical.svg" width="110%">]
+
+
+---
+# Logistic regression
+
+sigmoïd: sigma(x) = 1 / (1 + exp(-x))
+
+.shift-left.pull-left[<img src="../figures/logistic_color.svg" width="110%">]
+
+
 ---
 # End
 

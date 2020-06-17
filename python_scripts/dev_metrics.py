@@ -533,17 +533,134 @@ data = pd.read_csv(
     ("https://raw.githubusercontent.com/christophM/interpretable-ml-book/"
      "master/data/bike.csv"),
 )
+# rename the columns with human-readable names
 data = data.rename(columns={
     "yr": "year", "mnth": "month", "temp": "temperature", "hum": "humidity",
-    "cnt": "count"
+    "cnt": "count", "days_since_2011": "days since 2011"
 })
+# convert the categorical columns with a proper category data type
 for col in data.columns:
     if data[col].dtype.kind == "O":
         data[col] = data[col].astype("category")
 
-X = data.drop(columns=["count", "days_since_2011"])
+# separate the target from the original data
+X = data.drop(columns=["count"])
 y = data["count"]
 
+# %%
+X.head()
+
+# %%
+plt.hist(y, bins=50, density=True)
+plt.xlabel("Number of bike rentals")
+plt.ylabel("Probability")
+plt.title("Target distribution")
+
+# %% [markdown]
+# Our problem can be formulated as follow: we would like to infer the number of
+# bike rentals from data related to the current day. The number of bike rentals
+# is a number that can vary in the interval [0, infinity) (if the number of
+# bike available is infinite). As in the previous section, we will train a
+# model and we will evaluate its performance by introducing the different
+# regression metrics.
+#
+# First, we split the data into a training and a testing set.
+
+# %%
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, shuffle=True, random_state=0
+)
+
+# %% [markdown]
+# ### Baseline model
+# We will use a random forest as a model. However, we first need to check the
+# type of data that we are dealing with:
+
+# %%
+X_train.info()
+
+# %% [markdown]
+# While some features are numeric, some have been tagged as `category`. These
+# features need to be encoded in a proper way such that our random forest can
+# deal with them. The simplest solution is to use an `OrdinalEncoder`.
+# Regarding, the numerical features, we don't need to do anything. Thus, we
+# will create a preprocessing steps to take care about this encoding.
+
+# %%
+from sklearn.compose import make_column_transformer
+from sklearn.compose import make_column_selector as selector
+from sklearn.preprocessing import OrdinalEncoder
+
+categorical_selector = selector(dtype_include="category")
+preprocessor = make_column_transformer(
+    (OrdinalEncoder(), categorical_selector),
+    remainder="passthrough",
+)
+
+X_train_preprocessed = pd.DataFrame(
+    preprocessor.fit_transform(X_train),
+    columns=(
+        categorical_selector(X_train) +
+        [col for col in X_train.columns
+         if col not in categorical_selector(X_train)]
+    )
+)
+X_train_preprocessed.head()
+
+# %% [markdown]
+# Just to have some insights about the preprocessing, we manually preprocessed
+# the training data and we can observe that the original strings were encoded
+# with numbers. We can now create our model.
+
+# %%
+from sklearn.pipeline import make_pipeline
+from sklearn.ensemble import RandomForestRegressor
+
+regressor = make_pipeline(preprocessor, RandomForestRegressor())
+regressor.fit(X_train, y_train)
+
+# %% [markdown]
+# As for classifiers, regressors have a `score` method which will compute the
+# :math:`R^2` score (also known as the coefficient of determination) by
+# default:
+
+# %%
+regressor.score(X_test, y_test)
+
+# %% [markdown]
+# The :math:`R^2` score represents the proportion of variance of the target
+# explained by the independent variables in the model. The best score possible
+# is 1 but there is no lower bound. However, a model which would predict the
+# expected value of the target would get a score of 0.
+
+# %%
+from sklearn.dummy import DummyRegressor
+
+dummy_regressor = DummyRegressor(strategy="mean")
+dummy_regressor.fit(X_train, y_train).score(X_test, y_test)
+
+# %% [markdown]
+# The :math:`R^2` score gives insights regarding the goodness of fit of the
+# model. However, this score cannot be compared from one dataset to another and
+# the value obtained does not have a meaningful interpretation regarding the
+# original unit of the target. If we want to get such interpretable score, we
+# will be interested into the median or mean absolute error.
+
+# %%
+from sklearn.metrics import mean_absolute_error
+
+y_pred = regressor.predict(X_test)
+print(
+    f"Mean absolute error: {mean_absolute_error(y_test, y_pred):.0f}"
+)
+
+# %% [markdown]
+# By computing the mean absolute error, we can interpret that our model is
+# predicting in average 507 bike rentals away from the truth. The mean can be
+# impacted by large error while for some application, we would like to discard
+# them and we can in this case opt for the median absolute error.
 
 # %% [markdown]
 # ## Clustering

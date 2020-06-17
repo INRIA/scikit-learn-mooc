@@ -235,12 +235,132 @@ dummy_classifier.fit(X_train, y_train).score(X_test, y_test)
 from sklearn.metrics import balanced_accuracy_score
 
 balanced_accuracy_score(y_test, y_pred)
-
 # %% [markdown]
 # The balanced accuracy is equivalent to the accuracy in the context of
 # balanced classes. It is defined as the average recall obtained on each class.
 #
+# ### Evaluation with different probability threshold
+#
+# All statistics that we presented up to now rely on `classifier.predict` which
+# provide the most likely label. However, we don't use the probability
+# associated with this prediction or in other words how sure are the classifier
+# confident about this prediction. By default, the prediction of a classifier
+# correspons to a thresholding at a 0.5 probability, in a binary classification
+# problem. We can quickly check this relationship with the classifier that
+# we trained.
 
+# %%
+y_proba = pd.DataFrame(
+    classifier.predict_proba(X_test),
+    columns=classifier.classes_
+)
+y_proba[:5]
+
+# %%
+y_pred = classifier.predict(X_test)
+y_pred[:5]
+
+# %%
+# Since probabilities sum to 1 we can get the class with the highest
+# probability without using the threshold 0.5
+equivalence_pred_proba = (
+    y_proba.idxmax(axis=1).to_numpy() == y_pred
+)
+np.all(equivalence_pred_proba)
+
+# %% [markdown]
+# The default decision threshold might not be the best threshold leading to
+# optimal performance of our classifier. In this case, one can vary the
+# decision threshold and therefore the underlying prediction and compute the
+# same statistic than presented earlier. Usually, two metrics are computed
+# and reported as a curve. Each metric is belonging to a graph axis and a point
+# on the graph corresponds to a specific decision threshold. Let's start by
+# computing the precision-recall curve.
+
+# %%
+import matplotlib.pyplot as plt
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import average_precision_score
+
+y_pred = classifier.predict_proba(X_test)
+pos_label = "donated"
+precision, recall, threshold = precision_recall_curve(
+    y_test, y_pred[:, 0], pos_label=pos_label,
+)
+average_precision = average_precision_score(
+    y_test, y_pred[:, 0], pos_label=pos_label,
+)
+plt.plot(
+    recall, precision,
+    color="tab:orange", linewidth=3,
+    marker=".", markerfacecolor="tab:blue", markeredgecolor="tab:blue",
+    label=f"Average Precision: {average_precision:.2f}",
+)
+plt.xlabel(f"Recall\n (Positive label: {pos_label})")
+plt.ylabel(f"Precision\n (Positive label: {pos_label})")
+plt.legend()
+
+# # FIXME: to be used when solved in scikit-learn
+# from sklearn.metrics import plot_precision_recall_curve
+
+# disp = plot_precision_recall_curve(
+#     classifier, X_test, y_test, pos_label='donated',
+# )
+
+# %% [markdown]
+# On this curve, each blue dot correspond to a certain level of probability
+# which we used as a decision threshold. We can see that by varying this
+# decision threshold, we get different compromise precision vs. recall.
+#
+# A perfect classifier is expected to have a precision at 1 even when varying
+# the recall. A metric characterizing the curve is linked to the area under the
+# curve (AUC), named averaged precision. With a ideal classifier, the
+# average precision will be 1.
+#
+# While the precision and recall metric focuses on the positive class, one
+# might be interested into the compromise between performance to discriminate
+# positive and negative classes. The statistics used in this case are the
+# sensitivity and specificity. The sensitivity is just another denomination for
+# recall. However, the specificity measures the proportion of well classified
+# samples from the negative class defined as TN / (TN + FP). Similarly to the
+# precision-recall curve, sensitivity and specificity are reported with a curve
+# called the receiver operating characteristic (ROC) curve. We will show such
+# curve:
+
+# %%
+from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
+
+fpr, tpr, threshold = roc_curve(y_test, y_pred[:, 0], pos_label=pos_label)
+# FIXME: roc_auc_score has a bug and we need to give the inverse probability
+# vector. Should be changed when the following is merged and released:
+# https://github.com/scikit-learn/scikit-learn/pull/17594
+roc_auc = roc_auc_score(y_test, y_pred[:, 1])
+plt.plot(
+    fpr, tpr,
+    color="tab:orange", linewidth=3,
+    marker=".", markerfacecolor="tab:blue", markeredgecolor="tab:blue",
+    label=f"ROC-AUC: {roc_auc:.2f}"
+)
+plt.plot([0, 1], [0, 1], "--", color="tab:green", label="Chance")
+plt.xlabel(f"1 - Specificity\n (Positive label: {pos_label})")
+plt.ylabel(f"Sensitivity\n (Positive label: {pos_label})")
+plt.legend()
+
+# # FIXME: to be used when solved in scikit-learn
+# from sklearn.metrics import plot_roc_curve
+
+# plot_roc_curve(classifier, X_test, y_test, pos_label='donated')
+
+# %% [markdown]
+# This curve is built with the same principle than with the precision-recall
+# curve: we vary the probability threshold to compute "hard" prediction and
+# compute the metrics. As with the precision-recall curve as well, we can
+# compute the area under the ROC (ROC-AUC) to characterize the performance of
+# our classifier. However, this is important to observer that the lower bound
+# of the ROC-AUC is 0.5. Indeed, we represented the performance of a dummy
+# classifier (i.e. green dashed line) to show that the worse performance
+# obtained will always be above this line.
 
 # %% [markdown]
 # ## Regression

@@ -662,5 +662,16 @@ print(
 # impacted by large error while for some application, we would like to discard
 # them and we can in this case opt for the median absolute error.
 
+# %%
+from sklearn.metrics import median_absolute_error
+
+print(
+    f"Median absolute error: {median_absolute_error(y_test, y_pred):.0f}"
+)
+
+# %% [markdown]
+# In this case, our model make an error of 405 bikes.
+# FIXME: **not sure how to introduce the `mean_squared_error`.**
+
 # %% [markdown]
 # ## Clustering

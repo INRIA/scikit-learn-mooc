@@ -1,14 +1,14 @@
 # scikit-learn tutorial
 
-All notebook material: https://github.com/lesteve/scikit-learn-tutorial/
+All notebook material: https://github.com/INRIA/scikit-learn-mooc/
 
 ## Follow the tutorial online
 
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
-               https://mybinder.org/v2/gh/lesteve/scikit-learn-tutorial/master?urlpath=lab)
+               https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master?urlpath=lab)
 
 - Browse the static content online (pre-rendered outputs) using [nbviewer](
-  https://nbviewer.jupyter.org/github/lesteve/scikit-learn-tutorial/tree/master/rendered_notebooks/)
+  https://nbviewer.jupyter.org/github/INRIA/scikit-learn-mooc/tree/master/rendered_notebooks/)
 
 You need an internet connection but you will not have to install any package
 locally.
@@ -58,31 +58,45 @@ $ conda env update --prefix ./env --file environment.yml  --prune
 
 ## Contributing
 
-To synchronize the notebooks and the Python scripts (based on filestamps, only
-input cells content is modified in the notebooks):
+The source files, which should be modified, are in the python_scripts
+directory. The notebooks are generated from these files.
+
+### Notebooks saved in Python files
+
+This repo uses [Jupytext](https://jupytext.readthedocs.io/) to display
+Python files as notebooks. Saving as Python files facilitates control
+version.
+
+#### Setting up jupytext
+
+When jupytext is properly connected to jupyter, the python files can be
+opened in jupyter and are directly displayed as notebooks
+
+**With jupyter notebook** Once jupytext is installed, run the following
+command:
 
 ```
-$ make notebooks
+jupyter serverextension enable jupytext
 ```
 
-To render all the notebooks (from time to time, slow to run):
+**With jupyter lab** To make it work with "jupyter lab" (instead of
+"jupyter notebook"), you have to install nodejs (conda install nodejs
+works if you use conda). Then in jupyter lab you have to right click
+"Open with... > notebook" to open the python scripts with the notebook
+interface.
+
+### Building the rendered notebooks
+
+
+To rebuild all the rendered notebooks (from time to time, slow to run):
 
 ```
 $ make
 ```
 
-This repo uses [Jupytext](https://jupytext.readthedocs.io/). In some cases you
+In some cases you
 may need to use a `jupytext` command directly rather than using the provided
-`Makefile`. Here are a few useful `jupytext` commands:
-- pair a notebook with a Python script:
-```
-$ jupytext --set-formats python_scripts//py:percent,notebooks//ipynb notebooks/your_notebook.ipynb
-```
-- sync a paired Python script and notebook:
-```
-$ jupytext --sync notebooks/your_notebook.ipynb
-```
-- create an empty notebook from a Python script:
+`Makefile`. For instance, to create an empty notebook from a Python script:
 ```
 $ jupytext --to ../notebooks//ipynb python_scripts/your_python_script.py
 ```

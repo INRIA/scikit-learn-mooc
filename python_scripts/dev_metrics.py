@@ -528,24 +528,24 @@ plot_pr_roc_interactive()
 # variable in regression problem. Therefore, the classification metrics can be
 # used to evaluate the performance of a model. Instead, there exists a set of
 # metric dedicated to regression.
-
-data = pd.read_csv(
-    ("https://raw.githubusercontent.com/christophM/interpretable-ml-book/"
-     "master/data/bike.csv"),
-)
+#
+# data = pd.read_csv(
+#     ("https://raw.githubusercontent.com/christophM/interpretable-ml-book/"
+#      "master/data/bike.csv"),
+# )
 # rename the columns with human-readable names
-data = data.rename(columns={
-    "yr": "year", "mnth": "month", "temp": "temperature", "hum": "humidity",
-    "cnt": "count", "days_since_2011": "days since 2011"
-})
+# data = data.rename(columns={
+#     "yr": "year", "mnth": "month", "temp": "temperature", "hum": "humidity",
+#     "cnt": "count", "days_since_2011": "days since 2011"
+# })
 # convert the categorical columns with a proper category data type
-for col in data.columns:
-    if data[col].dtype.kind == "O":
-        data[col] = data[col].astype("category")
-
+# for col in data.columns:
+#     if data[col].dtype.kind == "O":
+#         data[col] = data[col].astype("category")
+#
 # separate the target from the original data
-X = data.drop(columns=["count"])
-y = data["count"]
+# X = data.drop(columns=["count"])
+# y = data["count"]
 
 # %%
 X.head()
@@ -672,6 +672,3 @@ print(
 # %% [markdown]
 # In this case, our model make an error of 405 bikes.
 # FIXME: **not sure how to introduce the `mean_squared_error`.**
-
-# %% [markdown]
-# ## Clustering

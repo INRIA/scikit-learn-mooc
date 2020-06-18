@@ -5,14 +5,12 @@ MINIMAL_RENDERED_NOTEBOOK_FILES = $(shell ls $(PYTHON_SCRIPTS_DIR)/*.py | perl -
 
 all: $(RENDERED_NOTEBOOKS_DIR)
 
-.PHONY: $(RENDERED_NOTEBOOKS_DIR) sanity_check_$(PYTHON_SCRIPTS_DIR) sanity_check_$(RENDERED_NOTEBOOKS_DIR) all
+.PHONY: $(RENDERED_NOTEBOOKS_DIR) sanity_check_$(PYTHON_SCRIPTS_DIR) sanity_check_$(RENDERED_NOTEBOOKS_DIR) all clean
 
 $(RENDERED_NOTEBOOKS_DIR): $(MINIMAL_RENDERED_NOTEBOOK_FILES) sanity_check_$(RENDERED_NOTEBOOKS_DIR)
 
 $(RENDERED_NOTEBOOKS_DIR)/%.ipynb: $(PYTHON_SCRIPTS_DIR)/%.py
-	jupytext --to notebook --output $@ $< 
-	jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=None \
-                    --ExecutePreprocessor.kernel_name=$(JUPYTER_KERNEL) --inplace $@
+	bash build_scripts/convert-python-script-to-notebook.sh $< $@ $(JUPYTER_KERNEL)
 
 sanity_check_$(PYTHON_SCRIPTS_DIR):
 	python build_scripts/check-python-scripts.py $(PYTHON_SCRIPTS_DIR)
@@ -20,3 +18,6 @@ sanity_check_$(PYTHON_SCRIPTS_DIR):
 
 sanity_check_$(RENDERED_NOTEBOOKS_DIR):
 	python build_scripts/sanity-check.py $(PYTHON_SCRIPTS_DIR) $(RENDERED_NOTEBOOKS_DIR)
+
+clean:
+	rm -rf $(RENDERED_NOTEBOOKS_DIR)/*tmp.ipynb

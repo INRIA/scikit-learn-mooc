@@ -30,9 +30,10 @@ jobs:
     - name: Export html
       working-directory: ./slides
       run: make && mkdir ../dist && mv *.html ../dist/
-    - name: Export pdf
-      working-directory: ./dist
-      run: for f in *.html ; do remarkjs-pdf "$f"; done
+    # TODO: we need to work-around remarkjs-pdf timeout
+    # - name: Export pdf
+    #   working-directory: ./dist
+    #   run: for f in *.html ; do remarkjs-pdf "$f"; done
 
     - name: Upload distributed files
       uses: actions/upload-artifact@v1

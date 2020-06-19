@@ -10,8 +10,8 @@ This lesson covers the linear models. These are basic models, easy to understand
 
 ???
 
-Linear models are easy to understand and fast to train
-They give us a baseline
+Linear models are easy to understand and fast to train, 
+they give us a fair baseline
 
 
 ---
@@ -37,10 +37,13 @@ Here the target value is expected to be a linear combination of the features
  
 ---
 # Linear regression (Ordinary Least Squares)
+In this case, a linear model is a slope "as close as possible" from the datapoint
 
-We look for the best fit, i.e. we learn w_0 and w_1 such that 
+We learn f(x) = w_o + w_1 * x (linear combination) to predict *y*
+So we learn w_0 and w_1 such that 
 *| y_i - w_o + w_1 * x_i|^2* is minimal for all *i*
 
+The blue is the prediction for each *x*
 
 .shift-left.pull-left[<img src="../figures/linear_fit.svg" width="100%">]
 
@@ -49,8 +52,8 @@ We look for the best fit, i.e. we learn w_0 and w_1 such that
 ---
 # Error in linear regression
 
-For each sample x_i, we than have an error which correspond to |y_i - ŷ_i|^2
-(where ŷ_i = w_o + w_1 * x_i)
+For each sample x_i, we than have an error which correspond to |y_i - f(x_i)|^2
+(where f(x_i) = w_o + w_1 * x_i)
 That correspond to the red bar in the figure below
 .shift-left.pull-left[<img src="../figures/linear_fit_red.svg" width="100%">]
 
@@ -58,6 +61,14 @@ That correspond to the red bar in the figure below
 the fit is the line which minimize the sum of the square of the red lines.
 
 ---
+# Solving the linear regression
+
+Fortunatly, there is a formula, given **X** and **y** to find the optimal weights of *f*.
+
+???
+
+---
+
 # Linear regerssion in higher dimension
 
 If **X** has two dimensions, we obtain a plot like that:
@@ -71,7 +82,7 @@ L1 (Lasso) make sparse assumption
 
 L2 (Ridge) 
 
-error is now: C*|y_i - ŷ_i|^2 + |w_0|^2 + |w_1|^2
+Ridge error is: C*|y_i - ŷ_i|^2 + |w_0|^2 + |w_1|^2
 where C control the ration between the error and the penalty.
 
 ???
@@ -82,7 +93,7 @@ The complexity parameter  controls the amount of shrinkage: the larger the value
 
 Left: severals fit on 2 points  
 
-Right: severals fit on 2 points with L2 penalty
+Right: severals fit on 2 points with L2 penalty (Ridge)
 
 .shift-left.pull-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
 .shift-right.pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
@@ -94,7 +105,7 @@ Left: As we can see, our linear model captures and amplifies the noise in the da
 
 Right: Ridge estimator regularizes the coefficients by shrinking them to zero
 
-As we can see, the estimator displays much less variance. However it systematically under-estimates the coefficient. It displays a biased behavior.
+Ridge displays much less variance. However it systematically under-estimates the coefficient. It displays a biased behavior.
 
 This is a typical example of bias/variance tradeof: non-regularized estimator are not biased, but they can display a lot of variance. Highly-regularized models have little variance, but high bias. This bias is not necessarily a bad thing: what matters is choosing the tradeoff between bias and variance that leads to the best prediction performance. For a specific dataset there is a sweet spot corresponding to the highest complexity that the data can support, depending on the amount of noise and of observations available.
 
@@ -120,10 +131,6 @@ Proba(Y_i=1) = 1 / (1 + exp(-X_i . W))
 ---
 # Multiclass Logistic Regression
 
-sigmoïd(x) = 1 / (1 + exp(-x))
-Proba(Y_i=1) = 1 / (1 + exp(-X_i . W))
-.shift-left.pull-left[<img src="../figures/logistic_color.svg" width="110%">]
-
 
 ---
 .center[
@@ -133,6 +140,7 @@ Proba(Y_i=1) = 1 / (1 + exp(-X_i . W))
  - regression: linear regression + L2 penalty = Ridge
  - classification: logistic regression
 
+* very fast to train
 * Better when *p* > *n*
 
 

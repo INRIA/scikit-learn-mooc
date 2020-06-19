@@ -8,6 +8,8 @@
 # function is usually decoupled from the evaluation metric that we want to
 # optimize in practice. The objective function serves as a proxy to the
 # evaluation metric.
+# FIXME: add information about a loss function depending of the notebooks
+# presented before the notebook about metrics.
 #
 # While other notebooks will give insights regarding algorithms and their
 # associated objective functions, in this notebook we will focus on the
@@ -62,7 +64,8 @@ from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression()
 classifier.fit(X_train, y_train)
 
-# %% [markdown] Now, that our classifier is trained, we can provide some 
+# %% [markdown]
+# Now, that our classifier is trained, we can provide some 
 # information about a subject and the classifier can predict whether or not the
 # subject will donate blood.
 #
@@ -117,8 +120,6 @@ from sklearn.metrics import accuracy_score
 accuracy_score(y_test, y_pred)
 
 # %% [markdown]
-# Our classifier give the good answer in 77% of the case.
-#
 # Scikit-learn also have a build-in method named `score` which compute by
 # default the accuracy score.
 
@@ -139,7 +140,8 @@ from sklearn.metrics import plot_confusion_matrix
 
 plot_confusion_matrix(classifier, X_test, y_test)
 
-# %% [markdown] The in-diagonal numbers are related to predictions that agree
+# %% [markdown]
+# The in-diagonal numbers are related to predictions that agree
 # with the true labels while off-diagonal numbers are related to
 # misclassification. Besides, we now know the type of true or erroneous
 # predictions the classifier did:

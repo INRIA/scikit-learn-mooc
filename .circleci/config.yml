@@ -1,0 +1,36 @@
+version: 2
+
+jobs:
+  run_notebooks:
+    docker:
+      - image: continuumio/miniconda
+    environment:
+      - OMP_NUM_THREADS: 2
+      - MKL_NUM_THREADS: 2
+      - OPENBLAS_NUM_THREADS: 2
+      - MINICONDA_PATH: ~/miniconda
+      - CONDA_ENV_NAME: testenv
+      - PYTHON_VERSION: 3
+    steps:
+      - checkout
+      - run: ./build_tools/circle/checkout_merge_commit.sh
+      - run:
+          command: ./build_tools/circle/run_notebooks.sh
+          no_output_timeout: 30m
+      - store_artifacts:
+          path: rendered_notebooks_html
+          destination: notebooks
+
+workflows:
+  version: 2
+  run_notebooks:
+    jobs:
+      # TODO add lint step
+      # - lint
+      - run_notebooks
+          # requires:
+          #   - lint
+      # TODO one day maybe push to a separate branch with [skip ci] to have the notebooks in the repo
+      # - deploy:
+      #     requires:
+      #       - run_notebooks

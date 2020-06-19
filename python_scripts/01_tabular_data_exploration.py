@@ -42,8 +42,9 @@ adult_census = pd.read_csv(
 # %% [markdown]
 # We can look at the OpenML webpage to learn more about this dataset: http://www.openml.org/d/1590
 
-# The goal with this data is to regress wages (i.e. whether a person makes over 50K a year)
-# from heterogeneous data such as age, employment, education, family information, etc.
+# The goal with this data is to predict whether a person earns over 50K a year
+# from heterogeneous data such as age, employment, education, family
+# information, etc.
 
 # %% [markdown]
 # ## The variables (columns) in the dataset
@@ -284,7 +285,7 @@ tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes,
 tree.fit(X, y)
 
 # %% [markdown]
-# `plot_tree` will allow us to visually check the set of rules learnt by 
+# `plot_tree` will allow us to visually check the set of rules learnt by
 # the decision tree.
 
 # %%
@@ -314,10 +315,6 @@ plot_tree_decision_function(tree, X, y)
 #   can allow you to decide whether using machine learning is appropriate for
 #   your data and to highlight potential peculiarities in your data
 #
-# Key ideas discussed:
-# * A first glance to the data can give some insights of features importance
-# * It is possible to visualize the decision rules from a decision tree
-# 
 # Ideas which will be discussed more in details later:
 # * if your target variable is imbalanced (e.g., you have more samples from one
 #   target category than another), you may need special techniques for training and

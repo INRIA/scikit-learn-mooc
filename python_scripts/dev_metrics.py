@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Evaluate of your predictive model
+# # Evaluation of your predictive model
 
 # %% [markdown]
 # ## Introduction
@@ -62,12 +62,12 @@ from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression()
 classifier.fit(X_train, y_train)
 
-# %% Now, that our classifier is trained, we can provide a some [markdown]
+# %% [markdown] Now, that our classifier is trained, we can provide some 
 # information about a subject and the classifier can predict whether or not the
 # subject will donate blood.
 #
 # Let's create a synthetic sample corresponding to the following potential
-# donor: he/she donated blood 6 month ago and gave twice blood in the past for
+# new donor: he/she donated blood 6 month ago and gave twice blood in the past for
 # a total of 1000 c.c. He/she gave blood for the first time 20 months ago.
 
 # %%
@@ -83,7 +83,7 @@ classifier.predict(new_donor)
 
 # %%
 y_pred = classifier.predict(X_test)
-y_pred
+y_pred[:5]
 
 # %% [markdown]
 # ### Accuracy as a baseline
@@ -97,9 +97,9 @@ y_test == y_pred
 # In the comparison above, a `True` value means that the value predicted by our
 # classifier is identical to the real `prediction` while a `False` means that
 # our classifier made a mistake. One way to get an overall statistic telling us
-# how good the performance of our classifier are is the computer the number of
+# how good the performance of our classifier are is to compute the number of
 # time our classifier was right and divide it by the number of samples in our
-# set.
+# set (i.e. taking the mean of correct predictions)
 
 # %%
 import numpy as np
@@ -107,8 +107,8 @@ import numpy as np
 np.mean(y_test == y_pred)
 
 # %% [markdown]
-# This measure is also known as the accuracy. Here, our classifier is 97%
-# accurate at classifying iris flowers. `scikit-learn` provides a function to
+# This measure is also known as the accuracy. Here, our classifier is 78%
+# accurate at classifying if subject will give blood. `scikit-learn` provides a function to
 # compute this metric in the module `sklearn.metrics`.
 
 # %%
@@ -139,7 +139,7 @@ from sklearn.metrics import plot_confusion_matrix
 
 plot_confusion_matrix(classifier, X_test, y_test)
 
-# %% The in-diagonal numbers are related to predictions that agree [markdown]
+# %% [markdown] The in-diagonal numbers are related to predictions that agree
 # with the true labels while off-diagonal numbers are related to
 # misclassification. Besides, we now know the type of true or erroneous
 # predictions the classifier did:
@@ -154,7 +154,7 @@ plot_confusion_matrix(classifier, X_test, y_test)
 # * the bottom left corner is called false positive (FP) and correspond to a
 #   person who did not give blood but was predicted as giving blood.
 #
-# Once that we have split these information, we can compute statistic for a
+# Once we have split these information, we can compute statistics for
 # highlighting the performance of our classifier in a particular setting. For
 # instance, one could be interested in the fraction of persons who really gave
 # blood when the classifier predicted so or the fraction of people predicted as
@@ -180,7 +180,7 @@ print(
 # who gave blood as "not donated" leading to a very low recall of around 0.1.
 #
 # The precision and recall can be combined in a single score called the F1
-# score
+# score (which is the harmonic mean of precision and recall)
 
 # %%
 from sklearn.metrics import f1_score
@@ -193,8 +193,8 @@ f1_score(y_test, y_pred, pos_label='donated')
 # did not look bad (i.e. 77%), the F1 score is relatively low (i.e. 21%).
 #
 # As we mentioned, precision and recall only focus on the positive label while
-# the accuracy is taking into account both aspects into account. In addition,
-# we important thing that we omit up to know is to look at the ratio class
+# the accuracy is taking both aspects into account. In addition,
+# we omit to look at the ratio class
 # occurrence. We could check this ratio in the training set.
 
 # %%
@@ -269,7 +269,7 @@ equivalence_pred_proba = (
 np.all(equivalence_pred_proba)
 
 # %% [markdown]
-# The default decision threshold might not be the best threshold leading to
+# The default decision threshold (0.5) might not be the best threshold leading to
 # optimal performance of our classifier. In this case, one can vary the
 # decision threshold and therefore the underlying prediction and compute the
 # same statistic than presented earlier. Usually, two metrics are computed

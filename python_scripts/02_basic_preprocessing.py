@@ -15,27 +15,23 @@
 # ---
 
 # %% [markdown]
-# # Introduction to scikit-learn
+# # First model with scikit-learn
 #
 # ## Basic preprocessing and model fitting
 #
 # In this notebook, we present how to build predictive models on tabular
-# datasets.
+# datasets, with numerical features. Categorical features will be discussed
+# in the next notebook.
 #
 # In particular we will highlight:
-# * the difference between numerical and categorical variables;
-# * the importance of scaling numerical variables;
-# * typical ways to deal categorical variables;
-# * how to train predictive models on different types of data;
-# * evaluate the performance of a model via cross-validation.
+# * working with numerical features
+# * the importance of scaling numerical variables
+# * evaluate the performance of a model via cross-validation
 #
-# ## Introducing the dataset
+# ## Loading the dataset
 #
-# To this aim, we will use data from the 1994 Census bureau database. The goal
-# with this data is to regress wages from heterogeneous data such as age,
-# employment, education, family information, etc.
-#
-# Let's first load the data located in the `datasets` folder.
+# We will use the same dataset "adult_census" described in the previous notebook.
+# TODO add link
 
 # %%
 import pandas as pd
@@ -52,34 +48,20 @@ df = pd.read_csv(
 # %%
 df.head()
 
-# %% [markdown]
-# The target variable in our study will be the "class" column while we will use
-# the other columns as input variables for our model. This target column divides
-# the samples (also known as records) into two groups: high income (>50K) vs low
-# income (<=50K). The resulting prediction problem is therefore a binary
-# classification problem.
-#
-# For simplicity, we will ignore the "fnlwgt" (final weight) column that was
-# crafted by the creators of the dataset when sampling the dataset to be
-# representative of the full census database.
-
 # %%
 target_name = "class"
 target = df[target_name].to_numpy()
 target
 
+# %% [markdown]
+# For simplicity, we will ignore the "fnlwgt" (final weight) column that was
+# crafted by the creators of the dataset when sampling the dataset to be
+# representative of the full census database.
+
 # %%
 data = df.drop(columns=[target_name, "fnlwgt"])
 data.head()
 
-# %% [markdown]
-# We can check the number of samples and the number of features available in
-# the dataset:
-
-# %%
-print(
-    f"The dataset contains {data.shape[0]} samples and {data.shape[1]} "
-    "features")
 
 # %% [markdown]
 # ## Working with numerical data
@@ -102,7 +84,8 @@ data.dtypes
 
 # "i" denotes integer type, "f" denotes float type
 numerical_columns = [
-    c for c in data.columns if data[c].dtype.kind in ["i", "f"]]
+    col for col in data.columns
+    if data[col].dtype.kind in ["i", "f"]]
 numerical_columns
 
 # %%
@@ -112,11 +95,11 @@ data_numeric.head()
 # %% [markdown]
 # When building a machine learning model, it is important to leave out a
 # subset of the data which we can use later to evaluate the trained model.
-# The data used to fit a model a called training data while the one used to
-# assess a model are called testing data.
+# The data used to fit a model is called training data while the one used to
+# assess a model is called testing data.
 #
 # Scikit-learn provides an helper function `train_test_split` which will
-# split the dataset into a training and a testing set. It will ensure that
+# split the dataset into a training and a testing set. It will also ensure that
 # the data are shuffled randomly before splitting the data.
 
 # %%
@@ -153,7 +136,7 @@ print(f"The model {model.__class__.__name__} was trained in "
 
 # %% [markdown]
 # Let's ignore the convergence warning for now and instead let's try
-# to use our model to make some predictions on the first three records
+# to use our model to make some predictions on the first five records
 # of the held out test set:
 
 # %%
@@ -356,4 +339,12 @@ fig, ax = plt.subplots(figsize=(10, 6))
 cv = KFold(5)
 _ = plot_cv_indices(cv, X, y, ax)
 
-# TODO: add summary here
+
+# %% [markdown]
+#
+# In this notebook we have:
+# * split our dataset into a training dataset and a testing dataset
+# * fitted a logistic regression model
+# * seen the importance of scaling numerical variables
+# * used the **pipeline** method to fit both the scaler and the logistic regression
+# * assessed the performance of our model via cross-validation

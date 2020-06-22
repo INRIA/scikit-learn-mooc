@@ -18,9 +18,9 @@ they give us a fair baseline
 # Outline
 
 * Linear regression
-* L1 and L2 penalty
+ - L1 and L2 penalty
 * Logistic regression
-* multi class
+ - multi class
 * linear separability
 
 ---
@@ -38,7 +38,6 @@ Here the target value is expected to be a linear combination of the features
 ---
 # Linear regression
 A linear model is a slope "as close as possible" from datapoint
-
 The blue curve is the prediction for each *x*
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
@@ -65,7 +64,7 @@ the fit is the line which minimize the sum of the square of those red lines.
 ---
 # Solving the linear regression
 
-Fortunatly, there is a efficient formula, given **X** and **y**, to find the optimal weights of *f*.
+Fortunatly, there is a efficient formula, given **X** and **y**, to find the optimal weights
 
 ???
 
@@ -80,7 +79,7 @@ If **X** has two dimensions, we obtain a plot like that:
 Linear model could also overfit. 
 If we have too many parameters w.r.t. number of samples, it's highly advice to penalize the parameters of our models.
 
-Simple way to do so is to add 
+Simple way to penalize a model is to include teh value of its weights within the error function
 
 ???
 
@@ -126,7 +125,8 @@ This is a typical example of bias/variance tradeof: non-regularized estimator ar
 ---
 # Logistic Regression
 
-Logistic regression learn a linear model for **classification** (and not regresion as the name suggest).  
+Logistic regression learn a linear model for **classification** 
+(and not regresion as the name suggest).  
 So **y** is either +1 or -1
 
 .shift-left.pull-left[<img src="../figures/categorical.svg" width="110%">]
@@ -140,6 +140,8 @@ Exemple: succes to an exam after x hours of study.
 # Logistic Regression
 
 sigmoïd(x) = 1 / (1 + exp(-x))
+  
+
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="110%">]
 
@@ -157,24 +159,36 @@ other way of representation
 axis = x1, x2
 y is the color
 
----
 
+---
 # Multiclass Logistic Regression
 
-Logistic regression could adapt even if **y** contains multiple class (not binary)
+Logistic regression could adapt even if **y** is contains multiple class. It is called *multinomial regression*
 
 .shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
 
 ???
---- 
-# Linear separability
-Linear models works as long as your data could be linear separable.
+Mutlinomial could be used here
+Otherwise, we stil can run One vs Rest approach
 
+---
+# Linear separability
+
+
+.shift-left.pull-left[<img src="../figures/lin_separable.svg" width="100%">]
+.pull-right[<img src="../figures/lin_not_separable.svg" width="100%">]
+
+.pull-left.shift-left[Linearly separable]
+.pull-right[    *Not* linearly separable]
+
+???
+Linear models work as long as your data could be linearly separable.
 
 ---
 .center[
 # Take home messages
 ]
+
 * Linear model are good baselines for:
  - regression: linear regression + L2 penalty = Ridge
  - classification: logistic regression
@@ -184,15 +198,3 @@ Linear models works as long as your data could be linear separable.
 
 
 ???
-
-.shift-left.pull-left[<img src="../figures/linear_ols.svg" width="110%">]
-
-.pull-right[<img src="../figures/linear_splines.svg" width="110%">]
-
-.shift-left.pull-left[<img src="../figures/linear_ols_test.svg" width="110%">]
-.pull-right[<img src="../figures/linear_splines_test.svg" width="110%">]
-.centered.reversed[**On new data**]
-
-.shift-left.pull-left[<img src="../figures/ols_simple_test.svg" width="110%">]
-.pull-right[<img src="../figures/splines_cubic_test.svg" width="110%">]
-.centered[A harder example]

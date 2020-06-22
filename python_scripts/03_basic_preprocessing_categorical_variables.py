@@ -14,10 +14,15 @@
 #     name: python3
 # ---
 
-# %%
-# TODO add intro with objectives
+# %% [markdown]
+## Working with both numerical & categorical variables
 
-# ## [markdown]
+# In this notebook, we will present:
+# * typical ways to deal with categorical variables
+# * how to train a predictive model on different types of data
+# (i.e. numerical and categorical)
+
+# %% [markdown]
 # Let's first load the data as we did in the previous notebook. TODO add link.
 
 # %%
@@ -42,7 +47,7 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 # of a sequence of arithmetic instructions such as additions and
 # multiplications.
 #
-# In contrast, categorical variables have discrete values typically represented
+# In contrast, categorical variables have discrete values, typically represented
 # by string labels taken from a finite list of possible choices. For instance,
 # the variable `native-country` in our dataset is a categorical variable because
 # it encodes the data using a finite list of possible countries (along with the
@@ -343,3 +348,13 @@ print(model.score(data_test, target_test))
 #   accuracy of `HistGradientBoostingClassifier` but slows down the training.
 #
 # Use the dedicated notebook to do this exercise.
+
+
+# %% [markdown]
+# 
+# In this notebook we have:
+# * encoded categorical features with both an ordinal encoding and an one hot encoding
+# * used a pipeline to process both numerical and categorical features before fitting a 
+# logistic regression
+# * seen that gradient boosting methods can outperforms the basic linear approach
+# 

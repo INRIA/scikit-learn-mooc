@@ -41,8 +41,10 @@ adult_census = pd.read_csv(
 
 # %% [markdown]
 # We can look at the OpenML webpage to learn more about this dataset: http://www.openml.org/d/1590
-#
-# It tells us that the typical prediction task is to determine whether a person makes over 50K a year.
+
+# The goal with this data is to predict whether a person earns over 50K a year
+# from heterogeneous data such as age, employment, education, family
+# information, etc.
 
 # %% [markdown]
 # ## The variables (columns) in the dataset
@@ -57,7 +59,9 @@ adult_census.head()  # Look at the first few lines of our dataframe
 # %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which
 # we want to predict). The two possible classes are `<= 50K` (low-revenue) and
-# `> 50K` (high-revenue).
+# `> 50K` (high-revenue). The resulting prediction problem is therefore a binary
+# classification problem,
+# while we will use the other columns as input variables for our model.
 
 # %%
 target_column = 'class'
@@ -93,14 +97,23 @@ adult_census = adult_census[all_columns]
 # be representative of the full census database.
 
 # %% [markdown]
+# We can check the number of samples and the number of features available in
+# the dataset:
+
+# %%
+print(
+    f"The dataset contains {adult_census.shape[0]} samples and "
+    "{adult_census.shape[1]} features")
+
+# %% [markdown]
 # ## Visual inspection of the data
 # Before building a machine learning model, it is a good idea to look at the
 # data:
 # * maybe the task you are trying to achieve can be solved without machine
 #   learning
-# * you need to check that the data you need for your task is indeed present in
+# * you need to check that the information you need for your task is indeed present in
 # the dataset
-# * inspecting the data is a good way to find peculiarities. These can can
+# * inspecting the data is a good way to find peculiarities. These can
 #   arise during data collection (for example, malfunctioning sensor or missing
 #   values), or from the way the data is processed afterwards (for example capped
 #   values).
@@ -196,12 +209,12 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # Another thing worth mentioning in this plot: if you are young (less than 25
 # year-old roughly) or old (more than 70 year-old roughly) you tend to work
 # less. This is a non-linear relationship between age and hours
-# per week. Some machine learning models can only capture linear interactions so
+# per week. Linear machine learning models can only capture linear interactions, so
 # this may be a factor when deciding which model to chose.
 #
-# In a machine-learning setting, we will use an algorithm to automatically
+# In a machine-learning setting, algorithm automatically
 # decide what should be the "rules" in order to make predictions on new data.
-# We can check which set of simple rules a decision tree would grasp using the
+# Let's visualize which set of simple rules a decision tree would grasp using the
 # same data.
 
 
@@ -259,8 +272,8 @@ y = LabelEncoder().fit_transform(
     data_subset[target_column].to_numpy())
 
 # %% [markdown]
-# We will create a decision tree which we will keep really simple on purpose.
-# We will only allow a maximum of 2 rules to interpret the results.
+# We will create a simple decision tree with a maximum of 2 rules, in order
+# to interpret the results.
 
 # %%
 from sklearn.tree import DecisionTreeClassifier
@@ -272,8 +285,8 @@ tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes,
 tree.fit(X, y)
 
 # %% [markdown]
-# We can now check the set of rules learnt by the tree then visually check
-# what theses rules look like.
+# `plot_tree` will allow us to visually check the set of rules learnt by
+# the decision tree.
 
 # %%
 _ = plot_tree(tree)
@@ -283,31 +296,30 @@ _ = plot_tree(tree)
 plot_tree_decision_function(tree, X, y)
 
 # %% [markdown]
-# Allowing only 3 leaves in the tree, we get similar rules to the ones we
+# By allowing only 3 leaves in the tree, we get similar rules to the ones we
 # designed by hand:
-# * the persons younger than 28.5 year-old will be considered in the class
+# * the persons younger than 28.5 year-old (X[0] < 28.5) will be considered in the class
 #   earning `<= 50K`.
-# * the persons older than 28.5 and working more than 40.5 hours-per-week
-#   will be considered in the class earning `> 50K`, while the persons working
-#   below 40.5 hours-per-week, will be considered in the class
-#   earning `<= 50K`.
+# * the persons older than 28.5 and working less than 40.5 hours-per-week (X[1] <= 40.5)
+#   will be considered in the class earning `<= 50K`, while the persons working
+#   above 40.5 hours-per-week, will be considered in the class
+#   earning `> 50K`.
 
 # %% [markdown]
 #
 # In this notebook we have:
 # * loaded the data from a CSV file using `pandas`
-# * looked at the kind of variables in the dataset, and differentiated
+# * looked at the differents kind of variables to differentiate
 #   between categorical and numerical variables
 # * inspected the data with `pandas`, `seaborn` and `pandas_profiling`. Data inspection
 #   can allow you to decide whether using machine learning is appropriate for
 #   your data and to highlight potential peculiarities in your data
 #
-# Key ideas discussed:
+# Ideas which will be discussed more in details later:
 # * if your target variable is imbalanced (e.g., you have more samples from one
-#   target category than another), you may need special techniques for machine
-#   learning
+#   target category than another), you may need special techniques for training and
+#   evaluating your machine learning model
 # * having redundant (or highly correlated) columns can be a problem for
-#   machine learning algorithms
-# * some machine learning models can only capture linear interaction so be
+#   some machine learning algorithms
+# * contrary to decision tree, linear models can only capture linear interaction, so be
 #   aware of non-linear relationships in your data
-

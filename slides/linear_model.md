@@ -18,52 +18,54 @@ they give us a fair baseline
 # Outline
 
 * Linear regression
+* L1 and L2 penalty
 * Logistic regression
- - (classification vs regression) ?
 * multi class
 * linear separability
-* L1 and L2 penalty
-* (Learning curves and validation curves) ?
+
 ---
 # Linear regression
 
-Here we have to predict the value of the target **y** given some observation (explanatory variable) **X**. For illustration purpose, we will consider that the observation is only one dimensional.
+Predict the value of the target **y**  
+given some observation (explanatory variable) **X**
 
-.shift-left.pull-left[<img src="../figures/linear_data.svg" width="110%">]
+.shift-down.pull-left.shift-left[<img src="../figures/linear_data.svg" width="100%">]
 
 ???
-
+For illustration purpose, let's consider oen dimensionnal observation
 Here the target value is expected to be a linear combination of the features
  
 ---
-# Linear regression (Ordinary Least Squares)
-In this case, a linear model is a slope "as close as possible" from the datapoint
+# Linear regression
+A linear model is a slope "as close as possible" from datapoint
+
+The blue curve is the prediction for each *x*
+
+.shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
+
+???
 
 We learn f(x) = w_o + w_1 * x (linear combination) to predict *y*
 So we learn w_0 and w_1 such that 
 *| y_i - w_o + w_1 * x_i|^2* is minimal for all *i*
 
-The blue is the prediction for each *x*
-
-.shift-left.pull-left[<img src="../figures/linear_fit.svg" width="100%">]
-
-???
 
 ---
 # Error in linear regression
 
-For each sample x_i, we than have an error which correspond to |y_i - f(x_i)|^2
-(where f(x_i) = w_o + w_1 * x_i)
-That correspond to the red bar in the figure below
-.shift-left.pull-left[<img src="../figures/linear_fit_red.svg" width="100%">]
+For each sample, error is the distance between the curve and the point
+
+.shift-down.pull-left.shift-left[<img src="../figures/linear_fit_red.svg" width="100%">]
 
 ???
-the fit is the line which minimize the sum of the square of the red lines.
+That correspond to the red bar in the figure below
+
+the fit is the line which minimize the sum of the square of those red lines.
 
 ---
 # Solving the linear regression
 
-Fortunatly, there is a formula, given **X** and **y** to find the optimal weights of *f*.
+Fortunatly, there is a efficient formula, given **X** and **y**, to find the optimal weights of *f*.
 
 ???
 
@@ -74,29 +76,41 @@ Fortunatly, there is a formula, given **X** and **y** to find the optimal weight
 If **X** has two dimensions, we obtain a plot like that:
 
 ---
+# Penalty
+Linear model could also overfit. 
+If we have too many parameters w.r.t. number of samples, it's highly advice to penalize the parameters of our models.
+
+Simple way to do so is to add 
+
+???
+
+---
 # Linear regression with regularization
 
-We could impose a penalty on the size of the coefficients (by modifying our error function)
+We could impose a penalty on the size of the coefficients (by modifying the error function)
 
 L1 (Lasso) make sparse assumption 
 
 L2 (Ridge) 
 
-Ridge error is: C*|y_i - ŷ_i|^2 + |w_0|^2 + |w_1|^2
-where C control the ration between the error and the penalty.
-
 ???
 The complexity parameter  controls the amount of shrinkage: the larger the value of , the greater the amount of shrinkage and thus the coefficients become more robust to collinearity.
 
 ---
+# Linear regression
+
+
+.pull-left.shift-left[<img src="../figures/lin_reg_2_points.svg" width="110%">]
+
+---
 # Linear regression with regularization
 
-Left: severals fit on 2 points  
 
-Right: severals fit on 2 points with L2 penalty (Ridge)
+.pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
+.pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
 
-.shift-left.pull-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
-.shift-right.pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
+.pull-left.shift-left[Linear regression]
+.pull-right[    Ridge]
 
 ???
 http://scipy-lectures.org/packages/scikit-learn/index.html#bias-variance-trade-off-illustration-on-a-simple-regression-problem
@@ -112,24 +126,49 @@ This is a typical example of bias/variance tradeof: non-regularized estimator ar
 ---
 # Logistic Regression
 
-With Logistic regression, we learn a linear model for *classification* (and not regresion as the name suggest).
+Logistic regression learn a linear model for **classification** (and not regresion as the name suggest).  
 So **y** is either +1 or -1
 
 .shift-left.pull-left[<img src="../figures/categorical.svg" width="110%">]
 
 ???
+Logistic regression learn a linear model for **classification** - and not regresion as the name suggest.
+
 Exemple: succes to an exam after x hours of study.
 
 ---
 # Logistic Regression
 
 sigmoïd(x) = 1 / (1 + exp(-x))
-Proba(Y_i=1) = 1 / (1 + exp(-X_i . W))
+
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="110%">]
 
 
 ---
+# Logistic Regression 2D
+
+**X** is 2-dimensional  
+**y** is the color
+
+.shift-left.pull-left[<img src="../figures/logistic_2D.svg" width="100%">]
+
+???
+other way of representation 
+axis = x1, x2
+y is the color
+
+---
+
 # Multiclass Logistic Regression
+
+Logistic regression could adapt even if **y** contains multiple class (not binary)
+
+.shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
+
+???
+--- 
+# Linear separability
+Linear models works as long as your data could be linear separable.
 
 
 ---

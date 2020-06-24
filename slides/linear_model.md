@@ -20,7 +20,7 @@ they give us fair baselines
 * Linear regression
 * Logistic regression
 
-* avoid overfitting 
+* Avoiding overfitting 
 
 
 ---
@@ -39,10 +39,11 @@ they give us fair baselines
 Salary = *.4* x Education + *.2* x Hours-per-week + *.1* x age + ...
 
 ???
-Adult census a bit modify, say we have the value of the salary for every one.
+Adult census is here a bit modify, instead we have the value of the salary for every one.
 So we can see it as a regression problem
 
-Salary could be a linear combination of the feature / explanatory variable
+Salary could be a linear combination of the feature (explanatory variable). 
+
 
 
 ---
@@ -66,14 +67,14 @@ The blue curve is the prediction for each *x*
 
 ???
 
-We learn a linear function to predict *y*. In one dimension it is f(x) = ax + b
+We learn a linear function to predict *y*. Here the salary is a constant times the number of years of study.
 
 
 
 ---
 # Error in linear regression
 
-The linear regression objectif is to minimize the distance between curve and datapoint
+The linear regression objectif is to minimize the distance between the prediction curve and the datapoints
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit_red.svg" width="100%">]
 
@@ -110,8 +111,8 @@ In our adult_census dataset, we do not have continous value for salary but only 
 ---
 # Logistic Regression
 
-sigmoïd(x) = 1 / (1 + exp(-x))
-FIXME absolut position for figure
+The output is now conposed with the sigmoïd function
+sigmoid(x) = 1 / (1 + exp(-x))
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
 
@@ -128,42 +129,38 @@ FIXME absolut position for figure
 ???
 Here is an other way of representing our data.
 In this case, X has two dimension x1 and x2.
-So the axis correspond to x1, x2
+The axis correspond to x1, x2
 and the color correspond to the target label y 
 
 ---
 # Model complexity
 * Linear model could also overfit. 
-- reducing its complexity by reducing its parameters value
+ - reducing its complexity by reducing its parameters value
   
 ???
 
 If we have too many parameters w.r.t. number of samples, it's adviced to penalize the parameters of our models.
 
-Weights penalty: include the value of the model's weights within the error function
-
+With weights penalty, we include the value of the model's weights within the objectif function
 So a penalized model should choose lower weights for almost a similar fit
 
 ---
 # Linear regression with regularization
 
 We could impose a penalty on the size of the coefficients
-
-L1 (Lasso) make sparse assumption 
-
-L2 (Ridge) 
+It's now called *Ridge regression*
 
 ???
 The complexity parameter \alpha controls the amount of shrinkage: the larger the value of \alpha, the greater the amount of shrinkage and thus the coefficients become more robust to collinearity.
 
 ---
-# Linear regression
+# 2 points example
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points.svg" width="110%">]
 
 ---
-# Linear regression with regularization
+# 2 points example
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
@@ -203,8 +200,8 @@ Logistic regression could adapt even if **y** is contains multiple class. It is 
 .shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
 
 ???
-Mutlinomial could be used
-Otherwise, we stil can run One vs Rest approach
+Mutlinomial logistic regression is a natural extension of logistic regression.
+Otherwise, we stil can run One vs Rest approach.
 
 ---
 # Linear separability
@@ -218,7 +215,7 @@ Otherwise, we stil can run One vs Rest approach
 
 ???
 Linear models work as long as your data could be linearly separable.
-Otherwise, either you do features augmentation, or you choose a more complex model.
+Otherwise, either we could do features augmentation, or we could choose a more complex model.
 
 ---
 .center[
@@ -226,7 +223,7 @@ Otherwise, either you do features augmentation, or you choose a more complex mod
 ]
 
 * Linear model are good baselines for:
- - regression: linear regression + L2 penalty = Ridge
+ - regression: linear regression + penalty = Ridge
  - classification: logistic regression
 
 * very fast to train

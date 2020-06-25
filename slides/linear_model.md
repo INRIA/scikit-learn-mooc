@@ -17,10 +17,9 @@ they give us fair baselines
 ---
 # Outline
 
-* Linear regression
-* Logistic regression
-
-* Avoiding overfitting 
+* What is a linear model?
+* Linear model for regression & classification
+* How to avoid overfitting?
 
 
 ---
@@ -36,7 +35,7 @@ they give us fair baselines
 | 44  | Private   | Some-college | Married-civ-spouse | Machine-op-inspct  | Husband      | Black | Male | 7688         | 40             | United-States   | $52k  |
 
 ]
-Salary = *.4* x Education + *.2* x Hours-per-week + *.1* x age + ...
+Salary = *.4 x* education + *.2 x* hours-per-week + *.1 x* age + ...
 
 ???
 Adult census is here a bit modify, instead we have the value of the salary for every one.
@@ -47,7 +46,7 @@ Salary could be a linear combination of the feature (explanatory variable).
 
 
 ---
-# Linear Regression
+# Linear regression
 
 Predict the value of the target **y**  
 given some observation **X**
@@ -61,10 +60,12 @@ e.g. salary should be explain by education level (nb of year of study)
 ---
 # Linear regression
 A linear model is a slope "as close as possible" from datapoint
-The blue curve is the prediction for each *x*
+The blue curve is the prediction for each **x**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
-
+.pull-right.very-small[`From sklearn.linear_model import LinearRegression`
+`lin_reg = LinearRegression()`
+`lin_reg.fit(x, y)`]
 ???
 
 We learn a linear function to predict *y*. Here the salary is a constant times the number of years of study.
@@ -72,7 +73,7 @@ We learn a linear function to predict *y*. Here the salary is a constant times t
 
 
 ---
-# Error in linear regression
+# Linear regression
 
 The linear regression objectif is to minimize the distance between the prediction curve and the datapoints
 
@@ -87,21 +88,23 @@ Fortunatly, there is a formula, given **X** and **y**, to find the optimal weigh
 ---
 # Linear regerssion in higher dimension
 
+.pull-left.shift-left[<img src="../figures/lin_reg_3D.svg" width="130%">]
 
-.shift-down.pull-left.shift-left[<img src="../figures/lin_reg_3D.svg" width="100%">]
-**X** is two dimensional
 
 ???
 In real world data set, **X** has severals dimensions, and it is not possible anymore to represent it.
 
 ---
-# Logistic Regression
+# Logistic regression
 
-Logistic regression learn a linear model for **classification**  
-**y** is either +1 or -1
+For **classification** we use a logistic regression model  
+**y** is binary, either +1 or -1
 
 .shift-left.pull-left[<img src="../figures/categorical.svg" width="100%">]
-
+.pull-right.very-small[
+    `From sklearn.linear_model import LogisticRegression`
+`log_reg = LogisticRegression()`
+]
 ???
 Logistic regression is a linear model for **classification** - not regresion as the name suggest.
 
@@ -109,16 +112,18 @@ In our adult_census dataset, we do not have continous value for salary but only 
 
 
 ---
-# Logistic Regression
+# Logistic regression
 
-The output is now conposed with the sigmoïd function
-sigmoid(x) = 1 / (1 + exp(-x))
+The output is now conposed with the logistic function
+Logistic(x) = 1 / (1 + exp(-x))
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
-
+.pull-right.very-small[`From sklearn.linear_model import LogisticRegression`
+`log_reg = LogisticRegression()`
+`log_reg.fit(X, y)`]
 
 ---
-# Logistic Regression 2D
+# Logistic regression in 2 dimensions
 
 **X** is 2-dimensional  
 **y** is the color
@@ -134,9 +139,11 @@ and the color correspond to the target label y
 
 ---
 # Model complexity
+Salary = *.4 x* education_level + *.2 x* hours-per-week + *.1 x* age + 
+.red[ *.2 x* zodiac_sign + *.1 x* drink_coffee] + ...  
+
 * Linear model could also overfit. 
- - reducing its complexity by reducing its parameters value
-  
+ - Reducing its complexity by reducing its parameters value is called *Ridge regression*
 ???
 
 If we have too many parameters w.r.t. number of samples, it's adviced to penalize the parameters of our models.
@@ -144,13 +151,6 @@ If we have too many parameters w.r.t. number of samples, it's adviced to penaliz
 With weights penalty, we include the value of the model's weights within the objectif function
 So a penalized model should choose lower weights for almost a similar fit
 
----
-# Linear regression with regularization
-
-We could impose a penalty on the size of the coefficients
-It's now called *Ridge regression*
-
-???
 The complexity parameter \alpha controls the amount of shrinkage: the larger the value of \alpha, the greater the amount of shrinkage and thus the coefficients become more robust to collinearity.
 
 ---
@@ -166,9 +166,10 @@ The complexity parameter \alpha controls the amount of shrinkage: the larger the
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
 .pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
 
-.pull-left.shift-left[Linear regression]
-.pull-right[    Ridge]
-
+.pull-left.shift-left[     Linear regression]
+.pull-right[         Ridge]
+.pull-left.shift-left[     No bias, high variance]
+.pull-right[         low bias, low variance]
 ???
 from http://scipy-lectures.org/packages/scikit-learn/index.html#bias-variance-trade-off-illustration-on-a-simple-regression-problem
 
@@ -182,7 +183,7 @@ This is a typical example of bias/variance tradeof: non-regularized estimator ar
 
 
 ---
-# Logistic Regression Penalize
+# Logistic regression penalized
 Logistic Regression comes with a penalty parameters C
 
 .shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]
@@ -193,12 +194,16 @@ In contrary, for low value of C, the model is considering all the points.
 The choice of C depends of the dataset
 
 ---
-# Multiclass Logistic Regression
+# Logistic regression for multiclass
 
 Logistic regression could adapt even if **y** is contains multiple class. It is called *multinomial logistic regression*
 
 .shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
-
+.pull-right[
+* Multinomial 
+* One vs One
+* One vs Rest
+]
 ???
 Mutlinomial logistic regression is a natural extension of logistic regression.
 Otherwise, we stil can run One vs Rest approach.

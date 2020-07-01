@@ -63,9 +63,11 @@ A linear model is a slope "as close as possible" from datapoint
 The blue curve is the prediction for each **x**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
-.pull-right.very-small[`from sklearn.linear_model import LinearRegression`
-`lin_reg = LinearRegression()`
-`lin_reg.fit(x, y)`]
+.pull-right.very-small[```python
+from sklearn.linear_model import LinearRegression
+lin_reg = LinearRegression()
+lin_reg.fit(x, y)
+```]
 ???
 
 We learn a linear function to predict *y*. Here the salary is a constant times the number of years of study.
@@ -102,8 +104,10 @@ For **classification** we use a logistic regression model
 
 .shift-left.pull-left[<img src="../figures/categorical.svg" width="100%">]
 .pull-right.very-small[
-    `From sklearn.linear_model import LogisticRegression`
-`log_reg = LogisticRegression()`
+```python
+From sklearn.linear_model import LogisticRegression
+log_reg = LogisticRegression()
+```
 ]
 ???
 Logistic regression is a linear model for **classification** - not regresion as the name suggest.
@@ -118,9 +122,12 @@ The output is now conposed with the logistic function
 Logistic(x) = 1 / (1 + exp(-x))
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
-.pull-right.very-small[`From sklearn.linear_model import LogisticRegression`
-`log_reg = LogisticRegression()`
-`log_reg.fit(X, y)`]
+.pull-right.very-small[
+```python
+From sklearn.linear_model import LogisticRegression
+log_reg = LogisticRegression()
+log_reg.fit(X, y)
+```]
 
 ---
 # Logistic regression in 2 dimensions

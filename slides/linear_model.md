@@ -161,7 +161,7 @@ So a penalized model should choose lower weights for almost a similar fit
 The complexity parameter \alpha controls the amount of shrinkage: the larger the value of \alpha, the greater the amount of shrinkage and thus the coefficients become more robust to collinearity.
 
 ---
-# 2 points example
+# Bias-variance tradeoff: an example
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points.svg" width="110%">]

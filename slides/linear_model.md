@@ -63,7 +63,7 @@ A linear model is a slope "as close as possible" from datapoint
 The blue curve is the prediction for each **x**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
-.pull-right.very-small[`From sklearn.linear_model import LinearRegression`
+.pull-right.very-small[`from sklearn.linear_model import LinearRegression`
 `lin_reg = LinearRegression()`
 `lin_reg.fit(x, y)`]
 ???
@@ -140,7 +140,7 @@ and the color correspond to the target label y
 ---
 # Model complexity
 Salary = *.4 x* education_level + *.2 x* hours-per-week + *.1 x* age + 
-.red[ *.2 x* zodiac_sign + *.1 x* drink_coffee] + ...  
+.red[ *.2 x* zodiac_sign + *.1 x* red_socks] + ...  
 
 * Linear model could also overfit. 
  - Reducing its complexity by reducing its parameters value is called *Ridge regression*

@@ -203,7 +203,7 @@ The choice of C depends of the dataset
 ---
 # Logistic regression for multiclass
 
-Logistic regression could adapt even if **y** is contains multiple class. It is called *multinomial logistic regression*
+Logistic regression could adapt even if **y** contains multiple classes. There are several options:
 
 .shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
 .pull-right[

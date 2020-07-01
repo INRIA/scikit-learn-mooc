@@ -132,7 +132,7 @@ Feature engineering to limit underfitting
 
 - Video about overfitting?
 
-## Loïc: Trees in depth + ensembles
+## Guillaume: Trees in depth + ensembles
 
 ## Guillaume: Evaluation of supervised learning models:
         

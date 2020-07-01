@@ -65,12 +65,12 @@ classifier = LogisticRegression()
 classifier.fit(X_train, y_train)
 
 # %% [markdown]
-# Now, that our classifier is trained, we can provide some 
-# information about a subject and the classifier can predict whether or not the
-# subject will donate blood.
+# Now, that our classifier is trained, we can provide some information about a
+# subject and the classifier can predict whether or not the subject will donate
+# blood.
 #
-# Let's create a synthetic sample corresponding to the following potential
-# new donor: he/she donated blood 6 month ago and gave twice blood in the past for
+# Let's create a synthetic sample corresponding to the following potential new
+# donor: he/she donated blood 6 month ago and gave twice blood in the past for
 # a total of 1000 c.c. He/she gave blood for the first time 20 months ago.
 
 # %%
@@ -111,8 +111,8 @@ np.mean(y_test == y_pred)
 
 # %% [markdown]
 # This measure is also known as the accuracy. Here, our classifier is 78%
-# accurate at classifying if subject will give blood. `scikit-learn` provides a function to
-# compute this metric in the module `sklearn.metrics`.
+# accurate at classifying if subject will give blood. `scikit-learn` provides a
+# function to compute this metric in the module `sklearn.metrics`.
 
 # %%
 from sklearn.metrics import accuracy_score
@@ -271,12 +271,12 @@ equivalence_pred_proba = (
 np.all(equivalence_pred_proba)
 
 # %% [markdown]
-# The default decision threshold (0.5) might not be the best threshold leading to
-# optimal performance of our classifier. In this case, one can vary the
+# The default decision threshold (0.5) might not be the best threshold leading
+# to optimal performance of our classifier. In this case, one can vary the
 # decision threshold and therefore the underlying prediction and compute the
-# same statistic than presented earlier. Usually, two metrics are computed
-# and reported as a curve. Each metric is belonging to a graph axis and a point
-# on the graph corresponds to a specific decision threshold. Let's start by
+# same statistic than presented earlier. Usually, two metrics are computed and
+# reported as a curve. Each metric is belonging to a graph axis and a point on
+# the graph corresponds to a specific decision threshold. Let's start by
 # computing the precision-recall curve.
 
 # %%
@@ -530,24 +530,25 @@ plot_pr_roc_interactive()
 # variable in regression problem. Therefore, the classification metrics can be
 # used to evaluate the performance of a model. Instead, there exists a set of
 # metric dedicated to regression.
-#
-# data = pd.read_csv(
-#     ("https://raw.githubusercontent.com/christophM/interpretable-ml-book/"
-#      "master/data/bike.csv"),
-# )
+
+# %%
+data = pd.read_csv(
+    ("https://raw.githubusercontent.com/christophM/interpretable-ml-book/"
+     "master/data/bike.csv"),
+)
 # rename the columns with human-readable names
-# data = data.rename(columns={
-#     "yr": "year", "mnth": "month", "temp": "temperature", "hum": "humidity",
-#     "cnt": "count", "days_since_2011": "days since 2011"
-# })
+data = data.rename(columns={
+    "yr": "year", "mnth": "month", "temp": "temperature", "hum": "humidity",
+    "cnt": "count", "days_since_2011": "days since 2011"
+})
 # convert the categorical columns with a proper category data type
-# for col in data.columns:
-#     if data[col].dtype.kind == "O":
-#         data[col] = data[col].astype("category")
-#
+for col in data.columns:
+    if data[col].dtype.kind == "O":
+        data[col] = data[col].astype("category")
+
 # separate the target from the original data
-# X = data.drop(columns=["count"])
-# y = data["count"]
+X = data.drop(columns=["count"])
+y = data["count"]
 
 # %%
 X.head()

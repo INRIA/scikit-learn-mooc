@@ -63,7 +63,7 @@ A linear model is a slope "as close as possible" from datapoint
 The blue curve is the prediction for each **x**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
-.pull-right.very-small[`From sklearn.linear_model import LinearRegression`
+.pull-right.very-small[`from sklearn.linear_model import LinearRegression`
 `lin_reg = LinearRegression()`
 `lin_reg.fit(x, y)`]
 ???

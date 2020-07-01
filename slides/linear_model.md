@@ -140,7 +140,7 @@ and the color correspond to the target label y
 ---
 # Model complexity
 Salary = *.4 x* education_level + *.2 x* hours-per-week + *.1 x* age + 
-.red[ *.2 x* zodiac_sign + *.1 x* drink_coffee] + ...  
+.red[ *.2 x* zodiac_sign + *.1 x* red_socks] + ...  
 
 * Linear model could also overfit. 
  - Reducing its complexity by reducing its parameters value is called *Ridge regression*

@@ -92,10 +92,12 @@ _ = sns.pairplot(data=data, hue="Species")
 
 
 # %%
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 def plot_decision_function(X, y, clf):
     """Plot the boundary of the decision function of a classifier."""
-    import numpy as np
-    import matplotlib.pyplot as plt
     from sklearn.preprocessing import LabelEncoder
 
     clf.fit(X, y)
@@ -191,3 +193,83 @@ tree.fit(X_train, y_train).score(X_test, y_test)
 #
 # ## Go into details in the partitioning mechanism
 #
+# We saw in the previous section that a tree uses a mechanism to partition the
+# feature space only considering a feature at a time. We will now go into
+# details regarding the split.
+#
+# We will focus on a single feature and check how a split will be defined.
+
+# %%
+single_feature = X_train["Culmen Length (mm)"]
+
+# %% [markdown]
+# We can check once more what is the distribution of this feature
+
+# %%
+for klass in y_train.unique():
+    mask_penguin_species = y_train == klass
+    plt.hist(
+        single_feature[mask_penguin_species], alpha=0.7,
+        label=f'{klass}', density=True
+    )
+plt.legend()
+plt.xlabel(single_feature.name)
+_ = plt.ylabel('Class probability')
+
+# %% [markdown]
+# On this graph, we can see that we can easily separate the Adelie specie from
+# the other species. Instead of the distribution, we can alternatively have
+# a representation of all samples.
+
+# %%
+df = pd.concat(
+    [single_feature, y_train,
+     pd.Series([""] * y_train.size, index=single_feature.index, name="")],
+    axis=1,
+)
+_ = sns.swarmplot(x=single_feature.name, y="", hue=y_train.name, data=df)
+
+# %% [markdown]
+# Finding a split is then equivalent to find a threshold value which will be
+# used to separate the classes. To give an example, we will pick a random
+# threshold value and check what would be the quality of the split.
+
+# %%
+random_indice = np.random.choice(single_feature.index)
+threshold_value = single_feature.loc[random_indice]
+
+_, ax = plt.subplots()
+_ = sns.swarmplot(
+    x=single_feature.name, y="", hue=y_train.name, data=df, ax=ax
+)
+ax.axvline(threshold_value, linestyle="--", color="black")
+_ = ax.set_title(f"Random threshold value: {threshold_value} mm")
+
+# %% [markdown]
+# A random selection does not ensure that we pick up the best threshold which
+# will separate the most the different species. Here, the intuition is that
+# we need to find a threshold that best divide the Adelie class from other
+# classes. A threshold around 42 mm would be ideal. Once this split defined,
+# we could specify that the sample < 42 mm would belong to the class Adelie and
+# the samples > 42 mm would belong to class the most probable (the most
+# represented) between the Gentoo and the Chinstrap. In this case, it seems to
+# be the Gentoo, which is in-line with what we observed earlier when fitting a
+# `DecisionTreeClassifier` with a `max_depth=1`.
+
+# %%
+threshold_value = 42
+
+_, ax = plt.subplots()
+_ = sns.swarmplot(
+    x=single_feature.name, y="", hue=y_train.name, data=df, ax=ax
+)
+ax.axvline(threshold_value, linestyle="--", color="black")
+_ = ax.set_title(f"Manual threshold value: {threshold_value} mm")
+
+# %% [markdown]
+# Intuitively, we expect the best possible threshold to be around this value
+# (42 mm) because it is the split leading the least amount of error that we
+# would make. Thus, if we want to automatically find such a threshold, we would
+# need a way to evaluate the goodness (or pureness) of a given threshold. This
+# evaluation is based on a tryptic of statistical measures, namely,
+# probabilities, entropy, and information gain.

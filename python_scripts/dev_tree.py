@@ -189,5 +189,5 @@ tree.fit(X_train, y_train).score(X_test, y_test)
 # feature at a time, we can focus on the details on how we can compute the best
 # partition.
 #
-# ## Go in detail into the partitioning mechanism
+# ## Go into details in the partitioning mechanism
 #

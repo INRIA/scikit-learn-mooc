@@ -118,8 +118,7 @@ In our adult_census dataset, we do not have continous value for salary but only 
 ---
 # Logistic regression
 
-The output is now conposed with the logistic function
-Logistic(x) = 1 / (1 + exp(-x))
+The output is now modeled as a form of step function, which is adjusted on the data.
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
 .pull-right.very-small[

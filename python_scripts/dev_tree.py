@@ -90,7 +90,6 @@ _ = sns.pairplot(data=data, hue="Species")
 # point and a classifier will plot the decision boundaries learnt by the
 # classifier.
 
-
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
@@ -273,3 +272,207 @@ _ = ax.set_title(f"Manual threshold value: {threshold_value} mm")
 # need a way to evaluate the goodness (or pureness) of a given threshold. This
 # evaluation is based on a tryptic of statistical measures, namely,
 # probabilities, entropy, and information gain.
+#
+# ### Probabilities
+#
+# First, we will investigate how probabilities can help us evaluating the
+# goodness of a split. We will first defined as if we have found a split for
+# the threshold 42 mm. For this threshold, we will then divide our data into
+# 2 sub-groups: 1 group for samples < 42 mm and 1 group for samples >= 42 mm.
+# Then, we will store the class label for these samples.
+
+# %%
+threshold_value = 42
+mask_below_threshold = single_feature < threshold_value
+labels_below_threshold = y_train[mask_below_threshold]
+labels_above_threshold = y_train[~mask_below_threshold]
+
+# %% [markdown]
+# If we want to investigate the goodness of the split, we will to check the
+# labels frequency of each side of the split.
+
+# %%
+labels_below_threshold.value_counts()
+
+# %%
+labels_above_threshold.value_counts()
+
+
+# %% [markdown]
+# As we could have assess previously, the partition defined by < 42 mm has
+# mainly Adelie penguin and only 2 samples which we could considered
+# misclassified. However on the partition >= 42 mm, we cannot differentiate
+# Gentoo and Chinstrap (while they are almost twice more Gentoo).
+#
+# These frequencies are useful but they cannot be easily compared since they
+# are not a normalized quantity. Thus, we could normalize the frequencies by
+# the total number of samples on the partition and we would obtain the
+# probability to be a certain class on this partition.
+
+# %%
+def compute_probability_partition(labels):
+    return labels.value_counts(normalize=True).sort_index()
+
+
+probability_below_threshold = compute_probability_partition(
+    labels_below_threshold
+)
+probability_above_threshold = compute_probability_partition(
+    labels_above_threshold
+)
+
+print(f"Probability for partition below the threshold: \n"
+      f"{probability_below_threshold}")
+print(f"Probability for partition above the threshold: \n"
+      f"{probability_above_threshold}")
+
+
+# %% [markdown]
+# Probabilities allow us to quantify the amount of sample in each partition.
+# However, we have one probability per class and one would wish to have a
+# single value to know the pureness of a partition or in other words, is the
+# partition composed of a single class or is it a mix of all classes.
+#
+# ### Entropy
+#
+# The entropy is one of the statistics that can help in this regard. It will
+# combine the different probabilities such as:
+# $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
+#
+# For a binary problem, the entropy function for one of the class can be
+# depicted as:
+#
+# ![title](https://upload.wikimedia.org/wikipedia/commons/2/22/Binary_entropy_plot.svg)
+#
+# Therefore, the entropy will be maximum when the proportion of sample from
+# each class will be equal and minimum when only samples for a single class
+# is present.
+#
+# To conclude, one search to minimize the entropy in a partition.
+
+# %%
+def entropy(labels):
+    from scipy import stats
+    probabilities = compute_probability_partition(labels)
+    return stats.entropy(probabilities)
+
+
+entropy_below_threshold = entropy(labels_below_threshold)
+entropy_above_threshold = entropy(labels_above_threshold)
+
+print(f"Entropy for partition below the threshold: \n"
+      f"{entropy_below_threshold}")
+print(f"Entropy for partition above the threshold: \n"
+      f"{entropy_above_threshold}")
+
+
+# %% [markdown]
+# In our case, we can see that the entropy in the partition < 42 mm is close to
+# 0 meaning that this partition is "pure" and contain a single class while
+# the partition >= 42 mm is much higher due to the fact that 2 of the classes
+# are still mixed.
+#
+# Now, we are able to access the quality of each partition. However, the
+# ultimate goal is to evaluate the quality of the split and thus combine both
+# measure of entropy to obtain a single statistic.
+#
+# ### Information gain
+#
+# This statistic is known as the information gain. It combines the entropy of
+# the different partitions to give us a single statistic qualifying the quality
+# of the split. The information gain is defined as the difference of the
+# entropy before the split and the sum of the entropies of the partition each
+# normalized by the frequencies of class samples on each partition. The goal is
+# to maximize the information gain.
+#
+# We will define a function to compute the information gain given the different
+# partitions.
+
+# %%
+def information_gain(labels_below_threshold, labels_above_threshold):
+    # compute the entropies in the different partitions
+    entropy_below_threshold = entropy(labels_below_threshold)
+    entropy_above_threshold = entropy(labels_above_threshold)
+    entropy_parent = entropy(
+        pd.concat([labels_below_threshold, labels_above_threshold])
+    )
+
+    # compute the normalized entropies
+    n_samples_below_threshold = labels_below_threshold.size
+    n_samples_above_threshold = labels_above_threshold.size
+    n_samples_parent = n_samples_below_threshold + n_samples_above_threshold
+
+    normalized_entropy_below_threshold = (
+        (n_samples_below_threshold / n_samples_parent) *
+        entropy_below_threshold
+    )
+    normalized_entropy_above_threshold = (
+        (n_samples_above_threshold / n_samples_parent) *
+        entropy_above_threshold
+    )
+
+    # compute the information gain
+    return (entropy_parent -
+            normalized_entropy_below_threshold -
+            normalized_entropy_above_threshold)
+
+
+information_gain(labels_below_threshold, labels_above_threshold)
+
+# %% [markdown]
+# Now that we are able to quantify the quality of a split, we can compute the
+# information gain for all the different possible splits.
+
+# %%
+splits_information_gain = []
+possible_thresholds = np.sort(single_feature.unique())[1:-1]
+for threshold_value in possible_thresholds:
+    mask_below_threshold = single_feature < threshold_value
+    labels_below_threshold = y_train.loc[mask_below_threshold]
+    labels_above_threshold = y_train.loc[~mask_below_threshold]
+    splits_information_gain.append(
+        information_gain(labels_below_threshold, labels_above_threshold)
+    )
+
+plt.plot(possible_thresholds, splits_information_gain)
+plt.xlabel(single_feature.name)
+_ = plt.ylabel("Information gain")
+
+# %% [markdown]
+# As previously mentioned, we would like to find the threshold value maximizing
+# the information gain.
+
+# %%
+best_threshold_indice = np.argmax(splits_information_gain)
+best_threshold_value = possible_thresholds[best_threshold_indice]
+
+_, ax = plt.subplots()
+ax.plot(possible_thresholds, splits_information_gain)
+ax.set_xlabel(single_feature.name)
+ax.set_ylabel("Information gain")
+ax.axvline(best_threshold_value, color="tab:orange", linestyle="--")
+ax.set_title(f"Best threshold: {best_threshold_value} mm")
+
+# %% [markdown]
+# By making this brute-force search, we find that the threshold maximizing the
+# information gain is 43.3 mm. We can check if we found something similar when
+# using the `DecisionTreeClassifier` earlier.
+
+# %%
+from sklearn.tree import plot_tree
+
+tree = DecisionTreeClassifier(criterion="entropy", max_depth=1)
+tree.fit(single_feature.to_frame(), y_train)
+_ = plot_tree(tree)
+
+
+# %% [markdown]
+# We can observe that the implementation in scikit-learn is giving something
+# very similar: 43.25 mm. The slight difference are only due to some low-level
+# implementation details.
+#
+# Once a split done, the data will be partitioned and we can restart the
+# process or partitioning on each subset. In the above example, it corresponds
+# to increase the `max_depth` parameter.
+#
+# ## How prediction works?

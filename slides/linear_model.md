@@ -88,7 +88,7 @@ the best fit is the line which minimize the sum of (the square of) those red lin
 Fortunatly, there is a formula, given **X** and **y**, to find the optimal weights in an efficient manner
 
 ---
-# Linear regerssion in higher dimension
+# Linear regression in higher dimension
 
 .pull-left.shift-left[<img src="../figures/lin_reg_3D.svg" width="130%">]
 
@@ -97,7 +97,7 @@ Fortunatly, there is a formula, given **X** and **y**, to find the optimal weigh
 In real world data set, **X** has severals dimensions, and it is not possible anymore to represent it.
 
 ---
-# Logistic regression
+# For classification: Logistic regression
 
 For **classification** we use a logistic regression model  
 **y** is binary, either +1 or -1
@@ -118,8 +118,7 @@ In our adult_census dataset, we do not have continous value for salary but only 
 ---
 # Logistic regression
 
-The output is now conposed with the logistic function
-Logistic(x) = 1 / (1 + exp(-x))
+The output is now modeled as a form of step function, which is adjusted on the data.
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
 .pull-right.very-small[
@@ -149,8 +148,9 @@ and the color correspond to the target label y
 Salary = *.4 x* education_level + *.2 x* hours-per-week + *.1 x* age + 
 .red[ *.2 x* zodiac_sign + *.1 x* red_socks] + ...  
 
-* Linear model could also overfit. 
- - Reducing its complexity by reducing its parameters value is called *Ridge regression*
+* A linear model can also overfit. 
+
+The most classic way to limit its complexity is to push coefficients toward small values. Such model is called *Ridge* for regression settings. 
 ???
 
 If we have too many parameters w.r.t. number of samples, it's adviced to penalize the parameters of our models.
@@ -190,8 +190,8 @@ This is a typical example of bias/variance tradeof: non-regularized estimator ar
 
 
 ---
-# Logistic regression penalized
-Logistic Regression comes with a penalty parameters C
+# Regularization in logistic regression
+The parameter C of logistic Regression controls the "complexity" of the model, and in practice whether the model focuses on data close to the boundary.
 
 .shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]
 .pull-right[<img src="../figures/logistic_2D_C1.svg" width="100%">]

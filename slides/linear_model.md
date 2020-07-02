@@ -149,7 +149,8 @@ Salary = *.4 x* education_level + *.2 x* hours-per-week + *.1 x* age +
 .red[ *.2 x* zodiac_sign + *.1 x* red_socks] + ...  
 
 * A linear model can also overfit. 
- - Reducing its complexity by reducing its parameters value is called *Ridge regression*
+
+The most classic way to limit its complexity is to push coefficients toward small values. Such model is called *Ridge* for regression settings. 
 ???
 
 If we have too many parameters w.r.t. number of samples, it's adviced to penalize the parameters of our models.

@@ -476,3 +476,27 @@ _ = plot_tree(tree)
 # to increase the `max_depth` parameter.
 #
 # ## How prediction works?
+#
+# We showed the way a tree is constructed. However, we did not explain how and
+# what will be predicted from the tree.
+#
+# We can first recall the structure of the tree that we just fitted.
+
+# %%
+_ = plot_tree(tree)
+
+# %% [markdown]
+# So the threshold value is 43.25 so we can check which classes we are going
+# to predict for a value above and below this threshold
+
+# %%
+print(f"The class predicted for a value below the threshold is: "
+      f"{tree.predict([[35]])}")
+print(f"The class predicted for a value above the threshold is: "
+      f"{tree.predict([[45]])}")
+
+# %% [markdown]
+# We predict an Adelie penguin for value below the threshold which is not
+# surprising since this partition was almost pure. In the case that it is not
+# as obvious, we predicted the Gentoo penguin. Indeed, we predict the class the
+# most probable (i.e. coming from the probabilities that we computed above).

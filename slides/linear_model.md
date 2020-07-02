@@ -97,7 +97,7 @@ Fortunatly, there is a formula, given **X** and **y**, to find the optimal weigh
 In real world data set, **X** has severals dimensions, and it is not possible anymore to represent it.
 
 ---
-# Logistic regression
+# For classification: Logistic regression
 
 For **classification** we use a logistic regression model  
 **y** is binary, either +1 or -1

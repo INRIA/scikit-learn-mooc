@@ -190,7 +190,7 @@ This is a typical example of bias/variance tradeof: non-regularized estimator ar
 
 
 ---
-# Logistic regression penalized
+# Regularization in logistic regression
 Logistic Regression comes with a penalty parameters C
 
 .shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]

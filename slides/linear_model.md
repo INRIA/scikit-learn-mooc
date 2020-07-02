@@ -97,7 +97,7 @@ Fortunatly, there is a formula, given **X** and **y**, to find the optimal weigh
 In real world data set, **X** has severals dimensions, and it is not possible anymore to represent it.
 
 ---
-# For classification: Logistic regression
+# For classification: logistic regression
 
 For **classification** we use a logistic regression model  
 **y** is binary, either +1 or -1
@@ -116,7 +116,7 @@ In our adult_census dataset, we do not have continous value for salary but only 
 
 
 ---
-# Logistic regression
+# For classification: logistic regression
 
 The output is now modeled as a form of step function, which is adjusted on the data.
 
@@ -188,17 +188,32 @@ Ridge displays much less variance. However it systematically under-estimates the
 
 This is a typical example of bias/variance tradeof: non-regularized estimator are not biased, but they can display a lot of variance. Highly-regularized models have little variance, but high bias. This bias is not necessarily a bad thing: what matters is choosing the tradeoff between bias and variance that leads to the best prediction performance. For a specific dataset there is a sweet spot corresponding to the highest complexity that the data can support, depending on the amount of noise and of observations available.
 
+---
+# 2 points example
+
+
+.pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="110%">]
+.pull-right[<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="110%">]
+
+.pull-left.shift-left[     Linear regression]
+.pull-right[         Ridge]
+.pull-left.shift-left[     No bias, high variance]
+.pull-right[         low bias, low variance]
+???
+
 
 ---
 # Regularization in logistic regression
-The parameter C of logistic Regression controls the "complexity" of the model, and in practice whether the model focuses on data close to the boundary.
+The parameter C of logistic regression controls the "complexity" of the model, and in practice whether the model focuses on data close to the boundary.
 
 .shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]
 .pull-right[<img src="../figures/logistic_2D_C1.svg" width="100%">]
+.pull-left.shift-left[     Small C]
+.pull-right[         Large C]
 ???
 For large value of C, the model put more emphasize on the frontier's point. 
 In contrary, for low value of C, the model is considering all the points.
-The choice of C depends of the dataset
+The choice of C depends of the dataset.
 
 ---
 # Logistic regression for multiclass

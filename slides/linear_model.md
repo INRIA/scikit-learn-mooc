@@ -191,7 +191,7 @@ This is a typical example of bias/variance tradeof: non-regularized estimator ar
 
 ---
 # Regularization in logistic regression
-Logistic Regression comes with a penalty parameters C
+The parameter C of logistic Regression controls the "complexity" of the model, and in practice whether the model focuses on data close to the boundary.
 
 .shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]
 .pull-right[<img src="../figures/logistic_2D_C1.svg" width="100%">]

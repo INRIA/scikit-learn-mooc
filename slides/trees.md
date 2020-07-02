@@ -9,7 +9,8 @@ This lesson covers decisions trees and random forest. These are robust models.
 <img src="../scikit-learn-logo.svg">
 
 ???
-Tree, random forest
+
+Decision tree, random forest
 
 
 ---
@@ -17,20 +18,31 @@ Tree, random forest
 
 * What is a decision tree?
 * For classification & rergession
+* Decision tree and random forest
 * How to avoid overfitting?
 
----
-# Best split
-.pull-left.shift-left[<img src="../figures/tree_1split.svg" width="100%">]
-Body mass < 3900 --> Adelie  
-Body mass >= 3900 --> Gentoo
 
 ---
-# Best split 2D
+# Example
+.pull-left[<img src="../figures/Decision_Tree.jpg" width="100%">]
+
+---
+# Classification
 .pull-left.shift-left[<img src="../figures/tree2D_1split.svg" width="100%">]
-.pull-left.shift-left[<img src="../figures/tree2D_2split.svg" width="100%">]
 
+---
+# Classification
+.pull-left.shift-left[<img src="../figures/tree2D_2split.svg" width="100%">]
+  
 ---
 # Regression
-.pull-left.shift-left[<img src="../figures/tree_regression.svg" width="100%">]
+<img src="../figures/tree_regression1.svg" width="100%">
+ 
+---
+# Regression
+<img src="../figures/tree_regression2.svg" width="100%">
+ 
+---
+# Regression
+<img src="../figures/tree_regression3.svg" width="100%">
 

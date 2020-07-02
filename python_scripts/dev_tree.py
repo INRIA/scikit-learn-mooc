@@ -161,16 +161,24 @@ plot_decision_function(X_train, y_train, tree)
 tree.fit(X_train, y_train).score(X_test, y_test)
 
 # %% [markdown]
-# To solve, this problem, we can repeat perform a new partition on each
-# rectangle that we created previously.
+# This is not a surprise since we saw in the section above that a single
+# feature will not help to separate the three species. However, from this
+# previous analysis we saw that if we use both feature, we should get fairly
+# good results in separating all 3 classes.
+# Considering the mechanism of the decision tree, it means that we should
+# repeat a partitioning on each rectangle that we created previously and we
+# expect that this partitioning will happen considering the feature
+# "Culmen Depth" this time.
 
 # %%
 tree.set_params(max_depth=2)
 plot_decision_function(X_train, y_train, tree)
 
 # %% [mark]
-# Now, we see that our tree is more powerful with similar performance to our
-# linear model.
+# As expected, the decision tree partionned using the "Culmen Depth" to
+# identify correctly data that we did could distinguish with a single split.
+# We see that our tree is more powerful with similar performance to our linear
+# model.
 
 # %%
 tree.fit(X_train, y_train).score(X_test, y_test)

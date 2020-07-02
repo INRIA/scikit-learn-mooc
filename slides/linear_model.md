@@ -88,7 +88,7 @@ the best fit is the line which minimize the sum of (the square of) those red lin
 Fortunatly, there is a formula, given **X** and **y**, to find the optimal weights in an efficient manner
 
 ---
-# Linear regerssion in higher dimension
+# Linear regression in higher dimension
 
 .pull-left.shift-left[<img src="../figures/lin_reg_3D.svg" width="130%">]
 

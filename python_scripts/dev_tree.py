@@ -335,8 +335,8 @@ print(f"Probability for partition above the threshold: \n"
 #
 # ### Entropy
 #
-# The entropy is one of the statistics that can help in this regard. It will
-# combine the different probabilities such as:
+# The entropy is one of the statistics, also called criterion, that can help in
+# this regard. It will combine the different probabilities such as:
 # $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
 #
 # For a binary problem, the entropy function for one of the class can be
@@ -500,3 +500,9 @@ print(f"The class predicted for a value above the threshold is: "
 # surprising since this partition was almost pure. In the case that it is not
 # as obvious, we predicted the Gentoo penguin. Indeed, we predict the class the
 # most probable (i.e. coming from the probabilities that we computed above).
+#
+# ## What about decision tree for regression?
+#
+# We explained the construction of the decision tree in a classification
+# problem. The information gain using the entropy was used to build the tree.
+# However, this criterion is not suited for regression problem.

@@ -1,26 +1,31 @@
 # %% [markdown]
 # # Decision tree in depth
 #
-# In this notebook, we will go into details on the internal algorithm of the
-# decision tree. In this regard, we will use a simple dataset composed of only
-# 2 features. We will illustrate how the space partioning along each feature
-# occur allowing to obtain a final decision.
+# In this notebook, we will go into details on the internal algorithm used to
+# build the decision tree. First, we will focus on the decision tree used for
+# classification. Then, we will highlight the fundamental difference between
+# decision tree used in classification and in regression. Finally, we will
+# quickly discuss the importance of the hyperparameters to be aware of when
+# using decision trees.
 #
 # ## Presentation of the dataset
 #
 # We use the
 # [Palmer penguins dataset](https://allisonhorst.github.io/palmerpenguins/).
-# This dataset is composed of penguins record and the final aim is to identify
-# from which specie a penguin belongs to.
+# This dataset is composed of penguins records and ultimately, we want to
+# identify from which specie a penguin belongs to.
 #
-# The penguins belongs to three different species: Adelie, Gentoo, and
-# Chinstrap. Here is an illustration of the three different species:
+# A penguin is from one of the three following species: Adelie, Gentoo, and
+# Chinstrap. See the illustration below depicting of the three different bird
+# species:
 #
 # ![Image of penguins](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png)
 #
-# Here, we will only use a subset of the original features based on the
-# penguin's culmen. You can know more about the penguin's culmen in the below
-# illustration:
+# This problem is a classification problem since the target is made of
+# categories. We will limit our input data to a subset of the original features
+# to simplify our explanations when presenting the decision tree algorithm.
+# Indeed, we will use feature based on penguins' culmen measurement. You can
+# learn more about the penguins' culmen with illustration below:
 #
 # ![Image of culmen](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/culmen_depth.png)
 
@@ -37,7 +42,7 @@ data = data[culmen_columns + [target_column]]
 data[target_column] = data[target_column].str.split().str[0]
 
 # %% [markdown]
-# Let's check the dataset more into details
+# Let's check the dataset more into details.
 
 # %%
 data.info()
@@ -51,8 +56,8 @@ data = data.dropna()
 data.info()
 
 # %% [markdown]
-# We split the data and target into 2 different variables and divide it into
-# a training and testing set.
+# We will split the data and the target and create a training and a testing
+# set.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -63,9 +68,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# Before to go into details in the decision tree algorithm, let's have a visual
-# inspection of the distribution of the culmen length and width depending of
-# the penguin's species.
+# Before to go into details in the decision tree algorithm, we will quickly
+# inspect our dataset.
 
 # %%
 import seaborn as sns
@@ -73,15 +77,15 @@ import seaborn as sns
 _ = sns.pairplot(data=data, hue="Species")
 
 # %% [markdown]
-# Focusing on the diagonal plot on the pairplot and thus the distribution of
-# each individual feature, we can build some intuitions:
+# We can first check the feature distributions by looking at the diagonal plots
+# of the pairplot. We can build the following intuitions:
 #
-# * The Adelie specie can be separated from the Gentoo and Chinstrap species
-#   using the culmen length;
-# * The Gentoo specie can be separated from the Adelie and Chinstrap species
-#   using the culmen depth.
+# * The Adelie specie is separable from the Gentoo and Chinstrap species using
+#   the culmen length;
+# * The Gentoo specie is separable from the Adelie and Chinstrap species using
+#   the culmen depth.
 #
-# ## Build an intuition on how decision trees work
+# ## How decision tree are built?
 #
 # We saw in a previous notebook that a linear classifier will find a separation
 # defined as a combination of the input feature. In our 2-dimensional space, it

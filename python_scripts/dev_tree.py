@@ -95,7 +95,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_decision_function(X, y, clf):
+def plot_decision_function(X, y, clf, ax=None):
     """Plot the boundary of the decision function of a classifier."""
     from sklearn.preprocessing import LabelEncoder
 
@@ -118,7 +118,8 @@ def plot_decision_function(X, y, clf):
     Z = Z.reshape(xx.shape)
 
     # make the plot of the boundary and the data samples
-    _, ax = plt.subplots()
+    if ax is None:
+        _, ax = plt.subplots()
     ax.contourf(xx, yy, Z, alpha=0.4)
     sns.scatterplot(
         data=pd.concat([X, y], axis=1),
@@ -522,27 +523,38 @@ sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
 # %%
 from sklearn.linear_model import LinearRegression
 
-linear_model = LinearRegression().fit(X_train, y_train)
+linear_model = LinearRegression()
+
 
 # %%
-training_data = pd.concat([X_train, y_train], axis=1)
+def plot_regression_model(X, y, model, extrapolate=False, ax=None):
+    model.fit(X, y)
 
-_, ax = plt.subplots()
-sns.scatterplot(
-    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
-    ax=ax,
-)
+    training_data = pd.concat([X, y], axis=1)
+    if ax is None:
+        _, ax = plt.subplots()
+    sns.scatterplot(
+        data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
+        ax=ax, color="black", alpha=0.5,
+    )
 
-possible_flipper_length = np.linspace(X.min(), X.max(), num=100).reshape(-1, 1)
-y_pred = linear_model.predict(possible_flipper_length)
-ax.plot(
-    possible_flipper_length, y_pred,
-    label=(f"Linear model trained: \n"
-           f"{linear_model.coef_[0]:.1f} x flipper length + "
-           f"{linear_model.intercept_:.1f}"),
-    color="tab:orange", linestyle="--", linewidth=3,
-)
-plt.legend()
+    offset = 20 if extrapolate else 0
+
+    X_test = np.linspace(
+        X.min() - offset, X.max() + offset, num=100
+    ).reshape(-1, 1)
+    y_pred = model.predict(X_test)
+    ax.plot(
+        X_test, y_pred,
+        label=f"{model.__class__.__name__} trained", linewidth=3,
+    )
+    plt.legend()
+    return ax
+
+
+# %%
+_ = plot_regression_model(X_train, y_train, linear_model)
+
 
 # %% [markdown]
 # On the plot above, we see that a non-penalized `LinearRegression` is able
@@ -550,29 +562,11 @@ plt.legend()
 # will occur on the line.
 
 # %%
-
-_, ax = plt.subplots()
-sns.scatterplot(
-    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
-    ax=ax,
-)
+X_test_subset = X_test[:10]
+ax = plot_regression_model(X_train, y_train, linear_model)
+y_pred = linear_model.predict(X_test_subset)
 ax.plot(
-    possible_flipper_length, y_pred,
-    label=(f"Linear model trained: \n"
-           f"{linear_model.coef_[0]:.1f} x flipper length + "
-           f"{linear_model.intercept_:.1f}"),
-    color="tab:orange", linestyle="--", linewidth=3,
-)
-
-# make prediction for some random flipper length
-rng = np.random.RandomState(0)
-random_flipper_length = rng.choice(
-    possible_flipper_length.ravel(), size=10,
-).reshape(-1, 1)
-new_y_pred = linear_model.predict(random_flipper_length)
-
-ax.plot(
-    random_flipper_length, new_y_pred, label="Test predictions",
+    X_test_subset, y_pred, label="Test predictions",
     color="tab:green", marker="^", markersize=10, linestyle="",
 )
 
@@ -586,22 +580,10 @@ plt.legend()
 # %%
 from sklearn.tree import DecisionTreeRegressor
 
-tree = DecisionTreeRegressor().fit(X_train, y_train)
+tree = DecisionTreeRegressor()
 
 # %%
-_, ax = plt.subplots()
-sns.scatterplot(
-    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
-    ax=ax,
-)
-
-possible_flipper_length = np.linspace(X.min(), X.max(), num=100).reshape(-1, 1)
-y_pred = tree.predict(possible_flipper_length)
-ax.plot(
-    possible_flipper_length, y_pred, label=(f"Tree model trained"),
-    color="tab:orange", linestyle="-", linewidth=2,
-)
-plt.legend()
+_ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
 # So we see that the decision tree model does not have an a-priori and we don't
@@ -620,50 +602,15 @@ plt.legend()
 # the linear model because it is a parametric model.
 
 # %%
-_, ax = plt.subplots()
-sns.scatterplot(
-    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
-    ax=ax,
-)
-
-possible_flipper_length = np.linspace(150, 250, num=100).reshape(-1, 1)
-y_pred = linear_model.predict(possible_flipper_length)
-ax.plot(
-    possible_flipper_length, y_pred,
-    label=(f"Linear model trained: \n"
-           f"{linear_model.coef_[0]:.1f} x flipper length + "
-           f"{linear_model.intercept_:.1f}"),
-    color="tab:orange", linestyle="--", linewidth=3,
-)
-plt.legend()
+plot_regression_model(X_train, y_train, linear_model, extrapolate=True)
 
 # %% [markdown]
 # The linear model will extrapolate using the fitted model for flipper length
 # < 175 mm and > 235 mm. Let's the difference with the trees.
 
 # %%
-_, ax = plt.subplots()
-sns.scatterplot(
-    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
-    ax=ax,
-)
-
-possible_flipper_length = np.linspace(150, 250, num=100).reshape(-1, 1)
-y_pred = linear_model.predict(possible_flipper_length)
-ax.plot(
-    possible_flipper_length, y_pred,
-    label=(f"Linear model trained: \n"
-           f"{linear_model.coef_[0]:.1f} x flipper length + "
-           f"{linear_model.intercept_:.1f}"),
-    color="tab:orange", linestyle="--", linewidth=3,
-)
-
-y_pred = tree.predict(possible_flipper_length)
-ax.plot(
-    possible_flipper_length, y_pred, label=(f"Tree model trained"),
-    color="tab:green", linestyle="--", linewidth=3,
-)
-plt.legend()
+ax = plot_regression_model(X_train, y_train, linear_model, extrapolate=True)
+_ = plot_regression_model(X_train, y_train, tree, extrapolate=True, ax=ax)
 
 # %% [markdown]
 # For the tree, we see that we cannot extrapolate below and above the minimum
@@ -673,3 +620,71 @@ plt.legend()
 #
 # ### The regression criterion
 #
+# In the previous section, we explained on difference between using decision
+# tree in classification or in regression: the predicted value will be the
+# most probable class for the classification case while the it will be the mean
+# in the case of the regression. The second difference that we already
+# mentioned is the criterion. The classification criterion cannot be applied
+# in regression setting and we need to use a specific set of criterion.
+#
+# One of the criterion that can be used in regression is the mean squared
+# error. In this case, we will compute this criterion in each of the partition
+# as in the case of the entropy and select the split leading to the best
+# improvement (i.e. information gain).
+#
+# ## Importance of decision tree parameters on generalization
+#
+# This last section will illustrate the importance of some key parameters of
+# the decision tree. We will both illustrate in classification and regression
+# dataset that we previously used.
+#
+# ### Creation of the classification and regression dataset
+#
+# We will first regenerate the classification and regression dataset.
+
+# %%
+data = pd.read_csv("../datasets/penguins.csv")
+
+# select the features of interest
+data_clf_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
+target_clf_column = "Species"
+
+data_clf = data[
+    data_clf_columns + [target_clf_column]
+]
+data_clf[target_clf_column] = data_clf[
+    target_clf_column].str.split().str[0]
+data_clf = data_clf.dropna()
+
+X_clf, y_clf = data_clf[data_clf_columns], data_clf[target_clf_column]
+X_train_clf, X_test_clf, y_train_clf, y_test_clf = train_test_split(
+    X_clf, y_clf, stratify=y_clf, random_state=0,
+)
+
+# %%
+data_reg_columns = ["Flipper Length (mm)"]
+target_reg_column = "Body Mass (g)"
+
+data_reg = data[data_reg_columns + [target_reg_column]]
+data_reg = data_reg.dropna()
+
+X_reg, y_reg = data_reg[data_reg_columns], data_reg[target_reg_column]
+X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(
+    X_reg, y_reg, random_state=0,
+)
+
+# %%
+_, axs = plt.subplots(ncols=2, figsize=(10, 5))
+sns.scatterplot(
+    data=data_clf,
+    x="Culmen Length (mm)", y="Culmen Depth (mm)", hue="Species",
+    ax=axs[0],
+)
+axs[0].set_title("Classification dataset")
+sns.scatterplot(
+    data=data_reg, x="Flipper Length (mm)", y="Body Mass (g)",
+    ax=axs[1],
+)
+_ = axs[1].set_title("Regression dataset")
+
+# %%

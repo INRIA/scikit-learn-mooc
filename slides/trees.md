@@ -69,26 +69,27 @@ Controling the depth allow to control the overfit.
 
 ---
 # Boosting
-<img src="../figures/boosting0.svg" width="60%">
+.pull-left[<img src="../figures/boosting0.svg" width="100%">]
 
 ???
 Here we have a classification task. 
 
 ---
 # Boosting
-<img src="../figures/boosting1.svg" width="60%">
-
+.pull-left[<img src="../figures/boosting1.svg" width="100%">]
+.pull-right[<img src="../figures/boosting_trees1.svg" width="100%">]
 ???
 A first tree start to separate circle from square
 ---
 # Boosting
-<img src="../figures/boosting2.svg" width="60%">
+.pull-left[<img src="../figures/boosting2.svg" width="100%">]
+.pull-right[<img src="../figures/boosting_trees2.svg" width="100%">]
 
 ???
 The second tree refine the first model
 ---
 # Boosting
-<img src="../figures/boosting3.svg" width="60%">
-
+.pull-left[<img src="../figures/boosting3.svg" width="100%">]
+.pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
 ???
 A third tree keep refining the model.

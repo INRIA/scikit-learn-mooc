@@ -487,6 +487,8 @@ print(f"The class predicted for a value above the threshold is: "
 # build some intuition on the characteristics of the decision tree when used
 # in regression.
 #
+# ### Decision tree: a non-parametric model
+#
 # We can use the same penguins dataset. However, we will pose a regression
 # problem instead of a classification problem. We will try to infer the body
 # mass of a penguin given its flipper length.
@@ -554,9 +556,6 @@ sns.scatterplot(
     data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
     ax=ax,
 )
-
-possible_flipper_length = np.linspace(X.min(), X.max(), num=100).reshape(-1, 1)
-y_pred = linear_model.predict(possible_flipper_length)
 ax.plot(
     possible_flipper_length, y_pred,
     label=(f"Linear model trained: \n"
@@ -570,12 +569,107 @@ rng = np.random.RandomState(0)
 random_flipper_length = rng.choice(
     possible_flipper_length.ravel(), size=10,
 ).reshape(-1, 1)
-y_pred = linear_model.predict(random_flipper_length)
+new_y_pred = linear_model.predict(random_flipper_length)
 
 ax.plot(
-    random_flipper_length, y_pred, label="Test predictions",
+    random_flipper_length, new_y_pred, label="Test predictions",
     color="tab:green", marker="^", markersize=10, linestyle="",
 )
 
 plt.legend()
+# %% [markdown]
+# In the contrary of the linear model, the decision trees are non-parametric
+# model and does not rely on the way data should be distributed. In this
+# regard, it will affect the way the model will predict. We can repeat the
+# above experiment and see the differences.
+
 # %%
+from sklearn.tree import DecisionTreeRegressor
+
+tree = DecisionTreeRegressor().fit(X_train, y_train)
+
+# %%
+_, ax = plt.subplots()
+sns.scatterplot(
+    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
+    ax=ax,
+)
+
+possible_flipper_length = np.linspace(X.min(), X.max(), num=100).reshape(-1, 1)
+y_pred = tree.predict(possible_flipper_length)
+ax.plot(
+    possible_flipper_length, y_pred, label=(f"Tree model trained"),
+    color="tab:orange", linestyle="-", linewidth=2,
+)
+plt.legend()
+
+# %% [markdown]
+# So we see that the decision tree model does not have an a-priori and we don't
+# end-up with a straight line to regress flipper length and body mass. We can
+# observe that when we generated a sample which was as well in the training
+# set, the tree will output the same target than this sample. However, if for
+# the same flipper length, we have different body masses, then the tree is
+# predicting the mean of the targets.
+#
+# So in classification setting, we saw that the predicted value was the most
+# probable value in the node of the tree, in the case of regression, the
+# predicted value corresponds to the mean of the target in the node.
+#
+# This lead us to question whether or not our decision tree are able to
+# extrapolate to unseen data. We can first highlight that this is possible with
+# the linear model because it is a parametric model.
+
+# %%
+_, ax = plt.subplots()
+sns.scatterplot(
+    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
+    ax=ax,
+)
+
+possible_flipper_length = np.linspace(150, 250, num=100).reshape(-1, 1)
+y_pred = linear_model.predict(possible_flipper_length)
+ax.plot(
+    possible_flipper_length, y_pred,
+    label=(f"Linear model trained: \n"
+           f"{linear_model.coef_[0]:.1f} x flipper length + "
+           f"{linear_model.intercept_:.1f}"),
+    color="tab:orange", linestyle="--", linewidth=3,
+)
+plt.legend()
+
+# %% [markdown]
+# The linear model will extrapolate using the fitted model for flipper length
+# < 175 mm and > 235 mm. Let's the difference with the trees.
+
+# %%
+_, ax = plt.subplots()
+sns.scatterplot(
+    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
+    ax=ax,
+)
+
+possible_flipper_length = np.linspace(150, 250, num=100).reshape(-1, 1)
+y_pred = linear_model.predict(possible_flipper_length)
+ax.plot(
+    possible_flipper_length, y_pred,
+    label=(f"Linear model trained: \n"
+           f"{linear_model.coef_[0]:.1f} x flipper length + "
+           f"{linear_model.intercept_:.1f}"),
+    color="tab:orange", linestyle="--", linewidth=3,
+)
+
+y_pred = tree.predict(possible_flipper_length)
+ax.plot(
+    possible_flipper_length, y_pred, label=(f"Tree model trained"),
+    color="tab:green", linestyle="--", linewidth=3,
+)
+plt.legend()
+
+# %% [markdown]
+# For the tree, we see that we cannot extrapolate below and above the minimum
+# and maximum, respectively, of the flipper length encountered during the
+# training. Indeed, we are predicting the minimum and maximum values of the
+# training set.
+#
+# ### The regression criterion
+#

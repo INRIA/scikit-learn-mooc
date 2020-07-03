@@ -269,17 +269,15 @@ _ = ax.set_title(f"Manual threshold value: {threshold_value} mm")
 # Intuitively, we expect the best possible threshold to be around this value
 # (42 mm) because it is the split leading the least amount of error that we
 # would make. Thus, if we want to automatically find such a threshold, we would
-# need a way to evaluate the goodness (or pureness) of a given threshold. This
-# evaluation is based on a tryptic of statistical measures, namely,
-# probabilities, entropy, and information gain.
+# need a way to evaluate the goodness (or pureness) of a given threshold.
 #
-# ### Probabilities
+# ### The split purity criterion
 #
-# First, we will investigate how probabilities can help us evaluating the
-# goodness of a split. We will first defined as if we have found a split for
-# the threshold 42 mm. For this threshold, we will then divide our data into
-# 2 sub-groups: 1 group for samples < 42 mm and 1 group for samples >= 42 mm.
-# Then, we will store the class label for these samples.
+# To evaluate the effectiveness of a split, we will use a criterion to qualify
+# the class purity on the different partition. We will first defined as if we
+# have found a split for the threshold 42 mm. For this threshold, we will then
+# divide our data into 2 sub-groups: 1 group for samples < 42 mm and 1 group
+# for samples >= 42 mm. Then, we will store the class label for these samples.
 
 # %%
 threshold_value = 42
@@ -288,14 +286,15 @@ labels_below_threshold = y_train[mask_below_threshold]
 labels_above_threshold = y_train[~mask_below_threshold]
 
 # %% [markdown]
-# If we want to investigate the goodness of the split, we will to check the
-# labels frequency of each side of the split.
+# We can check the proportion of samples of each class in both partitions. This
+# proportion represent the probability to be one of this class when considering
+# the partition.
 
 # %%
-labels_below_threshold.value_counts()
+labels_below_threshold.value_counts(normalize=True).sort_index()
 
 # %%
-labels_above_threshold.value_counts()
+labels_above_threshold.value_counts(normalize=True).sort_index()
 
 
 # %% [markdown]
@@ -304,40 +303,13 @@ labels_above_threshold.value_counts()
 # misclassified. However on the partition >= 42 mm, we cannot differentiate
 # Gentoo and Chinstrap (while they are almost twice more Gentoo).
 #
-# These frequencies are useful but they cannot be easily compared since they
-# are not a normalized quantity. Thus, we could normalize the frequencies by
-# the total number of samples on the partition and we would obtain the
-# probability to be a certain class on this partition.
-
-# %%
-def compute_probability_partition(labels):
-    return labels.value_counts(normalize=True).sort_index()
-
-
-probability_below_threshold = compute_probability_partition(
-    labels_below_threshold
-)
-probability_above_threshold = compute_probability_partition(
-    labels_above_threshold
-)
-
-print(f"Probability for partition below the threshold: \n"
-      f"{probability_below_threshold}")
-print(f"Probability for partition above the threshold: \n"
-      f"{probability_above_threshold}")
-
-
-# %% [markdown]
-# Probabilities allow us to quantify the amount of sample in each partition.
-# However, we have one probability per class and one would wish to have a
-# single value to know the pureness of a partition or in other words, is the
-# partition composed of a single class or is it a mix of all classes.
+# We should come with a statistical measure which combine the class
+# probabilities together and that we will use as a criterion to qualify the
+# purity of the partition. We will choose as an example the entropy criterion
+# (also used in scikit-learn) which is one of the possible classification
+# criterion.
 #
-# ### Entropy
-#
-# The entropy is one of the statistics, also called criterion, that can help in
-# this regard. It will combine the different probabilities such as:
-# $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
+# The entropy is defined as: $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
 #
 # For a binary problem, the entropy function for one of the class can be
 # depicted as:
@@ -351,14 +323,15 @@ print(f"Probability for partition above the threshold: \n"
 # To conclude, one search to minimize the entropy in a partition.
 
 # %%
-def entropy(labels):
-    from scipy import stats
-    probabilities = compute_probability_partition(labels)
-    return stats.entropy(probabilities)
+def classification_criterion(labels):
+    from scipy.stats import entropy
+    return entropy(
+        labels.value_counts(normalize=True).sort_index()
+    )
 
 
-entropy_below_threshold = entropy(labels_below_threshold)
-entropy_above_threshold = entropy(labels_above_threshold)
+entropy_below_threshold = classification_criterion(labels_below_threshold)
+entropy_above_threshold = classification_criterion(labels_above_threshold)
 
 print(f"Entropy for partition below the threshold: \n"
       f"{entropy_below_threshold}")
@@ -372,9 +345,9 @@ print(f"Entropy for partition above the threshold: \n"
 # the partition >= 42 mm is much higher due to the fact that 2 of the classes
 # are still mixed.
 #
-# Now, we are able to access the quality of each partition. However, the
+# Now, we are able to assess the quality of each partition. However, the
 # ultimate goal is to evaluate the quality of the split and thus combine both
-# measure of entropy to obtain a single statistic.
+# measures of entropy to obtain a single statistic.
 #
 # ### Information gain
 #
@@ -391,9 +364,9 @@ print(f"Entropy for partition above the threshold: \n"
 # %%
 def information_gain(labels_below_threshold, labels_above_threshold):
     # compute the entropies in the different partitions
-    entropy_below_threshold = entropy(labels_below_threshold)
-    entropy_above_threshold = entropy(labels_above_threshold)
-    entropy_parent = entropy(
+    entropy_below_threshold = classification_criterion(labels_below_threshold)
+    entropy_above_threshold = classification_criterion(labels_above_threshold)
+    entropy_parent = classification_criterion(
         pd.concat([labels_below_threshold, labels_above_threshold])
     )
 
@@ -434,6 +407,7 @@ for threshold_value in possible_thresholds:
         information_gain(labels_below_threshold, labels_above_threshold)
     )
 
+# %%
 plt.plot(possible_thresholds, splits_information_gain)
 plt.xlabel(single_feature.name)
 _ = plt.ylabel("Information gain")
@@ -504,5 +478,9 @@ print(f"The class predicted for a value above the threshold is: "
 # ## What about decision tree for regression?
 #
 # We explained the construction of the decision tree in a classification
-# problem. The information gain using the entropy was used to build the tree.
-# However, this criterion is not suited for regression problem.
+# problem. The entropy criterion was using class probabilities. Thus, this
+# criterion is not adapted when the target `y` is continuous target and that
+# the problem that we try to solve is a regression problem. In this case, we
+# will need specific criterion for regression.
+
+# %%

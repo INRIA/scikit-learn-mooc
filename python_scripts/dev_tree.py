@@ -482,5 +482,100 @@ print(f"The class predicted for a value above the threshold is: "
 # criterion is not adapted when the target `y` is continuous target and that
 # the problem that we try to solve is a regression problem. In this case, we
 # will need specific criterion for regression.
+#
+# Before to go into details with the regression criterion, we observe and
+# build some intuition on the characteristics of the decision tree when used
+# in regression.
+#
+# We can use the same penguins dataset. However, we will pose a regression
+# problem instead of a classification problem. We will try to infer the body
+# mass of a penguin given its flipper length.
 
+# %%
+data = pd.read_csv("../datasets/penguins.csv")
+
+data_columns = ["Flipper Length (mm)"]
+target_column = "Body Mass (g)"
+
+data = data[data_columns + [target_column]]
+data = data.dropna()
+
+X, y = data[data_columns], data[target_column]
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=0,
+)
+
+# %%
+sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
+
+# %% [markdown]
+# Here, we deal with a regression problem because our target is a continuous
+# variable ranging from 2.7 kg to 6.3 kg. From the scatter plot above, we can
+# observe that we have a sort of linear relationship between the flipper length
+# and the body mass. Longer is the flipper, heavier will be the penguin.
+#
+# For this problem, we would expect the simpler linear model to be able to
+# model this relationship.
+
+# %%
+from sklearn.linear_model import LinearRegression
+
+linear_model = LinearRegression().fit(X_train, y_train)
+
+# %%
+training_data = pd.concat([X_train, y_train], axis=1)
+
+_, ax = plt.subplots()
+sns.scatterplot(
+    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
+    ax=ax,
+)
+
+possible_flipper_length = np.linspace(X.min(), X.max(), num=100).reshape(-1, 1)
+y_pred = linear_model.predict(possible_flipper_length)
+ax.plot(
+    possible_flipper_length, y_pred,
+    label=(f"Linear model trained: \n"
+           f"{linear_model.coef_[0]:.1f} x flipper length + "
+           f"{linear_model.intercept_:.1f}"),
+    color="tab:orange", linestyle="--", linewidth=3,
+)
+plt.legend()
+
+# %% [markdown]
+# On the plot above, we see that a non-penalized `LinearRegression` is able
+# to fit the data. The specificity of the model is that any new predictions
+# will occur on the line.
+
+# %%
+
+_, ax = plt.subplots()
+sns.scatterplot(
+    data=training_data, x="Flipper Length (mm)", y="Body Mass (g)",
+    ax=ax,
+)
+
+possible_flipper_length = np.linspace(X.min(), X.max(), num=100).reshape(-1, 1)
+y_pred = linear_model.predict(possible_flipper_length)
+ax.plot(
+    possible_flipper_length, y_pred,
+    label=(f"Linear model trained: \n"
+           f"{linear_model.coef_[0]:.1f} x flipper length + "
+           f"{linear_model.intercept_:.1f}"),
+    color="tab:orange", linestyle="--", linewidth=3,
+)
+
+# make prediction for some random flipper length
+rng = np.random.RandomState(0)
+random_flipper_length = rng.choice(
+    possible_flipper_length.ravel(), size=10,
+).reshape(-1, 1)
+y_pred = linear_model.predict(random_flipper_length)
+
+ax.plot(
+    random_flipper_length, y_pred, label="Test predictions",
+    color="tab:green", marker="^", markersize=10, linestyle="",
+)
+
+plt.legend()
 # %%

@@ -528,8 +528,10 @@ linear_model = LinearRegression()
 
 # %%
 def plot_regression_model(X, y, model, extrapolate=False, ax=None):
+    # train our model
     model.fit(X, y)
 
+    # make a scatter plot of the input data and target
     training_data = pd.concat([X, y], axis=1)
     if ax is None:
         _, ax = plt.subplots()
@@ -538,17 +540,22 @@ def plot_regression_model(X, y, model, extrapolate=False, ax=None):
         ax=ax, color="black", alpha=0.5,
     )
 
+    # only necessary if we want to see the extrapolation of our model
     offset = 20 if extrapolate else 0
 
+    # generate a testing set spanning between min and max of the training set
     X_test = np.linspace(
         X.min() - offset, X.max() + offset, num=100
     ).reshape(-1, 1)
+
+    # predict for this testing set and plot the response
     y_pred = model.predict(X_test)
     ax.plot(
         X_test, y_pred,
         label=f"{model.__class__.__name__} trained", linewidth=3,
     )
     plt.legend()
+    # return the axes in case we want to add something to it
     return ax
 
 
@@ -645,7 +652,7 @@ _ = plot_regression_model(X_train, y_train, tree, extrapolate=True, ax=ax)
 # %%
 data = pd.read_csv("../datasets/penguins.csv")
 
-# select the features of interest
+# %%
 data_clf_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_clf_column = "Species"
 
@@ -687,4 +694,60 @@ sns.scatterplot(
 )
 _ = axs[1].set_title("Regression dataset")
 
+# %% [markdown]
+# ### Effect of the `max_depth` parameter
+#
+# In decision tree, the most important parameter to get a trade-off between
+# under-fitting and over-fitting is the `max_depth` parameter. Let's build
+# a shallow tree (for both classification and regression) and a deeper tree.
+
+
 # %%
+max_depth = 2
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+tree_reg = DecisionTreeRegressor(max_depth=max_depth)
+
+fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+plot_decision_function(X_train_clf, y_train_clf, tree_clf, ax=axs[0])
+plot_regression_model(X_train_reg, y_train_reg, tree_reg, ax=axs[1])
+_ = fig.suptitle(f"Shallow tree with a max-depth of {max_depth}")
+
+
+# %%
+max_depth = 30
+tree_clf.set_params(max_depth=max_depth)
+tree_reg.set_params(max_depth=max_depth)
+
+fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+plot_decision_function(X_train_clf, y_train_clf, tree_clf, ax=axs[0])
+plot_regression_model(X_train_reg, y_train_reg, tree_reg, ax=axs[1])
+_ = fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
+
+# %% [markdown]
+# In both classification and regression setting, we can observe that increasing
+# the depth will make the tree model more expressive. However, a tree which is
+# too deep will overfit the training data, creating partitions which will only
+# be correct for "outliers". The `max_depth` is one of the parameter that one
+# would like to optimize via cross-validation and a grid-search.
+
+# %%
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {"max_depth": np.arange(2, 10, 1)}
+tree_clf = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid)
+tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid)
+
+# %%
+fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+plot_decision_function(X_train_clf, y_train_clf, tree_clf, ax=axs[0])
+axs[0].set_title(
+    f"Optimal depth found via CV: {tree_clf.best_params_['max_depth']}"
+)
+plot_regression_model(X_train_reg, y_train_reg, tree_reg, ax=axs[1])
+_ = axs[1].set_title(
+    f"Optimal depth found via CV: {tree_reg.best_params_['max_depth']}"
+)
+
+# %% [markdown]
+# The other parameters are used to fine tune the decision tree and have less
+# impact than `max_depth`.

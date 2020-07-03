@@ -4,7 +4,7 @@ class: titlepage
 
 # Decisions trees
 
-This lesson covers decisions trees and random forest. These are robust models for both rergession and classification.
+This lesson covers decision tree and random forest. These are robust models for both rergession and classification.
 
 <img src="../scikit-learn-logo.svg">
 
@@ -38,7 +38,8 @@ In this example, if a new point have to be classified :
 .pull-left.shift-left[<img src="../figures/tree2D_1split.svg" width="100%">]
 
 ???
-Each split maximize the information
+Each split maximize the information for the leaf.
+
 
 ---
 # Classification
@@ -64,3 +65,30 @@ It will arrange the split w.r.t. the value of *x*.
 ???
 But it can also overfit.
 Controling the depth allow to control the overfit.
+
+
+---
+# Boosting
+<img src="../figures/boosting0.svg" width="60%">
+
+???
+Here we have a classification task. 
+
+---
+# Boosting
+<img src="../figures/boosting1.svg" width="60%">
+
+???
+A first tree start to separate circle from square
+---
+# Boosting
+<img src="../figures/boosting2.svg" width="60%">
+
+???
+The second tree refine the first model
+---
+# Boosting
+<img src="../figures/boosting3.svg" width="60%">
+
+???
+A third tree keep refining the model.

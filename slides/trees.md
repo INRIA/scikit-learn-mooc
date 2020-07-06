@@ -93,3 +93,10 @@ The second tree refine the first model
 .pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
 ???
 A third tree keep refining the model.
+
+
+---
+# Take away
+
+- `max_depth` parameter can prevent overfiting
+- `Random Forest` use both bagging and boosting over decision tree

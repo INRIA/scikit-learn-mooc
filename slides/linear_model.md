@@ -5,7 +5,7 @@ class: titlepage
 # Linear Model
 
 This lesson covers the linear models. These are basic models, easy to
-understand and fast to train
+understand and fast to train.
 
 <img src="../scikit-learn-logo.svg">
 
@@ -36,7 +36,8 @@ they give us fair baselines.
 | 44  | Private   | Some-college | Married-civ-spouse | Machine-op-inspct  | Husband      | Black | Male | 7688         | 40             | United-States   | $52k  |
 
 ]
-Salary = *.4 x* education + *.2 x* hours-per-week + *.1 x* age + ...
+  
+.small["Salary" = *0.4 x* "Education" + *0.2 x* "Hours-per-week" + *0.1 x* "Age" + ...]
 
 ???
 Adult census is here a bit modify, instead of having 2 categories, < $50k and
@@ -51,7 +52,7 @@ Salary could be a linear combination of the feature (explanatory variable).
 ---
 # Linear regression
 
-Predict the value of the target **y**
+Predict the value of the target **y**  
 given some observation **X**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_data.svg" width="100%">]
@@ -62,15 +63,17 @@ e.g. salary should be explained by education level (number of year of study)
 
 ---
 # Linear regression
-A linear model is a slope "as close as possible" from datapoint
+A linear model is a slope "as close as possible" from all samples
 The blue curve is the predictions for each possible **x**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
-.pull-right.very-small[```python
-from sklearn.linear_model import LinearRegression
-linear_regression = LinearRegression()
-linear_regression.fit(x, y)
-```]
+
+  ```python
+  from sklearn.linear_model import LinearRegression
+  linear_regression = LinearRegression()
+  linear_regression.fit(x, y)
+```
+
 ???
 
 We learn a linear function to predict *y*. Here, the salary is a constant
@@ -85,6 +88,17 @@ The linear regression aims at minimizing the distance between the prediction
 curve and the samples
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit_red.svg" width="100%">]
+
+
+```python
+  from sklearn.linear_model import LinearRegression
+  linear_regression = LinearRegression()
+  linear_regression.fit(x, y)
+
+  y_pred = linear_regression.predict(X)
+  residuals = y - y_pred
+  error = sum(residuals ** 2)
+```
 
 ???
 An error for each sample corresponds to the red bar in the figure.
@@ -110,16 +124,18 @@ possible to represent it graphically.
 ---
 # For classification: logistic regression
 
-For **classification**, we use a logistic regression model **y** is binary,
+For **classification**, we use a logistic regression model  
+**y** is binary,
 either +1 or -1
 
 .shift-left.pull-left[<img src="../figures/categorical.svg" width="100%">]
-.pull-right.very-small[
-```python
-From sklearn.linear_model import LogisticRegression
-log_reg = LogisticRegression()
-```
-]
+
+
+ ```python
+ From sklearn.linear_model import LogisticRegression
+ log_reg = LogisticRegression()
+ ```
+
 ???
 Logistic regression is a linear model for **classification** - not regression
 as the name would wrongly suggest.
@@ -136,12 +152,13 @@ The output is now modelled as a form of a step function, which is adjusted on
 the data
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
-.pull-right.very-small[
-```python
-From sklearn.linear_model import LogisticRegression
-log_reg = LogisticRegression()
-log_reg.fit(X, y)
-```]
+
+
+ ```python
+ From sklearn.linear_model import LogisticRegression
+ log_reg = LogisticRegression()
+ log_reg.fit(X, y)
+ ```
 
 ---
 # Logistic regression in 2 dimensions
@@ -159,13 +176,16 @@ The axes correspond to x1, x2 and the color corresponds to the target label y.
 
 ---
 # Model complexity
-Salary = *.4 x* education_level + *.2 x* hours-per-week + *.1 x* age + 
-.red[ *.2 x* zodiac_sign + *.1 x* red_socks] + ...  
+
 
 * A linear model can also overfit
 
+
+.small["Salary" = *0.4 x* "Education" + *0.2 x* "Hours-per-week" + *0.1 x* "Age" +]  
+.small.red[&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *0.2 x* "Zodiac_sign" + *0.1 x* "Wear_red_socks" + ...]
+
 The most classic way to limit its complexity is to push coefficients toward
-small values. Such model is called *Ridge* for regression settings.
+small values. Such model is called *Ridge*
 ???
 
 If we have too many parameters w.r.t. the number of samples, it is advised to
@@ -184,16 +204,16 @@ The complexity parameter \alpha controls the amount of shrinkage: the larger the
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points.svg" width="110%">]
 
 ---
-# 2 points example
+# Bias-variance tradeoff: an example
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
 .pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
 
-.pull-left.shift-left[     Linear regression]
-.pull-right[         Ridge]
-.pull-left.shift-left[     No bias, high variance]
-.pull-right[         low bias, low variance]
+.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Linear regression]
+.pull-right[&nbsp; &nbsp; &nbsp; Ridge]
+.pull-left.shift-left[&nbsp; &nbsp; &nbsp; No bias, high variance]
+.pull-right[&nbsp; &nbsp; &nbsp; low bias, low variance]
 ???
 from http://scipy-lectures.org/packages/scikit-learn/index.html#bias-variance-trade-off-illustration-on-a-simple-regression-problem
 
@@ -214,8 +234,8 @@ leads to the best prediction performance. For a specific dataset there is a
 sweet spot corresponding to the highest complexity that the data can support,
 depending on the amount of noise and of observations available.
 
----
-# 2 points example
+# Example with grey dot removed.
+# Bias-variance tradeoff: an example
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="110%">]
@@ -225,13 +245,13 @@ depending on the amount of noise and of observations available.
 .pull-right[         Ridge]
 .pull-left.shift-left[     No bias, high variance]
 .pull-right[         low bias, low variance]
-???
+
 
 
 ---
 # Regularization in logistic regression
-The parameter C of logistic regression controls the "complexity" of the model,
-and in practice, whether the model focuses on data close to the boundary.
+
+.small[The parameter C of logistic regression controls the "complexity" of the model, and in practice, whether the model focuses on data close to the boundary.]
 
 .shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]
 .pull-right[<img src="../figures/logistic_2D_C1.svg" width="100%">]
@@ -270,7 +290,7 @@ Otherwise, we still can run One vs Rest approach.
 
 ???
 Linear models work as long as your data could be linearly separable.
-Otherwise, either we could do features augmentation, or we could choose a more complex model.
+Otherwise, either we could do features augmentation (as we will see in an other lesson), or we could choose a non-linear model.
 
 ---
 .center[
@@ -278,11 +298,11 @@ Otherwise, either we could do features augmentation, or we could choose a more c
 ]
 
 * Linear model are good baselines for:
- - regression: linear regression + penalty = Ridge
- - classification: logistic regression
+ - regression: linear regression + regularization = Ridge
+ - classification: logistic regression + fine tune `C`
 
 * very fast to train
-* Better when *p* > *n*
+* Better when *nb of features* > *nb of samples*
 
 
 ???

@@ -48,7 +48,7 @@ data[target_column] = data[target_column].str.split().str[0]
 data.info()
 
 # %% [markdown]
-# We can observe that they are 2 missing records in this dataset and for a sake
+# We can observe that they are 2 missing records in this dataset and for the sake
 # of simplicity, we will drop the records corresponding to these 2 samples.
 
 # %%
@@ -56,7 +56,7 @@ data = data.dropna()
 data.info()
 
 # %% [markdown]
-# We will split the data and the target and create a training and a testing
+# We will separate the target from the data and we will create a training and a testing
 # set.
 
 # %%
@@ -68,7 +68,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# Before to go into details in the decision tree algorithm, we will quickly
+# Before going into details in the decision tree algorithm, we will quickly
 # inspect our dataset.
 
 # %%
@@ -156,7 +156,8 @@ print(
 
 # %% [markdown]
 # Unlike linear model, decision tree will partition the space considering a
-# single feature at a time. Let's illustrate this behaviour by indicating to
+# single feature at a time. Let's illustrate this behaviour by having
+# a decision tree which makes a single split to partition the feature space.
 # the decision tree to make a single split to partition our feature space.
 
 # %%
@@ -166,14 +167,13 @@ tree = DecisionTreeClassifier(max_depth=1)
 plot_decision_function(X_train, y_train, tree)
 
 # %% [markdown]
-# The partition found to separate the data along the axis "Culmen Length",
+# The partition found separate the data along the axis "Culmen Length",
 # discarding the feature "Culmen Depth". Thus, it highlights that a decision
 # tree does not use a combination of feature when making a split.
 #
 # However, such a split is not powerful enough to isolate the three species and
 # the model accuracy is low compared to the linear model.
 
-# %%
 # %%
 print(
     f"Accuracy of the {tree.__class__.__name__}: "
@@ -186,14 +186,14 @@ print(
 # saw that using both features should be useful to get fairly good results.
 # Considering the mechanism of the decision tree illustrated above, we should
 # repeat the partitioning on each rectangle that was previously created. In
-# this regard, we expect that the partition to happen using the feature "Culmen
+# this regard, we expect that the partition will be using the feature "Culmen
 # Depth" this time.
 
 # %%
 tree.set_params(max_depth=2)
 plot_decision_function(X_train, y_train, tree)
 
-# %% [mark]
+# %% [markdown]
 # As expected, the decision tree made 2 new partitions using the "Culmen
 # Depth". Now, our tree is more powerful with similar performance to our linear
 # model.
@@ -205,15 +205,15 @@ print(
 )
 
 # %% [markdown]
-# At this stage, we build the intuition that a decision tree is built by
-# successively partitioning the feature space, considering a feature at a time.
+# At this stage, we have the intuition that a decision tree is built by
+# successively partitioning the feature space, considering one feature at a time.
 # Subsequently, we will present the details regarding the partitioning
 # mechanism.
 #
 # ## Partitioning mechanism
 #
-# Let's consider a feature and we will present the mechanism allowing to find
-# the optimal partioning for these data.
+# Let's isolate a single feature. We will present the mechanism allowing to find
+# the optimal partition for these one-dimensional data.
 
 # %%
 single_feature = X_train["Culmen Length (mm)"]
@@ -233,8 +233,8 @@ plt.xlabel(single_feature.name)
 _ = plt.ylabel('Class probability')
 
 # %% [markdown]
-# On this graph, we can see that we can easily separate the Adelie specie from
-# the other species. Alternatively, we can have a representation of all
+# Seeing this graph, we can easily separate the Adelie specie from
+# the other species. Alternatively, we can have a scatter plot of all
 # samples.
 
 # %%
@@ -263,8 +263,8 @@ ax.axvline(threshold_value, linestyle="--", color="black")
 _ = ax.set_title(f"Random threshold value: {threshold_value} mm")
 
 # %% [markdown]
-# A random split does not ensure that we pick up the best threshold value which
-# best separate the species. Thus, the intuition is that we need to find a
+# A random split does not ensure that we pick up a threshold value which
+# best separate the species. Thus, an intuition will be to find a
 # threshold value that best divide the Adelie class from other classes. A
 # threshold around 42 mm would be ideal. Once this split is defined, we could
 # specify that the sample < 42 mm would belong to the class Adelie and the
@@ -296,7 +296,7 @@ _ = ax.set_title(f"Manual threshold value: {threshold_value} mm")
 # the class purity on the different partitions.
 #
 # First, let's define a threshold at 42 mm. Then, we will divide the data into
-# 2 sub-groups: 1 group for samples < 42 mm and 1 group for samples >= 42 mm.
+# 2 sub-groups: a group for samples < 42 mm and a group for samples >= 42 mm.
 # Then, we will store the class label for these samples.
 
 # %%
@@ -307,7 +307,7 @@ labels_above_threshold = y_train[~mask_below_threshold]
 
 # %% [markdown]
 # We can check the proportion of samples of each class in both partitions. This
-# proportion represent the probability to be one of this class when considering
+# proportion is the probability of each class when considering
 # the partition.
 
 # %%
@@ -339,7 +339,7 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 # each class will be equal and minimum when only samples for a single class
 # is present.
 #
-# Therefore, one searches to minimize the entropy in a partition.
+# Therefore, one searches to minimize the entropy in each partition.
 
 # %%
 def classification_criterion(labels):
@@ -373,7 +373,7 @@ print(f"Entropy for partition above the threshold: \n"
 # This statistic is known as the information gain. It combines the entropy of
 # the different partitions to give us a single statistic qualifying the quality
 # of a split. The information gain is defined as the difference of the entropy
-# before making a split and the sum of the entropies of the partition each
+# before making a split and the sum of the entropies of each partition, 
 # normalized by the frequencies of class samples on each partition. The goal is
 # to maximize the information gain.
 #
@@ -470,7 +470,7 @@ _ = plot_tree(tree)
 # slight difference are only due to some low-level implementation details.
 #
 # As we previously explained, the split mechanism will be repeated several
-# times (until we don't have any classification error).In the above example, it
+# times (until we don't have any classification error on the training set). In the above example, it
 # corresponds to increasing the `max_depth` parameter.
 #
 # ## How prediction works?
@@ -484,9 +484,9 @@ _ = plot_tree(tree)
 _ = plot_tree(tree)
 
 # %% [markdown]
-# We recall that the threshold found is 43.25 mm. Thus, we can predict for a
+# We recall that the threshold found is 43.25 mm. Thus, let's see the class prediction for a
 # sample with a feature value below the threshold and another above the
-# threshold to check which classes will be predicted by the tree.
+# threshold.
 
 # %%
 print(f"The class predicted for a value below the threshold is: "
@@ -496,20 +496,20 @@ print(f"The class predicted for a value above the threshold is: "
 
 # %% [markdown]
 # We predict an Adelie penguin for a value below the threshold which is not
-# surprising since this partition was almost pure. In the case that it is not
-# as obvious, we predicted the Gentoo penguin. Indeed, we predict the class the
+# surprising since this partition was almost pure. In the other case 
+# we predicted the Gentoo penguin. Indeed, we predict the class the
 # most probable.
 #
 # ## What about decision tree for regression?
 #
 # We explained the construction of the decision tree in a classification
-# problem. The entropy criterion used class probabilities. Thus, this criterion
-# is not adapted when the target `y` is a continuous target which is a
-# regression problem. In this case, we will need specific criterions adapted to
+# problem. The entropy criterion to split the nodes used the class probabilities. Thus, this criterion
+# is not adapted when the target `y` is continuous.
+In this case, we will need specific criterion adapted to
 # regression problems.
 #
-# Before to go into details with the regression criterion, we observe and
-# build some intuitions on the characteristics of the decision tree when used
+# Before going into details with regression criterion, let's observe and
+# build some intuitions on the characteristics of decision tree used
 # in regression.
 #
 # ### Decision tree: a non-parametric model
@@ -594,7 +594,7 @@ _ = plot_regression_model(X_train, y_train, linear_model)
 
 
 # %% [markdown]
-# On the plot above, we see that a non-penalized `LinearRegression` is able
+# On the plot above, we see that a non-regularized `LinearRegression` is able
 # to fit the data. The specificity of the model is that any new predictions
 # will occur on the line.
 
@@ -609,10 +609,10 @@ ax.plot(
 
 plt.legend()
 # %% [markdown]
-# In the contrary of the linear model, the decision trees are non-parametric
-# models and do not rely on the way data should be distributed. In this
-# regard, it will affect the way the model will predict. We can repeat the
-# above experiment and see the differences.
+# On the contrary of linear model, decision trees are non-parametric
+# models, so they do not rely on the way data should be distributed. In this
+# regard, it will affect the prediction scheme. Repeating the
+# above experiment will highlights the differences.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -623,12 +623,12 @@ tree = DecisionTreeRegressor()
 _ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
-# We see that the decision tree model does not have an a-priori and we do not
-# end-up with a straight line to regress flipper length and body mass. We can
-# observe that when we generated a sample which was as well present in the
-# training set, the tree will output the same target than this training sample.
-# However, if for the same flipper length, we have different body masses, then
-# the tree is predicting the mean of the targets.
+# We see that the decision tree model does not have a priori and do not
+# end-up with a straight line to regress flipper length and body mass. The prediction
+# of a new sample, which was already present in the
+# training set, will give the same target than this training sample.
+# However, having different body masses for a same flipper length, 
+# the tree will be predicting the mean of the targets.
 #
 # So in classification setting, we saw that the predicted value was the most
 # probable value in the node of the tree. In the case of regression, the
@@ -643,7 +643,7 @@ plot_regression_model(X_train, y_train, linear_model, extrapolate=True)
 
 # %% [markdown]
 # The linear model will extrapolate using the fitted model for flipper length
-# < 175 mm and > 235 mm. Let's the difference with the trees.
+# < 175 mm and > 235 mm. Let's see the difference with the trees.
 
 # %%
 ax = plot_regression_model(X_train, y_train, linear_model, extrapolate=True)
@@ -665,14 +665,14 @@ _ = plot_regression_model(X_train, y_train, tree, extrapolate=True, ax=ax)
 # in regression setting and we need to use a specific set of criterion.
 #
 # One of the criterion that can be used in regression is the mean squared
-# error. In this case, we will compute this criterion in each of the partition
+# error. In this case, we will compute this criterion in each partition
 # as in the case of the entropy and select the split leading to the best
 # improvement (i.e. information gain).
 #
-# ## Importance of decision tree parameters on generalization
+# ## Importance of decision tree hyper-parameters on generalization
 #
-# This last section will illustrate the importance of some key parameters of
-# the decision tree. We will both illustrate in classification and regression
+# This last section will illustrate the importance of some key hyper-parameters of
+# the decision tree. We will both illustrate it on classification and regression
 # datasets that we previously used.
 #
 # ### Creation of the classification and regression dataset

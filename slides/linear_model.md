@@ -4,14 +4,15 @@ class: titlepage
 
 # Linear Model
 
-This lesson covers the linear models. These are basic models, easy to understand and fast to train
+This lesson covers the linear models. These are basic models, easy to
+understand and fast to train
 
 <img src="../scikit-learn-logo.svg">
 
 ???
 
-Linear models are easy to understand and fast to train, 
-they give us fair baselines
+Linear models are easy to understand and fast to train,
+they give us fair baselines.
 
 
 ---
@@ -38,69 +39,79 @@ they give us fair baselines
 Salary = *.4 x* education + *.2 x* hours-per-week + *.1 x* age + ...
 
 ???
-Adult census is here a bit modify, instead we have the value of the salary for every one.
-So we can see it as a regression problem
+Adult census is here a bit modify, instead of having 2 categories, < $50k and
+>= $50k, the target "Salaray" contains the exact value of the salary for each
+person. Thus, the target is continuous and we deal with a regression problem
+instead of a classification problem.
 
-Salary could be a linear combination of the feature (explanatory variable). 
+Salary could be a linear combination of the feature (explanatory variable).
 
 
 
 ---
 # Linear regression
 
-Predict the value of the target **y**  
+Predict the value of the target **y**
 given some observation **X**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_data.svg" width="100%">]
 
 ???
-For illustration purpose, let's consider one dimensionnal observation, 
-e.g. salary should be explain by education level (nb of year of study)
+For illustration purpose, let's consider 1-dimensional observation,
+e.g. salary should be explained by education level (number of year of study)
 
 ---
 # Linear regression
 A linear model is a slope "as close as possible" from datapoint
-The blue curve is the prediction for each **x**
+The blue curve is the predictions for each possible **x**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
 .pull-right.very-small[```python
 from sklearn.linear_model import LinearRegression
-lin_reg = LinearRegression()
-lin_reg.fit(x, y)
+linear_regression = LinearRegression()
+linear_regression.fit(x, y)
 ```]
 ???
 
-We learn a linear function to predict *y*. Here the salary is a constant times the number of years of study.
+We learn a linear function to predict *y*. Here, the salary is a constant
+multiplied by the number of years of study.
 
 
 
 ---
 # Linear regression
 
-The linear regression objectif is to minimize the distance between the prediction curve and the datapoints
+The linear regression aims at minimizing the distance between the prediction
+curve and the samples
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit_red.svg" width="100%">]
 
 ???
-An error for each point correspond to the red bar in the figure
-the best fit is the line which minimize the sum of (the square of) those red lines.
+An error for each sample corresponds to the red bar in the figure.
+The best fit is the blue line which minimizes the sum of (the square of) those
+red lines.
 
-Fortunatly, there is a formula, given **X** and **y**, to find the optimal weights in an efficient manner
+Fortunately, there is a formula, given **X** and **y**, to find the optimal
+weights in an efficient manner.
 
 ---
-# Linear regression in higher dimension
+# Linear regression in higher dimensions
 
 .pull-left.shift-left[<img src="../figures/lin_reg_3D.svg" width="130%">]
 
 
 ???
-In real world data set, **X** has severals dimensions, and it is not possible anymore to represent it.
+In higher dimensions, the principle remains the same: a linear model tries
+to minimize the distance between the samples and a hyper-plane.
+
+In real-world data set, **X** has several dimensions, and it is not anymore
+possible to represent it graphically.
 
 ---
 # For classification: logistic regression
 
-For **classification** we use a logistic regression model  
-**y** is binary, either +1 or -1
+For **classification**, we use a logistic regression model **y** is binary,
+either +1 or -1
 
 .shift-left.pull-left[<img src="../figures/categorical.svg" width="100%">]
 .pull-right.very-small[
@@ -110,15 +121,19 @@ log_reg = LogisticRegression()
 ```
 ]
 ???
-Logistic regression is a linear model for **classification** - not regresion as the name suggest.
+Logistic regression is a linear model for **classification** - not regression
+as the name would wrongly suggest.
 
-In our adult_census dataset, we do not have continous value for salary but only whether the salary is higher than $50K or not.
+In our `adult_census` dataset, we do not have continuous value for salary but
+only whether the salary is higher than $50K or not. This problem is, therefore,
+a classification problem.
 
 
 ---
 # For classification: logistic regression
 
-The output is now modeled as a form of step function, which is adjusted on the data.
+The output is now modelled as a form of a step function, which is adjusted on
+the data
 
 .shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
 .pull-right.very-small[
@@ -131,7 +146,7 @@ log_reg.fit(X, y)
 ---
 # Logistic regression in 2 dimensions
 
-**X** is 2-dimensional  
+**X** is 2-dimensional
 **y** is the color
 
 .shift-left.pull-left[<img src="../figures/logistic_2D.svg" width="100%">]
@@ -140,23 +155,25 @@ log_reg.fit(X, y)
 ???
 Here is an other way of representing our data.
 In this case, X has two dimension x1 and x2.
-The axis correspond to x1, x2
-and the color correspond to the target label y 
+The axes correspond to x1, x2 and the color corresponds to the target label y.
 
 ---
 # Model complexity
 Salary = *.4 x* education_level + *.2 x* hours-per-week + *.1 x* age + 
 .red[ *.2 x* zodiac_sign + *.1 x* red_socks] + ...  
 
-* A linear model can also overfit. 
+* A linear model can also overfit
 
-The most classic way to limit its complexity is to push coefficients toward small values. Such model is called *Ridge* for regression settings. 
+The most classic way to limit its complexity is to push coefficients toward
+small values. Such model is called *Ridge* for regression settings.
 ???
 
-If we have too many parameters w.r.t. number of samples, it's adviced to penalize the parameters of our models.
+If we have too many parameters w.r.t. the number of samples, it is advised to
+penalize the parameters of our models.
 
-With weights penalty, we include the value of the model's weights within the objectif function
-So a penalized model should choose lower weights for almost a similar fit
+With weights penalty, we include the value of the model's weights within the
+objective function (i.e. the sum of the squared residuals). So a penalized model
+should choose lower weights for almost a similar fit.
 
 The complexity parameter \alpha controls the amount of shrinkage: the larger the value of \alpha, the greater the amount of shrinkage and thus the coefficients become more robust to collinearity.
 
@@ -180,13 +197,22 @@ The complexity parameter \alpha controls the amount of shrinkage: the larger the
 ???
 from http://scipy-lectures.org/packages/scikit-learn/index.html#bias-variance-trade-off-illustration-on-a-simple-regression-problem
 
-Left: As we can see, our linear model captures and amplifies the noise in the data. It displays a lot of *variance*.
+Left: As we can see, our linear model captures and amplifies the noise in the
+data. It displays a lot of *variance*.
 
-Right: Ridge estimator regularizes the coefficients by shrinking lightly them to zero
+Right: Ridge estimator regularizes the coefficients by shrinking lightly
+them to zero.
 
-Ridge displays much less variance. However it systematically under-estimates the coefficient. It displays a *biased* behavior.
+Ridge displays much less variance. However, it systematically under-estimates
+the coefficient. It displays a *biased* behavior.
 
-This is a typical example of bias/variance tradeof: non-regularized estimator are not biased, but they can display a lot of variance. Highly-regularized models have little variance, but high bias. This bias is not necessarily a bad thing: what matters is choosing the tradeoff between bias and variance that leads to the best prediction performance. For a specific dataset there is a sweet spot corresponding to the highest complexity that the data can support, depending on the amount of noise and of observations available.
+This is a typical example of bias/variance tradeoff: non-regularized estimator
+are not biased, but they can display a lot of variance. Highly-regularized
+models have little variance, but high bias. This bias is not necessarily a bad
+thing: what matters is choosing the tradeoff between bias and variance that
+leads to the best prediction performance. For a specific dataset there is a
+sweet spot corresponding to the highest complexity that the data can support,
+depending on the amount of noise and of observations available.
 
 ---
 # 2 points example
@@ -204,31 +230,33 @@ This is a typical example of bias/variance tradeof: non-regularized estimator ar
 
 ---
 # Regularization in logistic regression
-The parameter C of logistic regression controls the "complexity" of the model, and in practice whether the model focuses on data close to the boundary.
+The parameter C of logistic regression controls the "complexity" of the model,
+and in practice, whether the model focuses on data close to the boundary.
 
 .shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]
 .pull-right[<img src="../figures/logistic_2D_C1.svg" width="100%">]
 .pull-left.shift-left[     Small C]
 .pull-right[         Large C]
 ???
-For large value of C, the model put more emphasize on the frontier's point. 
-In contrary, for low value of C, the model is considering all the points.
-The choice of C depends of the dataset.
+For a large value of C, the model puts more emphasis on the frontier's point.
+On the contrary, for a low value of C, the model is considering all the points.
+The choice of C depends on the dataset and should be tuned for each set.
 
 ---
 # Logistic regression for multiclass
 
-Logistic regression could adapt even if **y** contains multiple classes. There are several options:
+Logistic regression could adapt even if **y** contains multiple classes.
+There are several options:
 
 .shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
 .pull-right[
-* Multinomial 
+* Multinomial
 * One vs One
 * One vs Rest
 ]
 ???
-Mutlinomial logistic regression is a natural extension of logistic regression.
-Otherwise, we stil can run One vs Rest approach.
+Multinomial logistic regression is a natural extension of logistic regression.
+Otherwise, we still can run One vs Rest approach.
 
 ---
 # Linear separability

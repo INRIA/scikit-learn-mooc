@@ -16,7 +16,7 @@
 # %% [markdown]
 # # Linear Models
 #
-# In this notebook we will review linear model from `sklearn`.
+# In this notebook we will review linear model from `sklearn`.  
 # We will : 
 # - fit a simple linear slope 
 # - use `LinearRegression` and its regularized version `Ridge` which is more robust.
@@ -56,7 +56,7 @@ plt.ylabel('y', size=26)
 #
 # In this exercice, you are asked to approximate the target `y` by a linear function `f(x)`. i.e. find the best coefficients of the function `f` in order to minimize the error.
 #
-# Then you could compare the mean squared error of your model with the mean squared error of a linear model, which shall be the minimal one.
+# Then you could compare the mean squared error of your model with the mean squared error of a linear model (which shall be the minimal one).
 
 # %%
 def f(x):
@@ -70,11 +70,14 @@ grid = np.linspace(x_min, x_max, 300)
 plt.scatter(x, y, color='k', s=9)
 plt.plot(grid, f(grid), linewidth=3)
 
-error_mse = np.sqrt(np.mean((y - f(x))**2))
-print(f'Mean squared error = {error_mse}')
+mean_squared_error = np.sqrt(np.mean((y - f(x))**2))
+print(f'Mean squared error = {mean_squared_error}')
+
+# %% [markdown]
+# ### Solution 1. by fiting a linear regression
+#
 
 # %%
-# Solution 1. by fiting a linear regression
 
 from sklearn import linear_model
 
@@ -88,8 +91,8 @@ y_best = lr.predict(grid.reshape(-1, 1))
 plt.plot(grid, y_best, linewidth=3)
 plt.scatter(x, y, color='k', s=9)
 
-error_mse = np.sqrt(np.mean(((y - lr.predict(X))**2)))
-print(f'Lowest mean squared error = {error_mse}')
+mean_squared_error = np.sqrt(np.mean(((y - lr.predict(X))**2)))
+print(f'Lowest mean squared error = {mean_squared_error}')
 print(f'best coef: w1 = {lr.coef_[0]}, best intercept: w0 = {lr.intercept_}')
 
 # %% [markdown]
@@ -99,7 +102,7 @@ print(f'best coef: w1 = {lr.coef_[0]}, best intercept: w0 = {lr.intercept_}')
 # For simplicity, we will only use this numerical features.
 #
 # We will compare the score of the `linear regression` and the `ridge regression` (which is simply a regularized version of the linear regression).
-# Here the score will be the $R^2$ score, which is the score by default of a Rergessor. It represents the proportion of variance of the target explained by the model. The best score possible is 1.
+# Here the score will be the $R^2$ score, which is the score by default of a Rergessor. It represents the proportion of variance of the target explained by the model. The best $R^2$ score possible is 1.
 #
 
 # %%
@@ -126,10 +129,13 @@ lr.fit(X_train, y_train)
 lr_score = lr.score(X_test, y_test)
 
 # %%
-list_ridge_scores = []
-list_alphas = np.logspace(-2,2.2)#[.01, .1, 1, 10, 100]
+# taking the alpha between .01 and 100,
+# spaced evenly on a log scale.
+list_alphas = np.logspace(-2,2.2)
 
+list_ridge_scores = []
 for alpha in list_alphas:
+    # fit Ridge
     ridge = Ridge(alpha = alpha)
     ridge.fit(X_train, y_train)
     list_ridge_scores.append(ridge.score(X_test, y_test))
@@ -142,6 +148,7 @@ _ = plt.legend()
 
 # %% [markdown]
 # We see that, just like adding salt in cooking, adding regularization in our model could improve its error on the test set. But too much regularization, like too much salt, decrease its performance.
+# In our case, the alpha parameters is best when is around 20.
 #
 # Fortunatly, the `sklearn` api provides us with an automatic way to find the best regularization `alpha` with the module `RidgeCV`. For that, it internaly computes a cross validation on the training set to predict the best `alpha` parameter.
 
@@ -154,14 +161,14 @@ ridge.fit(X_train, y_train)
 lr_score = lr.score(X_test, y_test)
 print(f'R2 score of linear regression  = {lr_score}')
 print(f'R2 score of ridgeCV regression = {ridge.score(X_test, y_test)}')
-print(f'best alpha found = {ridge.alpha_}')
+print(f'best `alpha` found = {ridge.alpha_}')
 
 # %% [markdown]
 # ## 2. Logistic regresion 
 
 # %% [markdown]
 # We will load the "adult census" dataset, already used in previous notebook.
-# The class to predict is either a person earn more than $50k per year.
+# We have to predict either a person earn more than $50k per year or not.
 
 # %%
 import pandas as pd
@@ -203,7 +210,7 @@ X_test_scaled = scaler.transform(X_test)
 # %% [markdown]
 # `LogisticRegression` comes already with a build-in regulartization parameters `C`. 
 #
-# Contrary to `alpha` in Ridge, the parameters `C` here is the inverse of regularization strength;  so smaller values specify stronger regularization.
+# Contrary to `alpha` in Ridge, the parameters `C` here is the inverse of regularization strength; so smaller values specify stronger regularization.
 #
 # Here we will fit `LogisiticRegressionCV` to get the best regularization parameters`C` on the training set.
 
@@ -246,7 +253,7 @@ def plot_linear_separation(X, y):
 # %%
 X_blobs, y_blobs = make_blobs(n_samples = 500, n_features=2, centers=[[3,3],[0,8]], random_state = 42)
 X_moons, y_moons = make_moons(n_samples= 500, noise=.13, random_state = 42)
-X_class, y_class = make_classification(n_features=2, n_redundant=0, n_informative=2, random_state=2)
+X_class, y_class = make_classification(n_samples= 500, n_features=2, n_redundant=0, n_informative=2, random_state=2)
 X_gauss, y_gauss = make_gaussian_quantiles(n_features=2, n_classes=2, random_state = 42)
 
 list_data = [[X_blobs, y_blobs],
@@ -260,6 +267,9 @@ for X,y in list_data:
                 s=50, edgecolor='k')
     plot_linear_separation(X, y)
     
+
+# %% [markdown]
+# We see that the $R^2$ score decrease on each dataset, so we can say that each dataset is "less linearly separable" than the previous one.
 
 # %% [markdown]
 # # Main take away

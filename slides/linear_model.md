@@ -290,7 +290,7 @@ Otherwise, we still can run One vs Rest approach.
 
 ???
 Linear models work as long as your data could be linearly separable.
-Otherwise, either we could do features augmentation (as we will see in an other lesson), or we could choose a non-linear model.
+Otherwise, either we could do feature augmentation (as we will see in an other lesson), or choose a non-linear model.
 
 ---
 .center[

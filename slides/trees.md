@@ -37,32 +37,40 @@ In this example, if a new point have to be classified :
 # Classification
 .pull-left.shift-left[<img src="../figures/tree2D_1split.svg" width="100%">]
 
+.pull-right[<img src="../figures/tree_blue_orange1.svg" width="100%">]
+
 ???
-Each split maximize the information for the leaf.
+Each split shall maximize the information gain. This will be define precisely in the corresponding notebook.
 
 
 ---
 # Classification
 .pull-left.shift-left[<img src="../figures/tree2D_2split.svg" width="100%">]
+
+.pull-right[<img src="../figures/tree_blue_orange2.svg" width="100%">]
+ 
 ???
-In this example, after two split, we obtain pur leaf. 
-In each leaf, there is only one class. 
+In this example, after two split, we obtain pure leaf. 
+i.e. in each leaf, there is only one class. 
 
 ---
 # Regression
 <img src="../figures/tree_regression1.svg" width="100%">
 ???
 Decision tree can also fit regression problem. 
+
 ---
 # Regression
 <img src="../figures/tree_regression2.svg" width="100%">
 ???
+
 It will arrange the split w.r.t. the value of *x*.
 
 ---
 # Regression
 <img src="../figures/tree_regression3.svg" width="100%">
 ???
+
 But it can also overfit.
 Controling the depth allow to control the overfit.
 
@@ -98,5 +106,5 @@ A third tree keep refining the model.
 ---
 # Take away
 
-- `max_depth` parameter can prevent overfiting
-- `Random Forest` use both bagging and boosting over decision tree
+* `max_depth` parameter can prevent overfiting
+* `Random Forest` use bagging over decision tree

@@ -42,12 +42,20 @@ In this example, if a new point have to be classified :
 ???
 Each split shall maximize the information gain. This will be define precisely in the corresponding notebook.
 
-
 ---
 # Classification
 .pull-left.shift-left[<img src="../figures/tree2D_2split.svg" width="100%">]
 
 .pull-right[<img src="../figures/tree_blue_orange2.svg" width="100%">]
+ 
+???
+We can expand a leaf to refine the decision
+
+---
+# Classification
+.pull-left.shift-left[<img src="../figures/tree2D_3split.svg" width="100%">]
+
+.pull-right[<img src="../figures/tree_blue_orange3.svg" width="100%">]
  
 ???
 In this example, after two split, we obtain pure leaf. 

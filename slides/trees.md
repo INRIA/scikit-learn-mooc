@@ -54,7 +54,7 @@ We can expand a leaf to refine the decision
 ---
 # Classification
 .pull-left.shift-left[<img src="../figures/tree2D_3split.svg" width="100%">]
-
+ 
 .pull-right[<img src="../figures/tree_blue_orange3.svg" width="100%">]
  
 ???

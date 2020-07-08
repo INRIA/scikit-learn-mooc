@@ -88,7 +88,7 @@ plt.savefig('../figures/linear_fit_red.svg')
 # %%
 # 3D linear regression
 
-# from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.mplot3d import Axes3D
 # import matplotlib.pyplot as plt
 # from matplotlib import cm
 # from matplotlib.ticker import LinearLocator, FormatStrFormatter
@@ -138,6 +138,7 @@ X_test = np.c_[ 0, 2].T
 regr = linear_model.LinearRegression()
 regr.fit(X, y)
 
+plt.figure(figsize = (4,3))
 plt.axes([.1, .1, .9, .9])
 style_figs.light_axis()
 plt.ylabel('y', size=22, weight=600)
@@ -149,15 +150,14 @@ plt.savefig('../figures/lin_reg_2_points.svg', facecolor='none', edgecolor='none
 
 # %%
 def add_grey_points():
-    np.random.seed(1)
-    X_new = np.array([[.25], [.75], [1.25]])
-    y_new = [.25, .75, 1.25]
-    for _ in range(5):
-        noisy_X_new = X_new + np.random.normal(loc=0, scale=.1, size=X_new.shape)
-        plt.scatter(noisy_X_new.ravel(), y_new, s = 70, c='lightgrey', edgecolor='k')
+    np.random.seed(2)
+    x_new = .5 * np.random.normal(size=500) + .85
+    y_new = -.1 + x_new + 1.5 * np.random.normal(loc=0, scale=.1, size=x_new.shape)
+    plt.scatter(x_new, y_new, s = 70, c='.5', alpha=.3)
 
 
 # %%
+plt.figure(figsize = (4,3))
 np.random.seed(0)
 plt.axes([.1, .1, .9, .9])
 style_figs.light_axis()
@@ -175,7 +175,8 @@ add_grey_points()
 plt.savefig('../figures/lin_reg_2_points_no_penalty_grey.svg', facecolor='none', edgecolor='none')
 
 # %%
-regr = linear_model.Ridge(alpha=.1)
+plt.figure(figsize = (4,3))
+regr = linear_model.Ridge(alpha=.05)
 plt.axes([.1, .1, .9, .9])
 style_figs.light_axis()
 plt.ylabel('y', size=22, weight=600)
@@ -192,6 +193,27 @@ for _ in range(5):
 plt.savefig('../figures/lin_reg_2_points_ridge.svg', facecolor='none', edgecolor='none')
 add_grey_points()
 plt.savefig('../figures/lin_reg_2_points_ridge_grey.svg', facecolor='none', edgecolor='none')
+
+# %%
+plt.figure(figsize = (4,3))
+regr = linear_model.Ridge(alpha=.02)
+plt.axes([.1, .1, .9, .9])
+style_figs.light_axis()
+plt.ylabel('y', size=22, weight=600)
+plt.xlabel('x', size=22, weight=600)
+np.random.seed(0)
+plt.xlim((0,2))
+plt.ylim((0,2))
+for _ in range(5):
+    noisy_X = X + np.random.normal(loc=0, scale=.1, size=X.shape)
+    plt.plot(noisy_X, y, 'o', markersize = 10)
+    regr.fit(noisy_X, y)
+    plt.plot(X_test, regr.predict(X_test), linewidth = 1.5)
+    
+plt.savefig('../figures/lin_reg_2_points_best_ridge.svg', facecolor='none', edgecolor='none')
+add_grey_points()
+plt.savefig('../figures/lin_reg_2_points_best_ridge_grey.svg', facecolor='none', edgecolor='none')
+
 
 # %%
 # Categorical
@@ -331,13 +353,14 @@ xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
 Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:,0]
 # Put the result into a color plot
 Z = Z.reshape(xx.shape)
+
 fig = plt.figure()
 
-ax = fig.gca(projection='3d', facecolor = 'none', zticks = [])
+ax = fig.gca(projection='3d', facecolor='none', zticks=[])
 
 style_figs.light_axis()
 
-ax.plot_surface(xx, yy, -Z, cmap = plt.cm.bwr, linewidths = 1, alpha = .5)
+ax.plot_surface(xx, yy, -Z, cmap=plt.cm.bwr, linewidths=1, alpha=.5)
 
 
 

@@ -4,8 +4,9 @@ class: titlepage
 
 # Linear Model
 
-This lesson covers the linear models. These are basic models, easy to
-understand and fast to train.
+This lesson covers the linear models.
+
+These are basic models, easy to understand and fast to train.
 
 <img src="../scikit-learn-logo.svg">
 
@@ -24,7 +25,7 @@ they give us fair baselines.
 
 
 ---
-# Adult census
+# An example: Adult census
 
 .very-small[
 
@@ -33,11 +34,9 @@ they give us fair baselines.
 | 25  | Private   | 11th         | Never-married      | Machine-op-inspct  | Own-child    | Black | Male | 0            | 40             | United-States  | $45k |
 | 38  | Private   | HS-grad      | Married-civ-spouse | Farming-fishing    | Husband     | White  | Male | 0            | 50             | United-States   | $40k |
 | 28  | Local-gov | Assoc-acdm   | Married-civ-spouse | Protective-serv    | Husband      | White | Male | 0            | 40             | United-States   | $60k  |
-| 44  | Private   | Some-college | Married-civ-spouse | Machine-op-inspct  | Husband      | Black | Male | 7688         | 40             | United-States   | $52k  |
-
 ]
-  
-.small["Salary" = *0.4 x* "Education" + *0.2 x* "Hours-per-week" + *0.1 x* "Age" + ...]
+
+.shift-left[Salary = *0.4 x* Education + *0.2 x* Hours-per-week + *0.1 x* Age +...]
 
 ???
 Adult census is here a bit modify, instead of having 2 categories, < $50k and
@@ -63,12 +62,12 @@ e.g. salary should be explained by education level (number of year of study)
 
 ---
 # Linear regression
-A linear model is a slope "as close as possible" from all samples
-The blue curve is the predictions for each possible **x**
+A linear model is a ramp "as close as possible" to all samples.
+The blue curve shows the predictions for each possible **x**
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
 
-  ```python
+```python
   from sklearn.linear_model import LinearRegression
   linear_regression = LinearRegression()
   linear_regression.fit(x, y)
@@ -84,8 +83,8 @@ multiplied by the number of years of study.
 ---
 # Linear regression
 
-The linear regression aims at minimizing the distance between the prediction
-curve and the samples
+The slope is chosen to minimize the distance between the prediction and the
+data points
 
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit_red.svg" width="100%">]
 
@@ -109,17 +108,20 @@ Fortunately, there is a formula, given **X** and **y**, to find the optimal
 weights in an efficient manner.
 
 ---
-# Linear regression in higher dimensions
+# Linear regression with several variables
 
 .pull-left.shift-left[<img src="../figures/lin_reg_3D.svg" width="130%">]
 
+The mental picture needs to be extended to several dimensions.
 
 ???
-In higher dimensions, the principle remains the same: a linear model tries
-to minimize the distance between the samples and a hyper-plane.
+With more variables, the mental picture needs to be extended to several
+dimensions. However, the idea is the same: a linear model tries to
+minimize the error between the predictions, that fall on a plane, and the
+data points.
 
-In real-world data set, **X** has several dimensions, and it is not anymore
-possible to represent it graphically.
+Often, the data have many features, and thus many dimensions. It is not
+possible any longer to represent the fitting graphically.
 
 ---
 # For classification: logistic regression
@@ -183,24 +185,32 @@ The axes correspond to x1, x2 and the color corresponds to the target label y.
 * A linear model can also overfit
 
 
-.small["Salary" = *0.4 x* "Education" + *0.2 x* "Hours-per-week" + *0.1 x* "Age" +]  
-.small.red[&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *0.2 x* "Zodiac_sign" + *0.1 x* "Wear_red_socks" + ...]
+&nbsp;Salary = *0.4 x* Education + *0.2 x* Hours-per-week + *0.1 x* Age
+.red[&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; + *0.2 x* Zodiac_sign + *0.3 x* Wear_red_socks + ...]
 
-The most classic way to limit its complexity is to push coefficients toward
-small values. Such model is called *Ridge*
+.small[]
+
+The most comon way to limit its complexity is to push coefficients toward
+small values. Such model is called *Ridge*.
+
+ ```python
+ From sklearn.linear_model import Ridge
+ ridge = Ridge(alpha=1)
+ ```
+
 ???
 
-If we have too many parameters w.r.t. the number of samples, it is advised to
-penalize the parameters of our models.
+If we have too many parameters with regards to the number of samples, the
+linear model can overfit: it assigns non-zero weights to associations by
+change.
 
-With weights penalty, we include the value of the model's weights within the
-objective function (i.e. the sum of the squared residuals). So a penalized model
-should choose lower weights for almost a similar fit.
+The solution is to regularize the model: to foster less complex
+solutions. For this, the is slightly biased to
+should choose smaller weights for almost a similar fit.
 
-In this penalized objective function, a complexity parameter allows to control
-the amount of shrinkage and it is denominated \alpha. The larger the value of
-\alpha, the greater the amount of shrinkage and thus the coefficients become
-more robust to collinearity.
+A complexity parameter allows to control the amount of regularization. It
+is denominated \alpha. The larger the value of \alpha, the greater the
+bias and thus the smaller the coefficients.
 
 ---
 # Bias-variance tradeoff: an example
@@ -215,10 +225,8 @@ more robust to collinearity.
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
 .pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
 
-.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Linear regression]
-.pull-right[&nbsp; &nbsp; &nbsp; Ridge]
-.pull-left.shift-left[&nbsp; &nbsp; &nbsp; No bias, high variance]
-.pull-right[&nbsp; &nbsp; &nbsp; low bias, low variance]
+.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Low bias, high variance]
+.pull-right[&nbsp; &nbsp; &nbsp; High bias, low variance]
 ???
 from http://scipy-lectures.org/packages/scikit-learn/index.html#bias-variance-trade-off-illustration-on-a-simple-regression-problem
 
@@ -239,18 +247,18 @@ leads to the best prediction performance. For a specific dataset there is a
 sweet spot corresponding to the highest complexity that the data can support,
 depending on the amount of noise and of observations available.
 
-# Example with grey dot removed.
+---
 # Bias-variance tradeoff: an example
 
 
-.pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="110%">]
-.pull-right[<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="110%">]
+<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="32%">
+<img src="../figures/lin_reg_2_points_best_ridge_grey.svg" width="32%">
+<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="32%">
 
-.pull-left.shift-left[     Linear regression]
-.pull-right[         Ridge]
-.pull-left.shift-left[     No bias, high variance]
-.pull-right[         low bias, low variance]
-
+&nbsp; &nbsp; Too much variance &nbsp; &nbsp;
+Best tradeoff
+&nbsp; &nbsp; &nbsp; &nbsp; Too much bias
+???
 
 
 ---

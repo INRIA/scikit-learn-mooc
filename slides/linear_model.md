@@ -195,7 +195,10 @@ With weights penalty, we include the value of the model's weights within the
 objective function (i.e. the sum of the squared residuals). So a penalized model
 should choose lower weights for almost a similar fit.
 
-The complexity parameter \alpha controls the amount of shrinkage: the larger the value of \alpha, the greater the amount of shrinkage and thus the coefficients become more robust to collinearity.
+In this penalized objective function, a complexity parameter allows to control
+the amount of shrinkage and it is denominated \alpha. The larger the value of
+\alpha, the greater the amount of shrinkage and thus the coefficients become
+more robust to collinearity.
 
 ---
 # Bias-variance tradeoff: an example
@@ -290,7 +293,7 @@ Otherwise, we still can run One vs Rest approach.
 
 ???
 Linear models work as long as your data could be linearly separable.
-Otherwise, either we could do features augmentation (as we will see in an other lesson), or we could choose a non-linear model.
+Otherwise, either we could do feature augmentation (as we will see in an other lesson), or choose a non-linear model.
 
 ---
 .center[

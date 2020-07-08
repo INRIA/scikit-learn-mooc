@@ -137,6 +137,8 @@ either +1 or -1
  ```
 
 ???
+FIXME title might appear in two lines on some browser.
+
 Logistic regression is a linear model for **classification** - not regression
 as the name would wrongly suggest.
 

@@ -205,8 +205,8 @@ linear model can overfit: it assigns non-zero weights to associations by
 change.
 
 The solution is to regularize the model: to foster less complex
-solutions. For this, the is slightly biased to
-should choose smaller weights for almost a similar fit.
+solutions. For this, the regularized model is slightly biased to
+choose smaller weights for almost a similar fit.
 
 A complexity parameter allows to control the amount of regularization. It
 is denominated \alpha. The larger the value of \alpha, the greater the

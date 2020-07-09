@@ -202,7 +202,7 @@ small values. Such model is called *Ridge*.
 
 If we have too many parameters with regards to the number of samples, the
 linear model can overfit: it assigns non-zero weights to associations by
-change.
+chance.
 
 The solution is to regularize the model: to foster less complex
 solutions. For this, the regularized model is slightly biased to

@@ -59,7 +59,7 @@ plt.ylabel('y', size=16, weight=600)
 plt.xlabel('x', size=16, weight=600)
 plt.xlim((0,1))
 plt.scatter(x,y,  color='k', s=9)
-plt.plot(grid, y_hat, linewidth=2, label = 'fitted curve')
+plt.plot(grid, y_hat, linewidth=2, label='fitted curve')
 plt.legend()
 plt.savefig('../figures/linear_fit.svg', facecolor='none', edgecolor='none')
 
@@ -72,7 +72,8 @@ style_figs.light_axis()
 plt.ylabel('y', size=16, weight=600)
 plt.xlabel('x', size=16, weight=600)
 plt.scatter(x,y,  color='k', s=9)
-plt.plot(grid, y_hat, linewidth=2, label = 'fitted curve')
+plt.plot(grid, y_hat, linewidth=2, label='fitted curve')
+
 for ii, (xi, yi) in enumerate(zip(x,y)):
     if ii == 0:
         plt.plot([xi, xi], [xi * lr.coef_ + lr.intercept_, yi], c='r',
@@ -80,7 +81,7 @@ for ii, (xi, yi) in enumerate(zip(x,y)):
     else:
         plt.plot([xi, xi], [xi * lr.coef_ + lr.intercept_, yi], c='r',
              linewidth = 1)
-        
+
 plt.legend()
 plt.xlim((0,1))
 plt.savefig('../figures/linear_fit_red.svg')
@@ -116,8 +117,6 @@ ax = fig.gca(projection='3d', facecolor = 'none', zticks = [])
 
 style_figs.light_axis()
 
-# ax.plot_surface(x1_grid, x2_grid, Z, cmap=cm.coolwarm,
-#                        linewidth=0, antialiased=False)
 ax.plot_wireframe(x1_grid, x2_grid, Z, rstride=2, cstride=2, linewidth = .5)
 #     ax.plot_surface(x1_grid, x2_grid, Z, rstride=2, cstride=2, linewidth = .5, alpha = .2)
 ax.scatter(X[:,0], X[:,1], y, c = 'k', s = 30)
@@ -143,7 +142,7 @@ plt.axes([.1, .1, .9, .9])
 style_figs.light_axis()
 plt.ylabel('y', size=22, weight=600)
 plt.xlabel('x', size=22, weight=600)
-plt.plot(X, y, 'o', markersize = 15) 
+plt.plot(X, y, 'o', markersize = 15)
 plt.plot(X_test, regr.predict(X_test), linewidth = 1.5)
 plt.savefig('../figures/lin_reg_2_points.svg', facecolor='none', edgecolor='none')
 
@@ -189,7 +188,7 @@ for _ in range(5):
     plt.plot(noisy_X, y, 'o', markersize = 10)
     regr.fit(noisy_X, y)
     plt.plot(X_test, regr.predict(X_test), linewidth = 1.5)
-    
+
 plt.savefig('../figures/lin_reg_2_points_ridge.svg', facecolor='none', edgecolor='none')
 add_grey_points()
 plt.savefig('../figures/lin_reg_2_points_ridge_grey.svg', facecolor='none', edgecolor='none')
@@ -209,7 +208,7 @@ for _ in range(5):
     plt.plot(noisy_X, y, 'o', markersize = 10)
     regr.fit(noisy_X, y)
     plt.plot(X_test, regr.predict(X_test), linewidth = 1.5)
-    
+
 plt.savefig('../figures/lin_reg_2_points_best_ridge.svg', facecolor='none', edgecolor='none')
 add_grey_points()
 plt.savefig('../figures/lin_reg_2_points_best_ridge_grey.svg', facecolor='none', edgecolor='none')
@@ -286,8 +285,8 @@ plt.savefig('logistic_color.svg', facecolor='none', edgecolor='none')
 
 from sklearn.datasets import make_blobs
 
-# make 3-class dataset for classification
-centers = [[-5, 0], [0, 1.5]]#, [5, -1]]
+# make 2-class dataset for classification
+centers = [[-5, 0], [0, 1.5]]
 X, y = make_blobs(n_samples=1000, centers=centers, random_state=40)
 transformation = [[0.4, 0.2], [-0.4, 1.2]]
 X = np.dot(X, transformation)
@@ -310,11 +309,11 @@ Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:,0]
 Z = Z.reshape(xx.shape)
 plt.figure()
 ax = plt.axes([.1, .1, .9, .9])
-plt.contour(xx, yy, -Z, cmap = plt.cm.bwr, linewidths = 1)
+plt.contour(xx, yy, -Z, cmap=plt.cm.BrBG_r, linewidths=1)
 
 
 # Plot also the training points
-colors = "br"
+colors = ["C0", "C1"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
     plt.scatter(X[idx, 0], X[idx, 1], c=color,
@@ -360,13 +359,14 @@ ax = fig.gca(projection='3d', facecolor='none', zticks=[])
 
 style_figs.light_axis()
 
-ax.plot_surface(xx, yy, -Z, cmap=plt.cm.bwr, linewidths=1, alpha=.5)
+ax.plot_surface(xx, yy, -Z, cmap=plt.cm.BrBG_r, linewidths=1,
+                alpha=.5)
 
 
 
 
 # Plot also the training points
-colors = "br"
+colors = ["C0", "C1"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
     ax.scatter(X[idx, 0], X[idx, 1], y[idx], c=color, edgecolor='black', s=20)
@@ -395,9 +395,10 @@ transformation = [[0.4, 0.2], [-0.4, 1.2]]
 X = np.dot(X, transformation)
 
 
-for C in [.001,1]:
+for C in [.001, 1]:
     multi_class = 'multinomial'
-    clf = linear_model.LogisticRegression(C = C,  solver='sag', max_iter=100, random_state=42,
+    clf = linear_model.LogisticRegression(C=C, solver='sag',
+                             max_iter=100, random_state=42,
                              multi_class=multi_class).fit(X, y)
 
     # create a mesh to plot in
@@ -412,15 +413,15 @@ for C in [.001,1]:
     Z = - clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:,0]
     # Put the result into a color plot
     Z = Z.reshape(xx.shape)
-    plt.figure()
-    plt.contour(xx, yy, Z, cmap=plt.cm.bwr, linewidths = 1)
+    plt.figure(figsize=(4, 3))
+    plt.contour(xx, yy, Z, cmap=plt.cm.BrBG_r, linewidths=2)
     # plt.title("Decision surface of LogisticRegression (%s)" % multi_class)
     # plt.axis('tight')
 
 
 
     # Plot also the training points
-    colors = "br"
+    colors = ["C0", "C1"]
     for i, color in zip(clf.classes_, colors):
         idx = np.where(y == i)
         plt.scatter(X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.Paired,
@@ -463,18 +464,18 @@ xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
 Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
 # Put the result into a color plot
 Z = Z.reshape(xx.shape)
-plt.figure()
-plt.contour(xx, yy, Z, cmap=plt.cm.PiYG)
+plt.figure(figsize=(4, 3))
+plt.contour(xx, yy, Z, cmap=plt.cm.BrBG_r)
 # plt.title("Decision surface of LogisticRegression (%s)" % multi_class)
 plt.axis('tight')
 style_figs.light_axis()
 
 
 # Plot also the training points
-colors = "bry"
+colors = ["C0", "C1", "C2"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
-    plt.scatter(X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.Paired,
+    plt.scatter(X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.BrBG_r,
                 edgecolor='black', s=20)
 
 plt.ylabel('x2', size=16, weight=600)
@@ -484,6 +485,7 @@ plt.savefig('multinomial.svg', facecolor='none', edgecolor='none')
 
 # %%
 # Linear separability
+plt.figure(figsize=(4, 3))
 from sklearn.datasets import make_blobs, make_moons
 
 from sklearn.linear_model import LogisticRegression
@@ -492,7 +494,7 @@ def plot_linear_separation(X, y):
     # plot the separation line from a logistic regression
     
     clf = LogisticRegression()
-    clf.fit(X,y)
+    clf.fit(X, y)
     h = .02  # step size in the mesh
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
@@ -501,9 +503,9 @@ def plot_linear_separation(X, y):
 
     Z = - (clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:,0])
     Z = Z.reshape(xx.shape)
-    plt.contour(xx, yy, Z, 'orange', linewidths = 3, levels = 0)
+    plt.contour(xx, yy, Z, colors='black', linewidths=3, levels=0)
 #     plt.title(f'$R^2$ score: {clf.score(X,y)}')
-    
+
 # separable
 centers = [[-5, 0], [0, 1.5]]#, [5, -1]]
 X, y = make_blobs(n_samples=1000, centers=centers, random_state=40)
@@ -514,7 +516,7 @@ style_figs.light_axis()
 
 
 # Plot also the training points
-colors = "br"
+colors = ["C0", "C1"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
     plt.scatter(X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.Paired,
@@ -530,11 +532,11 @@ plt.savefig('lin_separable.svg', facecolor='none', edgecolor='none')
 
 X, y = make_moons(n_samples=1000, random_state=40, noise = .2)
 
-plt.figure()
+plt.figure(figsize=(4, 3))
 style_figs.light_axis()
 
 # Plot also the training points
-colors = "br"
+colors = ["C0", "C1"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
     plt.scatter(X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.Paired,

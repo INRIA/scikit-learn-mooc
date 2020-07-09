@@ -171,7 +171,10 @@ the data
 **y** is the color
 
 .shift-left.pull-left[<img src="../figures/logistic_2D.svg" width="100%">]
-.pull-right[<img src="../figures/logistic_3D.svg" width="100%">]
+.shift-up.shift-left-more.pull-right[
+.shift-left-more[<img src="../figures/logistic_3D.svg" width="110%">]
+]
+ 
 
 ???
 Here is an other way of representing our data.
@@ -190,13 +193,16 @@ The axes correspond to x1, x2 and the color corresponds to the target label y.
 
 .small[]
 
-The most comon way to limit its complexity is to push coefficients toward
+**Regularization** is needed to control model complexity.
+The most comon way is to push coefficients toward
 small values. Such model is called *Ridge*.
 
+.pull-left[
  ```python
  From sklearn.linear_model import Ridge
  ridge = Ridge(alpha=1)
  ```
+]
 
 ???
 
@@ -213,13 +219,13 @@ is denominated \alpha. The larger the value of \alpha, the greater the
 bias and thus the smaller the coefficients.
 
 ---
-# Bias-variance tradeoff: an example
+# Bias-variance tradeoff in Ridge
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points.svg" width="110%">]
 
 ---
-# Bias-variance tradeoff: an example
+# Bias-variance tradeoff in Ridge
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
@@ -248,28 +254,45 @@ sweet spot corresponding to the highest complexity that the data can support,
 depending on the amount of noise and of observations available.
 
 ---
-# Bias-variance tradeoff: an example
+# Bias-variance tradeoff in Ridge
 
 
 <img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="32%">
 <img src="../figures/lin_reg_2_points_best_ridge_grey.svg" width="32%">
 <img src="../figures/lin_reg_2_points_ridge_grey.svg" width="32%">
 
-&nbsp; &nbsp; Too much variance &nbsp; &nbsp;
-Best tradeoff
-&nbsp; &nbsp; &nbsp; &nbsp; Too much bias
+.shift-up-less[
+Too much variance &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Too much bias
+]
+
+.shift-up-less[
+&nbsp; &nbsp; Small alpha &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+Large alpha
+]
+
+.width65.shift-up-less.centered[
+ ```python
+ From sklearn.linear_model import LogisticRegressionCV
+ ```
+]
+
+
 ???
 
 
 ---
 # Regularization in logistic regression
 
-.small[The parameter C of logistic regression controls the "complexity" of the model, and in practice, whether the model focuses on data close to the boundary.]
+.small[The parameter *C* controls the complexity of the model, and in practice, whether the model focuses on data close to the boundary.]
 
-.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="100%">]
-.pull-right[<img src="../figures/logistic_2D_C1.svg" width="100%">]
-.pull-left.shift-left[     Small C]
-.pull-right[         Large C]
+.shift-up-less.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="90%">]
+.shift-up-less.pull-right[<img src="../figures/logistic_2D_C1.svg" width="90%">]
+.shift-up.pull-left.shift-left[&nbsp;&nbsp;Small C]
+.shift-up.pull-right[&nbsp;&nbsp;Large C]
+
 ???
 For a large value of C, the model puts more emphasis on the frontier's point.
 On the contrary, for a low value of C, the model is considering all the points.
@@ -278,7 +301,7 @@ The choice of C depends on the dataset and should be tuned for each set.
 ---
 # Logistic regression for multiclass
 
-Logistic regression could adapt even if **y** contains multiple classes.
+Logistic regression can be adapted to **y** containing multiple classes.
 There are several options:
 
 .shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
@@ -292,14 +315,14 @@ Multinomial logistic regression is a natural extension of logistic regression.
 Otherwise, we still can run One vs Rest approach.
 
 ---
-# Linear separability
+# Linear models may not work on all data
 
 
 .shift-left.pull-left[<img src="../figures/lin_separable.svg" width="100%">]
 .pull-right[<img src="../figures/lin_not_separable.svg" width="100%">]
 
 .pull-left.shift-left[Linearly separable]
-.pull-right[     linearly *Not* separable]
+.pull-right[*Not* linearly separable]
 
 ???
 Linear models work as long as your data could be linearly separable.
@@ -307,14 +330,15 @@ Otherwise, either we could do feature augmentation (as we will see in an other l
 
 ---
 .center[
-# Take home messages 
+# Take home messages: Linear models
 ]
 
-* Linear model are good baselines for:
+* Good and understandable baselines for:
  - regression: linear regression + regularization = Ridge
  - classification: logistic regression + fine tune `C`
 
-* very fast to train
+* Very fast to train
+
 * Better when *nb of features* > *nb of samples*
 
 

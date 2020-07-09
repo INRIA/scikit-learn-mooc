@@ -110,6 +110,27 @@ The second tree refine the first model
 ???
 A third tree keep refining the model.
 
+---
+# Bagging
+.pull-left[<img src="../figures/bagging0.svg" width="100%">]
+.pull-right[<img src="../figures/bagging.svg" width="100%">]
+???
+
+---
+# Bagging
+.pull-left[<img src="../figures/bagging0.svg" width="100%">]
+.pull-right[<img src="../figures/bagging_line.svg" width="100%">]
+.pull-right[<img src="../figures/bagging_trees.svg" width="100%">]
+???
+
+---
+# Bagging
+.pull-left[<img src="../figures/bagging0_cross.svg" width="100%">]
+.pull-right[<img src="../figures/bagging_cross.svg" width="100%">]
+.pull-right[<img src="../figures/bagging_trees_predict.svg" width="100%">]
+???
+
+
 
 ---
 # Take away

@@ -10,14 +10,14 @@ all: $(RENDERED_NOTEBOOKS_DIR)
 $(RENDERED_NOTEBOOKS_DIR): $(MINIMAL_RENDERED_NOTEBOOK_FILES) sanity_check_$(RENDERED_NOTEBOOKS_DIR)
 
 $(RENDERED_NOTEBOOKS_DIR)/%.ipynb: $(PYTHON_SCRIPTS_DIR)/%.py
-	bash build_scripts/convert-python-script-to-notebook.sh $< $@ $(JUPYTER_KERNEL)
+	bash build_tools/convert-python-script-to-notebook.sh $< $@ $(JUPYTER_KERNEL)
 
 sanity_check_$(PYTHON_SCRIPTS_DIR):
-	python build_scripts/check-python-scripts.py $(PYTHON_SCRIPTS_DIR)
+	python build_tools/check-python-scripts.py $(PYTHON_SCRIPTS_DIR)
 	yapf --recursive --in-place --parallel $(PYTHON_SCRIPTS_DIR)
 
 sanity_check_$(RENDERED_NOTEBOOKS_DIR):
-	python build_scripts/sanity-check.py $(PYTHON_SCRIPTS_DIR) $(RENDERED_NOTEBOOKS_DIR)
+	python build_tools/sanity-check.py $(PYTHON_SCRIPTS_DIR) $(RENDERED_NOTEBOOKS_DIR)
 
 clean:
 	rm -rf $(RENDERED_NOTEBOOKS_DIR)/*tmp.ipynb

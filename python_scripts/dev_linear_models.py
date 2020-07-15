@@ -24,7 +24,7 @@
 # - see examples of linear separability.
 
 # %% [markdown]
-# ## 1. Linear regression
+# ## 1. Regression: Linear regression
 
 # %% [markdown]
 # Before loading any dataset, we will first explore a very simple linear model: our data is one dimensional, and the target value is continuous. 
@@ -50,7 +50,6 @@ plt.scatter(x,y,  color='k', s=9)
 plt.xlabel('x', size=26)
 plt.ylabel('y', size=26)
 
-
 # %% [markdown]
 # ### Exercice 1
 #
@@ -59,6 +58,8 @@ plt.ylabel('y', size=26)
 # Then you could compare the mean squared error of your model with the mean squared error of a linear model (which shall be the minimal one).
 
 # %%
+from sklearn.metrics import mean_squared_error
+
 def f(x):
     w0 = 0 # TODO: update the weight here
     w1 = 0 # TODO: update the weight here
@@ -70,8 +71,8 @@ grid = np.linspace(x_min, x_max, 300)
 plt.scatter(x, y, color='k', s=9)
 plt.plot(grid, f(grid), linewidth=3)
 
-mean_squared_error = np.sqrt(np.mean((y - f(x))**2))
-print(f'Mean squared error = {mean_squared_error}')
+mse = mean_squared_error(y, f(x))
+print(f'Mean squared error = {mse}')
 
 # %% [markdown]
 # ### Solution 1. by fiting a linear regression
@@ -91,8 +92,8 @@ y_best = lr.predict(grid.reshape(-1, 1))
 plt.plot(grid, y_best, linewidth=3)
 plt.scatter(x, y, color='k', s=9)
 
-mean_squared_error = np.sqrt(np.mean(((y - lr.predict(X))**2)))
-print(f'Lowest mean squared error = {mean_squared_error}')
+mse = mean_squared_error(y, lr.predict(X))
+print(f'Lowest mean squared error = {mse}')
 
 # %% [markdown]
 # Here the coeficients learnt by `LinearRegression` is the best slope which fit the data.
@@ -215,7 +216,7 @@ print(f'R2 score of ridgeCV regression = {ridge.score(X_test_scaled, y_test)}')
 print(f'The best `alpha` found on the training set is {ridge[1].alpha_}')
 
 # %% [markdown]
-# ## 2. Logistic regresion 
+# ## 2. Calssification: Logistic regresion 
 
 # %% [markdown]
 # We will load the "adult census" dataset, already used in previous notebook.
@@ -332,26 +333,34 @@ for X,y in list_data:
 # %% [markdown]
 # ## Feature augmentation
 
+# %% [markdown]
+# Let consider a toy dataset, where the target is a function of both `x` and `sin(x)`.
+# In this case, a linear model will only fit the linear part.
+
 # %%
 n_samples = 100
 x = np.arange(0, 10, 10 / n_samples)
 noise = np.random.randn(n_samples)
-y = np.sin(x) + x + noise
+y = 1.5 * np.sin(x) + x + noise
 X = x.reshape((-1,1))
 
 linear_regression = LinearRegression()
 linear_regression.fit(X, y)
-y_predict = linear_regression.predict(X)
-plt.scatter(X, y, label = 'data')
-plt.plot(X, y_predict, label = 'predict', color = 'k', linewidth = 3)
+y_predict_linear = linear_regression.predict(X)
+plt.scatter(X, y)
+plt.plot(X, y_predict_linear, label = 'predict with linear', color = 'k', linewidth = 3)
 
+# %% [markdown]
+# Now, if we want to extend the power of expression of our model, we could add whatever combination of the feature, to enrich the feature space, thus enriching the complexity of the model.
 
-
+# %%
 X_augmented = np.concatenate((X, np.sin(X)), axis = 1)
 linear_regression = LinearRegression()
 linear_regression.fit(X_augmented, y)
 y_predict_augmented = linear_regression.predict(X_augmented)
-plt.plot(X, y_predict_augmented, label = 'predict augmented', color = 'orange',
+plt.scatter(X, y)
+plt.plot(X, y_predict_linear, label = 'predict with linear', color = 'k', linewidth = 3)
+plt.plot(X, y_predict_augmented, label = 'predict with augmented', color = 'orange',
          linewidth = 4)
 
 plt.legend()
@@ -365,5 +374,3 @@ plt.legend()
 # - `pipeline` can be used to combinate a scaler and a model
 # - If the data are not linearly separable, we shall use a more complex model or use feature augmentation
 #
-
-# %%

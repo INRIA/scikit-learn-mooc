@@ -88,6 +88,27 @@ But it can also overfit.
 Controling the depth here allow to control the overfit.
 
 
+
+---
+# Decision tree
+
+<img src="../figures/dt_underfit.svg" width="32%">
+<img src="../figures/dt_fit.svg" width="32%">
+<img src="../figures/dt_overfit.svg" width="32%">
+
+.shift-up-less[
+&nbsp; &nbsp; Underfit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Overfit
+]
+
+.shift-up-less[
+&nbsp; &nbsp; Small depth &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+Large depth
+]
+
+
 ---
 # Boosting
 .pull-left[<img src="../figures/boosting0.svg" width="100%">]
@@ -108,6 +129,13 @@ A first shalow tree start to separate circle from square. Mistakes done by this 
 .pull-left[<img src="../figures/boosting2.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees2.svg" width="100%">]
 
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import HistGradientBoostingClassifier
+clf = HistGradientBoostingClassifier(learning_rate = .1)
+```
+]
+
 ???
 So now, the second tree refine the first tree. The final model is a weighted sum of this first two trees.
 
@@ -116,6 +144,13 @@ So now, the second tree refine the first tree. The final model is a weighted sum
 .pull-left[<img src="../figures/boosting3.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
 
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import HistGradientBoostingClassifier
+clf = HistGradientBoostingClassifier(learning_rate = .1)
+```
+]
+
 ???
 We could continue to refining our ensemble model. At each step we focus on mistakes of the previous model.
 
@@ -123,6 +158,12 @@ We could continue to refining our ensemble model. At each step we focus on mista
 # Bagging
 .pull-left[<img src="../figures/bagging0.svg" width="100%">]
 .pull-right[<img src="../figures/bagging.svg" width="120%">]
+
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import RandomForestClassifier
+```
+]
 
 ???
 In bagging, on contrary to boosting, we will construct deep tree in parallel.
@@ -133,6 +174,12 @@ In bagging, on contrary to boosting, we will construct deep tree in parallel.
 .pull-right[<img src="../figures/bagging_line.svg" width="120%">]
 
 .pull-right[<img src="../figures/bagging_trees.svg" width="120%">]
+
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import RandomForestClassifier
+```
+]
 
 ???
 Each tree will be fitted on an sub-sampling from the initial data. 
@@ -148,8 +195,32 @@ i.e. we will only consider a random part of the data to build each model.
  
 .pull-right[<img src="../figures/bagging_vote.svg" width="120%">]
 
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import RandomForestClassifier
+```
+]
+
 ???
 When we have to classify a new point, we will agregate the prediction of every model by a voting scheme.
+
+---
+# Bagging
+
+<img src="../figures/bagging_underfit.svg" width="32%">
+<img src="../figures/bagging_fit.svg" width="32%">
+<img src="../figures/bagging_overfit.svg" width="32%">
+
+.shift-up-less[
+&nbsp; &nbsp; Underfit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Overfit ???
+]
+
+.shift-up-less[
+&nbsp; &nbsp; Few estimators &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; severals etimators
+]
 
 
 ---

@@ -123,7 +123,7 @@ X = X[numerical_columns]
 X.head()
 
 # %% [markdown]
-# As always, we divide our data in a training and in a test set. The test test should only be used to assert the score of our final model.
+# As usual, we divide our data into a training and a testing set. The test test should only be used to assert the score of our final model.
 
 # %%
 from sklearn.linear_model import LinearRegression, Ridge
@@ -151,13 +151,12 @@ linear_regression_score = linear_regression.score(X_test_scaled, y_test)
 # %% [markdown]
 # As seen during the second notebook, we will use the scikit-learn `Pipeline` module to combine both the scaling and the linear regression.
 #
-# Using pipeline is more convenient and safer (it avoids leaking statistics from the test data into the trained model)  
+# Using pipeline is more convenient and it is safer: it avoids leaking statistics from the test data into the trained model.  
 #
 # We will call `make_pipeline()` which will create a `Pipeline` by giving as arguments the successive
 # transformations to perform followed by the regressor model.
 #
 # So the two cells above become this new one :
-#
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -170,10 +169,10 @@ linear_regression_score = model_linear.score(X_test, y_test)
 # %% [markdown]
 # Now we want to compare this basic `LinearRegression` versus its regularized form `Ridge`.
 #
-# We will present the score on the test set for different value of `alpha`, which controls the regularization strength in `Ridge`. 
+# We will present the score on the test set for different values of `alpha`, which controls the regularization strength in `Ridge`. 
 
 # %%
-# taking the alpha between .001 and 33,
+# taking the alpha between .01 and 33,
 # spaced evenly on a log scale.
 list_alphas = np.logspace(-2,1.5)
 
@@ -198,9 +197,9 @@ _ = plt.legend()
 #
 # However, the calibration of `alpha` could not be tuned on the test set - otherwise we are fitting the test set, which would correspond to overfitting.
 #
-# To calibrate the `alpha` on our training set, we have to extract a small validation set from our training set. That is seen on the lesson : *basic hyper parameters tuning*.
+# To calibrate `alpha` on our training set, we have to extract a small validation set from our training set. That is seen on the lesson : *basic hyper parameters tuning*.
 #
-# Fortunatly, the `scikit-learn` api provides us with an automatic way to find the best regularization `alpha` with the module `RidgeCV`. For that, it internaly computes a cross validation on the training set to predict the best `alpha` parameter.
+# Fortunatly, the `scikit-learn` api provides us with an automatic way to find the best regularization `alpha` with the module `RidgeCV`. For that, it internaly computes a cross validation on the training set (with a validation set) to predict the best `alpha` parameter.
 
 # %%
 from sklearn.linear_model import RidgeCV

@@ -48,16 +48,17 @@ data[target_column] = data[target_column].str.split().str[0]
 data.info()
 
 # %% [markdown]
-# We can observe that they are 2 missing records in this dataset and for the sake
-# of simplicity, we will drop the records corresponding to these 2 samples.
+# We can observe that they are 2 missing records in this dataset and for the
+# sake of simplicity, we will drop the records corresponding to these 2
+# samples.
 
 # %%
 data = data.dropna()
 data.info()
 
 # %% [markdown]
-# We will separate the target from the data and we will create a training and a testing
-# set.
+# We will separate the target from the data and we will create a training and a
+# testing set.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -206,14 +207,15 @@ print(
 
 # %% [markdown]
 # At this stage, we have the intuition that a decision tree is built by
-# successively partitioning the feature space, considering one feature at a time.
+# successively partitioning the feature space, considering one feature at a
+# time.
 # Subsequently, we will present the details regarding the partitioning
 # mechanism.
 #
 # ## Partitioning mechanism
 #
-# Let's isolate a single feature. We will present the mechanism allowing to find
-# the optimal partition for these one-dimensional data.
+# Let's isolate a single feature. We will present the mechanism allowing to
+# find the optimal partition for these one-dimensional data.
 
 # %%
 single_feature = X_train["Culmen Length (mm)"]
@@ -373,7 +375,7 @@ print(f"Entropy for partition above the threshold: \n"
 # This statistic is known as the information gain. It combines the entropy of
 # the different partitions to give us a single statistic qualifying the quality
 # of a split. The information gain is defined as the difference of the entropy
-# before making a split and the sum of the entropies of each partition, 
+# before making a split and the sum of the entropies of each partition,
 # normalized by the frequencies of class samples on each partition. The goal is
 # to maximize the information gain.
 #
@@ -470,8 +472,8 @@ _ = plot_tree(tree)
 # slight difference are only due to some low-level implementation details.
 #
 # As we previously explained, the split mechanism will be repeated several
-# times (until we don't have any classification error on the training set). In the above example, it
-# corresponds to increasing the `max_depth` parameter.
+# times (until we don't have any classification error on the training set). In
+# the above example, it corresponds to increasing the `max_depth` parameter.
 #
 # ## How prediction works?
 #
@@ -484,8 +486,9 @@ _ = plot_tree(tree)
 _ = plot_tree(tree)
 
 # %% [markdown]
-# We recall that the threshold found is 43.25 mm. Thus, let's see the class prediction for a
-# sample with a feature value below the threshold and another above the
+# We recall that the threshold found is 43.25 mm. Thus, let's see the class
+# prediction for a sample with a feature value below the threshold and another
+# above the
 # threshold.
 
 # %%
@@ -496,16 +499,16 @@ print(f"The class predicted for a value above the threshold is: "
 
 # %% [markdown]
 # We predict an Adelie penguin for a value below the threshold which is not
-# surprising since this partition was almost pure. In the other case 
-# we predicted the Gentoo penguin. Indeed, we predict the class the
+# surprising since this partition was almost pure. In the other case we
+# predicted the Gentoo penguin. Indeed, we predict the class the
 # most probable.
 #
 # ## What about decision tree for regression?
 #
 # We explained the construction of the decision tree in a classification
-# problem. The entropy criterion to split the nodes used the class probabilities. Thus, this criterion
-# is not adapted when the target `y` is continuous.
-In this case, we will need specific criterion adapted to
+# problem. The entropy criterion to split the nodes used the class
+# probabilities. Thus, this criterion is not adapted when the target `y` is
+# continuous. In this case, we will need specific criterion adapted to
 # regression problems.
 #
 # Before going into details with regression criterion, let's observe and
@@ -623,12 +626,12 @@ tree = DecisionTreeRegressor()
 _ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
-# We see that the decision tree model does not have a priori and do not
-# end-up with a straight line to regress flipper length and body mass. The prediction
-# of a new sample, which was already present in the
-# training set, will give the same target than this training sample.
-# However, having different body masses for a same flipper length, 
-# the tree will be predicting the mean of the targets.
+# We see that the decision tree model does not have a priori and do not end-up
+# with a straight line to regress flipper length and body mass. The prediction
+# of a new sample, which was already present in the training set, will give the
+# same target than this training sample. However, having different body masses
+# for a same flipper length, the tree will be predicting the mean of the
+# targets.
 #
 # So in classification setting, we saw that the predicted value was the most
 # probable value in the node of the tree. In the case of regression, the
@@ -671,9 +674,9 @@ _ = plot_regression_model(X_train, y_train, tree, extrapolate=True, ax=ax)
 #
 # ## Importance of decision tree hyper-parameters on generalization
 #
-# This last section will illustrate the importance of some key hyper-parameters of
-# the decision tree. We will both illustrate it on classification and regression
-# datasets that we previously used.
+# This last section will illustrate the importance of some key hyper-parameters
+# of the decision tree. We will both illustrate it on classification and
+# regression datasets that we previously used.
 #
 # ### Creation of the classification and regression dataset
 #

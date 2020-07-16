@@ -57,7 +57,7 @@ Let me start with a couple examples.
 
 # Which iris is that?
 
-<img src="iris-silhouette.svg" style="position: absolute; right: 1ex; top: 1ex; width: 150px">
+<img src="../figures/iris-silhouette.svg" style="position: absolute; right: 1ex; top: 1ex; width: 150px">
 
 
 ???
@@ -107,7 +107,7 @@ very small petal.
 
 # Is this person rich?
 
-<img src="people.svg" style="position: absolute; right: 1ex; top: 1ex; width: 200px">
+<img src="../figures/people.svg" style="position: absolute; right: 1ex; top: 1ex; width: 200px">
 
 
 ???
@@ -147,7 +147,7 @@ bit challenging. Data visualization will come in handy.
 
 Expert knowledge: setosa irises have small petals
 
-<img src="iris-silhouette_gray.svg" style="position: absolute; right: 1ex; top: 7ex; width: 150px;">
+<img src="../figures/iris-silhouette_gray.svg" style="position: absolute; right: 1ex; top: 7ex; width: 150px;">
 
 
 ???
@@ -218,7 +218,7 @@ will use differ a bit from those traditionally used in statistics.
 ---
 # Generalizing
 
-<img src="people.svg" style="position: absolute; right: 1ex; top: 1ex; width: 200px">
+<img src="../figures/people.svg" style="position: absolute; right: 1ex; top: 1ex; width: 200px">
 
 Concluding on new instances
 
@@ -267,7 +267,7 @@ during his annual review, which is not in our database.
 ---
 # Memorizing
 
-<img src="people.svg" style="position: absolute; right: 1ex; top: 1ex; width: 200px">
+<img src="../figures/people.svg" style="position: absolute; right: 1ex; top: 1ex; width: 200px">
 
 
 * store all known individual .small[(the census)]
@@ -354,7 +354,7 @@ marital status.
 
 # The machine-learning workflow
 
-<img src="workflow.png" width="90%">
+<img src="../figures/workflow.png" width="90%">
 
 ???
 
@@ -412,7 +412,7 @@ matrix". It can be seen as describing our problem in a 2D table:
 
 * A **target** *y*: a property of each observation
 
-<img src="supervised.png" width="40%" style="float: left">
+<img src="../figures/supervised.png" width="40%" style="float: left">
 
 The goal is to **predict** *y*
 
@@ -441,7 +441,7 @@ The goal of supervised learning is to predict y from *X*.
 
 The goal is to extract from *X* structure that generalizes.
 
-<img src="unsupervised.png" width="40%" style="float: left">
+<img src="../figures/unsupervised.png" width="40%" style="float: left">
 
 Very wide variety of different problems.
 
@@ -502,7 +502,7 @@ sitation, we say that it is a regression task.
   - a target *y* of length *n_samples*, made of numbers for *regression*
     and of discrete classes for *classification*
 
-<img src="workflow.png" width="40%">
+<img src="../figures/workflow.png" width="40%">
 
 ???
 

@@ -195,7 +195,7 @@ linear_regression_score = model_linear.score(X_test, y_test)
 # %%
 # taking the alpha between .01 and 33,
 # spaced evenly on a log scale.
-list_alphas = np.logspace(-2,1.5)
+list_alphas = np.logspace(-2, 1.5)
 
 list_ridge_scores = []
 for alpha in list_alphas:
@@ -342,7 +342,7 @@ def plot_linear_separation(X, y):
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
                          np.arange(y_min, y_max, h))
 
-    Z = - (clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:,0])
+    Z = - (clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 0])
     Z = Z.reshape(xx.shape)
     plt.contour(xx, yy, Z, linewidths=3, levels=0)
     plt.title(f'$R^2$ score: {clf.score(X,y)}')
@@ -350,7 +350,7 @@ def plot_linear_separation(X, y):
 
 # %%
 X_blobs, y_blobs = make_blobs(
-    n_samples=500, n_features=2, centers=[[3, 3],[0, 8]], random_state=42
+    n_samples=500, n_features=2, centers=[[3, 3], [0, 8]], random_state=42
 )
 X_moons, y_moons = make_moons(n_samples=500, noise=.13, random_state=42)
 X_class, y_class = make_classification(

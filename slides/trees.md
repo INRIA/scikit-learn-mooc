@@ -109,52 +109,25 @@ Large depth
 ]
 
 
+
 ---
-# Boosting
-.pull-left[<img src="../figures/boosting0.svg" width="100%">]
+# Bagging
+.pull-left[<img src="../figures/bagging_reg_data.svg" width="100%">]
+
+--
+
+.pull-right[<img src="../figures/bagging_reg_grey.svg" width="100%">]
+
+--
+
+.pull-right[<img src="../figures/bagging_reg_blue.svg" width="100%">]
+
 
 ???
-Here we have a classification task. Seprating red circle from blue square. 
 
 ---
-# Boosting
-.pull-left[<img src="../figures/boosting1.svg" width="100%">]
-.pull-right[<img src="../figures/boosting_trees1.svg" width="100%">]
 
-???
-A first shalow tree start to separate circle from square. Mistakes done by this first tree model shall be corrected by a second tree model.
 
----
-# Boosting
-.pull-left[<img src="../figures/boosting2.svg" width="100%">]
-.pull-right[<img src="../figures/boosting_trees2.svg" width="100%">]
-
-.width65.shift-up-less.centered[
-```python
-from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate = .1)
-```
-]
-
-???
-So now, the second tree refine the first tree. The final model is a weighted sum of this first two trees.
-
----
-# Boosting
-.pull-left[<img src="../figures/boosting3.svg" width="100%">]
-.pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
-
-.width65.shift-up-less.centered[
-```python
-from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate = .1)
-```
-]
-
-???
-We could continue to refining our ensemble model. At each step we focus on mistakes of the previous model.
-
----
 # Bagging
 .pull-left[<img src="../figures/bagging0.svg" width="100%">]
 .pull-right[<img src="../figures/bagging.svg" width="120%">]
@@ -204,24 +177,51 @@ from sklearn.ensemble import RandomForestClassifier
 ???
 When we have to classify a new point, we will agregate the prediction of every model by a voting scheme.
 
+
 ---
-# Bagging
+# Boosting
+.pull-left[<img src="../figures/boosting0.svg" width="100%">]
 
-<img src="../figures/bagging_underfit.svg" width="32%">
-<img src="../figures/bagging_fit.svg" width="32%">
-<img src="../figures/bagging_overfit.svg" width="32%">
+???
+Here we have a classification task. Seprating red circle from blue square. 
 
-.shift-up-less[
-&nbsp; &nbsp; Underfit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Overfit ???
+---
+# Boosting
+.pull-left[<img src="../figures/boosting1.svg" width="100%">]
+.pull-right[<img src="../figures/boosting_trees1.svg" width="100%">]
+
+???
+A first shalow tree start to separate circle from square. Mistakes done by this first tree model shall be corrected by a second tree model.
+
+---
+# Boosting
+.pull-left[<img src="../figures/boosting2.svg" width="100%">]
+.pull-right[<img src="../figures/boosting_trees2.svg" width="100%">]
+
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import HistGradientBoostingClassifier
+clf = HistGradientBoostingClassifier(learning_rate = .1)
+```
 ]
 
-.shift-up-less[
-&nbsp; &nbsp; Few estimators &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; severals etimators
+???
+So now, the second tree refine the first tree. The final model is a weighted sum of this first two trees.
+
+---
+# Boosting
+.pull-left[<img src="../figures/boosting3.svg" width="100%">]
+.pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
+
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import HistGradientBoostingClassifier
+clf = HistGradientBoostingClassifier(learning_rate = .1)
+```
 ]
 
+???
+We could continue to refining our ensemble model. At each step we focus on mistakes of the previous model.
 
 ---
 # Take away

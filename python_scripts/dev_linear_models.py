@@ -84,7 +84,6 @@ print(f'Mean squared error = {mse}')
 
 # %% [markdown]
 # ### Solution 1. by fiting a linear regression
-#
 
 # %%
 from sklearn import linear_model
@@ -109,6 +108,66 @@ print(f'Lowest mean squared error = {mse}')
 
 # %%
 print(f'best coef: w1 = {lr.coef_[0]}, best intercept: w0 = {lr.intercept_}')
+
+# %% [markdown]
+# ### Exercice 2
+# Here we will load some data from a real dataset. We will try to explain the mass of pinguins (`y`) given there flipper length (`x`)
+
+
+# %%
+import pandas as pd
+
+data = pd.read_csv("../datasets/penguins.csv")
+
+# select the features of interest
+x = data["Flipper Length (mm)"].dropna().to_numpy()
+y = data["Body Mass (g)"].dropna().to_numpy()
+
+# ploting the data
+plt.scatter(x, y, color = 'k')
+plt.xlabel("Flipper Length (mm)")
+plt.ylabel("Body Mass (g)")
+
+
+# %%
+def predict_body_mass(flipper_length):
+    w0 = -5000  # TODO: update the weight here [hint: between -5000 and -10000]
+    w1 = 40  # TODO: update the weight here [hint: between 40 and 70]
+    y_predict = w1 * flipper_length + w0
+    return y_predict
+
+# plot the slope of predict_body_mass
+x_max, x_min = 170, 235
+grid = np.linspace(x_min, x_max, 300)
+plt.scatter(x, y, color='k', s=9)
+plt.plot(grid, predict_body_mass(grid), linewidth=3)
+
+# %% [markdown]
+# ### Solution 2. Fiting a linear regression
+
+# %%
+from sklearn import linear_model
+
+lr = linear_model.LinearRegression()
+# X should be 2D for sklearn
+X = x.reshape((-1, 1))
+lr.fit(X, y)
+
+# plot the best slope
+y_best = lr.predict(grid.reshape(-1, 1))
+plt.plot(grid, y_best, linewidth=3)
+plt.scatter(x, y, color='k', s=9)
+
+mse = mean_squared_error(y, lr.predict(X))
+print(f'Lowest mean squared error = {mse}')
+
+# %%
+print(f'best coef: w1 = {lr.coef_[0]:.3}, best intercept: w0 = {lr.intercept_:.5}')
+
+# %% [markdown]
+# Here the coefficient w1 (=50) means that when a pinguin's flipper is 1 mm 
+# longer, the mass shall augment of 50g.
+# Here the intercept is not interpretable
 
 # %% [markdown]
 # ### Linear regression in higher dimension
@@ -136,15 +195,21 @@ X = X[numerical_columns]
 X.head()
 
 # %% [markdown]
-# As usual, we divide our data into a training and a testing set. The test test
-# should only be used to assert the score of our final model.
+# Here we will divide our data into a training set and a validation set. 
+# The validation set will be used to assert the hyper-parameters selection.
+# While a testing set should only be used to assert the score of our final 
+# model.
 
 # %%
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
+X_train_valid, X_test, y_train_valid, y_test = train_test_split(
+    X, y, test_size = 5, random_state=1 
+)
+
+X_train, X_valid, y_train, y_valid = train_test_split(
+    X_train_valid, y_train_valid, random_state=1
 )
 
 # %% [markdown]
@@ -169,7 +234,7 @@ linear_regression_score = linear_regression.score(X_test_scaled, y_test)
 # module to combine both the scaling and the linear regression.
 #
 # Using pipeline is more convenient and it is safer: it avoids leaking
-# statistics from the test data into the trained model.
+# statistics from the validation set or the testing set into the trained model.
 #
 # We will call `make_pipeline()` which will create a `Pipeline` by giving as
 # arguments the successive transformations to perform followed by the regressor
@@ -183,19 +248,19 @@ from sklearn.pipeline import make_pipeline
 model_linear = make_pipeline(StandardScaler(),
                              LinearRegression())
 model_linear.fit(X_train, y_train)
-linear_regression_score = model_linear.score(X_test, y_test)
+linear_regression_score = model_linear.score(X_valid, y_valid)
 
 # %% [markdown]
 # Now we want to compare this basic `LinearRegression` versus its regularized
 # form `Ridge`.
 #
-# We will present the score on the test set for different values of `alpha`,
+# We will present the score on the validation set for different values of `alpha`,
 # which controls the regularization strength in `Ridge`.
 
 # %%
-# taking the alpha between .01 and 33,
+# taking the alpha between .01 and 100,
 # spaced evenly on a log scale.
-list_alphas = np.logspace(-2, 1.5)
+list_alphas = np.logspace(-2, 2)
 
 list_ridge_scores = []
 for alpha in list_alphas:
@@ -204,7 +269,7 @@ for alpha in list_alphas:
         StandardScaler(), Ridge(alpha=alpha)
     )
     ridge.fit(X_train, y_train)
-    list_ridge_scores.append(ridge.score(X_test, y_test))
+    list_ridge_scores.append(ridge.score(X_valid, y_valid))
 
 plt.plot(
     list_alphas, [linear_regression_score] * len(list_alphas), '--',
@@ -217,14 +282,14 @@ _ = plt.legend()
 
 # %% [markdown]
 # We see that, just like adding salt in cooking, adding regularization in our
-# model could improve its error on the test set. But too much regularization,
+# model could improve its error on the validation set. But too much regularization,
 # like too much salt, decrease its performance.
-# In our case, the alpha parameters is best when is around 2.
+# In our case, the alpha parameters is best when is around 20.
 #
-# However, the calibration of `alpha` could not be tuned on the test set -
+# Note that the calibration of `alpha` could not be tuned on the test set -
 # otherwise we are fitting the test set, which would correspond to overfitting.
 #
-# To calibrate `alpha` on our training set, we have to extract a small
+# To calibrate `alpha` on our training set, we have extract a small
 # validation set from our training set. That is seen on the lesson:
 # *basic hyper parameters tuning*.
 #
@@ -237,14 +302,14 @@ _ = plt.legend()
 from sklearn.linear_model import RidgeCV
 
 ridge = make_pipeline(
-    StandardScaler(), RidgeCV(alphas=[.1, .5, 1, 5, 10])
+    StandardScaler(), RidgeCV(alphas=[.1, .5, 1, 5, 10, 50, 100])
 )
 # tune alpha on the traingin set
-ridge.fit(X_train_scaled, y_train)
+ridge.fit(X_train, y_train)
 
-linear_regression_score = linear_regression.score(X_test_scaled, y_test)
+linear_regression_score = linear_regression.score(X_test, y_test)
 print(f'R2 score of linear regression  = {linear_regression_score}')
-print(f'R2 score of ridgeCV regression = {ridge.score(X_test_scaled, y_test)}')
+print(f'R2 score of ridgeCV regression = {ridge.score(X_test, y_test)}')
 print(f'The best `alpha` found on the training set is {ridge[1].alpha_}')
 
 # %% [markdown]
@@ -266,13 +331,11 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 
 # %%
 # we will conserve only the numerical features
-# "i" denotes integer type, "f" denotes float type
-numerical_columns = [
-    col for col in data.columns
-    if df[col].dtype.kind in ["i", "f"]]
-numerical_columns
+from sklearn.compose import make_column_selector
 
-data_numeric = df[numerical_columns]
+get_numerical_columns = make_column_selector(dtype_include=np.number)
+data_numeric = data[get_numerical_columns(data)]
+
 data_numeric.head()
 
 # %%
@@ -345,7 +408,7 @@ def plot_linear_separation(X, y):
     Z = - (clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 0])
     Z = Z.reshape(xx.shape)
     plt.contour(xx, yy, Z, linewidths=3, levels=0)
-    plt.title(f'$R^2$ score: {clf.score(X,y)}')
+    plt.title(f'Accuracy score: {clf.score(X,y)}')
 
 
 # %%
@@ -432,3 +495,5 @@ plt.legend()
 # - If the data are not linearly separable, we shall use a more complex model
 #   or use feature augmentation
 #
+
+# %%

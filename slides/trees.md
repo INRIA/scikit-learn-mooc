@@ -99,7 +99,7 @@ Controling the depth here allow to control the overfit.
 .shift-up-less[
 &nbsp; &nbsp; Underfit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Overfit
-]
+] 
 
 .shift-up-less[
 &nbsp; &nbsp; Small depth &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -114,16 +114,25 @@ Large depth
 # Bagging
 .pull-left[<img src="../figures/bagging_reg_data.svg" width="100%">]
 
+---
+# Bagging
+
+<img src="../figures/bagging_reg_grey.svg" width="120%">
+
 --
 
-.pull-right[<img src="../figures/bagging_reg_grey.svg" width="100%">]
-
---
-
-.pull-right[<img src="../figures/bagging_reg_blue.svg" width="100%">]
+<img src="../figures/bagging_reg_blue.svg" width="30%">
 
 
 ???
+
+In bagging we will construct deep tree in parallel.
+
+
+Each tree will be fitted on an sub-sampling from the initial data. 
+i.e. we will only consider a random part of the data to build each model.
+
+When we have to classify a new point, we will agregate the prediction of every model by a voting scheme.
 
 ---
 
@@ -139,8 +148,7 @@ from sklearn.ensemble import RandomForestClassifier
 ]
 
 ???
-In bagging, on contrary to boosting, we will construct deep tree in parallel.
-
+Here we have a classification task. Seprating circle from  square. 
 ---
 # Bagging
 .pull-left[<img src="../figures/bagging0.svg" width="100%">]
@@ -155,8 +163,7 @@ from sklearn.ensemble import RandomForestClassifier
 ]
 
 ???
-Each tree will be fitted on an sub-sampling from the initial data. 
-i.e. we will only consider a random part of the data to build each model.
+
 
 
 ---
@@ -175,15 +182,32 @@ from sklearn.ensemble import RandomForestClassifier
 ]
 
 ???
-When we have to classify a new point, we will agregate the prediction of every model by a voting scheme.
 
+
+
+---
+# Boosting
+.pull-left[<img src="../figures/boosting_reg_data.svg" width="100%">]
+
+---
+# Boosting
+
+<img src="../figures/boosting_reg_grey.svg" width="100%">
+
+---
+# Boosting
+
+.pull-right[<img src="../figures/boosting_reg_blue.svg" width="100%">]
+
+
+???
 
 ---
 # Boosting
 .pull-left[<img src="../figures/boosting0.svg" width="100%">]
 
 ???
-Here we have a classification task. Seprating red circle from blue square. 
+
 
 ---
 # Boosting

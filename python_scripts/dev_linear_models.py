@@ -294,9 +294,11 @@ def f(x):
 grid = np.linspace(x_min, x_max, 300)
 plt.scatter(x, y, color='k', s=9)
 plt.plot(grid, f(grid), linewidth=3)
+plt.xlabel("x", size=26)
+plt.ylabel("y", size=26)
 
 mse = mean_squared_error(y, f(x))
-print(f'Mean squared error = {mse}')
+print(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # ### Solution 1. by fiting a linear regression
@@ -312,10 +314,12 @@ lr.fit(X, y)
 # plot the best slope
 y_best = lr.predict(grid.reshape(-1, 1))
 plt.plot(grid, y_best, linewidth=3)
-plt.scatter(x, y, color='k', s=9)
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("x", size=26)
+plt.ylabel("y", size=26)
 
 mse = mean_squared_error(y, lr.predict(X))
-print(f'Lowest mean squared error = {mse}')
+print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # Here the coeficients learnt by `LinearRegression` is the best slope which fit
@@ -323,32 +327,93 @@ print(f'Lowest mean squared error = {mse}')
 # learnt as follow:
 
 # %%
-print(f'best coef: w1 = {lr.coef_[0]}, best intercept: w0 = {lr.intercept_}')
+print(
+    f"best coef: w1 = {lr.coef_[0]:.2f}, "
+    f"best intercept: w0 = {lr.intercept_:.2f}"
+)
 
 # %% [markdown]
+# It is important to note that the model learnt will not be able to handle
+# the non-linearity linking `x` and `y` since it is beyond the assumption made
+# when using a linear model. To obtain a better model, we have mainly 2
+# solutions: (i) choose a model that natively can deal with non-linearity or
+# (ii) "augment" features by including expert knowledge which can be used by
+# the model.
+#
+# Let's illustrate quickly the first point by using a support vector machine
+# regressor which is originally a linear regressor which handle non-linear data
+# using a so-called kernel.
+
+# %%
+from sklearn.svm import SVR
+
+svr = SVR().fit(X, y)
+y_pred = svr.predict(grid.reshape(-1, 1))
+
+plt.plot(grid, y_pred, linewidth=3)
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("x", size=26)
+plt.ylabel("y", size=26)
+
+mse = mean_squared_error(y, svr.predict(X))
+print(f"Lowest mean squared error = {mse:.2f}")
+
+# %% [markdown]
+# In this case, the model can handle the non-linearity. Feature augmentation
+# will be discussed in a later section at the end of this notebook.
+#
 # ### Linear regression in higher dimension
+# In our previous example, we always used a single feature to predict the
+# target of interest. However, it is common that we have several features
+# from which one would like to extract knowledge to make some predictions.
 #
 # We will now load a new dataset from the “Current Population Survey” from 1985
 # to predict the **salary** as a function of various features such as
-# *experience, age*, or *education*.
-# For simplicity, we will only use this numerical features.
-#
-# We will compare the score of `LinearRegression` and `Ridge` (which is a
-# regularized version of linear regression).
-# Here the score will be the $R^2$ score, which is the score by default of a
-# Rergessor. It represents the proportion of variance of the target explained
-# by the model. The best $R^2$ score possible is 1.
+# *experience, age*, or *education*. For simplicity, we will only use these
+# three numerical features.
 
 # %%
 from sklearn.datasets import fetch_openml
 
 # Load the data
-survey = fetch_openml(data_id=534, as_frame=True)
-X = survey.data[survey.feature_names]
-y = np.log(survey.target)
+X, y = fetch_openml(data_id=534, as_frame=True, return_X_y=True)
 numerical_columns = ['EDUCATION', 'EXPERIENCE', 'AGE']
 X = X[numerical_columns]
 X.head()
+
+# %% [markdown]
+# Before to go further, we can check the salary distribution.
+
+plt.hist(y, bins=50, density=True)
+plt.xlabel("Salary ($/hrs)")
+_ = plt.ylabel("Probability density")
+
+# %% [markdown]
+# We can observe that the salary distribution has a long tail. Linear model
+# make the assumption that the target is normally distributed. Thus, it will
+# be best to transform the target to make it Gaussian-like. In this regard,
+# we will use a `log` transform.
+
+y = np.log(y)
+plt.hist(y, bins=50, density=True)
+plt.xlabel("Salary log($/hrs)")
+_ = plt.ylabel("Probability density")
+
+# %% [markdown]
+# We can see that this transform allows to obtain a more normally distributed
+# target which is better suited for fitting a linear model. However, we should
+# be aware that any computed metrics using the model predictions will be using
+# the transformed predictions (log($/hrs)) rather than the original unit in
+# $/hrs. If we would be interested to evaluate the error in the original space,
+# we would need to transform back the prediction and the target.
+
+# %% [markdown]
+# We will compare the score of `LinearRegression` and `Ridge` (which is a
+# regularized version of linear regression).
+# Here the score will be the $R^2$ score, which is the default score computed
+# when calling the method `score` of a scikit-learn regressor. It represents
+# the proportion of variance of the target explained by the model. The best
+# $R^2$ score possible is 1.
 
 # %% [markdown]
 # Here we will divide our data into a training set and a validation set.
@@ -357,11 +422,10 @@ X.head()
 # model.
 
 # %%
-from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split
 
 X_train_valid, X_test, y_train_valid, y_test = train_test_split(
-    X, y, test_size=5, random_state=1
+    X, y, test_size=20, random_state=1
 )
 
 X_train, X_valid, y_train, y_valid = train_test_split(
@@ -369,28 +433,49 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 )
 
 # %% [markdown]
-# Since the data are not scaled, we should scale them before applying our
-# linear model.
+# Note that in the first example, we did not care about scaling our data to
+# keep the original units and have better intuition. However, this is a good
+# practise to scale the data such that each feature have a similar standard
+# deviation. It will be even more important if the solver used by the model
+# is a gradient-descent-based solver.
 
 # %%
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-
-# %%
-# fit linear regression
-linear_regression = LinearRegression()
-linear_regression.fit(X_train_scaled, y_train)
-linear_regression_score = linear_regression.score(X_test_scaled, y_test)
+X_train_scaled = scaler.fit(X_train).transform(X_train)
+X_valid_scaled = scaler.transform(X_valid)
 
 # %% [markdown]
-# As seen during the second notebook, we will use the scikit-learn `Pipeline`
-# module to combine both the scaling and the linear regression.
+# Scikit-learn provides several tools to preprocess the data. The
+# `StandardScaler` transforms the data such that each feature will have a zero
+# mean and a unit standard deviation.
 #
-# Using pipeline is more convenient and it is safer: it avoids leaking
-# statistics from the validation set or the testing set into the trained model.
+# These scikit-learn estimators are known are transformer: they compute some
+# statistics and store them when calling `fit`. Using these statistics, they
+# transform the data when calling `transform`. Therefore, it is important to
+# note that `fit` should only be called on the training data similarly to the
+# classifier or regressor.
+#
+# In the example above, `X_train_scaled` are data scaled after computing the
+# mean and standard deviation of each feature considering the training data.
+# `X_test_scaled` are data scaled using the mean and standard deviation of each
+# feature on the training data.
+
+# %%
+linear_regression = LinearRegression()
+linear_regression.fit(X_train_scaled, y_train)
+linear_regression.score(X_valid_scaled, y_valid)
+
+# %% [markdown]
+# Instead of manually transforming the data by calling the transformer,
+# scikit-learn provide a `Pipeline` allowing to call a sequence of
+# transformer(s) followed by a regressor or a classifier. This pipeline exposed
+# the same API than the regressor and classifier and will manage the call to
+# `fit` and `transform` for you, avoiding any mistake with data leakage.
+#
+# We already presented `Pipeline` in the second notebook and we will use it
+# here to combine both the scaling and the linear regression.
 #
 # We will call `make_pipeline()` which will create a `Pipeline` by giving as
 # arguments the successive transformations to perform followed by the regressor
@@ -401,10 +486,14 @@ linear_regression_score = linear_regression.score(X_test_scaled, y_test)
 # %%
 from sklearn.pipeline import make_pipeline
 
-model_linear = make_pipeline(StandardScaler(),
-                             LinearRegression())
-model_linear.fit(X_train, y_train)
-linear_regression_score = model_linear.score(X_valid, y_valid)
+# create a model which will first scale the data and then feed it to a linear
+# regression
+linear_regression = make_pipeline(
+    StandardScaler(), LinearRegression()
+)
+linear_regression.fit(X_train, y_train)
+linear_regression_score = linear_regression.score(X_valid, y_valid)
+print(linear_regression_score)
 
 # %% [markdown]
 # Now we want to compare this basic `LinearRegression` versus its regularized
@@ -416,11 +505,12 @@ linear_regression_score = model_linear.score(X_valid, y_valid)
 # %%
 # taking the alpha between .01 and 100,
 # spaced evenly on a log scale.
+from sklearn.linear_model import Ridge
+
 list_alphas = np.logspace(-2, 2)
 
 list_ridge_scores = []
 for alpha in list_alphas:
-    # fit Ridge
     ridge = make_pipeline(
         StandardScaler(), Ridge(alpha=alpha)
     )
@@ -429,11 +519,11 @@ for alpha in list_alphas:
 
 plt.plot(
     list_alphas, [linear_regression_score] * len(list_alphas), '--',
-    label='LinearRegression', linewidth=3
+    label='LinearRegression',
 )
-plt.plot(list_alphas, list_ridge_scores, label='Ridge', linewidth=3)
-plt.xlabel('alpha (regularization strength)', size=16)
-plt.ylabel('$R^2$ Score (higher is better)', size=16)
+plt.plot(list_alphas, list_ridge_scores, label='Ridge')
+plt.xlabel('alpha (regularization strength)')
+plt.ylabel('$R^2$ Score (higher is better)')
 _ = plt.legend()
 
 # %% [markdown]

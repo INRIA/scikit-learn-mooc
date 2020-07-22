@@ -329,7 +329,7 @@ print(f'best coef: w1 = {lr.coef_[0]}, best intercept: w0 = {lr.intercept_}')
 # ### Linear regression in higher dimension
 #
 # We will now load a new dataset from the “Current Population Survey” from 1985
-# to predict the **Salary** as a function of various features such as
+# to predict the **salary** as a function of various features such as
 # *experience, age*, or *education*.
 # For simplicity, we will only use this numerical features.
 #
@@ -357,11 +357,11 @@ X.head()
 # model.
 
 # %%
-from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split
 
 X_train_valid, X_test, y_train_valid, y_test = train_test_split(
-    X, y, test_size = 5, random_state=1 
+    X, y, test_size=5, random_state=1
 )
 
 X_train, X_valid, y_train, y_valid = train_test_split(
@@ -410,8 +410,8 @@ linear_regression_score = model_linear.score(X_valid, y_valid)
 # Now we want to compare this basic `LinearRegression` versus its regularized
 # form `Ridge`.
 #
-# We will present the score on the validation set for different values of `alpha`,
-# which controls the regularization strength in `Ridge`.
+# We will present the score on the validation set for different values of
+# `alpha`, which controls the regularization strength in `Ridge`.
 
 # %%
 # taking the alpha between .01 and 100,
@@ -438,8 +438,8 @@ _ = plt.legend()
 
 # %% [markdown]
 # We see that, just like adding salt in cooking, adding regularization in our
-# model could improve its error on the validation set. But too much regularization,
-# like too much salt, decrease its performance.
+# model could improve its error on the validation set. But too much
+# regularization, like too much salt, decrease its performance.
 # In our case, the alpha parameters is best when is around 20.
 #
 # Note that the calibration of `alpha` could not be tuned on the test set -

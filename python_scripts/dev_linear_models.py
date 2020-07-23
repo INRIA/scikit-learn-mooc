@@ -25,7 +25,7 @@
 # - see examples of linear separability.
 
 # %% [markdown]
-# ## 1. Regression: Linear regression
+# ## 1. Regression
 
 # %% [markdown]
 # ### The over-simplistic toy example
@@ -469,127 +469,217 @@ print(f'R2 score of ridgeCV regression = {ridge.score(X_test, y_test)}')
 print(f'The best `alpha` found on the training set is {ridge[1].alpha_}')
 
 # %% [markdown]
-# ## 2. Calssification: Logistic regresion
+# ## 2. Classification
+# In regression, we saw that the target to be predicted was a continuous
+# variable. In classification, this target will be discrete.
+#
+# We will go back to our penguin dataset. However, this time we will try to
+# predict the penguin species using the culmen information. We will also
+# simplify our classification problem by selecting only 2 of the penguin
+# species to solve a binary classification problem.
+
+# %%
+data = pd.read_csv("../datasets/penguins.csv")
+
+# select the features of interest
+culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
+target_column = "Species"
+
+data = data[culmen_columns + [target_column]]
+data[target_column] = data[target_column].str.split().str[0]
+data = data[data[target_column].apply(lambda x: x in ("Adelie", "Chinstrap"))]
+data = data.dropna()
 
 # %% [markdown]
-# We will load the "adult census" dataset, already used in previous notebook.
-# We have to predict either a person earn more than $50k per year or not.
+# We can quickly start by visualizing the feature distribution by class
 
 # %%
-import pandas as pd
+_ = sns.pairplot(data=data, hue="Species")
 
-df = pd.read_csv(
-    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
-
-target_name = "class"
-target = df[target_name].to_numpy()
-data = df.drop(columns=[target_name, "fnlwgt"])
-
-# %%
-# we will conserve only the numerical features
-from sklearn.compose import make_column_selector
-
-get_numerical_columns = make_column_selector(dtype_include=np.number)
-data_numeric = data[get_numerical_columns(data)]
-
-data_numeric.head()
-
-# %%
-target[:5]
+# %% [markdown]
+# So we can observe, that we have quite a simple problem. When the culmen
+# length increase, the probability to be a Chinstrap penguin is closer to 1.
+# However, the culmen length does not help at predicting the penguin specie.
+#
+# For the later model fitting, we will separate the target from the data and
+# we will create a training and a testing set.
 
 # %%
 from sklearn.model_selection import train_test_split
 
+X, y = data[culmen_columns], data[target_column]
 X_train, X_test, y_train, y_test = train_test_split(
-    data_numeric, target, random_state=42)
+    X, y, stratify=y, random_state=0,
+)
 
 # %% [markdown]
-# `LogisticRegression` already comes with a build-in regulartization
-# parameters `C`.
+# To visualize the separation found by our classifier, we create an helper
+# function. In short, this function will fit our classifier on the data and
+# we will plot the decision function where the probability to be an Adelie or
+# Chinstrap will be equal (p=0.5).
+
+
+# %%
+def plot_decision_function(X, y, clf, title="auto", ax=None):
+    """Plot the boundary of the decision function of a classifier."""
+    from sklearn.preprocessing import LabelEncoder
+
+    clf.fit(X, y)
+
+    # create a grid to evaluate all possible samples
+    plot_step = 0.02
+    feature_0_min, feature_0_max = (
+        X.iloc[:, 0].min() - 1,
+        X.iloc[:, 0].max() + 1,
+    )
+    feature_1_min, feature_1_max = (
+        X.iloc[:, 1].min() - 1,
+        X.iloc[:, 1].max() + 1,
+    )
+    xx, yy = np.meshgrid(
+        np.arange(feature_0_min, feature_0_max, plot_step),
+        np.arange(feature_1_min, feature_1_max, plot_step),
+    )
+
+    # compute the associated prediction
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = LabelEncoder().fit_transform(Z)
+    Z = Z.reshape(xx.shape)
+
+    # make the plot of the boundary and the data samples
+    if ax is None:
+        _, ax = plt.subplots()
+    ax.contourf(xx, yy, Z, alpha=0.4)
+    sns.scatterplot(
+        data=pd.concat([X, y], axis=1),
+        x=X.columns[0],
+        y=X.columns[1],
+        hue=y.name,
+        ax=ax,
+    )
+    if title == "auto":
+        C = clf[-1].C if hasattr(clf[-1], "C") else clf[-1].C_
+        ax.set_title(f"C={C}\n with coef={clf[-1].coef_[0]}")
+    else:
+        ax.set_title(title)
+
+
+# %% [markdown]
+# ### Un-penalized logistic regression
 #
-# Contrary to `alpha` in Ridge, the parameters `C` here is the inverse of
-# regularization strength; so smaller values specify stronger regularization.
+# The linear regression that we previously saw will predict a continuous
+# output. When the target is a binary outcome, one can use the logistic
+# function to model the probability. This model is known as logistic
+# regression.
 #
-# Here we will fit `LogisiticRegressionCV` to get the best regularization
-# parameters`C` on the training set.
+# Scikit-learn provides the class `LogisticRegression` which implement this
+# algorithm.
+
+# %%
+from sklearn.linear_model import LogisticRegression
+
+logistic_regression = make_pipeline(
+    StandardScaler(), LogisticRegression(penalty="none")
+)
+plot_decision_function(X_train, y_train, logistic_regression)
+
+# %% [markdown]
+# Thus, we see that our decision function is represented by a line separating
+# the 2 classes. Since that the line is oblique, it means that we use a
+# combination of both features:
+
+# %%
+print(logistic_regression[-1].coef_)
+
+# %% [markdown]
+# Indeed, both coefficients are non-null.
 #
-# As seen before, we shall scale the input data when using a linear model.
+# ### Apply some regularization when fitting the logistic model
+#
+# The `LogisticRegression` model
+# allows to apply regularization via the parameter `C`. It would be equivalent
+# to shift from `LinearRegression` to `Ridge`. In the contrary to `Ridge`, the
+# `C` parameter is the inverse of the regularization strength: a smaller `C`
+# will lead to a more regularized model. We can check the effect of
+# regularization on our model:
+
+# %%
+_, axs = plt.subplots(ncols=3, figsize=(12, 4))
+
+for ax, C in zip(axs, [0.02, 0.1, 1]):
+    logistic_regression = make_pipeline(
+        StandardScaler(), LogisticRegression(C=C)
+    )
+    plot_decision_function(
+        X_train, y_train, logistic_regression, ax=ax,
+    )
+
+# %% [markdown]
+# A more regularized model will make the coefficients tend to 0. Since one of
+# the feature is considered less important when fitting the model (lower
+# coefficient magnitude), only one of the feature will be used when C is small.
+# This feature is the culmen length which is in line with our first insight
+# that we found when plotting the marginal feature probabilities.
+#
+# Has with ridge which automatically find the optimal `alpha` using the
+# `RidgeCV` class, one can use `LogisticRegressionCV` to find the best `C`.
 
 # %%
 from sklearn.linear_model import LogisticRegressionCV
 
-model = make_pipeline(StandardScaler(),
-                      LogisticRegressionCV())
-
-model.fit(X_train, y_train)
-
-# %% [markdown]
-# The default score in `LogisticRegression` is the accuracy.
-# Note that the method `score` of a pipeline is the score of its last
-# estimator.
-
-# %%
-model.score(X_test, y_test)
+logistic_regression = make_pipeline(
+    StandardScaler(), LogisticRegressionCV(Cs=[0.01, 0.1, 1, 10])
+)
+plot_decision_function(X_train, y_train, logistic_regression)
 
 # %% [markdown]
-# We then can access each part of the pipeline as accessing a list
-
-# %%
-model[1]
-
-# %%
-model[1].C_
-
-# %% [markdown]
-# ## 3. Linear separability
+# ### Beyond linear separation
+#
+# As we saw in regression, the linear classification model expects the data
+# to be linearly separable. When this assumption does not hold, the model
+# is not enough expressive to properly fit the data. One need to apply the same
+# tricks than in regression: feature augmentation (using expert-knowledge
+# potentially) or using method based on kernel.
+#
+# We will provide an example where we will use a kernel support vector machine
+# to make classification on where it is impossible to find a perfect linear
+# separation
 
 # %%
 from sklearn.datasets import (
-    make_blobs, make_moons, make_classification, make_gaussian_quantiles
+    make_moons, make_classification, make_gaussian_quantiles,
 )
-from sklearn.linear_model import LogisticRegression
 
-
-def plot_linear_separation(X, y):
-    # plot the separation line from a logistic regression
-
-    clf = LogisticRegression()
-    clf.fit(X, y)
-    h = .02  # step size in the mesh
-    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                         np.arange(y_min, y_max, h))
-
-    Z = - (clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 0])
-    Z = Z.reshape(xx.shape)
-    plt.contour(xx, yy, Z, linewidths=3, levels=0)
-    plt.title(f'Accuracy score: {clf.score(X,y)}')
-
-
-# %%
-X_blobs, y_blobs = make_blobs(
-    n_samples=500, n_features=2, centers=[[3, 3], [0, 8]], random_state=42
-)
 X_moons, y_moons = make_moons(n_samples=500, noise=.13, random_state=42)
 X_class, y_class = make_classification(
     n_samples=500, n_features=2, n_redundant=0, n_informative=2,
     random_state=2,
 )
 X_gauss, y_gauss = make_gaussian_quantiles(
-    n_features=2, n_classes=2, random_state=42
+    n_samples=50, n_features=2, n_classes=2, random_state=42,
 )
 
-list_data = [[X_blobs, y_blobs],
-             [X_moons, y_moons],
-             [X_class, y_class],
-             [X_gauss, y_gauss]]
+datasets = [
+    [pd.DataFrame(X_moons, columns=["Feature #0", "Feature #1"]),
+     pd.Series(y_moons, name="class")],
+    [pd.DataFrame(X_class, columns=["Feature #0", "Feature #1"]),
+     pd.Series(y_class, name="class")],
+    [pd.DataFrame(X_gauss, columns=["Feature #0", "Feature #1"]),
+     pd.Series(y_gauss, name="class")],
+]
 
-for X, y in list_data:
-    plt.figure()
-    plt.scatter(X[:, 0], X[:, 1], c=y, s=50, edgecolor='k')
-    plot_linear_separation(X, y)
+# %%
+from sklearn.svm import SVC
 
+_, axs = plt.subplots(ncols=3, nrows=2, figsize=(12, 9))
+
+linear_model = make_pipeline(StandardScaler(), SVC(kernel="linear"))
+kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf"))
+
+for ax, (X, y) in zip(axs[0], datasets):
+    plot_decision_function(X, y, linear_model, title="Linear kernel", ax=ax)
+for ax, (X, y) in zip(axs[1], datasets):
+    plot_decision_function(X, y, kernel_model, title="RBF kernel", ax=ax)
 
 # %% [markdown]
 # We see that the $R^2$ score decrease on each dataset, so we can say that each

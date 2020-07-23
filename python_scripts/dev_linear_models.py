@@ -269,12 +269,12 @@ y = x ** 3 - 0.5 * x ** 2 + noise
 # plot the data
 plt.scatter(x, y,  color='k', s=9)
 plt.xlabel('x', size=26)
-plt.ylabel('y', size=26)
+_ = plt.ylabel('y', size=26)
 
 # %% [markdown]
-# ### Exercice 1
+# ### Exercise 1
 #
-# In this exercice, you are asked to approximate the target `y` by a linear
+# In this exercise, you are asked to approximate the target `y` by a linear
 # function `f(x)`. i.e. find the best coefficients of the function `f` in order
 # to minimize the error.
 #
@@ -306,48 +306,135 @@ print(f"Mean squared error = {mse:.2f}")
 # %%
 from sklearn import linear_model
 
-lr = linear_model.LinearRegression()
+linear_regression = linear_model.LinearRegression()
 # X should be 2D for sklearn
 X = x.reshape((-1, 1))
-lr.fit(X, y)
+linear_regression.fit(X, y)
 
 # plot the best slope
-y_best = lr.predict(grid.reshape(-1, 1))
+y_best = linear_regression.predict(grid.reshape(-1, 1))
 plt.plot(grid, y_best, linewidth=3)
 plt.scatter(x, y, color="k", s=9)
 plt.xlabel("x", size=26)
 plt.ylabel("y", size=26)
 
-mse = mean_squared_error(y, lr.predict(X))
+mse = mean_squared_error(y, linear_regression.predict(X))
 print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# Here the coeficients learnt by `LinearRegression` is the best slope which fit
-# the data. We can inspect those coeficents using the attributes of the model
-# learnt as follow:
+# Here the coefficients learnt by `LinearRegression` is the best slope which
+# fit the data. We can inspect those coefficients using the attributes of the
+# model learnt as follow:
 
 # %%
 print(
-    f"best coef: w1 = {lr.coef_[0]:.2f}, "
-    f"best intercept: w0 = {lr.intercept_:.2f}"
+    f"best coef: w1 = {linear_regression.coef_[0]:.2f}, "
+    f"best intercept: w0 = {linear_regression.intercept_:.2f}"
 )
 
 # %% [markdown]
 # It is important to note that the model learnt will not be able to handle
 # the non-linearity linking `x` and `y` since it is beyond the assumption made
-# when using a linear model. To obtain a better model, we have mainly 2
-# solutions: (i) choose a model that natively can deal with non-linearity or
+# when using a linear model. To obtain a better model, we have mainly 3
+# solutions: (i) choose a model that natively can deal with non-linearity,
 # (ii) "augment" features by including expert knowledge which can be used by
-# the model.
+# the model, or (iii) use a "kernel" to have a locally-based decision function
+# instead of a global linear decision function.
 #
-# Let's illustrate quickly the first point by using a support vector machine
-# regressor which is originally a linear regressor which handle non-linear data
-# using a so-called kernel.
+# Let's illustrate quickly the first point by using a decision tree regressor
+# which natively can handle non-linearity.
+
+# %%
+from sklearn.tree import DecisionTreeRegressor
+
+tree = DecisionTreeRegressor(max_depth=3).fit(X, y)
+y_pred = tree.predict(grid.reshape(-1, 1))
+
+plt.plot(grid, y_pred, linewidth=3)
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("x", size=26)
+plt.ylabel("y", size=26)
+
+mse = mean_squared_error(y, tree.predict(X))
+print(f"Lowest mean squared error = {mse:.2f}")
+
+# %% [markdown]
+# In this case, the model can handle the non-linearity. Instead to have a model
+# which natively can deal with non-linearity, we could modify our data. We
+# could create new features, derived from the original features, using some
+# expert knowledge. For instance, here we know that we have a cubic and squared
+# relationship between `x` and `y` (because we generated the data). Indeed,
+# we could create two new feature that could add this information in the data;
+
+# %%
+X = np.vstack([x, x ** 2, x ** 3]).T
+
+linear_regression.fit(X, y)
+
+grid_augmented = np.vstack([grid, grid ** 2, grid ** 3]).T
+y_pred = linear_regression.predict(grid_augmented)
+
+plt.plot(grid, y_pred, linewidth=3)
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("x", size=26)
+plt.ylabel("y", size=26)
+
+mse = mean_squared_error(y, linear_regression.predict(X))
+print(f"Lowest mean squared error = {mse:.2f}")
+
+# %% [markdown]
+# We can see that even with a linear model, we overcome the limitation of the
+# model by adding the non-linearity component into the design of additional
+# features. Here, we created new feature by knowing the way the target was
+# generated. In practice, this is usually not the case. Instead, one is usually
+# creating interaction between features with different order, at risk of
+# creating a model which too much expressive and might overfit. In
+# scikit-learn, the `PolynomialFeatures` is a transformer to create such
+# feature interactions which we could have use instead of creating new features
+# ourself.
+#
+# We are going to use a scikit-learn pipeline which will first create the new
+# features and then fit the model. We will later comeback to details regarding
+# scikit-learn pipeline.
+
+# %%
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
+
+X = x.reshape(-1, 1)
+
+model = make_pipeline(
+    PolynomialFeatures(degree=3), LinearRegression()
+)
+model.fit(X, y)
+y_pred = model.predict(grid.reshape(-1, 1))
+
+plt.plot(grid, y_pred, linewidth=3)
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("x", size=26)
+plt.ylabel("y", size=26)
+
+mse = mean_squared_error(y, model.predict(X))
+print(f"Lowest mean squared error = {mse:.2f}")
+
+# %% [markdown]
+# Thus, we saw that the `PolynomialFeatures` is actually doing the same
+# operation that we did manually above.
+
+# %% [markdown]
+# **FIXME: it might be to complex to be introduced here but it seems good in
+# the flow. However, we go away from linear model.**
+#
+# The last possibility to make a linear model more expressive is to use
+# "kernel". Instead of learning a weight per feature as we previously
+# emphasized, a weight will be assign by sample instead. However, not all
+# sample will be used. This is the base of the support vector machine
+# algorithm.
 
 # %%
 from sklearn.svm import SVR
 
-svr = SVR().fit(X, y)
+svr = SVR(kernel="linear").fit(X, y)
 y_pred = svr.predict(grid.reshape(-1, 1))
 
 plt.plot(grid, y_pred, linewidth=3)
@@ -359,13 +446,32 @@ mse = mean_squared_error(y, svr.predict(X))
 print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# In this case, the model can handle the non-linearity. Feature augmentation
-# will be discussed in a later section at the end of this notebook.
-#
+# The algorithm can be modified such that it can use non-linear kernel. Then,
+# it will compute interaction between samples using this non-linear
+# interaction.
+
+svr = SVR(kernel="poly", degree=3).fit(X, y)
+y_pred = svr.predict(grid.reshape(-1, 1))
+
+plt.plot(grid, y_pred, linewidth=3)
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("x", size=26)
+plt.ylabel("y", size=26)
+
+mse = mean_squared_error(y, svr.predict(X))
+print(f"Lowest mean squared error = {mse:.2f}")
+
+# %% [markdown]
+# Therefore, kernel can make a model more expressive.
+
+# %% [markdown]
 # ### Linear regression in higher dimension
-# In our previous example, we always used a single feature to predict the
-# target of interest. However, it is common that we have several features
-# from which one would like to extract knowledge to make some predictions.
+# In the previous example, we usually used only a single feature. But we
+# already shown that we could add new feature to make the model more expressive
+# by deriving new features based on the original feature.
+#
+# Indeed, we could also use additional feature which are decorrelated with the
+# original feature and that could help us to predict the target.
 #
 # We will now load a new dataset from the “Current Population Survey” from 1985
 # to predict the **salary** as a function of various features such as
@@ -684,50 +790,6 @@ for X, y in list_data:
 # %% [markdown]
 # We see that the $R^2$ score decrease on each dataset, so we can say that each
 # dataset is "less linearly separable" than the previous one.
-
-# %% [markdown]
-# ## Feature augmentation
-
-# %% [markdown]
-# Let consider a toy dataset, where the target is a function of both `x` and
-# `sin(x)`.
-# In this case, a linear model will only fit the linear part.
-
-# %%
-n_samples = 100
-x = np.arange(0, 10, 10 / n_samples)
-noise = np.random.randn(n_samples)
-y = 1.5 * np.sin(x) + x + noise
-X = x.reshape((-1, 1))
-
-linear_regression = LinearRegression()
-linear_regression.fit(X, y)
-y_predict_linear = linear_regression.predict(X)
-plt.scatter(X, y)
-plt.plot(
-    X, y_predict_linear, label='predict with linear', color='k', linewidth=3
-)
-
-# %% [markdown]
-# Now, if we want to extend the power of expression of our model, we could add
-# whatever combination of the feature, to enrich the feature space, thus
-# enriching the complexity of the model.
-
-# %%
-X_augmented = np.concatenate((X, np.sin(X)), axis=1)
-linear_regression = LinearRegression()
-linear_regression.fit(X_augmented, y)
-y_predict_augmented = linear_regression.predict(X_augmented)
-plt.scatter(X, y)
-plt.plot(
-    X, y_predict_linear, label='predict with linear', color='k', linewidth=3
-)
-plt.plot(
-    X, y_predict_augmented, label='predict with augmented', color='orange',
-    linewidth=4
-)
-
-plt.legend()
 
 # %% [markdown]
 # # Main take away

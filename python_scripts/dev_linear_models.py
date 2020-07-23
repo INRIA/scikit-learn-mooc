@@ -473,53 +473,22 @@ print(f"Lowest mean squared error = {mse:.2f}")
 # Indeed, we could also use additional feature which are decorrelated with the
 # original feature and that could help us to predict the target.
 #
-# We will now load a new dataset from the “Current Population Survey” from 1985
-# to predict the **salary** as a function of various features such as
-# *experience, age*, or *education*. For simplicity, we will only use these
-# three numerical features.
+# We will load a dataset reporting the median house value in California.
+# The dataset in made of 8 features regarding demography and geography of the
+# location and the aim is to predict the median house price.
 
 # %%
-from sklearn.datasets import fetch_openml
+from sklearn.datasets import fetch_california_housing
 
-# Load the data
-X, y = fetch_openml(data_id=534, as_frame=True, return_X_y=True)
-numerical_columns = ['EDUCATION', 'EXPERIENCE', 'AGE']
-X = X[numerical_columns]
+X, y = fetch_california_housing(as_frame=True, return_X_y=True)
 X.head()
-
-# %% [markdown]
-# Before to go further, we can check the salary distribution.
-
-plt.hist(y, bins=50, density=True)
-plt.xlabel("Salary ($/hrs)")
-_ = plt.ylabel("Probability density")
-
-# %% [markdown]
-# We can observe that the salary distribution has a long tail. Linear model
-# make the assumption that the target is normally distributed. Thus, it will
-# be best to transform the target to make it Gaussian-like. In this regard,
-# we will use a `log` transform.
-
-y = np.log(y)
-plt.hist(y, bins=50, density=True)
-plt.xlabel("Salary log($/hrs)")
-_ = plt.ylabel("Probability density")
-
-# %% [markdown]
-# We can see that this transform allows to obtain a more normally distributed
-# target which is better suited for fitting a linear model. However, we should
-# be aware that any computed metrics using the model predictions will be using
-# the transformed predictions (log($/hrs)) rather than the original unit in
-# $/hrs. If we would be interested to evaluate the error in the original space,
-# we would need to transform back the prediction and the target.
 
 # %% [markdown]
 # We will compare the score of `LinearRegression` and `Ridge` (which is a
 # regularized version of linear regression).
-# Here the score will be the $R^2$ score, which is the default score computed
-# when calling the method `score` of a scikit-learn regressor. It represents
-# the proportion of variance of the target explained by the model. The best
-# $R^2$ score possible is 1.
+#
+# We will evaluate our model using the mean squared error as in the previous
+# example. The lower the score, the better.
 
 # %% [markdown]
 # Here we will divide our data into a training set and a validation set.
@@ -531,7 +500,7 @@ _ = plt.ylabel("Probability density")
 from sklearn.model_selection import train_test_split
 
 X_train_valid, X_test, y_train_valid, y_test = train_test_split(
-    X, y, test_size=20, random_state=1
+    X, y, random_state=1
 )
 
 X_train, X_valid, y_train, y_valid = train_test_split(
@@ -541,7 +510,7 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 # %% [markdown]
 # Note that in the first example, we did not care about scaling our data to
 # keep the original units and have better intuition. However, this is a good
-# practise to scale the data such that each feature have a similar standard
+# practice to scale the data such that each feature have a similar standard
 # deviation. It will be even more important if the solver used by the model
 # is a gradient-descent-based solver.
 
@@ -571,7 +540,11 @@ X_valid_scaled = scaler.transform(X_valid)
 # %%
 linear_regression = LinearRegression()
 linear_regression.fit(X_train_scaled, y_train)
-linear_regression.score(X_valid_scaled, y_valid)
+y_pred = linear_regression.predict(X_valid_scaled)
+print(
+    f"Mean squared error on the validation set: "
+    f"{mean_squared_error(y_valid, y_pred):.4f}"
+)
 
 # %% [markdown]
 # Instead of manually transforming the data by calling the transformer,
@@ -592,63 +565,128 @@ linear_regression.score(X_valid_scaled, y_valid)
 # %%
 from sklearn.pipeline import make_pipeline
 
-# create a model which will first scale the data and then feed it to a linear
-# regression
-linear_regression = make_pipeline(
-    StandardScaler(), LinearRegression()
-)
+linear_regression = make_pipeline(StandardScaler(), LinearRegression())
+
 linear_regression.fit(X_train, y_train)
-linear_regression_score = linear_regression.score(X_valid, y_valid)
-print(linear_regression_score)
+y_pred_valid = linear_regression.predict(X_valid)
+y_pred_test = linear_regression.predict(X_test)
+
+print(
+    f"Mean squared error on the validation set: "
+    f"{mean_squared_error(y_valid, y_pred_valid):.4f}"
+)
+print(
+    f"Mean squared error on the test set: "
+    f"{mean_squared_error(y_test, y_pred_test):.4f}"
+)
 
 # %% [markdown]
 # Now we want to compare this basic `LinearRegression` versus its regularized
 # form `Ridge`.
 #
-# We will present the score on the validation set for different values of
-# `alpha`, which controls the regularization strength in `Ridge`.
+# We will tune the parameter alpha and compare it with the `LinearRegression`
+# model which is not regularized.
 
 # %%
-# taking the alpha between .01 and 100,
-# spaced evenly on a log scale.
 from sklearn.linear_model import Ridge
 
-list_alphas = np.logspace(-2, 2)
+ridge = make_pipeline(StandardScaler(), Ridge())
 
+list_alphas = np.logspace(-2, 2.1, num=40)
 list_ridge_scores = []
 for alpha in list_alphas:
-    ridge = make_pipeline(
-        StandardScaler(), Ridge(alpha=alpha)
-    )
+    ridge.set_params(ridge__alpha=alpha)
     ridge.fit(X_train, y_train)
-    list_ridge_scores.append(ridge.score(X_valid, y_valid))
+    y_pred = ridge.predict(X_valid)
+    list_ridge_scores.append(mean_squared_error(y_valid, y_pred))
 
 plt.plot(
     list_alphas, [linear_regression_score] * len(list_alphas), '--',
     label='LinearRegression',
 )
-plt.plot(list_alphas, list_ridge_scores, label='Ridge')
+plt.plot(list_alphas, list_ridge_scores, "+-", label='Ridge')
 plt.xlabel('alpha (regularization strength)')
-plt.ylabel('$R^2$ Score (higher is better)')
+plt.ylabel('Mean squared error (lower is better')
 _ = plt.legend()
 
 # %% [markdown]
 # We see that, just like adding salt in cooking, adding regularization in our
 # model could improve its error on the validation set. But too much
 # regularization, like too much salt, decrease its performance.
-# In our case, the alpha parameters is best when is around 20.
 #
-# Note that the calibration of `alpha` could not be tuned on the test set -
-# otherwise we are fitting the test set, which would correspond to overfitting.
+# We can see visually that the best alpha should be around 40.
+
+# %%
+best_alpha = list_alphas[np.argmin(list_ridge_scores)]
+best_alpha
+
+# %% [markdown]
+# At the end, we selected this alpha without using the testing set but instead
+# by extracting a validation set which is a subset of the training data. This
+# has been seen in the lesson *basic hyper parameters tuning*. We can finally
+# compared the `LinearRegression` model and the best `Ridge` model on the
+# testing set.
+
+# %%
+print("Linear Regression")
+y_pred_test = linear_regression.predict(X_test)
+print(
+    f"Mean squared error on the test set: "
+    f"{mean_squared_error(y_test, y_pred_test):.4f}"
+)
+
+print("Ridge Regression")
+ridge.set_params(ridge__alpha=alpha)
+ridge.fit(X_train, y_train)
+y_pred_test = ridge.predict(X_test)
+print(
+    f"Mean squared error on the test set: "
+    f"{mean_squared_error(y_test, y_pred_test):.4f}"
+)
+
+# %% [markdown]
+# The hyperparameter search could have make use of the `GridSearchCV` instead
+# of manually splitting the training data and selecting the best alpha.
+
+# %%
+from sklearn.model_selection import GridSearchCV
+
+ridge = GridSearchCV(
+    make_pipeline(StandardScaler(), Ridge()),
+    param_grid={"ridge__alpha": list_alphas},
+)
+ridge.fit(X_train_valid, y_train_valid)
+print(ridge.best_params_)
+
+# %% [markdown]
+# The `GridSearchCV` manage to test all possible given `alpha` value and picked
+# up the best one with a cross-validation scheme. We can now compare with
+# the `LinearRegression`.
+
+# %%
+print("Linear Regression")
+linear_regression.fit(X_train_valid, y_train_valid)
+y_pred_test = linear_regression.predict(X_test)
+print(
+    f"Mean squared error on the test set: "
+    f"{mean_squared_error(y_test, y_pred_test):.4f}"
+)
+
+print("Ridge Regression")
+y_pred_test = ridge.predict(X_test)
+print(
+    f"Mean squared error on the test set: "
+    f"{mean_squared_error(y_test, y_pred_test):.4f}"
+)
+
+# %% [markdown]
+# It is as well interesting to know that several regressors and classifiers
+# in scikit-learn are optimized to make this parameter tuning. They usually
+# finish with the term "CV" (e.g. `RidgeCV`). They are more efficient than
+# making the `GridSearchCV` by hand and you should use them instead.
 #
-# To calibrate `alpha` on our training set, we have extract a small
-# validation set from our training set. That is seen on the lesson:
-# *basic hyper parameters tuning*.
-#
-# Fortunatly, the `scikit-learn` api provides us with an automatic way to find
-# the best regularization `alpha` with the module `RidgeCV`. For that, it
-# internaly computes a cross validation on the training set (with a validation
-# set) to predict the best `alpha` parameter.
+# We will repeat the equivalent of the hyper-parameter search but instead of
+# using a `GridSearchCV`, we will use `RidgeCV`.
 
 # %%
 from sklearn.linear_model import RidgeCV
@@ -656,18 +694,30 @@ from sklearn.linear_model import RidgeCV
 ridge = make_pipeline(
     StandardScaler(), RidgeCV(alphas=[.1, .5, 1, 5, 10, 50, 100])
 )
-# tune alpha on the traingin set
-ridge.fit(X_train, y_train)
+ridge.fit(X_train_valid, y_train_valid)
+ridge[-1].alpha_
 
-linear_regression_score = linear_regression.score(X_test, y_test)
-print(f'R2 score of linear regression  = {linear_regression_score}')
-print(f'R2 score of ridgeCV regression = {ridge.score(X_test, y_test)}')
-print(f'The best `alpha` found on the training set is {ridge[1].alpha_}')
+# %%
+print("Linear Regression")
+y_pred_test = linear_regression.predict(X_test)
+print(
+    f"Mean squared error on the test set: "
+    f"{mean_squared_error(y_test, y_pred_test):.4f}"
+)
+
+print("Ridge Regression")
+y_pred_test = ridge.predict(X_test)
+print(
+    f"Mean squared error on the test set: "
+    f"{mean_squared_error(y_test, y_pred_test):.4f}"
+)
 
 # %% [markdown]
-# ## 2. Calssification: Logistic regresion
+# Note that the best parameter value is changing because the cross-validation
+# between the different approach is internally different.
 
 # %% [markdown]
+# ## 2. Classification: Logistic regresion
 # We will load the "adult census" dataset, already used in previous notebook.
 # We have to predict either a person earn more than $50k per year or not.
 

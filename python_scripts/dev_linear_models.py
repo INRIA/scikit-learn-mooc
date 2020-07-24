@@ -875,7 +875,7 @@ for ax, C in zip(axs, [0.02, 0.1, 1]):
 # This feature is the culmen length which is in line with our first insight
 # that we found when plotting the marginal feature probabilities.
 #
-# Just like the `ridgeCV` class which automatically find the optimal `alpha`, 
+# Just like the `RidgeCV` class which automatically find the optimal `alpha`, 
 # one can use `LogisticRegressionCV` to find the best `C` on the training data.
 
 # %%

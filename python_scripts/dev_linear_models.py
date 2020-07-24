@@ -16,12 +16,13 @@
 # %% [markdown]
 # # Linear Models
 #
-# In this notebook we will review some linear models from `scikit-learn`.
+# In this notebook we will review linear models from `scikit-learn`.
 # We will :
-# - fit a simple linear slope;
+# - learn how to fit a simple linear slope and interpret the coefficients;
+# - discuss feature augmentation to fit a non-linear function;
 # - use `LinearRegression` and its regularized version `Ridge` which is more
 #   robust;
-# - use `LogisticRegression` on the dataset "adult census" with `pipeline`;
+# - use `LogisticRegression` with `pipeline`;
 # - see examples of linear separability.
 
 # %% [markdown]

@@ -359,7 +359,7 @@ mse = mean_squared_error(y, tree.predict(X))
 print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# In this case, the model can handle the non-linearity. Instead to have a model
+# In this case, the model can handle the non-linearity. Instead having a model
 # which natively can deal with non-linearity, we could modify our data. We
 # could create new features, derived from the original features, using some
 # expert knowledge. For instance, here we know that we have a cubic and squared

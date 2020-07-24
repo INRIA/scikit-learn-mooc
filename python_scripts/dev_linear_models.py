@@ -471,7 +471,7 @@ print(f'The best `alpha` found on the training set is {ridge[1].alpha_}')
 # %% [markdown]
 # ## 2. Classification
 # In regression, we saw that the target to be predicted was a continuous
-# variable. In classification, this target will be discrete.
+# variable. In classification, this target will be discrete. (e.g. categorical)
 #
 # We will go back to our penguin dataset. However, this time we will try to
 # predict the penguin species using the culmen information. We will also
@@ -513,9 +513,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# To visualize the separation found by our classifier, we create an helper
-# function. In short, this function will fit our classifier on the data and
-# we will plot the decision function where the probability to be an Adelie or
+# To visualize the separation found by our classifier, we will define an helper
+# function `plot_decision_function` . In short, this function will fit our classifier and
+# plot the edge of the decision function, where the probability to be an Adelie or
 # Chinstrap will be equal (p=0.5).
 
 
@@ -585,7 +585,7 @@ plot_decision_function(X_train, y_train, logistic_regression)
 
 # %% [markdown]
 # Thus, we see that our decision function is represented by a line separating
-# the 2 classes. Since that the line is oblique, it means that we use a
+# the 2 classes. Since the line is oblique, it means that we used a
 # combination of both features:
 
 # %%
@@ -598,7 +598,7 @@ print(logistic_regression[-1].coef_)
 #
 # The `LogisticRegression` model
 # allows to apply regularization via the parameter `C`. It would be equivalent
-# to shift from `LinearRegression` to `Ridge`. In the contrary to `Ridge`, the
+# to shift from `LinearRegression` to `Ridge`. On the contrary to `Ridge`, the
 # `C` parameter is the inverse of the regularization strength: a smaller `C`
 # will lead to a more regularized model. We can check the effect of
 # regularization on our model:
@@ -621,8 +621,8 @@ for ax, C in zip(axs, [0.02, 0.1, 1]):
 # This feature is the culmen length which is in line with our first insight
 # that we found when plotting the marginal feature probabilities.
 #
-# Has with ridge which automatically find the optimal `alpha` using the
-# `RidgeCV` class, one can use `LogisticRegressionCV` to find the best `C`.
+# Just like the `ridgeCV` class which automatically find the optimal `alpha`, 
+# one can use `LogisticRegressionCV` to find the best `C` on the training data.
 
 # %%
 from sklearn.linear_model import LogisticRegressionCV
@@ -641,8 +641,8 @@ plot_decision_function(X_train, y_train, logistic_regression)
 # tricks than in regression: feature augmentation (using expert-knowledge
 # potentially) or using method based on kernel.
 #
-# We will provide an example where we will use a kernel support vector machine
-# to make classification on where it is impossible to find a perfect linear
+# We will provide examples where we will use a kernel support vector machine
+# to make classification on some toy-dataset where it is impossible to find a perfect linear
 # separation
 
 # %%

@@ -409,3 +409,26 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # we would need to pass a tree instance with the parameter
 # `max_features="sqrt"` if we want the bagging classifier and random forest
 # classifier to behave the same.
+#
+# ### What is the difference between regressor and classifier
+#
+# Up to now, we only focused on regression problem. There is little difference
+# between regression and classification. The first difference is that we are
+# using classifiers as base estimator instead of regressors. The second
+# difference lies in the way we aggregate the predictions. With the regressors,
+# we were computing the averaged of the predictions. In classification, we
+# will make a majority vote to give the final prediction. We can easily derived
+# probabilities by looking at the prediction class counts.
+#
+# ## Summary
+#
+# We saw in this section 2 algorithms which use bootstrap samples to create
+# an ensemble classifiers or regressors. The predictions are then aggregated.
+# These algorithms train several classifiers or regressors on different
+# bootstrap samples. This operation can be done in a very efficient manner
+# since the training of each classifier or regressor can be done
+# simultaneously.
+# ## Boosting
+
+# %% [markdown]
+# ## Parameters consideration with random forest and gradient boosting

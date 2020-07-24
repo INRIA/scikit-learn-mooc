@@ -119,8 +119,13 @@ Large depth
 
 <img src="../figures/bagging_reg_grey.svg" width="120%">
 
---
+---
 
+# Bagging
+
+<img src="../figures/bagging_reg_grey_fitted.svg" width="120%">
+
+--
 <img src="../figures/bagging_reg_blue.svg" width="30%">
 
 
@@ -187,18 +192,40 @@ from sklearn.ensemble import RandomForestClassifier
 
 ---
 # Boosting
-.pull-left[<img src="../figures/boosting_reg_data.svg" width="100%">]
-
+<img src="../figures/boosting/boosting_iter1.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_sized1.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_orange1.svg" width="100%">
 ---
 # Boosting
-
-<img src="../figures/boosting_reg_grey.svg" width="100%">
-
+<img src="../figures/boosting/boosting_iter2.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_sized2.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_orange2.svg" width="100%">
 ---
 # Boosting
-
-.pull-right[<img src="../figures/boosting_reg_blue.svg" width="100%">]
-
+<img src="../figures/boosting/boosting_iter3.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_sized3.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_orange3.svg" width="100%">
+---
+# Boosting
+<img src="../figures/boosting/boosting_iter4.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_sized4.svg" width="100%">
+---
+# Bossting
+<img src="../figures/boosting/boosting_iter_orange4.svg" width="100%">
 
 ???
 

@@ -360,11 +360,11 @@ print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # In this case, the model can handle the non-linearity. Instead having a model
-# which natively can deal with non-linearity, we could modify our data. We
+# which natively can deal with non-linearity, we could modify our data: we
 # could create new features, derived from the original features, using some
 # expert knowledge. For instance, here we know that we have a cubic and squared
 # relationship between `x` and `y` (because we generated the data). Indeed,
-# we could create two new feature that could add this information in the data;
+# we could create two new features that would add this information in the data.
 
 # %%
 X = np.vstack([x, x ** 2, x ** 3]).T
@@ -388,14 +388,15 @@ print(f"Lowest mean squared error = {mse:.2f}")
 # features. Here, we created new feature by knowing the way the target was
 # generated. In practice, this is usually not the case. Instead, one is usually
 # creating interaction between features with different order, at risk of
-# creating a model which too much expressive and might overfit. In
+# creating a model with too much expressivity and wich might overfit. In
 # scikit-learn, the `PolynomialFeatures` is a transformer to create such
-# feature interactions which we could have use instead of creating new features
-# ourself.
+# feature interactions which we could have used instead of creating new 
+# features ourself.
 #
-# We are going to use a scikit-learn pipeline which will first create the new
-# features and then fit the model. We will later comeback to details regarding
-# scikit-learn pipeline.
+
+# To present the `PolynomialFeatures`, we are going to use a scikit-learn 
+# pipeline which will first create the new features and then fit the model.
+# We will later comeback to details regarding scikit-learn pipeline.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -468,9 +469,9 @@ print(f"Lowest mean squared error = {mse:.2f}")
 # ### Linear regression in higher dimension
 # In the previous example, we usually used only a single feature. But we
 # already shown that we could add new feature to make the model more expressive
-# by deriving new features based on the original feature.
+# by deriving this new features based on the original feature.
 #
-# Indeed, we could also use additional feature which are decorrelated with the
+# Indeed, we could also use additional features which are decorrelated with the
 # original feature and that could help us to predict the target.
 #
 # We will load a dataset reporting the median house value in California.
@@ -569,6 +570,7 @@ linear_regression = make_pipeline(StandardScaler(), LinearRegression())
 
 linear_regression.fit(X_train, y_train)
 y_pred_valid = linear_regression.predict(X_valid)
+linear_regression_score = mean_squared_error(y_valid, y_pred_valid)
 y_pred_test = linear_regression.predict(X_test)
 
 print(
@@ -621,11 +623,11 @@ best_alpha = list_alphas[np.argmin(list_ridge_scores)]
 best_alpha
 
 # %% [markdown]
-# At the end, we selected this alpha without using the testing set but instead
-# by extracting a validation set which is a subset of the training data. This
-# has been seen in the lesson *basic hyper parameters tuning*. We can finally
-# compared the `LinearRegression` model and the best `Ridge` model on the
-# testing set.
+# At the end, we selected this alpha *without* using the testing set ; but 
+# instead by extracting a validation set which is a subset of the training
+# data. This has been seen in the lesson *basic hyper parameters tuning*.
+# We can finally compared the `LinearRegression` model and the best `Ridge`
+# model on the testing set.
 
 # %%
 print("Linear Regression")
@@ -643,10 +645,12 @@ print(
     f"Mean squared error on the test set: "
     f"{mean_squared_error(y_test, y_pred_test):.4f}"
 )
+# FIXME add explication why Ridge is not better (equivalent) than linear 
+# regression here.
 
 # %% [markdown]
-# The hyperparameter search could have make use of the `GridSearchCV` instead
-# of manually splitting the training data and selecting the best alpha.
+# The hyperparameter search could have been made using the `GridSearchCV`
+# instead of manually splitting the training data and selecting the best alpha.
 
 # %%
 from sklearn.model_selection import GridSearchCV
@@ -682,8 +686,9 @@ print(
 # %% [markdown]
 # It is as well interesting to know that several regressors and classifiers
 # in scikit-learn are optimized to make this parameter tuning. They usually
-# finish with the term "CV" (e.g. `RidgeCV`). They are more efficient than
-# making the `GridSearchCV` by hand and you should use them instead.
+# finish with the term "CV" for "Cross Validation" (e.g. `RidgeCV`).
+# They are more efficient than making the `GridSearchCV` by hand and you
+# should use them instead.
 #
 # We will repeat the equivalent of the hyper-parameter search but instead of
 # using a `GridSearchCV`, we will use `RidgeCV`.

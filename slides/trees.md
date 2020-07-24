@@ -220,12 +220,6 @@ from sklearn.ensemble import RandomForestClassifier
 ---
 # Boosting
 <img src="../figures/boosting/boosting_iter4.svg" width="100%">
----
-# Bossting
-<img src="../figures/boosting/boosting_iter_sized4.svg" width="100%">
----
-# Bossting
-<img src="../figures/boosting/boosting_iter_orange4.svg" width="100%">
 
 ???
 

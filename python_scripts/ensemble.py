@@ -1,3 +1,21 @@
+# %% [markdown]
+# # Ensemble learning: when many are better that the one
+#
+# In this notebook, we will go in depth into algorithms which combine several
+# simple models (e.g. decision tree, linear model, etc.) together. We will see
+# that combining learners will lead to more powerful learner which are more
+# robust. We will see into details 2 family of ensemble:
+#
+# * ensemble using bootstrap (e.g. bagging and random-forest);
+# * ensemble using boosting (e.g. gradient-boosting decision tree).
+#
+# ## Benefit of ensemble method at a first glance
+#
+# In this section, we will give a quick demonstration on the power of combining
+# several learners instead of fine-tuning a single learner.
+#
+# We will start by loading data from "California Housing".
+
 # %%
 from sklearn.datasets import fetch_california_housing
 
@@ -5,12 +23,36 @@ california_housing = fetch_california_housing(as_frame=True)
 df = california_housing.frame
 X, y = california_housing.data, california_housing.target
 
+# %% [markdown]
+# In this dataset, we try to predict the median housing value in some district
+# in California based on demographic and geographic data
+
+# %%
+df.head()
+
+# %% [markdown]
+# We will learn a single decision tree regressor. As we previously presented
+# in the notebook presenting the decision tree, this learner need to be tuned.
+# Indeed, the default parameter will not lead to an optimal decision tree.
+# Instead of using the default value, we should search via cross-validation
+# the value of the important parameter such as `max_depth`,
+# `min_samples_split`, or `min_samples_leaf`. We recall that we need to tune
+# these parameters because the decision trees tend to overfit the training data
+# if we grow deep the trees but there are no rules to limit the parameters.
+# Thus, not making a search could lead us to have underfitted model.
+#
+# First, let's keep a set of data to test our final model.
+
 # %%
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, random_state=0,
 )
+
+# %% [markdown]
+# We will first make a grid-search to fine-tune the parameters that we
+# mentioned earlier.
 
 # %%
 from sklearn.model_selection import GridSearchCV
@@ -31,6 +73,10 @@ tree = GridSearchCV(
 
 tree.fit(X_train, y_train)
 
+# %% [markdown]
+# We can create a dataframe storing the important information collected during
+# the parameter tuning and investigate the results.
+
 # %%
 import pandas as pd
 
@@ -46,6 +92,16 @@ interesting_columns = [
 cv_results = cv_results[interesting_columns].sort_values(by="rank_test_score")
 cv_results
 
+# %% [markdown]
+# From theses results, we can see that the best parameters is a combination
+# where the depth of the tree is not limited, the minimum number of samples to
+# make a leaf is also equal to 1. However, the minimum number of samples to
+# make a split is much higher than the default value (i.e. 50 samples).
+#
+# To run this grid-search, we can check the total amount of time it took to
+# fit all these different model. In addition, we can check the performance
+# of the optimal decision tree on the left-out testing data.
+
 # %%
 total_fitting_time = (cv_results["mean_fit_time"] * cv).sum()
 print(
@@ -55,6 +111,23 @@ print(
 print(
     f"Best R2 score of a single tree: {tree.best_score_:.3f}"
 )
+
+# %% [markdown]
+# Hence, we have a model that has an $R^2$ score below 0.7. In addition,
+# the amount of time to find this learner depends on the number of fold used
+# during the cross-validation in the grid-search multiplied by the cartesian
+# product of the paramters combination. Therefore, the computational cost is
+# quite high.
+#
+# Now we will use an ensemble method called bagging. We will see more into
+# details this method in the next section. In short, this method will use
+# a base regressor (i.e. decision tree regressors) and will train several of
+# them on a slightly modified version of the training set. Then, the
+# predictions given by each tree will be combine by averaging.
+#
+# Here, we will use 50 decision trees and check the fitting time as well as
+# the performance on the left-out testing data. It is important to note that
+# we are not going to tune any parameter of the decision tree.
 
 # %%
 from time import time
@@ -71,6 +144,18 @@ elapsed_fitting_time = time() - start_fitting_time
 
 print(f"Elapsed fitting time: {elapsed_fitting_time:.2f} seconds")
 print(f"R2 score: {bagging_regressor.score(X_test, y_test):.3f}")
+
+# %% [markdown]
+# We can see that the training time is indeed much shorter to train the full
+# ensemble than making the parameter search of a single tree. In addition,
+# the score is largely improved with a $R^2$ close to 0.8 while we did not
+# tune any of the parameters. This shows the motivation behind the use of
+# ensemble learner.
+#
+# Now, we will go into details by presenting 2 ensemble families: bagging and
+# boosting.
+#
+# ## Bagging
 
 # %%
 import numpy as np

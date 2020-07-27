@@ -428,7 +428,221 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # bootstrap samples. This operation can be done in a very efficient manner
 # since the training of each classifier or regressor can be done
 # simultaneously.
+#
 # ## Boosting
+#
+# We saw that bagging builds an ensemble in a sequential manner: each learner
+# is trained on an independent manner from the each other. The idea behind
+# boosting is different. The ensemble is created as a sequence where the
+# learner at stage `N` will require all learners from 1 to `N-1`.
+#
+# Intuitively, a learner will be added in the ensemble and will correct the
+# mistakes done by the previous series of learners. We will start with an
+# algorithm named AdaBoost to get some intuitions regarding some ideas behind
+# boosting.
+#
+# ### Adaptive Boosting (AdaBoost)
+#
+# We will first present some fundamental ideas used in AdaBoost to understand
+# the principle of boosting. we will use a classification problem with a
+# dataset already used in the presenting the tree algorithms.
+
+# %%
+data = pd.read_csv("../datasets/penguins.csv")
+
+# select the features of interest
+culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
+target_column = "Species"
+
+data = data[culmen_columns + [target_column]]
+data[target_column] = data[target_column].str.split().str[0]
+data = data.dropna()
+
+X, y = data[culmen_columns], data[target_column]
+
+# %% [markdown]
+# We will take from this notebook a function which plots the decision function
+# learnt by the classifier.
+
+# %%
+import seaborn as sns
+
+
+def plot_decision_function(X, y, clf, sample_weight=None, fit=True, ax=None):
+    """Plot the boundary of the decision function of a classifier."""
+    from sklearn.preprocessing import LabelEncoder
+
+    if fit:
+        clf.fit(X, y, sample_weight=sample_weight)
+
+    # create a grid to evaluate all possible samples
+    plot_step = 0.02
+    feature_0_min, feature_0_max = (
+        X.iloc[:, 0].min() - 1,
+        X.iloc[:, 0].max() + 1,
+    )
+    feature_1_min, feature_1_max = (
+        X.iloc[:, 1].min() - 1,
+        X.iloc[:, 1].max() + 1,
+    )
+    xx, yy = np.meshgrid(
+        np.arange(feature_0_min, feature_0_max, plot_step),
+        np.arange(feature_1_min, feature_1_max, plot_step),
+    )
+
+    # compute the associated prediction
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = LabelEncoder().fit_transform(Z)
+    Z = Z.reshape(xx.shape)
+
+    # make the plot of the boundary and the data samples
+    if ax is None:
+        _, ax = plt.subplots()
+    ax.contourf(xx, yy, Z, alpha=0.4)
+    sns.scatterplot(
+        data=pd.concat([X, y], axis=1),
+        x=X.columns[0],
+        y=X.columns[1],
+        hue=y.name,
+        ax=ax,
+    )
+
+
+# %% [markdown]
+# As we previously did, we will train a decision tree classifier with a very
+# shallow depth. We will draw the decision function obtain and we will
+# show the samples for which the tree was not able to make a proper
+# classification.
+
+
+# %%
+from sklearn.tree import DecisionTreeClassifier
+
+tree = DecisionTreeClassifier(max_depth=2, random_state=0)
+
+_, ax = plt.subplots()
+plot_decision_function(X, y, tree, ax=ax)
+
+# find the misclassified samples
+y_pred = tree.predict(X)
+misclassified_samples_idx = np.flatnonzero(y != y_pred)
+
+ax.plot(
+    X.iloc[misclassified_samples_idx, 0],
+    X.iloc[misclassified_samples_idx, 1],
+    "+k",
+    label="Misclassified samples",
+)
+ax.legend()
+
+# %% [markdown]
+# We can observe that there is several samples for which the current classifier
+# was not able to make the proper decision. As we previously mentioned,
+# boosting relies on creating a new classifier which will try to correct these
+# error. In scikit-learn, learners usually support a parameter `sample_weight`
+# which allows to specify to pay more attention to some specific samples. This
+# parameters is set when calling `classifier.fit(X, y, sample_weight=weights)`.
+# We will use this trick to create a new classifier by discarding all well
+# classified samples and only consider the misclassified samples. Thus,
+# misclassified samples will be assigned a weight of 1 while well classified
+# samples will assigned to a weight of 0.
+
+# %%
+sample_weight = np.zeros_like(y, dtype=int)
+sample_weight[misclassified_samples_idx] = 1
+
+_, ax = plt.subplots()
+plot_decision_function(X, y, tree, sample_weight=sample_weight, ax=ax)
+
+ax.plot(
+    X.iloc[misclassified_samples_idx, 0],
+    X.iloc[misclassified_samples_idx, 1],
+    "+k",
+    label="Previous misclassified samples",
+)
+ax.legend()
+
+# %% [markdown]
+# We can see that the decision function drastically changed. Qualitatively,
+# we see that the previously misclassified samples are now well classified.
+
+# %%
+y_pred = tree.predict(X)
+newly_misclassified_samples_idx = np.flatnonzero(y != y_pred)
+remaining_misclassified_samples_idx = np.intersect1d(
+    misclassified_samples_idx, newly_misclassified_samples_idx
+)
+
+print(
+    f"Number of samples previously misclassified and still misclassified: "
+    f"{len(remaining_misclassified_samples_idx)}"
+)
+
+# %% [markdown]
+# Now, we could think of a simple heuristic to combine together the 2
+# classifiers and make some predictions using both classifiers. For instance,
+# we could assign a weight to each classifier depending on the
+# misclassification rate done on the dataset.
+
+ensemble_weight = [
+    (y.shape[0] - len(misclassified_samples_idx)) / y.shape[0],
+    (y.shape[0] - len(newly_misclassified_samples_idx)) / y.shape[0],
+]
+ensemble_weight
+
+# %% [markdown]
+# So for instance, the first classifier was 94% accurate and the second one
+# 69% accurate. Therefore, when predicting a class, I could trust slightly more
+# the first classifier than the second one. Indeed, we could predict a weighted
+# prediction using those weight.
+#
+# As a summary, we can note several things. First, we can learn several
+# classifier which will be different by focusing more or less to some specific
+# samples of the dataset. Then, boosting is different from bagging: here we
+# never resample our dataset, we just assign weight to the original dataset.
+#
+# Finally, we see that we need some strategy to combine the learners together:
+# * one need to define a way to compute the weight which need to be assigned to
+#   samples;
+# * one need to assign a weight to each learner when making the predictions.
+#
+# Here, we defined really simple scheme to define the weight. However, there is
+# some statistical basis which can be used to theoretically defined these
+# weights.
+
+# %%
+from sklearn.ensemble import AdaBoostClassifier
+
+adaboost = AdaBoostClassifier(
+    base_estimator=DecisionTreeClassifier(max_depth=3, random_state=0),
+    n_estimators=3,
+    algorithm="SAMME",
+    random_state=0,
+)
+adaboost.fit(X, y)
+
+_, axs = plt.subplots(ncols=3, figsize=(16, 6))
+
+for ax, tree in zip(axs, adaboost.estimators_):
+    plot_decision_function(X, y, tree, fit=False, ax=ax)
+
+print(f"Weight of each classifier: {adaboost.estimator_weights_}")
+print(f"Error of each classifier: {adaboost.estimator_errors_}")
+
+# %% [markdown]
+# We see that AdaBoost learnt 3 different classifiers focusing on different
+# samples. Looking at the weight of each learner, we see that we are more
+# confident in the first learner than the latest since the weights are
+# decreasing. It is in line of the error rate of each classifier.
+#
+# While AdaBoost is a nice algorithm to get the internal machinery of boosting
+# algorithms, this is not the most efficient machine-learning algorithm.
+# The most efficient algorithm based on boosting is the gradient-boosting
+# decision tree (GBDT) algorithm which we will present now.
+#
+# ### Gradient-boosting decision tree (GBDT)
+#
+
 
 # %% [markdown]
 # ## Parameters consideration with random forest and gradient boosting

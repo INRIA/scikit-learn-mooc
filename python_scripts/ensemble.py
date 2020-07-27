@@ -805,6 +805,43 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 # to correct the residuals for all samples. In this regard, one need to add
 # several trees in the ensemble to succeed to correct the error.
 #
+# We will make a small comparison between random-forest and gradient boosting
+# on the california housing dataset.
+
+# %%
+from sklearn.ensemble import GradientBoostingRegressor
+
+X, y = california_housing.data, california_housing.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0,)
+
+gradient_boosting = GradientBoostingRegressor(n_estimators=200)
+start_time = time()
+gradient_boosting.fit(X_train, y_train)
+fit_time_gradient_boosting = time() - start_time
+
+random_forest = RandomForestRegressor(n_estimators=200, n_jobs=-1)
+start_time = time()
+random_forest.fit(X_train, y_train)
+fit_time_random_forest = time() - start_time
+
+print(
+    f"The performance of gradient-boosting are:"
+    f"{gradient_boosting.score(X_test, y_test):.3f}"
+)
+print(f"Fitting time took: {fit_time_gradient_boosting:.2f} seconds")
+
+print(
+    f"The performance of random-forest are:"
+    f"{random_forest.score(X_test, y_test):.3f}"
+)
+print(f"Fitting time took: {fit_time_random_forest:.2f} seconds")
+
+# %% [markdown]
+# In term of computation performance, the forest can be parallelized and will
+# benefit from the having multiple CPU. In terms of scoring performance, the
+# algorithm leads to very close results and are both really robust and
+# efficient.
+#
 # ## Parameters consideration with random forest and gradient-boosting
 #
 # In the previous section, we did not focus on the parameters of random forest
@@ -854,3 +891,49 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 #
 # ## Accelerate gradient-boosting
 #
+# We previously mentioned that random-forest is an efficient algorithm since
+# each tree of the ensemble can be fitted at the same time from an independent
+# manner.
+#
+# In gradient-boosting, the algorithm is a sequential algorithm. it requires
+# the `N-1` trees to fit the tree at the stage `N`. Therefore, the algorithm
+# is quite computationally expensive. The most expensive in this algorithm is
+# indeed the search for the best split which is a brute-force approach: all
+# possible split are evaluated and the best one is picked. We explain this
+# process in the notebook presenting the tree algorithm to which you can refer.
+#
+# To accelerate the gradient-boosting algorithm, one could reduce the number
+# of split to be evaluated. Thus, the score of such tree will be much lower.
+# However, since we are combining several trees in a gradient-boosting, we are
+# just required to add enough estimator to overcome this issue.
+#
+# This algorithm is called `HistGradientBoostingClassifier` and
+# `HistGradientBoostingRegressor`. Indeed, the dataset `X` is first binned
+# by computing histograms to make the split. The number of splits to evaluate
+# is much smaller. This algorithm becomes extremely efficient when the dataset
+# has 10,000+ samples.
+#
+# We are giving an example of such dataset and we can compare it with the
+# earlier experiment in the previous section.
+
+# %%
+from sklearn.experimental import enable_hist_gradient_boosting
+from sklearn.ensemble import HistGradientBoostingRegressor
+
+histogram_gradient_boosting = HistGradientBoostingRegressor(
+    max_iter=200, random_state=0,
+)
+start_time = time()
+histogram_gradient_boosting.fit(X_train, y_train)
+fit_time_histogram_gradient_boosting = time() - start_time
+
+print(
+    f"The performance of histogram gradient-boosting are:"
+    f"{histogram_gradient_boosting.score(X_test, y_test):.3f}"
+)
+print(f"Fitting time took: {fit_time_histogram_gradient_boosting:.2f} seconds")
+
+# %% [markdown]
+# The histogram gradient-boosting is the best algorithm in term of score.
+# It will also scale whenever the number of samples increase while the normal
+# gradient-boosting will not.

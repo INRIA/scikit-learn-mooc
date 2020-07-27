@@ -321,7 +321,7 @@ def plot_cv_indices(cv, X, y, ax, lw=20):
 
     # Formatting
     yticklabels = list(range(n_splits))
-    ax.set(yticks=np.arange(n_splits + 2) + .5,
+    ax.set(yticks=np.arange(n_splits) + .5,
            yticklabels=yticklabels, xlabel='Sample index',
            ylabel="CV iteration", ylim=[n_splits + .2,
                                         -.2], xlim=[0, 100])

@@ -7,7 +7,8 @@
 # robust. We will see into details 2 family of ensemble:
 #
 # * ensemble using bootstrap (e.g. bagging and random-forest);
-# * ensemble using boosting (e.g. gradient-boosting decision tree).
+# * ensemble using boosting (e.g. adaptive boosting and gradient-boosting
+#   decision tree).
 #
 # ## Benefit of ensemble method at a first glance
 #
@@ -171,12 +172,15 @@ import matplotlib.pyplot as plt
 rng = np.random.RandomState(0)
 
 
-def generate_data(n_samples=50):
+def generate_data(n_samples=50, sorted=False):
     x_max, x_min = 1.4, -1.4
     len_x = x_max - x_min
     x = rng.rand(n_samples) * len_x - len_x / 2
     noise = rng.randn(n_samples) * 0.3
     y = x ** 3 - 0.5 * x ** 2 + noise
+    if sorted:
+        sorted_idx = np.argsort(x)
+        x, y = x[sorted_idx], y[sorted_idx]
     return x, y
 
 
@@ -642,7 +646,211 @@ print(f"Error of each classifier: {adaboost.estimator_errors_}")
 #
 # ### Gradient-boosting decision tree (GBDT)
 #
+# Gradient-boosting differs from AdaBoost since at each stage, it will fit
+# the residuals (hence the name "gradient") instead of the samples themselves.
+#
+# In this section, we will provide some intuitions regarding the way learners
+# will be combined to give the final prediction. In this regard, let's start
+# with our regression problem.
 
+# %%
+x, y = generate_data(sorted=True)
+
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("Feature")
+_ = plt.ylabel("Target")
 
 # %% [markdown]
-# ## Parameters consideration with random forest and gradient boosting
+# As we previously discussed, boosting will be based on assembling a sequence
+# of learner. We will start by creating a decision tree regressor. We will fix
+# the depth of the tree such that the resulting learner will underfit the data.
+
+# %%
+tree = DecisionTreeRegressor(max_depth=3, random_state=0)
+tree.fit(x.reshape(-1, 1), y)
+
+grid = np.linspace(np.min(x), np.max(x), num=200)
+y_pred_grid_raw = tree.predict(grid.reshape(-1, 1))
+
+plt.scatter(x, y, color="k", s=9)
+plt.xlabel("Feature")
+plt.ylabel("Target")
+line_predictions = plt.plot(grid, y_pred_grid_raw, "--")
+
+y_pred_raw = tree.predict(x.reshape(-1, 1))
+for idx in range(len(y)):
+    lines_residuals = plt.plot(
+        [x[idx], x[idx]], [y[idx], y_pred_raw[idx]], color="red",
+    )
+
+_ = plt.legend(
+    [line_predictions[0], lines_residuals[0]], ["Fitted tree", "Residuals"]
+)
+
+# %% [markdown]
+# Since the tree is underfitting the data, the accuracy of the tree will is far
+# to be perfect on the training data. We can observe it on the figure by
+# looking at the difference between the predictions and the ground-truth data.
+# We represent these data by a red plain line that we call "Residuals".
+#
+# Indeed, our initial tree was not enough expressive to handle these changes.
+# In a gradient-boosting algorithm, the idea will be to create a second tree
+# which given the same data `x` will try to predict the residuals instead of
+# `y`. Therefore, we will have a tree able to predict the error made by the
+# initial tree.
+#
+# Let's train such a tree.
+
+# %%
+residuals = y - y_pred_raw
+
+tree_residuals = DecisionTreeRegressor(max_depth=5, random_state=0)
+tree_residuals.fit(x.reshape(-1, 1), residuals)
+
+y_pred_grid_residuals = tree_residuals.predict(grid.reshape(-1, 1))
+
+plt.scatter(x, residuals, color="k", s=9)
+plt.xlabel("Feature")
+plt.ylabel("Residuals")
+line_predictions = plt.plot(grid, y_pred_grid_residuals, "--")
+
+y_pred_residuals = tree_residuals.predict(x.reshape(-1, 1))
+for idx in range(len(y)):
+    lines_residuals = plt.plot(
+        [x[idx], x[idx]], [residuals[idx], y_pred_residuals[idx]], color="red",
+    )
+
+_ = plt.legend(
+    [line_predictions[0], lines_residuals[0]], ["Fitted tree", "Residuals"]
+)
+
+# %% [markdown]
+# We see that this new tree succeed to correct the residual for some specific
+# samples but not for others. We will focus on the last sample of `x` and
+# explain how the predictions of both trees are combined.
+
+# %%
+
+_, axs = plt.subplots(ncols=2, figsize=(12, 6), sharex=True)
+
+axs[0].scatter(x, y, color="k", s=9)
+axs[0].set_xlabel("Feature")
+axs[0].set_ylabel("Target")
+axs[0].plot(grid, y_pred_grid_raw, "--")
+
+axs[1].scatter(x, residuals, color="k", s=9)
+axs[1].set_xlabel("Feature")
+axs[1].set_ylabel("Residuals")
+plt.plot(grid, y_pred_grid_residuals, "--")
+
+for idx in range(len(y)):
+    axs[0].plot(
+        [x[idx], x[idx]], [y[idx], y_pred_raw[idx]], color="red",
+    )
+    axs[1].plot(
+        [x[idx], x[idx]], [residuals[idx], y_pred_residuals[idx]], color="red",
+    )
+
+axs[0].set_xlim([1.1, 1.4])
+_ = axs[1].set_xlim([1.1, 1.4])
+
+# %% [markdown]
+# For this last sample, we see that our initial tree is making an error
+# (small residual). When fitting the second tree, the residual in this case is
+# perfectly fitted. We can check the prediction quantitatively using the tree
+# predictions. First, let's check the prediction of the initial tree and
+# compare it with the true value to predict.
+
+# %%
+x_max = x[-1]
+y_true = y[-1]
+
+print(f"True value to predict for f(x={x_max:.3f}) = {y_true:.3f}")
+
+y_pred_first_tree = tree.predict([[x_max]])[0]
+print(
+    f"Prediction of the first decision tree for x={x_max:.3f}: "
+    f"y={y_pred_first_tree:.3f}"
+)
+print(f"Error of the tree: {y_true - y_pred_first_tree:.3f}")
+
+# %% [markdown]
+# As we visually observed, we have a small residual. Now, we can use the second
+# tree to try to predict this residual.
+
+# %%
+print(
+    f"Prediction of the residual for x={x_max:.3f}: "
+    f"{tree_residuals.predict([[x_max]])[0]:.3f}"
+)
+
+# %% [markdown]
+# Wee see that our second tree is capable of prediting the exact residual
+# (error) that our first tree did. Therefore, we can predict the value of
+# `x` by summing the prediction of the all trees in the ensemble.
+
+# %%
+y_pred_first_and_second_tree = (
+    y_pred_first_tree + tree_residuals.predict([[x_max]])[0]
+)
+print(
+    f"Prediction of the first and second decision trees combined for "
+    f"x={x_max:.3f}: y={y_pred_first_and_second_tree:.3f}"
+)
+print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
+
+# %% [markdown]
+# We choose a sample for which only 2 trees were enough to make the perfect
+# prediction. However, we saw in the previous plot that 2 trees were not enough
+# to correct the residuals for all samples. In this regard, one need to add
+# several trees in the ensemble to succeed to correct the error.
+#
+# ## Parameters consideration with random forest and gradient-boosting
+#
+# In the previous section, we did not focus on the parameters of random forest
+# and gradient-boosting.
+#
+# ### Random forest
+#
+# The main parameters to tune with random forest is the `n_estimators`
+# parameter. In general, more trees in the forest the better will be the
+# performance. However, it will slow down the fitting and prediction time. So
+# one have to consider limiting the number of estimators when putting such
+# learner in production.
+#
+# The `max_depth` parameter could also be tuned. Sometimes, there is no need
+# to have fully grown trees. However, be aware that with random forest, trees
+# are generally deep since we are seeking to overfit each of the bootstrap
+# samples which will be then mitigated by combining them. Assembling
+# underfitted trees (i.e. shallow trees) might also lead to an underfitted
+# forest.
+#
+# Gradient-boosting decision tree
+#
+# In gradient-boosting, parameters tuning is a combination of several
+# parameters: `n_estimators`, `max_depth`, and `learning_rate`.
+#
+# Let's first discuss about the `max_depth`. We saw in the section of the
+# gradient-boosting that the algorithm fit the error of the previous trees in
+# the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed,
+# the first tree of the ensemble will overfit the data and thus no subsequent
+# tree is required since there will be no residuals to be fitted. Therefore,
+# the tree used in gradient-boosting will have a low depth between 3 to 8
+# levels typically.
+#
+# Having in mind this consideration, deeper will be the trees, the residuals
+# will be corrected faster and with a lower number of estimators. So
+# `n_estimators` should be increased if `max_depth` is lower.
+#
+# Finally, we did not explain what `learning_rate` parameter was corresponding
+# too. When fitting the residual one could choose if the tree should try to
+# correct all possible errors or only a fraction of it. The learning-rate is
+# allowing to control this behaviour. A small value of learning-rate will only
+# correct the residuals of very few samples. If the learning-rate is set to 1
+# then we will find a tree that fit the residuals of all samples. So, with a
+# very low learning-rate, we will need more estimators to correct the error.
+# However, a too large learning-rate will tend obtain an overfitted ensemble
+# similarly to have a too large tree depth.
+#
+# ## Accelerate gradient-boosting
+#

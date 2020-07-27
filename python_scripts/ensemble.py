@@ -861,6 +861,24 @@ print(f"Fitting time took: {fit_time_random_forest:.2f} seconds")
 # samples which will be then mitigated by combining them. Assembling
 # underfitted trees (i.e. shallow trees) might also lead to an underfitted
 # forest.
+
+# %%
+param_grid = {
+    "n_estimators": [10, 20, 30],
+    "max_depth": [3, 5, None],
+}
+grid_search = GridSearchCV(
+    RandomForestRegressor(n_jobs=-1), param_grid=param_grid, n_jobs=-1,
+)
+grid_search.fit(X_train, y_train)
+
+columns = ["params", "mean_test_score", "rank_test_score"]
+cv_results = pd.DataFrame(grid_search.cv_results_)
+cv_results[columns].sort_values(by="rank_test_score")
+
+# %% [markdown]
+# We can observe that in our grid-search, the larger `max_depth` with the
+# largest `n_estimators` lead to the best performance.
 #
 # Gradient-boosting decision tree
 #
@@ -888,7 +906,22 @@ print(f"Fitting time took: {fit_time_random_forest:.2f} seconds")
 # very low learning-rate, we will need more estimators to correct the error.
 # However, a too large learning-rate will tend obtain an overfitted ensemble
 # similarly to have a too large tree depth.
-#
+
+# %%
+param_grid = {
+    "n_estimators": [10, 30, 50],
+    "max_depth": [3, 5, None],
+    "learning_rate": [0.1, 1],
+}
+grid_search = GridSearchCV(
+    GradientBoostingRegressor(), param_grid=param_grid, n_jobs=-1,
+)
+grid_search.fit(X_train, y_train)
+
+cv_results = pd.DataFrame(grid_search.cv_results_)
+cv_results[columns].sort_values(by="rank_test_score")
+
+# %% [markdown]
 # ## Accelerate gradient-boosting
 #
 # We previously mentioned that random-forest is an efficient algorithm since

@@ -160,10 +160,9 @@ print(f"R2 score: {bagging_regressor.score(X_test, y_test):.3f}")
 #
 # ## Bagging
 #
-# We will first focus on the bagging algorithm. Bagging stands for bootstrap
-# aggregating. Indeed, it uses bootstrap samples to learn several learners.
-# At predict time, the predictions of each learner are aggregated to give the
-# final predictions.
+# Bagging stands for bootstrap aggregating. Indeed, it uses bootstrap samples
+# to learn several models. At predict time, the predictions of each learner
+# are aggregated to give the final predictions.
 #
 # Let's define a simple dataset that we already used in some previous notebook.
 
@@ -200,7 +199,7 @@ _ = plt.ylabel("Target")
 tree = DecisionTreeRegressor(max_depth=3, random_state=0)
 tree.fit(x.reshape(-1, 1), y)
 
-grid = np.linspace(np.min(x), np.max(x), num=30)
+grid = np.linspace(np.min(x), np.max(x), num=300)
 y_pred = tree.predict(grid.reshape(-1, 1))
 
 plt.scatter(x, y, color="k", s=9)
@@ -214,10 +213,11 @@ plt.legend()
 #
 # ### Bootstrap sample
 #
-# Let's first define what is a bootstrap sample: it is a resampling with
-# replacement of the same size than the original sample. Thus, the bootstrap
-# sample will contain some of the data points several time and some of the
-# original data points will not be present in the sample.
+# A bootstrap sample corresponds to a resampling with replacement of the
+# original dataset and where the size of the bootstrap sample is equal to the
+# size of the original dataset. Thus, the bootstrap sample contains some
+# of the data points several time and some of the original data points will not
+# be present in the sample.
 #
 # We will create a function that given `x` and `y` will return a bootstrap
 # sample `x_bootstrap` and `y_bootstrap`.
@@ -234,9 +234,8 @@ def bootstrap_sample(x, y):
 
 
 # %% [markdown]
-# Let's generate 3 bootstrap sample and check the difference with the original
-# dataset.
-
+# We will generate 3 bootstrap sample and qualitatively check the difference
+# with the original dataset.
 
 # %%
 n_bootstrap = 3
@@ -254,9 +253,9 @@ for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
     ax.set_xlabel("Feature")
 
 # %% [markdown]
-# We can observe that the 3 generated bootstrap are all different. We can even
-# check the amount of samples in the bootstrap sample which are present in the
-# original dataset.
+# We observe that the 3 generated bootstrap samples are all different. To
+# confirm this intuition, we can check the quantity of unique sample in the
+# bootstrap samples.
 
 # %%
 # we need to generate a larger set to have a good estimate
@@ -304,8 +303,7 @@ for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
     ax.set_title(f"Bootstrap #{idx}")
 
 # %% [markdown]
-# We can plot all trees decision function on the same plot to highlight that
-# they are indeed different.
+# We can plot these decision functions on the same plot to see the difference.
 
 # %%
 _, ax = plt.subplots()
@@ -331,9 +329,9 @@ _ = plt.legend()
 # ### Aggregating
 #
 # Once that our trees are fitted and we are able to get predictions for each of
-# them, we also need to combine these predictions. The most straightforward
-# approach is to average the different predictions. We can plot the average
-# predictions on the plot that we shown previously.
+# them, we also need to combine them. In regression, the most straightforward
+# approach is to average the different predictions from all learners. We can
+# plot the averaged predictions in the previous example.
 
 # %%
 _, ax = plt.subplots()
@@ -367,20 +365,23 @@ plt.ylabel("Target")
 _ = plt.legend()
 
 # %% [markdown]
-# The red line on the plot is showing what would be the final predictions of
-# our model.
+# The plain red line shows the averaged predictions which will be the final
+# preditions given by our bag of decision tree regressors.
 #
-# ## Random Forest
+# ## Random forest
 #
-# One of the widely used algorithm in machine learning is Random Forest.
-# Random Forest is a modification of the bagging algorithm. In bagging, any
-# classifier or regressor can be used. Random forest limit this base classifier
-# or regressor to be a decision tree, similarly to what we shown in the
-# previous section. There is a noticeable difference in classification: when
-# searching for the best split, only a subset of the original feature will be
-# used. This subset will be equal to the squared root of the original number
-# of feature. In regression, the total number of available feature will be
-# used.
+# A popular machine-learning algorithm is random forest. Random forest is a
+# modification of the bagging algorithm. In bagging, any classifier or
+# regressor can be used. Random forest limits this base classifier or regressor
+# to be a decision tree. In our previous example, we already used decision
+# trees but we could have make the same experiment using a linear model.
+#
+# In addition, random forest is different from bagging when used with
+# classifiers: when searching for the best split, only a subset of the original
+# features are used. By default, this subset of feature is equal to the squared
+# root of the original number of feature. In regression, the total number of
+# available feature will be used as with the bagging regressor presented
+# earlier.
 #
 # We will illustrate the usage of a random forest and compare it with the
 # bagging regressor on the "California housing" dataset.
@@ -409,12 +410,14 @@ print(
 print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 
 # %% [markdown]
-# First, we can observe that we cannot give the `base_estimator` to the
-# random forest regressor since it is already fixed. Finally, we can see that
-# the score on the testing set is exactly the same. In classification setting,
-# we would need to pass a tree instance with the parameter
-# `max_features="sqrt"` if we want the bagging classifier and random forest
-# classifier to behave the same.
+# We see that we don't provide a `base_estimator` parameter to the random
+# forest regressor. We see that our score are almost identical. Indeed, our
+# problem is a regression problem and therefore, the number of features used
+# in random forest and bagging is identical.
+#
+# When solving a classification problem, we would need to pass a tree instance
+# with the parameter `max_features="sqrt"` if we want the bagging classifier
+# and the random forest classifier to have the same behaviour.
 #
 # ### What is the difference between regressor and classifier
 #

@@ -681,6 +681,7 @@ print(
 # the predicted values versus the true values.
 
 
+# %%
 def plot_predicted_vs_actual(y_true, y_pred, title=None):
     plt.scatter(y_true, y_pred)
 

@@ -15,68 +15,65 @@
 # %% [markdown]
 # # Feature importance
 #
-# In this notebook, we will go into details on an algorithm to evaluating the importance of features for a given a model.
-#
-# Permutation feature importance is a model inspection technique that can be used for any fitted estimator when the data is tabular. 
+# In this notebook, we will detail an method to evaluate the importance of features used by a given a model.
+# We will examine `permutation feature importance` which is an inspection technique that can be used for any fitted model when the data is tabular.
 
 # %% [markdown]
-# ## Presentation of the titanic dataset
+# ## Presentation of the dataset
 
 # %% [markdown]
-# We use the titanic dataset, which is composed of the record of passagenr of the titanic 
-# the class to predict is wether the passagenr had survived from the titanic 
-#
+# We use the titanic dataset, which is composed of the record of passengers of the titanic.
+# The class to predict is wether the passenger had survived from the titanic.
 
 # %%
-# Load Titnaic
 import pandas as pd
 from sklearn.datasets import fetch_openml
 
-# Load data from https://www.openml.org/d/40945
 X, y = fetch_openml("titanic", version=1, as_frame=True, return_X_y=True)
 titanic = pd.concat((X, y), axis=1)
+titanic.head()
 
 # %% [markdown]
-# In order to assess the feature importance, we will add some random feature onto our dataset. We append one "categorical" liike variable, and one variable with a lot of different numerical value
+# In order to assess the feature importance, we will add some random feature onto our dataset. We concatenate one "categorical" like variable, and one variable with all different numerical value
 
 # %%
 import numpy as np
 
 # Adding some random variables
-cat_var = pd.Series(np.random.randint(0,3, X.shape[0]), name = 'rnd_cat')
-num_var = pd.Series(np.random.randint(0,50000, X.shape[0]), name = 'rnd_num')
-X = pd.concat((X, cat_var, num_var), axis = 1)
+rng = np.random.RandomState(0)
+cat_var = pd.Series(rng.randint(0,3, X.shape[0]), name = 'rnd_cat')
+# num_var = pd.Series(np.arange(X.shape[0]), name = 'rnd_num') # pd.Series(rng.randint(0,100, X.shape[0]), name = 'rnd_num') 
+num_var = pd.Series(rng.randint(0,100, X.shape[0]), name = 'rnd_num') 
+#pd.Series(np.arange(X.shape[0]), name = 'rnd_num') #pd.Series(np.ones(X.shape[0]), name = 'rnd_num') #
+X_with_rnd_feat = pd.concat((X, cat_var, num_var), axis = 1)
 
 
 
 # %%
-X.head()
 # SibSp: Number of siblings/spouses aboard
 # Parch: Number of parents/children aboard
-
-# %%
-y.head()
 
 # %%
 # explore the data 
 import matplotlib.pyplot as plt
 
-columns = ['sex', 'age', 'pclass', 'sibsp']
+columns = ['sex', 'age', 'pclass']
 
 for col in columns :
     plt.figure()
+    plt.title(col)
     plt.hist(X.iloc[np.where(y==y[0])][col], alpha = .5)
     plt.hist(X.iloc[np.where(y==y[2])][col], alpha = .5)
     
 
 # %%
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(X_with_rnd_feat, y, random_state = 0)
 
 # %% [markdown]
 # ### fit the model
-# For simplicity, we will focus on numericla and categorical feature.
-# Since teh data contains some missing values, we will impute them: the numerical missing value will be impute by the `median`, the categorical missing value will be replace by the categorie "missing".
+# For simplicity, we will focus on the numericla and categorical features.
+# Since the data contains some missing values, we will impute them: the numerical missing value will be impute by the `median`, the categorical missing value will be replace by the category "missing".
 # We then one hot encode the categorical features.
 
 # %%
@@ -102,12 +99,11 @@ preprocessor = ColumnTransformer(
 
 
 # %% [markdown]
-# We are able to fit our model. Since the feature importance algotirgm that we present is model agnostic, it will not depend on the model we choose here. 
-# The objectif is to have a model powerful enough, so intepreting it shall be relevant.
+# We are now able to fit our model. Since the feature importance algotirgm that we present is model agnostic, it will not depend on the model we choose here. 
+# The objectif is however to have a model powerful enough, so intepreting its feature importance shall be relevant.
 
 # %%
-
-from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -120,15 +116,15 @@ model = make_pipeline(preprocessor,
                       clf)
 
 # %%
-_ = model.fit(X_train, y_train)
+model.fit(X_train, y_train)
 
 print(f'model score on training data: {model.score(X_train, y_train)}')
 print(f'model score on testing data: {model.score(X_test, y_test)}')
 
 
 # %% [markdown]
-# The score on test set is .79, so feature importance shall be relevant here for this model. 
-# Note that on train set, the score is almost perfect, it means that the model do overfit completly the training data.
+# The score on test set is .81, so feature importance shall be relevant here for this model. 
+# Note that on train set, the score is perfect, it means that the model do overfit completly the training data.
 
 # %% [markdown]
 # ### Feature importance 
@@ -137,7 +133,7 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
 # The permutation feature importance is defined to be the decrease in a model score when a single feature value is randomly shuffled
 
 # %% [markdown]
-# Lets compute the feature importance for a given feature. say it will be `pclass` (i.e. the passagenr class on the titanic)
+# Lets compute the feature importance for a given feature, say the `pclass` feature (i.e. the passenger class on the titanic)
 #
 # For that, we will shuffle this specific feature, keeping the other feature as is, and run our same model to predict the outcome.
 # The decrease of the score shall indicate how the model had used this feature to predict the target.
@@ -168,8 +164,8 @@ def get_feature_importance(model, X, y, curr_feat):
     feature_importance = baseline_score_train - permuted_score_train
     return feature_importance
 
-curr_feat = 'hours-per-week'
-curr_feat = 'age'
+# curr_feat = 'hours-per-week'
+# curr_feat = 'age'
 curr_feat = 'pclass'
 
 feature_importance = get_feature_importance(model, X_train, y_train, curr_feat)
@@ -190,6 +186,7 @@ print(f'feature importance of "{curr_feat}" on train set is '
 
 
 # %% [markdown]
+# 0.18 over 1. is quit relevant. So we can imagine our model use this feature to predict the class.
 # We can now compute the feature permutation importance for all the features
 
 # %%
@@ -208,10 +205,9 @@ def permutation_importance(model, X, y, n_repeats = 10):
                 'importances_std': np.std(importances, axis=1),
                 'importances': importances}
 
+# This function could also be access by
+# from sklearn.inspection import permutation_importance
 
-
-# %% [markdown]
-# This function could be access by `from sklearn.inspection import permutation_importance`
 
 # %%
 def plot_importantes_features(perm_importance_result, feat_name):
@@ -230,21 +226,18 @@ def plot_importantes_features(perm_importance_result, feat_name):
 
 # %% [markdown]
 # Let's compute the feature importance by permutation on the training data.
-# What the model learnt 
 
 # %%
 perm_importance_result_train = permutation_importance(model, X_train, y_train,
-                           n_repeats=10)
+                           n_repeats=20)
 
 plot_importantes_features(perm_importance_result_train, X_train.columns)
 
 # %% [markdown]
-# We see that the feature `sex` and `pclass` are very important for the model, since it represent a decrease of .30 and .18 in a score of .99.
+# We see that the feature `sex` and `pclass` are very important for the model, since it represent a decrease of .30 and .18 in a score of 1.
 #
 # We note that our random variable `rnd_cat` and `rnd_num` has both .10 of importance score. it means that our model do use these feature to compute the output. It is in line with the overfitting we had notice between the train and test score.
 #
-
-# %% [markdown]
 # Now we compute the feature importance by permutation on the *testing data*.
 
 # %%
@@ -257,7 +250,19 @@ plot_importantes_features(perm_importance_result_test, X_test.columns)
 # We note `sex`, `pclass` and `age` are used by the model.
 # On the contrary the two random variables are now without importance on the test score.
 
+# %% [markdown]
+# Now, let's imagine that our random variable has only distinct value.
+
 # %%
+# num_var = pd.Series(np.arange(X.shape[0]), name = 'rnd_num')
+# X_with_rnd_feat['rnd_num'] = num_var
+# X_train, X_test, y_train, y_test = train_test_split(X_with_rnd_feat, y, random_state = 0)
+# model.fit(X_train, y_train)
+
+# perm_importance_result_train = permutation_importance(model, X_train, y_train,
+#                            n_repeats=20)
+
+# plot_importantes_features(perm_importance_result_train, X_train.columns)
 
 # %% [markdown]
 # # Random Forest feature importances_
@@ -271,9 +276,6 @@ model = make_pipeline(preprocessor,
                       rf)
 
 _ = model.fit(X_train, y_train)
-
-# %% [markdown]
-#
 
 # %%
 feat_name = list(model[0].transformers_[1][1][1].get_feature_names()) + list(numeric_features)

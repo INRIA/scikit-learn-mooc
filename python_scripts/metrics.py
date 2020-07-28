@@ -675,3 +675,89 @@ print(
 # %% [markdown]
 # In this case, our model make an error of 405 bikes.
 # FIXME: **not sure how to introduce the `mean_squared_error`.**
+
+# %% [markdown]
+# In addition of metrics, we can visually represent the results by plotting
+# the predicted values versus the true values.
+
+
+def plot_predicted_vs_actual(y_true, y_pred, title=None):
+    plt.scatter(y_true, y_pred)
+
+    max_value = np.max([y_true.max(), y_pred.max()])
+    plt.plot(
+        [0, max_value],
+        [0, max_value],
+        color="tab:orange",
+        linewidth=3,
+        label="Perfect fit",
+    )
+
+    plt.xlabel("True values")
+    plt.ylabel("Predicted values")
+    plt.axis("square")
+    plt.legend()
+    if title is not None:
+        plt.title(title)
+
+
+plot_predicted_vs_actual(y_test, y_pred)
+
+# %% [markdown]
+# On this plot, the perfect prediction will lay on the diagonal line. This plot
+# allows to detect if the model have a specific regime where our model does not
+# work as expected or has some kinda of bias.
+#
+# Let's take an example using the house prices in Ames.
+
+# %%
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import RidgeCV
+
+X, y = fetch_openml(name="house_prices", as_frame=True, return_X_y=True)
+X = X.select_dtypes(np.number).drop(
+    columns=["LotFrontage", "GarageYrBlt", "MasVnrArea"]
+)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+
+# %% [markdown]
+# We will fit a ridge regressor on the data and plot the prediction versus the
+# actual values.
+
+# %%
+model = make_pipeline(StandardScaler(), RidgeCV())
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+plot_predicted_vs_actual(y_test, y_pred, title="House prices in Ames")
+
+# %% [markdown]
+# On this plot, we see that for the large "True values", our model tend to
+# under-estimate the price of the house. Typically, this issue arises when
+# the target to predict does not follow a normal distribution and the model
+# could benefit of an intermediate target transformation.
+
+# %%
+from sklearn.preprocessing import QuantileTransformer
+from sklearn.compose import TransformedTargetRegressor
+
+model_transformed_target = TransformedTargetRegressor(
+    regressor=model,
+    transformer=QuantileTransformer(
+        n_quantiles=900, output_distribution="normal"
+    ),
+)
+model_transformed_target.fit(X_train, y_train)
+y_pred = model_transformed_target.predict(X_test)
+
+plot_predicted_vs_actual(y_test, y_pred, title="House prices in Ames")
+
+# %% [markdown]
+# Thus, once we transformed the target, we see that we corrected some of the
+# high values.
+#
+# ## Summary
+# In this notebook, we presented the metrics and plots useful to evaluate and
+# get insights about models. We both focus on regression and classification
+# problems.

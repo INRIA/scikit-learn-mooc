@@ -118,8 +118,8 @@ print(
 # %% [markdown]
 # Hence, we have a model that has an $R^2$ score below 0.7. The amount of time
 # to find the best learner depends on the number of fold used during the
-# cross-validation in the grid-search multiplied by the cartesian product of
-# the paramters combination. Therefore, the computational cost is quite high.
+# cross-validation in the grid-search multiplied by the number of parameters.
+# Therefore, the computational cost is quite high.
 #
 # Now we will use an ensemble method called bagging. We will later see more
 # into details this method in the next section. In short, this method will use
@@ -273,9 +273,9 @@ print(
 # be present in the bootstrap sample. The other 36.8% are just some repeated
 # samples.
 #
-# So, we are able to generate as many datasets, all slightly different. Now,
-# we can fit a decision tree for each of these datasets and they will be all
-# slightly different as well.
+# So, we are able to generate many datasets, all slightly different. Now, we
+# can fit a decision tree for each of these datasets and they each decision
+# tree shall be slightly different as well.
 
 # %%
 _, axs = plt.subplots(
@@ -430,7 +430,7 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 #
 # Then, the aggregation method is different in regression and classification:
 # the averaged predictions is computed in regression while the majority class
-# is predicted in classification.
+# (weighted by the probabilities) is predicted in classification.
 #
 # ## Summary
 #
@@ -438,15 +438,14 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # an ensemble of classifiers or regressors. The predictions are then
 # aggregated. These algorithms train several learners on different bootstrap
 # samples. This operation can be done in a very efficient manner since the
-# training of each learner can be done simultaneously.
+# training of each learner can be done in parallel.
 #
 # ## Boosting
 #
-# We recall that bagging builds an ensemble in a sequential manner: each
-# learner is trained on an independent manner from each other. The idea behind
-# boosting is different. The ensemble is created as a sequence of learners
-# where the learner at stage `N` will require all learners from stages 1 to
-# `N-1`.
+# We recall that bagging builds an ensemble in a parallel manner: each learner
+# is trained independently from each other. The idea behind boosting is
+# different. The ensemble is created as a sequence of learners where the
+# learner at stage `N` will require all learners from stages 1 to `N-1`.
 #
 # Intuitively, a learner will be added in the ensemble and will correct the
 # mistakes done by the previous series of learners. We will start with an
@@ -457,7 +456,7 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 #
 # We first focus on AdaBoost which we will apply in a classification setting.
 # We load the "penguin" dataset used in the "tree in depth" notebook where one
-# expect to predict the penguin species from culmen length and depth.
+# expects to predict the penguin species from culmen length and depth.
 # %%
 data = pd.read_csv("../datasets/penguins.csv")
 
@@ -624,9 +623,9 @@ ensemble_weight
 #   to samples;
 # * one needs to assign a weight to each learner when making the predictions.
 #
-# Indeed, we defined a really simple scheme to define sample weights and
+# Indeed, we defined a really simple scheme to assign sample weights and
 # learner weights. However, there are some statistical basis which
-# theoretically defined these weights.
+# theoretically define how these weights should be assigned.
 # FIXME: I think we should add a reference to ESL here.
 #
 # We will use the AdaBoost classifier implemented in scikit-learn and we will
@@ -710,8 +709,8 @@ _ = plt.legend(
 )
 
 # %% [markdown]
-# Since the tree is underfitting the data, the accuracy of the tree is far
-# to be perfect on the training data. We can observe it on the figure by
+# Since the tree is underfitting the data, its accuracy of the tree is far
+# from be perfect on the training data. We can observe it on the figure by
 # looking at the difference between the predictions and the ground-truth data.
 # We represent these errors by a red plain line that we call "Residuals".
 #
@@ -747,8 +746,8 @@ _ = plt.legend(
 )
 
 # %% [markdown]
-# We see that this new tree succeed to correct some of the residuals but not
-# for all training samples. We will focus on the last sample in `x` and
+# We see that this new tree only succeed to correct some of the residuals but
+# not of all training samples. We will focus on the last sample in `x` and
 # explain how the predictions of both trees are combined.
 
 # %%
@@ -835,8 +834,8 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 # enough to correct the residuals for all samples. In this regard, one need to
 # add several trees in the ensemble to succeed to correct the error.
 #
-# We will make a small comparison between random-forest and gradient boosting
-# on the california housing dataset.
+# We will benchmark random-forest and gradient boosting on the California
+# housing dataset.
 
 # %%
 from sklearn.ensemble import GradientBoostingRegressor
@@ -924,8 +923,8 @@ cv_results[columns].sort_values(by="rank_test_score")
 # the tree used in gradient-boosting will have a low depth between 3 to 8
 # levels typically.
 #
-# Having in mind this consideration, deeper will be the trees, the residuals
-# will be corrected faster and less learners are required. So `n_estimators`
+# Having in mind this consideration, deeper will be the trees, faster the
+# residuals will be corrected and less learners are required. So `n_estimators`
 # should be increased if `max_depth` is lower.
 #
 # Finally, we overlook the impact of `learning_rate` parameter up to now. When
@@ -936,7 +935,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 # find a tree that fit the residuals of all samples. So, with a very low
 # learning-rate, we will need more estimators to correct the overall error.
 # However, a too large learning-rate tends to obtain an overfitted ensemble
-# similarly to have a too large tree depth.
+# similarly to having a too large tree depth.
 
 # %%
 param_grid = {
@@ -956,13 +955,13 @@ cv_results[columns].sort_values(by="rank_test_score")
 # ## Accelerate gradient-boosting
 #
 # We previously mentioned that random-forest is an efficient algorithm since
-# each tree of the ensemble can be fitted at the same time from an independent
-# manner. Therefore, the algorithm scale efficiently with both the number of
-# CPUs and the number of samples.
+# each tree of the ensemble can be fitted at the same time independently.
+# Therefore, the algorithm scale efficiently with both the number of CPUs and
+# the number of samples.
 #
 # In gradient-boosting, the algorithm is a sequential algorithm. It requires
 # the `N-1` trees to fit the tree at the stage `N`. Therefore, the algorithm is
-# quite computationally expensive. The most expensive in this algorithm is
+# quite computationally expensive. The most expensive part in this algorithm is
 # indeed the search for the best split in the tree which is a brute-force
 # approach: all possible split are evaluated and the best one is picked. We
 # explain this process in the notebook presenting the tree algorithm to which

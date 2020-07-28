@@ -970,3 +970,14 @@ print(f"Fitting time took: {fit_time_histogram_gradient_boosting:.2f} seconds")
 # The histogram gradient-boosting is the best algorithm in term of score.
 # It will also scale whenever the number of samples increase while the normal
 # gradient-boosting will not.
+#
+# ## Wrap-up
+#
+# So in this notebook we presented ensemble learners which are a type of
+# learners which combined simpler learner together. We saw 2 strategies:
+# one base on bootstrap samples allowing to fit learner in a parallel manner
+# and the other called boosting which fit learners in a sequential manner.
+#
+# From these two families, we mainly focus on giving intuitions regarding the
+# internal machinery of the random forest and gradient-boosting algorithms
+# which are state-of-the-art methods.

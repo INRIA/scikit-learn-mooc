@@ -132,17 +132,34 @@ Feature engineering to limit underfitting
 
 - Video about overfitting?
 
-## Guillaume: Trees in depth + ensembles
+## Guillaume: Trees in depth
 
-## Guillaume: Evaluation of supervised learning models:
+- [x] Notebook
+- [ ] Slides
+- [ ] Reviews
+
+## Guillaume: Ensemble in depth
+
+- [x] Notebook
+- [ ] Slides
+- [ ] Reviews
+
+## Guillaume: Evaluation of supervised learning models
         
-Confusion matrix for classifiers / precision / recall / ROC AUC curve (Mention imbalanced classes)
-Predict vs True plot for regressors
+- [x] Notebook
+- [ ] Slides
+- [ ] Reviews
+
+Need to add regression plots.
 
 ## Gael: Linear models in depth
 Logistic Regression, linear regression, classification vs regression, multi-class, linear separability. Pros and cons
         L1 and L2 penalty for linear models
         Learning curves and validation curves (video: how to read curves)
+        
+- [x] Notebook
+- [x] Slides
+- [ ] Reviews
 
 ## Baselines: majority class classifier (already in second module) and k-nearest neighbors
 
@@ -152,9 +169,10 @@ Binning / Polynomial feature extraction / Nystroem method
         
 Feature selection to combat overfitting and speed-up models
 
-## Univariate feature selection
+## Guillaume: Univariate feature selection
 Show catastrophic example where feature selection is done on the whole dataset rather than only on train
 
+- [ ] Notebook
 
 ## Evaluating the feature importance with permutations
 Failure Mode : cardinality bias of overfitting random forest feature importances

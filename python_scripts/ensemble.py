@@ -442,22 +442,22 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 #
 # ## Boosting
 #
-# We saw that bagging builds an ensemble in a sequential manner: each learner
-# is trained on an independent manner from the each other. The idea behind
-# boosting is different. The ensemble is created as a sequence where the
-# learner at stage `N` will require all learners from 1 to `N-1`.
+# We recall that bagging builds an ensemble in a sequential manner: each
+# learner is trained on an independent manner from each other. The idea behind
+# boosting is different. The ensemble is created as a sequence of learners
+# where the learner at stage `N` will require all learners from stages 1 to
+# `N-1`.
 #
 # Intuitively, a learner will be added in the ensemble and will correct the
 # mistakes done by the previous series of learners. We will start with an
-# algorithm named AdaBoost to get some intuitions regarding some ideas behind
-# boosting.
+# algorithm named AdaBoost to get some intuitions regarding the main ideas
+# behind boosting.
 #
 # ### Adaptive Boosting (AdaBoost)
 #
-# We will first present some fundamental ideas used in AdaBoost to understand
-# the principle of boosting. we will use a classification problem with a
-# dataset already used in the presenting the tree algorithms.
-
+# We first focus on AdaBoost which we will apply in a classification setting.
+# We load the "penguin" dataset used in the "tree in depth" notebook where one
+# expect to predict the penguin species from culmen length and depth.
 # %%
 data = pd.read_csv("../datasets/penguins.csv")
 
@@ -472,8 +472,8 @@ data = data.dropna()
 X, y = data[culmen_columns], data[target_column]
 
 # %% [markdown]
-# We will take from this notebook a function which plots the decision function
-# learnt by the classifier.
+# In addition, we are also using on the function used this previous notebook
+# to plot the decision function of the tree learnt on some given data.
 
 # %%
 import seaborn as sns
@@ -520,10 +520,9 @@ def plot_decision_function(X, y, clf, sample_weight=None, fit=True, ax=None):
 
 
 # %% [markdown]
-# As we previously did, we will train a decision tree classifier with a very
-# shallow depth. We will draw the decision function obtain and we will
-# show the samples for which the tree was not able to make a proper
-# classification.
+# We will train on purpose a shallow decision tree. Since the tree is shallow,
+# it will not overfit and some of the training examples will be misclassified
+# even on the training set.
 
 
 # %%
@@ -547,12 +546,16 @@ ax.plot(
 ax.legend()
 
 # %% [markdown]
-# We can observe that there is several samples for which the current classifier
-# was not able to make the proper decision. As we previously mentioned,
-# boosting relies on creating a new classifier which will try to correct these
-# error. In scikit-learn, learners usually support a parameter `sample_weight`
-# which allows to specify to pay more attention to some specific samples. This
-# parameters is set when calling `classifier.fit(X, y, sample_weight=weights)`.
+# We observe that several samples for which the current classifier was not able
+# to make the proper decision.
+#
+# We mentioned that boosting relies on creating a new classifier which try to
+# correct these errors. In scikit-learn, learners support a parameter
+# `sample_weight` which allows to pay more attention to some specific samples
+# during the training.
+#
+# This parameters is set when calling
+# `classifier.fit(X, y, sample_weight=weights)`.
 # We will use this trick to create a new classifier by discarding all well
 # classified samples and only consider the misclassified samples. Thus,
 # misclassified samples will be assigned a weight of 1 while well classified
@@ -574,7 +577,7 @@ ax.plot(
 ax.legend()
 
 # %% [markdown]
-# We can see that the decision function drastically changed. Qualitatively,
+# We see that the decision function drastically changed. Qualitatively,
 # we see that the previously misclassified samples are now well classified.
 
 # %%
@@ -590,10 +593,12 @@ print(
 )
 
 # %% [markdown]
-# Now, we could think of a simple heuristic to combine together the 2
-# classifiers and make some predictions using both classifiers. For instance,
-# we could assign a weight to each classifier depending on the
-# misclassification rate done on the dataset.
+# However, we are making mistakes on previously well classified samples. Thus,
+# we get the intuition that we should weights the answer of a classifier
+# differently most probably depending on the number of mistake each classifier
+# is making.
+#
+# So we could use the classification error to combine both trees.
 
 ensemble_weight = [
     (y.shape[0] - len(misclassified_samples_idx)) / y.shape[0],
@@ -602,24 +607,30 @@ ensemble_weight = [
 ensemble_weight
 
 # %% [markdown]
-# So for instance, the first classifier was 94% accurate and the second one
-# 69% accurate. Therefore, when predicting a class, I could trust slightly more
-# the first classifier than the second one. Indeed, we could predict a weighted
+# The first classifier was 94% accurate and the second one 69% accurate.
+# Therefore, when predicting a class, we should trust slightly more first
+# classifier instead of the second one. We could predict a weighted
 # prediction using those weight.
 #
-# As a summary, we can note several things. First, we can learn several
-# classifier which will be different by focusing more or less to some specific
-# samples of the dataset. Then, boosting is different from bagging: here we
-# never resample our dataset, we just assign weight to the original dataset.
+# To summarize, we can rise three points to be considered with boosting. First,
+# we can learn several classifiers which will be different by focusing more or
+# less to some specific samples of the dataset. Then, boosting is different
+# from bagging: here we never resample our dataset, we just assign weight to
+# the original dataset.
 #
 # Finally, we see that we need some strategy to combine the learners together:
-# * one need to define a way to compute the weight which need to be assigned to
-#   samples;
-# * one need to assign a weight to each learner when making the predictions.
 #
-# Here, we defined really simple scheme to define the weight. However, there is
-# some statistical basis which can be used to theoretically defined these
-# weights.
+# * one needs to define a way to compute the weight which need to be assigned
+#   to samples;
+# * one needs to assign a weight to each learner when making the predictions.
+#
+# Indeed, we defined a really simple scheme to define sample weights and
+# learner weights. However, there are some statistical basis which
+# theoretically defined these weights.
+# FIXME: I think we should add a reference to ESL here.
+#
+# We will use the AdaBoost classifier implemented in scikit-learn and we will
+# check the underlying decision tree classifiers trained.
 
 # %%
 from sklearn.ensemble import AdaBoostClassifier
@@ -641,10 +652,11 @@ print(f"Weight of each classifier: {adaboost.estimator_weights_}")
 print(f"Error of each classifier: {adaboost.estimator_errors_}")
 
 # %% [markdown]
-# We see that AdaBoost learnt 3 different classifiers focusing on different
-# samples. Looking at the weight of each learner, we see that we are more
-# confident in the first learner than the latest since the weights are
-# decreasing. It is in line of the error rate of each classifier.
+# We see that AdaBoost learnt three different classifiers focusing on different
+# samples. Looking at the weight of each learner, we see that the ensemble give
+# more weights to the first classifier than the others. This is indeed expected
+# when we look at the error of each classifier. The first classifier was having
+# higher classification performance than others.
 #
 # While AdaBoost is a nice algorithm to get the internal machinery of boosting
 # algorithms, this is not the most efficient machine-learning algorithm.
@@ -653,12 +665,15 @@ print(f"Error of each classifier: {adaboost.estimator_errors_}")
 #
 # ### Gradient-boosting decision tree (GBDT)
 #
-# Gradient-boosting differs from AdaBoost since at each stage, it will fit
-# the residuals (hence the name "gradient") instead of the samples themselves.
+# Gradient-boosting differs from AdaBoost due to the following reason: instead
+# of assigning a weights to some specific samples, GBDT will fit a decision
+# tree on the residuals (hence the name "gradient") from the previous trees.
+# Therefore, each new added tree in the ensemble predicts the error made by the
+# previous learners instead of predicing the target directly.
 #
 # In this section, we will provide some intuitions regarding the way learners
-# will be combined to give the final prediction. In this regard, let's start
-# with our regression problem.
+# will be combined to give the final prediction. In this regard, let's go back
+# to our regression problem which is more intuitive to expose the machinery.
 
 # %%
 x, y = generate_data(sorted=True)
@@ -695,16 +710,16 @@ _ = plt.legend(
 )
 
 # %% [markdown]
-# Since the tree is underfitting the data, the accuracy of the tree will is far
+# Since the tree is underfitting the data, the accuracy of the tree is far
 # to be perfect on the training data. We can observe it on the figure by
 # looking at the difference between the predictions and the ground-truth data.
-# We represent these data by a red plain line that we call "Residuals".
+# We represent these errors by a red plain line that we call "Residuals".
 #
 # Indeed, our initial tree was not enough expressive to handle these changes.
 # In a gradient-boosting algorithm, the idea will be to create a second tree
 # which given the same data `x` will try to predict the residuals instead of
-# `y`. Therefore, we will have a tree able to predict the error made by the
-# initial tree.
+# the target `y`. Therefore, we will have a tree able to predict the error made
+# by the initial tree.
 #
 # Let's train such a tree.
 
@@ -732,12 +747,11 @@ _ = plt.legend(
 )
 
 # %% [markdown]
-# We see that this new tree succeed to correct the residual for some specific
-# samples but not for others. We will focus on the last sample of `x` and
+# We see that this new tree succeed to correct some of the residuals but not
+# for all training samples. We will focus on the last sample in `x` and
 # explain how the predictions of both trees are combined.
 
 # %%
-
 _, axs = plt.subplots(ncols=2, figsize=(12, 6), sharex=True)
 
 axs[0].scatter(x, y, color="k", s=9)
@@ -758,15 +772,24 @@ for idx in range(len(y)):
         [x[idx], x[idx]], [residuals[idx], y_pred_residuals[idx]], color="red",
     )
 
+axs[0].scatter(x[-1], y[-1], color="tab:orange", label="Sample of interest")
+axs[1].scatter(
+    x[-1], residuals[-1], color="tab:orange", label="Sample of interest"
+)
+
 axs[0].set_xlim([1.1, 1.4])
-_ = axs[1].set_xlim([1.1, 1.4])
+axs[1].set_xlim([1.1, 1.4])
+axs[0].set_ylim([0, 2])
+axs[1].set_ylim([-0.7, 0.7])
+axs[0].legend()
+axs[1].legend()
 
 # %% [markdown]
-# For this last sample, we see that our initial tree is making an error
-# (small residual). When fitting the second tree, the residual in this case is
-# perfectly fitted. We can check the prediction quantitatively using the tree
-# predictions. First, let's check the prediction of the initial tree and
-# compare it with the true value to predict.
+# For this sample, our initial tree is making an error (small residual). When
+# fitting the second tree, the residual in this case is perfectly fitted and
+# predicted. We will check quantitatively this prediction using the fitted
+# tree. First, let's check the prediction of the initial tree and compare it
+# with the true value to predict.
 
 # %%
 x_max = x[-1]
@@ -782,7 +805,7 @@ print(
 print(f"Error of the tree: {y_true - y_pred_first_tree:.3f}")
 
 # %% [markdown]
-# As we visually observed, we have a small residual. Now, we can use the second
+# As we visually observed, we have a small error. Now, we can use the second
 # tree to try to predict this residual.
 
 # %%
@@ -807,10 +830,10 @@ print(
 print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 
 # %% [markdown]
-# We choose a sample for which only 2 trees were enough to make the perfect
-# prediction. However, we saw in the previous plot that 2 trees were not enough
-# to correct the residuals for all samples. In this regard, one need to add
-# several trees in the ensemble to succeed to correct the error.
+# We choose a sample for which only two trees were enough to make the perfect
+# prediction. However, we saw in the previous plot that two trees were not
+# enough to correct the residuals for all samples. In this regard, one need to
+# add several trees in the ensemble to succeed to correct the error.
 #
 # We will make a small comparison between random-forest and gradient boosting
 # on the california housing dataset.
@@ -845,19 +868,19 @@ print(f"Fitting time took: {fit_time_random_forest:.2f} seconds")
 
 # %% [markdown]
 # In term of computation performance, the forest can be parallelized and will
-# benefit from the having multiple CPU. In terms of scoring performance, the
-# algorithm leads to very close results and are both really robust and
-# efficient.
+# benefit from the having multiple CPUs. In terms of scoring performance, both
+# algorithms lead to very close results.
 #
 # ## Parameters consideration with random forest and gradient-boosting
 #
-# In the previous section, we did not focus on the parameters of random forest
-# and gradient-boosting.
+# In the previous section, we did not discuss the parameters of random forest
+# and gradient-boosting. However, there is a couple of things to have in mind
+# when using these classifiers and the way to set these parameters.
 #
 # ### Random forest
 #
 # The main parameters to tune with random forest is the `n_estimators`
-# parameter. In general, more trees in the forest the better will be the
+# parameter. In general, more trees in the forest, the better will be the
 # performance. However, it will slow down the fitting and prediction time. So
 # one have to consider limiting the number of estimators when putting such
 # learner in production.
@@ -884,34 +907,35 @@ cv_results = pd.DataFrame(grid_search.cv_results_)
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
-# We can observe that in our grid-search, the larger `max_depth` with the
+# We can observe that in our grid-search, the largest `max_depth` together with
 # largest `n_estimators` lead to the best performance.
 #
 # Gradient-boosting decision tree
 #
 # In gradient-boosting, parameters tuning is a combination of several
-# parameters: `n_estimators`, `max_depth`, and `learning_rate`.
+# parameters instead of setting one after the other each parameter. The
+# important parameters are `n_estimators`, `max_depth`, and `learning_rate`.
 #
-# Let's first discuss about the `max_depth`. We saw in the section of the
-# gradient-boosting that the algorithm fit the error of the previous trees in
-# the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed,
+# Let's first discuss about the `max_depth` parameter. We saw in the section of
+# the gradient-boosting that the algorithm fit the error of the previous trees
+# in the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed,
 # the first tree of the ensemble will overfit the data and thus no subsequent
 # tree is required since there will be no residuals to be fitted. Therefore,
 # the tree used in gradient-boosting will have a low depth between 3 to 8
 # levels typically.
 #
 # Having in mind this consideration, deeper will be the trees, the residuals
-# will be corrected faster and with a lower number of estimators. So
-# `n_estimators` should be increased if `max_depth` is lower.
+# will be corrected faster and less learners are required. So `n_estimators`
+# should be increased if `max_depth` is lower.
 #
-# Finally, we did not explain what `learning_rate` parameter was corresponding
-# too. When fitting the residual one could choose if the tree should try to
-# correct all possible errors or only a fraction of it. The learning-rate is
-# allowing to control this behaviour. A small value of learning-rate will only
-# correct the residuals of very few samples. If the learning-rate is set to 1
-# then we will find a tree that fit the residuals of all samples. So, with a
-# very low learning-rate, we will need more estimators to correct the error.
-# However, a too large learning-rate will tend obtain an overfitted ensemble
+# Finally, we overlook the impact of `learning_rate` parameter up to now. When
+# fitting the residual one could choose if the tree should try to correct all
+# possible errors or only a fraction of it. The learning-rate is allowing to
+# control this behaviour. A small value of learning-rate will only correct the
+# residuals of very few samples. If the learning-rate is set to 1 then we will
+# find a tree that fit the residuals of all samples. So, with a very low
+# learning-rate, we will need more estimators to correct the overall error.
+# However, a too large learning-rate tends to obtain an overfitted ensemble
 # similarly to have a too large tree depth.
 
 # %%
@@ -933,25 +957,28 @@ cv_results[columns].sort_values(by="rank_test_score")
 #
 # We previously mentioned that random-forest is an efficient algorithm since
 # each tree of the ensemble can be fitted at the same time from an independent
-# manner.
+# manner. Therefore, the algorithm scale efficiently with both the number of
+# CPUs and the number of samples.
 #
-# In gradient-boosting, the algorithm is a sequential algorithm. it requires
-# the `N-1` trees to fit the tree at the stage `N`. Therefore, the algorithm
-# is quite computationally expensive. The most expensive in this algorithm is
-# indeed the search for the best split which is a brute-force approach: all
-# possible split are evaluated and the best one is picked. We explain this
-# process in the notebook presenting the tree algorithm to which you can refer.
+# In gradient-boosting, the algorithm is a sequential algorithm. It requires
+# the `N-1` trees to fit the tree at the stage `N`. Therefore, the algorithm is
+# quite computationally expensive. The most expensive in this algorithm is
+# indeed the search for the best split in the tree which is a brute-force
+# approach: all possible split are evaluated and the best one is picked. We
+# explain this process in the notebook presenting the tree algorithm to which
+# you can refer.
 #
-# To accelerate the gradient-boosting algorithm, one could reduce the number
-# of split to be evaluated. Thus, the score of such tree will be much lower.
-# However, since we are combining several trees in a gradient-boosting, we are
-# just required to add enough estimator to overcome this issue.
+# To accelerate the gradient-boosting algorithm, one could reduce the number of
+# split to be evaluated. As a consequence, the scoring performance of such a
+# tree will be reduced. However, since we are combining several trees in a
+# gradient-boosting, we are just required to add enough estimators to overcome
+# this issue.
 #
 # This algorithm is called `HistGradientBoostingClassifier` and
-# `HistGradientBoostingRegressor`. Indeed, the dataset `X` is first binned
-# by computing histograms to make the split. The number of splits to evaluate
-# is much smaller. This algorithm becomes extremely efficient when the dataset
-# has 10,000+ samples.
+# `HistGradientBoostingRegressor`. Indeed, the dataset `X` is first binned by
+# computing histograms later used to evaluate the potential splits. The number
+# of splits to evaluate is then much smaller. This algorithm becomes extremely
+# efficient when the dataset has 10,000+ samples.
 #
 # We are giving an example of such dataset and we can compare it with the
 # earlier experiment in the previous section.
@@ -975,13 +1002,13 @@ print(f"Fitting time took: {fit_time_histogram_gradient_boosting:.2f} seconds")
 
 # %% [markdown]
 # The histogram gradient-boosting is the best algorithm in term of score.
-# It will also scale whenever the number of samples increase while the normal
+# It will also scale whenever the number of samples increases while the normal
 # gradient-boosting will not.
 #
 # ## Wrap-up
 #
 # So in this notebook we presented ensemble learners which are a type of
-# learners which combined simpler learner together. We saw 2 strategies:
+# learners which combined simpler learner together. We saw two strategies:
 # one base on bootstrap samples allowing to fit learner in a parallel manner
 # and the other called boosting which fit learners in a sequential manner.
 #

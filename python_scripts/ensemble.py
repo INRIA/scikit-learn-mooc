@@ -419,24 +419,26 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # with the parameter `max_features="sqrt"` if we want the bagging classifier
 # and the random forest classifier to have the same behaviour.
 #
-# ### What is the difference between regressor and classifier
+# ### Specificities regarding the classifiers.
 #
-# Up to now, we only focused on regression problem. There is little difference
-# between regression and classification. The first difference is that we are
-# using classifiers as base estimator instead of regressors. The second
-# difference lies in the way we aggregate the predictions. With the regressors,
-# we were computing the averaged of the predictions. In classification, we
-# will make a majority vote to give the final prediction. We can easily derived
-# probabilities by looking at the prediction class counts.
+# Up to now, we only focused on regression problems. There is little a
+# difference between regression and classification.
+#
+# First, the `base_estimator` should be chosen in line with the problem that
+# is solved: use a classifier with a classification problem and a regressor
+# with a regression problem.
+#
+# Then, the aggregation method is different in regression and classification:
+# the averaged predictions is computed in regression while the majority class
+# is predicted in classification.
 #
 # ## Summary
 #
-# We saw in this section 2 algorithms which use bootstrap samples to create
-# an ensemble classifiers or regressors. The predictions are then aggregated.
-# These algorithms train several classifiers or regressors on different
-# bootstrap samples. This operation can be done in a very efficient manner
-# since the training of each classifier or regressor can be done
-# simultaneously.
+# We saw in this section two algorithms which use bootstrap samples to create
+# an ensemble of classifiers or regressors. The predictions are then
+# aggregated. These algorithms train several learners on different bootstrap
+# samples. This operation can be done in a very efficient manner since the
+# training of each learner can be done simultaneously.
 #
 # ## Boosting
 #

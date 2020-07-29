@@ -64,8 +64,10 @@ data["native-country"].value_counts()
 data.dtypes
 
 # %%
-categorical_columns = [
-    c for c in data.columns if data[c].dtype.kind not in ["i", "f"]]
+from sklearn.compose import make_column_selector as selector
+
+categorical_columns_selector = selector(dtype_exclude=["int", "float"])
+categorical_columns = categorical_columns_selector(data)
 categorical_columns
 
 # %%

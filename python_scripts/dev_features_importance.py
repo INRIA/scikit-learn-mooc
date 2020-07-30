@@ -18,7 +18,7 @@
 # In this notebook, we will detail methods to investigate the importance of features used by a given a model.
 # We will look at:
 #
-# 1. interpreting coefficient in a linear model;
+# 1. interpreting the coefficients in a linear model;
 # 2. the attribute `feature_importances_` in RandomForrest;
 # 3. `permutation feature importance`, which is an inspection technique that can be used for any fitted model.
 
@@ -26,7 +26,7 @@
 # ## 0. Presentation of the dataset
 
 # %% [markdown]
-# This dataset is a record of neighborhoods in California district, predicting the **median house value** (target) given some information about the neighborhoods, as the average number of rooms, the latitude, the longitude and the median income of people in the neighborhoods (block).
+# This dataset is a record of neighborhoods in California district, predicting the **median house value** (target) given some information about the neighborhoods, as the average number of rooms, the latitude, the longitude or the median income of people in the neighborhoods (block).
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -45,19 +45,17 @@ X.head()
 # - AveOccup average house occupancy
 # - Latitude house block latitude
 # - Longitude house block longitude
-
-# %%
-y.head()
+# - MedHouseVal Median house value in 100k$ *(target)* 
 
 # %% [markdown]
-# To assert the quality of our inspection technique, let's add some random feature that won't help the prediction (uninformative feature)
+# To assert the quality of our inspection technique, let's add some random feature that won't help the prediction (un-informative feature)
 
 # %%
 import numpy as np
 
 # Adding random features
 rng = np.random.RandomState(0)
-cat_var = pd.Series(rng.randint(0,3, X.shape[0]), name = 'rnd_cat')
+bin_var = pd.Series(rng.randint(0,1, X.shape[0]), name = 'bin_cat')
 num_var = pd.Series(np.arange(X.shape[0]), name = 'rnd_num')
 X_with_rnd_feat = pd.concat((X, cat_var, num_var), axis = 1)
 
@@ -83,7 +81,6 @@ _ = sns.pairplot(train_dataset[['MedHouseVal', 'Latitude', 'AveRooms', 'MedInc']
 
 # %% [markdown]
 # We see in the upper right plot that the median income seems to be positively correlated to the median house price (the target).
-# Moreover, AveRooms and AveBedrms are also strongly correlated
 
 # %% [markdown]
 # ## 1. Linear model inspection
@@ -105,7 +102,7 @@ print(f'model score on training data: {model.score(X_train, y_train)}')
 print(f'model score on testing data: {model.score(X_test, y_test)}')
 
 # %% [markdown]
-# Our linear model obtain a $R^2$ score of .60, so it explain a significant part of the target. its coefficient should be somehow relevant.
+# Our linear model obtain a $R^2$ score of .60, so it explain a significant part of the target. Its coefficient should be somehow relevant.
 # Let's look at the coefficient learnt
 
 # %%
@@ -122,12 +119,12 @@ plt.axvline(x=0, color='.5')
 plt.subplots_adjust(left=.3)
 
 # %% [markdown]
-# The AveBedrms have the higher coefficient. However, we can't compare the magnitude of this coefficients directly, since they are not scaled.
+# The `AveBedrms` have the higher coefficient. However, we can't compare the magnitude of this coefficients directly, since they are not scaled.
 # Indeed, population is a integer which can be thousand, while AvergaeBedrooms is around 4 and Latitude is in degree.
 #
-# So the Population coefficient is expressed in "dollar / habitant" while the AveBedrms is expressed in "dollar / nb of bedrooms" and the Latitude coefficient in "dollar / degree". 
+# So the Population coefficient is expressed in "$100k\$$ / habitant" while the AveBedrms is expressed in "$100k\$$ / nb of bedrooms" and the Latitude coefficient in "$100k\$$ / degree". 
 #
-# We see that changing population by one do not change the outcome, while as we go south (lattitude increase) the price become cheaper. Also, adding a bedrooms (keeping all other feature constant) shall rise the price of the house.
+# We see that changing population by one do not change the outcome, while as we go south (lattitude increase) the price become cheaper. Also, adding a bedrooms (keeping all other feature constant) shall rise the price of the house by 80k$.
 
 # %% [markdown]
 # So looking at the coefficient plot to gauge feature importance can be misleading as some of them vary on a small scale, while others, varies a lot more, several decades.
@@ -141,7 +138,7 @@ plt.subplots_adjust(left=.3)
 plt.xlim((0,100))
 
 # %% [markdown]
-# So before any interpretation, we need to scale each column (i.e. removing the mean and scaling the variance to 1).
+# So before any interpretation, we need to scale each column (removing the mean and scaling the variance to 1).
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -172,8 +169,7 @@ plt.subplots_adjust(left=.3)
 #
 # The median income feature, with longitude and latitude are the three variables that most influence the model.
 #
-# The plot above tells us about dependencies between a specific feature and the target when all other features remain constant, i.e., conditional dependencies. An increase of the House age will induce a increase of the price when all other features remain constant. On the contrary, an increase of the average rooms will induce an decrease of the price when all other features remain constant. Also, median income, latitude and longitude 
-#
+# The plot above tells us about dependencies between a specific feature and the target when all other features remain constant, i.e., conditional dependencies. An increase of the `HouseAge` will induce a increase of the price when all other features remain constant. On the contrary, an increase of the average rooms will induce an decrease of the price when all other features remain constant.
 
 # %% [markdown]
 # ### Checking the variability of the coefficients
@@ -211,7 +207,7 @@ plt.subplots_adjust(left=.3)
 # ### Linear models with sparse coefficients (Lasso)
 
 # %% [markdown]
-# In order to illustrate feature selection with a L1 penalty, let's build a Lasso model with a strong regularization parameters `alpha`
+# In order to illustrate feature selection with a L1 penalty, let's fit a Lasso model with a strong regularization parameters `alpha`
 
 # %%
 from sklearn.linear_model import Lasso
@@ -254,7 +250,7 @@ plt.subplots_adjust(left=.3)
 # ## 2. RandomForest `feature_importances_`
 #
 # On some algorithm, there pre-exist some feature importance method, inherently build within the model. 
-# It is the case in RandomForrest models. Let's investigate the build-in attribute on our model.
+# It is the case in RandomForrest models. Let's investigate the build-in `feature_importances_` attribute.
 
 # %%
 from sklearn.ensemble import RandomForestRegressor
@@ -287,27 +283,19 @@ _ = ax.set_yticklabels(np.array(X_train.columns)[indices])
 # %% [markdown]
 # Median income is still the most important feature. 
 #
-# It also has a small bias toward high cardinality feature, such as the noisy feature `rnd_num`, which are here predicted having .07 importance, more than `HouseAge` (with low cardinality).
-#
+# It also has a small bias toward high cardinality feature, such as the noisy feature `rnd_num`, which are here predicted having .07 importance, more than `HouseAge` (which has low cardinality).
 
 # %% [markdown]
 # ## 3. Feature importance by permutation
 #
-# The permutation feature importance is defined to be the decrease in a model score when a single feature value is randomly shuffled
-
-# %% [markdown]
-# Since the feature importance algotirgm that we present is model agnostic, it will not depend on the model we choose here. 
-# The objectif is however to have a model powerful enough, so intepreting its feature importance shall be relevant.
+# We introduce here a new technique to evaluate the feature importance of any given fitted model. It basically shuffle a feature and see how the model changes is prediction. Thus, the change in prediction will be correspond to the feature importance.
 
 # %%
-reg = RandomForestRegressor()
-# reg = RidgeCV()
+# Any model could be used here
 
-model = make_pipeline(StandardScaler(),
-                      reg)
-
-# %%
-clf.fit(X_train, y_train)
+model = RandomForestRegressor()
+# model = make_pipeline(StandardScaler(),
+#                       RidgeCV())
 
 # %%
 model.fit(X_train, y_train)
@@ -318,7 +306,6 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
 
 # %% [markdown]
 # The score on test set is .81, so feature importance shall be relevant here for this model. 
-# Note that on train set, the score is perfect, it means that the model do overfit completly the training data.
 
 # %% [markdown]
 # ### Feature importance 
@@ -326,10 +313,11 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
 # %% [markdown]
 # Lets compute the feature importance for a given feature, say the `MedInc` feature.
 #
-# For that, we will shuffle this specific feature, keeping the other feature as is, and run our same model to predict the outcome.
+# For that, we will shuffle this specific feature, keeping the other feature as is, and run our same model (already fitted) to predict the outcome.
 # The decrease of the score shall indicate how the model had used this feature to predict the target.
+# The permutation feature importance is defined to be the decrease in a model score when a single feature value is randomly shuffled
 #
-# For instance, if the feature is crucial for the model, the outcome would also be permuted (just as the feature), thus the score would be close to zero. Afterward, the feature importance is compute as being egal to the decrease in score. So in that case, the feature importance would be close to the score.
+# For instance, if the feature is crucial for the model, the outcome would also be permuted (just as the feature), thus the score would be close to zero. Afterward, the feature importance is the decrease in score. So in that case, the feature importance would be close to the score.
 #
 # On the contrary, if the feature is not used by the model, the score shall remain the same, thus the feature importance will be close to 0.
 
@@ -337,9 +325,9 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
 def get_score_after_permutation(model, X, y, curr_feat):
     """ return the score of model when curr_feat is permuted """
     
-    # permute one column in pandas DataFrame
     X_permuted = X.copy()
     col_idx = list(X.columns).index(curr_feat)
+    # permute one column
     X_permuted.iloc[:, col_idx] = np.random.permutation(X_permuted[curr_feat].values)
     
     permuted_score = model.score(X_permuted, y)
@@ -348,6 +336,7 @@ def get_score_after_permutation(model, X, y, curr_feat):
 
 def get_feature_importance(model, X, y, curr_feat):
     """ compare the score when curr_feat is permuted """
+    
     baseline_score_train = model.score(X, y)
     permuted_score_train = get_score_after_permutation(model, X, y, curr_feat)
     
@@ -375,7 +364,7 @@ print(f'feature importance of "{curr_feat}" on train set is '
 
 
 # %% [markdown]
-# 0.83 over .79 is very relevant (note the R2 score could go below 0). So we can imagine our model rely evely on this feature to predict the class.
+# 0.86 over .97 is very relevant (note the R2 score could go below 0). So we can imagine our model rely evely on this feature to predict the class.
 # We can now compute the feature permutation importance for all the features
 
 # %%
@@ -422,22 +411,19 @@ perm_importance_result_train = permutation_importance(model, X_train, y_train,
 
 plot_importantes_features(perm_importance_result_train, X_train.columns)
 
-# %%
-
 # %% [markdown]
 # We see again that the feature  `MedInc`, `Latitude` and `Longitude` are very important for the model.
 #
-# We note that our random variable `rnd_num` is now very less importante than latitude. Indeed, the feature importance build-in in Random Forest has bias for continous data =, such as AveOccup and rnd_num.
+# We note that our random variable `rnd_num` is now very less importante than latitude. Indeed, the feature importance build-in in RandomForest has bias for continous data, such as `AveOccup` and `rnd_num`.
 #
 # However, the model still use these `rnd_num` feature to compute the output. It is in line with the overfitting we had notice between the train and test score.
-# x
 
 # %% [markdown]
 # ### discussion
 #
-# 2. For correlated feature, the permutation could give non realistic sample (e.g. nb of bedrooms higher than the number of rooms)
-# 3. It is unclear whether you should use training or testing data to compute the feature importance.
-# 1. Note that dropping a column and fitting a new model will not allow to analyse the feature importance for a specific model, since a *new* model will be fitted.
+# 1. For correlated feature, the permutation could give non realistic sample (e.g. nb of bedrooms higher than the number of rooms)
+# 2. It is unclear whether you should use training or testing data to compute the feature importance.
+# 3. Note that dropping a column and fitting a new model will not allow to analyse the feature importance for a specific model, since a *new* model will be fitted.
 
 # %% [markdown]
 # # Take Away
@@ -446,5 +432,5 @@ plot_importantes_features(perm_importance_result_train, X_train.columns)
 
 # %% [markdown]
 # * One could directly interpret the coefficient in linear model (if the feature have been scaled first)
-# * other model like RandomForest have build-in feature importance
+# * Model like RandomForest have build-in feature importance
 # * `permutation_importance` gives feature importnace by permutation for any fitted model

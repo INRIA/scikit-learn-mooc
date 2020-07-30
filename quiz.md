@@ -32,9 +32,13 @@ c) if the data are polynomial
 d) if the data are one dimensional
 e) always
 
+_solution_ e) linearRegression optimize only the error, while Ridge has a trade off between the error and the regularization of the model
+
 2. mean squared error is a measure:
 a) for regression b) for classification
 c) better when higher d) better when lower
+
+_solution_ a) & d) contrary to a score, an error is always better when lower
 
 3. Ridge model is:
 a) same as LinearRegression with penalized weights
@@ -42,16 +46,22 @@ b) same as LogisticRegression with penalized weights
 c) a Linear model
 d) a non linear model
 
-4. The parameter alpha in Ridge is learnt:
-a) During the fit on the train set
-b) by cross validation on the train set
-c) by cross validation on the test set
+_solution_ a) & c) LogisticRegression already come with a regularization parameter
+
+4. The parameter alpha in Ridge is:
+a) Learnt during the fit on the train set
+b) choose by cross validation on the train set
+c) choose by cross validation on the test set
 d) could be choose by hand a priori
+
+_solution_ b) & d) Only `coef_` and `intercept_` are fitted during the fit. One could never choose any hyper-parameters on the test set (it is overfitting)
 
 5. Which error/score could be used for classification:
 a) Mean squared error
 b) R2 score
 c) Accuracy score
+
+_solution_ c) Mean squared error and R2 score are for regression
 
 6. In a linear model, the number of parameters learnt are:
 a) proportional to the number of samples
@@ -59,6 +69,7 @@ b) proportional to the number of features
 c) fixed (chose by hand a priori)
 d) proportional to the number of iteration
 
+_solution_ 
 # Trees
 
 1. How could we prevent overfitting within a tree model ?
@@ -139,3 +150,4 @@ c) characterize the performance of a regression model
 
 # Ensemble
 
+# Feature importance

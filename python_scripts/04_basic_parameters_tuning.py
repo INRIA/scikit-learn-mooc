@@ -1,7 +1,6 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: python_scripts//py:percent,notebooks//ipynb
 #     text_representation:
 #       extension: .py
 #       format_name: percent
@@ -19,11 +18,12 @@
 # The process of learning a predictive model is driven by a set of internal
 # parameters and a set of training data. These internal parameters are called
 # hyper-parameters and are specific for each family of models. In addition, a
-# specific set of parameters are optimal for a specific dataset and thus they
+# specific set of hyper-parameters are optimal for a specific dataset and thus they
 # need to be optimized.
+# In this notebook we will use the words "hyper-parameters" and "parameters" interchangeably
 #
 # This notebook shows:
-# * the influence of changing model parameters;
+# * the influence of changing model hyper-parameters;
 # * how to tune these hyper-parameters;
 # * how to evaluate the model performance together with hyper-parameter
 #   tuning.
@@ -172,8 +172,8 @@ for param_name in model.get_params().keys():
 # %% [markdown]
 # ## Exercises:
 #
-# Use the previously defined model (called `model`) and using two nested `for`
-# loops, make a search of the best combinations of the `learning_rate` and
+# By using the previously defined model (called `model`) and using two nested `for`
+# loops, make a search for the best combinations of the `learning_rate` and
 # `max_leaf_nodes` parameters. In this regard, you will need to train and test
 # the model by setting the parameters. The evaluation of the model should be
 # performed using `cross_val_score`. We can propose to define the following
@@ -212,7 +212,7 @@ print(f"The test accuracy score of the grid-searched pipeline is: "
 # all hyper-parameters and their associated values. The grid-search will be in
 # charge of creating all possible combinations and test them.
 #
-# The number of combinations will be equal to the cardesian product of the
+# The number of combinations will be equal to the product of the
 # number of values to explore for each parameter (e.g. in our example 3 x 3
 # combinations). Thus, adding new parameters with their associated values to be
 # explored become rapidly computationally expensive.
@@ -237,7 +237,7 @@ print(f"The best set of parameters is: "
 
 # %% [markdown]
 # In addition, we can inspect all results which are stored in the attribute
-# `cv_results_` of the grid-search. We will filter some specific columns to
+# `cv_results_` of the grid-search. We will filter some specific columns
 # from these results
 
 # %%
@@ -246,7 +246,8 @@ cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
 cv_results.head()
 
 # %% [markdown]
-# Let us focus on the most interesting columns and shorten the parameter names to remove the `"param_classifier__"` prefix for readability:
+# Let us focus on the most interesting columns and shorten the parameter
+# names to remove the `"param_classifier__"` prefix for readability:
 
 # %%
 # get the parameter names
@@ -268,10 +269,10 @@ cv_results
 
 # %% [markdown]
 # With only 2 parameters, we might want to visualize the grid-search as a
-# heatmap. We need to transform our `cv_results` into a dataframe where the
-# rows will correspond to the learning-rate values and the columns will
-# correspond to the maximum number of leaf and the content of the dataframe
-# will be the mean test scores.
+# heatmap. We need to transform our `cv_results` into a dataframe where:
+# - the rows will correspond to the learning-rate values
+# - the columns will correspond to the maximum number of leaf
+# - the content of the dataframe will be the mean test scores.
 
 # %%
 pivoted_cv_results = cv_results.pivot_table(
@@ -291,20 +292,20 @@ ax.invert_yaxis()
 # %% [markdown]
 # The above tables highlights the following things:
 #
-# - for too high values of the value of `learning_rate`, the performance of the model is degraded and adjusting the value of `max_leaf_nodes` cannot fix that problem;
+# - for too high values of `learning_rate`, the performance of the model is degraded and adjusting the value of `max_leaf_nodes` cannot fix that problem;
 # - outside of this pathological region, we observe that the optimal choice of `max_leaf_nodes` depends on the value of `learning_rate`;
 # - in particular, we observe a "diagonal" of good models with an accuracy close to the maximal of 0.87: when the value of `max_leaf_nodes` is increased, one should increase the value of `learning_rate` accordingly to preserve a good accuracy.
 #
 # The precise meaning of those two parameters will be explained in a latter notebook.
 #
-# For now we will note that, in general, **there is no unique optimal parameter setting**: 6 models out of the 16 parameter configuration reach the maximal accuracy (up to smal random fluctuations caused by the sampling of the training set).
+# For now we will note that, in general, **there is no unique optimal parameter setting**: 6 models out of the 16 parameter configuration reach the maximal accuracy (up to small random fluctuations caused by the sampling of the training set).
 
 # %% [markdown]
 # ## Hyper-parameter tuning with Random Search
 #
 #
 # With the `GridSearchCV` estimator, the parameters need to be specified
-# explicitely. We mentioned that exploring a large number of values for
+# explicitly. We already mentioned that exploring a large number of values for
 # different parameters will be quickly untractable.
 #
 # Instead, we can randomly generate the parameter candidates. The
@@ -520,8 +521,7 @@ print(scores)
 #
 # * manually tuned the hyper-parameters of a machine-learning pipeline;
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
-#   by exhaustively searching the best combination of parameters from a defined
-#   grid;
+#   exhaustively searching the best combination from a defined grid;
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
 #   drawing values candidates from some predefined distributions;
 # * nested an hyper-parameters tuning procedure within an cross-validation
@@ -536,5 +536,3 @@ print(scores)
 #   be tuned on the training data of a predifined train test split;
 # * alternatively it is possible to nest parameter tuning within a
 #   cross-validation scheme.
-
-# %%

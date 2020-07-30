@@ -323,26 +323,26 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
  
 # %%
 def get_score_after_permutation(model, X, y, curr_feat):
-   """ return the score of model when curr_feat is permuted """
-  
-   X_permuted = X.copy()
-   col_idx = list(X.columns).index(curr_feat)
-   # permute one column
-   X_permuted.iloc[:, col_idx] = np.random.permutation(X_permuted[curr_feat].values)
-  
-   permuted_score = model.score(X_permuted, y)
-   return permuted_score
+    """ return the score of model when curr_feat is permuted """
+   
+    X_permuted = X.copy()
+    col_idx = list(X.columns).index(curr_feat)
+    # permute one column
+    X_permuted.iloc[:, col_idx] = np.random.permutation(X_permuted[curr_feat].values)
+   
+    permuted_score = model.score(X_permuted, y)
+    return permuted_score
  
  
 def get_feature_importance(model, X, y, curr_feat):
-   """ compare the score when curr_feat is permuted """
-  
-   baseline_score_train = model.score(X, y)
-   permuted_score_train = get_score_after_permutation(model, X, y, curr_feat)
-  
-   # feature importance is the difference between the two scores
-   feature_importance = baseline_score_train - permuted_score_train
-   return feature_importance
+    """ compare the score when curr_feat is permuted """
+
+    baseline_score_train = model.score(X, y)
+    permuted_score_train = get_score_after_permutation(model, X, y, curr_feat)
+
+    # feature importance is the difference between the two scores
+    feature_importance = baseline_score_train - permuted_score_train
+    return feature_importance
  
 curr_feat = 'MedInc'
  
@@ -357,10 +357,10 @@ n_repeats = 10
  
 list_feature_importance = []
 for n_round in range(n_repeats):
-   list_feature_importance.append(get_feature_importance(model, X_train, y_train, curr_feat))
+    list_feature_importance.append(get_feature_importance(model, X_train, y_train, curr_feat))
   
 print(f'feature importance of "{curr_feat}" on train set is '
-     f'{np.mean(list_feature_importance):.3} +/- {np.std(list_feature_importance):.3}')
+      f'{np.mean(list_feature_importance):.3} +/- {np.std(list_feature_importance):.3}')
  
  
 # %% [markdown]
@@ -369,19 +369,19 @@ print(f'feature importance of "{curr_feat}" on train set is '
  
 # %%
 def permutation_importance(model, X, y, n_repeats = 10):
-   """Calculate importance score for each feature."""
+    """Calculate importance score for each feature."""
+   
+    importances = []
+    for curr_feat in X.columns:
+        list_feature_importance = []
+        for n_round in range(n_repeats):
+            list_feature_importance.append(get_feature_importance(model, X, y, curr_feat))
   
-   importances = []
-   for curr_feat in X.columns:
-       list_feature_importance = []
-       for n_round in range(n_repeats):
-           list_feature_importance.append(get_feature_importance(model, X, y, curr_feat))
- 
-       importances.append(list_feature_importance)
- 
-   return {'importances_mean': np.mean(importances, axis=1),
-               'importances_std': np.std(importances, axis=1),
-               'importances': importances}
+        importances.append(list_feature_importance)
+  
+    return {'importances_mean': np.mean(importances, axis=1),
+            'importances_std': np.std(importances, axis=1),
+            'importances': importances}
  
 # This function could directly be access from sklearn
 # from sklearn.inspection import permutation_importance
@@ -389,17 +389,17 @@ def permutation_importance(model, X, y, n_repeats = 10):
  
 # %%
 def plot_importantes_features(perm_importance_result, feat_name):
-   """ bar plot the feature importance """
-  
-   fig, ax = plt.subplots()
-  
-   indices = perm_importance_result['importances_mean'].argsort()
-   plt.barh(range(len(indices)),
-            perm_importance_result['importances_mean'][indices],
-            xerr=perm_importance_result['importances_std'][indices])
- 
-   ax.set_yticks(range(len(indices)))
-   _ = ax.set_yticklabels(feat_name[indices])
+    """ bar plot the feature importance """
+
+    fig, ax = plt.subplots()
+
+    indices = perm_importance_result['importances_mean'].argsort()
+    plt.barh(range(len(indices)),
+             perm_importance_result['importances_mean'][indices],
+             xerr=perm_importance_result['importances_std'][indices])
+
+    ax.set_yticks(range(len(indices)))
+    _ = ax.set_yticklabels(feat_name[indices])
  
  
 # %% [markdown]

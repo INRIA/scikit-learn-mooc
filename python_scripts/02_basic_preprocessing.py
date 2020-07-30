@@ -2,7 +2,6 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: python_scripts//py:percent,notebooks//ipynb
 #     text_representation:
 #       extension: .py
 #       format_name: percent
@@ -81,11 +80,10 @@ data.columns
 data.dtypes
 
 # %%
+from sklearn.compose import make_column_selector as selector
 
-# "i" denotes integer type, "f" denotes float type
-numerical_columns = [
-    col for col in data.columns
-    if data[col].dtype.kind in ["i", "f"]]
+numerical_columns_selector = selector(dtype_include=["int", "float"])
+numerical_columns = numerical_columns_selector(data)
 numerical_columns
 
 # %%

@@ -55,10 +55,10 @@ import numpy as np
  
 # Adding random features
 rng = np.random.RandomState(0)
-bin_var = pd.Series(rng.randint(0,1, X.shape[0]), name = 'bin_cat')
+bin_var = pd.Series(rng.randint(0,1, X.shape[0]), name = 'rnd_bin')
 num_var = pd.Series(np.arange(X.shape[0]), name = 'rnd_num')
-X_with_rnd_feat = pd.concat((X, cat_var, num_var), axis = 1)
- 
+X_with_rnd_feat = pd.concat((X, bin_var, num_var), axis = 1)
+
  
 # %% [markdown]
 # We will split the data into training and testing for the remaining part of this notebook

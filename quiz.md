@@ -55,11 +55,52 @@ _solution_ c)
 
 ## lesson 2, basic preprocessing / first model with numerical feature
 
-cf inside the notebook
+1. Why do we split the data into a training and a testing part ?
+a) to train the model faster
+b) to gain insight of how to tune the hyper-parameters
+c) to validate the model on unseen data
+
+_solution_ c)
+
+2. scaling the data before fitting a linear model allows us to:
+a) train the model faster
+b) achieve better performance
+c) none of the above
+
+_solution_ a)
+
+3. Cross validation allows us to:
+a) train the model faster
+b) have better performance
+c) compute the error/score variability
+d) avoid overfitting
+
+_solution_ c)
+
+4. `make_pipeline` is used for:
+a) run cross validation
+b) combine a scaler and a model
+c) try severals model at the same time
+d) avoid overfitting
+
+_solution_ b)
 
 ## lesson 3, categorical feature
 
-cf inside the notebook
+1. Ordinal categories correspond to:
+a) categorical variable with few categories
+b) categorical variable with meaningful order (e.g. "slow", "meduim", "fast")
+c) categorical variable with only number
+
+_solution_ b)
+
+2. One-hot encoding will:
+a) transform a categorical variable onto a numerical variable
+b) transform a numerical variable onto a catergorical variable
+c) create one additional column for each possible categorical value
+d) transform string variable onto numerical representation
+
+_solution_ c)
 
 ## lesson 4, hyper-parameters tuning
 

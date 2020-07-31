@@ -1,36 +1,73 @@
 # Quiz for each lesson
 
-# lesson 0, ML concepts
+## lesson 0, ML concepts
 
-(from plan.md) Given a case study (e.g. pricing apartments based on a real estate website database) and sample toy dataset:
+Given a case study: pricing apartments based on a real estate website. We have the record of thousand house descriptions with their price. But for some house the price is not mentioned, and we want to predict it.
 
-- say whether it’s an application of supervised vs unsupervised,
-- classification vs regression,
-- what are the features,
-- what is the target variable,
-- what is a record.
+1. What kind of problem is it?
+a) a supervised problem
+b) an unsupervised problem
+c) a classification problem
+d) a regression problem
+
+_solution_ a) & d) It is a supervised problem because we have some information about the target variable (the price). It is a regression problem because the target variable is continous (it is not a class)
+
+2. What are the features?
+a) the number of rooms might be a feature
+b) the localisation of the house might be a feature
+c) the price of the house might be a feature
+
+_solution_ a) & b) Every kind of house description might be a feature here.
+
+3. What is the target variable?
+a) The text descritpion is the target
+b) the price of the house is the target
+c) the house with no price mentioned are the target
+
+_solution_ b) The price is the amount we want to predict, thus it is our target variable
+
+4. What is a record (a sample)?
+a) each house description is a record
+b) each house price is a record
+c) each kind of description (as the house size) is a record
+
+_solution_ a)
+
 - Propose a hand engineer decision rule that can be used as a baseline
 - Propose a quantitative evaluation of the success of this decision rule.
 
-# Lesson 1, exploratory analysis
+## Lesson 1, exploratory analysis
+
+1. `import pandas as pd` allows us to:
+a) deals with CSV files
+b) deals with tabular data
+c) plot basic information about tabular data
+d) deals with scientific/mathematics functions
+
+_solution_ a) & b) & c)
+
+2. a *categorical* variable:
+a) is a variable with only two different values
+b) is a variable with continuous numerical values
+c) is a variable with a finit set of value
+
+_solution_ c)
+
+## lesson 2, basic preprocessing / first model with numerical feature
 
 cf inside the notebook
 
-# lesson 2, basic preprocessing / first model with numerical feature
+## lesson 3, categorical feature
 
 cf inside the notebook
 
-# lesson 3, categorical feature
+## lesson 4, hyper-parameters tuning
 
 cf inside the notebook
 
-# lesson 4, hyper-parameters tuning
+## Linear models
 
-cf inside the notebook
-
-# Linear models
-
-0. Could you explain what the LinearRegression's attribute `coef_` and `intercept_` is ?
+0. Could you explain what the LinearRegression's attribute `coef_` and `intercept_` is?
 
 _solution_ The prediction of a linear regression model is as follow: y = `coef_` * X + `intercept_`
 
@@ -80,7 +117,7 @@ d) proportional to the number of iteration
 
 _solution_ b) There a exactly number of features + 1 parameters in a linear model
 
-# Trees
+## Trees
 
 1. How could we prevent overfitting within a tree model ?
 a) with a weight regularization
@@ -129,7 +166,7 @@ d) dimension reduction
 
 _solution_ a) & b)
 
-# Metrics
+## Metrics
 
 1. What is the accuracy score ?
 
@@ -182,11 +219,11 @@ c) characterize the performance of a regression model
 
 _solution_ b)
 
-# Ensemble
+## Ensemble
 
-# Feature selection
+## Feature selection
 
-# Feature importance
+## Feature importance
 
 1. With a same dataset, feature importance might differs if:
 a) we use two different models

@@ -10,7 +10,7 @@ All notebook material: https://github.com/INRIA/scikit-learn-mooc/
 - Browse the static content online (pre-rendered outputs) using [nbviewer](
   https://nbviewer.jupyter.org/github/INRIA/scikit-learn-mooc/tree/master/rendered_notebooks/)
 
-You need an internet connection but you will not have to install any package
+You will need an internet connection but you do not have to install any packages
 locally.
 
 
@@ -38,19 +38,21 @@ You can install the packages using `pip`:
 $ pip install -r requirements.txt
 ```
 
-You can create an `scikit-learn-tutorial` conda environment executing:
+Alternatively, you can create an `scikit-learn-tutorial` conda environment
+by executing:
 
 ```
 $ conda env create -f environment.yml
 ```
 
-and later activate the environment:
+then activate the environment with:
 
 ```
 $ conda activate scikit-learn-tutorial
 ```
 
-You might also only update your current environment using:
+You can also update your current environment, instead of creating a new
+environment, using:
 
 ```
 $ conda env update --prefix ./env --file environment.yml  --prune
@@ -58,31 +60,34 @@ $ conda env update --prefix ./env --file environment.yml  --prune
 
 ## Contributing
 
-The source files, which should be modified, are in the python_scripts
+The source files, which should be modified, are in the `python_scripts`
 directory. The notebooks are generated from these files.
 
 ### Notebooks saved in Python files
 
-This repo uses [Jupytext](https://jupytext.readthedocs.io/) to display
-Python files as notebooks. Saving as Python files facilitates control
-version.
+This repository uses [Jupytext](https://jupytext.readthedocs.io/) to display
+Python files as notebooks. Saving as Python files facilitates version
+control.
 
 #### Setting up jupytext
 
 When jupytext is properly connected to jupyter, the python files can be
 opened in jupyter and are directly displayed as notebooks
 
-**With jupyter notebook** Once jupytext is installed, run the following
-command:
+**With jupyter notebook**
+
+Once jupytext is installed, run the following command:
 
 ```
 jupyter serverextension enable jupytext
 ```
 
-**With jupyter lab** To make it work with "jupyter lab" (instead of
-"jupyter notebook"), you have to install nodejs (conda install nodejs
+**With jupyter lab**
+
+To make it work with "jupyter lab" (instead of
+"jupyter notebook"), you have to install nodejs (`conda install nodejs`
 works if you use conda). Then in jupyter lab you have to right click
-"Open with... > notebook" to open the python scripts with the notebook
+"Open with -> notebook" to open the python scripts with the notebook
 interface.
 
 ### Building the rendered notebooks

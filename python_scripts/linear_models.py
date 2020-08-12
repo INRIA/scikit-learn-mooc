@@ -488,7 +488,8 @@ print(f"Lowest mean squared error = {mse:.2f}")
 # We will load a dataset about house prices in California.
 # The dataset consists of 8 features regarding the demography and geography of
 # districts in California and the aim is to predict the median house price of
-# each district.
+# each district. We will use all 8 features to predict the target, median
+# house price.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -500,7 +501,7 @@ X.head()
 # We will compare the score of `LinearRegression` and `Ridge` (which is a
 # regularized version of linear regression).
 #
-# The scoer we will use to evaluate our model is the mean squared error, as in
+# The scorer we will use to evaluate our model is the mean squared error, as in
 # the previous example. The lower the score, the better.
 
 # %% [markdown]
@@ -907,12 +908,12 @@ plot_decision_function(X_train, y_train, logistic_regression)
 # As we saw in regression, the linear classification model expects the data
 # to be linearly separable. When this assumption does not hold, the model
 # is not expressive enough to properly fit the data. One needs to apply the
-# same tricks as in regression: feature augmentation (using expert-knowledge
-# potentially) or using a kernel based method.
+# same tricks as in regression: feature augmentation (potentially using
+# expert-knowledge) or using a kernel based method.
 #
 # We will provide examples where we will use a kernel support vector machine
-# to make classification on some toy-dataset where it is impossible to find a
-# perfect linear separation.
+# to perform classification on some toy-datasets where it is impossible to
+# find a perfect linear separation.
 
 # %%
 from sklearn.datasets import (

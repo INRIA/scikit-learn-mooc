@@ -723,7 +723,8 @@ _ = plt.legend(
 # looking at the difference between the predictions and the ground-truth data.
 # We represent these errors, called "Residuals", by unbroken red lines.
 #
-# Indeed, our initial tree was not expressive enough to handle these changes.
+# Indeed, our initial tree was not expressive enough to handle the complexity
+# of the data, as shown by the residuals.
 # In a gradient-boosting algorithm, the idea is to create a second tree
 # which, given the same data `x`, will try to predict the residuals instead of
 # the target `y`. We would therefore have a tree that is able to predict the

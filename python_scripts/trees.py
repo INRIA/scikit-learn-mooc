@@ -187,7 +187,7 @@ print(
 # be able to separate all three species. However, from the previous analysis we
 # saw that by using both features we should be able to get fairly good results.
 # Considering the mechanism of the decision tree illustrated above, we should
-# repeat the partitioning on the resulting rectangle created by the first
+# repeat the partitioning on the resulting rectangles created by the first
 # split. In this regard, we expect that the second partition will be using
 # the feature "Culmen Depth".
 
@@ -369,7 +369,7 @@ print(f"Entropy for partition above the threshold: \n"
 # and Gentoo penguins.
 #
 # With entropy, we are able to assess the quality of each partition. However,
-# the ultimate goal is to evaluate the quality of the over all split and thus
+# the ultimate goal is to evaluate the quality of the overall split and thus
 # combine the measures of entropy in each partition into a single statistic.
 #
 # ### Information gain

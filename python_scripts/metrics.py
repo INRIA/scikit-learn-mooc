@@ -21,17 +21,17 @@
 # Machine-learning models rely on optimizing an objective function, by seeking
 # its minimum or maximum. It is important to understand that this objective
 # function is usually decoupled from the evaluation metric that we want to
-# optimize in practice. The objective function serves as a proxy to the
+# optimize in practice. The objective function serves as a proxy for the
 # evaluation metric.
 # FIXME: add information about a loss function depending of the notebooks
 # presented before the notebook about metrics.
 #
-# While other notebooks will give insights regarding algorithms and their
-# associated objective functions, in this notebook we will focus on the
+# While other notebooks will give insight about machine-learning algorithms and
+# their associated objective functions, in this notebook we will focus on the
 # metrics used to evaluate the performance of a predictive model.
 #
-# Selecting an evaluation metric will mainly depend on the model chosen to
-# solve our datascience problem.
+# Evaluation metric selection will mainly depend on the model chosen to
+# solve our data science problem.
 
 # %% [markdown]
 # ## Classification
@@ -69,8 +69,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# Once our data are split, we can learn a logistic regression classifier solely
-# on the training data, keeping the testing data for the evaluation of the
+# Once our data are split, we can learn a logistic regression classifier using
+# only the training data, keeping the testing data for evaluation of the
 # model.
 
 # %%
@@ -80,24 +80,25 @@ classifier = LogisticRegression()
 classifier.fit(X_train, y_train)
 
 # %% [markdown]
-# Now, that our classifier is trained, we can provide some information about a
+# Now that our classifier is trained, we can provide some information about a
 # subject and the classifier can predict whether or not the subject will donate
 # blood.
 #
-# Let's create a synthetic sample corresponding to the following potential new
-# donor: he/she donated blood 6 month ago and gave twice blood in the past for
-# a total of 1000 c.c. He/she gave blood for the first time 20 months ago.
+# Let's create a synthetic sample for a new potential
+# donor: he/she donated blood 6 months ago and has given a total of 1000 c.c.
+# of blood, twice in the past. He/she gave blood for the first time 20
+# months ago.
 
 # %%
 new_donor = [[6, 2, 1000, 20]]
 classifier.predict(new_donor)
 
 # %% [markdown]
-# With these information, our classifier predicted that this synthetic subject
-# is more likely to not donate blood. However, we have no possibility to ensure
-# if the prediction is correct or not. That's why, we can now use the testing
-# set for this purpose. First, we can predict whether or not a subject will
-# give blood with the help of the trained classifier.
+# With this information, our classifier predicts that this synthetic subject
+# is more likely to not donate blood again. However, we cannot check if the
+# prediction is correct or not (we do not know the true target value). That's
+# the purpose of the testing set. First, we predict whether or not a
+# subject will give blood with the help of the trained classifier.
 
 # %%
 y_pred = classifier.predict(X_test)
@@ -105,7 +106,7 @@ y_pred[:5]
 
 # %% [markdown]
 # ### Accuracy as a baseline
-# Now that we have these predictions, we could compare them with the true
+# Now that we have these predictions, we can compare them with the true
 # predictions (sometimes called ground-truth) which we did not use up to now.
 
 # %%
@@ -114,10 +115,10 @@ y_test == y_pred
 # %% [markdown]
 # In the comparison above, a `True` value means that the value predicted by our
 # classifier is identical to the real `prediction` while a `False` means that
-# our classifier made a mistake. One way to get an overall statistic telling us
-# how good the performance of our classifier are is to compute the number of
-# time our classifier was right and divide it by the number of samples in our
-# set (i.e. taking the mean of correct predictions)
+# our classifier made a mistake. One way to get an overall statistic that tells
+# us how good the performance of our classifier is, is to compute the number of
+# times our classifier was right and divide it by the number of samples in our
+# set.
 
 # %%
 import numpy as np
@@ -127,7 +128,7 @@ np.mean(y_test == y_pred)
 # %% [markdown]
 # This measure is also known as the accuracy. Here, our classifier is 78%
 # accurate at classifying if subject will give blood. `scikit-learn` provides a
-# function to compute this metric in the module `sklearn.metrics`.
+# function that computes this metric in the module `sklearn.metrics`.
 
 # %%
 from sklearn.metrics import accuracy_score
@@ -135,8 +136,8 @@ from sklearn.metrics import accuracy_score
 accuracy_score(y_test, y_pred)
 
 # %% [markdown]
-# Scikit-learn also have a build-in method named `score` which compute by
-# default the accuracy score.
+# Scikit-learn also has a method built named `score`, built into
+# `LogisticRegression` which computes the accuracy score by default.
 
 # %%
 classifier.score(X_test, y_test)
@@ -144,11 +145,11 @@ classifier.score(X_test, y_test)
 # %% [markdown]
 # ### Confusion matrix and derived metrics
 # The comparison that we did above and the accuracy that we deducted did not
-# take into account which type of error our classifier was doing. The accuracy
+# take into account the type of error our classifier was making. The accuracy
 # is an aggregate of the error. However, we might be interested in a lower
-# granularity level to know separately the error for the two following case:
-# - we predicted that a person will give blood but she/he is not;
-# - we predicted that a person will not give blood but she/he is.
+# granularity level - to know separately the error for the two following cases:
+# - we predicted that a person will give blood but she/he did not;
+# - we predicted that a person will not give blood but she/he did.
 
 # %%
 from sklearn.metrics import plot_confusion_matrix

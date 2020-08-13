@@ -1,28 +1,28 @@
 # %% [markdown]
 # # Decision tree in depth
 #
-# In this notebook, we will go into details on the internal algorithm used to
-# build the decision tree. First, we will focus on the decision tree used for
-# classification. Then, we will highlight the fundamental difference between
-# decision tree used in classification and in regression. Finally, we will
-# quickly discuss the importance of the hyperparameters to be aware of when
+# In this notebook, we will discuss in detail the internal algorithm used to
+# build the decision tree. First, we will focus on the classification decision
+# tree. Then, we will highlight the fundamental difference between the
+# decision tree used for classification and regression. Finally, we will
+# quickly discuss the importance of the hyper-parameters to be aware of when
 # using decision trees.
 #
 # ## Presentation of the dataset
 #
-# We use the
+# We will use the
 # [Palmer penguins dataset](https://allisonhorst.github.io/palmerpenguins/).
-# This dataset is composed of penguins records and ultimately, we want to
-# identify from which specie a penguin belongs to.
+# This dataset is comprised of penguin records and ultimately, we want to
+# predict the species each penguin belongs to.
 #
-# A penguin is from one of the three following species: Adelie, Gentoo, and
-# Chinstrap. See the illustration below depicting of the three different bird
+# Each penguin is from one of the three following species: Adelie, Gentoo, and
+# Chinstrap. See the illustration below depicting the three different penguin
 # species:
 #
 # ![Image of penguins](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png)
 #
-# This problem is a classification problem since the target is made of
-# categories. We will limit our input data to a subset of the original features
+# This problem is a classification problem since the target is categorical.
+# We will limit our input data to a subset of the original features
 # to simplify our explanations when presenting the decision tree algorithm.
 # Indeed, we will use feature based on penguins' culmen measurement. You can
 # learn more about the penguins' culmen with illustration below:
@@ -48,7 +48,7 @@ data[target_column] = data[target_column].str.split().str[0]
 data.info()
 
 # %% [markdown]
-# We can observe that they are 2 missing records in this dataset and for the
+# We can observe that there are 2 missing records in this dataset and for the
 # sake of simplicity, we will drop the records corresponding to these 2
 # samples.
 
@@ -57,7 +57,7 @@ data = data.dropna()
 data.info()
 
 # %% [markdown]
-# We will separate the target from the data and we will create a training and a
+# We will separate the target from the data and create a training and a
 # testing set.
 
 # %%
@@ -69,7 +69,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# Before going into details in the decision tree algorithm, we will quickly
+# Before going into detail about the decision tree algorithm, we will quickly
 # inspect our dataset.
 
 # %%
@@ -81,19 +81,19 @@ _ = sns.pairplot(data=data, hue="Species")
 # We can first check the feature distributions by looking at the diagonal plots
 # of the pairplot. We can build the following intuitions:
 #
-# * The Adelie specie is separable from the Gentoo and Chinstrap species using
+# * The Adelie species is separable from the Gentoo and Chinstrap species using
 #   the culmen length;
-# * The Gentoo specie is separable from the Adelie and Chinstrap species using
+# * The Gentoo species is separable from the Adelie and Chinstrap species using
 #   the culmen depth.
 #
-# ## How decision tree are built?
+# ## How are decision tree built?
 #
 # In a previous notebook, we learnt that a linear classifier will define a
 # linear separation to split classes using a linear combination of the input
 # features. In our 2-dimensional space, it means that a linear classifier will
-# defined some oblique lines that best separate our classes. We define a
-# function below that given a set of data point and a classifier will plot the
-# decision boundaries learnt by the classifier.
+# define some oblique lines that best separate our classes. We define a
+# function below that, given a set of data points and a classifier, will plot
+# the decision boundaries learnt by the classifier.
 
 # %%
 import numpy as np
@@ -146,7 +146,7 @@ plot_decision_function(X_train, y_train, linear_model)
 # %% [markdown]
 # We see that the lines are a combination of the input features since they are
 # not perpendicular a specific axis. In addition, it seems that the linear
-# model would be a good candidate model for such problem, giving a good
+# model would be a good candidate model for such problem as it gives good
 # accuracy.
 
 # %%
@@ -156,10 +156,10 @@ print(
 )
 
 # %% [markdown]
-# Unlike linear model, decision tree will partition the space considering a
-# single feature at a time. Let's illustrate this behaviour by having
-# a decision tree which makes a single split to partition the feature space.
-# the decision tree to make a single split to partition our feature space.
+# Unlike linear models, decision trees will partition the space by considering
+# a single feature at a time. Let's illustrate this behaviour by having
+# a decision tree that only makes a single split to partition the feature
+# space.
 
 # %%
 from sklearn.tree import DecisionTreeClassifier
@@ -168,12 +168,13 @@ tree = DecisionTreeClassifier(max_depth=1)
 plot_decision_function(X_train, y_train, tree)
 
 # %% [markdown]
-# The partition found separate the data along the axis "Culmen Length",
+# The partition found by the algorithm separates the data along the axis
+# "Culmen Length",
 # discarding the feature "Culmen Depth". Thus, it highlights that a decision
 # tree does not use a combination of feature when making a split.
 #
-# However, such a split is not powerful enough to isolate the three species and
-# the model accuracy is low compared to the linear model.
+# However, such a split is not powerful enough to separate the three species
+# and the model accuracy is low when compared to the linear model.
 
 # %%
 print(
@@ -182,13 +183,13 @@ print(
 )
 
 # %% [markdown]
-# Indeed, it is not a surprise. We earlier saw that a single feature will not
-# help separating the three species. However, from the previous analysis we
-# saw that using both features should be useful to get fairly good results.
+# Indeed, it is not a surprise. We saw earlier that a single feature will not
+# be able to separate all three species. However, from the previous analysis we
+# saw that by using both features we should be able to get fairly good results.
 # Considering the mechanism of the decision tree illustrated above, we should
-# repeat the partitioning on each rectangle that was previously created. In
-# this regard, we expect that the partition will be using the feature "Culmen
-# Depth" this time.
+# repeat the partitioning on the resulting rectangle created by the first
+# split. In this regard, we expect that the second partition will be using
+# the feature "Culmen Depth".
 
 # %%
 tree.set_params(max_depth=2)
@@ -209,13 +210,13 @@ print(
 # At this stage, we have the intuition that a decision tree is built by
 # successively partitioning the feature space, considering one feature at a
 # time.
-# Subsequently, we will present the details regarding the partitioning
+# Subsequently, we will present the details of the partitioning
 # mechanism.
 #
 # ## Partitioning mechanism
 #
-# Let's isolate a single feature. We will present the mechanism allowing to
-# find the optimal partition for these one-dimensional data.
+# Let's isolate a single feature. We will present the mechanism allowing us to
+# find the optimal partition for this one-dimensional data.
 
 # %%
 single_feature = X_train["Culmen Length (mm)"]
@@ -235,8 +236,8 @@ plt.xlabel(single_feature.name)
 _ = plt.ylabel('Class probability')
 
 # %% [markdown]
-# Seeing this graph, we can easily separate the Adelie specie from
-# the other species. Alternatively, we can have a scatter plot of all
+# Seeing this graph, we can easily separate the Adelie species from
+# the other species. This can also been seen on a scatter plot of all the
 # samples.
 
 # %%
@@ -248,9 +249,9 @@ df = pd.concat(
 _ = sns.swarmplot(x=single_feature.name, y="", hue=y_train.name, data=df)
 
 # %% [markdown]
-# Finding a split comes to define a threshold value which will be used to
+# Finding a split requires us to define a threshold value which will be used to
 # separate the different classes. To give an example, we will pick a random
-# threshold value and we will qualify the quality of the split.
+# threshold value and we will quantify the quality of the split.
 
 # %%
 rng = np.random.RandomState(0)
@@ -265,14 +266,14 @@ ax.axvline(threshold_value, linestyle="--", color="black")
 _ = ax.set_title(f"Random threshold value: {threshold_value} mm")
 
 # %% [markdown]
-# A random split does not ensure that we pick up a threshold value which
-# best separate the species. Thus, an intuition will be to find a
-# threshold value that best divide the Adelie class from other classes. A
+# A random split does not ensure that we pick a threshold value that
+# best separates the species. Thus, an intuition would be to find a
+# threshold value that best divides the Adelie class from other classes. A
 # threshold around 42 mm would be ideal. Once this split is defined, we could
 # specify that the sample < 42 mm would belong to the class Adelie and the
-# samples > 42 mm would belong to the class the most probable (the most
-# represented in the partition) between the Gentoo and the Chinstrap. In this
-# case, it seems to be the Gentoo specie, which is in-line with what we
+# samples > 42 mm would belong to the class the most probable (the one most
+# represented in the partition). In this
+# case, it seems to be the Gentoo species, which is in line with what we
 # observed earlier when fitting a `DecisionTreeClassifier` with a
 # `max_depth=1`.
 
@@ -295,11 +296,11 @@ _ = ax.set_title(f"Manual threshold value: {threshold_value} mm")
 # ### The split purity criterion
 #
 # To evaluate the effectiveness of a split, we will use a criterion to qualify
-# the class purity on the different partitions.
+# the class purity on the resulting partitions.
 #
 # First, let's define a threshold at 42 mm. Then, we will divide the data into
 # 2 sub-groups: a group for samples < 42 mm and a group for samples >= 42 mm.
-# Then, we will store the class label for these samples.
+# Finally, we will store the class label for these samples.
 
 # %%
 threshold_value = 42
@@ -309,8 +310,8 @@ labels_above_threshold = y_train[~mask_below_threshold]
 
 # %% [markdown]
 # We can check the proportion of samples of each class in both partitions. This
-# proportion is the probability of each class when considering
-# the partition.
+# proportion is the probability of each class when considering the samples
+# in the partition.
 
 # %%
 labels_below_threshold.value_counts(normalize=True).sort_index()
@@ -320,20 +321,20 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 
 
 # %% [markdown]
-# As we visually assess, the partition defined by < 42 mm has mainly Adelie
-# penguin and only 2 samples which we could considered misclassified. However,
-# on the partition >= 42 mm, we cannot differentiate Gentoo and Chinstrap
-# (while they are almost twice more Gentoo).
+# As we visually assessed, the partition defined by < 42 mm has mainly Adelie
+# penguin and only 2 samples that are misclassified. However,
+# in the partition >= 42 mm, we cannot differentiate well between Gentoo and
+# Chinstrap (while they are almost twice more Gentoo).
 #
-# We should come with a statistical measure which combine the class
-# probabilities together that can be used as a criterion to qualify the purity
+# We should use a statistical measure that uses the all class
+# probabilities, as the criterion to qualify the purity
 # of a partition. We will choose as an example the entropy criterion (also used
 # in scikit-learn) which is one of the possible classification criterion.
 #
 # The entropy is defined as: $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
 #
-# For a binary problem, the entropy function for one of the class can be
-# depicted as follows:
+# For a binary problem (e.g., only 2 classes of penguins), the entropy function
+# for one of the class can be depicted as follows:
 #
 # ![title](https://upload.wikimedia.org/wikipedia/commons/2/22/Binary_entropy_plot.svg)
 #
@@ -362,24 +363,26 @@ print(f"Entropy for partition above the threshold: \n"
 
 # %% [markdown]
 # In our case, we can see that the entropy in the partition < 42 mm is close to
-# 0 meaning that this partition is "pure" and contain a single class while
-# the partition >= 42 mm is much higher due to the fact that 2 of the classes
-# are still mixed.
+# 0, meaning that this partition is "pure" and nearly entirely consists of a
+# single class (Adelie). Conversely, the partition >= 42 mm is much higher
+# because the species are still mixed, with large numbers of both Chinstrap
+# and Gentoo penguins.
 #
-# Now, we are able to assess the quality of each partition. However, the
-# ultimate goal is to evaluate the quality of the split and thus combine both
-# measures of entropy to obtain a single statistic.
+# With entropy, we are able to assess the quality of each partition. However,
+# the ultimate goal is to evaluate the quality of the over all split and thus
+# combine the measures of entropy in each partition into a single statistic.
 #
 # ### Information gain
 #
-# This statistic is known as the information gain. It combines the entropy of
-# the different partitions to give us a single statistic qualifying the quality
-# of a split. The information gain is defined as the difference of the entropy
-# before making a split and the sum of the entropies of each partition,
-# normalized by the frequencies of class samples on each partition. The goal is
+# Information gain uses the entropy of
+# the two partitions to give us a single statistic quantifying the quality
+# of a split. The information gain is defined as the difference between the
+# entropy
+# before a split and the sum of the entropies of each partition,
+# normalized by the frequencies of class samples in each partition. The goal is
 # to maximize the information gain.
 #
-# We will define a function to compute the information gain given the different
+# We will define a function to compute the information gain given the
 # partitions.
 
 # %%
@@ -418,8 +421,8 @@ print(
 
 
 # %% [markdown]
-# Now, we are able to quantify any split. Thus, we can evaluate every possible
-# split and compute the information gain for each split.
+# Now that we are able to quantify any split, we can evaluate all possible
+# splits and compute the information gain for each split.
 
 # %%
 splits_information_gain = []
@@ -439,7 +442,8 @@ _ = plt.ylabel("Information gain")
 
 # %% [markdown]
 # As previously mentioned, we would like to find the threshold value maximizing
-# the information gain.
+# the information gain. Below we draw a line in the plot, where the maximum
+# information gain value is.
 
 # %%
 best_threshold_indice = np.argmax(splits_information_gain)
@@ -453,10 +457,10 @@ ax.axvline(best_threshold_value, color="tab:orange", linestyle="--")
 ax.set_title(f"Best threshold: {best_threshold_value} mm")
 
 # %% [markdown]
-# By making this brute-force search, we find that the threshold maximizing the
+# Using this brute-force search, we find that the threshold maximizing the
 # information gain is 43.3 mm.
 #
-# Let's check if this results is similar than the one found with the
+# Let's check if this result is similar to the one found with the
 # `DecisionTreeClassifier` from scikit-learn.
 
 # %%
@@ -469,16 +473,19 @@ _ = plot_tree(tree)
 
 # %% [markdown]
 # The implementation in scikit-learn gives similar results: 43.25 mm. The
-# slight difference are only due to some low-level implementation details.
+# slight difference is just due to some low-level implementation details.
 #
 # As we previously explained, the split mechanism will be repeated several
-# times (until we don't have any classification error on the training set). In
-# the above example, it corresponds to increasing the `max_depth` parameter.
+# times (until there is no classification error on the training set,
+# i.e., all final partitions consist of only one class). In
+# the above example, it corresponds to setting the `max_depth` parameter to
+# `None`. This allows the algorithm to keep making splits until the final
+# partitions are pure.
 #
-# ## How prediction works?
+# ## How does prediction work?
 #
-# We showed the way a decision tree is constructed. However, we did not explain
-# how and what will be predicted from the decision tree.
+# We showed how a decision tree is constructed. However, we did not explain
+# how predictions are makde from the decision tree.
 #
 # First, let's recall the tree structure that we fitted earlier.
 
@@ -488,8 +495,7 @@ _ = plot_tree(tree)
 # %% [markdown]
 # We recall that the threshold found is 43.25 mm. Thus, let's see the class
 # prediction for a sample with a feature value below the threshold and another
-# above the
-# threshold.
+# above the threshold.
 
 # %%
 print(f"The class predicted for a value below the threshold is: "
@@ -498,27 +504,27 @@ print(f"The class predicted for a value above the threshold is: "
       f"{tree.predict([[45]])}")
 
 # %% [markdown]
-# We predict an Adelie penguin for a value below the threshold which is not
-# surprising since this partition was almost pure. In the other case we
-# predicted the Gentoo penguin. Indeed, we predict the class the
-# most probable.
+# We predict an Adelie penguin if the feature value is below the threshold,
+# which is not surprising since this partition was almost pure. If the feature
+# value is above the threshold, we
+# predict the Gentoo penguin, the class that is most probable.
 #
 # ## What about decision tree for regression?
 #
-# We explained the construction of the decision tree in a classification
-# problem. The entropy criterion to split the nodes used the class
-# probabilities. Thus, this criterion is not adapted when the target `y` is
-# continuous. In this case, we will need specific criterion adapted to
+# We explained the construction of the decision tree for a classification
+# problem. The entropy criterion to determine how we split the nodes used the
+# class probabilities. We cannot use this criterion the target `y` is
+# continuous. In this case, we will need specific criterion adapted for
 # regression problems.
 #
-# Before going into details with regression criterion, let's observe and
-# build some intuitions on the characteristics of decision tree used
-# in regression.
+# Before going into detail about regression criterion, let's observe and
+# build some intuitions about the characteristics of decision trees used
+# for regression.
 #
 # ### Decision tree: a non-parametric model
 #
-# We use the same penguins dataset. However, this time we will formulate a
-# regression problem instead of a classification problem. Thus, we will try to
+# We will use the same penguins dataset however, this time we will formulate a
+# regression problem instead of a classification problem. We will try to
 # infer the body mass of a penguin given its flipper length.
 
 # %%
@@ -542,10 +548,10 @@ sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
 # Here, we deal with a regression problem because our target is a continuous
 # variable ranging from 2.7 kg to 6.3 kg. From the scatter plot above, we can
 # observe that we have a linear relationship between the flipper length
-# and the body mass. Longer is the flipper of a penguin, heavier will be the
+# and the body mass. The longer the flipper of a penguin, the heavier the
 # penguin.
 #
-# For this problem, we would expect the simpler linear model to be able to
+# For this problem, we would expect the simple linear model to be able to
 # model this relationship.
 
 # %%
@@ -556,7 +562,7 @@ linear_model = LinearRegression()
 # %% [markdown]
 # We will first create a function in charge of plotting the dataset and
 # all possible predictions. This function is equivalent to the earlier
-# function used for classification.
+# function used to plot the decision boundaries for classification.
 
 # %%
 def plot_regression_model(X, y, model, extrapolate=False, ax=None):
@@ -598,8 +604,8 @@ _ = plot_regression_model(X_train, y_train, linear_model)
 
 # %% [markdown]
 # On the plot above, we see that a non-regularized `LinearRegression` is able
-# to fit the data. The specificity of the model is that any new predictions
-# will occur on the line.
+# to fit the data. A feature of this model is that all new predictions
+# will be on the line.
 
 # %%
 X_test_subset = X_test[:10]
@@ -612,10 +618,10 @@ ax.plot(
 
 plt.legend()
 # %% [markdown]
-# On the contrary of linear model, decision trees are non-parametric
-# models, so they do not rely on the way data should be distributed. In this
-# regard, it will affect the prediction scheme. Repeating the
-# above experiment will highlights the differences.
+# Contrary to linear models, decision trees are non-parametric
+# models, so they do not make assumptions about the way data are distributed.
+# This will affect the prediction scheme. Repeating the
+# above experiment will highlight the differences.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -626,9 +632,10 @@ tree = DecisionTreeRegressor()
 _ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
-# We see that the decision tree model does not have a priori and do not end-up
+# We see that the decision tree model does not have a priori and we do not
+# end-up
 # with a straight line to regress flipper length and body mass. The prediction
-# of a new sample, which was already present in the training set, will give the
+# of a sample from the training set will give the
 # same target than this training sample. However, having different body masses
 # for a same flipper length, the tree will be predicting the mean of the
 # targets.
@@ -645,38 +652,41 @@ _ = plot_regression_model(X_train, y_train, tree)
 plot_regression_model(X_train, y_train, linear_model, extrapolate=True)
 
 # %% [markdown]
-# The linear model will extrapolate using the fitted model for flipper length
-# < 175 mm and > 235 mm. Let's see the difference with the trees.
+# The linear model will extrapolate using the fitted model for flipper lengths
+# < 175 mm and > 235 mm. Let's see the difference between the classification
+# and regression trees.
 
 # %%
 ax = plot_regression_model(X_train, y_train, linear_model, extrapolate=True)
 _ = plot_regression_model(X_train, y_train, tree, extrapolate=True, ax=ax)
 
 # %% [markdown]
-# For the tree, we see that it cannot extrapolate below and above the minimum
-# and maximum, respectively, of the flipper length encountered during the
-# training. Indeed, we are predicting the minimum and maximum values of the
-# training set.
+# For the regression tree, we see that it cannot extrapolate outside of the
+# flipper length range present in the training data.
+# For flipper lengths below the minimum, the mass of the penguin in the
+# training data with the shortest flipper length will always be predicted.
+# Similarly, for flipper lengths above the maximum, the mass of the penguin
+# in the training data with the longest flipper will always predicted.
 #
 # ### The regression criterion
 #
 # In the previous section, we explained the differences between using decision
-# tree in classification or in regression: the predicted value will be the
+# tree for classification and for regression: the predicted value will be the
 # most probable class for the classification case while the it will be the mean
 # in the case of the regression. The second difference that we already
 # mentioned is the criterion. The classification criterion cannot be applied
 # in regression setting and we need to use a specific set of criterion.
 #
 # One of the criterion that can be used in regression is the mean squared
-# error. In this case, we will compute this criterion in each partition
-# as in the case of the entropy and select the split leading to the best
+# error. In this case, we will compute this criterion for each partition,
+# as in the case of the entropy, and select the split leading to the best
 # improvement (i.e. information gain).
 #
 # ## Importance of decision tree hyper-parameters on generalization
 #
 # This last section will illustrate the importance of some key hyper-parameters
-# of the decision tree. We will both illustrate it on classification and
-# regression datasets that we previously used.
+# of the decision tree. We will illustrate it on both the classification and
+# regression probelms that we previously used.
 #
 # ### Creation of the classification and regression dataset
 #
@@ -730,9 +740,9 @@ _ = axs[1].set_title("Regression dataset")
 # %% [markdown]
 # ### Effect of the `max_depth` parameter
 #
-# In decision tree, the most important parameter to get a trade-off between
+# In decision trees, the most important parameter to get a trade-off between
 # under-fitting and over-fitting is the `max_depth` parameter. Let's build
-# a shallow tree (for both classification and regression) and a deeper tree.
+# a shallow tree and then deeper tree (for both classification and regression).
 
 
 # %%
@@ -757,11 +767,12 @@ plot_regression_model(X_train_reg, y_train_reg, tree_reg, ax=axs[1])
 _ = fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
 
 # %% [markdown]
-# In both classification and regression setting, we can observe that increasing
-# the depth will make the tree model more expressive. However, a tree which is
-# too deep will overfit the training data, creating partitions which will only
-# be correct for "outliers". The `max_depth` is one of the parameter that one
-# would like to optimize via cross-validation and a grid-search.
+# For both classification and regression setting, we can observe that
+# increasing
+# the depth will make the tree model more expressive. However, a tree that is
+# too deep will overfit the training data, creating partitions which are only
+# be correct for "outliers". The `max_depth` is one of the hyper-parameters
+# that one should optimize via cross-validation and grid-search.
 
 # %%
 from sklearn.model_selection import GridSearchCV

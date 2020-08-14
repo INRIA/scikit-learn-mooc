@@ -127,8 +127,8 @@ np.mean(y_test == y_pred)
 
 # %% [markdown]
 # This measure is also known as the accuracy. Here, our classifier is 78%
-# accurate at classifying if subject will give blood. `scikit-learn` provides a
-# function that computes this metric in the module `sklearn.metrics`.
+# accurate at classifying if a subject will give blood. `scikit-learn` provides
+# a function that computes this metric in the module `sklearn.metrics`.
 
 # %%
 from sklearn.metrics import accuracy_score
@@ -136,18 +136,19 @@ from sklearn.metrics import accuracy_score
 accuracy_score(y_test, y_pred)
 
 # %% [markdown]
-# Scikit-learn also has a method built named `score`, built into
-# `LogisticRegression` which computes the accuracy score by default.
+# Scikit-learn also has a method named `score`, built into
+# `LogisticRegression`, which computes the accuracy score.
 
 # %%
 classifier.score(X_test, y_test)
 
 # %% [markdown]
 # ### Confusion matrix and derived metrics
-# The comparison that we did above and the accuracy that we deducted did not
-# take into account the type of error our classifier was making. The accuracy
-# is an aggregate of the error. However, we might be interested in a lower
-# granularity level - to know separately the error for the two following cases:
+# The comparison that we did above and the accuracy that we calculated did not
+# take into account the type of error our classifier was making. Accuracy
+# is an aggregate of the errors made by the classifier. We may be interested
+# in finer granularity - to know independently what the error is for each of
+# the two following cases:
 # - we predicted that a person will give blood but she/he did not;
 # - we predicted that a person will not give blood but she/he did.
 
@@ -157,31 +158,35 @@ from sklearn.metrics import plot_confusion_matrix
 plot_confusion_matrix(classifier, X_test, y_test)
 
 # %% [markdown]
-# The in-diagonal numbers are related to predictions that agree
-# with the true labels while off-diagonal numbers are related to
-# misclassification. Besides, we now know the type of true or erroneous
-# predictions the classifier did:
+# The in-diagonal numbers are related to predictions that were correct
+# while off-diagonal numbers are related to incorrect predictions
+# (misclassifications). We now know the four types of correct and erroneous
+# predictions:
 #
-# * the top left corner is called true positive (TP) and correspond to a person
+# * the top left corner are true positives (TP) and corresponds to people
 #   who gave blood and was predicted as such by the classifier;
-# * the bottom right corner is called the true negative (TN) and correspond to
-#   a person who did not gave blood and was predicted as such by the
+# * the bottom right corner are true negatives (TN) and correspond to
+#   a people who did not give blood and was predicted as such by the
 #   classifier;
-# * the top right corner is called false negative (FN) and correspond to a
-#   person who gave blood but was predicted as not giving blood;
-# * the bottom left corner is called false positive (FP) and correspond to a
-#   person who did not give blood but was predicted as giving blood.
+# * the top right corner are false negatives (FN) and correspond to
+#   people who gave blood but was predicted to not have given blood;
+# * the bottom left corner are false positives (FP) and correspond to
+#   people who did not give blood but was predicted to have given blood.
 #
-# Once we have split these information, we can compute statistics for
-# highlighting the performance of our classifier in a particular setting. For
-# instance, one could be interested in the fraction of persons who really gave
-# blood when the classifier predicted so or the fraction of people predicted as
-# giving blood among the total population that actually did so.
+# Once we have split this information, we can compute statistics tp
+# highlight the performance of our classifier in a particular setting. For
+# instance, we could be interested in the fraction of people who really gave
+# blood when the classifier predicted so or the fraction of people predicted
+# to have given blood out of the total population that actually did so.
 #
-# The former statistic is known as the precision defined as TP / (TP + FP)
-# while the latter statistic is known as the recall defined as TP / (TP + FN)
-# We could, similarly than with the accuracy, manually compute these values.
-# But scikit-learn provides functions to compute these statistics.
+# The former statistic, known as the precision, is defined as TP / (TP + FP)
+# and represents how likely the person actually gave blood when the classifier
+# predicted that they did.
+# The latter statistic, known as the recall, defined as TP / (TP + FN) and
+# assesses how well the classifier is able to correctly identify people who
+# did give blood.
+# We could, similar to accuracy, manually compute these values
+# but scikit-learn provides functions to compute these statistics.
 
 # %%
 from sklearn.metrics import precision_score, recall_score
@@ -192,13 +197,14 @@ print(
 )
 
 # %% [markdown]
-# These results are in line with what we could see in the confusion matrix.
-# In the left column, more than half of the predictions were corrected leading
-# to a precision above 0.5. However, our classifier mislabeled a lot of persons
-# who gave blood as "not donated" leading to a very low recall of around 0.1.
+# These results are in line with what was seen in the confusion matrix.
+# Looking at the left column, more than half of the "donated" predictions were
+# correct, leading
+# to a precision above 0.5. However, our classifier mislabeled a lot of people
+# who gave blood as "not donated", leading to a very low recall of around 0.1.
 #
 # The precision and recall can be combined in a single score called the F1
-# score (which is the harmonic mean of precision and recall)
+# score (which is the harmonic mean of precision and recall).
 
 # %%
 from sklearn.metrics import f1_score
@@ -210,10 +216,11 @@ f1_score(y_test, y_pred, pos_label='donated')
 # At this stage, we could ask ourself a reasonable question. While the accuracy
 # did not look bad (i.e. 77%), the F1 score is relatively low (i.e. 21%).
 #
-# As we mentioned, precision and recall only focus on the positive label while
-# the accuracy is taking both aspects into account. In addition,
-# we omit to look at the ratio class
-# occurrence. We could check this ratio in the training set.
+# As we mentioned, precision and recall only focuses on samples predicted to
+# be positive, while
+# accuracy takes both into account. In addition,
+# we did not look at the ratio of classes (labels).
+# We could check this ratio in the training set.
 
 # %%
 from collections import Counter
@@ -223,10 +230,10 @@ class_counts /= class_counts.sum()
 class_counts
 
 # %% [markdown]
-# So we can observed that the positive class `'donated'` is only 24% of the
+# We can observed that the positive class `'donated'` is only 24% of the
 # total number of instances. The good accuracy of our classifier is then linked
-# to its capability of predicting correctly the negative class `'not donated'`
-# which could be relevant or not depending of the application. We can
+# to its ability to predict correctly the negative class `'not donated'`
+# which may or may not be relevant, depending on the application. We can
 # illustrate the issue using a dummy classifier as a baseline.
 
 # %%
@@ -238,16 +245,18 @@ dummy_classifier = DummyClassifier(
 dummy_classifier.fit(X_train, y_train).score(X_test, y_test)
 
 # %% [markdown]
-# This dummy classifier will always predict the negative class `'not donated'`.
-# We obtain an accuracy score of 76%. Therefore, it means that this classifier,
-# without learning anything from the data `X` is capable of predicting as
-# accurately than our logistic regression. 76% represents the baseline that
-# any classifier should overperform to not be a random classifier.
+# With dummy classifier, which always predicts the negative class
+# `'not donated'`,
+# we obtain an accuracy score of 76%. Therefore, it means that this classifier,
+# without learning anything from the data `X`, is capable of predicting as
+# accurately as our logistic regression model. 76% represents the baseline that
+# any classifier should out perform to not be a random classifier.
 #
-# The problem illustrated above is also known as the class imbalance problem
-# where the accuracy should not be used. In this case, one should either use
+# The problem illustrated above is also known as the class imbalance problem.
+# When the classes are imbalanced accuracy should not be used. In this case,
+# one should either use
 # the precision, recall, or F1 score as presented above or the balanced
-# accuracy score instead of the accuracy.
+# accuracy score instead of accuracy.
 
 # %%
 from sklearn.metrics import balanced_accuracy_score
@@ -257,13 +266,13 @@ balanced_accuracy_score(y_test, y_pred)
 # The balanced accuracy is equivalent to the accuracy in the context of
 # balanced classes. It is defined as the average recall obtained on each class.
 #
-# ### Evaluation with different probability threshold
+# ### Evaluatiion and different probability thresholds
 #
 # All statistics that we presented up to now rely on `classifier.predict` which
-# provide the most likely label. However, we don't use the probability
-# associated with this prediction or in other words how sure are the classifier
-# confident about this prediction. By default, the prediction of a classifier
-# correspons to a thresholding at a 0.5 probability, in a binary classification
+# outputs the most likely label. We haven't made use use of the probability
+# associated with this prediction, which gives the confidence of the
+# classifier in this prediction. By default, the prediction of a classifier
+# corresponds to a threshold of 0.5 probability in a binary classification
 # problem. We can quickly check this relationship with the classifier that
 # we trained.
 
@@ -280,20 +289,21 @@ y_pred[:5]
 
 # %%
 # Since probabilities sum to 1 we can get the class with the highest
-# probability without using the threshold 0.5
+# probability without using the threshold 0.5.
 equivalence_pred_proba = (
     y_proba.idxmax(axis=1).to_numpy() == y_pred
 )
 np.all(equivalence_pred_proba)
 
 # %% [markdown]
-# The default decision threshold (0.5) might not be the best threshold leading
-# to optimal performance of our classifier. In this case, one can vary the
-# decision threshold and therefore the underlying prediction and compute the
-# same statistic than presented earlier. Usually, two metrics are computed and
-# reported as a curve. Each metric is belonging to a graph axis and a point on
+# The default decision threshold (0.5) might not be the best threshold that
+# leads to optimal performance of our classifier. In this case, one can vary
+# the decision threshold, and therefore the underlying prediction, and compute
+# the same statistics presented earlier. Usually, the two metrics recall and
+# precision are computed and plotted on a graph. Each metric plotted on a
+# graph axis and each point on
 # the graph corresponds to a specific decision threshold. Let's start by
-# computing the precision-recall curve.
+# manually computing the precision-recall curve.
 
 # %%
 import matplotlib.pyplot as plt
@@ -326,24 +336,24 @@ plt.legend()
 # )
 
 # %% [markdown]
-# On this curve, each blue dot correspond to a certain level of probability
+# On this curve, each blue dot corresponds to a level of probability
 # which we used as a decision threshold. We can see that by varying this
-# decision threshold, we get different compromise precision vs. recall.
+# decision threshold, we get different precision vs. recall values.
 #
-# A perfect classifier is expected to have a precision at 1 even when varying
-# the recall. A metric characterizing the curve is linked to the area under the
-# curve (AUC), named averaged precision. With a ideal classifier, the
-# average precision will be 1.
+# A perfect classifier would have a precision of 1 for all recall
+# values. A metric characterizing the curve is linked to the area under the
+# curve (AUC) and is named average precision. With an ideal classifier, the
+# average precision would be 1.
 #
-# While the precision and recall metric focuses on the positive class, one
-# might be interested into the compromise between performance to discriminate
-# positive and negative classes. The statistics used in this case are the
-# sensitivity and specificity. The sensitivity is just another denomination for
-# recall. However, the specificity measures the proportion of well classified
-# samples from the negative class defined as TN / (TN + FP). Similarly to the
-# precision-recall curve, sensitivity and specificity are reported with a curve
-# called the receiver operating characteristic (ROC) curve. We will show such
-# curve:
+# The precision and recall metric focuses on the positive class however, one
+# might be interested in the compromise between accurately discriminating the
+# positive class and accurately discriminating the negative classes. The
+# statistics used for this are sensitivity and specificity. Sensitivity is just
+# another name for recall. However, specificity measures the proportion of
+# correctly classified samples in the tnegative class defined as:
+# TN / (TN + FP). Similar to the precision-recall curve, sensitivity and
+# specificity are generally plotted as a curve called the receiver operating
+# characteristic (ROC) curve. Below is such a curve:
 
 # %%
 from sklearn.metrics import roc_curve
@@ -371,13 +381,13 @@ plt.legend()
 # plot_roc_curve(classifier, X_test, y_test, pos_label='donated')
 
 # %% [markdown]
-# This curve is built with the same principle than with the precision-recall
+# This curve is built using the same principle as the precision-recall
 # curve: we vary the probability threshold to compute "hard" prediction and
-# compute the metrics. As with the precision-recall curve as well, we can
+# compute the metrics. As with the precision-recall curve, we can
 # compute the area under the ROC (ROC-AUC) to characterize the performance of
-# our classifier. However, this is important to observer that the lower bound
-# of the ROC-AUC is 0.5. Indeed, we represented the performance of a dummy
-# classifier (i.e. green dashed line) to show that the worse performance
+# our classifier. However, it is important to observer that the lower bound
+# of the ROC-AUC is 0.5. Indeed, we show the performance of a dummy
+# classifier (the green dashed line) to show that the even worst performance
 # obtained will always be above this line.
 #
 # ### Link between confusion matrix, precision-recall curve and ROC curve
@@ -542,10 +552,10 @@ plot_pr_roc_interactive()
 
 # %% [markdown]
 # ## Regression
-# Unlike in the classification problem, the target `y` is a continuous
-# variable in regression problem. Therefore, the classification metrics can be
-# used to evaluate the performance of a model. Instead, there exists a set of
-# metric dedicated to regression.
+# Unlike in classification problems, the target `y` is a continuous
+# variable in regression problems. Therefore, classification metrics cannot
+# be used to evaluate the performance of regression models. Instead, there
+# exists a set of metrics dedicated to regression.
 
 # %%
 data = pd.read_csv(
@@ -576,14 +586,14 @@ plt.ylabel("Probability")
 plt.title("Target distribution")
 
 # %% [markdown]
-# Our problem can be formulated as follow: we would like to infer the number of
-# bike rentals from data related to the current day. The number of bike rentals
-# is a number that can vary in the interval [0, infinity) (if the number of
-# bike available is infinite). As in the previous section, we will train a
-# model and we will evaluate its performance by introducing the different
+# Our problem can be formulated as follows: we would like to infer the number
+# of bike rentals in a day using information about the day. The number of bike
+# rentals is a number that can vary in the interval [0, max_number_of_bikes).
+# As in the previous section, we will train a
+# model and evaluate its performance while introducing different
 # regression metrics.
 #
-# First, we split the data into a training and a testing set.
+# First, we split the data into training and a testing sets.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -602,10 +612,10 @@ X_train.info()
 
 # %% [markdown]
 # While some features are numeric, some have been tagged as `category`. These
-# features need to be encoded in a proper way such that our random forest can
+# features need to be encoded such that our random forest can
 # deal with them. The simplest solution is to use an `OrdinalEncoder`.
 # Regarding, the numerical features, we don't need to do anything. Thus, we
-# will create a preprocessing steps to take care about this encoding.
+# will create preprocessing steps to take care of this encoding.
 
 # %%
 from sklearn.compose import make_column_transformer
@@ -629,9 +639,9 @@ X_train_preprocessed = pd.DataFrame(
 X_train_preprocessed.head()
 
 # %% [markdown]
-# Just to have some insights about the preprocessing, we manually preprocessed
-# the training data and we can observe that the original strings were encoded
-# with numbers. We can now create our model.
+# Just to have some insight about the preprocessing, we preprocess
+# the training data show the result. We can observe that the original strings
+# are now encoded with numbers. We can now create our model.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -641,7 +651,8 @@ regressor = make_pipeline(preprocessor, RandomForestRegressor())
 regressor.fit(X_train, y_train)
 
 # %% [markdown]
-# As for classifiers, regressors have a `score` method which will compute the
+# As for scikit-learn classifiers, scikit-learn regressors have a `score`
+# method that computes the
 # :math:`R^2` score (also known as the coefficient of determination) by
 # default:
 
@@ -650,8 +661,9 @@ regressor.score(X_test, y_test)
 
 # %% [markdown]
 # The :math:`R^2` score represents the proportion of variance of the target
-# explained by the independent variables in the model. The best score possible
-# is 1 but there is no lower bound. However, a model which would predict the
+# that is explained by the independent variables in the model. The best score
+# possible
+# is 1 but there is no lower bound. However, a model that predicts the
 # expected value of the target would get a score of 0.
 
 # %%
@@ -661,11 +673,11 @@ dummy_regressor = DummyRegressor(strategy="mean")
 dummy_regressor.fit(X_train, y_train).score(X_test, y_test)
 
 # %% [markdown]
-# The :math:`R^2` score gives insights regarding the goodness of fit of the
+# The :math:`R^2` score gives insight into the goodness of fit of the
 # model. However, this score cannot be compared from one dataset to another and
-# the value obtained does not have a meaningful interpretation regarding the
-# original unit of the target. If we want to get such interpretable score, we
-# will be interested into the median or mean absolute error.
+# the value obtained does not have a meaningful interpretation relative the
+# original unit of the target. If we wanted to get an interpretable score, we
+# would be interested in the median or mean absolute error.
 
 # %%
 from sklearn.metrics import mean_absolute_error
@@ -677,9 +689,11 @@ print(
 
 # %% [markdown]
 # By computing the mean absolute error, we can interpret that our model is
-# predicting in average 507 bike rentals away from the truth. The mean can be
-# impacted by large error while for some application, we would like to discard
-# them and we can in this case opt for the median absolute error.
+# predicting on average 507 bike rentals away from the truth. A disadvantage
+# of this metric is that the mean can be
+# impacted by large error. For some applications, we might not want these
+# large errors to have such a big influence on our metric. In this case we can
+# use the median absolute error.
 
 # %%
 from sklearn.metrics import median_absolute_error
@@ -689,7 +703,7 @@ print(
 )
 
 # %% [markdown]
-# In this case, our model make an error of 405 bikes.
+# This metric tells us that, our model makes a median error of 405 bikes.
 # FIXME: **not sure how to introduce the `mean_squared_error`.**
 
 # %% [markdown]
@@ -721,9 +735,9 @@ def plot_predicted_vs_actual(y_true, y_pred, title=None):
 plot_predicted_vs_actual(y_test, y_pred)
 
 # %% [markdown]
-# On this plot, the perfect prediction will lay on the diagonal line. This plot
-# allows to detect if the model have a specific regime where our model does not
-# work as expected or has some kinda of bias.
+# On this plot, correct predictions would lie on the diagonal line. This plot
+# allows us to detect if the model makes errors in a consistent way, i.e.
+# has some bias.
 #
 # Let's take an example using the house prices in Ames.
 
@@ -750,10 +764,10 @@ y_pred = model.predict(X_test)
 plot_predicted_vs_actual(y_test, y_pred, title="House prices in Ames")
 
 # %% [markdown]
-# On this plot, we see that for the large "True values", our model tend to
+# On this plot, we see that for the large True price values, our model tends to
 # under-estimate the price of the house. Typically, this issue arises when
-# the target to predict does not follow a normal distribution and the model
-# could benefit of an intermediate target transformation.
+# the target to predict does not follow a normal distribution. In these cases
+# the model would benefit from target transformation.
 
 # %%
 from sklearn.preprocessing import QuantileTransformer

@@ -230,8 +230,8 @@ class_counts /= class_counts.sum()
 class_counts
 
 # %% [markdown]
-# We can observed that the positive class `'donated'` is only 24% of the
-# total number of instances. The good accuracy of our classifier is then linked
+# We can observe that the positive class, `'donated'`, comprises only 24% of
+# the of the samples. The good accuracy of our classifier is then linked
 # to its ability to predict correctly the negative class `'not donated'`
 # which may or may not be relevant, depending on the application. We can
 # illustrate the issue using a dummy classifier as a baseline.
@@ -245,7 +245,7 @@ dummy_classifier = DummyClassifier(
 dummy_classifier.fit(X_train, y_train).score(X_test, y_test)
 
 # %% [markdown]
-# With dummy classifier, which always predicts the negative class
+# With the dummy classifier, which always predicts the negative class
 # `'not donated'`,
 # we obtain an accuracy score of 76%. Therefore, it means that this classifier,
 # without learning anything from the data `X`, is capable of predicting as
@@ -253,7 +253,7 @@ dummy_classifier.fit(X_train, y_train).score(X_test, y_test)
 # any classifier should out perform to not be a random classifier.
 #
 # The problem illustrated above is also known as the class imbalance problem.
-# When the classes are imbalanced accuracy should not be used. In this case,
+# When the classes are imbalanced, accuracy should not be used. In this case,
 # one should either use
 # the precision, recall, or F1 score as presented above or the balanced
 # accuracy score instead of accuracy.
@@ -263,10 +263,10 @@ from sklearn.metrics import balanced_accuracy_score
 
 balanced_accuracy_score(y_test, y_pred)
 # %% [markdown]
-# The balanced accuracy is equivalent to the accuracy in the context of
+# The balanced accuracy is equivalent to accuracy in the context of
 # balanced classes. It is defined as the average recall obtained on each class.
 #
-# ### Evaluatiion and different probability thresholds
+# ### Evaluation and different probability thresholds
 #
 # All statistics that we presented up to now rely on `classifier.predict` which
 # outputs the most likely label. We haven't made use use of the probability
@@ -303,7 +303,7 @@ np.all(equivalence_pred_proba)
 # precision are computed and plotted on a graph. Each metric plotted on a
 # graph axis and each point on
 # the graph corresponds to a specific decision threshold. Let's start by
-# manually computing the precision-recall curve.
+# computing the precision-recall curve.
 
 # %%
 import matplotlib.pyplot as plt
@@ -350,7 +350,7 @@ plt.legend()
 # positive class and accurately discriminating the negative classes. The
 # statistics used for this are sensitivity and specificity. Sensitivity is just
 # another name for recall. However, specificity measures the proportion of
-# correctly classified samples in the tnegative class defined as:
+# correctly classified samples in the negative class defined as:
 # TN / (TN + FP). Similar to the precision-recall curve, sensitivity and
 # specificity are generally plotted as a curve called the receiver operating
 # characteristic (ROC) curve. Below is such a curve:
@@ -381,9 +381,9 @@ plt.legend()
 # plot_roc_curve(classifier, X_test, y_test, pos_label='donated')
 
 # %% [markdown]
-# This curve is built using the same principle as the precision-recall
-# curve: we vary the probability threshold to compute "hard" prediction and
-# compute the metrics. As with the precision-recall curve, we can
+# This curve was built using the same principle as the precision-recall
+# curve: we vary the probability threshold for determining "hard" prediction
+# and compute the metrics. As with the precision-recall curve, we can
 # compute the area under the ROC (ROC-AUC) to characterize the performance of
 # our classifier. However, it is important to observer that the lower bound
 # of the ROC-AUC is 0.5. Indeed, we show the performance of a dummy
@@ -615,7 +615,7 @@ X_train.info()
 # features need to be encoded such that our random forest can
 # deal with them. The simplest solution is to use an `OrdinalEncoder`.
 # Regarding, the numerical features, we don't need to do anything. Thus, we
-# will create preprocessing steps to take care of this encoding.
+# will create preprocessing steps to take care of the encoding.
 
 # %%
 from sklearn.compose import make_column_transformer
@@ -653,8 +653,7 @@ regressor.fit(X_train, y_train)
 # %% [markdown]
 # As for scikit-learn classifiers, scikit-learn regressors have a `score`
 # method that computes the
-# :math:`R^2` score (also known as the coefficient of determination) by
-# default:
+# :math:`R^2` score (also known as the coefficient of determination):
 
 # %%
 regressor.score(X_test, y_test)

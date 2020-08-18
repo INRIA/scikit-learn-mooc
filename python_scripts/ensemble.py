@@ -443,7 +443,7 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # (after averaging the predicted probabilities) is predicted. For instance, if
 # three learners predict (for two classes) the probability (0.4, 0.6),
 # (0.3, 0.7) and (0.31, 0.69), the aggregation probability is (0.33, 0.67)
-# and the second class will be predicted
+# and the second class would be predicted.
 #
 # ## Summary
 #

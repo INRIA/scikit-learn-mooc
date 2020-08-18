@@ -853,8 +853,8 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 # prediction. However, we saw in the previous plot that two trees were not
 # enough to correct the residuals of all samples. Therefore, one needs to
 # add several trees to the ensemble to successfully correct the error.
-# (i.e. the second tree correct the first tree's error, while the third tree
-# correct the second tree's error and so on.)
+# (i.e. the second tree corrects the first tree's error, while the third tree
+# corrects the second tree's error and so on.)
 # 
 # We will compare the performance of random-forest and gradient boosting on
 # the California housing dataset.

@@ -340,8 +340,11 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 #
 # Therefore, the entropy will be maximum when the proportion of samples from
 # each class is equal (i.e. $p(X_k)$ is 50%) and minimum when only samples for
-# a single class is present (i.e., $p(X_k)$ is 100%, definitely class `X`,
-# or 0%, definitely the other class).
+# a single class is present (i.e., $p(X_k)$ is 100%, only class `X`,
+# or 0%, only the other class). This idea can be extended to >2 classes.
+# For example, for 3 classes, entropy would be highest when the proportion of
+# samples is 33% for all 3 classes and lowest when the proportion of only one
+# of the classes is 100%.
 #
 # Therefore, one searches to minimize the entropy in each partition.
 

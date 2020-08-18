@@ -640,7 +640,7 @@ ensemble_weight
 # * one needs to assign a weight to each learner when making predictions.
 #
 # Indeed, we defined a really simple scheme to assign sample weights and
-# learner weights. However, there are statistical theory (like in AdaBoost)
+# learner weights. However, there are statistical theories (like in AdaBoost)
 # for how these sample and learner weights can be optimally calculated.
 # FIXME: I think we should add a reference to ESL here.
 #

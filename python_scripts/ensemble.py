@@ -439,8 +439,8 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # Then, the aggregation method is different in regression and classification:
 # - in regression, the average prediction is computed. For instance, if 
 # three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33,
-# - while in classification, the majority class
-# (after summing the predicted probabilities) is predicted. For instance, if
+# - while in classification, the class which highest probability
+# (after averaging the predicted probabilities) is predicted. For instance, if
 # three learners predict (for two classes) the probability (0.4, 0.6),
 # (0.3, 0.7) and (0.31, 0.69), the aggregation probability is (0.33, 0.67)
 # and the second class will be predicted

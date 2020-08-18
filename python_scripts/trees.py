@@ -338,9 +338,10 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 #
 # ![title](https://upload.wikimedia.org/wikipedia/commons/2/22/Binary_entropy_plot.svg)
 #
-# Therefore, the entropy will be maximum when the proportion of sample from
-# each class will be equal and minimum when only samples for a single class
-# is present.
+# Therefore, the entropy will be maximum when the proportion of samples from
+# each class is equal (i.e. $p(X_k)$ is 50%) and minimum when only samples for
+# a single class is present (i.e., $p(X_k)$ is 100%, definitely class `X`,
+# or 0%, definitely the other class).
 #
 # Therefore, one searches to minimize the entropy in each partition.
 

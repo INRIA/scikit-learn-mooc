@@ -374,7 +374,7 @@ print(f"Lowest mean squared error = {mse:.2f}")
 # could create new features, derived from the original features, using some
 # expert knowledge. For instance, here we know that we have a cubic and squared
 # relationship between `x` and `y` (because we generated the data). Indeed,
-# we could create two new features (`x^2` and `X^3`) using this information.
+# we could create two new features (`x^2` and `x^3`) using this information.
 
 # %%
 X = np.vstack([x, x ** 2, x ** 3]).T

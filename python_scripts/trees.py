@@ -335,7 +335,7 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 #
 # The entropy $H$ of the data $X$ remaining in one leaf is defined as: 
 # $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
-# where $p(X_k)$ stand for the probability (here proportions) 
+# where $p(X_k)$ stands for the probability (here proportions) 
 # of finding the class $k$ in the leaf
 # 
 # For a binary problem (e.g., only 2 classes of penguins), the entropy function

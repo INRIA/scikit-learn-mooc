@@ -654,8 +654,8 @@ best_alpha
 # %% [markdown]
 # Note that, we selected this alpha *without* using the testing set ; but
 # instead by using the validation set which is a subset of the training
-# data. So we did not "overfit" the test data.
-# This has been seen in the lesson *basic hyper-parameters tuning*.
+# data. This is so we do not "overfit" the test data and
+# can be seen in the lesson *basic hyper-parameters tuning*.
 # We can finally compare the performance of the `LinearRegression` model to the
 # best `Ridge` model, on the testing set.
 

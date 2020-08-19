@@ -378,7 +378,7 @@ print(f"Entropy for partition above the threshold: \n"
 #
 # With entropy, we are able to assess the quality of each partition. However,
 # the ultimate goal is to evaluate the quality of the overall split
-# (the node in decision tree)and thus
+# and thus
 # combine the measures of entropy in each partition (leaf) into a single statistic.
 #
 # ### Information gain

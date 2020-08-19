@@ -288,7 +288,7 @@ _ = plt.ylabel('y', size=26)
 # In this exercise, you are asked to approximate the target `y` using a linear
 # function `f(x)`. i.e. find the best coefficients of the function `f` in order
 # to minimize the mean squared error. Here you shall find the coefficient manually
-# via trial and error (just as the previous cells with weight and intercept).
+# via trial and error (just as in the previous cells with weight and intercept).
 #
 # Then you can compare the mean squared error of your model with the mean
 # squared error found by `LinearRegression` (which shall be the minimal one).

@@ -169,7 +169,7 @@ tree = DecisionTreeClassifier(max_depth=1)
 plot_decision_function(X_train, y_train, tree)
 
 # %% [markdown]
-# The partition found by the algorithm separates the data along the axis
+# The partitions found by the algorithm separates the data along the axis
 # "Culmen Length",
 # discarding the feature "Culmen Depth". Thus, it highlights that a decision
 # tree does not use a combination of feature when making a split.
@@ -187,9 +187,9 @@ print(
 # Indeed, it is not a surprise. We saw earlier that a single feature will not
 # be able to separate all three species. However, from the previous analysis we
 # saw that by using both features we should be able to get fairly good results.
-# Considering the spliting mechanism of the decision tree illustrated above, we should
+# Considering the splitting mechanism of the decision tree illustrated above, we should
 # repeat the partitioning on the resulting rectangles created by the first
-# split. In this regard, we expect that the other partitions will be using
+# split. In this regard, we expect that the two partitions at the second level of the tree will be using
 # the feature "Culmen Depth".
 
 # %%
@@ -217,7 +217,7 @@ print(
 # ## Partitioning mechanism
 #
 # Let's isolate a single feature. We will present the mechanism allowing us to
-# find the optimal partition for this one-dimensional data.
+# find the optimal partitions for this one-dimensional data.
 
 # %%
 single_feature = X_train["Culmen Length (mm)"]
@@ -322,21 +322,24 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 
 
 # %% [markdown]
-# As we visually assessed, the partition defined by < 42 mm has mainly Adelie
+# As we visually assessed, the partition (i.e. the part of the data)
+# defined by < 42 mm has mainly Adelie
 # penguin and only 2 samples that are misclassified. However,
 # in the partition >= 42 mm, we cannot differentiate well between Gentoo and
 # Chinstrap (while they are almost twice more Gentoo).
 #
 # We should use a statistical measure that uses all the class
 # probabilities, as the criterion to qualify the purity
-# of a partition (which will be a leaf in a decision tree).
+# of a partition.
 # We will choose as an example the entropy criterion (also used
 # in scikit-learn) which is one of the possible classification criterion.
 #
-# The entropy $H$ of the data $X$ remaining in one leaf is defined as: 
-# $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
-# where $p(X_k)$ stand for the probability (here proportions) 
-# of finding the class $k$ in the leaf
+# The entropy $H$ of the data remaining in one partition is defined as: 
+#
+# $H = - \sum_{k=1}^{K} p_k \log p_k$
+#
+# where $p_k$ stands for the probability (here the proportions) 
+# of finding the class $k$ in this part.
 # 
 # For a binary problem (e.g., only 2 classes of penguins), the entropy function
 # for one of the class can be depicted as follows:
@@ -347,7 +350,7 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 # each class will be equal and minimum when only samples for a single class
 # is present.
 #
-# Therefore, a good partition (i.e. a good leaf) *minimize* the entropy.
+# Therefore, a good partition *minimizes* the entropy in each part.
 
 # %%
 def classification_criterion(labels):
@@ -389,7 +392,7 @@ print(f"Entropy for partition above the threshold: \n"
 # 
 # IG = H(X_unsplit)/N - ( H(split1)/N1 + H(split2)/N2 )
 # 
-# The goal is to maximize the information gain (i.e. minimizing the entropy of each split).
+# The goal is to maximize the information gain (i.e. maximize the decrease in entropy after the split).
 #
 # We will define a function to compute the information gain given the
 # partitions.
@@ -641,7 +644,7 @@ tree = DecisionTreeRegressor()
 _ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
-# We see that the decision tree model does not have an a priori distribution
+# We see that the decision tree model does not have a priori distribution
 # for the data and we do not end-up
 # with a straight line to regress flipper length and body mass.
 # Having different body masses

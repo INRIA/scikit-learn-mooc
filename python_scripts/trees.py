@@ -641,7 +641,7 @@ tree = DecisionTreeRegressor()
 _ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
-# We see that the decision tree model does not have an a priori distribution
+# We see that the decision tree model does not have a priori distribution
 # for the data and we do not end-up
 # with a straight line to regress flipper length and body mass.
 # Having different body masses

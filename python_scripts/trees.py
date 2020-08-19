@@ -347,7 +347,7 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 # each class will be equal and minimum when only samples for a single class
 # is present.
 #
-# Therefore, a good partition (i.e. a good leaf) *minimize* the entropy.
+# Therefore, a good partition (i.e. a good leaf) *minimizes* the entropy.
 
 # %%
 def classification_criterion(labels):

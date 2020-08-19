@@ -227,10 +227,12 @@ for weight, intercept in zip([-40, 45, 90], [15000, -5000, -14000]):
 
 # %% [markdown]
 # Thus, the best model will be the one with the lowest error.
-# Hopefully, this problem can be solved without the need to check every
+# Hopefully, this problem of finding the best parameters values
+# (i.e. that result in the lowest error)
+# can be solved without the need to check every
 # potential parameter combination. Indeed, this problem has a closed-form
-# solution (i.e. the best parameter values can be found by solving an equation),
-# avoiding the need for brute-force search. This strategy is
+# solution: the best parameter values can be found by solving an equation. This
+# avoids the need for brute-force search. This strategy is
 # implemented in scikit-learn.
 
 # %%

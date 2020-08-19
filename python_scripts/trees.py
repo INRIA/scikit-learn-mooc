@@ -389,7 +389,7 @@ print(f"Entropy for partition above the threshold: \n"
 # 
 # IG = H(X_unsplit)/N - ( H(split1)/N1 + H(split2)/N2 )
 # 
-# The goal is to maximize the information gain (i.e. minimizing the entropy of each split).
+# The goal is to maximize the information gain (i.e. maximize the decrease in entropy after the split).
 #
 # We will define a function to compute the information gain given the
 # partitions.

@@ -556,7 +556,12 @@ X_valid_scaled = scaler.transform(X_valid)
 # transform the data when `transform` is called. Therefore, it is important to
 # note that `fit` should only be called on the training data, similar to
 # classifiers and regressors.
-#
+
+# %%
+print('mean records on the training set:', scaler.mean_)
+print('standard deviation records on the training set:', scaler.scale_)
+
+# %% [markdown]
 # In the example above, `X_train_scaled` is the data scaled, using the
 # mean and standard deviation of each feature, computed using the training
 # data `X_train`.

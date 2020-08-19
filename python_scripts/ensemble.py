@@ -942,9 +942,9 @@ cv_results[columns].sort_values(by="rank_test_score")
 # in the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed,
 # the first tree of the ensemble would perfectly fit (overfit) the data and
 # thus no subsequent tree would be required, since there would be no residuals.
-# Instead, having very weak learners at each step will help reducing overfitting.
 # Therefore, the tree used in gradient-boosting should have a low depth,
 # typically between 3 to 8 levels.
+# Having very weak learners at each step will help reducing overfitting.
 #
 # With this consideration in mind, the deeper the trees, the faster the
 # residuals will be corrected and less learners are required. So `n_estimators`

@@ -339,8 +339,8 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 # ![title](https://upload.wikimedia.org/wikipedia/commons/2/22/Binary_entropy_plot.svg)
 #
 # Therefore, the entropy will be maximum when the proportion of samples from
-# each class is equal (i.e. $p(X_k)$ is 50%) and minimum when only samples for
-# a single class is present (i.e., $p(X_k)$ is 100%, only class `X`,
+# each class is equal (i.e. $Pr(X=1)$ is 50%) and minimum when only samples for
+# a single class is present (i.e., $Pr(X=1)$ is 100%, only class `X`,
 # or 0%, only the other class). This idea can be extended to >2 classes.
 # For example, for 3 classes, entropy would be highest when the proportion of
 # samples is 33% for all 3 classes and lowest when the proportion of only one

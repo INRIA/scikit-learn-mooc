@@ -549,8 +549,9 @@ X_valid_scaled = scaler.transform(X_valid)
 # `StandardScaler` transforms the data such that each feature will have a mean
 # of zero and a standard deviation of 1.
 #
-# These scikit-learn estimator is known as a transformer: it compute some
-# statistics (i.e the mean and the standard deviation) and store them in its attributes
+# This scikit-learn estimator is known as a transformer: it computes some
+# statistics (i.e the mean and the standard deviation) and stores them as
+#  attributes (scaler.mean_, scaler.scale_)
 # when calling `fit`. Using these statistics, it
 # transform the data when `transform` is called. Therefore, it is important to
 # note that `fit` should only be called on the training data, similar to

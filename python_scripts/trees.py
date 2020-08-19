@@ -189,7 +189,7 @@ print(
 # saw that by using both features we should be able to get fairly good results.
 # Considering the splitting mechanism of the decision tree illustrated above, we should
 # repeat the partitioning on the resulting rectangles created by the first
-# split. In this regard, we expect that the other partitions will be using
+# split. In this regard, we expect that the two partitions at the second level of the tree will be using
 # the feature "Culmen Depth".
 
 # %%

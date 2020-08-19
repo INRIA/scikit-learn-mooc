@@ -187,7 +187,7 @@ print(
 # Indeed, it is not a surprise. We saw earlier that a single feature will not
 # be able to separate all three species. However, from the previous analysis we
 # saw that by using both features we should be able to get fairly good results.
-# Considering the spliting mechanism of the decision tree illustrated above, we should
+# Considering the splitting mechanism of the decision tree illustrated above, we should
 # repeat the partitioning on the resulting rectangles created by the first
 # split. In this regard, we expect that the other partitions will be using
 # the feature "Culmen Depth".

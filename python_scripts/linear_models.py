@@ -164,7 +164,7 @@ print(
 
 # %% [markdown]
 # We can also see that we have a parameter `intercept_body_mass` in our model.
-# This parameter correspond the value on the y-axis if `flipper_length=0`
+# This parameter corresponds to the value on the y-axis if `flipper_length=0`
 # (which in our case is only a mathematical consideration, i.e. in our data,
 #  the value of `flipper_length` goes from 170mm to 230mm). This y-value when  
 # x=0 is called the y-intercept. 

@@ -437,13 +437,13 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # with a regression problem.
 #
 # Then, the aggregation method is different in regression and classification:
-# - in regression, the averaged predictions value is computed. For instance, if 
-# three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33
-# - while in classification, the majority class
-# (after summing the predicted probabilities) is predicted. For instance, if
+# - in regression, the average prediction is computed. For instance, if 
+# three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33,
+# - while in classification, the class which highest probability
+# (after averaging the predicted probabilities) is predicted. For instance, if
 # three learners predict (for two classes) the probability (0.4, 0.6),
 # (0.3, 0.7) and (0.31, 0.69), the aggregation probability is (0.33, 0.67)
-# and the second class will be predicted
+# and the second class would be predicted.
 #
 # ## Summary
 #
@@ -640,7 +640,7 @@ ensemble_weight
 # * one needs to assign a weight to each learner when making predictions.
 #
 # Indeed, we defined a really simple scheme to assign sample weights and
-# learner weights. However, there are statistical theory (like in AdaBoost)
+# learner weights. However, there are statistical theories (like in AdaBoost)
 # for how these sample and learner weights can be optimally calculated.
 # FIXME: I think we should add a reference to ESL here.
 #
@@ -853,8 +853,8 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 # prediction. However, we saw in the previous plot that two trees were not
 # enough to correct the residuals of all samples. Therefore, one needs to
 # add several trees to the ensemble to successfully correct the error.
-# (i.e. the second tree correct the first tree's error, while the third tree
-# correct the second tree's error and so on.)
+# (i.e. the second tree corrects the first tree's error, while the third tree
+# corrects the second tree's error and so on.)
 # 
 # We will compare the performance of random-forest and gradient boosting on
 # the California housing dataset.

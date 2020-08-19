@@ -586,7 +586,9 @@ print(
 
 # This pipeline exposes the same API as the regressor and classifier
 # and will manage the calls to `fit` and `transform` for you, avoiding any
-# problems with data leakage (like fitting the transformer on the test data).
+# problems with data leakage (when knowledge of the test data was 
+# inadvertently included in training a model, as when fitting a transformer
+# on the test data).
 #
 # We already presented `Pipeline` in the second notebook and we will use it
 # here to combine both the scaling and the linear regression.

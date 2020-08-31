@@ -135,7 +135,8 @@ def plot_decision_function(X, y, clf, ax=None):
 
 # %% [markdown]
 # Thus, for a linear classifier, we will obtain the following decision
-# boundaries.
+# boundaries. These boundaries lines indicate where the model changes its 
+# prediction from one class to another.
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -168,7 +169,7 @@ tree = DecisionTreeClassifier(max_depth=1)
 plot_decision_function(X_train, y_train, tree)
 
 # %% [markdown]
-# The partition found by the algorithm separates the data along the axis
+# The partitions found by the algorithm separates the data along the axis
 # "Culmen Length",
 # discarding the feature "Culmen Depth". Thus, it highlights that a decision
 # tree does not use a combination of feature when making a split.
@@ -186,9 +187,9 @@ print(
 # Indeed, it is not a surprise. We saw earlier that a single feature will not
 # be able to separate all three species. However, from the previous analysis we
 # saw that by using both features we should be able to get fairly good results.
-# Considering the mechanism of the decision tree illustrated above, we should
+# Considering the splitting mechanism of the decision tree illustrated above, we should
 # repeat the partitioning on the resulting rectangles created by the first
-# split. In this regard, we expect that the second partition will be using
+# split. In this regard, we expect that the two partitions at the second level of the tree will be using
 # the feature "Culmen Depth".
 
 # %%
@@ -216,7 +217,7 @@ print(
 # ## Partitioning mechanism
 #
 # Let's isolate a single feature. We will present the mechanism allowing us to
-# find the optimal partition for this one-dimensional data.
+# find the optimal partitions for this one-dimensional data.
 
 # %%
 single_feature = X_train["Culmen Length (mm)"]
@@ -321,18 +322,25 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 
 
 # %% [markdown]
-# As we visually assessed, the partition defined by < 42 mm has mainly Adelie
+# As we visually assessed, the partition (i.e. the part of the data)
+# defined by < 42 mm has mainly Adelie
 # penguin and only 2 samples that are misclassified. However,
 # in the partition >= 42 mm, we cannot differentiate well between Gentoo and
 # Chinstrap (while they are almost twice more Gentoo).
 #
-# We should use a statistical measure that uses the all class
+# We should use a statistical measure that uses all the class
 # probabilities, as the criterion to qualify the purity
-# of a partition. We will choose as an example the entropy criterion (also used
+# of a partition.
+# We will choose as an example the entropy criterion (also used
 # in scikit-learn) which is one of the possible classification criterion.
 #
-# The entropy is defined as: $H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)$
+# The entropy $H$ of the data remaining in one partition is defined as: 
 #
+# $H = - \sum_{k=1}^{K} p_k \log p_k$
+#
+# where $p_k$ stands for the probability (here the proportions) 
+# of finding the class $k$ in this part.
+# 
 # For a binary problem (e.g., only 2 classes of penguins), the entropy function
 # for one of the class can be depicted as follows:
 #
@@ -346,7 +354,7 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 # samples is 33% for all 3 classes and lowest when the proportion of only one
 # of the classes is 100%.
 #
-# Therefore, one searches to minimize the entropy in each partition.
+# Therefore, a good partition *minimizes* the entropy in each part.
 
 # %%
 def classification_criterion(labels):
@@ -373,8 +381,9 @@ print(f"Entropy for partition above the threshold: \n"
 # and Gentoo penguins.
 #
 # With entropy, we are able to assess the quality of each partition. However,
-# the ultimate goal is to evaluate the quality of the overall split and thus
-# combine the measures of entropy in each partition into a single statistic.
+# the ultimate goal is to evaluate the quality of the overall split
+# and thus
+# combine the measures of entropy in each partition (leaf) into a single statistic.
 #
 # ### Information gain
 #
@@ -383,8 +392,11 @@ print(f"Entropy for partition above the threshold: \n"
 # of a split. The information gain is defined as the difference between the
 # entropy
 # before a split and the sum of the entropies of each partition,
-# normalized by the frequencies of class samples in each partition. The goal is
-# to maximize the information gain.
+# normalized by the frequencies of class samples in each partition. 
+# 
+# IG = H(X_unsplit)/N - ( H(split1)/N1 + H(split2)/N2 )
+# 
+# The goal is to maximize the information gain (i.e. maximize the decrease in entropy after the split).
 #
 # We will define a function to compute the information gain given the
 # partitions.
@@ -636,17 +648,16 @@ tree = DecisionTreeRegressor()
 _ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
-# We see that the decision tree model does not have a priori and we do not
-# end-up
-# with a straight line to regress flipper length and body mass. The prediction
-# of a sample from the training set will give the
-# same target than this training sample. However, having different body masses
+# We see that the decision tree model does not have a priori distribution
+# for the data and we do not end-up
+# with a straight line to regress flipper length and body mass.
+# Having different body masses
 # for a same flipper length, the tree will be predicting the mean of the
 # targets.
 #
 # So in classification setting, we saw that the predicted value was the most
 # probable value in the node of the tree. In the case of regression, the
-# predicted value corresponds to the mean of the target in the node.
+# predicted value corresponds to the mean of the target in the leaf.
 #
 # This lead us to question whether or not our decision trees are able to
 # extrapolate to unseen data. We can highlight that this is possible with the

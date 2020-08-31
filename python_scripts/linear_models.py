@@ -164,8 +164,11 @@ print(
 
 # %% [markdown]
 # We can also see that we have a parameter `intercept_body_mass` in our model.
-# this parameter is the value on the y-axis when `flipper_length=0` and it
-# is called the y-intercept. If `intercept_body_mass` is 0, the curve will
+# This parameter corresponds to the value on the y-axis if `flipper_length=0`
+# (which in our case is only a mathematical consideration, as in our data,
+#  the value of `flipper_length` only goes from 170mm to 230mm). This y-value when  
+# x=0 is called the y-intercept. 
+# If `intercept_body_mass` is 0, the curve will
 # pass through the origin:
 
 # %%
@@ -223,10 +226,13 @@ for weight, intercept in zip([-40, 45, 90], [15000, -5000, -14000]):
     )
 
 # %% [markdown]
-# Hopefully, this problem can be solved without the need to check every
+# Thus, the best model will be the one with the lowest error.
+# Hopefully, this problem of finding the best parameters values
+# (i.e. that result in the lowest error)
+# can be solved without the need to check every
 # potential parameter combination. Indeed, this problem has a closed-form
-# solution (i.e. you can use an equation to solve for the best parameter
-# values), avoiding the need for brute-force search. This strategy is
+# solution: the best parameter values can be found by solving an equation. This
+# avoids the need for brute-force search. This strategy is
 # implemented in scikit-learn.
 
 # %%
@@ -283,7 +289,8 @@ _ = plt.ylabel('y', size=26)
 #
 # In this exercise, you are asked to approximate the target `y` using a linear
 # function `f(x)`. i.e. find the best coefficients of the function `f` in order
-# to minimize the mean squared error.
+# to minimize the mean squared error. Here you shall find the coefficient manually
+# via trial and error (just as in the previous cells with weight and intercept).
 #
 # Then you can compare the mean squared error of your model with the mean
 # squared error found by `LinearRegression` (which shall be the minimal one).
@@ -291,9 +298,9 @@ _ = plt.ylabel('y', size=26)
 
 # %%
 def f(x):
-    w0 = 0  # TODO: update the weight here
-    w1 = 0  # TODO: update the weight here
-    y_predict = w1 * x + w0
+    intercept = 0  # TODO: update the parameters here
+    weight = 0  # TODO: update the parameters here
+    y_predict = weight * x + intercept
     return y_predict
 
 
@@ -398,7 +405,8 @@ print(f"Lowest mean squared error = {mse:.2f}")
 # additional
 # features. Here, we created new feature by knowing the way the target was
 # generated. In practice, this is usually not the case. Instead, one is usually
-# creating interaction between features with different orders, at the risk of
+# creating interaction between features (e.g. $x_1 * x_2$) with different orders 
+# (e.g. $x_1, x_1^2, x_1^3$), at the risk of
 # creating a model with too much expressivity and which might overfit. In
 # scikit-learn, the `PolynomialFeatures` is a transformer to create such
 # feature interactions which we could have used instead of manually creating
@@ -541,12 +549,19 @@ X_valid_scaled = scaler.transform(X_valid)
 # `StandardScaler` transforms the data such that each feature will have a mean
 # of zero and a standard deviation of 1.
 #
-# These scikit-learn estimators are known as transformers: they compute some
-# statistics and store them when calling `fit`. Using these statistics, they
+# This scikit-learn estimator is known as a transformer: it computes some
+# statistics (i.e the mean and the standard deviation) and stores them as
+#  attributes (scaler.mean_, scaler.scale_)
+# when calling `fit`. Using these statistics, it
 # transform the data when `transform` is called. Therefore, it is important to
 # note that `fit` should only be called on the training data, similar to
 # classifiers and regressors.
-#
+
+# %%
+print('mean records on the training set:', scaler.mean_)
+print('standard deviation records on the training set:', scaler.scale_)
+
+# %% [markdown]
 # In the example above, `X_train_scaled` is the data scaled, using the
 # mean and standard deviation of each feature, computed using the training
 # data `X_train`.
@@ -565,9 +580,15 @@ print(
 # the regressor, scikit-learn provides a `Pipeline`, which 'chains' the
 # transformer and regressor together. The pipeline allows you to use a
 # sequence of transformer(s) followed by a regressor or a classifier, in one
-# call. This pipeline exposes the same API as the regressor and classifier
+# call. (i.e. fitting the pipeline will fit both the transformer(s) and the regressor. 
+# Then predicting from the pipeline will first transform the data through the transformer(s)
+# then predict with the regressor from the transformed data)
+
+# This pipeline exposes the same API as the regressor and classifier
 # and will manage the calls to `fit` and `transform` for you, avoiding any
-# problems with data leakage.
+# problems with data leakage (when knowledge of the test data was 
+# inadvertently included in training a model, as when fitting a transformer
+# on the test data).
 #
 # We already presented `Pipeline` in the second notebook and we will use it
 # here to combine both the scaling and the linear regression.
@@ -640,7 +661,8 @@ best_alpha
 # %% [markdown]
 # Note that, we selected this alpha *without* using the testing set ; but
 # instead by using the validation set which is a subset of the training
-# data. This has been seen in the lesson *basic hyper-parameters tuning*.
+# data. This is so we do not "overfit" the test data and
+# can be seen in the lesson *basic hyper-parameters tuning*.
 # We can finally compare the performance of the `LinearRegression` model to the
 # best `Ridge` model, on the testing set.
 

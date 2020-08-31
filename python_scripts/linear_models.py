@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.5.0
+#       jupytext_version: 1.5.2
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -18,7 +18,7 @@
 #
 # In this notebook we will review linear models from `scikit-learn`.
 # We will :
-# - learn how to fit a simple linear slope and interpret the coefficients;
+# - learn how to fit a simple linear model and interpret the coefficients;
 # - discuss feature augmentation to fit a non-linear function;
 # - use `LinearRegression` and its regularized version `Ridge` which is more
 #   robust;
@@ -31,7 +31,7 @@
 # %% [markdown]
 # ### The over-simplistic toy example
 # To illustrate the main principle of linear regression, we will use a dataset
-# containing information about penguins.
+# that contains information about penguins.
 
 # %%
 import pandas as pd
@@ -40,9 +40,9 @@ data = pd.read_csv("../datasets/penguins.csv")
 data.head()
 
 # %% [markdown]
-# This dataset contains features of penguins. We will formulate the following
-# problem. Observing the flipper length of a penguin, we would like to infer
-# is mass.
+# This dataset contains measurements taken of penguins. We will formulate the
+# following problem: using the flipper length of a penguin, we would like
+# to infer its mass.
 
 # %%
 import seaborn as sns
@@ -57,13 +57,13 @@ X = data[[feature_names]].dropna()
 y = data[target_name].dropna()
 
 # %% [markdown]
-# In this problem, the mass of a penguin is our target. It is a continuous
-# variable that roughly vary between 2700 g and 6300 g. Thus, this is a
+# In this problem, penguin mass is our target. It is a continuous
+# variable that roughly varies between 2700 g and 6300 g. Thus, this is a
 # regression problem (in contrast to classification). We also see that there is
-# almost linear relationship between the body mass of the penguin and the
-# flipper length. Longer is the flipper, heavier is the penguin.
+# almost a linear relationship between the body mass of the penguin and the
+# flipper length. The longer the flipper, the heavier the penguin.
 #
-# Thus, we could come with a simple rule that given a length of the flipper
+# Thus, we could come up with a simple formula, where given a flipper length
 # we could compute the body mass of a penguin using a linear relationship of
 # of the form `y = a * x + b` where `a` and `b` are the 2 parameters of our
 # model.
@@ -79,8 +79,9 @@ def linear_model_flipper_mass(
 
 
 # %% [markdown]
-# Using the model that we define, we can check which body mass values we would
-# predict for a large range of flipper length.
+# Using the model we defined above, we can check the body mass values
+# predicted for a range of flipper lengths. We will set `weight_flipper_length`
+# to be 45 and `intercept_body_mass` to be -5000.
 
 # %%
 import matplotlib.pyplot as plt
@@ -123,12 +124,15 @@ plot_data_and_model(
 )
 
 # %% [markdown]
-# The variable `weight_flipper_length` is a weight applied to the feature in
+# The variable `weight_flipper_length` is a weight applied to the feature
+# `flipper_length` in
 # order to make the inference. When this coefficient is positive, it means that
-# an increase of the flipper length will induce an increase of the body mass.
-# If the coefficient is negative, an increase of the flipper length will induce
-# a decrease of the body mass. Graphically, this coefficient is represented by
-# the slope of the curve that we draw.
+# penguins with longer flipper lengths will have larger body masses.
+# If the coefficient is negative, it means that penguins with shorter flipper
+# flipper lengths have larger body masses. Graphically, this coefficient is
+# represented by the slope of the curve in the plot. Below we show what the
+# curve would look like when the `weight_flipper_length` coefficient is
+# negative.
 
 # %%
 weight_flipper_length = -40
@@ -141,9 +145,10 @@ plot_data_and_model(
 
 
 # %% [markdown]
-# In our case, this coefficient has some meaningful unit. Indeed, its unit is
-# g/mm. For instance, with a coefficient of 40 g/mm, it means that for an
-# additional millimeter, the body weight predicted will increase of 40 g.
+# In our case, this coefficient has a meaningful unit: g/mm.
+# For instance, a coefficient of 40 g/mm, means that for each
+# additional millimeter in flipper length, the body weight predicted will
+# increase by 40 g.
 
 body_mass_180 = linear_model_flipper_mass(
     flipper_length=180, weight_flipper_length=40, intercept_body_mass=0
@@ -159,8 +164,12 @@ print(
 
 # %% [markdown]
 # We can also see that we have a parameter `intercept_body_mass` in our model.
-# this parameter is the intercept of the curve when `x=0`. If the intercept is
-# null, then the curve will be passing by the origin:
+# This parameter corresponds to the value on the y-axis if `flipper_length=0`
+# (which in our case is only a mathematical consideration, as in our data,
+#  the value of `flipper_length` only goes from 170mm to 230mm). This y-value when  
+# x=0 is called the y-intercept. 
+# If `intercept_body_mass` is 0, the curve will
+# pass through the origin:
 
 # %%
 weight_flipper_length = 25
@@ -172,7 +181,7 @@ plot_data_and_model(
 )
 
 # %% [markdown]
-# Otherwise, it will be the value intercepted:
+# Otherwise, it will pass through the `intercept_body_mass` value:
 
 # %%
 weight_flipper_length = 45
@@ -184,9 +193,9 @@ plot_data_and_model(
 )
 
 # %% [markdown]
-# Now, that we understood how our model is inferring data, one should question
-# on how to find the best value for the parameters. Indeed, it seems that we
-# can have several model which will depend of the choice of parameters:
+# Now, that we understand how our model is inferring data, one should ask
+# how do we find the best value for the parameters. Indeed, it seems that we
+# can have many models, depending of the choice of parameters:
 
 # %%
 _, ax = plt.subplots()
@@ -197,8 +206,8 @@ for weight, intercept in zip([-40, 45, 90], [15000, -5000, -14000]):
     )
 
 # %% [markdown]
-# To choose a model, we could use a metric indicating how good our model is
-# fitting our data.
+# To choose a model, we could use a metric that indicates how good our model is
+# at fitting our data.
 
 # %%
 from sklearn.metrics import mean_squared_error
@@ -217,10 +226,14 @@ for weight, intercept in zip([-40, 45, 90], [15000, -5000, -14000]):
     )
 
 # %% [markdown]
-# Hopefully, this problem can be solved without the need to check every
-# potential parameters combinations. Indeed, this problem as a closed-form
-# solution (i.e. an equation giving the parameter values) avoiding for any
-# brute-force search. This strategy is implemented in scikit-learn.
+# Thus, the best model will be the one with the lowest error.
+# Hopefully, this problem of finding the best parameters values
+# (i.e. that result in the lowest error)
+# can be solved without the need to check every
+# potential parameter combination. Indeed, this problem has a closed-form
+# solution: the best parameter values can be found by solving an equation. This
+# avoids the need for brute-force search. This strategy is
+# implemented in scikit-learn.
 
 # %%
 from sklearn.linear_model import LinearRegression
@@ -230,8 +243,8 @@ linear_regression.fit(X, y)
 
 # %% [markdown]
 # The instance `linear_regression` will store the parameter values in the
-# attribute `coef_` and `intercept_`. We can check which is the optimal model
-# found:
+# attributes `coef_` and `intercept_`. We can check what the optimal model
+# found is:
 
 # %%
 weight_flipper_length = linear_regression.coef_[0]
@@ -247,12 +260,11 @@ model_error = mean_squared_error(y, inferred_body_mass)
 print(f"The error of the optimal model is {model_error:.2f}")
 
 # %% [markdown]
-# ### What if your data don't have a linear relationship
+# ### What if your data doesn't have a linear relationship
 # Now, we will define a new problem where the feature and the target are not
-# linearly linked. For instance, we could defined `x` to be the years of
+# linearly linked. For instance, we could define `x` to be the years of
 # experience (normalized) and `y` the salary (normalized). Therefore, the
-# problem here would be to infer the salary given the years of experience of
-# someone.
+# problem here would be to infer the salary given the years of experience.
 
 # %%
 
@@ -275,19 +287,20 @@ _ = plt.ylabel('y', size=26)
 # %% [markdown]
 # ### Exercise 1
 #
-# In this exercise, you are asked to approximate the target `y` by a linear
+# In this exercise, you are asked to approximate the target `y` using a linear
 # function `f(x)`. i.e. find the best coefficients of the function `f` in order
-# to minimize the error.
+# to minimize the mean squared error. Here you shall find the coefficient manually
+# via trial and error (just as in the previous cells with weight and intercept).
 #
-# Then you could compare the mean squared error of your model with the mean
-# squared error of a linear model (which shall be the minimal one).
+# Then you can compare the mean squared error of your model with the mean
+# squared error found by `LinearRegression` (which shall be the minimal one).
 
 
 # %%
 def f(x):
-    w0 = 0  # TODO: update the weight here
-    w1 = 0  # TODO: update the weight here
-    y_predict = w1 * x + w0
+    intercept = 0  # TODO: update the parameters here
+    weight = 0  # TODO: update the parameters here
+    y_predict = weight * x + intercept
     return y_predict
 
 
@@ -323,9 +336,9 @@ mse = mean_squared_error(y, linear_regression.predict(X))
 print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# Here the coefficients learnt by `LinearRegression` is the best slope which
-# fit the data. We can inspect those coefficients using the attributes of the
-# model learnt as follow:
+# Here the coefficients learnt by `LinearRegression` is the best curve that
+# fits the data. We can inspect the coefficients using the attributes of the
+# model learnt as follows:
 
 # %%
 print(
@@ -335,15 +348,18 @@ print(
 
 # %% [markdown]
 # It is important to note that the model learnt will not be able to handle
-# the non-linearity linking `x` and `y` since it is beyond the assumption made
-# when using a linear model. To obtain a better model, we have mainly 3
-# solutions: (i) choose a model that natively can deal with non-linearity,
-# (ii) "augment" features by including expert knowledge which can be used by
-# the model, or (iii) use a "kernel" to have a locally-based decision function
-# instead of a global linear decision function.
+# the non-linear relationship between `x` and `y` since linear models assume
+# the relationship between `x` and `y` to be linear. To obtain a better model,
+# we have 3 main solutions:
+#
+# 1. choose a model that natively can deal with non-linearity,
+# 2. "augment" features by including expert knowledge which can be used by
+#    the model, or
+# 2. use a "kernel" to have a locally-based decision function instead of a
+#    global linear decision function.
 #
 # Let's illustrate quickly the first point by using a decision tree regressor
-# which natively can handle non-linearity.
+# which can natively handle non-linearity.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -360,12 +376,12 @@ mse = mean_squared_error(y, tree.predict(X))
 print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# In this case, the model can handle the non-linearity. Instead having a model
-# which natively can deal with non-linearity, we could modify our data: we
+# In this case, the model can handle non-linearity. Instead of having a model
+# which can natively deal with non-linearity, we could also modify our data: we
 # could create new features, derived from the original features, using some
 # expert knowledge. For instance, here we know that we have a cubic and squared
 # relationship between `x` and `y` (because we generated the data). Indeed,
-# we could create two new features that would add this information in the data.
+# we could create two new features (`x^2` and `x^3`) using this information.
 
 # %%
 X = np.vstack([x, x ** 2, x ** 3]).T
@@ -384,20 +400,22 @@ mse = mean_squared_error(y, linear_regression.predict(X))
 print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# We can see that even with a linear model, we overcome the limitation of the
-# model by adding the non-linearity component into the design of additional
+# We can see that even with a linear model, we can overcome the linearity
+# limitation of the model by adding the non-linear component into the design of
+# additional
 # features. Here, we created new feature by knowing the way the target was
 # generated. In practice, this is usually not the case. Instead, one is usually
-# creating interaction between features with different order, at risk of
-# creating a model with too much expressivity and wich might overfit. In
+# creating interaction between features (e.g. $x_1 * x_2$) with different orders 
+# (e.g. $x_1, x_1^2, x_1^3$), at the risk of
+# creating a model with too much expressivity and which might overfit. In
 # scikit-learn, the `PolynomialFeatures` is a transformer to create such
-# feature interactions which we could have used instead of creating new 
-# features ourself.
+# feature interactions which we could have used instead of manually creating
+# new features.
 #
-
-# To present the `PolynomialFeatures`, we are going to use a scikit-learn 
+#
+# To demonstrate `PolynomialFeatures`, we are going to use a scikit-learn
 # pipeline which will first create the new features and then fit the model.
-# We will later comeback to details regarding scikit-learn pipeline.
+# We come back to scikit-learn pipelines and discuss them in more detail later.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -420,17 +438,17 @@ mse = mean_squared_error(y, model.predict(X))
 print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# Thus, we saw that the `PolynomialFeatures` is actually doing the same
+# Thus, we saw that `PolynomialFeatures` is actually doing the same
 # operation that we did manually above.
 
 # %% [markdown]
 # **FIXME: it might be to complex to be introduced here but it seems good in
 # the flow. However, we go away from linear model.**
 #
-# The last possibility to make a linear model more expressive is to use
+# The last possibility to make a linear model more expressive is to use a
 # "kernel". Instead of learning a weight per feature as we previously
 # emphasized, a weight will be assign by sample instead. However, not all
-# sample will be used. This is the base of the support vector machine
+# samples will be used. This is the base of the support vector machine
 # algorithm.
 
 # %%
@@ -468,16 +486,18 @@ print(f"Lowest mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # ### Linear regression in higher dimension
-# In the previous example, we usually used only a single feature. But we
+# In the previous example, we only used a single feature. But we have
 # already shown that we could add new feature to make the model more expressive
-# by deriving this new features based on the original feature.
+# by deriving new features, based on the original feature.
 #
-# Indeed, we could also use additional features which are decorrelated with the
-# original feature and that could help us to predict the target.
+# Indeed, we could also use additional features (not related to the
+# original feature) and these could help us to predict the target.
 #
-# We will load a dataset reporting the median house value in California.
-# The dataset in made of 8 features regarding demography and geography of the
-# location and the aim is to predict the median house price.
+# We will load a dataset about house prices in California.
+# The dataset consists of 8 features regarding the demography and geography of
+# districts in California and the aim is to predict the median house price of
+# each district. We will use all 8 features to predict the target, median
+# house price.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -489,14 +509,15 @@ X.head()
 # We will compare the score of `LinearRegression` and `Ridge` (which is a
 # regularized version of linear regression).
 #
-# We will evaluate our model using the mean squared error as in the previous
-# example. The lower the score, the better.
+# The scorer we will use to evaluate our model is the mean squared error, as in
+# the previous example. The lower the score, the better.
 
 # %% [markdown]
-# Here we will divide our data into a training set and a validation set.
-# The validation set will be used to assert the hyper-parameters selection.
-# While a testing set should only be used to assert the score of our final
-# model.
+# Here, we will divide our data into a training set, a validation set and a
+# testing set.
+# The validation set will be used to evaluate selection of the
+# hyper-parameters, while the testing set should only be used to calculate the
+# score of our final model.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -510,9 +531,9 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 )
 
 # %% [markdown]
-# Note that in the first example, we did not care about scaling our data to
-# keep the original units and have better intuition. However, this is a good
-# practice to scale the data such that each feature have a similar standard
+# Note that in the first example, we did not care about scaling our data in
+# order to keep the original units and have better intuition. However, it is
+# good practice to scale the data such that each feature has a similar standard
 # deviation. It will be even more important if the solver used by the model
 # is a gradient-descent-based solver.
 
@@ -525,19 +546,25 @@ X_valid_scaled = scaler.transform(X_valid)
 
 # %% [markdown]
 # Scikit-learn provides several tools to preprocess the data. The
-# `StandardScaler` transforms the data such that each feature will have a zero
-# mean and a unit standard deviation.
+# `StandardScaler` transforms the data such that each feature will have a mean
+# of zero and a standard deviation of 1.
 #
-# These scikit-learn estimators are known are transformer: they compute some
-# statistics and store them when calling `fit`. Using these statistics, they
-# transform the data when calling `transform`. Therefore, it is important to
-# note that `fit` should only be called on the training data similarly to the
-# classifier or regressor.
-#
-# In the example above, `X_train_scaled` are data scaled after computing the
-# mean and standard deviation of each feature considering the training data.
-# `X_test_scaled` are data scaled using the mean and standard deviation of each
-# feature on the training data.
+# This scikit-learn estimator is known as a transformer: it computes some
+# statistics (i.e the mean and the standard deviation) and stores them as
+#  attributes (scaler.mean_, scaler.scale_)
+# when calling `fit`. Using these statistics, it
+# transform the data when `transform` is called. Therefore, it is important to
+# note that `fit` should only be called on the training data, similar to
+# classifiers and regressors.
+
+# %%
+print('mean records on the training set:', scaler.mean_)
+print('standard deviation records on the training set:', scaler.scale_)
+
+# %% [markdown]
+# In the example above, `X_train_scaled` is the data scaled, using the
+# mean and standard deviation of each feature, computed using the training
+# data `X_train`.
 
 # %%
 linear_regression = LinearRegression()
@@ -549,20 +576,28 @@ print(
 )
 
 # %% [markdown]
-# Instead of manually transforming the data by calling the transformer,
-# scikit-learn provide a `Pipeline` allowing to call a sequence of
-# transformer(s) followed by a regressor or a classifier. This pipeline exposed
-# the same API than the regressor and classifier and will manage the call to
-# `fit` and `transform` for you, avoiding any mistake with data leakage.
+# Instead of calling the transformer to transform the data and then calling
+# the regressor, scikit-learn provides a `Pipeline`, which 'chains' the
+# transformer and regressor together. The pipeline allows you to use a
+# sequence of transformer(s) followed by a regressor or a classifier, in one
+# call. (i.e. fitting the pipeline will fit both the transformer(s) and the regressor. 
+# Then predicting from the pipeline will first transform the data through the transformer(s)
+# then predict with the regressor from the transformed data)
+
+# This pipeline exposes the same API as the regressor and classifier
+# and will manage the calls to `fit` and `transform` for you, avoiding any
+# problems with data leakage (when knowledge of the test data was 
+# inadvertently included in training a model, as when fitting a transformer
+# on the test data).
 #
 # We already presented `Pipeline` in the second notebook and we will use it
 # here to combine both the scaling and the linear regression.
 #
-# We will call `make_pipeline()` which will create a `Pipeline` by giving as
-# arguments the successive transformations to perform followed by the regressor
+# We will can create a `Pipeline` by using `make_pipeline` and giving as
+# arguments the transformation(s) to be performed (in order) and the regressor
 # model.
 #
-# So the two cells above become this new one:
+# So the two cells above can be reduced to this new one:
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -587,8 +622,8 @@ print(
 # Now we want to compare this basic `LinearRegression` versus its regularized
 # form `Ridge`.
 #
-# We will tune the parameter alpha and compare it with the `LinearRegression`
-# model which is not regularized.
+# We will tune the parameter `alpha` in `Ridge` and compare the results with
+# the `LinearRegression` model which is not regularized.
 
 # %%
 from sklearn.linear_model import Ridge
@@ -615,20 +650,21 @@ _ = plt.legend()
 # %% [markdown]
 # We see that, just like adding salt in cooking, adding regularization in our
 # model could improve its error on the validation set. But too much
-# regularization, like too much salt, decrease its performance.
+# regularization, like too much salt, decreases its performance.
 #
-# We can see visually that the best alpha should be around 40.
+# We can see visually that the best `alpha` should be around 40.
 
 # %%
 best_alpha = list_alphas[np.argmin(list_ridge_scores)]
 best_alpha
 
 # %% [markdown]
-# At the end, we selected this alpha *without* using the testing set ; but 
-# instead by extracting a validation set which is a subset of the training
-# data. This has been seen in the lesson *basic hyper parameters tuning*.
-# We can finally compared the `LinearRegression` model and the best `Ridge`
-# model on the testing set.
+# Note that, we selected this alpha *without* using the testing set ; but
+# instead by using the validation set which is a subset of the training
+# data. This is so we do not "overfit" the test data and
+# can be seen in the lesson *basic hyper-parameters tuning*.
+# We can finally compare the performance of the `LinearRegression` model to the
+# best `Ridge` model, on the testing set.
 
 # %%
 print("Linear Regression")
@@ -650,8 +686,9 @@ print(
 # regression here.
 
 # %% [markdown]
-# The hyperparameter search could have been made using the `GridSearchCV`
-# instead of manually splitting the training data and selecting the best alpha.
+# The hyper-parameter search could have been made using `GridSearchCV`
+# instead of manually splitting the training data (into training and
+# validation subsets) and selecting the best alpha.
 
 # %%
 from sklearn.model_selection import GridSearchCV
@@ -664,9 +701,9 @@ ridge.fit(X_train_valid, y_train_valid)
 print(ridge.best_params_)
 
 # %% [markdown]
-# The `GridSearchCV` manage to test all possible given `alpha` value and picked
-# up the best one with a cross-validation scheme. We can now compare with
-# the `LinearRegression`.
+# The `GridSearchCV` tests all possible given `alpha` values and picks
+# the best one with a cross-validation scheme. We can now compare with
+# `LinearRegression`.
 
 # %%
 print("Linear Regression")
@@ -685,11 +722,11 @@ print(
 )
 
 # %% [markdown]
-# It is as well interesting to know that several regressors and classifiers
+# It is also interesting to know that several regressors and classifiers
 # in scikit-learn are optimized to make this parameter tuning. They usually
 # finish with the term "CV" for "Cross Validation" (e.g. `RidgeCV`).
-# They are more efficient than making the `GridSearchCV` by hand and you
-# should use them instead.
+# They are more efficient than using `GridSearchCV` and you should use them
+# instead.
 #
 # We will repeat the equivalent of the hyper-parameter search but instead of
 # using a `GridSearchCV`, we will use `RidgeCV`.
@@ -719,13 +756,13 @@ print(
 )
 
 # %% [markdown]
-# Note that the best parameter value is changing because the cross-validation
-# between the different approach is internally different.
+# Note that the best hyper-parameter value is different because the
+# cross-validation used in the different approach is internally different.
 
 # %% [markdown]
 # ## 2. Classification
 # In regression, we saw that the target to be predicted was a continuous
-# variable. In classification, this target will be discrete. (e.g. categorical)
+# variable. In classification, this target will be discrete (e.g. categorical).
 #
 # We will go back to our penguin dataset. However, this time we will try to
 # predict the penguin species using the culmen information. We will also
@@ -745,17 +782,18 @@ data = data[data[target_column].apply(lambda x: x in ("Adelie", "Chinstrap"))]
 data = data.dropna()
 
 # %% [markdown]
-# We can quickly start by visualizing the feature distribution by class
+# We can quickly start by visualizing the feature distribution by class:
 
 # %%
 _ = sns.pairplot(data=data, hue="Species")
 
 # %% [markdown]
-# So we can observe, that we have quite a simple problem. When the culmen
-# length increase, the probability to be a Chinstrap penguin is closer to 1.
-# However, the culmen length does not help at predicting the penguin specie.
+# We can observe that we have quite a simple problem. When the culmen
+# length increases, the probability that the penguin is a Chinstrap is closer
+# to 1. However, the culmen depth is not helpful for predicting the penguin
+# species.
 #
-# For the later model fitting, we will separate the target from the data and
+# For model fitting, we will separate the target from the data and
 # we will create a training and a testing set.
 
 # %%
@@ -768,9 +806,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # %% [markdown]
 # To visualize the separation found by our classifier, we will define an helper
-# function `plot_decision_function` . In short, this function will fit our classifier and
-# plot the edge of the decision function, where the probability to be an Adelie or
-# Chinstrap will be equal (p=0.5).
+# function `plot_decision_function`. In short, this function will fit our
+# classifier and plot the edge of the decision function, where the probability
+# to be an Adelie or Chinstrap will be equal (p=0.5).
 
 
 # %%
@@ -826,7 +864,7 @@ def plot_decision_function(X, y, clf, title="auto", ax=None):
 # function to model the probability. This model is known as logistic
 # regression.
 #
-# Scikit-learn provides the class `LogisticRegression` which implement this
+# Scikit-learn provides the class `LogisticRegression` which implements this
 # algorithm.
 
 # %%
@@ -850,12 +888,12 @@ print(logistic_regression[-1].coef_)
 #
 # ### Apply some regularization when fitting the logistic model
 #
-# The `LogisticRegression` model
-# allows to apply regularization via the parameter `C`. It would be equivalent
-# to shift from `LinearRegression` to `Ridge`. On the contrary to `Ridge`, the
-# `C` parameter is the inverse of the regularization strength: a smaller `C`
-# will lead to a more regularized model. We can check the effect of
-# regularization on our model:
+# The `LogisticRegression` model allows one to apply regularization via the
+# parameter `C`. It would be equivalent to shifting from `LinearRegression`
+# to `Ridge`. Ccontrary to `Ridge`, the value of the
+# `C` parameter is inversely proportional to the regularization strength:
+# a smaller `C` will lead to a more regularized model. We can check the effect
+# of regularization on our model:
 
 # %%
 _, axs = plt.subplots(ncols=3, figsize=(12, 4))
@@ -870,12 +908,12 @@ for ax, C in zip(axs, [0.02, 0.1, 1]):
 
 # %% [markdown]
 # A more regularized model will make the coefficients tend to 0. Since one of
-# the feature is considered less important when fitting the model (lower
+# the features is considered less important when fitting the model (lower
 # coefficient magnitude), only one of the feature will be used when C is small.
 # This feature is the culmen length which is in line with our first insight
-# that we found when plotting the marginal feature probabilities.
+# when plotting the marginal feature probabilities.
 #
-# Just like the `RidgeCV` class which automatically find the optimal `alpha`, 
+# Just like the `RidgeCV` class which automatically finds the optimal `alpha`,
 # one can use `LogisticRegressionCV` to find the best `C` on the training data.
 
 # %%
@@ -891,13 +929,13 @@ plot_decision_function(X_train, y_train, logistic_regression)
 #
 # As we saw in regression, the linear classification model expects the data
 # to be linearly separable. When this assumption does not hold, the model
-# is not enough expressive to properly fit the data. One need to apply the same
-# tricks than in regression: feature augmentation (using expert-knowledge
-# potentially) or using method based on kernel.
+# is not expressive enough to properly fit the data. One needs to apply the
+# same tricks as in regression: feature augmentation (potentially using
+# expert-knowledge) or using a kernel based method.
 #
 # We will provide examples where we will use a kernel support vector machine
-# to make classification on some toy-dataset where it is impossible to find a perfect linear
-# separation
+# to perform classification on some toy-datasets where it is impossible to
+# find a perfect linear separation.
 
 # %%
 from sklearn.datasets import (
@@ -936,7 +974,7 @@ for ax, (X, y) in zip(axs[1], datasets):
     plot_decision_function(X, y, kernel_model, title="RBF kernel", ax=ax)
 
 # %% [markdown]
-# We see that the $R^2$ score decrease on each dataset, so we can say that each
+# We see that the $R^2$ score decreases on each dataset, so we can say that each
 # dataset is "less linearly separable" than the previous one.
 
 # %% [markdown]

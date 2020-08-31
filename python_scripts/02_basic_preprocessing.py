@@ -292,7 +292,6 @@ print(f"The mean cross-validation accuracy is: "
 # procedure:
 
 # %%
-# %matplotlib inline
 from sklearn.model_selection import KFold
 import matplotlib.pyplot as plt
 import numpy as np

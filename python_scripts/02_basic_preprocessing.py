@@ -174,9 +174,11 @@ print(f"The test accuracy using a {model.__class__.__name__} is "
 # - What would be the score of a model that always predicts `' <= 50K'`?
 # - Is 81% or 82% accuracy a good score for this problem?
 #
-# Hint: You can compute the cross-validated of a
-# [DummyClassifier](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
-# the performance of such baselines.
+# Hint: You can use a `DummyClassifier` and do a train-test split to evaluate
+# its accuracy on the test set. This
+# [link](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
+# shows a few examples of how to evaluate the performance of these baseline
+# models.
 #
 # Use the dedicated notebook to do this exercise.
 

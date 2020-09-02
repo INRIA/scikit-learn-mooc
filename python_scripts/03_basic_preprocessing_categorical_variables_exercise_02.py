@@ -42,10 +42,12 @@ target = df[target_name].to_numpy()
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 # %%
-numerical_columns = [
-    c for c in data.columns if data[c].dtype.kind in ["i", "f"]]
-categorical_columns = [
-    c for c in data.columns if data[c].dtype.kind not in ["i", "f"]]
+from sklearn.compose import make_column_selector as selector
+
+numerical_columns_selector = selector(dtype_include=["int", "float"])
+categorical_columns_selector = selector(dtype_exclude=["int", "float"])
+numerical_columns = numerical_columns_selector(data)
+categorical_columns = categorical_columns_selector(data)
 
 categories = [
     data[column].unique() for column in data[categorical_columns]]

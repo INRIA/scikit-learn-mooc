@@ -28,7 +28,7 @@ df = pd.read_csv(
 
 target_name = "class"
 target = df[target_name].to_numpy()
-data = df.drop(columns=target_name)
+data = df.drop(columns=[target_name, "fnlwgt"])
 
 from sklearn.model_selection import train_test_split
 

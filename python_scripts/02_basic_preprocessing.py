@@ -30,7 +30,7 @@
 # ## Loading the dataset
 #
 # We will use the same dataset "adult_census" described in the previous notebook.
-# TODO add link
+# For more details about the dataset see http://www.openml.org/d/1590.
 
 # %%
 import pandas as pd

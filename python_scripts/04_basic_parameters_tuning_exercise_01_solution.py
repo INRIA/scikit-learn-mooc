@@ -21,16 +21,6 @@
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-# This line is currently required to import HistGradientBoostingClassifier
-from sklearn.experimental import enable_hist_gradient_boosting
-from sklearn.ensemble import HistGradientBoostingClassifier
-
-from scipy.stats import expon, uniform
-from scipy.stats import randint
 
 df = pd.read_csv(
     "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
@@ -60,12 +50,15 @@ preprocessor = ColumnTransformer(
     [('cat-preprocessor', categorical_preprocessor, categorical_columns)],
     remainder='passthrough', sparse_threshold=0)
 
+# This line is currently required to import HistGradientBoostingClassifier
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.pipeline import make_pipeline
+from sklearn.pipeline import Pipeline
 
-model = make_pipeline(
-    preprocessor, HistGradientBoostingClassifier(random_state=42))
+model = Pipeline([
+    ("preprocessor", preprocessor),
+    ("classifier", HistGradientBoostingClassifier(random_state=42))
+])
 
 # %% [markdown]
 # TODO: write your solution here
@@ -90,8 +83,8 @@ best_params = {}
 for lr in learning_rate:
     for mln in max_leaf_nodes:
         model.set_params(
-            histgradientboostingclassifier__learning_rate=lr,
-            histgradientboostingclassifier__max_leaf_nodes=mln
+            classifier__learning_rate=lr,
+            classifier__max_leaf_nodes=mln
         )
         scores = cross_val_score(model, df_train, target_train, cv=3)
         if scores.mean() > best_score:

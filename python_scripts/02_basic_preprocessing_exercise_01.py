@@ -29,12 +29,16 @@ df = pd.read_csv(
 target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=[target_name, "fnlwgt"])
-numerical_columns = [
-    c for c in data.columns if data[c].dtype.kind in ["i", "f"]]
+
+# %%
+from sklearn.compose import make_column_selector as selector
+
+numerical_columns_selector = selector(dtype_include=["int", "float"])
+numerical_columns = numerical_columns_selector(data)
 data_numeric = data[numerical_columns]
 
 # %%
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
 from sklearn.dummy import DummyClassifier
 
 # TODO: write me!

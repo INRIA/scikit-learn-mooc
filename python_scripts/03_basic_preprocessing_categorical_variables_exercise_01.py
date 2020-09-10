@@ -48,8 +48,12 @@ df = pd.read_csv(
 target_name = "class"
 target = df[target_name].to_numpy()
 data = df.drop(columns=[target_name, "fnlwgt"])
-categorical_columns = [
-    c for c in data.columns if data[c].dtype.kind not in ["i", "f"]]
+
+# %%
+from sklearn.compose import make_column_selector as selector
+
+categorical_columns_selector = selector(dtype_exclude=["int", "float"])
+categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %%

@@ -102,7 +102,7 @@ adult_census = adult_census[all_columns]
 # %%
 print(
     f"The dataset contains {adult_census.shape[0]} samples and "
-    "{adult_census.shape[1]} features")
+    f"{adult_census.shape[1]} features")
 
 # %% [markdown]
 # ## Visual inspection of the data

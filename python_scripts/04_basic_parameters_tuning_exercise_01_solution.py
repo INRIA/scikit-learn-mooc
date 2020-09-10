@@ -39,7 +39,7 @@ df = pd.read_csv(
 
 target_name = "class"
 target = df[target_name].to_numpy()
-data = df.drop(columns=target_name)
+data = df.drop(columns=[target_name, "fnlwgt"])
 
 df_train, df_test, target_train, target_test = train_test_split(
     data, target, random_state=42)

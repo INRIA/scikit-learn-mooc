@@ -46,6 +46,7 @@ df.head()
 # no rules on what each parameter should be set to. 
 # Thus, not making a search could lead us
 # to have an underfitted or overfitted model.
+
 #
 # First, let's keep a set of data to test our final model.
 
@@ -945,6 +946,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 # Therefore, the tree used in gradient-boosting should have a low depth,
 # typically between 3 to 8 levels.
 # Having very weak learners at each step will help reducing overfitting.
+
 #
 # With this consideration in mind, the deeper the trees, the faster the
 # residuals will be corrected and less learners are required. So `n_estimators`

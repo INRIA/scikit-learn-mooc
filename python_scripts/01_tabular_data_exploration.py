@@ -32,11 +32,7 @@
 # %%
 import pandas as pd
 
-adult_census = pd.read_csv(
-    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
-
-# Or use the local copy:
-# adult_census = pd.read_csv('../datasets/adult-census.csv')
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
 # We can look at the OpenML webpage to learn more about this dataset: http://www.openml.org/d/1590

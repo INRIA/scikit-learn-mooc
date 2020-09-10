@@ -35,11 +35,7 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv(
-    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
-
-# Or use the local copy:
-# df = pd.read_csv('../datasets/adult-census.csv')
+df = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
 # Let's have a look at the first records of this data frame:

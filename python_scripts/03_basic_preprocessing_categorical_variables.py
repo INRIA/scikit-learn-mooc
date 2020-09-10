@@ -27,10 +27,7 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv(
-    "https://www.openml.org/data/get_csv/1595261/adult-census.csv")
-# Or use the local copy:
-# df = pd.read_csv('../datasets/adult-census.csv')
+df = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
 target = df[target_name].to_numpy()

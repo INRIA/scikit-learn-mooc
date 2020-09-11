@@ -66,14 +66,14 @@ model = Pipeline([
 # the model by setting the parameters. The evaluation of the model should be
 # performed using `cross_val_score`. We can propose to define the following
 # parameters search:
-# - `learning_rate` for the values 0.01, 0.1, and 1;
-# - `max_leaf_nodes` for the values 5, 25, 45.
+# - `learning_rate` for the values 0.05, 0.1, 0.5, 1 and 5
+# - `max_leaf_nodes` for the values 3, 10, 30 and 100
 
 # %%
 from sklearn.model_selection import cross_val_score
 
-learning_rate = [0.01, 0.1, 1, 10]
-max_leaf_nodes = [5, 25, 45]
+learning_rate = [0.05, 0.1, 0.5, 1, 5]
+max_leaf_nodes = [3, 10, 30, 100]
 
 best_score = 0
 best_params = {}
@@ -83,7 +83,7 @@ for lr in learning_rate:
             classifier__learning_rate=lr,
             classifier__max_leaf_nodes=mln
         )
-        scores = cross_val_score(model, df_train, target_train, cv=3)
+        scores = cross_val_score(model, df_train, target_train, cv=2)
         if scores.mean() > best_score:
             best_score = scores.mean()
             best_params = {'learning-rate': lr, 'max leaf nodes': mln}

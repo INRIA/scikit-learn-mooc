@@ -173,10 +173,10 @@ for param_name in model.get_params().keys():
 # loops, make a search for the best combinations of the `learning_rate` and
 # `max_leaf_nodes` parameters. In this regard, you will need to train and test
 # the model by setting the parameters. The evaluation of the model should be
-# performed using `cross_val_score`. We can propose to define the following
-# parameters search:
-# - `learning_rate` for the values 0.01, 0.1, and 1;
-# - `max_leaf_nodes` for the values 5, 25, 45.
+# performed using `cross_val_score`. You can use the following parameters
+# search:
+# - `learning_rate` for the values 0.05, 0.1, 0.5, 1 and 5
+# - `max_leaf_nodes` for the values 3, 10, 30 and 100
 
 # %% [markdown]
 # ## Automated parameter tuning via grid-search
@@ -196,7 +196,7 @@ from sklearn.model_selection import GridSearchCV
 
 param_grid = {
     'classifier__learning_rate': (0.05, 0.1, 0.5, 1, 5),
-    'classifier__max_leaf_nodes': (3, 10, 30, 100),}
+    'classifier__max_leaf_nodes': (3, 10, 30, 100)}
 model_grid_search = GridSearchCV(model, param_grid=param_grid,
                                  n_jobs=4, cv=2)
 model_grid_search.fit(df_train, target_train)
@@ -231,6 +231,11 @@ model_grid_search.predict(df_test.iloc[0:5])
 # %%
 print(f"The best set of parameters is: "
       f"{model_grid_search.best_params_}")
+
+# %% [markdown]
+# The accuracy and the best parameters of the grid-searched pipeline are
+# similar to the ones we found in the previous exercise, where we searched the
+# best parameters "by hand" through a double for loop.
 
 # %% [markdown]
 # In addition, we can inspect all results which are stored in the attribute

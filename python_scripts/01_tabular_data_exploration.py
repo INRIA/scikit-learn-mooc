@@ -207,98 +207,42 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # per week. Linear machine learning models can only capture linear interactions, so
 # this may be a factor when deciding which model to chose.
 #
-# In a machine-learning setting, algorithm automatically
-# decide what should be the "rules" in order to make predictions on new data.
-# Let's visualize which set of simple rules a decision tree would grasp using the
-# same data.
-
-
-# %%
-def plot_tree_decision_function(tree, X, y, ax=None):
-    """Plot the different decision rules found by a `DecisionTreeClassifier`.
-
-    Parameters
-    ----------
-    tree : DecisionTreeClassifier instance
-        The decision tree to inspect.
-    X : dataframe of shape (n_samples, n_features)
-        The data used to train the `tree` estimator.
-    y : ndarray of shape (n_samples,)
-        The target used to train the `tree` estimator.
-    ax : matplotlib axis
-        The matplotlib axis where to plot the different decision rules.
-    """
-    import numpy as np
-    from scipy import ndimage
-
-    h = 0.02
-    x_min, x_max = 0, 100
-    y_min, y_max = 0, 100
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                         np.arange(y_min, y_max, h))
-
-    Z = tree.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
-    Z = Z.reshape(xx.shape)
-    faces = tree.tree_.apply(
-        np.c_[xx.ravel(), yy.ravel()].astype(np.float32))
-    faces = faces.reshape(xx.shape)
-    border = ndimage.laplace(faces) != 0
-    if ax is None:
-        ax = plt.gca()
-    ax.scatter(X.iloc[:, 0], X.iloc[:, 1],
-               c=np.array(['tab:blue',
-                           'tab:red'])[y], s=60, alpha=0.7)
-    ax.contourf(xx, yy, Z, alpha=.4, cmap='RdBu_r')
-    ax.scatter(xx[border], yy[border], marker='.', s=1)
-    ax.set_xlabel(X.columns[0])
-    ax.set_ylabel(X.columns[1])
-    ax.set_xlim([x_min, x_max])
-    ax.set_ylim([y_min, y_max])
-    sns.despine(offset=10)
-
-
-# %%
-from sklearn.preprocessing import LabelEncoder
-
-# select a subset of data
-data_subset = adult_census[:n_samples_to_plot]
-X = data_subset[["age", "hours-per-week"]]
-y = LabelEncoder().fit_transform(
-    data_subset[target_column].to_numpy())
+# In a machine-learning setting, an algorithm automatically
+# create the "rules" in order to make predictions on new data.
 
 # %% [markdown]
-# We will create a simple decision tree with a maximum of 2 rules, in order
-# to interpret the results.
+# The plot below shows the rules of a simple model, called decision tree.
 
 # %%
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.tree import plot_tree
-
-max_leaf_nodes = 3
-tree = DecisionTreeClassifier(max_leaf_nodes=max_leaf_nodes,
-                              random_state=0)
-tree.fit(X, y)
+%run ../figures/plot_simple_decision_tree_adult_census.py
 
 # %% [markdown]
-# `plot_tree` will allow us to visually check the set of rules learnt by
-# the decision tree.
-
-# %%
-_ = plot_tree(tree)
-
-# %%
-# plot the decision function learned by the tree
-plot_tree_decision_function(tree, X, y)
-
-# %% [markdown]
-# By allowing only 3 leaves in the tree, we get similar rules to the ones we
-# designed by hand:
-# * the persons younger than 28.5 year-old (X[0] < 28.5) will be considered in the class
-#   earning `<= 50K`.
-# * the persons older than 28.5 and working less than 40.5 hours-per-week (X[1] <= 40.5)
-#   will be considered in the class earning `<= 50K`, while the persons working
-#   above 40.5 hours-per-week, will be considered in the class
-#   earning `> 50K`.
+# What is plotted in the graph above, is the probability of the class
+# `high-income` as estimated by the model. Values towards 0 (dark blue)
+# indicates that the model predicts `low-income` with a high probability.
+# Values towards 1 (dark orange) indicates that the model predicts
+# `high-income` with a high probability. Values towards 0.5 (white) indicates
+# that the model is not very sure about its prediction.
+#
+# Looking at the plot here is what we can gather:
+# * In the region `age < 28.5` (left region) the prediction is `low-income`. The
+#   dark blue color indicates that the model is quite sure about its
+#   prediction.
+# * In the region `age > 28.5 AND hours-per-week < 40.5`
+#   (bottom-right region), the prediction is `low-income`. Note that the blue
+#   is a bit lighter that for the left region which means that the algorithm is
+#   not as certain in this region.
+# * In the region `age > 28.5 AND hours-per-week > 40.5` (top-right region),
+#   the prediction is `low-income`. The probability of the class `low-income`
+#   is very close to 0.5 which means the model is not sure at all about its
+#   prediction.
+#
+# It is interesting to see that a simple model create rules similar to the ones
+# that we could have created by hand. Note that machine learning is really
+# interesting when creating rules by hand is not straightfoward, for example
+# because we are in high dimension (many features) or because there is no
+# simple and obvious rules that separate the two classes as in the top-right
+# region
 
 # %% [markdown]
 #

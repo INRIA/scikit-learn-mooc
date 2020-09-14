@@ -87,9 +87,7 @@ from sklearn.pipeline import Pipeline
 model = Pipeline([
     ("preprocessor", preprocessor),
     ("classifier",
-     HistGradientBoostingClassifier(max_leaf_nodes=16,
-                                    learning_rate=0.05,
-                                    random_state=42)),])
+     HistGradientBoostingClassifier(random_state=42))])
 model.fit(df_train, target_train)
 
 print(
@@ -99,15 +97,21 @@ print(
 # %% [markdown]
 # ## Quizz
 #
-# 1. What is the default value of the `learning_rate` parameter of the `HistGradientBoostingClassifier` class? ([link to the API documentation](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html#sklearn-ensemble-histgradientboostingclassifier))
+# 1. What is the default value of the `learning_rate` parameter of the
+# `HistGradientBoostingClassifier` class? ([link to the API documentation](
+# https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html))
 #
-# 2. Try to edit the code of the previous cell to set the learning rate parameter to 10. Does this increase the accuracy of the model?
+# 2. Try to edit the code of the previous cell to set the learning rate
+# parameter to 10. Does this increase the accuracy of the model?
 #
-# 3. Decrease progressively value of `learning_rate`: can you find a value that yields an accuracy higher than 0.87?
+# 3. Decrease progressively value of `learning_rate`: can you find a value that
+# yields an accuracy higher than with the default learning rate?
 #
-# 4. Fix `learning_rate` to 0.05 and try setting the value of `max_leaf_nodes` to the minimum value of 2. Does not improve the accuracy?
+# 4. Fix `learning_rate` to 0.05 and try setting the value of `max_leaf_nodes`
+# to the minimum value of 2. Does not improve the accuracy?
 #
-# 5. Try to progressively increase the value of `max_leaf_nodes` to 256 by taking powers of 2. What do you observe?
+# 5. Try to progressively increase the value of `max_leaf_nodes` to 256 by
+# taking powers of 2. What do you observe?
 
 # %% [markdown]
 # ## The issue of finding the best model parameters
@@ -115,7 +119,7 @@ print(
 # In the previous example, we created an histogram gradient-boosting classifier
 # using the default parameters by omitting to explicitely set these parameters.
 #
-# However, there is no reasons that this set of parameters are optimal for our
+# However, there is no reason that these parameters are optimal for our
 # dataset. For instance, fine-tuning the histogram gradient-boosting can be
 # achieved by finding the best combination of the following parameters: (i)
 # `learning_rate`, (ii) `min_samples_leaf`, and (iii) `max_leaf_nodes`.

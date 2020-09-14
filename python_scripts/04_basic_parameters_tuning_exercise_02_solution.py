@@ -108,23 +108,50 @@ param_distributions = {
 
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions,
-    n_iter=200, error_score=np.nan, n_jobs=-1)
+    n_iter=20, error_score=np.nan, n_jobs=-1)
 model_random_search.fit(df_train, target_train)
+cv_results = model_random_search.cv_results_
+
+# %% [markdown]
+# We could use `cv_results = model_random_search.cv_results_` in the plot at
+# the end of this notebook (you are more than welcome to try!). Instead we are
+# going to load the results obtained from a similar search with more
+# iterations. This way we can have a more detailed plot while being able to run
+# this notebook in a reasonably short amount of time.
+
+# %%
+# Uncomment this cell if you want to regenerate the results csv file
+#
+# model_random_search = RandomizedSearchCV(
+#     model, param_distributions=param_distributions,
+#     n_iter=200, error_score=np.nan, n_jobs=-1)
+# _ = model_random_search.fit(df_train, target_train)
+# cv_results =  pd.DataFrame(model_random_search.cv_results_)
+# cv_results.to_csv("../figures/randomized_search_results_logistic_regression.csv")
+
+# %%
+cv_results = pd.read_csv(
+    "../figures/randomized_search_results_logistic_regression.csv",
+    index_col=0)
 
 # %%
 column_results = [f"param_{name}"for name in param_distributions.keys()]
 column_results += ["mean_test_score", "std_test_score", "rank_test_score"]
 
-cv_results = pd.DataFrame(model_random_search.cv_results_)
 cv_results = cv_results[column_results].sort_values(
     "mean_test_score", ascending=False)
-cv_results = cv_results.rename(
-    columns={"param_logisticregression__C": "C",
-             "param_logisticregression__solver": "solver",
-             "param_logisticregression__penalty": "penalty",
-             "param_columntransformer__cat-preprocessor__drop": "drop",
-             "mean_test_score": "mean test accuracy",
-             "rank_test_score": "ranking"})
+cv_results = (
+    cv_results
+    .rename(columns={
+        "param_logisticregression__C": "C",
+         "param_logisticregression__solver": "solver",
+         "param_logisticregression__penalty": "penalty",
+         "param_columntransformer__cat-preprocessor__drop": "drop",
+         "mean_test_score": "mean test accuracy",
+         "rank_test_score": "ranking"})
+    .astype(dtype={'C': 'float64'})
+)
+cv_results['log C'] = np.log(cv_results['C'])
 
 # %%
 cv_results["drop"] = cv_results["drop"].fillna("None")
@@ -136,14 +163,14 @@ for col in cv_results:
         cv_results[col] = labels
         encoding[col] = uniques
 encoding
-# %%
 
+# %%
 import plotly.express as px
 
 fig = px.parallel_coordinates(
     cv_results.drop(columns=["ranking", "std_test_score"]),
     color="mean test accuracy",
-    dimensions=["C", "penalty", "drop",
+    dimensions=["log C", "penalty", "drop",
                 "mean test accuracy"],
     color_continuous_scale=px.colors.diverging.Tealrose,
 )

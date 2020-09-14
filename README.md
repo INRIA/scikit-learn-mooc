@@ -5,7 +5,7 @@ All notebook material: https://github.com/INRIA/scikit-learn-mooc/
 ## Follow the tutorial online
 
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
-               https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master?urlpath=lab)
+               https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc)
 
 - Browse the static content online (pre-rendered outputs) using [nbviewer](
   https://nbviewer.jupyter.org/github/INRIA/scikit-learn-mooc/tree/master/rendered_notebooks/)
@@ -27,6 +27,8 @@ The tutorials will require the following packages:
 * pandas-profiling
 * matplotlib
 * seaborn
+* plotly
+* jupytext (required only for contributors)
 
 ### Local install
 
@@ -106,8 +108,11 @@ may need to use a `jupytext` command directly rather than using the provided
 $ jupytext --to ../notebooks//ipynb python_scripts/your_python_script.py
 ```
 
-## Direct binder links to GKE and OVH to trigger and cache builds
+## Direct binder links to OVH, GESIS and GKE to trigger and cache builds
 
-- [GKE Binder](https://gke.mybinder.org/v2/gh/lesteve/scikit-learn-tutorial/master?urlpath=lab)
 
-- [OVH Binder](https://ovh.mybinder.org/v2/gh/lesteve/scikit-learn-tutorial/master?urlpath=lab)
+- [OVH Binder](https://ovh.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
+
+- [GESIS Binder](https://gesis.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
+
+- [GKE Binder](https://gke.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)

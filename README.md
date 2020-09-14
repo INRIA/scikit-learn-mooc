@@ -5,7 +5,7 @@ All notebook material: https://github.com/INRIA/scikit-learn-mooc/
 ## Follow the tutorial online
 
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
-               https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc)
+               https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
 
 - Browse the static content online (pre-rendered outputs) using [nbviewer](
   https://nbviewer.jupyter.org/github/INRIA/scikit-learn-mooc/tree/master/rendered_notebooks/)

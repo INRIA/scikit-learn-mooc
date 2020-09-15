@@ -14,8 +14,14 @@
 
 # %% [markdown]
 # #  Exercise 01
+#
 # The goal is to write an exhaustive search to find the best parameters
-# combination maximizing the model performance
+# combination maximizing the model performance.
+
+# Here we use a small subset of the Adult Census dataset to make to code
+# fast to execute. Once your code works on the small subset, try to
+# change `train_size` to a larger value (e.g. 0.8 for 80% instead of
+# 20%).
 
 # %%
 import pandas as pd
@@ -29,7 +35,7 @@ target = df[target_name].to_numpy()
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 df_train, df_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
+    data, target, train_size=0.2, random_state=42)
 
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
@@ -58,34 +64,40 @@ model = Pipeline([
 ])
 
 # %% [markdown]
-# TODO: write your solution here
-#
+# TODO: write your solution below
+
 # Use the previously defined model (called `model`) and using two nested `for`
 # loops, make a search of the best combinations of the `learning_rate` and
 # `max_leaf_nodes` parameters. In this regard, you will need to train and test
 # the model by setting the parameters. The evaluation of the model should be
 # performed using `cross_val_score`. We can propose to define the following
 # parameters search:
-# - `learning_rate` for the values 0.05, 0.1, 0.5, 1 and 5
-# - `max_leaf_nodes` for the values 3, 10, 30 and 100
+# - `learning_rate` for the values 0.01, 0.1, 1 and 10
+# - `max_leaf_nodes` for the values 3, 10, 30
 
 # %%
 from sklearn.model_selection import cross_val_score
 
-learning_rate = [0.05, 0.1, 0.5, 1, 5]
-max_leaf_nodes = [3, 10, 30, 100]
+learning_rate = [0.01, 0.1, 1, 10]
+max_leaf_nodes = [3, 10, 30]
 
 best_score = 0
 best_params = {}
 for lr in learning_rate:
     for mln in max_leaf_nodes:
+        print(f"Evaluating model with learning rate {lr:.3f}"
+              f" and max leaf nodes {mln}... ", end="")
         model.set_params(
             classifier__learning_rate=lr,
             classifier__max_leaf_nodes=mln
         )
         scores = cross_val_score(model, df_train, target_train, cv=2)
-        if scores.mean() > best_score:
-            best_score = scores.mean()
+        mean_score = scores.mean()
+        print(f"score: {mean_score:.3f}")
+        if mean_score > best_score:
+            best_score = mean_score
             best_params = {'learning-rate': lr, 'max leaf nodes': mln}
+            print(f"Found new best model with score {best_score:.3f}!")
+
 print(f"The best accuracy obtained is {best_score:.3f}")
 print(f"The best parameters found are:\n {best_params}")

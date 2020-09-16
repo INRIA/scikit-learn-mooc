@@ -233,9 +233,9 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 #   is a bit lighter that for the left region which means that the algorithm is
 #   not as certain in this region.
 # * In the region `age > 28.5 AND hours-per-week > 40.5` (top-right region),
-#   the prediction is `low-income`. The probability of the class `low-income`
-#   is very close to 0.5 which means the model is not sure at all about its
-#   prediction.
+#   the prediction is `low-income`. However the probability of the class
+#   `low-income` is very close to 0.5 which means the model is not sure at all
+#   about its prediction.
 #
 # It is interesting to see that a simple model create rules similar to the ones
 # that we could have created by hand. Note that machine learning is really

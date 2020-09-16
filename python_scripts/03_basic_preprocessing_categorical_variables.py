@@ -22,7 +22,7 @@
 # (i.e. numerical and categorical together)
 
 # %% [markdown]
-# Let's first load the data as we did in the previous notebook. TODO add link.
+# Let's first load the data as we did in the previous notebook.
 
 # %%
 import pandas as pd
@@ -73,7 +73,7 @@ data_categorical.head()
 
 # %%
 print(
-    f"The datasets is composed of {data_categorical.shape[1]} features"
+    f"The dataset is composed of {data_categorical.shape[1]} features"
 )
 
 # %% [markdown]
@@ -163,8 +163,8 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # original data because some variables such as `occupation` and `native-country`
 # have many possible categories.
 #
-# We can now integrate this encoder inside a machine learning pipeline as in the
-# case with numerical data: let's train a linear classifier on
+# We can now integrate this encoder inside a machine learning pipeline like we
+# did with numerical data: let's train a linear classifier on
 # the encoded data and check the performance of this machine learning pipeline
 # using cross-validation.
 
@@ -305,7 +305,7 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # In the following cell we try a scalable implementation of the **Gradient Boosting
 # Machine** algorithm. For this class of models, we know that contrary to linear
 # models, it is **useless to scale the numerical features** and furthermore it is
-# both safe and significantly more computationally efficient use an arbitrary
+# both safe and significantly more computationally efficient to use an arbitrary
 # **integer encoding for the categorical variables** even if the ordering is
 # arbitrary. Therefore we adapt the preprocessing pipeline as follows:
 

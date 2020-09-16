@@ -212,12 +212,12 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 
 # %% [markdown]
 # The plot below shows the rules of a simple model, called decision tree.
-
-# %%
-%run ../figures/plot_simple_decision_tree_adult_census.py
-
-# %% [markdown]
-# What is plotted in the graph above, is the probability of the class
+# We will explain how this model works in a latter notebook, for now let us
+# just consider the model predictions when trained on this dataset:
+#
+# ![](../figures/simple_decision_tree_adult_census.png)
+#
+# The background color in each area represents the probability of the class
 # `high-income` as estimated by the model. Values towards 0 (dark blue)
 # indicates that the model predicts `low-income` with a high probability.
 # Values towards 1 (dark orange) indicates that the model predicts

@@ -1,3 +1,4 @@
+from pathlib import Path
 import numpy as np
 
 from scipy import ndimage
@@ -12,6 +13,9 @@ import seaborn as sns
 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier
+
+
+HERE = Path(__file__).parent
 
 top = cm.get_cmap('Oranges', 128)
 bottom = cm.get_cmap('Blues_r', 128)
@@ -43,6 +47,7 @@ def plot_tree_decision_function(tree, X, y, ax=None):
     import numpy as np
     from scipy import ndimage
 
+    plt.figure(figsize=(12, 10))
     h = 0.02
     x_min, x_max = 0, 100
     y_min, y_max = 0, 100
@@ -71,6 +76,7 @@ def plot_tree_decision_function(tree, X, y, ax=None):
     ax.set_xlim([x_min, x_max])
     ax.set_ylim([y_min, y_max])
     sns.despine(offset=10)
+    plt.savefig(HERE / "simple_decision_tree_adult_census.png")
 
 
 # select a subset of data

@@ -17,9 +17,9 @@
 ## Working with both numerical & categorical variables
 
 # In this notebook, we will present:
-# * typical ways to deal with categorical variables
-# * how to train a predictive model on different types of data
-# (i.e. numerical and categorical)
+# * typical ways to deal with **categorical variables**
+# * how to train a predictive model on **mixed types** of data
+# (i.e. numerical and categorical together)
 
 # %% [markdown]
 # Let's first load the data as we did in the previous notebook. TODO add link.
@@ -88,11 +88,11 @@ from sklearn.preprocessing import OrdinalEncoder
 
 encoder = OrdinalEncoder()
 data_encoded = encoder.fit_transform(data_categorical)
-
-print(
-    f"The dataset encoded contains {data_encoded.shape[1]} features")
 data_encoded[:5]
 
+# %%
+print(
+    f"The dataset encoded contains {data_encoded.shape[1]} features")
 # %% [markdown]
 # We can see that the categories have been encoded for each feature (column)
 # independently. We can also note that the number of features before and after
@@ -142,9 +142,12 @@ from sklearn.preprocessing import OneHotEncoder
 
 encoder = OneHotEncoder(sparse=False)
 data_encoded = encoder.fit_transform(data_categorical)
+data_encoded[:5]
+
+# %%
+
 print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
-data_encoded
 
 # %% [markdown]
 # Let's wrap this numpy array in a dataframe with informative column names as provided by the encoder object:
@@ -173,8 +176,10 @@ from sklearn.model_selection import cross_val_score
 model = make_pipeline(
     OneHotEncoder(handle_unknown='ignore'),
     LogisticRegression(solver='lbfgs', max_iter=1000))
+
+# %%
 scores = cross_val_score(model, data_categorical, target)
-print(f"The different scores obtained are: \n{scores}")
+scores
 
 # %%
 print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
@@ -188,7 +193,7 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 # - Try to fit a logistic regression model on categorical data transformed by
 #   the OrdinalEncoder instead. What do you observe?
 #
-# Use the dedicated notebook to do this exercise.
+# Open the dedicated notebook to do this exercise.
 
 
 # %% [markdown]
@@ -211,20 +216,15 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 #   two possible categories. This encoding will create one additional column for
 #   each possible categorical value.
 # * **numerical scaling** numerical features which will be standardized.
-#
-#
-#
-#
-#
-#
-#
 
 
 # %%
 binary_encoding_columns = ['sex']
+
 one_hot_encoding_columns = [
     'workclass', 'education', 'marital-status', 'occupation',
     'relationship', 'race', 'native-country']
+
 scaling_columns = [
     'age', 'education-num', 'hours-per-week', 'capital-gain',
     'capital-loss']
@@ -243,6 +243,8 @@ preprocessor = ColumnTransformer([
     ('one-hot-encoder', OneHotEncoder(handle_unknown='ignore'),
      one_hot_encoding_columns),
     ('standard-scaler', StandardScaler(), scaling_columns)])
+
+# %%
 model = make_pipeline(
     preprocessor, LogisticRegression(solver='lbfgs', max_iter=1000))
 
@@ -259,14 +261,18 @@ from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
-model.fit(data_train, target_train)
+
+# %%
+_ = model.fit(data_train, target_train)
+
+# %%
+data_test.head()
+
+# %%
 model.predict(data_test)[:5]
 
 # %%
 target_test[:5]
-
-# %%
-data_test.head()
 
 # %%
 model.score(data_test, target_test)
@@ -277,7 +283,7 @@ model.score(data_test, target_test)
 
 # %%
 scores = cross_val_score(model, data, target, cv=5)
-print(f"The different scores obtained are: \n{scores}")
+scores
 
 # %%
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
@@ -290,17 +296,17 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # %% [markdown]
 # # Fitting a more powerful model
 #
-# Linear models are very nice because they are usually very cheap to train,
-# small to deploy, fast to predict and give a good baseline.
+# **Linear models** are very nice because they are usually very cheap to train,
+# **small** to deploy, **fast** to predict and give a **good baseline**.
 #
 # However, it is often useful to check whether more complex models such as an
 # ensemble of decision trees can lead to higher predictive performance.
 #
-# In the following cell we try a scalable implementation of the Gradient Boosting
-# Machine algorithm. For this class of models, we know that contrary to linear
-# models, it is useless to scale the numerical features and furthermore it is
+# In the following cell we try a scalable implementation of the **Gradient Boosting
+# Machine** algorithm. For this class of models, we know that contrary to linear
+# models, it is **useless to scale the numerical features** and furthermore it is
 # both safe and significantly more computationally efficient use an arbitrary
-# integer encoding for the categorical variable even if the ordering is
+# **integer encoding for the categorical variables** even if the ordering is
 # arbitrary. Therefore we adapt the preprocessing pipeline as follows:
 
 # %%
@@ -310,15 +316,22 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 # For each categorical column, extract the list of all possible categories
 # in some arbritrary order.
 categories = [
-    data[column].unique() for column in data[categorical_columns]]
+    data[column].unique()
+    for column in categorical_columns
+]
 
 preprocessor = ColumnTransformer([
     ('categorical', OrdinalEncoder(categories=categories),
      categorical_columns)], remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-model.fit(data_train, target_train)
-print(model.score(data_test, target_test))
+
+# %%
+%%time
+_ = model.fit(data_train, target_train)
+
+# %%
+model.score(data_test, target_test)
 
 # %% [markdown]
 # We can observe that we get significantly higher accuracies with the Gradient
@@ -328,13 +341,6 @@ print(model.score(data_test, target_test))
 #
 # This explains why Gradient Boosted Machines are very popular among datascience
 # practitioners who work with tabular data.
-#
-#
-#
-#
-#
-#
-#
 
 
 # %% [markdown]
@@ -345,14 +351,15 @@ print(model.score(data_test, target_test))
 # - Check that one-hot encoding the categorical variable does not improve the
 #   accuracy of `HistGradientBoostingClassifier` but slows down the training.
 #
-# Use the dedicated notebook to do this exercise.
+# Open the dedicated notebook to do this exercise.
 
 
 # %% [markdown]
 # 
 # In this notebook we have:
-# * encoded categorical features with both an ordinal encoding and an one hot encoding
-# * used a pipeline to process both numerical and categorical features before fitting a 
-# logistic regression
-# * seen that gradient boosting methods can outperforms the basic linear approach
+# * encoded categorical features with both an **ordinal encoding** and
+#   an **one hot encoding**
+# * used a pipeline to process **both numerical and categorical** features before
+#  fitting a logistic regression
+# * seen that **gradient boosting methods** can outperforms the basic linear approach
 # 

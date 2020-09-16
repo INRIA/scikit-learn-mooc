@@ -14,8 +14,13 @@
 
 # %% [markdown]
 # # Exercise 02
+#
 # The goal is to find the best set of hyper-parameters which maximize the
 # performance on a training set.
+#
+# Here again with limit the size of the training set to make computation
+# run faster. Feel free to increase the `train_size` value if your computer
+# is powerful enough.
 
 # %%
 import numpy as np
@@ -30,7 +35,7 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 from sklearn.model_selection import train_test_split
 
 df_train, df_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
+    data, target, train_size=0.2, random_state=42)
 
 # %% [markdown]
 # TODO: create your machine learning pipeline
@@ -88,12 +93,18 @@ model = make_pipeline(preprocessor, LogisticRegression())
 #   distribution (i.e. `scipy.stats.reciprocal`);
 # - `solver` with possible values being `"liblinear"` and `"lbfgs"`;
 # - `penalty` with possible values being `"l2"` and `"l1"`;
+#
 # In addition, try several preprocessing strategies with the `OneHotEncoder`
 # by always (or not) dropping the first column when encoding the categorical
 # data.
 #
-# Notes: You can accept failure during a grid-search or a randomized-search
-# by settgin `error_score` to `np.nan` for instance.
+# Notes: some combinations of the hyper-parameters proposed above are invalid.
+# You can make the parameter search accept such failures by setting `error_score`
+# to `np.nan`. The warning messages give more details on which parameter
+# combinations but the computation will proceed.
+#
+# Once the computation has completed, print the best combination of parameters
+# stored in the `best_params_` attribute.
 
 # %%
 from sklearn.model_selection import RandomizedSearchCV
@@ -108,19 +119,22 @@ param_distributions = {
 
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions,
-    n_iter=20, error_score=np.nan, n_jobs=-1)
+    n_iter=20, error_score=np.nan, n_jobs=2, verbose=1)
 model_random_search.fit(df_train, target_train)
-cv_results = model_random_search.cv_results_
+model_random_search.best_params_
 
 # %% [markdown]
 # We could use `cv_results = model_random_search.cv_results_` in the plot at
 # the end of this notebook (you are more than welcome to try!). Instead we are
-# going to load the results obtained from a similar search with more
-# iterations. This way we can have a more detailed plot while being able to run
-# this notebook in a reasonably short amount of time.
+# going to load the results obtained from a similar search with many more
+# iterations (200 instead of 20).
+#
+# This way we can have a more detailed plot while being able to run this notebook
+# in a reasonably short amount of time.
 
 # %%
-# Uncomment this cell if you want to regenerate the results csv file
+# Uncomment this cell if you want to regenerate the results csv file. This
+# can take a long time to execute.
 #
 # model_random_search = RandomizedSearchCV(
 #     model, param_distributions=param_distributions,

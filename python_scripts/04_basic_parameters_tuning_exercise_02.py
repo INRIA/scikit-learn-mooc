@@ -14,8 +14,13 @@
 
 # %% [markdown]
 # # Exercise 02
+#
 # The goal is to find the best set of hyper-parameters which maximize the
 # performance on a training set.
+#
+# Here again with limit the size of the training set to make computation
+# run faster. Feel free to increase the `train_size` value if your computer
+# is powerful enough.
 
 # %%
 import numpy as np
@@ -72,9 +77,15 @@ from sklearn.linear_model import LogisticRegression
 #   distribution (i.e. `scipy.stats.reciprocal`);
 # - `solver` with possible values being `"liblinear"` and `"lbfgs"`;
 # - `penalty` with possible values being `"l2"` and `"l1"`;
+#
 # In addition, try several preprocessing strategies with the `OneHotEncoder`
 # by always (or not) dropping the first column when encoding the categorical
 # data.
 #
-# Notes: You can accept failure during a grid-search or a randomized-search
-# by settgin `error_score` to `np.nan` for instance.
+# Notes: some combinations of the hyper-parameters proposed above are invalid.
+# You can make the parameter search accept such failures by setting `error_score`
+# to `np.nan`. The warning messages give more details on which parameter
+# combinations but the computation will proceed.
+#
+# Once the computation has completed, print the best combination of parameters
+# stored in the `best_params_` attribute.

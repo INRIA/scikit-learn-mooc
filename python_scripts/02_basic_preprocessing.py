@@ -5,8 +5,8 @@
 #     text_representation:
 #       extension: .py
 #       format_name: percent
-#       format_version: '1.2'
-#       jupytext_version: 1.2.4
+#       format_version: '1.3'
+#       jupytext_version: 1.6.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -102,9 +102,12 @@ from sklearn.model_selection import train_test_split
 data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
+# %%
 print(
     f"The training dataset contains {data_train.shape[0]} samples and "
     f"{data_train.shape[1]} features")
+
+# %%
 print(
     f"The testing dataset contains {data_test.shape[0]} samples and "
     f"{data_test.shape[1]} features")
@@ -176,7 +179,7 @@ print(f"The test accuracy using a {model.__class__.__name__} is "
 # shows a few examples of how to evaluate the performance of these baseline
 # models.
 #
-# Use the dedicated notebook to do this exercise.
+# Open the dedicated notebook in Jupyter to do this exercise.
 
 # %% [markdown]
 # Let's now consider the `ConvergenceWarning` message that was raised previously
@@ -264,10 +267,13 @@ print(
 
 
 # %%
+# %%time
 from sklearn.model_selection import cross_val_score
 
 scores = cross_val_score(model, data_numeric, target, cv=5)
-print(f"The different scores obtained are: \n{scores}")
+
+# %%
+scores
 
 # %%
 print(f"The mean cross-validation accuracy is: "
@@ -285,61 +291,28 @@ print(f"The mean cross-validation accuracy is: "
 # scored on the matching test set. This strategy is called K-fold
 # cross-validation where `K` corresponds to the number of splits.
 #
-# The following matplotlib code helps visualize how the dataset is partitioned
+# The figure helps visualize how the dataset is partitioned
 # into train and test samples at each iteration of the cross-validation
 # procedure:
-
-# %%
-from sklearn.model_selection import KFold
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.patches import Patch
-
-cmap_cv = plt.cm.coolwarm
-
-
-def plot_cv_indices(cv, X, y, ax, lw=20):
-    """Create a sample plot for indices of a cross-validation object."""
-    splits = list(cv.split(X=X, y=y))
-    n_splits = len(splits)
-
-    # Generate the training/testing visualizations for each CV split
-    for ii, (train, test) in enumerate(splits):
-        # Fill in indices with the training/test groups
-        indices = np.zeros(shape=X.shape[0], dtype=np.int32)
-        indices[train] = 1
-
-        # Visualize the results
-        ax.scatter(range(len(indices)), [ii + .5] * len(indices),
-                   c=indices, marker='_', lw=lw, cmap=cmap_cv,
-                   vmin=-.2, vmax=1.2)
-
-    # Formatting
-    yticklabels = list(range(n_splits))
-    ax.set(yticks=np.arange(n_splits) + .5,
-           yticklabels=yticklabels, xlabel='Sample index',
-           ylabel="CV iteration", ylim=[n_splits + .2,
-                                        -.2], xlim=[0, 100])
-    ax.set_title('{}'.format(type(cv).__name__), fontsize=15)
-    return ax
-
-
-# %%
-# Some random data points
-n_points = 100
-X = np.random.randn(n_points, 10)
-y = np.random.randn(n_points)
-
-fig, ax = plt.subplots(figsize=(10, 6))
-cv = KFold(5)
-_ = plot_cv_indices(cv, X, y, ax)
-
+#
+# ![Cross-validation diagram](../figures/cross_validation_diagram.png)
+#
+# For each cross-validation split, the procedure trains a model on the
+# concatenation of the red samples and evaluate the score of the model
+# by using the blue samples. Cross-validation is therefore computationally
+# intensive because it requires training several models instead of one.
+#
+# Note that the `cross_val_score` method above discards the 5 models that
+# were trained on the different overlapping subset of the dataset.
+# The goal of cross-validation is not to train a model, but rather to
+# estimate approximately the generalization performance of a model that
+# would have been trained to the full training set, along with an estimate
+# of the variability (uncertainty on the generalization accuracy).
 
 # %% [markdown]
-#
 # In this notebook we have:
-# * split our dataset into a training dataset and a testing dataset
-# * fitted a logistic regression model
-# * seen the importance of scaling numerical variables
+# * **split** our dataset into a training dataset and a testing dataset
+# * fitted a **logistic regression** model
+# * seen the importance of **scaling numerical variables**
 # * used the **pipeline** method to fit both the scaler and the logistic regression
-# * assessed the performance of our model via cross-validation
+# * assessed the performance of our model via **cross-validation**

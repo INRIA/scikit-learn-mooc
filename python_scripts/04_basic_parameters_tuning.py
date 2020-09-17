@@ -108,7 +108,7 @@ print(
 # yields an accuracy higher than with the default learning rate?
 #
 # 4. Fix `learning_rate` to 0.05 and try setting the value of `max_leaf_nodes`
-# to the minimum value of 2. Does not improve the accuracy?
+# to the minimum value of 2. Does it improve the accuracy?
 #
 # 5. Try to progressively increase the value of `max_leaf_nodes` to 256 by
 # taking powers of 2. What do you observe?
@@ -171,7 +171,7 @@ for param_name in model.get_params().keys():
 #   control the depth of each tree.
 
 # %% [markdown]
-# ## Exercises:
+# ## Exercise 1:
 #
 # By using the previously defined model (called `model`) and using two nested `for`
 # loops, make a search for the best combinations of the `learning_rate` and
@@ -185,7 +185,7 @@ for param_name in model.get_params().keys():
 # %% [markdown]
 # ## Automated parameter tuning via grid-search
 #
-# Instead of manually writting the two `for` loops, scikit-learn provides a
+# Instead of manually writing the two `for` loops, scikit-learn provides a
 # class called `GridSearchCV` which implement the exhaustive search implemented
 # during the exercise.
 #
@@ -214,7 +214,7 @@ print(f"The test accuracy score of the grid-searched pipeline is: "
 # charge of creating all possible combinations and test them.
 #
 # The number of combinations will be equal to the product of the
-# number of values to explore for each parameter (e.g. in our example 3 x 3
+# number of values to explore for each parameter (e.g. in our example 4 x 4
 # combinations). Thus, adding new parameters with their associated values to be
 # explored become rapidly computationally expensive.
 #
@@ -319,10 +319,12 @@ ax.invert_yaxis()
 # the `GridSearchCV` but the sampling distributions need to be specified
 # instead of the parameter values. For instance, we will draw candidates using
 # a log-uniform distribution also called reciprocal distribution. In addition,
-# we will optimize 2 other parameters:
+# we will optimize 3 other parameters:
 # - `max_iter`: it corresponds to the number of trees in the ensemble;
 # - `min_samples_leaf`: it corresponds to the minimum number of samples
 #   required in a leaf.
+# - `max_bins`: it corresponds to the maximum number of bins to construct the
+#   histograms.
 
 # %%
 from scipy.stats import reciprocal
@@ -460,7 +462,7 @@ fig.show()
 # | too large `max_bins`          |      |       |
 
 # %% [markdown]
-# ## Exercises:
+# ## Exercise 2:
 #
 # - Build a machine learning pipeline:
 #   * preprocess the categorical columns using a `OneHotEncoder` and use
@@ -530,7 +532,7 @@ print(scores)
 #   exhaustively searching the best combination from a defined grid;
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
 #   drawing values candidates from some predefined distributions;
-# * nested an hyper-parameters tuning procedure within an cross-validation
+# * nested an hyper-parameters tuning procedure within a cross-validation
 #   evaluation procedure.
 #
 # ## Main take-away points

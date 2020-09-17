@@ -92,7 +92,7 @@ data_numeric.head()
 # The data used to fit a model is called training data while the one used to
 # assess a model is called testing data.
 #
-# Scikit-learn provides an helper function `train_test_split` which will
+# Scikit-learn provides a helper function `train_test_split` which will
 # split the dataset into a training and a testing set. It will also ensure that
 # the data are shuffled randomly before splitting the data.
 
@@ -202,7 +202,7 @@ print(
     f"{elapsed_time:.3f} seconds in {model.n_iter_} iterations")
 
 # %% [markdown]
-# We now observe a longer training time but not significant improvement in
+# We now observe a longer training time but no significant improvement in
 # the predictive performance. Instead of increasing the number of iterations, we
 # can try to help fit the model faster by scaling the data first. A range of
 # preprocessing algorithms in scikit-learn allows us to transform the input data
@@ -213,7 +213,7 @@ print(
 # transformations to perform followed by the classifier or regressor model.
 #
 # In our case, we will standardize the data and then train a new logistic
-# regression model on that new version of the dataset set.
+# regression model on that new version of the dataset.
 
 # %%
 data_train.describe()

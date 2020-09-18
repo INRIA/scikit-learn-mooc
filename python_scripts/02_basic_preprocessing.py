@@ -228,7 +228,7 @@ data_train_scaled.describe()
 
 # %% [markdown]
 # We can easily combine these sequential operations
-# with a scikit-learn `Pipeline`, which chain together operations and can be
+# with a scikit-learn `Pipeline`, which chains together operations and can be
 # used like any other classifier or regressor. The helper function
 # `make_pipeline` will create a `Pipeline` by giving as arguments the successive
 # transformations to perform followed by the classifier or regressor model.

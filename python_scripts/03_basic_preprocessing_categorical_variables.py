@@ -249,6 +249,15 @@ model = make_pipeline(
     preprocessor, LogisticRegression(solver='lbfgs', max_iter=1000))
 
 # %% [markdown]
+# Starting from `scikit-learn` 0.23, the notebooks can display an interactive view of the pipelines.
+
+# %%
+from sklearn import set_config
+set_config(display='diagram')
+
+model
+
+# %% [markdown]
 # The final model is more complex than the previous models but still follows the
 # same API:
 # - the `fit` method is called to preprocess the data then train the classifier;

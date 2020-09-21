@@ -206,11 +206,7 @@ print(
 # the predictive performance. Instead of increasing the number of iterations, we
 # can try to help fit the model faster by scaling the data first. A range of
 # preprocessing algorithms in scikit-learn allows us to transform the input data
-# before training a model. We can easily combine these sequential operations
-# with a scikit-learn `Pipeline`, which chain together operations and can be
-# used like any other classifier or regressor. The helper function
-# `make_pipeline` will create a `Pipeline` by giving as arguments the successive
-# transformations to perform followed by the classifier or regressor model.
+# before training a model. 
 #
 # In our case, we will standardize the data and then train a new logistic
 # regression model on that new version of the dataset.
@@ -229,6 +225,13 @@ data_train_scaled
 data_train_scaled = pd.DataFrame(data_train_scaled,
                                  columns=data_train.columns)
 data_train_scaled.describe()
+
+# %% [markdown]
+# We can easily combine these sequential operations
+# with a scikit-learn `Pipeline`, which chains together operations and can be
+# used like any other classifier or regressor. The helper function
+# `make_pipeline` will create a `Pipeline` by giving as arguments the successive
+# transformations to perform followed by the classifier or regressor model.
 
 # %%
 from sklearn.pipeline import make_pipeline

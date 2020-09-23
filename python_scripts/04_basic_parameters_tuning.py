@@ -315,7 +315,7 @@ ax.invert_yaxis()
 # different parameters will be quickly untractable.
 #
 # Instead, we can randomly generate the parameter candidates. The
-# `RandomSearchCV` allows for such stochastic search. It is used similarly to
+# `RandomizedSearchCV` allows for such stochastic search. It is used similarly to
 # the `GridSearchCV` but the sampling distributions need to be specified
 # instead of the parameter values. For instance, we will draw candidates using
 # a log-uniform distribution also called reciprocal distribution. In addition,
@@ -490,7 +490,7 @@ fig.show()
 #
 #
 # In practice, it can be implemented by calling `cross_val_score` or
-# `cross_validate` on an instance of `GridSearchCV`, `RandomSearchCV`, or any
+# `cross_validate` on an instance of `GridSearchCV`, `RandomizedSearchCV`, or any
 # other `EstimatorCV` class.
 
 # %%

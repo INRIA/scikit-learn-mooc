@@ -175,7 +175,7 @@ from sklearn.model_selection import cross_val_score
 
 model = make_pipeline(
     OneHotEncoder(handle_unknown='ignore'),
-    LogisticRegression(solver='lbfgs', max_iter=1000))
+    LogisticRegression(max_iter=1000))
 
 # %%
 scores = cross_val_score(model, data_categorical, target)
@@ -246,7 +246,7 @@ preprocessor = ColumnTransformer([
 
 # %%
 model = make_pipeline(
-    preprocessor, LogisticRegression(solver='lbfgs', max_iter=1000))
+    preprocessor, LogisticRegression(max_iter=1000))
 
 # %% [markdown]
 # Starting from `scikit-learn` 0.23, the notebooks can display an interactive view of the pipelines.

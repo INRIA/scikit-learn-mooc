@@ -123,7 +123,7 @@ print(
 from sklearn.linear_model import LogisticRegression
 import time
 
-model = LogisticRegression(solver='lbfgs')
+model = LogisticRegression()
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start
@@ -190,7 +190,7 @@ print(f"The test accuracy using a {model.__class__.__name__} is "
 # and increase the maximum number of iterations allowed.
 
 # %%
-model = LogisticRegression(solver='lbfgs', max_iter=50000)
+model = LogisticRegression(max_iter=50000)
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start
@@ -237,7 +237,7 @@ data_train_scaled.describe()
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(StandardScaler(),
-                      LogisticRegression(solver='lbfgs'))
+                      LogisticRegression())
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start

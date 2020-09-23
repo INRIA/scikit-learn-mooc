@@ -66,7 +66,7 @@ from sklearn.linear_model import LogisticRegression
 
 model = make_pipeline(
     OrdinalEncoder(categories=categories),
-    LogisticRegression(solver='lbfgs', max_iter=1000))
+    LogisticRegression(max_iter=1000))
 scores = cross_val_score(model, data_categorical, target)
 print(f"The different scores obtained are: \n{scores}")
 
@@ -95,7 +95,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 model = make_pipeline(
     OneHotEncoder(handle_unknown="ignore"),
-    LogisticRegression(solver='lbfgs', max_iter=1000))
+    LogisticRegression(max_iter=1000))
 scores = cross_val_score(model, data_categorical, target)
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")

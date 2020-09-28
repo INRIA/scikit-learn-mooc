@@ -4,8 +4,8 @@
 #     text_representation:
 #       extension: .py
 #       format_name: percent
-#       format_version: '1.2'
-#       jupytext_version: 1.2.4
+#       format_version: '1.3'
+#       jupytext_version: 1.6.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -17,7 +17,7 @@
 #
 # The goal is to write an exhaustive search to find the best parameters
 # combination maximizing the model performance.
-
+#
 # Here we use a small subset of the Adult Census dataset to make to code
 # fast to execute. Once your code works on the small subset, try to
 # change `train_size` to a larger value (e.g. 0.8 for 80% instead of
@@ -65,7 +65,7 @@ model = Pipeline([
 
 # %% [markdown]
 # TODO: write your solution below
-
+#
 # Use the previously defined model (called `model`) and using two nested `for`
 # loops, make a search of the best combinations of the `learning_rate` and
 # `max_leaf_nodes` parameters. In this regard, you will need to train and test

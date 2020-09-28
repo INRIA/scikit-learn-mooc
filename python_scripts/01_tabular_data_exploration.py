@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.5.0
+#       jupytext_version: 1.6.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -36,7 +36,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
 # We can look at the OpenML webpage to learn more about this dataset: http://www.openml.org/d/1590
-
+#
 # The goal with this data is to predict whether a person earns over 50K a year
 # from heterogeneous data such as age, employment, education, family
 # information, etc.

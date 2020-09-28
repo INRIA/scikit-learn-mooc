@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.5.2
+#       jupytext_version: 1.6.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -150,6 +149,7 @@ plot_data_and_model(
 # additional millimeter in flipper length, the body weight predicted will
 # increase by 40 g.
 
+# %%
 body_mass_180 = linear_model_flipper_mass(
     flipper_length=180, weight_flipper_length=40, intercept_body_mass=0
 )
@@ -470,6 +470,7 @@ print(f"Lowest mean squared error = {mse:.2f}")
 # it will compute interaction between samples using this non-linear
 # interaction.
 
+# %%
 svr = SVR(kernel="poly", degree=3).fit(X, y)
 y_pred = svr.predict(grid.reshape(-1, 1))
 
@@ -583,7 +584,7 @@ print(
 # call. (i.e. fitting the pipeline will fit both the transformer(s) and the regressor. 
 # Then predicting from the pipeline will first transform the data through the transformer(s)
 # then predict with the regressor from the transformed data)
-
+#
 # This pipeline exposes the same API as the regressor and classifier
 # and will manage the calls to `fit` and `transform` for you, avoiding any
 # problems with data leakage (when knowledge of the test data was 

@@ -1,3 +1,18 @@
+# ---
+# jupyter:
+#   jupytext:
+#     cell_metadata_filter: -all
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.6.0
+#   kernelspec:
+#     display_name: Python 3
+#     language: python
+#     name: python3
+# ---
+
 # %% [markdown]
 # # Ensemble learning: when many are better that the one
 #
@@ -608,6 +623,7 @@ print(
 #
 # So we could use the classification error to combine both trees.
 
+# %%
 ensemble_weight = [
     (y.shape[0] - len(misclassified_samples_idx)) / y.shape[0],
     (y.shape[0] - len(newly_misclassified_samples_idx)) / y.shape[0],

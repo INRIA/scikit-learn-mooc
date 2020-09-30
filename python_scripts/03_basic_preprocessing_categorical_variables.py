@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
 #     text_representation:
 #       extension: .py
 #       format_name: percent
-#       format_version: '1.2'
-#       jupytext_version: 1.2.4
+#       format_version: '1.3'
+#       jupytext_version: 1.6.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -14,8 +13,8 @@
 # ---
 
 # %% [markdown]
-## Working with both numerical & categorical variables
-
+# # Working with both numerical & categorical variables
+#
 # In this notebook, we will present:
 # * typical ways to deal with **categorical variables**
 # * how to train a predictive model on **mixed types** of data
@@ -336,7 +335,7 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
 # %%
-%%time
+# %%time
 _ = model.fit(data_train, target_train)
 
 # %%
@@ -364,11 +363,11 @@ model.score(data_test, target_test)
 
 
 # %% [markdown]
-# 
+#
 # In this notebook we have:
 # * encoded categorical features with both an **ordinal encoding** and
 #   an **one hot encoding**
 # * used a pipeline to process **both numerical and categorical** features before
 #  fitting a logistic regression
 # * seen that **gradient boosting methods** can outperforms the basic linear approach
-# 
+#

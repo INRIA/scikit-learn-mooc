@@ -1,0 +1,1168 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feature importance &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.bfb7730f9caf2ec0b46a44615585038c.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.30270b6e4c972e43c488.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Evaluation of your predictive model" href="metrics.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Tabular data exploration
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_tabular_data_exploration.html">
+   Loading data into machine learning
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing.html">
+   First model with scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01_solution.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html">
+   Working with both numerical &amp; categorical variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html#fitting-a-more-powerful-model">
+   Fitting a more powerful model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01_solution.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02_solution.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Parameter tuning
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning.html">
+   Introduction to scikit-learn: basic model hyper-parameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01_solution.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02_solution.html">
+   Exercise 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html">
+   Linear Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Decision Trees
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees.html">
+   Decision tree in depth
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Ensemble models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble.html">
+   Ensemble learning: when many are better that the one
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Metrics
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="metrics.html">
+   Evaluation of your predictive model
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="#take-away">
+   Take Away
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="_sources/dev_features_importance.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/dev_features_importance.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master?urlpath=tree/python_scripts/dev_features_importance.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Feature importance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#presentation-of-the-dataset">
+     0. Presentation of the dataset
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#linear-model-inspection">
+     1. Linear model inspection
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#checking-the-variability-of-the-coefficients">
+       Checking the variability of the coefficients
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#linear-models-with-sparse-coefficients-lasso">
+       Linear models with sparse coefficients (Lasso)
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#lessons-learned">
+       Lessons learned
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#randomforest-feature-importances">
+     2. RandomForest
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       feature_importances_
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feature-importance-by-permutation">
+     3. Feature importance by permutation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       Feature importance
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#discussion">
+       discussion
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#take-away">
+   Take Away
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="feature-importance">
+<h1>Feature importance<a class="headerlink" href="#feature-importance" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will detail methods to investigate the importance of
+features used by a given model. We will look at:</p>
+<ol class="simple">
+<li><p>interpreting the coefficients in a linear model;</p></li>
+<li><p>the attribute <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code> in RandomForrest;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">permutation</span> <span class="pre">feature</span> <span class="pre">importance</span></code>, which is an inspection technique that
+can be used for any fitted model.</p></li>
+</ol>
+<div class="section" id="presentation-of-the-dataset">
+<h2>0. Presentation of the dataset<a class="headerlink" href="#presentation-of-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>This dataset is a record of neighborhoods in California district, predicting
+the <strong>median house value</strong> (target) given some information about the
+neighborhoods, as the average number of rooms, the latitude, the longitude or
+the median income of people in the neighborhoods (block).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MedInc</th>
+      <th>HouseAge</th>
+      <th>AveRooms</th>
+      <th>AveBedrms</th>
+      <th>Population</th>
+      <th>AveOccup</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8.3252</td>
+      <td>41.0</td>
+      <td>6.984127</td>
+      <td>1.023810</td>
+      <td>322.0</td>
+      <td>2.555556</td>
+      <td>37.88</td>
+      <td>-122.23</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8.3014</td>
+      <td>21.0</td>
+      <td>6.238137</td>
+      <td>0.971880</td>
+      <td>2401.0</td>
+      <td>2.109842</td>
+      <td>37.86</td>
+      <td>-122.22</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.2574</td>
+      <td>52.0</td>
+      <td>8.288136</td>
+      <td>1.073446</td>
+      <td>496.0</td>
+      <td>2.802260</td>
+      <td>37.85</td>
+      <td>-122.24</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.6431</td>
+      <td>52.0</td>
+      <td>5.817352</td>
+      <td>1.073059</td>
+      <td>558.0</td>
+      <td>2.547945</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.8462</td>
+      <td>52.0</td>
+      <td>6.281853</td>
+      <td>1.081081</td>
+      <td>565.0</td>
+      <td>2.181467</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The feature reads as follow:</p>
+<ul class="simple">
+<li><p>MedInc median income in block</p></li>
+<li><p>HouseAge median house age in block</p></li>
+<li><p>AveRooms average number of rooms</p></li>
+<li><p>AveBedrms average number of bedrooms</p></li>
+<li><p>Population block population</p></li>
+<li><p>AveOccup average house occupancy</p></li>
+<li><p>Latitude house block latitude</p></li>
+<li><p>Longitude house block longitude</p></li>
+<li><p>MedHouseVal Median house value in 100k$ <em>(target)</em></p></li>
+</ul>
+<p>To assert the quality of our inspection technique, let’s add some random
+feature that won’t help the prediction (un-informative feature)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Adding random features</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">bin_var</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rnd_bin&#39;</span><span class="p">)</span>
+<span class="n">num_var</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rnd_num&#39;</span><span class="p">)</span>
+<span class="n">X_with_rnd_feat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">bin_var</span><span class="p">,</span> <span class="n">num_var</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will split the data into training and testing for the remaining part of
+this notebook</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_with_rnd_feat</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                                                    <span class="n">random_state</span><span class="o">=</span><span class="mi">29</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s quickly inspect some features and the target</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">train_dataset</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+    <span class="n">train_dataset</span><span class="p">[[</span><span class="s1">&#39;MedHouseVal&#39;</span><span class="p">,</span> <span class="s1">&#39;Latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;AveRooms&#39;</span><span class="p">,</span> <span class="s1">&#39;MedInc&#39;</span><span class="p">]],</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="n">diag_kind</span><span class="o">=</span><span class="s1">&#39;kde&#39;</span><span class="p">,</span> <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;scatter_kws&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dev_features_importance_10_0.png" src="_images/dev_features_importance_10_0.png" />
+</div>
+</div>
+<p>We see in the upper right plot that the median income seems to be positively
+correlated to the median house price (the target).</p>
+</div>
+<div class="section" id="linear-model-inspection">
+<h2>1. Linear model inspection<a class="headerlink" href="#linear-model-inspection" title="Permalink to this headline">¶</a></h2>
+<p>In linear models, the target value is modeled as a linear combination of the
+features</p>
+<p>Coefficients represent the relationship between the given feature <span class="math notranslate nohighlight">\(X_i\)</span> and
+the target <span class="math notranslate nohighlight">\(y\)</span>, assuming that all the other features remain constant
+(conditional dependence). This is different from plotting <span class="math notranslate nohighlight">\(X_i\)</span> versus <span class="math notranslate nohighlight">\(y\)</span>
+and fitting a linear relationship: in that case all possible values of the
+other features are taken into account in the estimation (marginal
+dependence).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RidgeCV</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RidgeCV</span><span class="p">()</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079742666117236
+model score on testing data: 0.6021994317861668
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our linear model obtains a <span class="math notranslate nohighlight">\(R^2\)</span> score of .60, so it explains a significant
+part of the target. Its coefficient should be somehow relevant. Let’s look at
+the coefficient learnt</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+   <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span>
+   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Coefficients&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">)</span>
+
+<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ridge model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dev_features_importance_16_0.png" src="_images/dev_features_importance_16_0.png" />
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code> have the higher coefficient. However, we can’t compare the
+magnitude of these coefficients directly, since they are not scaled. Indeed,
+<code class="docutils literal notranslate"><span class="pre">Population</span></code> is an integer which can be thousands, while <code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code> is
+around 4 and Latitude is in degree.</p>
+<p>So the Population coefficient is expressed in “<span class="math notranslate nohighlight">\(100k\$\)</span> / habitant” while the
+AveBedrms is expressed in “<span class="math notranslate nohighlight">\(100k\$\)</span> / nb of bedrooms” and the Latitude
+coefficient in “<span class="math notranslate nohighlight">\(100k\$\)</span> / degree”.</p>
+<p>We see that changing population by one does not change the outcome, while as
+we go south (latitude increase) the price becomes cheaper. Also, adding a
+bedroom (keeping all other feature constant) shall rise the price of the
+house by 80k$.</p>
+<p>So looking at the coefficient plot to gauge feature importance can be
+misleading as some of them vary on a small scale, while others vary a lot
+more, several decades.</p>
+<p>This becomes visible if we compare the standard deviations of our different
+features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Features std. dev.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 100.0)
+</pre></div>
+</div>
+<img alt="_images/dev_features_importance_19_1.png" src="_images/dev_features_importance_19_1.png" />
+</div>
+</div>
+<p>So before any interpretation, we need to scale each column (removing the mean
+and scaling the variance to 1).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">RidgeCV</span><span class="p">())</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079822261145086
+model score on testing data: 0.6015989882627983
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+   <span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span>
+   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Coefficients&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">)</span>
+
+<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ridge model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dev_features_importance_22_0.png" src="_images/dev_features_importance_22_0.png" />
+</div>
+</div>
+<p>Now that the coefficients have been scaled, we can safely compare them.</p>
+<p>The median income feature, with longitude and latitude are the three
+variables that most influence the model.</p>
+<p>The plot above tells us about dependencies between a specific feature and the
+target when all other features remain constant, i.e., conditional
+dependencies. An increase of the <code class="docutils literal notranslate"><span class="pre">HouseAge</span></code> will induce an increase of the
+price when all other features remain constant. On the contrary, an increase
+of the average rooms will induce an decrease of the price when all other
+features remain constant.</p>
+<div class="section" id="checking-the-variability-of-the-coefficients">
+<h3>Checking the variability of the coefficients<a class="headerlink" href="#checking-the-variability-of-the-coefficients" title="Permalink to this headline">¶</a></h3>
+<p>We can check the coefficient variability through cross-validation: it is a
+form of data perturbation.</p>
+<p>If coefficients vary significantly when changing the input dataset their
+robustness is not guaranteed, and they should probably be interpreted with
+caution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RepeatedKFold</span>
+
+<span class="n">cv_model</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+   <span class="n">model</span><span class="p">,</span> <span class="n">X_with_rnd_feat</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">RepeatedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+   <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+   <span class="p">[</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">cv_model</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]],</span>
+   <span class="n">columns</span><span class="o">=</span><span class="n">X_with_rnd_feat</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">coefs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># sns.boxplot(data=coefs, orient=&#39;h&#39;, color=&#39;cyan&#39;, saturation=0.5)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Coefficient importance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Coefficient importance and its variability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 52.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+  warnings.warn(msg, UserWarning)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 80.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+  warnings.warn(msg, UserWarning)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 56.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+  warnings.warn(msg, UserWarning)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 76.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+  warnings.warn(msg, UserWarning)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 48.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+  warnings.warn(msg, UserWarning)
+</pre></div>
+</div>
+<img alt="_images/dev_features_importance_26_1.png" src="_images/dev_features_importance_26_1.png" />
+</div>
+</div>
+<p>Every coefficient looks pretty stable, which mean that different Ridge model
+put almost the same weight to the same feature.</p>
+</div>
+<div class="section" id="linear-models-with-sparse-coefficients-lasso">
+<h3>Linear models with sparse coefficients (Lasso)<a class="headerlink" href="#linear-models-with-sparse-coefficients-lasso" title="Permalink to this headline">¶</a></h3>
+<p>In order to illustrate feature selection with a L1 penalty, let’s fit a Lasso
+model with a strong regularization parameters <code class="docutils literal notranslate"><span class="pre">alpha</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=.</span><span class="mi">04</span><span class="p">))</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.5599556353946507
+model score on testing data: 0.5733210993165778
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+   <span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span>
+   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Coefficients&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">)</span>
+
+<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Lasso model, strong regularization&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dev_features_importance_31_0.png" src="_images/dev_features_importance_31_0.png" />
+</div>
+</div>
+<p>Here the model score is a bit lower, because of the strong regularization.
+However, it has selectioned only 5 non negative coefficients to make its
+prediction.</p>
+</div>
+<div class="section" id="lessons-learned">
+<h3>Lessons learned<a class="headerlink" href="#lessons-learned" title="Permalink to this headline">¶</a></h3>
+<p>Coefficients must be scaled to the same unit of measure to retrieve feature
+importance, or comparing them.</p>
+<p>Coefficients in multivariate linear models represent the dependency between a
+given feature and the target, conditional on the other features.</p>
+<p>Correlated features might induce instabilities in the coefficients of linear
+models and their effects cannot be well teased apart.</p>
+<p>Inspecting coefficients across the folds of a cross-validation loop gives an
+idea of their stability.</p>
+</div>
+</div>
+<div class="section" id="randomforest-feature-importances">
+<h2>2. RandomForest <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code><a class="headerlink" href="#randomforest-feature-importances" title="Permalink to this headline">¶</a></h2>
+<p>On some algorithms, there pre-exist some feature importance method,
+inherently built within the model. It is the case in RandomForrest models.
+Let’s investigate the built-in <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code> attribute.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.974520300997408
+model score on testing data: 0.8199396596312579
+</pre></div>
+</div>
+</div>
+</div>
+<p>Contrary to the testing set, the score on the training set is almost perfect,
+which means that our model is overfitting here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importances</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The importance of a feature is basically: how much this feature is used in
+each tree of the forest. Formally, it is computed as the (normalized) total
+reduction of the criterion brought by that feature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">importances</span><span class="p">)),</span> <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">importances</span><span class="p">)))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)[</span><span class="n">indices</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dev_features_importance_39_0.png" src="_images/dev_features_importance_39_0.png" />
+</div>
+</div>
+<p>Median income is still the most important feature.</p>
+<p>It also has a small bias toward high cardinality features, such as the noisy
+feature <code class="docutils literal notranslate"><span class="pre">rnd_num</span></code>, which are here predicted having .07 importance, more than
+<code class="docutils literal notranslate"><span class="pre">HouseAge</span></code> (which has low cardinality).</p>
+</div>
+<div class="section" id="feature-importance-by-permutation">
+<h2>3. Feature importance by permutation<a class="headerlink" href="#feature-importance-by-permutation" title="Permalink to this headline">¶</a></h2>
+<p>We introduce here a new technique to evaluate the feature importance of any
+given fitted model. It basically shuffles a feature and sees how the model
+changes its prediction. Thus, the change in prediction will be correspond to
+the feature importance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Any model could be used here</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
+<span class="c1"># model = make_pipeline(StandardScaler(),</span>
+<span class="c1">#                       RidgeCV())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9746852331682103
+model score on testing data: 0.8198737753625668
+</pre></div>
+</div>
+</div>
+</div>
+<p>The score on the test set is .81, so feature importance shall be relevant
+here for this model.</p>
+<div class="section" id="id1">
+<h3>Feature importance<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Lets compute the feature importance for a given feature, say the <code class="docutils literal notranslate"><span class="pre">MedInc</span></code>
+feature.</p>
+<p>For that, we will shuffle this specific feature, keeping the other feature as
+is, and run our same model (already fitted) to predict the outcome. The
+decrease of the score shall indicate how the model had used this feature to
+predict the target. The permutation feature importance is defined to be the
+decrease in a model score when a single feature value is randomly shuffled</p>
+<p>For instance, if the feature is crucial for the model, the outcome would also
+be permuted (just as the feature), thus the score would be close to zero.
+Afterward, the feature importance is the decrease in score. So in that case,
+the feature importance would be close to the score.</p>
+<p>On the contrary, if the feature is not used by the model, the score shall
+remain the same, thus the feature importance will be close to 0.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_score_after_permutation</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; return the score of model when curr_feat is permuted &quot;&quot;&quot;</span>
+
+    <span class="n">X_permuted</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">col_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">curr_feat</span><span class="p">)</span>
+    <span class="c1"># permute one column</span>
+    <span class="n">X_permuted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">col_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span>
+        <span class="n">X_permuted</span><span class="p">[</span><span class="n">curr_feat</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="n">permuted_score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_permuted</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">permuted_score</span>
+
+
+<span class="k">def</span> <span class="nf">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; compare the score when curr_feat is permuted &quot;&quot;&quot;</span>
+
+    <span class="n">baseline_score_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">permuted_score_train</span> <span class="o">=</span> <span class="n">get_score_after_permutation</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">)</span>
+
+    <span class="c1"># feature importance is the difference between the two scores</span>
+    <span class="n">feature_importance</span> <span class="o">=</span> <span class="n">baseline_score_train</span> <span class="o">-</span> <span class="n">permuted_score_train</span>
+    <span class="k">return</span> <span class="n">feature_importance</span>
+
+
+<span class="n">curr_feat</span> <span class="o">=</span> <span class="s1">&#39;MedInc&#39;</span>
+
+<span class="n">feature_importance</span> <span class="o">=</span> <span class="n">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;feature importance of &quot;</span><span class="si">{</span><span class="n">curr_feat</span><span class="si">}</span><span class="s1">&quot; on train set is&#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">feature_importance</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is0.82
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since there are some randomness, it is advice to run multiple times and
+inspect the mean and the standard deviation of the feature importance</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">list_feature_importance</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">n_round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+    <span class="n">list_feature_importance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;feature importance of &quot;</span><span class="si">{</span><span class="n">curr_feat</span><span class="si">}</span><span class="s1">&quot; on train set is &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">list_feature_importance</span><span class="p">)</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1"> &#39;</span>
+    <span class="sa">f</span><span class="s1">&#39;+/- </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">list_feature_importance</span><span class="p">)</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.823 +/- 0.00882
+</pre></div>
+</div>
+</div>
+</div>
+<p>0.86 over .97 is very relevant (note the R2 score could go below 0). So we
+can imagine our model relies heavily on this feature to predict the class.
+We can now compute the feature permutation importance for all the features</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">permutation_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate importance score for each feature.&quot;&quot;&quot;</span>
+
+    <span class="n">importances</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">curr_feat</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">list_feature_importance</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">n_round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+            <span class="n">list_feature_importance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">))</span>
+
+        <span class="n">importances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list_feature_importance</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;importances_mean&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;importances_std&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;importances&#39;</span><span class="p">:</span> <span class="n">importances</span><span class="p">}</span>
+
+<span class="c1"># This function could directly be access from sklearn</span>
+<span class="c1"># from sklearn.inspection import permutation_importance</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_importantes_features</span><span class="p">(</span><span class="n">perm_importance_result</span><span class="p">,</span> <span class="n">feat_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; bar plot the feature importance &quot;&quot;&quot;</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">perm_importance_result</span><span class="p">[</span><span class="s1">&#39;importances_mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)),</span>
+             <span class="n">perm_importance_result</span><span class="p">[</span><span class="s1">&#39;importances_mean&#39;</span><span class="p">][</span><span class="n">indices</span><span class="p">],</span>
+             <span class="n">xerr</span><span class="o">=</span><span class="n">perm_importance_result</span><span class="p">[</span><span class="s1">&#39;importances_std&#39;</span><span class="p">][</span><span class="n">indices</span><span class="p">])</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)))</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">feat_name</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s compute the feature importance by permutation on the training data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perm_importance_result_train</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plot_importantes_features</span><span class="p">(</span><span class="n">perm_importance_result_train</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dev_features_importance_54_0.png" src="_images/dev_features_importance_54_0.png" />
+</div>
+</div>
+<p>We see again that the feature <code class="docutils literal notranslate"><span class="pre">MedInc</span></code>, <code class="docutils literal notranslate"><span class="pre">Latitude</span></code> and <code class="docutils literal notranslate"><span class="pre">Longitude</span></code> are very
+important for the model.</p>
+<p>We note that our random variable <code class="docutils literal notranslate"><span class="pre">rnd_num</span></code> is now very less important than
+latitude. Indeed, the feature importance build-in in RandomForest has bias
+for continuous data, such as <code class="docutils literal notranslate"><span class="pre">AveOccup</span></code> and <code class="docutils literal notranslate"><span class="pre">rnd_num</span></code>.</p>
+<p>However, the model still uses these <code class="docutils literal notranslate"><span class="pre">rnd_num</span></code> feature to compute the output.
+It is in line with the overfitting we had noticed between the train and test
+score.</p>
+</div>
+<div class="section" id="discussion">
+<h3>discussion<a class="headerlink" href="#discussion" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>For correlated feature, the permutation could give non realistic sample
+(e.g. nb of bedrooms higher than the number of rooms)</p></li>
+<li><p>It is unclear whether you should use training or testing data to compute
+the feature importance.</p></li>
+<li><p>Note that dropping a column and fitting a new model will not allow to
+analyse the feature importance for a specific model, since a <em>new</em> model
+will be fitted.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="take-away">
+<h1>Take Away<a class="headerlink" href="#take-away" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>One could directly interpret the coefficient in linear model (if the
+feature have been scaled first)</p></li>
+<li><p>Model like RandomForest have built-in feature importance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">permutation_importance</span></code> gives feature importance by permutation for any
+fitted model</p></li>
+</ul>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="metrics.html" title="previous page">Evaluation of your predictive model</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.30270b6e4c972e43c488.js"></script>
+
+
+    
+  </body>
+</html>

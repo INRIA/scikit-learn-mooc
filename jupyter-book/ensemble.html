@@ -1,0 +1,2147 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ensemble learning: when many are better that the one &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.bfb7730f9caf2ec0b46a44615585038c.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.30270b6e4c972e43c488.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Evaluation of your predictive model" href="metrics.html" />
+    <link rel="prev" title="Decision tree in depth" href="trees.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Tabular data exploration
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_tabular_data_exploration.html">
+   Loading data into machine learning
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing.html">
+   First model with scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01_solution.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html">
+   Working with both numerical &amp; categorical variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html#fitting-a-more-powerful-model">
+   Fitting a more powerful model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01_solution.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02_solution.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Parameter tuning
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning.html">
+   Introduction to scikit-learn: basic model hyper-parameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01_solution.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02_solution.html">
+   Exercise 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html">
+   Linear Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Decision Trees
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees.html">
+   Decision tree in depth
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Ensemble models
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Ensemble learning: when many are better that the one
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Metrics
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="metrics.html">
+   Evaluation of your predictive model
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="_sources/ensemble.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/ensemble.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master?urlpath=tree/python_scripts/ensemble.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#benefit-of-ensemble-method-at-a-first-glance">
+   Benefit of ensemble method at a first glance
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bagging">
+   Bagging
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bootstrap-sample">
+     Bootstrap sample
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#aggregating">
+     Aggregating
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#random-forest">
+   Random forest
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#classifiers-details">
+     Classifiers details
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#boosting">
+   Boosting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adaptive-boosting-adaboost">
+     Adaptive Boosting (AdaBoost)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-boosting-decision-tree-gbdt">
+     Gradient-boosting decision tree (GBDT)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parameter-consideration-with-random-forest-and-gradient-boosting">
+   Parameter consideration with random forest and gradient-boosting
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Random forest
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gradient-boosting-decision-tree">
+     Gradient-boosting decision tree
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accelerating-gradient-boosting">
+   Accelerating gradient-boosting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wrap-up">
+   Wrap-up
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="ensemble-learning-when-many-are-better-that-the-one">
+<h1>Ensemble learning: when many are better that the one<a class="headerlink" href="#ensemble-learning-when-many-are-better-that-the-one" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will go in depth into algorithms which combine several
+simple learners (e.g. decision tree, linear model, etc.). We will
+see that combining simple learners will result in a more powerful and robust
+learner.
+We will focus on two families of ensemble methods:</p>
+<ul class="simple">
+<li><p>ensemble using bootstrap (e.g. bagging and random-forest);</p></li>
+<li><p>ensemble using boosting (e.g. adaptive boosting and gradient-boosting
+decision tree).</p></li>
+</ul>
+<div class="section" id="benefit-of-ensemble-method-at-a-first-glance">
+<h2>Benefit of ensemble method at a first glance<a class="headerlink" href="#benefit-of-ensemble-method-at-a-first-glance" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will give a quick demonstration on the power of combining
+several learners instead of fine-tuning a single learner.</p>
+<p>We will start by loading the “California Housing” dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+
+<span class="n">california_housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this dataset, we want to predict the median house value in some district
+in California based on demographic and geographic data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MedInc</th>
+      <th>HouseAge</th>
+      <th>AveRooms</th>
+      <th>AveBedrms</th>
+      <th>Population</th>
+      <th>AveOccup</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>MedHouseVal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8.3252</td>
+      <td>41.0</td>
+      <td>6.984127</td>
+      <td>1.023810</td>
+      <td>322.0</td>
+      <td>2.555556</td>
+      <td>37.88</td>
+      <td>-122.23</td>
+      <td>4.526</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8.3014</td>
+      <td>21.0</td>
+      <td>6.238137</td>
+      <td>0.971880</td>
+      <td>2401.0</td>
+      <td>2.109842</td>
+      <td>37.86</td>
+      <td>-122.22</td>
+      <td>3.585</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.2574</td>
+      <td>52.0</td>
+      <td>8.288136</td>
+      <td>1.073446</td>
+      <td>496.0</td>
+      <td>2.802260</td>
+      <td>37.85</td>
+      <td>-122.24</td>
+      <td>3.521</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.6431</td>
+      <td>52.0</td>
+      <td>5.817352</td>
+      <td>1.073059</td>
+      <td>558.0</td>
+      <td>2.547945</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+      <td>3.413</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.8462</td>
+      <td>52.0</td>
+      <td>6.281853</td>
+      <td>1.081081</td>
+      <td>565.0</td>
+      <td>2.181467</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+      <td>3.422</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We start by learning a single decision tree regressor. As we previously
+presented in the “tree in depth” notebook, this learner needs to be tuned to
+overcome over- or under-fitting. Indeed, the default parameters will not
+necessarily lead to an optimal decision tree. Instead of using the default
+value, we should search via cross-validation the optimal value of the
+important parameters such as <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, <code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>.</p>
+<p>We recall that we need to tune these parameters, as decision trees
+tend to overfit the training data if we grow deep trees, but there are no
+rules on how to limit the parameters. Thus, not making a search could lead us
+to have an underfitted model.</p>
+<p>First, let’s keep a set of data to test our final model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will first make a grid-search to fine-tune the parameters that we
+mentioned earlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">&quot;min_samples_split&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
+    <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GridSearchCV(cv=3, estimator=DecisionTreeRegressor(random_state=0), n_jobs=-1,
+             param_grid={&#39;max_depth&#39;: [3, 5, 8, None],
+                         &#39;min_samples_leaf&#39;: [0.01, 0.05, 0.1, 1],
+                         &#39;min_samples_split&#39;: [2, 10, 30, 50]})
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can create a dataframe storing the important information collected during
+the tuning of the parameters and investigate the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">interesting_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;param_max_depth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;param_min_samples_split&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;param_min_samples_leaf&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rank_test_score&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mean_fit_time&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">interesting_columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
+<span class="n">cv_results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>param_max_depth</th>
+      <th>param_min_samples_split</th>
+      <th>param_min_samples_leaf</th>
+      <th>mean_test_score</th>
+      <th>rank_test_score</th>
+      <th>mean_fit_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>63</th>
+      <td>None</td>
+      <td>50</td>
+      <td>1</td>
+      <td>0.690531</td>
+      <td>1</td>
+      <td>0.079753</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>None</td>
+      <td>30</td>
+      <td>1</td>
+      <td>0.679867</td>
+      <td>2</td>
+      <td>0.084119</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>8</td>
+      <td>50</td>
+      <td>1</td>
+      <td>0.678336</td>
+      <td>3</td>
+      <td>0.058852</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>8</td>
+      <td>30</td>
+      <td>1</td>
+      <td>0.676595</td>
+      <td>4</td>
+      <td>0.059032</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>8</td>
+      <td>10</td>
+      <td>1</td>
+      <td>0.674313</td>
+      <td>5</td>
+      <td>0.059225</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>8</td>
+      <td>10</td>
+      <td>0.1</td>
+      <td>0.501931</td>
+      <td>49</td>
+      <td>0.027289</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>3</td>
+      <td>30</td>
+      <td>0.1</td>
+      <td>0.486399</td>
+      <td>61</td>
+      <td>0.024279</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>3</td>
+      <td>2</td>
+      <td>0.1</td>
+      <td>0.486399</td>
+      <td>61</td>
+      <td>0.024918</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3</td>
+      <td>10</td>
+      <td>0.1</td>
+      <td>0.486399</td>
+      <td>61</td>
+      <td>0.024081</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>3</td>
+      <td>50</td>
+      <td>0.1</td>
+      <td>0.486399</td>
+      <td>61</td>
+      <td>0.024626</td>
+    </tr>
+  </tbody>
+</table>
+<p>64 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>From theses results, we can see that the best parameters is the combination
+where the depth of the tree is not limited and the minimum number of samples
+to create a leaf is also equal to 1 (the default values) and the
+minimum number of samples to make a split of 50 (much higher than the default
+value.</p>
+<p>It is interesting to look at the total amount of time it took to fit all
+these different models. In addition, we can check the performance of the
+optimal decision tree on the left-out testing data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_fitting_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_fit_time&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cv</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Required training time of the GridSearchCV: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Best R2 score of a single tree: </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 7.56 seconds
+Best R2 score of a single tree: 0.691
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hence, we have a model that has an <span class="math notranslate nohighlight">\(R^2\)</span> score below 0.7. The amount of time
+to find the best learner depends on the number of folds used during the
+cross-validation in the grid-search multiplied by the number of parameters.
+Therefore, the computational cost is quite high.</p>
+<p>Now we will use an ensemble method called bagging. More details about this
+method will be discussed in the next section. In short, this method will use
+a base regressor (i.e. decision tree regressors) and will train several of
+them on a slightly modified version of the training set. Then, the
+predictions of all these base regressors will be combined by averaging.</p>
+<p>Here, we will use 50 decision trees and check the fitting time as well as
+the performance on the left-out testing data. It is important to note that
+we are not going to tune any parameter of the decision tree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
+
+<span class="n">base_estimator</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">bagging_regressor</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">base_estimator</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">start_fitting_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">bagging_regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">elapsed_fitting_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_fitting_time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed fitting time: </span><span class="si">{</span><span class="n">elapsed_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score: </span><span class="si">{</span><span class="n">bagging_regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 5.56 seconds
+R2 score: 0.792
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the computation time is much shorter for training the full
+ensemble than for the parameter search of a single tree. In addition, the
+score is significantly improved with a <span class="math notranslate nohighlight">\(R^2\)</span> close to 0.8. Furthermore, note
+that this result is obtained before any parameter tuning. This shows the
+motivation behind the use of an ensemble learner: it gives a relatively good
+baseline with decent performance without any parameter tuning.</p>
+<p>Now, we will discuss in detail two ensemble families: bagging and
+boosting.</p>
+</div>
+<div class="section" id="bagging">
+<h2>Bagging<a class="headerlink" href="#bagging" title="Permalink to this headline">¶</a></h2>
+<p>Bagging stands for Bootstrap AGGregatING. It uses bootstrap samples
+to learn several models. At predict time, the predictions of each learner
+are aggregated to give the final predictions.</p>
+<p>Let’s define a simple dataset (which we have used before in a previous
+notebook).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">generate_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="nb">sorted</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">x_max</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span>
+    <span class="n">len_x</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="n">len_x</span> <span class="o">-</span> <span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">noise</span>
+    <span class="k">if</span> <span class="nb">sorted</span><span class="p">:</span>
+        <span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_15_0.png" src="_images/ensemble_15_0.png" />
+</div>
+</div>
+<p>The link between our feature and the target to predict is non-linear.
+However, a decision tree is capable of fitting such data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Tree fitting&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f5c62e250d0&gt;
+</pre></div>
+</div>
+<img alt="_images/ensemble_17_1.png" src="_images/ensemble_17_1.png" />
+</div>
+</div>
+<p>Let’s see how we can use bootstraping to learn several trees.</p>
+<div class="section" id="bootstrap-sample">
+<h3>Bootstrap sample<a class="headerlink" href="#bootstrap-sample" title="Permalink to this headline">¶</a></h3>
+<p>A bootstrap sample corresponds to a resampling, with replacement, of the
+original dataset, a sample that is the same size as the
+original dataset. Thus, the bootstrap sample will contain some
+data points several times while some of the original data points will
+not be present.</p>
+<p>We will create a function that given <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> will return a bootstrap
+sample <code class="docutils literal notranslate"><span class="pre">x_bootstrap</span></code> and <code class="docutils literal notranslate"><span class="pre">y_bootstrap</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bootstrap_sample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">bootstrap_indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">x_bootstrap_sample</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">bootstrap_indices</span><span class="p">]</span>
+    <span class="n">y_bootstrap_sample</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">bootstrap_indices</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x_bootstrap_sample</span><span class="p">,</span> <span class="n">y_bootstrap_sample</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will generate 3 bootstrap samples and qualitatively check the difference
+with the original dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_bootstrap</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="n">ncols</span><span class="o">=</span><span class="n">n_bootstrap</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstrap</span><span class="p">))):</span>
+    <span class="n">x_bootstrap_sample</span><span class="p">,</span> <span class="n">y_bootstrap_sample</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">x_bootstrap_sample</span><span class="p">,</span> <span class="n">y_bootstrap_sample</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bootstrap sample #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_21_0.png" src="_images/ensemble_21_0.png" />
+</div>
+</div>
+<p>We observe that the 3 generated bootstrap samples are all different. To
+confirm this intuition, we can check the number of unique samples in the
+bootstrap samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we need to generate a larger set to have a good estimate</span>
+<span class="n">x_huge</span><span class="p">,</span> <span class="n">y_huge</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">x_bootstrap_sample</span><span class="p">,</span> <span class="n">y_bootstrap_sample</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span><span class="n">x_huge</span><span class="p">,</span> <span class="n">y_huge</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Percentage of samples present in the original dataset: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">x_bootstrap_sample</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="n">x_bootstrap_sample</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;%&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Percentage of samples present in the original dataset: 63.2%
+</pre></div>
+</div>
+</div>
+</div>
+<p>Theoretically, 63.2% of the original data points of the original dataset will
+be present in the bootstrap sample. The other 36.8% are just repeated
+samples.</p>
+<p>So, we are able to generate many datasets, all slightly different. Now, we
+can fit a decision tree to each of these datasets and each decision
+tree shall be slightly different as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="n">ncols</span><span class="o">=</span><span class="n">n_bootstrap</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">forest</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstrap</span><span class="p">))):</span>
+    <span class="n">x_bootstrap_sample</span><span class="p">,</span> <span class="n">y_bootstrap_sample</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_bootstrap_sample</span><span class="p">,</span> <span class="n">y_bootstrap_sample</span><span class="p">)</span>
+
+    <span class="n">forest</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">x_bootstrap_sample</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">y_bootstrap_sample</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">forest</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Features&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bootstrap #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_25_0.png" src="_images/ensemble_25_0.png" />
+</div>
+</div>
+<p>We can plot these decision functions on the same plot to see the difference.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">y_pred_forest</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">forest</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">grid</span><span class="p">,</span>
+        <span class="n">y_pred</span><span class="p">,</span>
+        <span class="s2">&quot;--&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Tree #</span><span class="si">{</span><span class="n">tree_idx</span><span class="si">}</span><span class="s2"> predictions&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">y_pred_forest</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_27_0.png" src="_images/ensemble_27_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="aggregating">
+<h3>Aggregating<a class="headerlink" href="#aggregating" title="Permalink to this headline">¶</a></h3>
+<p>Once our trees are fitted and we are able to get predictions for each of
+them, we also need to combine them. In regression, the most straightforward
+approach is to average the different predictions from all learners. We can
+plot the averaged predictions from the previous example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">y_pred_forest</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">forest</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">grid</span><span class="p">,</span>
+        <span class="n">y_pred</span><span class="p">,</span>
+        <span class="s2">&quot;--&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Tree #</span><span class="si">{</span><span class="n">tree_idx</span><span class="si">}</span><span class="s2"> predictions&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">y_pred_forest</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># Averaging the predictions</span>
+<span class="n">y_pred_forest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_pred_forest</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">grid</span><span class="p">,</span>
+    <span class="n">y_pred_forest</span><span class="p">,</span>
+    <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Averaged predictions&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_29_0.png" src="_images/ensemble_29_0.png" />
+</div>
+</div>
+<p>The unbroken red line shows the averaged predictions, which would be the
+final preditions given by our ‘bag’ of decision tree regressors.</p>
+</div>
+</div>
+<div class="section" id="random-forest">
+<h2>Random forest<a class="headerlink" href="#random-forest" title="Permalink to this headline">¶</a></h2>
+<p>A popular machine-learning algorithm is the random forest. A Random forest
+is a modification of the bagging algorithm. In bagging, any classifier or
+regressor can be used. In a random forest, the base classifier or regressor
+must be a decision tree. In our previous example, we used a decision
+tree but we could have used a linear model as the regressor for our
+bagging algorithm.</p>
+<p>In addition, random forest is different from bagging when used with
+classifiers: when searching for the best split, only a subset of the original
+features are used. By default, this subset of feature is equal to the square
+root of the total number of features. In regression, the total number of
+available features will be used.</p>
+<p>We will illustrate the usage of a random forest and compare it with the
+bagging regressor on the “California housing” dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">target</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+
+<span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">random_forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Performance of random forest: </span><span class="si">{</span><span class="n">random_forest</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Performance of bagging: </span><span class="si">{</span><span class="n">bagging</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of random forest: 0.794
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.792
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that we don’t need to provide a <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> parameter to
+<code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code>, it is always a tree classifier. Also note that the
+scores are almost identical. This is because our
+problem is a regression problem and therefore, the number of features used
+in random forest and bagging is the same.</p>
+<p>For classification problems, we would need to pass a tree model instance
+with the parameter <code class="docutils literal notranslate"><span class="pre">max_features=&quot;sqrt&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">BaggingRegressor</span></code> if we wanted
+it to have the same behaviour as the random forest classifier.</p>
+<div class="section" id="classifiers-details">
+<h3>Classifiers details<a class="headerlink" href="#classifiers-details" title="Permalink to this headline">¶</a></h3>
+<p>Up to now, we have only focused on regression problems. There is a little
+difference between regression and classification.</p>
+<p>First, the <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> should be chosen in line with the problem that
+is solved: use a classifier with a classification problem and a regressor
+with a regression problem.</p>
+<p>Then, the aggregation method is different in regression and classification:
+the averaged predictions is computed in regression while the majority class
+(weighted by the probabilities) is predicted in classification.</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>We saw in this section two algorithms that use bootstrap samples to create
+an ensemble of classifiers or regressors. These algorithms train several
+learners on different bootstrap samples. The predictions are then
+aggregated. This operation can be done in a very efficient manner since the
+training of each learner can be done in parallel.</p>
+</div>
+<div class="section" id="boosting">
+<h2>Boosting<a class="headerlink" href="#boosting" title="Permalink to this headline">¶</a></h2>
+<p>We recall that bagging builds an ensemble in a parallel manner: each learner
+is trained independently from each other. The idea behind boosting is
+different. The ensemble is a sequence of learners where the
+<code class="docutils literal notranslate"><span class="pre">Nth</span></code> learner requires all previous learners, from 1 to <code class="docutils literal notranslate"><span class="pre">N-1</span></code>.</p>
+<p>Intuitively, bagging adds learners to the ensemble to correct the
+mistakes of the previous learners. We will start with an
+algorithm named Adaptive Boosting (AdaBoost) to get some intuition about the
+main ideas behind boosting.</p>
+<div class="section" id="adaptive-boosting-adaboost">
+<h3>Adaptive Boosting (AdaBoost)<a class="headerlink" href="#adaptive-boosting-adaboost" title="Permalink to this headline">¶</a></h3>
+<p>We will first focus on AdaBoost, which we will use for a classification
+problem.
+We will load the “penguin” dataset used in the “tree in depth” notebook.
+We will predict penguin species from the features culmen length and depth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># select the features of interest</span>
+<span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">culmen_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]]</span>
+<span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In addition, we are also using on the function used the previous
+“tree in depth” notebook
+to plot the decision function of the tree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+
+<span class="k">def</span> <span class="nf">plot_decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">clf</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot the boundary of the decision function of a classifier.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+    <span class="k">if</span> <span class="n">fit</span><span class="p">:</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
+
+    <span class="c1"># create a grid to evaluate all possible samples</span>
+    <span class="n">plot_step</span> <span class="o">=</span> <span class="mf">0.02</span>
+    <span class="n">feature_0_min</span><span class="p">,</span> <span class="n">feature_0_max</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">feature_1_min</span><span class="p">,</span> <span class="n">feature_1_max</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">feature_0_min</span><span class="p">,</span> <span class="n">feature_0_max</span><span class="p">,</span> <span class="n">plot_step</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">feature_1_min</span><span class="p">,</span> <span class="n">feature_1_max</span><span class="p">,</span> <span class="n">plot_step</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># compute the associated prediction</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># make the plot of the boundary and the data samples</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">hue</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will purposely train a shallow decision tree. Since the tree is shallow,
+it is unlikely to overfit and some of the training examples will even be
+misclassified on the training set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="c1"># find the misclassified samples</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">misclassified_samples_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="s2">&quot;+k&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Misclassified samples&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f5c625449d0&gt;
+</pre></div>
+</div>
+<img alt="_images/ensemble_37_1.png" src="_images/ensemble_37_1.png" />
+</div>
+</div>
+<p>We observe that several samples have been misclassified by the
+classifier.</p>
+<p>We mentioned that boosting relies on creating a new classifier which tries to
+correct these misclassifications. In scikit-learn, learners support a
+parameter <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> which forces the learner to pay more attention to
+samples with higher weights, during the training.</p>
+<p>This parameter is set when calling
+<code class="docutils literal notranslate"><span class="pre">classifier.fit(X,</span> <span class="pre">y,</span> <span class="pre">sample_weight=weights)</span></code>.
+We will use this trick to create a new classifier by ‘discarding’ all
+correctly classified samples and only considering the misclassified samples.
+Thus, mosclassified samples will be assigned a weight of 1 while well
+classified samples will assigned to a weight of 0.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sample_weight</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="s2">&quot;+k&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Previous misclassified samples&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f5c61759c10&gt;
+</pre></div>
+</div>
+<img alt="_images/ensemble_39_1.png" src="_images/ensemble_39_1.png" />
+</div>
+</div>
+<p>We see that the decision function drastically changed. Qualitatively,
+we see that the previously misclassified samples are now correctly
+classified.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">newly_misclassified_samples_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">remaining_misclassified_samples_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span>
+    <span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="n">newly_misclassified_samples_idx</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number of samples previously misclassified and still misclassified: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_misclassified_samples_idx</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of samples previously misclassified and still misclassified: 0
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, we are making mistakes on previously well classified samples. Thus,
+we get the intuition that we should weight the predictions of each classifier
+differently, most probably by using the number of mistakes each classifier
+is making.</p>
+<p>So we could use the classification error to combine both trees.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ensemble_weight</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">misclassified_samples_idx</span><span class="p">))</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">newly_misclassified_samples_idx</span><span class="p">))</span> <span class="o">/</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<span class="p">]</span>
+<span class="n">ensemble_weight</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.935672514619883, 0.6929824561403509]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first classifier was 94% accurate and the second one 69% accurate.
+Therefore, when predicting a class, we should trust the first classifier
+slightly more than the second one. We could use these accuracy values to
+weight the predictions of each learner.</p>
+<p>To summarize, boosting learns several classifiers, each of which will
+focus more or less on specific samples of the dataset. Boosting is thus
+different from bagging: here we never resample our dataset, we just assign
+different weights to the original dataset.</p>
+<p>Boosting requires some strategy to combine the learners together:</p>
+<ul class="simple">
+<li><p>one needs to define a way to compute the weights to be assigned
+to samples;</p></li>
+<li><p>one needs to assign a weight to each learner when making predictions.</p></li>
+</ul>
+<p>Indeed, we defined a really simple scheme to assign sample weights and
+learner weights. However, there are statistical theory for how these
+these sample and learner weights can be optimally calculated.
+FIXME: I think we should add a reference to ESL here.</p>
+<p>We will use the AdaBoost classifier implemented in scikit-learn and
+look at the underlying decision tree classifiers trained.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+
+<span class="n">adaboost</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME&quot;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">adaboost</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">adaboost</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
+    <span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of each classifier: </span><span class="si">{</span><span class="n">adaboost</span><span class="o">.</span><span class="n">estimator_weights_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of each classifier: </span><span class="si">{</span><span class="n">adaboost</span><span class="o">.</span><span class="n">estimator_errors_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight of each classifier: [3.58351894 3.46901998 3.03303773]
+Error of each classifier: [0.05263158 0.05864198 0.08787269]
+</pre></div>
+</div>
+<img alt="_images/ensemble_45_1.png" src="_images/ensemble_45_1.png" />
+</div>
+</div>
+<p>We see that AdaBoost has learnt three different classifiers each of which
+focuses on different samples. Looking at the weights of each learner, we see
+that the ensemble gives the highest weight to the first classifier. This
+indeed makes sense when we look at the errors of each classifier. The first
+classifier also has the highest classification performance.</p>
+<p>While AdaBoost is a nice algorithm to demonsrate the internal machinery of
+boosting
+algorithms, it is not the most efficient machine-learning algorithm.
+The most efficient algorithm based on boosting is the gradient-boosting
+decision tree (GBDT) algorithm which we will discuss now.</p>
+</div>
+<div class="section" id="gradient-boosting-decision-tree-gbdt">
+<h3>Gradient-boosting decision tree (GBDT)<a class="headerlink" href="#gradient-boosting-decision-tree-gbdt" title="Permalink to this headline">¶</a></h3>
+<p>Gradient-boosting differs from AdaBoost due to the following reason: instead
+of assigning weights to specific samples, GBDT will fit a decision
+tree on the residuals (hence the name “gradient”) of the previous tree.
+Therefore, each new added tree in the ensemble predicts the error made by the
+previous learner instead of predicting the target directly.</p>
+<p>In this section, we will provide some intuition about the way learners
+are combined to give the final prediction. In this regard, let’s go back
+to our regression problem which is more intuitive for demonstrating the
+underlying machinery.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="nb">sorted</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_47_0.png" src="_images/ensemble_47_0.png" />
+</div>
+</div>
+<p>As we previously discussed, boosting will be based on assembling a sequence
+of learners. We will start by creating a decision tree regressor. We will fix
+the depth of the tree so that the resulting learner will underfit the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">num</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">y_pred_grid_raw</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+<span class="n">line_predictions</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">y_pred_grid_raw</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">y_pred_raw</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y_pred_raw</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">line_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines_residuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Residuals&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_49_0.png" src="_images/ensemble_49_0.png" />
+</div>
+</div>
+<p>Since the tree underfits the data, its accuracy is far
+from perfect on the training data. We can observe this in the figure by
+looking at the difference between the predictions and the ground-truth data.
+We represent these errors, called “Residuals”, by unbroken red lines.</p>
+<p>Indeed, our initial tree was not expressive enough to handle the complexity
+of the data, as shown by the residuals.
+In a gradient-boosting algorithm, the idea is to create a second tree
+which, given the same data <code class="docutils literal notranslate"><span class="pre">x</span></code>, will try to predict the residuals instead of
+the target <code class="docutils literal notranslate"><span class="pre">y</span></code>. We would therefore have a tree that is able to predict the
+errors made by the initial tree.</p>
+<p>Let’s train such a tree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_pred_raw</span>
+
+<span class="n">tree_residuals</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">tree_residuals</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">residuals</span><span class="p">)</span>
+
+<span class="n">y_pred_grid_residuals</span> <span class="o">=</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">)</span>
+<span class="n">line_predictions</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">y_pred_grid_residuals</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">y_pred_residuals</span> <span class="o">=</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="p">[</span><span class="n">residuals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y_pred_residuals</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">line_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines_residuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Residuals&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ensemble_51_0.png" src="_images/ensemble_51_0.png" />
+</div>
+</div>
+<p>We see that this new tree only manages to fit some of the residuals.
+We will focus on the last sample in <code class="docutils literal notranslate"><span class="pre">x</span></code> and
+explain how the predictions of both trees are combined.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">y_pred_grid_raw</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Feature&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">y_pred_grid_residuals</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y_pred_raw</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="p">[</span><span class="n">residuals</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y_pred_residuals</span><span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">residuals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span>
+<span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f5c62aedfd0&gt;
+</pre></div>
+</div>
+<img alt="_images/ensemble_53_1.png" src="_images/ensemble_53_1.png" />
+</div>
+</div>
+<p>For our sample of interest, our initial tree is making an error (small
+residual). When
+fitting the second tree, the residual in this case is perfectly fitted and
+predicted. We will quantitatively check this prediction using the fitted
+tree. First, let’s check the prediction of the initial tree and compare it
+with the true value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_max</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True value to predict for f(x=</span><span class="si">{</span><span class="n">x_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">y_true</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">y_pred_first_tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="n">x_max</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Prediction of the first decision tree for x=</span><span class="si">{</span><span class="n">x_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;y=</span><span class="si">{</span><span class="n">y_pred_first_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of the tree: </span><span class="si">{</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred_first_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True value to predict for f(x=1.384) = 1.676
+Prediction of the first decision tree for x=1.384: y=1.555
+Error of the tree: 0.121
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we visually observed, we have a small error. Now, we can use the second
+tree to try to predict this residual.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Prediction of the residual for x=</span><span class="si">{</span><span class="n">x_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="n">x_max</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the residual for x=1.384: 0.121
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that our second tree is capable of prediting the exact residual
+(error) of our first tree. Therefore, we can predict the value of
+<code class="docutils literal notranslate"><span class="pre">x</span></code> by summing the prediction of the all trees in the ensemble.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_first_and_second_tree</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">y_pred_first_tree</span> <span class="o">+</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="n">x_max</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Prediction of the first and second decision trees combined for &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;x=</span><span class="si">{</span><span class="n">x_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: y=</span><span class="si">{</span><span class="n">y_pred_first_and_second_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of the tree: </span><span class="si">{</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred_first_and_second_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the first and second decision trees combined for x=1.384: y=1.676
+Error of the tree: 0.000
+</pre></div>
+</div>
+</div>
+</div>
+<p>We chose a sample for which only two trees were enough to make the perfect
+prediction. However, we saw in the previous plot that two trees were not
+enough to correct the residuals of all samples. Therefore, one needs to
+add several trees to the ensemble to successfully correct the error.</p>
+<p>We will compare the performance of random-forest and gradient boosting on
+the California housing dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">target</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,)</span>
+
+<span class="n">gradient_boosting</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">gradient_boosting</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">fit_time_gradient_boosting</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">random_forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">fit_time_random_forest</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The performance of gradient-boosting are:&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">gradient_boosting</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fitting time took: </span><span class="si">{</span><span class="n">fit_time_gradient_boosting</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The performance of random-forest are:&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">random_forest</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fitting time took: </span><span class="si">{</span><span class="n">fit_time_random_forest</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of gradient-boosting are:0.804
+Fitting time took: 7.34 seconds
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of random-forest are:0.795
+Fitting time took: 11.12 seconds
+</pre></div>
+</div>
+</div>
+</div>
+<p>In term of computation performance, the forest can be parallelized and will
+benefit from the having multiple CPUs. In terms of scoring performance, both
+algorithms lead to very close results.</p>
+</div>
+</div>
+<div class="section" id="parameter-consideration-with-random-forest-and-gradient-boosting">
+<h2>Parameter consideration with random forest and gradient-boosting<a class="headerlink" href="#parameter-consideration-with-random-forest-and-gradient-boosting" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section, we did not discuss the parameters of random forest
+and gradient-boosting. However, there are a couple of things to keep in mind
+when setting these parameters.</p>
+<div class="section" id="id1">
+<h3>Random forest<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The main parameter to tune with random forest is the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>
+parameter. In general, the more trees in the forest, the better the
+performance will be. However, it will slow down the fitting and prediction
+time. So one has to balance compute time and performance when setting the
+number of estimators when putting such learner in production.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter could also be tuned. Sometimes, there is no need
+to have fully grown trees. However, be aware that with random forest, trees
+are generally deep since we are seeking to overfit the learners on the
+bootstrap samples because this will be mitigated by combining them.
+Assembling underfitted trees (i.e. shallow trees) might also lead to an
+underfitted forest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;params&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>params</th>
+      <th>mean_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>8</th>
+      <td>{'max_depth': None, 'n_estimators': 30}</td>
+      <td>0.794470</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>{'max_depth': None, 'n_estimators': 20}</td>
+      <td>0.790711</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>{'max_depth': None, 'n_estimators': 10}</td>
+      <td>0.777455</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>{'max_depth': 5, 'n_estimators': 30}</td>
+      <td>0.664080</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'max_depth': 5, 'n_estimators': 20}</td>
+      <td>0.662135</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'max_depth': 5, 'n_estimators': 10}</td>
+      <td>0.660847</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{'max_depth': 3, 'n_estimators': 30}</td>
+      <td>0.561776</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'max_depth': 3, 'n_estimators': 20}</td>
+      <td>0.560810</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>{'max_depth': 3, 'n_estimators': 10}</td>
+      <td>0.557636</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can observe that in our grid-search, the largest <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> together with
+largest <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> led to the best performance.</p>
+</div>
+<div class="section" id="gradient-boosting-decision-tree">
+<h3>Gradient-boosting decision tree<a class="headerlink" href="#gradient-boosting-decision-tree" title="Permalink to this headline">¶</a></h3>
+<p>For gradient-boosting, parameter tuning is a combination of several
+parameters instead of setting one after the other each parameter. The
+important parameters are <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, and <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>.</p>
+<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter. We saw in the section on
+gradient-boosting that the algorithm fits the error of the previous tree
+in the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed,
+the first tree of the ensemble would perfectly fit (overfit) the data and
+thus no subsequent tree would be required, since there would be no residuals.
+Therefore, the tree used in gradient-boosting should have a low depth,
+typically between 3 to 8 levels.</p>
+<p>With this consideration in mind, the deeper the trees, the faster the
+residuals will be corrected and less learners are required. So <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>
+should be increased if <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is lower.</p>
+<p>Finally, we have overlooked the impact of the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> parameter up
+till now. When
+fitting the residuals one could choose if the tree should try to correct all
+possible errors or only a fraction of them. The learning-rate allows you to
+control this behaviour. A small learning-rate value would only correct the
+residuals of very few samples. If a large learning-rate is set (e.g., 1),
+we would fit the residuals of all samples. So, with a very low
+learning-rate, we will need more estimators to correct the overall error.
+However, a too large learning-rate tends to obtain an overfitted ensemble,
+similar to having a too large tree depth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">}</span>
+<span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">GradientBoostingRegressor</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>params</th>
+      <th>mean_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
+      <td>0.798289</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
+      <td>0.784097</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
+      <td>0.780980</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
+      <td>0.767519</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{'learning_rate': 0.1, 'max_depth': 3, 'n_esti...</td>
+      <td>0.754046</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
+      <td>0.752127</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
+      <td>0.747502</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
+      <td>0.744140</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
+      <td>0.732779</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'learning_rate': 0.1, 'max_depth': 3, 'n_esti...</td>
+      <td>0.706039</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
+      <td>0.634918</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
+      <td>0.626634</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
+      <td>0.622491</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
+      <td>0.597316</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
+      <td>0.594525</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
+      <td>0.593725</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
+      <td>0.590659</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>{'learning_rate': 0.1, 'max_depth': 3, 'n_esti...</td>
+      <td>0.515365</td>
+      <td>18</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="accelerating-gradient-boosting">
+<h2>Accelerating gradient-boosting<a class="headerlink" href="#accelerating-gradient-boosting" title="Permalink to this headline">¶</a></h2>
+<p>We previously mentioned that random-forest is an efficient algorithm since
+each tree of the ensemble can be fitted at the same time independently.
+Therefore, the algorithm scales efficiently with both the number of CPUs and
+the number of samples.</p>
+<p>In gradient-boosting, the algorithm is a sequential algorithm. It requires
+the <code class="docutils literal notranslate"><span class="pre">N-1</span></code> trees to have been fit to be able to fit the tree at stage <code class="docutils literal notranslate"><span class="pre">N</span></code>.
+Therefore, the algorithm is
+quite computationally expensive. The most expensive part in this algorithm is
+the search for the best split in the tree which is a brute-force
+approach: all possible split are evaluated and the best one is picked. We
+explained this process in the notebook “tree in depth”, which
+you can refer to.</p>
+<p>To accelerate the gradient-boosting algorithm, one could reduce the number of
+splits to be evaluated. As a consequence, the performance of such a
+tree would be reduced. However, since we are combining several trees in a
+gradient-boosting, we can add more estimators to overcome
+this issue.</p>
+<p>This algorithm is called <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> and
+<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingRegressor</span></code>. Each feature in the dataset <code class="docutils literal notranslate"><span class="pre">X</span></code> is first
+binned by computing histograms which are later used to evaluate the potential
+splits. The number
+of splits to evaluate is then much smaller. This algorithm becomes much more
+efficient than gradient bossting when the dataset has 10,000+ samples.</p>
+<p>Below we will give an example of a large dataset and we can compare
+computation time with the earlier experiment in the previous section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingRegressor</span>
+
+<span class="n">histogram_gradient_boosting</span> <span class="o">=</span> <span class="n">HistGradientBoostingRegressor</span><span class="p">(</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">histogram_gradient_boosting</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">fit_time_histogram_gradient_boosting</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The performance of histogram gradient-boosting are:&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">histogram_gradient_boosting</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fitting time took: </span><span class="si">{</span><span class="n">fit_time_histogram_gradient_boosting</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of histogram gradient-boosting are:0.845
+Fitting time took: 1.27 seconds
+</pre></div>
+</div>
+</div>
+</div>
+<p>The histogram gradient-boosting is the best algorithm in terms of score.
+It will also scale when the number of samples increases, while the normal
+gradient-boosting will not.</p>
+</div>
+<div class="section" id="wrap-up">
+<h2>Wrap-up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h2>
+<p>So in this notebook we discussed ensemble learners which are a type of
+learner that combines simpler learners together. We saw two strategies:
+one based on bootstrap samples allowing learners to be fit in a parallel
+manner and the other called boosting which fit learners in a sequential
+manner.</p>
+<p>From these two families, we mainly focused on giving intuitions regarding the
+internal machinery of the random forest and gradient-boosting algorithms
+which are state-of-the-art methods.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="trees.html" title="previous page">Decision tree in depth</a>
+    <a class='right-next' id="next-link" href="metrics.html" title="next page">Evaluation of your predictive model</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.30270b6e4c972e43c488.js"></script>
+
+
+    
+  </body>
+</html>

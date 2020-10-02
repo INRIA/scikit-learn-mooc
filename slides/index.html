@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Presentation</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="custom.css">
+</head>
+<body>
+<textarea id="source"></textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js">
+</script>
+<script>
+  var slideshow = remark.create({
+    ratio: '16:9',
+    slideNumberFormat: '(%current%/%total%)',
+    countIncrementalSlides: false,
+    highlightLines: true,
+    sourceUrl: getUrlParameter('file') ? getUrlParameter('file') : 'slides.md'
+  });
+
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  };
+</script>
+</body>
+</html>

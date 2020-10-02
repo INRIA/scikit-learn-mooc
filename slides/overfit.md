@@ -7,7 +7,7 @@ class: titlepage
 This lesson covers overfit and underfit. These are concepts important to
 understand why a model generalizes well or not to new data
 
-<img src="../scikit-learn-logo.svg">
+<img src="../figures/scikit-learn-logo.svg">
 
 ???
 

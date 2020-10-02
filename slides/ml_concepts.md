@@ -2,7 +2,7 @@ class: center, middle
 
 # MOOC Machine learning with scikit-learn
 
-<img src="../scikit-learn-logo.svg" style="width: 90%;">
+<img src="../figures/scikit-learn-logo.svg" style="width: 90%;">
 
 ???
 
@@ -19,7 +19,7 @@ class: titlepage
 A first, introductory lesson, focusing on general concepts rather than
 coding or maths.
 
-<img src="../scikit-learn-logo.svg">
+<img src="../figures/scikit-learn-logo.svg">
 
 ???
 

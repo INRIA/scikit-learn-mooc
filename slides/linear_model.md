@@ -8,7 +8,7 @@ This lesson covers the linear models.
 
 These are basic models, easy to understand and fast to train.
 
-<img src="../scikit-learn-logo.svg">
+<img src="../figures/scikit-learn-logo.svg">
 
 ???
 

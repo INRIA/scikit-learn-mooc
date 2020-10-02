@@ -8,7 +8,7 @@ This lesson covers decision tree and random forest.
 
 These are robust models for both rergession and classification.
 
-<img src="../scikit-learn-logo.svg">
+<img src="../figures/scikit-learn-logo.svg">
 
 ???
 Decision tree are built as a set of rules for both classification and regression problems.

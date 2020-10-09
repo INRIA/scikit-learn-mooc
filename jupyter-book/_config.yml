@@ -7,6 +7,14 @@ logo: 'scikit-learn-logo.png'
 # Information about where the book exists on the web
 description: >-
   scikit-learn tutorial
+exclude_patterns:
+  -  _build
+  - Thumbs.db
+  - .DS_Store
+  - "**.ipynb_checkpoints"
+  - "figures"
+  - "datasets"
+  - "README.md"
 
 #######################################################################################
 # Execution settings
@@ -23,11 +31,17 @@ html:
 # Interact link settings
 notebook_interface            : "notebook"
 
+sphinx:
+  config:
+    nb_custom_formats:
+      .py:
+        - jupytext.reads
+        - fmt: py:percent
+
 #######################################################################################
 # Launch button settings
 repository:
   url                         : https://github.com/INRIA/scikit-learn-mooc
-  path_to_book                : "python_scripts"
 
 binder:
   binderhub_url               : "https://mybinder.org"

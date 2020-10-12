@@ -1,0 +1,1531 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decision tree in depth &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ensemble learning: when many are better that the one" href="ensemble.html" />
+    <link rel="prev" title="Linear Models" href="linear_models.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Tabular data exploration
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_tabular_data_exploration.html">
+   Loading data into machine learning
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing.html">
+   First model with scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01_solution.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html">
+   Working with both numerical &amp; categorical variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html#fitting-a-more-powerful-model">
+   Fitting a more powerful model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01_solution.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02_solution.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Parameter tuning
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning.html">
+   Introduction to scikit-learn: basic model hyper-parameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01_solution.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02_solution.html">
+   Exercise 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html">
+   Linear Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Decision Trees
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Decision tree in depth
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Ensemble models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble.html">
+   Ensemble learning: when many are better that the one
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Metrics
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="metrics.html">
+   Evaluation of your predictive model
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/python_scripts/trees.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.py</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master?urlpath=tree/python_scripts/trees.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#presentation-of-the-dataset">
+   Presentation of the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-decision-tree-are-built">
+   How decision tree are built?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#partitioning-mechanism">
+   Partitioning mechanism
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-split-purity-criterion">
+     The split purity criterion
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#information-gain">
+     Information gain
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-prediction-works">
+   How prediction works?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-about-decision-tree-for-regression">
+   What about decision tree for regression?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decision-tree-a-non-parametric-model">
+     Decision tree: a non-parametric model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-regression-criterion">
+     The regression criterion
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#importance-of-decision-tree-hyper-parameters-on-generalization">
+   Importance of decision tree hyper-parameters on generalization
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creation-of-the-classification-and-regression-dataset">
+     Creation of the classification and regression dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#effect-of-the-max-depth-parameter">
+     Effect of the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       max_depth
+      </span>
+     </code>
+     parameter
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="decision-tree-in-depth">
+<h1>Decision tree in depth<a class="headerlink" href="#decision-tree-in-depth" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will go into details on the internal algorithm used to
+build the decision tree. First, we will focus on the decision tree used for
+classification. Then, we will highlight the fundamental difference between
+decision tree used in classification and in regression. Finally, we will
+quickly discuss the importance of the hyperparameters to be aware of when
+using decision trees.</p>
+<div class="section" id="presentation-of-the-dataset">
+<h2>Presentation of the dataset<a class="headerlink" href="#presentation-of-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>We use the
+<a class="reference external" href="https://allisonhorst.github.io/palmerpenguins/">Palmer penguins dataset</a>.
+This dataset is composed of penguins records and ultimately, we want to
+identify from which specie a penguin belongs to.</p>
+<p>A penguin is from one of the three following species: Adelie, Gentoo, and
+Chinstrap. See the illustration below depicting of the three different bird
+species:</p>
+<p><img alt="Image of penguins" src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png" /></p>
+<p>This problem is a classification problem since the target is made of
+categories. We will limit our input data to a subset of the original features
+to simplify our explanations when presenting the decision tree algorithm.
+Indeed, we will use feature based on penguins’ culmen measurement. You can
+learn more about the penguins’ culmen with illustration below:</p>
+<p><img alt="Image of culmen" src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/culmen_depth.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># select the features of interest</span>
+<span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">culmen_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]]</span>
+<span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check the dataset more into details.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 344 entries, 0 to 343
+Data columns (total 3 columns):
+ #   Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   Culmen Length (mm)  342 non-null    float64
+ 1   Culmen Depth (mm)   342 non-null    float64
+ 2   Species             344 non-null    object 
+dtypes: float64(2), object(1)
+memory usage: 8.2+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can observe that they are 2 missing records in this dataset and for the
+sake of simplicity, we will drop the records corresponding to these 2
+samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 342 entries, 0 to 343
+Data columns (total 3 columns):
+ #   Column              Non-Null Count  Dtype  
+---  ------              --------------  -----  
+ 0   Culmen Length (mm)  342 non-null    float64
+ 1   Culmen Depth (mm)   342 non-null    float64
+ 2   Species             342 non-null    object 
+dtypes: float64(2), object(1)
+memory usage: 10.7+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will separate the target from the data and we will create a training and a
+testing set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before going into details in the decision tree algorithm, we will quickly
+inspect our dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_9_0.png" src="../_images/trees_9_0.png" />
+</div>
+</div>
+<p>We can first check the feature distributions by looking at the diagonal plots
+of the pairplot. We can build the following intuitions:</p>
+<ul class="simple">
+<li><p>The Adelie specie is separable from the Gentoo and Chinstrap species using
+the culmen length;</p></li>
+<li><p>The Gentoo specie is separable from the Adelie and Chinstrap species using
+the culmen depth.</p></li>
+</ul>
+</div>
+<div class="section" id="how-decision-tree-are-built">
+<h2>How decision tree are built?<a class="headerlink" href="#how-decision-tree-are-built" title="Permalink to this headline">¶</a></h2>
+<p>In a previous notebook, we learnt that a linear classifier will define a
+linear separation to split classes using a linear combination of the input
+features. In our 2-dimensional space, it means that a linear classifier will
+defined some oblique lines that best separate our classes. We define a
+function below that given a set of data point and a classifier will plot the
+decision boundaries learnt by the classifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="k">def</span> <span class="nf">plot_decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot the boundary of the decision function of a classifier.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># create a grid to evaluate all possible samples</span>
+    <span class="n">plot_step</span> <span class="o">=</span> <span class="mf">0.02</span>
+    <span class="n">feature_0_min</span><span class="p">,</span> <span class="n">feature_0_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                                    <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">feature_1_min</span><span class="p">,</span> <span class="n">feature_1_max</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                                    <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">feature_0_min</span><span class="p">,</span> <span class="n">feature_0_max</span><span class="p">,</span> <span class="n">plot_step</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">feature_1_min</span><span class="p">,</span> <span class="n">feature_1_max</span><span class="p">,</span> <span class="n">plot_step</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># compute the associated prediction</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="c1"># make the plot of the boundary and the data samples</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thus, for a linear classifier, we will obtain the following decision
+boundaries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">linear_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">linear_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_13_0.png" src="../_images/trees_13_0.png" />
+</div>
+</div>
+<p>We see that the lines are a combination of the input features since they are
+not perpendicular a specific axis. In addition, it seems that the linear
+model would be a good candidate model for such problem, giving a good
+accuracy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Accuracy of the </span><span class="si">{</span><span class="n">linear_model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">linear_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of the LogisticRegression: 0.97
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unlike linear model, decision tree will partition the space considering a
+single feature at a time. Let’s illustrate this behaviour by having
+a decision tree which makes a single split to partition the feature space.
+the decision tree to make a single split to partition our feature space.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_17_0.png" src="../_images/trees_17_0.png" />
+</div>
+</div>
+<p>The partition found separate the data along the axis “Culmen Length”,
+discarding the feature “Culmen Depth”. Thus, it highlights that a decision
+tree does not use a combination of feature when making a split.</p>
+<p>However, such a split is not powerful enough to isolate the three species and
+the model accuracy is low compared to the linear model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Accuracy of the </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of the DecisionTreeClassifier: 0.77
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, it is not a surprise. We earlier saw that a single feature will not
+help separating the three species. However, from the previous analysis we
+saw that using both features should be useful to get fairly good results.
+Considering the mechanism of the decision tree illustrated above, we should
+repeat the partitioning on each rectangle that was previously created. In
+this regard, we expect that the partition will be using the feature “Culmen
+Depth” this time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_21_0.png" src="../_images/trees_21_0.png" />
+</div>
+</div>
+<p>As expected, the decision tree made 2 new partitions using the “Culmen
+Depth”. Now, our tree is more powerful with similar performance to our linear
+model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Accuracy of the </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of the DecisionTreeClassifier: 0.93
+</pre></div>
+</div>
+</div>
+</div>
+<p>At this stage, we have the intuition that a decision tree is built by
+successively partitioning the feature space, considering one feature at a
+time.
+Subsequently, we will present the details regarding the partitioning
+mechanism.</p>
+</div>
+<div class="section" id="partitioning-mechanism">
+<h2>Partitioning mechanism<a class="headerlink" href="#partitioning-mechanism" title="Permalink to this headline">¶</a></h2>
+<p>Let’s isolate a single feature. We will present the mechanism allowing to
+find the optimal partition for these one-dimensional data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_feature</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check once more the distribution of this feature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">klass</span> <span class="ow">in</span> <span class="n">y_train</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="n">mask_penguin_species</span> <span class="o">=</span> <span class="n">y_train</span> <span class="o">==</span> <span class="n">klass</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+        <span class="n">single_feature</span><span class="p">[</span><span class="n">mask_penguin_species</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">klass</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">single_feature</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Class probability&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_27_0.png" src="../_images/trees_27_0.png" />
+</div>
+</div>
+<p>Seeing this graph, we can easily separate the Adelie specie from
+the other species. Alternatively, we can have a scatter plot of all
+samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">single_feature</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
+     <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">y_train</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">single_feature</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">single_feature</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">y_train</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_29_0.png" src="../_images/trees_29_0.png" />
+</div>
+</div>
+<p>Finding a split comes to define a threshold value which will be used to
+separate the different classes. To give an example, we will pick a random
+threshold value and we will qualify the quality of the split.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">random_indice</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">single_feature</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">threshold_value</span> <span class="o">=</span> <span class="n">single_feature</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">random_indice</span><span class="p">]</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">single_feature</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">y_train</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random threshold value: </span><span class="si">{</span><span class="n">threshold_value</span><span class="si">}</span><span class="s2"> mm&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_31_0.png" src="../_images/trees_31_0.png" />
+</div>
+</div>
+<p>A random split does not ensure that we pick up a threshold value which
+best separate the species. Thus, an intuition will be to find a
+threshold value that best divide the Adelie class from other classes. A
+threshold around 42 mm would be ideal. Once this split is defined, we could
+specify that the sample &lt; 42 mm would belong to the class Adelie and the
+samples &gt; 42 mm would belong to the class the most probable (the most
+represented in the partition) between the Gentoo and the Chinstrap. In this
+case, it seems to be the Gentoo specie, which is in-line with what we
+observed earlier when fitting a <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> with a
+<code class="docutils literal notranslate"><span class="pre">max_depth=1</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold_value</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">single_feature</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">y_train</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">threshold_value</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Manual threshold value: </span><span class="si">{</span><span class="n">threshold_value</span><span class="si">}</span><span class="s2"> mm&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_33_0.png" src="../_images/trees_33_0.png" />
+</div>
+</div>
+<p>Intuitively, we expect the best possible threshold to be around this value
+(42 mm) because it is the split leading to the least amount of error. Thus,
+if we want to automatically find such a threshold, we would need a way to
+evaluate the goodness (or pureness) of a given threshold.</p>
+<div class="section" id="the-split-purity-criterion">
+<h3>The split purity criterion<a class="headerlink" href="#the-split-purity-criterion" title="Permalink to this headline">¶</a></h3>
+<p>To evaluate the effectiveness of a split, we will use a criterion to qualify
+the class purity on the different partitions.</p>
+<p>First, let’s define a threshold at 42 mm. Then, we will divide the data into
+2 sub-groups: a group for samples &lt; 42 mm and a group for samples &gt;= 42 mm.
+Then, we will store the class label for these samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold_value</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">mask_below_threshold</span> <span class="o">=</span> <span class="n">single_feature</span> <span class="o">&lt;</span> <span class="n">threshold_value</span>
+<span class="n">labels_below_threshold</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="n">mask_below_threshold</span><span class="p">]</span>
+<span class="n">labels_above_threshold</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[</span><span class="o">~</span><span class="n">mask_below_threshold</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can check the proportion of samples of each class in both partitions. This
+proportion is the probability of each class when considering
+the partition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels_below_threshold</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Adelie       0.98
+Chinstrap    0.01
+Gentoo       0.01
+Name: Species, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels_above_threshold</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Adelie       0.096154
+Chinstrap    0.320513
+Gentoo       0.583333
+Name: Species, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we visually assess, the partition defined by &lt; 42 mm has mainly Adelie
+penguin and only 2 samples which we could considered misclassified. However,
+on the partition &gt;= 42 mm, we cannot differentiate Gentoo and Chinstrap
+(while they are almost twice more Gentoo).</p>
+<p>We should come with a statistical measure which combine the class
+probabilities together that can be used as a criterion to qualify the purity
+of a partition. We will choose as an example the entropy criterion (also used
+in scikit-learn) which is one of the possible classification criterion.</p>
+<p>The entropy is defined as: <span class="math notranslate nohighlight">\(H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)\)</span></p>
+<p>For a binary problem, the entropy function for one of the class can be
+depicted as follows:</p>
+<p><img alt="title" src="https://upload.wikimedia.org/wikipedia/commons/2/22/Binary_entropy_plot.svg" /></p>
+<p>Therefore, the entropy will be maximum when the proportion of sample from
+each class will be equal and minimum when only samples for a single class
+is present.</p>
+<p>Therefore, one searches to minimize the entropy in each partition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">classification_criterion</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">entropy</span>
+    <span class="k">return</span> <span class="n">entropy</span><span class="p">(</span>
+        <span class="n">labels</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="p">)</span>
+
+
+<span class="n">entropy_below_threshold</span> <span class="o">=</span> <span class="n">classification_criterion</span><span class="p">(</span><span class="n">labels_below_threshold</span><span class="p">)</span>
+<span class="n">entropy_above_threshold</span> <span class="o">=</span> <span class="n">classification_criterion</span><span class="p">(</span><span class="n">labels_above_threshold</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Entropy for partition below the threshold: </span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">entropy_below_threshold</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Entropy for partition above the threshold: </span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">entropy_above_threshold</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Entropy for partition below the threshold: 
+0.112
+Entropy for partition above the threshold: 
+0.904
+</pre></div>
+</div>
+</div>
+</div>
+<p>In our case, we can see that the entropy in the partition &lt; 42 mm is close to
+0 meaning that this partition is “pure” and contain a single class while
+the partition &gt;= 42 mm is much higher due to the fact that 2 of the classes
+are still mixed.</p>
+<p>Now, we are able to assess the quality of each partition. However, the
+ultimate goal is to evaluate the quality of the split and thus combine both
+measures of entropy to obtain a single statistic.</p>
+</div>
+<div class="section" id="information-gain">
+<h3>Information gain<a class="headerlink" href="#information-gain" title="Permalink to this headline">¶</a></h3>
+<p>This statistic is known as the information gain. It combines the entropy of
+the different partitions to give us a single statistic qualifying the quality
+of a split. The information gain is defined as the difference of the entropy
+before making a split and the sum of the entropies of each partition,
+normalized by the frequencies of class samples on each partition. The goal is
+to maximize the information gain.</p>
+<p>We will define a function to compute the information gain given the different
+partitions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">information_gain</span><span class="p">(</span><span class="n">labels_below_threshold</span><span class="p">,</span> <span class="n">labels_above_threshold</span><span class="p">):</span>
+    <span class="c1"># compute the entropies in the different partitions</span>
+    <span class="n">entropy_below_threshold</span> <span class="o">=</span> <span class="n">classification_criterion</span><span class="p">(</span><span class="n">labels_below_threshold</span><span class="p">)</span>
+    <span class="n">entropy_above_threshold</span> <span class="o">=</span> <span class="n">classification_criterion</span><span class="p">(</span><span class="n">labels_above_threshold</span><span class="p">)</span>
+    <span class="n">entropy_parent</span> <span class="o">=</span> <span class="n">classification_criterion</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">labels_below_threshold</span><span class="p">,</span> <span class="n">labels_above_threshold</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="c1"># compute the normalized entropies</span>
+    <span class="n">n_samples_below_threshold</span> <span class="o">=</span> <span class="n">labels_below_threshold</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">n_samples_above_threshold</span> <span class="o">=</span> <span class="n">labels_above_threshold</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">n_samples_parent</span> <span class="o">=</span> <span class="n">n_samples_below_threshold</span> <span class="o">+</span> <span class="n">n_samples_above_threshold</span>
+
+    <span class="n">normalized_entropy_below_threshold</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">n_samples_below_threshold</span> <span class="o">/</span> <span class="n">n_samples_parent</span><span class="p">)</span> <span class="o">*</span>
+        <span class="n">entropy_below_threshold</span>
+    <span class="p">)</span>
+    <span class="n">normalized_entropy_above_threshold</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">n_samples_above_threshold</span> <span class="o">/</span> <span class="n">n_samples_parent</span><span class="p">)</span> <span class="o">*</span>
+        <span class="n">entropy_above_threshold</span>
+    <span class="p">)</span>
+
+    <span class="c1"># compute the information gain</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">entropy_parent</span> <span class="o">-</span>
+            <span class="n">normalized_entropy_below_threshold</span> <span class="o">-</span>
+            <span class="n">normalized_entropy_above_threshold</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The information gain for the split with a threshold at 42 mm is &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">information_gain</span><span class="p">(</span><span class="n">labels_below_threshold</span><span class="p">,</span> <span class="n">labels_above_threshold</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The information gain for the split with a threshold at 42 mm is 0.455
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we are able to quantify any split. Thus, we can evaluate every possible
+split and compute the information gain for each split.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">splits_information_gain</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">possible_thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">single_feature</span><span class="o">.</span><span class="n">unique</span><span class="p">())[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">threshold_value</span> <span class="ow">in</span> <span class="n">possible_thresholds</span><span class="p">:</span>
+    <span class="n">mask_below_threshold</span> <span class="o">=</span> <span class="n">single_feature</span> <span class="o">&lt;</span> <span class="n">threshold_value</span>
+    <span class="n">labels_below_threshold</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask_below_threshold</span><span class="p">]</span>
+    <span class="n">labels_above_threshold</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">mask_below_threshold</span><span class="p">]</span>
+    <span class="n">splits_information_gain</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">information_gain</span><span class="p">(</span><span class="n">labels_below_threshold</span><span class="p">,</span> <span class="n">labels_above_threshold</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">possible_thresholds</span><span class="p">,</span> <span class="n">splits_information_gain</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">single_feature</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Information gain&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_45_0.png" src="../_images/trees_45_0.png" />
+</div>
+</div>
+<p>As previously mentioned, we would like to find the threshold value maximizing
+the information gain.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_threshold_indice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">splits_information_gain</span><span class="p">)</span>
+<span class="n">best_threshold_value</span> <span class="o">=</span> <span class="n">possible_thresholds</span><span class="p">[</span><span class="n">best_threshold_indice</span><span class="p">]</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">possible_thresholds</span><span class="p">,</span> <span class="n">splits_information_gain</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">single_feature</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Information gain&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">best_threshold_value</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best threshold: </span><span class="si">{</span><span class="n">best_threshold_value</span><span class="si">}</span><span class="s2"> mm&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Best threshold: 43.3 mm&#39;)
+</pre></div>
+</div>
+<img alt="../_images/trees_47_1.png" src="../_images/trees_47_1.png" />
+</div>
+</div>
+<p>By making this brute-force search, we find that the threshold maximizing the
+information gain is 43.3 mm.</p>
+<p>Let’s check if this results is similar than the one found with the
+<code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> from scikit-learn.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;entropy&quot;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">single_feature</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(),</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_49_0.png" src="../_images/trees_49_0.png" />
+</div>
+</div>
+<p>The implementation in scikit-learn gives similar results: 43.25 mm. The
+slight difference are only due to some low-level implementation details.</p>
+<p>As we previously explained, the split mechanism will be repeated several
+times (until we don’t have any classification error on the training set). In
+the above example, it corresponds to increasing the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter.</p>
+</div>
+</div>
+<div class="section" id="how-prediction-works">
+<h2>How prediction works?<a class="headerlink" href="#how-prediction-works" title="Permalink to this headline">¶</a></h2>
+<p>We showed the way a decision tree is constructed. However, we did not explain
+how and what will be predicted from the decision tree.</p>
+<p>First, let’s recall the tree structure that we fitted earlier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_51_0.png" src="../_images/trees_51_0.png" />
+</div>
+</div>
+<p>We recall that the threshold found is 43.25 mm. Thus, let’s see the class
+prediction for a sample with a feature value below the threshold and another
+above the
+threshold.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The class predicted for a value below the threshold is: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">35</span><span class="p">]])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The class predicted for a value above the threshold is: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">45</span><span class="p">]])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The class predicted for a value below the threshold is: [&#39;Adelie&#39;]
+The class predicted for a value above the threshold is: [&#39;Gentoo&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We predict an Adelie penguin for a value below the threshold which is not
+surprising since this partition was almost pure. In the other case we
+predicted the Gentoo penguin. Indeed, we predict the class the
+most probable.</p>
+</div>
+<div class="section" id="what-about-decision-tree-for-regression">
+<h2>What about decision tree for regression?<a class="headerlink" href="#what-about-decision-tree-for-regression" title="Permalink to this headline">¶</a></h2>
+<p>We explained the construction of the decision tree in a classification
+problem. The entropy criterion to split the nodes used the class
+probabilities. Thus, this criterion is not adapted when the target <code class="docutils literal notranslate"><span class="pre">y</span></code> is
+continuous. In this case, we will need specific criterion adapted to
+regression problems.</p>
+<p>Before going into details with regression criterion, let’s observe and
+build some intuitions on the characteristics of decision tree used
+in regression.</p>
+<div class="section" id="decision-tree-a-non-parametric-model">
+<h3>Decision tree: a non-parametric model<a class="headerlink" href="#decision-tree-a-non-parametric-model" title="Permalink to this headline">¶</a></h3>
+<p>We use the same penguins dataset. However, this time we will formulate a
+regression problem instead of a classification problem. Thus, we will try to
+infer the body mass of a penguin given its flipper length.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+
+<span class="n">data_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data_columns</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Body Mass (g)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Flipper Length (mm)&#39;, ylabel=&#39;Body Mass (g)&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/trees_56_1.png" src="../_images/trees_56_1.png" />
+</div>
+</div>
+<p>Here, we deal with a regression problem because our target is a continuous
+variable ranging from 2.7 kg to 6.3 kg. From the scatter plot above, we can
+observe that we have a linear relationship between the flipper length
+and the body mass. Longer is the flipper of a penguin, heavier will be the
+penguin.</p>
+<p>For this problem, we would expect the simpler linear model to be able to
+model this relationship.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="n">linear_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will first create a function in charge of plotting the dataset and
+all possible predictions. This function is equivalent to the earlier
+function used for classification.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_regression_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">extrapolate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot the dataset and the prediction of a learnt regression model.&quot;&quot;&quot;</span>
+    <span class="c1"># train our model</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># make a scatter plot of the input data and target</span>
+    <span class="n">training_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">training_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Body Mass (g)&quot;</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># only necessary if we want to see the extrapolation of our model</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">20</span> <span class="k">if</span> <span class="n">extrapolate</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># generate a testing set spanning between min and max of the training set</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="n">offset</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># predict for this testing set and plot the response</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">X_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> trained&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="c1"># return the axes in case we want to add something to it</span>
+    <span class="k">return</span> <span class="n">ax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">linear_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_61_0.png" src="../_images/trees_61_0.png" />
+</div>
+</div>
+<p>On the plot above, we see that a non-regularized <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> is able
+to fit the data. The specificity of the model is that any new predictions
+will occur on the line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test_subset</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">linear_model</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_subset</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">X_test_subset</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test predictions&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:green&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fde004707d0&gt;
+</pre></div>
+</div>
+<img alt="../_images/trees_63_1.png" src="../_images/trees_63_1.png" />
+</div>
+</div>
+<p>On the contrary of linear model, decision trees are non-parametric
+models, so they do not rely on the way data should be distributed. In this
+regard, it will affect the prediction scheme. Repeating the
+above experiment will highlights the differences.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_66_0.png" src="../_images/trees_66_0.png" />
+</div>
+</div>
+<p>We see that the decision tree model does not have a priori and do not end-up
+with a straight line to regress flipper length and body mass. The prediction
+of a new sample, which was already present in the training set, will give the
+same target than this training sample. However, having different body masses
+for a same flipper length, the tree will be predicting the mean of the
+targets.</p>
+<p>So in classification setting, we saw that the predicted value was the most
+probable value in the node of the tree. In the case of regression, the
+predicted value corresponds to the mean of the target in the node.</p>
+<p>This lead us to question whether or not our decision trees are able to
+extrapolate to unseen data. We can highlight that this is possible with the
+linear model because it is a parametric model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">linear_model</span><span class="p">,</span> <span class="n">extrapolate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Flipper Length (mm)&#39;, ylabel=&#39;Body Mass (g)&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/trees_68_1.png" src="../_images/trees_68_1.png" />
+</div>
+</div>
+<p>The linear model will extrapolate using the fitted model for flipper length
+&lt; 175 mm and &gt; 235 mm. Let’s see the difference with the trees.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">linear_model</span><span class="p">,</span> <span class="n">extrapolate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">extrapolate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_70_0.png" src="../_images/trees_70_0.png" />
+</div>
+</div>
+<p>For the tree, we see that it cannot extrapolate below and above the minimum
+and maximum, respectively, of the flipper length encountered during the
+training. Indeed, we are predicting the minimum and maximum values of the
+training set.</p>
+</div>
+<div class="section" id="the-regression-criterion">
+<h3>The regression criterion<a class="headerlink" href="#the-regression-criterion" title="Permalink to this headline">¶</a></h3>
+<p>In the previous section, we explained the differences between using decision
+tree in classification or in regression: the predicted value will be the
+most probable class for the classification case while the it will be the mean
+in the case of the regression. The second difference that we already
+mentioned is the criterion. The classification criterion cannot be applied
+in regression setting and we need to use a specific set of criterion.</p>
+<p>One of the criterion that can be used in regression is the mean squared
+error. In this case, we will compute this criterion in each partition
+as in the case of the entropy and select the split leading to the best
+improvement (i.e. information gain).</p>
+</div>
+</div>
+<div class="section" id="importance-of-decision-tree-hyper-parameters-on-generalization">
+<h2>Importance of decision tree hyper-parameters on generalization<a class="headerlink" href="#importance-of-decision-tree-hyper-parameters-on-generalization" title="Permalink to this headline">¶</a></h2>
+<p>This last section will illustrate the importance of some key hyper-parameters
+of the decision tree. We will both illustrate it on classification and
+regression datasets that we previously used.</p>
+<div class="section" id="creation-of-the-classification-and-regression-dataset">
+<h3>Creation of the classification and regression dataset<a class="headerlink" href="#creation-of-the-classification-and-regression-dataset" title="Permalink to this headline">¶</a></h3>
+<p>We will first regenerate the classification and regression dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+
+<span class="n">data_clf</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
+    <span class="n">data_clf_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">data_clf</span><span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_clf</span><span class="p">[</span>
+    <span class="n">target_clf_column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">data_clf</span> <span class="o">=</span> <span class="n">data_clf</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">X_clf</span><span class="p">,</span> <span class="n">y_clf</span> <span class="o">=</span> <span class="n">data_clf</span><span class="p">[</span><span class="n">data_clf_columns</span><span class="p">],</span> <span class="n">data_clf</span><span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span>
+<span class="n">X_train_clf</span><span class="p">,</span> <span class="n">X_test_clf</span><span class="p">,</span> <span class="n">y_train_clf</span><span class="p">,</span> <span class="n">y_test_clf</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_clf</span><span class="p">,</span> <span class="n">y_clf</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_clf</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/ipykernel_launcher.py:8: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_reg_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_reg_column</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+
+<span class="n">data_reg</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data_reg_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_reg_column</span><span class="p">]]</span>
+<span class="n">data_reg</span> <span class="o">=</span> <span class="n">data_reg</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">X_reg</span><span class="p">,</span> <span class="n">y_reg</span> <span class="o">=</span> <span class="n">data_reg</span><span class="p">[</span><span class="n">data_reg_columns</span><span class="p">],</span> <span class="n">data_reg</span><span class="p">[</span><span class="n">target_reg_column</span><span class="p">]</span>
+<span class="n">X_train_reg</span><span class="p">,</span> <span class="n">X_test_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">y_test_reg</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_reg</span><span class="p">,</span> <span class="n">y_reg</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data_clf</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Classification dataset&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data_reg</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Body Mass (g)&quot;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Regression dataset&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_75_0.png" src="../_images/trees_75_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="effect-of-the-max-depth-parameter">
+<h3>Effect of the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter<a class="headerlink" href="#effect-of-the-max-depth-parameter" title="Permalink to this headline">¶</a></h3>
+<p>In decision tree, the most important parameter to get a trade-off between
+under-fitting and over-fitting is the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter. Let’s build
+a shallow tree (for both classification and regression) and a deeper tree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+<span class="n">tree_reg</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X_train_clf</span><span class="p">,</span> <span class="n">y_train_clf</span><span class="p">,</span> <span class="n">tree_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">tree_reg</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shallow tree with a max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_77_0.png" src="../_images/trees_77_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">tree_clf</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+<span class="n">tree_reg</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X_train_clf</span><span class="p">,</span> <span class="n">y_train_clf</span><span class="p">,</span> <span class="n">tree_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">tree_reg</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deep tree with a max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_78_0.png" src="../_images/trees_78_0.png" />
+</div>
+</div>
+<p>In both classification and regression setting, we can observe that increasing
+the depth will make the tree model more expressive. However, a tree which is
+too deep will overfit the training data, creating partitions which will only
+be correct for “outliers”. The <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is one of the parameter that one
+would like to optimize via cross-validation and a grid-search.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">)</span>
+<span class="n">tree_reg</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeRegressor</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">X_train_clf</span><span class="p">,</span> <span class="n">y_train_clf</span><span class="p">,</span> <span class="n">tree_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Optimal depth found via CV: </span><span class="si">{</span><span class="n">tree_clf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">tree_reg</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Optimal depth found via CV: </span><span class="si">{</span><span class="n">tree_reg</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/trees_81_0.png" src="../_images/trees_81_0.png" />
+</div>
+</div>
+<p>The other parameters are used to fine tune the decision tree and have less
+impact than <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./python_scripts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="linear_models.html" title="previous page">Linear Models</a>
+    <a class='right-next' id="next-link" href="ensemble.html" title="next page">Ensemble learning: when many are better that the one</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

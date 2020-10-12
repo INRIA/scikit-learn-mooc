@@ -1,0 +1,1533 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>First model with scikit-learn &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Exercise 01" href="02_basic_preprocessing_exercise_01.html" />
+    <link rel="prev" title="Loading data into machine learning" href="01_tabular_data_exploration.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <p class="caption">
+ <span class="caption-text">
+  Tabular data exploration
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_tabular_data_exploration.html">
+   Loading data into machine learning
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   First model with scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_basic_preprocessing_exercise_01_solution.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Fitting a scikit-learn model on numerical data
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html">
+   Working with both numerical &amp; categorical variables
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables.html#fitting-a-more-powerful-model">
+   Fitting a more powerful model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01_solution.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02_solution.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Parameter tuning
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning.html">
+   Introduction to scikit-learn: basic model hyper-parameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_01_solution.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_basic_parameters_tuning_exercise_02_solution.html">
+   Exercise 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html">
+   Linear Models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Decision Trees
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees.html">
+   Decision tree in depth
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Ensemble models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble.html">
+   Ensemble learning: when many are better that the one
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Metrics
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="metrics.html">
+   Evaluation of your predictive model
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/python_scripts/02_basic_preprocessing.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.py</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master?urlpath=tree/python_scripts/02_basic_preprocessing.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-preprocessing-and-model-fitting">
+   Basic preprocessing and model fitting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-dataset">
+   Loading the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#working-with-numerical-data">
+   Working with numerical data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise-1">
+   Exercise 1
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="first-model-with-scikit-learn">
+<h1>First model with scikit-learn<a class="headerlink" href="#first-model-with-scikit-learn" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-preprocessing-and-model-fitting">
+<h2>Basic preprocessing and model fitting<a class="headerlink" href="#basic-preprocessing-and-model-fitting" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, we present how to build predictive models on tabular
+datasets, with numerical features. Categorical features will be discussed
+in the next notebook.</p>
+<p>In particular we will highlight:</p>
+<ul class="simple">
+<li><p>working with numerical features</p></li>
+<li><p>the importance of scaling numerical variables</p></li>
+<li><p>evaluate the performance of a model via cross-validation</p></li>
+</ul>
+</div>
+<div class="section" id="loading-the-dataset">
+<h2>Loading the dataset<a class="headerlink" href="#loading-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>We will use the same dataset “adult_census” described in the previous notebook.
+For more details about the dataset see http://www.openml.org/d/1590.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s have a look at the first records of this data frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>fnlwgt</th>
+      <th>education</th>
+      <th>education-num</th>
+      <th>marital-status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+      <th>native-country</th>
+      <th>class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>Private</td>
+      <td>226802</td>
+      <td>11th</td>
+      <td>7</td>
+      <td>Never-married</td>
+      <td>Machine-op-inspct</td>
+      <td>Own-child</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>Private</td>
+      <td>89814</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Farming-fishing</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>28</td>
+      <td>Local-gov</td>
+      <td>336951</td>
+      <td>Assoc-acdm</td>
+      <td>12</td>
+      <td>Married-civ-spouse</td>
+      <td>Protective-serv</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44</td>
+      <td>Private</td>
+      <td>160323</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Married-civ-spouse</td>
+      <td>Machine-op-inspct</td>
+      <td>Husband</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>?</td>
+      <td>103497</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>?</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+      <td>United-States</td>
+      <td>&lt;=50K</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, ..., &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;],
+      dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For simplicity, we will ignore the “fnlwgt” (final weight) column that was
+crafted by the creators of the dataset when sampling the dataset to be
+representative of the full census database.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">])</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>education</th>
+      <th>education-num</th>
+      <th>marital-status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+      <th>native-country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>Private</td>
+      <td>11th</td>
+      <td>7</td>
+      <td>Never-married</td>
+      <td>Machine-op-inspct</td>
+      <td>Own-child</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>Private</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Farming-fishing</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>28</td>
+      <td>Local-gov</td>
+      <td>Assoc-acdm</td>
+      <td>12</td>
+      <td>Married-civ-spouse</td>
+      <td>Protective-serv</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44</td>
+      <td>Private</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Married-civ-spouse</td>
+      <td>Machine-op-inspct</td>
+      <td>Husband</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>?</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>?</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+      <td>United-States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="working-with-numerical-data">
+<h2>Working with numerical data<a class="headerlink" href="#working-with-numerical-data" title="Permalink to this headline">¶</a></h2>
+<p>Numerical data is the most natural type of data used in machine learning
+and can (almost) directly be fed to predictive models. We can quickly have a
+look at such data by selecting the subset of numerical columns from the
+original data.</p>
+<p>We will use this subset of data to fit a linear classification model to
+predict the income class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;workclass&#39;, &#39;education&#39;, &#39;education-num&#39;, &#39;marital-status&#39;,
+       &#39;occupation&#39;, &#39;relationship&#39;, &#39;race&#39;, &#39;sex&#39;, &#39;capital-gain&#39;,
+       &#39;capital-loss&#39;, &#39;hours-per-week&#39;, &#39;native-country&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                int64
+workclass         object
+education         object
+education-num      int64
+marital-status    object
+occupation        object
+relationship      object
+race              object
+sex               object
+capital-gain       int64
+capital-loss       int64
+hours-per-week     int64
+native-country    object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+
+<span class="n">numerical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;int&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">])</span>
+<span class="n">numerical_columns</span> <span class="o">=</span> <span class="n">numerical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">numerical_columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;age&#39;, &#39;education-num&#39;, &#39;capital-gain&#39;, &#39;capital-loss&#39;, &#39;hours-per-week&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
+<span class="n">data_numeric</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>education-num</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>28</td>
+      <td>12</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44</td>
+      <td>10</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>10</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>When building a machine learning model, it is important to leave out a
+subset of the data which we can use later to evaluate the trained model.
+The data used to fit a model is called training data while the one used to
+assess a model is called testing data.</p>
+<p>Scikit-learn provides a helper function <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> which will
+split the dataset into a training and a testing set. It will also ensure that
+the data are shuffled randomly before splitting the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The training dataset contains </span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The training dataset contains 36631 samples and 5 features
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The testing dataset contains </span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 12211 samples and 5 features
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will build a linear classification model called “Logistic Regression”. The
+<code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to train the model from the input (features) and
+target data. Only the training data should be given for this purpose.</p>
+<p>In addition, check the time required to train the model and the number of
+iterations done by the solver to find a solution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The model </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> was trained in &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds for </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2"> iterations&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The model LogisticRegression was trained in 0.454 seconds for [100] iterations
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s ignore the convergence warning for now and instead let’s try
+to use our model to make some predictions on the first five records
+of the held out test set:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;predicted-class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_predicted</span>
+<span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;expected-class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_test</span>
+<span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;correct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_predicted</span> <span class="o">==</span> <span class="n">target_test</span>
+<span class="n">predictions</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>education-num</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+      <th>predicted-class</th>
+      <th>expected-class</th>
+      <th>correct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7762</th>
+      <td>56</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>&lt;=50K</td>
+      <td>&lt;=50K</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>23881</th>
+      <td>25</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>&lt;=50K</td>
+      <td>&lt;=50K</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>30507</th>
+      <td>43</td>
+      <td>13</td>
+      <td>14344</td>
+      <td>0</td>
+      <td>40</td>
+      <td>&gt;50K</td>
+      <td>&gt;50K</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>28911</th>
+      <td>32</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>&lt;=50K</td>
+      <td>&lt;=50K</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>19484</th>
+      <td>39</td>
+      <td>13</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+      <td>&lt;=50K</td>
+      <td>&lt;=50K</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To quantitatively evaluate our model, we can use the method <code class="docutils literal notranslate"><span class="pre">score</span></code>. It will
+compute the classification accuracy when dealing with a classification
+problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy using a </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a LogisticRegression is 0.818
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is mathematically equivalent as computing the average number of time
+the model makes a correct prediction on the test set:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target_test</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8177053476373761
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exercise-1">
+<h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>What would be the score of a model that always predicts <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">&gt;50K'</span></code>?</p></li>
+<li><p>What would be the score of a model that always predicts <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">&lt;=</span> <span class="pre">50K'</span></code>?</p></li>
+<li><p>Is 81% or 82% accuracy a good score for this problem?</p></li>
+</ul>
+<p>Hint: You can use a <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> and do a train-test split to evaluate
+its accuracy on the test set. This
+<a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators">link</a>
+shows a few examples of how to evaluate the performance of these baseline
+models.</p>
+<p>Open the dedicated notebook in Jupyter to do this exercise.</p>
+<p>Let’s now consider the <code class="docutils literal notranslate"><span class="pre">ConvergenceWarning</span></code> message that was raised previously
+when calling the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method to train our model. This warning informs us that
+our model stopped learning because it reached the maximum number of
+iterations allowed by the user. This could potentially be detrimental for the
+model accuracy. We can follow the (bad) advice given in the warning message
+and increase the maximum number of iterations allowed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The accuracy using a </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> with a fitting time of &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds in </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2"> iterations&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.818 with a fitting time of 0.467 seconds in [105] iterations
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now observe a longer training time but no significant improvement in
+the predictive performance. Instead of increasing the number of iterations, we
+can try to help fit the model faster by scaling the data first. A range of
+preprocessing algorithms in scikit-learn allows us to transform the input data
+before training a model.</p>
+<p>In our case, we will standardize the data and then train a new logistic
+regression model on that new version of the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>education-num</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>36631.000000</td>
+      <td>36631.000000</td>
+      <td>36631.000000</td>
+      <td>36631.000000</td>
+      <td>36631.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>38.642352</td>
+      <td>10.078131</td>
+      <td>1087.077721</td>
+      <td>89.665311</td>
+      <td>40.431247</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>13.725748</td>
+      <td>2.570143</td>
+      <td>7522.692939</td>
+      <td>407.110175</td>
+      <td>12.423952</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>17.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>28.000000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>40.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>37.000000</td>
+      <td>10.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>40.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>48.000000</td>
+      <td>12.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>45.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>90.000000</td>
+      <td>16.000000</td>
+      <td>99999.000000</td>
+      <td>4356.000000</td>
+      <td>99.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">data_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+<span class="n">data_train_scaled</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.17177061,  0.35868902, -0.14450843,  5.71188483, -2.28845333],
+       [ 0.02605707,  1.1368665 , -0.14450843, -0.22025127, -0.27618374],
+       [-0.33822677,  1.1368665 , -0.14450843, -0.22025127,  0.77019645],
+       ...,
+       [-0.77536738, -0.03039972, -0.14450843, -0.22025127, -0.03471139],
+       [ 0.53605445,  0.35868902, -0.14450843, -0.22025127, -0.03471139],
+       [ 1.48319243,  1.52595523, -0.14450843, -0.22025127, -2.69090725]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train_scaled</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_train_scaled</span><span class="p">,</span>
+                                 <span class="n">columns</span><span class="o">=</span><span class="n">data_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">data_train_scaled</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>education-num</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>3.663100e+04</td>
+      <td>3.663100e+04</td>
+      <td>3.663100e+04</td>
+      <td>3.663100e+04</td>
+      <td>3.663100e+04</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>-2.273364e-16</td>
+      <td>1.219606e-16</td>
+      <td>3.530310e-17</td>
+      <td>3.840667e-17</td>
+      <td>1.844684e-16</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.000014e+00</td>
+      <td>1.000014e+00</td>
+      <td>1.000014e+00</td>
+      <td>1.000014e+00</td>
+      <td>1.000014e+00</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-1.576792e+00</td>
+      <td>-3.532198e+00</td>
+      <td>-1.445084e-01</td>
+      <td>-2.202513e-01</td>
+      <td>-3.173852e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-7.753674e-01</td>
+      <td>-4.194885e-01</td>
+      <td>-1.445084e-01</td>
+      <td>-2.202513e-01</td>
+      <td>-3.471139e-02</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>-1.196565e-01</td>
+      <td>-3.039972e-02</td>
+      <td>-1.445084e-01</td>
+      <td>-2.202513e-01</td>
+      <td>-3.471139e-02</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>6.817680e-01</td>
+      <td>7.477778e-01</td>
+      <td>-1.445084e-01</td>
+      <td>-2.202513e-01</td>
+      <td>3.677425e-01</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>3.741752e+00</td>
+      <td>2.304133e+00</td>
+      <td>1.314865e+01</td>
+      <td>1.047970e+01</td>
+      <td>4.714245e+00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can easily combine these sequential operations
+with a scikit-learn <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, which chains together operations and can be
+used like any other classifier or regressor. The helper function
+<code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> will create a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> by giving as arguments the successive
+transformations to perform followed by the classifier or regressor model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span>
+                      <span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The accuracy using a </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> with a fitting time of &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds in </span><span class="si">{</span><span class="n">model</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2"> iterations&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.818 with a fitting time of 0.123 seconds in [13] iterations
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the training time and the number of iterations is much shorter
+while the predictive performance (accuracy) stays the same.</p>
+<p>In the previous example, we split the original data into a training set and a
+testing set. This strategy has several issues: in the setting where the amount
+of data is limited, the subset of data used to train or test will be small;
+and the splitting was done in a random manner and we have no information
+regarding the confidence of the results obtained.</p>
+<p>Instead, we can use cross-validation. Cross-validation consists of
+repeating this random splitting into training and testing sets and aggregating
+the model performance. By repeating the experiment, one can get an estimate of
+the variability of the model performance.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> allows for such experimental protocol by giving
+the model, the data and the target. Since there exists several
+cross-validation strategies, <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> takes a parameter <code class="docutils literal notranslate"><span class="pre">cv</span></code> which
+defines the splitting strategy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.2 s, sys: 455 ms, total: 1.66 s
+Wall time: 867 ms
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.81216092, 0.8096018 , 0.81337019, 0.81326781, 0.82207207])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.814 +/- 0.004
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that by computing the standard-deviation of the cross-validation scores
+we can get an idea of the uncertainty of our estimation of the predictive
+performance of the model: in the above results, only the first 2 decimals seem
+to be trustworthy. Using a single train / test split would not allow us to
+know anything about the level of uncertainty of the accuracy of the model.</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">cv=5</span></code> created 5 distinct splits to get 5 variations for the training
+and testing sets. Each training set is used to fit one model which is then
+scored on the matching test set. This strategy is called K-fold
+cross-validation where <code class="docutils literal notranslate"><span class="pre">K</span></code> corresponds to the number of splits.</p>
+<p>The figure helps visualize how the dataset is partitioned
+into train and test samples at each iteration of the cross-validation
+procedure:</p>
+<p><img alt="Cross-validation diagram" src="../_images/cross_validation_diagram.png" /></p>
+<p>For each cross-validation split, the procedure trains a model on the
+concatenation of the red samples and evaluate the score of the model
+by using the blue samples. Cross-validation is therefore computationally
+intensive because it requires training several models instead of one.</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> method above discards the 5 models that
+were trained on the different overlapping subset of the dataset.
+The goal of cross-validation is not to train a model, but rather to
+estimate approximately the generalization performance of a model that
+would have been trained to the full training set, along with an estimate
+of the variability (uncertainty on the generalization accuracy).</p>
+<p>In this notebook we have:</p>
+<ul class="simple">
+<li><p><strong>split</strong> our dataset into a training dataset and a testing dataset</p></li>
+<li><p>fitted a <strong>logistic regression</strong> model</p></li>
+<li><p>seen the importance of <strong>scaling numerical variables</strong></p></li>
+<li><p>used the <strong>pipeline</strong> method to fit both the scaler and the logistic regression</p></li>
+<li><p>assessed the performance of our model via <strong>cross-validation</strong></p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./python_scripts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="01_tabular_data_exploration.html" title="previous page">Loading data into machine learning</a>
+    <a class='right-next' id="next-link" href="02_basic_preprocessing_exercise_01.html" title="next page">Exercise 01</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

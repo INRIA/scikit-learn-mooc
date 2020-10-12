@@ -4,14 +4,13 @@ All notebook material: https://github.com/INRIA/scikit-learn-mooc/
 
 ## Follow the tutorial online
 
+A few different ways are available:
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
                https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
-
+- Browse [website](https://inria.github.io/scikit-learn-mooc/jupyter-book/) generated with
+  [Jupyter Book](https://jupyterbook.org/)
 - Browse the static content online (pre-rendered outputs) using [nbviewer](
   https://nbviewer.jupyter.org/github/INRIA/scikit-learn-mooc/tree/master/rendered_notebooks/)
-
-You will need an internet connection but you do not have to install any packages
-locally.
 
 
 ## Running the tutorial locally

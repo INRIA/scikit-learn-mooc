@@ -277,7 +277,7 @@ print(
 )
 
 # %% [markdown]
-# Empirically, 63.2% of the original data points of the original dataset will
+# On average, 63.2% of the original data points of the original dataset will
 # be present in the bootstrap sample. The other 36.8% are just repeated
 # samples.
 #

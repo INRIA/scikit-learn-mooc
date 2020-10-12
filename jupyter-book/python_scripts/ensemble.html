@@ -587,9 +587,10 @@ value, we should search via cross-validation the optimal value of the
 important parameters such as <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, <code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code>, or
 <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>.</p>
 <p>We recall that we need to tune these parameters, as decision trees
-tend to overfit the training data if we grow deep trees, but there are no
-rules on how to limit the parameters. Thus, not making a search could lead us
-to have an underfitted model.</p>
+tend to overfit the training data if we grow deep trees, but there are
+no rules on what each parameter should be set to.
+Thus, not making a search could lead us
+to have an underfitted or overfitted model.</p>
 <p>First, let’s keep a set of data to test our final model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -690,7 +691,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.690531</td>
       <td>1</td>
-      <td>0.088000</td>
+      <td>0.082576</td>
     </tr>
     <tr>
       <th>62</th>
@@ -699,7 +700,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.679867</td>
       <td>2</td>
-      <td>0.093922</td>
+      <td>0.086411</td>
     </tr>
     <tr>
       <th>47</th>
@@ -708,7 +709,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.678336</td>
       <td>3</td>
-      <td>0.064755</td>
+      <td>0.060488</td>
     </tr>
     <tr>
       <th>46</th>
@@ -717,7 +718,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.676595</td>
       <td>4</td>
-      <td>0.067832</td>
+      <td>0.057700</td>
     </tr>
     <tr>
       <th>45</th>
@@ -726,7 +727,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.674313</td>
       <td>5</td>
-      <td>0.065563</td>
+      <td>0.059842</td>
     </tr>
     <tr>
       <th>...</th>
@@ -744,7 +745,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.501931</td>
       <td>49</td>
-      <td>0.029629</td>
+      <td>0.027161</td>
     </tr>
     <tr>
       <th>10</th>
@@ -753,7 +754,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.025768</td>
+      <td>0.023001</td>
     </tr>
     <tr>
       <th>8</th>
@@ -762,7 +763,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.026620</td>
+      <td>0.024314</td>
     </tr>
     <tr>
       <th>9</th>
@@ -771,7 +772,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.025471</td>
+      <td>0.023143</td>
     </tr>
     <tr>
       <th>11</th>
@@ -780,7 +781,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.027315</td>
+      <td>0.023643</td>
     </tr>
   </tbody>
 </table>
@@ -809,7 +810,7 @@ optimal decision tree on the left-out testing data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 8.30 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 7.67 seconds
 Best R2 score of a single tree: 0.691
 </pre></div>
 </div>
@@ -847,7 +848,7 @@ we are not going to tune any parameter of the decision tree.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 5.81 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 5.31 seconds
 R2 score: 0.792
 </pre></div>
 </div>
@@ -864,8 +865,10 @@ boosting.</p>
 </div>
 <div class="section" id="bagging">
 <h2>Bagging<a class="headerlink" href="#bagging" title="Permalink to this headline">¶</a></h2>
-<p>Bagging stands for Bootstrap AGGregatING. It uses bootstrap samples
-to learn several models. At predict time, the predictions of each learner
+<p>Bagging stands for Bootstrap AGGregatING. It uses bootstrap
+(random sampling
+with replacement) to learn several models.
+At predict time, the predictions of each learner
 are aggregated to give the final predictions.</p>
 <p>Let’s define a simple dataset (which we have used before in a previous
 notebook).</p>
@@ -920,7 +923,7 @@ However, a decision tree is capable of fitting such data</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f04a5ad2650&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe452c673d0&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_17_1.png" src="../_images/ensemble_17_1.png" />
@@ -996,7 +999,7 @@ bootstrap samples.</p>
 </div>
 </div>
 </div>
-<p>Theoretically, 63.2% of the original data points of the original dataset will
+<p>On average, 63.2% of the original data points of the original dataset will
 be present in the bootstrap sample. The other 36.8% are just repeated
 samples.</p>
 <p>So, we are able to generate many datasets, all slightly different. Now, we
@@ -1156,7 +1159,7 @@ bagging regressor on the “California housing” dataset.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of random forest: 0.794
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.794
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.792
 </pre></div>
 </div>
 </div>
@@ -1176,9 +1179,16 @@ difference between regression and classification.</p>
 <p>First, the <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> should be chosen in line with the problem that
 is solved: use a classifier with a classification problem and a regressor
 with a regression problem.</p>
-<p>Then, the aggregation method is different in regression and classification:
-the averaged predictions is computed in regression while the majority class
-(weighted by the probabilities) is predicted in classification.</p>
+<p>Then, the aggregation method is different in regression and classification:</p>
+<ul class="simple">
+<li><p>in regression, the average prediction is computed. For instance, if
+three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33,</p></li>
+<li><p>while in classification, the class which highest probability
+(after averaging the predicted probabilities) is predicted. For instance, if
+three learners predict (for two classes) the probability (0.4, 0.6),
+(0.3, 0.7) and (0.31, 0.69), the aggregation probability is (0.33, 0.67)
+and the second class would be predicted.</p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="summary">
@@ -1294,12 +1304,12 @@ misclassified on the training set.</p>
     <span class="s2">&quot;+k&quot;</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Misclassified samples&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="s1">&#39;small&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f04a4799e10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe45317f410&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_37_1.png" src="../_images/ensemble_37_1.png" />
@@ -1331,12 +1341,12 @@ classified samples will assigned to a weight of 0.</p>
     <span class="s2">&quot;+k&quot;</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Previous misclassified samples&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span> <span class="o">=</span> <span class="s1">&#39;small&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f049ec9c890&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe45152bf50&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_39_1.png" src="../_images/ensemble_39_1.png" />
@@ -1402,8 +1412,8 @@ to samples;</p></li>
 <li><p>one needs to assign a weight to each learner when making predictions.</p></li>
 </ul>
 <p>Indeed, we defined a really simple scheme to assign sample weights and
-learner weights. However, there are statistical theory for how these
-these sample and learner weights can be optimally calculated.
+learner weights. However, there are statistical theories (like in AdaBoost)
+for how these sample and learner weights can be optimally calculated.
 FIXME: I think we should add a reference to ESL here.</p>
 <p>We will use the AdaBoost classifier implemented in scikit-learn and
 look at the underlying decision tree classifiers trained.</p>
@@ -1452,7 +1462,7 @@ decision tree (GBDT) algorithm which we will discuss now.</p>
 <h3>Gradient-boosting decision tree (GBDT)<a class="headerlink" href="#gradient-boosting-decision-tree-gbdt" title="Permalink to this headline">¶</a></h3>
 <p>Gradient-boosting differs from AdaBoost due to the following reason: instead
 of assigning weights to specific samples, GBDT will fit a decision
-tree on the residuals (hence the name “gradient”) of the previous tree.
+tree on the residuals error (hence the name “gradient”) of the previous tree.
 Therefore, each new added tree in the ensemble predicts the error made by the
 previous learner instead of predicting the target directly.</p>
 <p>In this section, we will provide some intuition about the way learners
@@ -1586,7 +1596,7 @@ explain how the predictions of both trees are combined.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f049f8db2d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe452706450&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_53_1.png" src="../_images/ensemble_53_1.png" />
@@ -1665,7 +1675,9 @@ Error of the tree: 0.000
 <p>We chose a sample for which only two trees were enough to make the perfect
 prediction. However, we saw in the previous plot that two trees were not
 enough to correct the residuals of all samples. Therefore, one needs to
-add several trees to the ensemble to successfully correct the error.</p>
+add several trees to the ensemble to successfully correct the error.
+(i.e. the second tree corrects the first tree’s error, while the third tree
+corrects the second tree’s error and so on.)</p>
 <p>We will compare the performance of random-forest and gradient boosting on
 the California housing dataset.</p>
 <div class="cell docutils container">
@@ -1701,11 +1713,11 @@ the California housing dataset.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of gradient-boosting are:0.804
-Fitting time took: 7.81 seconds
+Fitting time took: 7.02 seconds
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of random-forest are:0.794
-Fitting time took: 12.01 seconds
+Fitting time took: 10.99 seconds
 </pre></div>
 </div>
 </div>
@@ -1778,55 +1790,55 @@ underfitted forest.</p>
     <tr>
       <th>8</th>
       <td>{'max_depth': None, 'n_estimators': 30}</td>
-      <td>0.794272</td>
+      <td>0.792681</td>
       <td>1</td>
     </tr>
     <tr>
       <th>7</th>
       <td>{'max_depth': None, 'n_estimators': 20}</td>
-      <td>0.790908</td>
+      <td>0.789481</td>
       <td>2</td>
     </tr>
     <tr>
       <th>6</th>
       <td>{'max_depth': None, 'n_estimators': 10}</td>
-      <td>0.776775</td>
+      <td>0.779778</td>
       <td>3</td>
     </tr>
     <tr>
       <th>5</th>
       <td>{'max_depth': 5, 'n_estimators': 30}</td>
-      <td>0.663720</td>
+      <td>0.663744</td>
       <td>4</td>
     </tr>
     <tr>
       <th>4</th>
       <td>{'max_depth': 5, 'n_estimators': 20}</td>
-      <td>0.662154</td>
+      <td>0.661517</td>
       <td>5</td>
     </tr>
     <tr>
       <th>3</th>
       <td>{'max_depth': 5, 'n_estimators': 10}</td>
-      <td>0.658368</td>
+      <td>0.658127</td>
       <td>6</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>{'max_depth': 3, 'n_estimators': 20}</td>
-      <td>0.561065</td>
-      <td>7</td>
     </tr>
     <tr>
       <th>2</th>
       <td>{'max_depth': 3, 'n_estimators': 30}</td>
-      <td>0.560942</td>
+      <td>0.561692</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'max_depth': 3, 'n_estimators': 20}</td>
+      <td>0.561057</td>
       <td>8</td>
     </tr>
     <tr>
       <th>0</th>
       <td>{'max_depth': 3, 'n_estimators': 10}</td>
-      <td>0.558525</td>
+      <td>0.556558</td>
       <td>9</td>
     </tr>
   </tbody>
@@ -1838,8 +1850,8 @@ largest <code class="docutils literal notranslate"><span class="pre">n_estimator
 </div>
 <div class="section" id="gradient-boosting-decision-tree">
 <h3>Gradient-boosting decision tree<a class="headerlink" href="#gradient-boosting-decision-tree" title="Permalink to this headline">¶</a></h3>
-<p>For gradient-boosting, parameter tuning is a combination of several
-parameters instead of setting one after the other each parameter. The
+<p>For gradient-boosting, parameters are coupled, so we can not anymore
+set the parameters one after the other. The
 important parameters are <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, and <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>.</p>
 <p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter. We saw in the section on
 gradient-boosting that the algorithm fits the error of the previous tree
@@ -1847,7 +1859,8 @@ in the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed,
 the first tree of the ensemble would perfectly fit (overfit) the data and
 thus no subsequent tree would be required, since there would be no residuals.
 Therefore, the tree used in gradient-boosting should have a low depth,
-typically between 3 to 8 levels.</p>
+typically between 3 to 8 levels.
+Having very weak learners at each step will help reducing overfitting.</p>
 <p>With this consideration in mind, the deeper the trees, the faster the
 residuals will be corrected and less learners are required. So <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>
 should be increased if <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is lower.</p>
@@ -1906,43 +1919,43 @@ similar to having a too large tree depth.</p>
     <tr>
       <th>5</th>
       <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
-      <td>0.798379</td>
+      <td>0.798306</td>
       <td>1</td>
     </tr>
     <tr>
       <th>11</th>
       <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
-      <td>0.783818</td>
+      <td>0.782926</td>
       <td>2</td>
     </tr>
     <tr>
       <th>10</th>
       <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
-      <td>0.781249</td>
+      <td>0.781367</td>
       <td>3</td>
     </tr>
     <tr>
       <th>4</th>
       <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
-      <td>0.766619</td>
+      <td>0.766565</td>
       <td>4</td>
     </tr>
     <tr>
       <th>2</th>
       <td>{'learning_rate': 0.1, 'max_depth': 3, 'n_esti...</td>
-      <td>0.754102</td>
+      <td>0.754121</td>
       <td>5</td>
     </tr>
     <tr>
       <th>12</th>
       <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
-      <td>0.752837</td>
+      <td>0.752657</td>
       <td>6</td>
     </tr>
     <tr>
       <th>13</th>
       <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
-      <td>0.745447</td>
+      <td>0.748112</td>
       <td>7</td>
     </tr>
     <tr>
@@ -1954,7 +1967,7 @@ similar to having a too large tree depth.</p>
     <tr>
       <th>14</th>
       <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
-      <td>0.733873</td>
+      <td>0.734799</td>
       <td>9</td>
     </tr>
     <tr>
@@ -1966,43 +1979,43 @@ similar to having a too large tree depth.</p>
     <tr>
       <th>7</th>
       <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
-      <td>0.634591</td>
+      <td>0.633912</td>
       <td>11</td>
     </tr>
     <tr>
       <th>6</th>
       <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
-      <td>0.626002</td>
+      <td>0.626521</td>
       <td>12</td>
     </tr>
     <tr>
       <th>8</th>
       <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
-      <td>0.623431</td>
+      <td>0.622169</td>
       <td>13</td>
     </tr>
     <tr>
       <th>3</th>
       <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
-      <td>0.597248</td>
+      <td>0.597241</td>
       <td>14</td>
     </tr>
     <tr>
       <th>16</th>
       <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
-      <td>0.594897</td>
+      <td>0.592473</td>
       <td>15</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
-      <td>0.594782</td>
-      <td>16</td>
     </tr>
     <tr>
       <th>15</th>
       <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
-      <td>0.592349</td>
+      <td>0.590286</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
+      <td>0.589034</td>
       <td>17</td>
     </tr>
     <tr>
@@ -2066,7 +2079,7 @@ computation time with the earlier experiment in the previous section.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of histogram gradient-boosting are:0.845
-Fitting time took: 1.06 seconds
+Fitting time took: 1.00 seconds
 </pre></div>
 </div>
 </div>

@@ -57,9 +57,11 @@ df.head()
 # `min_samples_leaf`.
 #
 # We recall that we need to tune these parameters, as decision trees
-# tend to overfit the training data if we grow deep trees, but there are no
-# rules on how to limit the parameters. Thus, not making a search could lead us
-# to have an underfitted model.
+# tend to overfit the training data if we grow deep trees, but there are 
+# no rules on what each parameter should be set to. 
+# Thus, not making a search could lead us
+# to have an underfitted or overfitted model.
+
 #
 # First, let's keep a set of data to test our final model.
 
@@ -178,8 +180,10 @@ print(f"R2 score: {bagging_regressor.score(X_test, y_test):.3f}")
 #
 # ## Bagging
 #
-# Bagging stands for Bootstrap AGGregatING. It uses bootstrap samples
-# to learn several models. At predict time, the predictions of each learner
+# Bagging stands for Bootstrap AGGregatING. It uses bootstrap 
+# (random sampling 
+# with replacement) to learn several models.
+# At predict time, the predictions of each learner
 # are aggregated to give the final predictions.
 #
 # Let's define a simple dataset (which we have used before in a previous
@@ -288,7 +292,7 @@ print(
 )
 
 # %% [markdown]
-# Theoretically, 63.2% of the original data points of the original dataset will
+# On average, 63.2% of the original data points of the original dataset will
 # be present in the bootstrap sample. The other 36.8% are just repeated
 # samples.
 #
@@ -449,8 +453,13 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # with a regression problem.
 #
 # Then, the aggregation method is different in regression and classification:
-# the averaged predictions is computed in regression while the majority class
-# (weighted by the probabilities) is predicted in classification.
+# - in regression, the average prediction is computed. For instance, if 
+# three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33,
+# - while in classification, the class which highest probability
+# (after averaging the predicted probabilities) is predicted. For instance, if
+# three learners predict (for two classes) the probability (0.4, 0.6),
+# (0.3, 0.7) and (0.31, 0.69), the aggregation probability is (0.33, 0.67)
+# and the second class would be predicted.
 #
 # ## Summary
 #
@@ -565,7 +574,7 @@ ax.plot(
     "+k",
     label="Misclassified samples",
 )
-ax.legend()
+ax.legend(fontsize = 'small')
 
 # %% [markdown]
 # We observe that several samples have been misclassified by the
@@ -596,7 +605,7 @@ ax.plot(
     "+k",
     label="Previous misclassified samples",
 )
-ax.legend()
+ax.legend(fontsize = 'small')
 
 # %% [markdown]
 # We see that the decision function drastically changed. Qualitatively,
@@ -648,8 +657,8 @@ ensemble_weight
 # * one needs to assign a weight to each learner when making predictions.
 #
 # Indeed, we defined a really simple scheme to assign sample weights and
-# learner weights. However, there are statistical theory for how these
-# these sample and learner weights can be optimally calculated.
+# learner weights. However, there are statistical theories (like in AdaBoost)
+# for how these sample and learner weights can be optimally calculated.
 # FIXME: I think we should add a reference to ESL here.
 #
 # We will use the AdaBoost classifier implemented in scikit-learn and
@@ -691,7 +700,7 @@ print(f"Error of each classifier: {adaboost.estimator_errors_}")
 #
 # Gradient-boosting differs from AdaBoost due to the following reason: instead
 # of assigning weights to specific samples, GBDT will fit a decision
-# tree on the residuals (hence the name "gradient") of the previous tree.
+# tree on the residuals error (hence the name "gradient") of the previous tree.
 # Therefore, each new added tree in the ensemble predicts the error made by the
 # previous learner instead of predicting the target directly.
 #
@@ -861,7 +870,9 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 # prediction. However, we saw in the previous plot that two trees were not
 # enough to correct the residuals of all samples. Therefore, one needs to
 # add several trees to the ensemble to successfully correct the error.
-#
+# (i.e. the second tree corrects the first tree's error, while the third tree
+# corrects the second tree's error and so on.)
+# 
 # We will compare the performance of random-forest and gradient boosting on
 # the California housing dataset.
 
@@ -939,8 +950,8 @@ cv_results[columns].sort_values(by="rank_test_score")
 #
 # ### Gradient-boosting decision tree
 #
-# For gradient-boosting, parameter tuning is a combination of several
-# parameters instead of setting one after the other each parameter. The
+# For gradient-boosting, parameters are coupled, so we can not anymore
+# set the parameters one after the other. The
 # important parameters are `n_estimators`, `max_depth`, and `learning_rate`.
 #
 # Let's first discuss the `max_depth` parameter. We saw in the section on
@@ -950,6 +961,8 @@ cv_results[columns].sort_values(by="rank_test_score")
 # thus no subsequent tree would be required, since there would be no residuals.
 # Therefore, the tree used in gradient-boosting should have a low depth,
 # typically between 3 to 8 levels.
+# Having very weak learners at each step will help reducing overfitting.
+
 #
 # With this consideration in mind, the deeper the trees, the faster the
 # residuals will be corrected and less learners are required. So `n_estimators`

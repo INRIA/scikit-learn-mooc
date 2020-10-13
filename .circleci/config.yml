@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  run_notebooks:
+  build_jupyter_book:
     docker:
       - image: continuumio/miniconda
     environment:
@@ -15,22 +15,18 @@ jobs:
       - checkout
       - run: ./build_tools/circle/checkout_merge_commit.sh
       - run:
-          command: ./build_tools/circle/run_notebooks.sh
+          command: ./build_tools/circle/build_jupyter_book.sh
           no_output_timeout: 30m
       - store_artifacts:
-          path: rendered_notebooks_html
-          destination: notebooks
+          path: jupyter-book/_build/html
+          destination: jupyter-book
 
 workflows:
   version: 2
-  run_notebooks:
+  build_jupyter_book:
     jobs:
       # TODO add lint step
       # - lint
-      - run_notebooks
+      - build_jupyter_book
           # requires:
           #   - lint
-      # TODO one day maybe push to a separate branch with [skip ci] to have the notebooks in the repo
-      # - deploy:
-      #     requires:
-      #       - run_notebooks

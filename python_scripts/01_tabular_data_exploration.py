@@ -30,8 +30,6 @@
 # downloaded from [OpenML](http://openml.org/).
 
 # %%
-1/0
-
 import pandas as pd
 
 adult_census = pd.read_csv("../datasets/adult-census.csv")

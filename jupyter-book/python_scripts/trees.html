@@ -360,8 +360,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-decision-tree-are-built">
-   How decision tree are built?
+  <a class="reference internal nav-link" href="#how-are-decision-tree-built">
+   How are decision tree built?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -382,8 +382,8 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-prediction-works">
-   How prediction works?
+  <a class="reference internal nav-link" href="#how-does-prediction-work">
+   How does prediction work?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -439,24 +439,24 @@
                 
   <div class="section" id="decision-tree-in-depth">
 <h1>Decision tree in depth<a class="headerlink" href="#decision-tree-in-depth" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will go into details on the internal algorithm used to
-build the decision tree. First, we will focus on the decision tree used for
-classification. Then, we will highlight the fundamental difference between
-decision tree used in classification and in regression. Finally, we will
-quickly discuss the importance of the hyperparameters to be aware of when
+<p>In this notebook, we will discuss in detail the internal algorithm used to
+build the decision tree. First, we will focus on the classification decision
+tree. Then, we will highlight the fundamental difference between the
+decision tree used for classification and regression. Finally, we will
+quickly discuss the importance of the hyper-parameters to be aware of when
 using decision trees.</p>
 <div class="section" id="presentation-of-the-dataset">
 <h2>Presentation of the dataset<a class="headerlink" href="#presentation-of-the-dataset" title="Permalink to this headline">¶</a></h2>
-<p>We use the
+<p>We will use the
 <a class="reference external" href="https://allisonhorst.github.io/palmerpenguins/">Palmer penguins dataset</a>.
-This dataset is composed of penguins records and ultimately, we want to
-identify from which specie a penguin belongs to.</p>
-<p>A penguin is from one of the three following species: Adelie, Gentoo, and
-Chinstrap. See the illustration below depicting of the three different bird
+This dataset is comprised of penguin records and ultimately, we want to
+predict the species each penguin belongs to.</p>
+<p>Each penguin is from one of the three following species: Adelie, Gentoo, and
+Chinstrap. See the illustration below depicting the three different penguin
 species:</p>
 <p><img alt="Image of penguins" src="https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png" /></p>
-<p>This problem is a classification problem since the target is made of
-categories. We will limit our input data to a subset of the original features
+<p>This problem is a classification problem since the target is categorical.
+We will limit our input data to a subset of the original features
 to simplify our explanations when presenting the decision tree algorithm.
 Indeed, we will use feature based on penguins’ culmen measurement. You can
 learn more about the penguins’ culmen with illustration below:</p>
@@ -499,7 +499,7 @@ memory usage: 8.2+ KB
 </div>
 </div>
 </div>
-<p>We can observe that they are 2 missing records in this dataset and for the
+<p>We can observe that there are 2 missing records in this dataset and for the
 sake of simplicity, we will drop the records corresponding to these 2
 samples.</p>
 <div class="cell docutils container">
@@ -524,7 +524,7 @@ memory usage: 10.7+ KB
 </div>
 </div>
 </div>
-<p>We will separate the target from the data and we will create a training and a
+<p>We will separate the target from the data and create a training and a
 testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -538,7 +538,7 @@ testing set.</p>
 </div>
 </div>
 </div>
-<p>Before going into details in the decision tree algorithm, we will quickly
+<p>Before going into detail about the decision tree algorithm, we will quickly
 inspect our dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -555,20 +555,20 @@ inspect our dataset.</p>
 <p>We can first check the feature distributions by looking at the diagonal plots
 of the pairplot. We can build the following intuitions:</p>
 <ul class="simple">
-<li><p>The Adelie specie is separable from the Gentoo and Chinstrap species using
+<li><p>The Adelie species is separable from the Gentoo and Chinstrap species using
 the culmen length;</p></li>
-<li><p>The Gentoo specie is separable from the Adelie and Chinstrap species using
+<li><p>The Gentoo species is separable from the Adelie and Chinstrap species using
 the culmen depth.</p></li>
 </ul>
 </div>
-<div class="section" id="how-decision-tree-are-built">
-<h2>How decision tree are built?<a class="headerlink" href="#how-decision-tree-are-built" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-are-decision-tree-built">
+<h2>How are decision tree built?<a class="headerlink" href="#how-are-decision-tree-built" title="Permalink to this headline">¶</a></h2>
 <p>In a previous notebook, we learnt that a linear classifier will define a
 linear separation to split classes using a linear combination of the input
 features. In our 2-dimensional space, it means that a linear classifier will
-defined some oblique lines that best separate our classes. We define a
-function below that given a set of data point and a classifier will plot the
-decision boundaries learnt by the classifier.</p>
+define some oblique lines that best separate our classes. We define a
+function below that, given a set of data points and a classifier, will plot
+the decision boundaries learnt by the classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -611,7 +611,8 @@ decision boundaries learnt by the classifier.</p>
 </div>
 </div>
 <p>Thus, for a linear classifier, we will obtain the following decision
-boundaries.</p>
+boundaries. These boundaries lines indicate where the model changes its
+prediction from one class to another.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -627,7 +628,7 @@ boundaries.</p>
 </div>
 <p>We see that the lines are a combination of the input features since they are
 not perpendicular a specific axis. In addition, it seems that the linear
-model would be a good candidate model for such problem, giving a good
+model would be a good candidate model for such problem as it gives good
 accuracy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -644,10 +645,10 @@ accuracy.</p>
 </div>
 </div>
 </div>
-<p>Unlike linear model, decision tree will partition the space considering a
-single feature at a time. Let’s illustrate this behaviour by having
-a decision tree which makes a single split to partition the feature space.
-the decision tree to make a single split to partition our feature space.</p>
+<p>Unlike linear models, decision trees will partition the space by considering
+a single feature at a time. Let’s illustrate this behaviour by having
+a decision tree that only makes a single split to partition the feature
+space.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
@@ -661,11 +662,12 @@ the decision tree to make a single split to partition our feature space.</p>
 <img alt="../_images/trees_17_0.png" src="../_images/trees_17_0.png" />
 </div>
 </div>
-<p>The partition found separate the data along the axis “Culmen Length”,
+<p>The partitions found by the algorithm separates the data along the axis
+“Culmen Length”,
 discarding the feature “Culmen Depth”. Thus, it highlights that a decision
 tree does not use a combination of feature when making a split.</p>
-<p>However, such a split is not powerful enough to isolate the three species and
-the model accuracy is low compared to the linear model.</p>
+<p>However, such a split is not powerful enough to separate the three species
+and the model accuracy is low when compared to the linear model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
@@ -681,13 +683,13 @@ the model accuracy is low compared to the linear model.</p>
 </div>
 </div>
 </div>
-<p>Indeed, it is not a surprise. We earlier saw that a single feature will not
-help separating the three species. However, from the previous analysis we
-saw that using both features should be useful to get fairly good results.
-Considering the mechanism of the decision tree illustrated above, we should
-repeat the partitioning on each rectangle that was previously created. In
-this regard, we expect that the partition will be using the feature “Culmen
-Depth” this time.</p>
+<p>Indeed, it is not a surprise. We saw earlier that a single feature will not
+be able to separate all three species. However, from the previous analysis we
+saw that by using both features we should be able to get fairly good results.
+Considering the splitting mechanism of the decision tree illustrated above, we should
+repeat the partitioning on the resulting rectangles created by the first
+split. In this regard, we expect that the two partitions at the second level of the tree will be using
+the feature “Culmen Depth”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -720,13 +722,13 @@ model.</p>
 <p>At this stage, we have the intuition that a decision tree is built by
 successively partitioning the feature space, considering one feature at a
 time.
-Subsequently, we will present the details regarding the partitioning
+Subsequently, we will present the details of the partitioning
 mechanism.</p>
 </div>
 <div class="section" id="partitioning-mechanism">
 <h2>Partitioning mechanism<a class="headerlink" href="#partitioning-mechanism" title="Permalink to this headline">¶</a></h2>
-<p>Let’s isolate a single feature. We will present the mechanism allowing to
-find the optimal partition for these one-dimensional data.</p>
+<p>Let’s isolate a single feature. We will present the mechanism allowing us to
+find the optimal partitions for this one-dimensional data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_feature</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">]</span>
@@ -753,8 +755,8 @@ find the optimal partition for these one-dimensional data.</p>
 <img alt="../_images/trees_27_0.png" src="../_images/trees_27_0.png" />
 </div>
 </div>
-<p>Seeing this graph, we can easily separate the Adelie specie from
-the other species. Alternatively, we can have a scatter plot of all
+<p>Seeing this graph, we can easily separate the Adelie species from
+the other species. This can also been seen on a scatter plot of all the
 samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -771,9 +773,9 @@ samples.</p>
 <img alt="../_images/trees_29_0.png" src="../_images/trees_29_0.png" />
 </div>
 </div>
-<p>Finding a split comes to define a threshold value which will be used to
+<p>Finding a split requires us to define a threshold value which will be used to
 separate the different classes. To give an example, we will pick a random
-threshold value and we will qualify the quality of the split.</p>
+threshold value and we will quantify the quality of the split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -793,14 +795,14 @@ threshold value and we will qualify the quality of the split.</p>
 <img alt="../_images/trees_31_0.png" src="../_images/trees_31_0.png" />
 </div>
 </div>
-<p>A random split does not ensure that we pick up a threshold value which
-best separate the species. Thus, an intuition will be to find a
-threshold value that best divide the Adelie class from other classes. A
+<p>A random split does not ensure that we pick a threshold value that
+best separates the species. Thus, an intuition would be to find a
+threshold value that best divides the Adelie class from other classes. A
 threshold around 42 mm would be ideal. Once this split is defined, we could
 specify that the sample &lt; 42 mm would belong to the class Adelie and the
-samples &gt; 42 mm would belong to the class the most probable (the most
-represented in the partition) between the Gentoo and the Chinstrap. In this
-case, it seems to be the Gentoo specie, which is in-line with what we
+samples &gt; 42 mm would belong to the class the most probable (the one most
+represented in the partition). In this
+case, it seems to be the Gentoo species, which is in line with what we
 observed earlier when fitting a <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> with a
 <code class="docutils literal notranslate"><span class="pre">max_depth=1</span></code>.</p>
 <div class="cell docutils container">
@@ -827,10 +829,10 @@ evaluate the goodness (or pureness) of a given threshold.</p>
 <div class="section" id="the-split-purity-criterion">
 <h3>The split purity criterion<a class="headerlink" href="#the-split-purity-criterion" title="Permalink to this headline">¶</a></h3>
 <p>To evaluate the effectiveness of a split, we will use a criterion to qualify
-the class purity on the different partitions.</p>
+the class purity on the resulting partitions.</p>
 <p>First, let’s define a threshold at 42 mm. Then, we will divide the data into
 2 sub-groups: a group for samples &lt; 42 mm and a group for samples &gt;= 42 mm.
-Then, we will store the class label for these samples.</p>
+Finally, we will store the class label for these samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">threshold_value</span> <span class="o">=</span> <span class="mi">42</span>
@@ -842,8 +844,8 @@ Then, we will store the class label for these samples.</p>
 </div>
 </div>
 <p>We can check the proportion of samples of each class in both partitions. This
-proportion is the probability of each class when considering
-the partition.</p>
+proportion is the probability of each class when considering the samples
+in the partition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels_below_threshold</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
@@ -874,22 +876,31 @@ Name: Species, dtype: float64
 </div>
 </div>
 </div>
-<p>As we visually assess, the partition defined by &lt; 42 mm has mainly Adelie
-penguin and only 2 samples which we could considered misclassified. However,
-on the partition &gt;= 42 mm, we cannot differentiate Gentoo and Chinstrap
-(while they are almost twice more Gentoo).</p>
-<p>We should come with a statistical measure which combine the class
-probabilities together that can be used as a criterion to qualify the purity
-of a partition. We will choose as an example the entropy criterion (also used
+<p>As we visually assessed, the partition (i.e. the part of the data)
+defined by &lt; 42 mm has mainly Adelie
+penguin and only 2 samples that are misclassified. However,
+in the partition &gt;= 42 mm, we cannot differentiate well between Gentoo and
+Chinstrap (while they are almost twice more Gentoo).</p>
+<p>We should use a statistical measure that uses all the class
+probabilities, as the criterion to qualify the purity
+of a partition.
+We will choose as an example the entropy criterion (also used
 in scikit-learn) which is one of the possible classification criterion.</p>
-<p>The entropy is defined as: <span class="math notranslate nohighlight">\(H(X) = - \sum_{k=1}^{K} p(X_k) \log p(X_k)\)</span></p>
-<p>For a binary problem, the entropy function for one of the class can be
-depicted as follows:</p>
+<p>The entropy <span class="math notranslate nohighlight">\(H\)</span> of the data remaining in one partition is defined as:</p>
+<p><span class="math notranslate nohighlight">\(H = - \sum_{k=1}^{K} p_k \log p_k\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(p_k\)</span> stands for the probability (here the proportions)
+of finding the class <span class="math notranslate nohighlight">\(k\)</span> in this part.</p>
+<p>For a binary problem (e.g., only 2 classes of penguins), the entropy function
+for one of the class can be depicted as follows:</p>
 <p><img alt="title" src="https://upload.wikimedia.org/wikipedia/commons/2/22/Binary_entropy_plot.svg" /></p>
-<p>Therefore, the entropy will be maximum when the proportion of sample from
-each class will be equal and minimum when only samples for a single class
-is present.</p>
-<p>Therefore, one searches to minimize the entropy in each partition.</p>
+<p>Therefore, the entropy will be maximum when the proportion of samples from
+each class is equal (i.e. <span class="math notranslate nohighlight">\(p_k\)</span> is 50%) and minimum when only samples for
+a single class is present (i.e., <span class="math notranslate nohighlight">\(p_k\)</span> is 100%, only class <code class="docutils literal notranslate"><span class="pre">X</span></code>,
+or 0%, only the other class). This idea can be extended to &gt;2 classes.
+For example, for 3 classes, entropy would be highest when the proportion of
+samples is 33% for all 3 classes and lowest when the proportion of only one
+of the classes is 100%.</p>
+<p>Therefore, a good partition <em>minimizes</em> the entropy in each part.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">classification_criterion</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
@@ -919,22 +930,26 @@ Entropy for partition above the threshold:
 </div>
 </div>
 <p>In our case, we can see that the entropy in the partition &lt; 42 mm is close to
-0 meaning that this partition is “pure” and contain a single class while
-the partition &gt;= 42 mm is much higher due to the fact that 2 of the classes
-are still mixed.</p>
-<p>Now, we are able to assess the quality of each partition. However, the
-ultimate goal is to evaluate the quality of the split and thus combine both
-measures of entropy to obtain a single statistic.</p>
+0, meaning that this partition is “pure” and nearly entirely consists of a
+single class (Adelie). Conversely, the partition &gt;= 42 mm is much higher
+because the species are still mixed, with large numbers of both Chinstrap
+and Gentoo penguins.</p>
+<p>With entropy, we are able to assess the quality of each partition. However,
+the ultimate goal is to evaluate the quality of the overall split
+and thus
+combine the measures of entropy in each partition (leaf) into a single statistic.</p>
 </div>
 <div class="section" id="information-gain">
 <h3>Information gain<a class="headerlink" href="#information-gain" title="Permalink to this headline">¶</a></h3>
-<p>This statistic is known as the information gain. It combines the entropy of
-the different partitions to give us a single statistic qualifying the quality
-of a split. The information gain is defined as the difference of the entropy
-before making a split and the sum of the entropies of each partition,
-normalized by the frequencies of class samples on each partition. The goal is
-to maximize the information gain.</p>
-<p>We will define a function to compute the information gain given the different
+<p>Information gain uses the entropy of
+the two partitions to give us a single statistic quantifying the quality
+of a split. The information gain is defined as the difference between the
+entropy
+before a split and the sum of the entropies of each partition,
+normalized by the frequencies of class samples in each partition.</p>
+<p>IG = H(X_unsplit)/N - ( H(split1)/N1 + H(split2)/N2 )</p>
+<p>The goal is to maximize the information gain (i.e. maximize the decrease in entropy after the split).</p>
+<p>We will define a function to compute the information gain given the
 partitions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -979,8 +994,8 @@ partitions.</p>
 </div>
 </div>
 </div>
-<p>Now, we are able to quantify any split. Thus, we can evaluate every possible
-split and compute the information gain for each split.</p>
+<p>Now that we are able to quantify any split, we can evaluate all possible
+splits and compute the information gain for each split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">splits_information_gain</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1009,7 +1024,8 @@ split and compute the information gain for each split.</p>
 </div>
 </div>
 <p>As previously mentioned, we would like to find the threshold value maximizing
-the information gain.</p>
+the information gain. Below we draw a line in the plot, where the maximum
+information gain value is.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_threshold_indice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">splits_information_gain</span><span class="p">)</span>
@@ -1031,9 +1047,9 @@ the information gain.</p>
 <img alt="../_images/trees_47_1.png" src="../_images/trees_47_1.png" />
 </div>
 </div>
-<p>By making this brute-force search, we find that the threshold maximizing the
+<p>Using this brute-force search, we find that the threshold maximizing the
 information gain is 43.3 mm.</p>
-<p>Let’s check if this results is similar than the one found with the
+<p>Let’s check if this result is similar to the one found with the
 <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> from scikit-learn.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1050,16 +1066,19 @@ information gain is 43.3 mm.</p>
 </div>
 </div>
 <p>The implementation in scikit-learn gives similar results: 43.25 mm. The
-slight difference are only due to some low-level implementation details.</p>
+slight difference is just due to some low-level implementation details.</p>
 <p>As we previously explained, the split mechanism will be repeated several
-times (until we don’t have any classification error on the training set). In
-the above example, it corresponds to increasing the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter.</p>
+times (until there is no classification error on the training set,
+i.e., all final partitions consist of only one class). In
+the above example, it corresponds to setting the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter to
+<code class="docutils literal notranslate"><span class="pre">None</span></code>. This allows the algorithm to keep making splits until the final
+partitions are pure.</p>
 </div>
 </div>
-<div class="section" id="how-prediction-works">
-<h2>How prediction works?<a class="headerlink" href="#how-prediction-works" title="Permalink to this headline">¶</a></h2>
-<p>We showed the way a decision tree is constructed. However, we did not explain
-how and what will be predicted from the decision tree.</p>
+<div class="section" id="how-does-prediction-work">
+<h2>How does prediction work?<a class="headerlink" href="#how-does-prediction-work" title="Permalink to this headline">¶</a></h2>
+<p>We showed how a decision tree is constructed. However, we did not explain
+how predictions are makde from the decision tree.</p>
 <p>First, let’s recall the tree structure that we fitted earlier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1073,8 +1092,7 @@ how and what will be predicted from the decision tree.</p>
 </div>
 <p>We recall that the threshold found is 43.25 mm. Thus, let’s see the class
 prediction for a sample with a feature value below the threshold and another
-above the
-threshold.</p>
+above the threshold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The class predicted for a value below the threshold is: &quot;</span>
@@ -1091,25 +1109,25 @@ The class predicted for a value above the threshold is: [&#39;Gentoo&#39;]
 </div>
 </div>
 </div>
-<p>We predict an Adelie penguin for a value below the threshold which is not
-surprising since this partition was almost pure. In the other case we
-predicted the Gentoo penguin. Indeed, we predict the class the
-most probable.</p>
+<p>We predict an Adelie penguin if the feature value is below the threshold,
+which is not surprising since this partition was almost pure. If the feature
+value is above the threshold, we
+predict the Gentoo penguin, the class that is most probable.</p>
 </div>
 <div class="section" id="what-about-decision-tree-for-regression">
 <h2>What about decision tree for regression?<a class="headerlink" href="#what-about-decision-tree-for-regression" title="Permalink to this headline">¶</a></h2>
-<p>We explained the construction of the decision tree in a classification
-problem. The entropy criterion to split the nodes used the class
-probabilities. Thus, this criterion is not adapted when the target <code class="docutils literal notranslate"><span class="pre">y</span></code> is
-continuous. In this case, we will need specific criterion adapted to
+<p>We explained the construction of the decision tree for a classification
+problem. The entropy criterion to determine how we split the nodes used the
+class probabilities. We cannot use this criterion the target <code class="docutils literal notranslate"><span class="pre">y</span></code> is
+continuous. In this case, we will need specific criterion adapted for
 regression problems.</p>
-<p>Before going into details with regression criterion, let’s observe and
-build some intuitions on the characteristics of decision tree used
-in regression.</p>
+<p>Before going into detail about regression criterion, let’s observe and
+build some intuitions about the characteristics of decision trees used
+for regression.</p>
 <div class="section" id="decision-tree-a-non-parametric-model">
 <h3>Decision tree: a non-parametric model<a class="headerlink" href="#decision-tree-a-non-parametric-model" title="Permalink to this headline">¶</a></h3>
-<p>We use the same penguins dataset. However, this time we will formulate a
-regression problem instead of a classification problem. Thus, we will try to
+<p>We will use the same penguins dataset however, this time we will formulate a
+regression problem instead of a classification problem. We will try to
 infer the body mass of a penguin given its flipper length.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1145,9 +1163,9 @@ infer the body mass of a penguin given its flipper length.</p>
 <p>Here, we deal with a regression problem because our target is a continuous
 variable ranging from 2.7 kg to 6.3 kg. From the scatter plot above, we can
 observe that we have a linear relationship between the flipper length
-and the body mass. Longer is the flipper of a penguin, heavier will be the
+and the body mass. The longer the flipper of a penguin, the heavier the
 penguin.</p>
-<p>For this problem, we would expect the simpler linear model to be able to
+<p>For this problem, we would expect the simple linear model to be able to
 model this relationship.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1160,7 +1178,7 @@ model this relationship.</p>
 </div>
 <p>We will first create a function in charge of plotting the dataset and
 all possible predictions. This function is equivalent to the earlier
-function used for classification.</p>
+function used to plot the decision boundaries for classification.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_regression_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">extrapolate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1209,8 +1227,8 @@ function used for classification.</p>
 </div>
 </div>
 <p>On the plot above, we see that a non-regularized <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> is able
-to fit the data. The specificity of the model is that any new predictions
-will occur on the line.</p>
+to fit the data. A feature of this model is that all new predictions
+will be on the line.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test_subset</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
@@ -1226,16 +1244,16 @@ will occur on the line.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f044110b3d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f45879fab50&gt;
 </pre></div>
 </div>
 <img alt="../_images/trees_63_1.png" src="../_images/trees_63_1.png" />
 </div>
 </div>
-<p>On the contrary of linear model, decision trees are non-parametric
-models, so they do not rely on the way data should be distributed. In this
-regard, it will affect the prediction scheme. Repeating the
-above experiment will highlights the differences.</p>
+<p>Contrary to linear models, decision trees are non-parametric
+models, so they do not make assumptions about the way data are distributed.
+This will affect the prediction scheme. Repeating the
+above experiment will highlight the differences.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
@@ -1255,15 +1273,15 @@ above experiment will highlights the differences.</p>
 <img alt="../_images/trees_66_0.png" src="../_images/trees_66_0.png" />
 </div>
 </div>
-<p>We see that the decision tree model does not have a priori and do not end-up
-with a straight line to regress flipper length and body mass. The prediction
-of a new sample, which was already present in the training set, will give the
-same target than this training sample. However, having different body masses
+<p>We see that the decision tree model does not have a priori distribution
+for the data and we do not end-up
+with a straight line to regress flipper length and body mass.
+Having different body masses
 for a same flipper length, the tree will be predicting the mean of the
 targets.</p>
 <p>So in classification setting, we saw that the predicted value was the most
 probable value in the node of the tree. In the case of regression, the
-predicted value corresponds to the mean of the target in the node.</p>
+predicted value corresponds to the mean of the target in the leaf.</p>
 <p>This lead us to question whether or not our decision trees are able to
 extrapolate to unseen data. We can highlight that this is possible with the
 linear model because it is a parametric model.</p>
@@ -1280,8 +1298,9 @@ linear model because it is a parametric model.</p>
 <img alt="../_images/trees_68_1.png" src="../_images/trees_68_1.png" />
 </div>
 </div>
-<p>The linear model will extrapolate using the fitted model for flipper length
-&lt; 175 mm and &gt; 235 mm. Let’s see the difference with the trees.</p>
+<p>The linear model will extrapolate using the fitted model for flipper lengths
+&lt; 175 mm and &gt; 235 mm. Let’s see the difference between the classification
+and regression trees.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">plot_regression_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">linear_model</span><span class="p">,</span> <span class="n">extrapolate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1293,30 +1312,32 @@ linear model because it is a parametric model.</p>
 <img alt="../_images/trees_70_0.png" src="../_images/trees_70_0.png" />
 </div>
 </div>
-<p>For the tree, we see that it cannot extrapolate below and above the minimum
-and maximum, respectively, of the flipper length encountered during the
-training. Indeed, we are predicting the minimum and maximum values of the
-training set.</p>
+<p>For the regression tree, we see that it cannot extrapolate outside of the
+flipper length range present in the training data.
+For flipper lengths below the minimum, the mass of the penguin in the
+training data with the shortest flipper length will always be predicted.
+Similarly, for flipper lengths above the maximum, the mass of the penguin
+in the training data with the longest flipper will always predicted.</p>
 </div>
 <div class="section" id="the-regression-criterion">
 <h3>The regression criterion<a class="headerlink" href="#the-regression-criterion" title="Permalink to this headline">¶</a></h3>
 <p>In the previous section, we explained the differences between using decision
-tree in classification or in regression: the predicted value will be the
+tree for classification and for regression: the predicted value will be the
 most probable class for the classification case while the it will be the mean
 in the case of the regression. The second difference that we already
 mentioned is the criterion. The classification criterion cannot be applied
 in regression setting and we need to use a specific set of criterion.</p>
 <p>One of the criterion that can be used in regression is the mean squared
-error. In this case, we will compute this criterion in each partition
-as in the case of the entropy and select the split leading to the best
+error. In this case, we will compute this criterion for each partition,
+as in the case of the entropy, and select the split leading to the best
 improvement (i.e. information gain).</p>
 </div>
 </div>
 <div class="section" id="importance-of-decision-tree-hyper-parameters-on-generalization">
 <h2>Importance of decision tree hyper-parameters on generalization<a class="headerlink" href="#importance-of-decision-tree-hyper-parameters-on-generalization" title="Permalink to this headline">¶</a></h2>
 <p>This last section will illustrate the importance of some key hyper-parameters
-of the decision tree. We will both illustrate it on classification and
-regression datasets that we previously used.</p>
+of the decision tree. We will illustrate it on both the classification and
+regression probelms that we previously used.</p>
 <div class="section" id="creation-of-the-classification-and-regression-dataset">
 <h3>Creation of the classification and regression dataset<a class="headerlink" href="#creation-of-the-classification-and-regression-dataset" title="Permalink to this headline">¶</a></h3>
 <p>We will first regenerate the classification and regression dataset.</p>
@@ -1397,9 +1418,9 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="section" id="effect-of-the-max-depth-parameter">
 <h3>Effect of the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter<a class="headerlink" href="#effect-of-the-max-depth-parameter" title="Permalink to this headline">¶</a></h3>
-<p>In decision tree, the most important parameter to get a trade-off between
+<p>In decision trees, the most important parameter to get a trade-off between
 under-fitting and over-fitting is the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter. Let’s build
-a shallow tree (for both classification and regression) and a deeper tree.</p>
+a shallow tree and then deeper tree (for both classification and regression).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">2</span>
@@ -1434,11 +1455,12 @@ a shallow tree (for both classification and regression) and a deeper tree.</p>
 <img alt="../_images/trees_78_0.png" src="../_images/trees_78_0.png" />
 </div>
 </div>
-<p>In both classification and regression setting, we can observe that increasing
-the depth will make the tree model more expressive. However, a tree which is
-too deep will overfit the training data, creating partitions which will only
-be correct for “outliers”. The <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is one of the parameter that one
-would like to optimize via cross-validation and a grid-search.</p>
+<p>For both classification and regression setting, we can observe that
+increasing
+the depth will make the tree model more expressive. However, a tree that is
+too deep will overfit the training data, creating partitions which are only
+be correct for “outliers”. The <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is one of the hyper-parameters
+that one should optimize via cross-validation and grid-search.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>

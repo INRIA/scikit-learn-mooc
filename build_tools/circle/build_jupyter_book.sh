@@ -12,4 +12,8 @@ pip install jupytext yapf
 pip install jupyter-book
 
 cd jupyter-book
-jupyter-book build .
+jupyter-book build . 2>&1 | tee build.log
+
+# Grep the log to make sure there has been no errors when running the notebooks
+# since jupyter-book exit code is always 0
+grep -q 'Execution Failed' build.log && exit 1

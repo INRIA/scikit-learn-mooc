@@ -249,8 +249,7 @@ dummy_classifier.fit(X_train, y_train).score(X_test, y_test)
 # `'not donated'`,
 # we obtain an accuracy score of 76%. Therefore, it means that this classifier,
 # without learning anything from the data `X`, is capable of predicting as
-# accurately as our logistic regression model. 76% represents the baseline that
-# any classifier should out perform to not be a random classifier.
+# accurately as our logistic regression model.
 #
 # The problem illustrated above is also known as the class imbalance problem.
 # When the classes are imbalanced, accuracy should not be used. In this case,

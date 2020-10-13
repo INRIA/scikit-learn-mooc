@@ -9,5 +9,7 @@ conda create -n testenv --yes pip python=3.7
 conda activate testenv
 pip install -r requirements.txt
 pip install jupytext yapf
+pip install jupyter-book
 
-make --always-make
+cd jupyter-book
+jupyter-book build .

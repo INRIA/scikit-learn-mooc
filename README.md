@@ -9,9 +9,6 @@ A few different ways are available:
                https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
 - Browse [website](https://inria.github.io/scikit-learn-mooc/jupyter-book/) generated with
   [Jupyter Book](https://jupyterbook.org/)
-- Browse the static content online (pre-rendered outputs) using [nbviewer](
-  https://nbviewer.jupyter.org/github/INRIA/scikit-learn-mooc/tree/master/rendered_notebooks/)
-
 
 ## Running the tutorial locally
 
@@ -91,10 +88,9 @@ works if you use conda). Then in jupyter lab you have to right click
 "Open with -> notebook" to open the python scripts with the notebook
 interface.
 
-### Building the rendered notebooks
+### Updating the notebooks
 
-
-To rebuild all the rendered notebooks (from time to time, slow to run):
+To update all the notebooks:
 
 ```
 $ make
@@ -102,9 +98,9 @@ $ make
 
 In some cases you
 may need to use a `jupytext` command directly rather than using the provided
-`Makefile`. For instance, to create an empty notebook from a Python script:
+`Makefile`. For instance, to create a notebook from a Python script:
 ```
-$ jupytext --to ../notebooks//ipynb python_scripts/your_python_script.py
+$ jupytext --to ipynb python_scripts/your_python_script.py --output notebooks/your_notebook.ipynb
 ```
 
 ## Direct binder links to OVH, GESIS and GKE to trigger and cache builds

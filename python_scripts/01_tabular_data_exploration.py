@@ -142,14 +142,6 @@ adult_census['sex'].value_counts()
 adult_census['education'].value_counts()
 
 # %% [markdown]
-# `pandas_profiling` is a nice tool for inspecting the data (both numerical and
-# categorical variables).
-
-# %%
-import pandas_profiling
-adult_census.profile_report()
-
-# %% [markdown]
 # As noted above, `education-num` distribution has two clear peaks around 10
 # and 13. It would be reasonable to expect that `education-num` is the number of
 # years of education.
@@ -250,9 +242,9 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # * loaded the data from a CSV file using `pandas`
 # * looked at the differents kind of variables to differentiate
 #   between categorical and numerical variables
-# * inspected the data with `pandas`, `seaborn` and `pandas_profiling`. Data inspection
-#   can allow you to decide whether using machine learning is appropriate for
-#   your data and to highlight potential peculiarities in your data
+# * inspected the data with `pandas` and `seaborn`. Data inspection can allow
+#   you to decide whether using machine learning is appropriate for your data
+#   and to highlight potential peculiarities in your data
 #
 # Ideas which will be discussed more in details later:
 # * if your target variable is imbalanced (e.g., you have more samples from one

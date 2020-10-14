@@ -20,7 +20,6 @@ The tutorials will require the following packages:
 * jupyter
 * scikit-learn
 * pandas
-* pandas-profiling
 * matplotlib
 * seaborn
 * plotly

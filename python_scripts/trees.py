@@ -279,7 +279,7 @@ print(
 # level of the tree will be using the feature "Culmen Depth".
 
 # %%
-tree.set_params(max_depth=2)
+tree = DecisionTreeClassifier(max_depth=2)
 plot_decision_function(X_train, y_train, tree)
 
 # %% [markdown]
@@ -550,8 +550,8 @@ _ = fig.suptitle(f"Shallow tree with a max-depth of {max_depth}")
 
 # %%
 max_depth = 30
-tree_clf.set_params(max_depth=max_depth)
-tree_reg.set_params(max_depth=max_depth)
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
 fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
 plot_decision_function(X_train_clf, y_train_clf, tree_clf, ax=axs[0])

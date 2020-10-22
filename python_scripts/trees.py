@@ -198,19 +198,18 @@ _ = plot_tree(tree, ax=ax)
 # %% [markdown]
 # We see that the split was done the first feature `X[0]` (i.e. "Culmen
 # Length"). The original dataset was subdivided into 2 sets depending if the
-# culmen length was inferior or superior to 43.25 cm.
+# culmen length was inferior or superior to 43.25 mm.
 #
 # This partition of the dataset is the one that minimize the class diversities
 # in each sub-partitions. This measure is also known as called **criterion**
-# and it is a parameter that can be set when instantiating the decision tree.
-# In classification, this criterion can either be the Gini impurity or the
-# entropy.
+# and different criterion can be used when instantiating the decision tree.
+# Here, it corresponds to the Gini impurity.
 #
 # If we look closely at the partition, the sample inferior to 43.25 belong
 # mainly to the Adelie class. Looking at the tree structure, we indeed observe
 # 109 Adelie samples. We also count 3 Chinstrap samples and 6 Gentoo samples.
 # We can make similar interpretation for the partition defined by a threshold
-# superior to 43.25 cm. In this case, the most represented class is the Gentoo
+# superior to 43.25 mm. In this case, the most represented class is the Gentoo
 # specie.
 #
 # Let's see how our tree would work as a predictor. Let's start to see the
@@ -284,7 +283,7 @@ tree.set_params(max_depth=2)
 plot_decision_function(X_train, y_train, tree)
 
 # %% [markdown]
-# As expected, the decision tree made 2 new partitions using the "Culmen
+# As expected, the decision tree made two new partitions using the "Culmen
 # Depth". Now, our tree is more powerful with similar performance to our linear
 # model.
 
@@ -309,14 +308,10 @@ print(
 # ## What about decision tree for regression?
 #
 # We explained the construction of the decision tree for a classification
-# problem. The entropy criterion to determine how we split the nodes used the
-# class probabilities. We cannot use this criterion the target `y` is
-# continuous. In this case, we will need specific criterion adapted for
-# regression problems.
-#
-# Before going into detail about regression criterion, let's observe and build
-# some intuitions about the characteristics of decision trees used for
-# regression.
+# problem. In classification, we show that we minimized the class diversity. In
+# regression, this criterion cannot be applied since `y` is continuous. To give
+# some intuitions regarding the problem solved in regression, let's observe the
+# characteristics of decision trees used for regression.
 #
 # ### Decision tree: a non-parametric model
 #
@@ -416,31 +411,45 @@ ax.plot(
 
 plt.legend()
 # %% [markdown]
-# Contrary to linear models, decision trees are non-parametric
-# models, so they do not make assumptions about the way data are distributed.
-# This will affect the prediction scheme. Repeating the
-# above experiment will highlight the differences.
+# Contrary to linear models, decision trees are non-parametric models, so they
+# do not make assumptions about the way data are distributed. This will affect
+# the prediction scheme. Repeating the above experiment will highlight the
+# differences.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
 
-tree = DecisionTreeRegressor()
+tree = DecisionTreeRegressor(max_depth=1)
 
 # %%
 _ = plot_regression_model(X_train, y_train, tree)
 
 # %% [markdown]
-# We see that the decision tree model does not have a priori distribution
-# for the data and we do not end-up
-# with a straight line to regress flipper length and body mass.
-# Having different body masses
-# for a same flipper length, the tree will be predicting the mean of the
-# targets.
+# We see that the decision tree model does not have a priori distribution for
+# the data and we do not end-up with a straight line to regress flipper length
+# and body mass.
 #
-# So in classification setting, we saw that the predicted value was the most
-# probable value in the node of the tree. In the case of regression, the
-# predicted value corresponds to the mean of the target in the leaf.
+# Instead, we observe that the predictions of the tree are piecewise constant.
+# Indeed, our feature space was split into two partitions. We can check the
+# tree structure to see what was the threshold found during the training.
+
+# %%
+_ = plot_tree(tree)
+
+# %% [markdown]
+# The threshold for our feature (flipper length) is 206.5 mm. The predicted
+# values on each side of the split are two constants: 3686.29 g and 5025.99 g.
+# These values corresponds to the mean values of the training samples in each
+# partition.
 #
+# Increasing the depth of the tree will increase the number of partition and
+# thus the number of constant values that the tree is capable of predicting.
+
+# %%
+tree = DecisionTreeRegressor(max_depth=3)
+_ = plot_regression_model(X_train, y_train, tree)
+
+# %% [markdown]
 # This lead us to question whether or not our decision trees are able to
 # extrapolate to unseen data. We can highlight that this is possible with the
 # linear model because it is a parametric model.
@@ -464,20 +473,6 @@ _ = plot_regression_model(X_train, y_train, tree, extrapolate=True, ax=ax)
 # training data with the shortest flipper length will always be predicted.
 # Similarly, for flipper lengths above the maximum, the mass of the penguin
 # in the training data with the longest flipper will always predicted.
-#
-# ### The regression criterion
-#
-# In the previous section, we explained the differences between using decision
-# tree for classification and for regression: the predicted value will be the
-# most probable class for the classification case while the it will be the mean
-# in the case of the regression. The second difference that we already
-# mentioned is the criterion. The classification criterion cannot be applied
-# in regression setting and we need to use a specific set of criterion.
-#
-# One of the criterion that can be used in regression is the mean squared
-# error. In this case, we will compute this criterion for each partition,
-# as in the case of the entropy, and select the split leading to the best
-# improvement (i.e. information gain).
 #
 # ## Importance of decision tree hyper-parameters on generalization
 #
@@ -565,11 +560,11 @@ _ = fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
 
 # %% [markdown]
 # For both classification and regression setting, we can observe that
-# increasing
-# the depth will make the tree model more expressive. However, a tree that is
-# too deep will overfit the training data, creating partitions which are only
-# be correct for "outliers". The `max_depth` is one of the hyper-parameters
-# that one should optimize via cross-validation and grid-search.
+# increasing the depth will make the tree model more expressive. However, a
+# tree that is too deep will overfit the training data, creating partitions
+# which are only be correct for "outliers". The `max_depth` is one of the
+# hyper-parameters that one should optimize via cross-validation and
+# grid-search.
 
 # %%
 from sklearn.model_selection import GridSearchCV

@@ -322,6 +322,7 @@ y.size
 # Let's make an experiment and reduce the number of samples and repeat the
 # previous experiment.
 
+
 # %%
 def make_cv_analysis(regressor, X, y):
     cv = ShuffleSplit(n_splits=10, test_size=0.2)
@@ -356,8 +357,116 @@ scores_sample_sizes = pd.DataFrame(
 sns.displot(scores_sample_sizes, kind="kde")
 plt.xlabel("Mean absolute error (k$)")
 _ = plt.title(
-    "Emperical errors distribution \nby varying the sample size"
+    "Generalization errors distribution \nby varying the sample size"
 )
 
 # %% [markdown]
-# 
+# For the different sample size, we plotted the distribution of the
+# generalization error. We observe that smaller is the sample size, larger is
+# the variance of the generalization errors. Thus, having a small number of
+# samples might put us in the situation where it is impossible to get a
+# reliable evaluation.
+#
+# Here, we plotted the different curve to highlight the issue of small sample
+# size. However, this experiment is also used to draw the so-called
+# "learning curve". This curve give some additional indication regarding the
+# benefit of adding new training samples to improve the performance of a model.
+
+# %%
+from sklearn.model_selection import learning_curve
+
+results = learning_curve(
+    regressor, X, y, train_sizes=sample_sizes[:-1],
+    cv=cv, scoring="neg_mean_absolute_error",
+    n_jobs=-1,
+)
+train_size, train_scores, test_scores = results[:3]
+
+# %%
+_, ax = plt.subplots()
+ax.plot(
+    train_size, train_scores.mean(axis=1),
+    linestyle="-.", label="Emperical error",
+    alpha=0.8,
+)
+ax.fill_between(
+    train_size,
+    train_scores.mean(axis=1) - train_scores.std(axis=1),
+    train_scores.mean(axis=1) + train_scores.std(axis=1),
+    alpha=0.5,
+    label="Var. emperical error"
+)
+ax.plot(
+    train_size, test_scores.mean(axis=1),
+    linestyle="-.", label="Generalization error",
+    alpha=0.8,
+)
+ax.fill_between(
+    train_size,
+    test_scores.mean(axis=1) - test_scores.std(axis=1),
+    test_scores.mean(axis=1) + test_scores.std(axis=1),
+    alpha=0.5,
+    label="Var. generalization error"
+)
+
+ax.set_xticks(train_size)
+ax.set_xscale("log")
+ax.set_xlabel("Number of samples in the training set")
+ax.set_ylabel("Mean absolute error (k$)")
+ax.set_title("Learning curve for decision tree")
+_ = plt.legend()
+
+# %% [markdown]
+# On this learning curve, we see that more samples we add in the training set,
+# lower the error becomes. With this curve, we are searching for the "plateau",
+# for which there is not benefit to add anymore samples or address the
+# potential gain of adding more sample into the training set.
+#
+# ## Comparing results with baseline and chance level
+# Previously, we compare the generalization error by taking into account the
+# target distribution. A good practice is to compare the generalization error
+# with a dummy baseline and the chance level. In regression, we could use the
+# `DummyRegressor` and predict the mean target without using the data. The
+# chance level can be determined by permuting the labels and check the
+# difference of result.
+
+# %%
+from sklearn.dummy import DummyRegressor
+
+dummy = DummyRegressor()
+result_dummy = cross_validate(
+    dummy, X, y, cv=cv, scoring="neg_mean_absolute_error",
+)
+
+# %%
+from sklearn.model_selection import permutation_test_score
+
+score, permutation_score, pvalue = permutation_test_score(
+    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
+    n_jobs=-1, n_permutations=30,
+)
+
+# %% [markdown]
+# We plot the generalization errors for each of the experiment. We see that
+# even our regressor does not perform well, it is far above chances our a
+# regressor that would predict the mean target.
+
+# %%
+final_result = pd.concat(
+    [
+        result_cv["test_score"] * -1,
+        pd.Series(result_dummy["test_score"]) * -1,
+        pd.Series(permutation_score) * -1,
+    ], axis=1
+).rename(columns={
+    "test_score": "Cross-validation score",
+    0: "Dummy score",
+    1: "Permuted score",
+})
+
+# %%
+sns.displot(final_result, kind="kde")
+_ = plt.xlabel("Mean absolute error (k$)")
+
+# %% [markdown]
+# ## Choice of cross-validation

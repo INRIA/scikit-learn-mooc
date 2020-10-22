@@ -203,15 +203,6 @@ print(
 # to a precision above 0.5. However, our classifier mislabeled a lot of people
 # who gave blood as "not donated", leading to a very low recall of around 0.1.
 #
-# The precision and recall can be combined in a single score called the F1
-# score (which is the harmonic mean of precision and recall).
-
-# %%
-from sklearn.metrics import f1_score
-
-f1_score(y_test, y_pred, pos_label='donated')
-
-# %% [markdown]
 # ### The issue of class imbalance
 # At this stage, we could ask ourself a reasonable question. While the accuracy
 # did not look bad (i.e. 77%), the F1 score is relatively low (i.e. 21%).

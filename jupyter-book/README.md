@@ -9,10 +9,15 @@ cd jupyter-book
 
 To generate the jupyter-book HTML:
 ```sh
-jb build .
+make
 ```
 
-Generated file are in `__build/html`. For example you can do:
+Generated files are in `_build/html`. To browse the generated website it is
+recommended to use a local web server:
+
 ```sh
-firefox _build/html/index.html
+cd _build/html/index.html && python -m http.server
 ```
+
+and then open a browser at `localhost:8000`. A few things will not work, e.g.
+slides, if you open the HTML files in a web browser directly.

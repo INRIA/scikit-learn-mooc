@@ -376,8 +376,12 @@ _ = plt.title(
 from sklearn.model_selection import learning_curve
 
 results = learning_curve(
-    regressor, X, y, train_sizes=sample_sizes[:-1],
-    cv=cv, scoring="neg_mean_absolute_error",
+    regressor,
+    X,
+    y,
+    train_sizes=sample_sizes[:-1],
+    cv=cv,
+    scoring="neg_mean_absolute_error",
     n_jobs=-1,
 )
 train_size, train_scores, test_scores = results[:3]
@@ -385,8 +389,10 @@ train_size, train_scores, test_scores = results[:3]
 # %%
 _, ax = plt.subplots()
 ax.plot(
-    train_size, train_scores.mean(axis=1),
-    linestyle="-.", label="Emperical error",
+    train_size,
+    train_scores.mean(axis=1),
+    linestyle="-.",
+    label="Emperical error",
     alpha=0.8,
 )
 ax.fill_between(
@@ -394,11 +400,13 @@ ax.fill_between(
     train_scores.mean(axis=1) - train_scores.std(axis=1),
     train_scores.mean(axis=1) + train_scores.std(axis=1),
     alpha=0.5,
-    label="Var. emperical error"
+    label="Var. emperical error",
 )
 ax.plot(
-    train_size, test_scores.mean(axis=1),
-    linestyle="-.", label="Generalization error",
+    train_size,
+    test_scores.mean(axis=1),
+    linestyle="-.",
+    label="Generalization error",
     alpha=0.8,
 )
 ax.fill_between(
@@ -406,7 +414,7 @@ ax.fill_between(
     test_scores.mean(axis=1) - test_scores.std(axis=1),
     test_scores.mean(axis=1) + test_scores.std(axis=1),
     alpha=0.5,
-    label="Var. generalization error"
+    label="Var. generalization error",
 )
 
 ax.set_xticks(train_size)
@@ -435,15 +443,24 @@ from sklearn.dummy import DummyRegressor
 
 dummy = DummyRegressor()
 result_dummy = cross_validate(
-    dummy, X, y, cv=cv, scoring="neg_mean_absolute_error",
+    dummy,
+    X,
+    y,
+    cv=cv,
+    scoring="neg_mean_absolute_error",
 )
 
 # %%
 from sklearn.model_selection import permutation_test_score
 
 score, permutation_score, pvalue = permutation_test_score(
-    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
-    n_jobs=-1, n_permutations=30,
+    regressor,
+    X,
+    y,
+    cv=cv,
+    scoring="neg_mean_absolute_error",
+    n_jobs=-1,
+    n_permutations=30,
 )
 
 # %% [markdown]
@@ -457,12 +474,15 @@ final_result = pd.concat(
         result_cv["test_score"] * -1,
         pd.Series(result_dummy["test_score"]) * -1,
         pd.Series(permutation_score) * -1,
-    ], axis=1
-).rename(columns={
-    "test_score": "Cross-validation score",
-    0: "Dummy score",
-    1: "Permuted score",
-})
+    ],
+    axis=1,
+).rename(
+    columns={
+        "test_score": "Cross-validation score",
+        0: "Dummy score",
+        1: "Permuted score",
+    }
+)
 
 # %%
 sns.displot(final_result, kind="kde")

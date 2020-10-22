@@ -150,7 +150,7 @@ def plot_decision_function(X, y, clf, ax=None):
 
 # %% [markdown]
 # Thus, for a linear classifier, we will obtain the following decision
-# boundaries. These boundaries lines indicate where the model changes its 
+# boundaries. These boundaries lines indicate where the model changes its
 # prediction from one class to another.
 
 # %%
@@ -202,10 +202,10 @@ print(
 # Indeed, it is not a surprise. We saw earlier that a single feature will not
 # be able to separate all three species. However, from the previous analysis we
 # saw that by using both features we should be able to get fairly good results.
-# Considering the splitting mechanism of the decision tree illustrated above, we should
-# repeat the partitioning on the resulting rectangles created by the first
-# split. In this regard, we expect that the two partitions at the second level of the tree will be using
-# the feature "Culmen Depth".
+# Considering the splitting mechanism of the decision tree illustrated above,
+# we should repeat the partitioning on the resulting rectangles created by the
+# first split. In this regard, we expect that the two partitions at the second
+# level of the tree will be using the feature "Culmen Depth".
 
 # %%
 tree.set_params(max_depth=2)
@@ -349,13 +349,13 @@ labels_above_threshold.value_counts(normalize=True).sort_index()
 # We will choose as an example the entropy criterion (also used
 # in scikit-learn) which is one of the possible classification criterion.
 #
-# The entropy $H$ of the data remaining in one partition is defined as: 
+# The entropy $H$ of the data remaining in one partition is defined as:
 #
 # $H = - \sum_{k=1}^{K} p_k \log p_k$
 #
-# where $p_k$ stands for the probability (here the proportions) 
+# where $p_k$ stands for the probability (here the proportions)
 # of finding the class $k$ in this part.
-# 
+#
 # For a binary problem (e.g., only 2 classes of penguins), the entropy function
 # for one of the class can be depicted as follows:
 #
@@ -396,9 +396,9 @@ print(f"Entropy for partition above the threshold: \n"
 # and Gentoo penguins.
 #
 # With entropy, we are able to assess the quality of each partition. However,
-# the ultimate goal is to evaluate the quality of the overall split
-# and thus
-# combine the measures of entropy in each partition (leaf) into a single statistic.
+# the ultimate goal is to evaluate the quality of the overall split and thus
+# combine the measures of entropy in each partition (leaf) into a single
+# statistic.
 #
 # ### Information gain
 #
@@ -407,11 +407,12 @@ print(f"Entropy for partition above the threshold: \n"
 # of a split. The information gain is defined as the difference between the
 # entropy
 # before a split and the sum of the entropies of each partition,
-# normalized by the frequencies of class samples in each partition. 
-# 
+# normalized by the frequencies of class samples in each partition.
+#
 # IG = H(X_unsplit)/N - ( H(split1)/N1 + H(split2)/N2 )
-# 
-# The goal is to maximize the information gain (i.e. maximize the decrease in entropy after the split).
+#
+# The goal is to maximize the information gain (i.e. maximize the decrease in
+# entropy after the split).
 #
 # We will define a function to compute the information gain given the
 # partitions.

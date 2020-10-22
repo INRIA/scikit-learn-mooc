@@ -1021,7 +1021,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 # binned by computing histograms which are later used to evaluate the potential
 # splits. The number
 # of splits to evaluate is then much smaller. This algorithm becomes much more
-# efficient than gradient bossting when the dataset has 10,000+ samples.
+# efficient than gradient boosting when the dataset has 10,000+ samples.
 #
 # Below we will give an example of a large dataset and we can compare
 # computation time with the earlier experiment in the previous section.

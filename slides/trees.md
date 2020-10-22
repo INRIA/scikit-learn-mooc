@@ -194,28 +194,28 @@ from sklearn.ensemble import RandomForestClassifier
 # Boosting
 <img src="../figures/boosting/boosting_iter1.svg" width="100%">
 ---
-# Bossting
+# Boosting
 <img src="../figures/boosting/boosting_iter_sized1.svg" width="100%">
 ---
-# Bossting
+# Boosting
 <img src="../figures/boosting/boosting_iter_orange1.svg" width="100%">
 ---
 # Boosting
 <img src="../figures/boosting/boosting_iter2.svg" width="100%">
 ---
-# Bossting
+# Boosting
 <img src="../figures/boosting/boosting_iter_sized2.svg" width="100%">
 ---
-# Bossting
+# Boosting
 <img src="../figures/boosting/boosting_iter_orange2.svg" width="100%">
 ---
 # Boosting
 <img src="../figures/boosting/boosting_iter3.svg" width="100%">
 ---
-# Bossting
+# Boosting
 <img src="../figures/boosting/boosting_iter_sized3.svg" width="100%">
 ---
-# Bossting
+# Boosting
 <img src="../figures/boosting/boosting_iter_orange3.svg" width="100%">
 ---
 # Boosting

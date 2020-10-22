@@ -14,7 +14,7 @@
 # ---
 
 # %% [markdown]
-# # Evaluation of your predictive model
+# # Evaluation of your predictive model: which metric to choose?
 
 # %% [markdown]
 # ## Introduction

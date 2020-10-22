@@ -180,7 +180,7 @@ too much noise.
 
 .pull-left.shift-left[<img src="../figures/polynomial_overfit_simple_legend.svg" width="110%">]
 
-.pull-right.width50.shift-left[<img src="target_variance.svg"
+.pull-right.width50.shift-left[<img src="../figures/target_variance.svg"
 				class="shift-up" width="90%">]
 
 ???
@@ -225,7 +225,7 @@ complexity of the model, or in low-noise situations.
 
 .pull-left.shift-left[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
 
-.pull-right.width50.shift-left[<img src="target_bias.svg"
+.pull-right.width50.shift-left[<img src="../figures/target_bias.svg"
 				class="shift-up" width="90%">]
 
 ???
@@ -255,8 +255,8 @@ The challenge is to find the right tradeoff between the two.
 ---
 # Underfit versus overfit
 
-.pull-left.width50[<img src="target_bias.svg" width="80%">]
-.pull-right.width50.shift-left[<img src="target_variance.svg"
+.pull-left.width50[<img src="../figures/target_bias.svg" width="80%">]
+.pull-right.width50.shift-left[<img src="../figures/target_variance.svg"
 				width="80%">]
 
 .shift-up.pull-left.shift-left[.centered.reversed[Bias]]

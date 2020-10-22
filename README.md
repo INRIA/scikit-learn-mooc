@@ -7,7 +7,7 @@ All notebook material: https://github.com/INRIA/scikit-learn-mooc/
 A few different ways are available:
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
                https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
-- Browse [website](https://inria.github.io/scikit-learn-mooc/jupyter-book/) generated with
+- Browse [website](https://inria.github.io/scikit-learn-mooc) generated with
   [Jupyter Book](https://jupyterbook.org/)
 
 ## Running the tutorial locally

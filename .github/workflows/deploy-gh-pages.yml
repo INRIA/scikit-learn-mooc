@@ -30,14 +30,11 @@ jobs:
     - name: Build the book
       run: |
         cd jupyter-book
-        jupyter-book build .
+        make
 
     - name: Create folder for gh-pages 
       run: |
-        mkdir gh-pages
-        cp -r slides gh-pages
-        cp -r jupyter-book/_build/html gh-pages/jupyter-book
-        cp -r figures gh-pages
+        cp -r jupyter-book/_build/html gh-pages
 
     - name: GitHub Pages action
       uses: peaceiris/actions-gh-pages@v3.6.1

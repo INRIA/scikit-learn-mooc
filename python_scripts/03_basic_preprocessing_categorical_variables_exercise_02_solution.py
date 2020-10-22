@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # Solution for Exercise 03
+# # Solution for Exercise 02
 #
 # The goal of this exercise is to evaluate the impact of feature preprocessing on a pipeline that uses a  decision-tree-based classifier instead of logistic regression.
 #

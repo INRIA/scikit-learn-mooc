@@ -59,6 +59,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Exercise 02" href="03_basic_preprocessing_categorical_variables_exercise_01.html" />
+    <link rel="prev" title="Preprocessing for categorical data" href="../predictive_modeling_pipeline/03_basic_preprocessing_categorical_variables_index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -108,10 +110,57 @@
   The Predictive Modeling Pipeline
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="01_tabular_data_exploration.html">
    Loading data into machine learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/02_basic_preprocessing_index.html">
+   Fitting a scikit-learn model on numerical data
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_basic_preprocessing_categorical_variables_index.html">
+   Preprocessing for categorical data
+  </a>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Working with both numerical &amp; categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="#fitting-a-more-powerful-model">
+     Fitting a more powerful model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_01_solution.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02.html">
+     Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_basic_preprocessing_categorical_variables_exercise_02_solution.html">
+     Solution for Exercise 03
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/04_basic_parameters_tuning_index.html">
+   Parameter tuning
   </a>
  </li>
 </ul>
@@ -440,9 +489,9 @@ it encodes the data using a finite list of possible countries (along with the
  Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
- Outlying-US(Guam-USVI-etc)       23
  Yugoslavia                       23
  Laos                             23
+ Outlying-US(Guam-USVI-etc)       23
  Scotland                         21
  Honduras                         20
  Hungary                          19
@@ -1148,7 +1197,7 @@ to stack this “preprocessor” with our classifier (logistic regression).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="89e3ce0f-3309-4082-a7e9-4d4d7b0f386c" type="checkbox" ><label class="sk-toggleable__label" for="89e3ce0f-3309-4082-a7e9-4d4d7b0f386c">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('columntransformer',
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8620028d-d51b-43f5-9921-9746a6c2945b" type="checkbox" ><label class="sk-toggleable__label" for="8620028d-d51b-43f5-9921-9746a6c2945b">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('columntransformer',
                  ColumnTransformer(transformers=[('binary-encoder',
                                                   OrdinalEncoder(), ['sex']),
                                                  ('one-hot-encoder',
@@ -1163,7 +1212,7 @@ to stack this “preprocessor” with our classifier (logistic regression).</p>
                                                    'hours-per-week',
                                                    'capital-gain',
                                                    'capital-loss'])])),
-                ('logisticregression', LogisticRegression(max_iter=1000))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="063d31d2-c505-4e30-a436-d147a0257ff2" type="checkbox" ><label class="sk-toggleable__label" for="063d31d2-c505-4e30-a436-d147a0257ff2">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('binary-encoder', OrdinalEncoder(), ['sex']),
+                ('logisticregression', LogisticRegression(max_iter=1000))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="cad3fe01-9925-457c-bcbe-b724714a370d" type="checkbox" ><label class="sk-toggleable__label" for="cad3fe01-9925-457c-bcbe-b724714a370d">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('binary-encoder', OrdinalEncoder(), ['sex']),
                                 ('one-hot-encoder',
                                  OneHotEncoder(handle_unknown='ignore'),
                                  ['workclass', 'education', 'marital-status',
@@ -1171,7 +1220,7 @@ to stack this “preprocessor” with our classifier (logistic regression).</p>
                                   'native-country']),
                                 ('standard-scaler', StandardScaler(),
                                  ['age', 'education-num', 'hours-per-week',
-                                  'capital-gain', 'capital-loss'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="79acdd8b-5497-4d8c-8c96-e8bf72010c5d" type="checkbox" ><label class="sk-toggleable__label" for="79acdd8b-5497-4d8c-8c96-e8bf72010c5d">binary-encoder</label><div class="sk-toggleable__content"><pre>['sex']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="7da63db2-2e8c-4b2c-8ab9-c13cfc62cc3a" type="checkbox" ><label class="sk-toggleable__label" for="7da63db2-2e8c-4b2c-8ab9-c13cfc62cc3a">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder()</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8b7311c7-0d8a-427f-8ac8-5a5a2d7c6038" type="checkbox" ><label class="sk-toggleable__label" for="8b7311c7-0d8a-427f-8ac8-5a5a2d7c6038">one-hot-encoder</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="76dc27d4-e3ce-4322-9731-ee0108b78c62" type="checkbox" ><label class="sk-toggleable__label" for="76dc27d4-e3ce-4322-9731-ee0108b78c62">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown='ignore')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="26eb3a57-5157-460f-aefc-5a0ce8afde49" type="checkbox" ><label class="sk-toggleable__label" for="26eb3a57-5157-460f-aefc-5a0ce8afde49">standard-scaler</label><div class="sk-toggleable__content"><pre>['age', 'education-num', 'hours-per-week', 'capital-gain', 'capital-loss']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="297117d3-e58d-447c-96c0-2149158f3c56" type="checkbox" ><label class="sk-toggleable__label" for="297117d3-e58d-447c-96c0-2149158f3c56">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="18d9c833-3c17-4ba1-9ba9-15993e762c41" type="checkbox" ><label class="sk-toggleable__label" for="18d9c833-3c17-4ba1-9ba9-15993e762c41">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000)</pre></div></div></div></div></div></div></div></div></div>
+                                  'capital-gain', 'capital-loss'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ab63a5b2-900f-4ca1-b901-cb87679d0c2d" type="checkbox" ><label class="sk-toggleable__label" for="ab63a5b2-900f-4ca1-b901-cb87679d0c2d">binary-encoder</label><div class="sk-toggleable__content"><pre>['sex']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9458a12b-f856-49a1-b776-968c8bdfcc4a" type="checkbox" ><label class="sk-toggleable__label" for="9458a12b-f856-49a1-b776-968c8bdfcc4a">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder()</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="03201d4e-93e0-4920-96f5-65f7e4d46926" type="checkbox" ><label class="sk-toggleable__label" for="03201d4e-93e0-4920-96f5-65f7e4d46926">one-hot-encoder</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="2de9de26-fb30-4315-abba-4f17e9e05c33" type="checkbox" ><label class="sk-toggleable__label" for="2de9de26-fb30-4315-abba-4f17e9e05c33">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown='ignore')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3819dfe4-9d99-492a-b038-b19c259dbaaa" type="checkbox" ><label class="sk-toggleable__label" for="3819dfe4-9d99-492a-b038-b19c259dbaaa">standard-scaler</label><div class="sk-toggleable__content"><pre>['age', 'education-num', 'hours-per-week', 'capital-gain', 'capital-loss']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3537e67c-0d50-46e5-ac74-93bf906df35d" type="checkbox" ><label class="sk-toggleable__label" for="3537e67c-0d50-46e5-ac74-93bf906df35d">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="4c719ee6-83a5-4e0d-8b93-702a106981ad" type="checkbox" ><label class="sk-toggleable__label" for="4c719ee6-83a5-4e0d-8b93-702a106981ad">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>The final model is more complex than the previous models but still follows the
 same API:</p>
@@ -1432,8 +1481,8 @@ arbitrary. Therefore we adapt the preprocessing pipeline as follows:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.89 s, sys: 83.9 ms, total: 1.97 s
-Wall time: 1.06 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.84 s, sys: 55.9 ms, total: 1.9 s
+Wall time: 1.02 s
 </pre></div>
 </div>
 </div>
@@ -1445,7 +1494,7 @@ Wall time: 1.06 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8794529522561625
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.877733191384817
 </pre></div>
 </div>
 </div>
@@ -1504,6 +1553,8 @@ fitting a logistic regression</p></li>
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="../predictive_modeling_pipeline/03_basic_preprocessing_categorical_variables_index.html" title="previous page">Preprocessing for categorical data</a>
+    <a class='right-next' id="next-link" href="03_basic_preprocessing_categorical_variables_exercise_01.html" title="next page">Exercise 02</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

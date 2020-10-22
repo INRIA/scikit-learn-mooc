@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Slides &#8212; Scikit-learn tutorial</title>
+    <title>Preprocessing for categorical data &#8212; Scikit-learn tutorial</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -59,8 +59,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Loading data into machine learning" href="../python_scripts/01_tabular_data_exploration.html" />
-    <link rel="prev" title="Intro" href="../index.html" />
+    <link rel="next" title="Working with both numerical &amp; categorical variables" href="../python_scripts/03_basic_preprocessing_categorical_variables.html" />
+    <link rel="prev" title="Solution for Exercise 01" href="../python_scripts/02_basic_preprocessing_exercise_01_solution.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -98,9 +98,9 @@
   Machine Learning Concepts
  </span>
 </p>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/slides.html">
    Slides
   </a>
  </li>
@@ -110,24 +110,56 @@
   The Predictive Modeling Pipeline
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../python_scripts/01_tabular_data_exploration.html">
    Loading data into machine learning
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../predictive_modeling_pipeline/02_basic_preprocessing_index.html">
+  <a class="reference internal" href="02_basic_preprocessing_index.html">
    Fitting a scikit-learn model on numerical data
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../predictive_modeling_pipeline/03_basic_preprocessing_categorical_variables_index.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Preprocessing for categorical data
   </a>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables.html">
+     Working with both numerical &amp; categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables.html#fitting-a-more-powerful-model">
+     Fitting a more powerful model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_01.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_01_solution.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_02.html">
+     Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_02_solution.html">
+     Solution for Exercise 03
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../predictive_modeling_pipeline/04_basic_parameters_tuning_index.html">
+  <a class="reference internal" href="04_basic_parameters_tuning_index.html">
    Parameter tuning
   </a>
  </li>
@@ -258,7 +290,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/ml_concepts/slides.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/predictive_modeling_pipeline/03_basic_preprocessing_categorical_variables_index.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -278,10 +310,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fml_concepts/slides.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpredictive_modeling_pipeline/03_basic_preprocessing_categorical_variables_index.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/ml_concepts/slides.md"><button
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/predictive_modeling_pipeline/03_basic_preprocessing_categorical_variables_index.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -308,9 +340,20 @@
         
               <div>
                 
-  <div class="section" id="slides">
-<h1>Slides<a class="headerlink" href="#slides" title="Permalink to this headline">¶</a></h1>
-<iframe width="100%" height="600em" src="../slides/index.html?file=../slides/ml_concepts.md"/>
+  <div class="section" id="preprocessing-for-categorical-data">
+<h1>Preprocessing for categorical data<a class="headerlink" href="#preprocessing-for-categorical-data" title="Permalink to this headline">¶</a></h1>
+<div class="tableofcontents-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables.html">Working with both numerical &amp; categorical variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables.html#fitting-a-more-powerful-model">Fitting a more powerful model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_01.html">Exercise 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_01_solution.html">Solution for Exercise 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_02.html">Exercise 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_basic_preprocessing_categorical_variables_exercise_02_solution.html">Solution for Exercise 03</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -326,7 +369,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./ml_concepts"
+            path: "./predictive_modeling_pipeline"
         },
         predefinedOutput: true
     }
@@ -341,8 +384,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">Intro</a>
-    <a class='right-next' id="next-link" href="../python_scripts/01_tabular_data_exploration.html" title="next page">Loading data into machine learning</a>
+    <a class='left-prev' id="prev-link" href="../python_scripts/02_basic_preprocessing_exercise_01_solution.html" title="previous page">Solution for Exercise 01</a>
+    <a class='right-next' id="next-link" href="../python_scripts/03_basic_preprocessing_categorical_variables.html" title="next page">Working with both numerical &amp; categorical variables</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

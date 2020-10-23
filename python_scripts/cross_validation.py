@@ -38,6 +38,7 @@
 
 # %%
 from matplotlib.colors import Normalize
+from numpy.core.defchararray import lower, upper
 from sklearn.datasets import fetch_california_housing
 from sklearn.utils import shuffle
 
@@ -634,4 +635,113 @@ print(f"The average accuracy is {test_score.mean():.3f}")
 # stratification within the cross-validation framework.
 #
 # ### Sample grouping
-# We are going to linger into the concept of samples group.
+# We are going to linger into the concept of samples group. As in the previous
+# section, we will give an example to highlight some surprising results.
+# This time, we will use the handwritten digits dataset.
+
+# %%
+from sklearn.datasets import load_digits
+
+digits = load_digits()
+X, y = digits.data, digits.target
+
+# %% [markdown]
+# We will use the same baseline model. We will use a `KFold` cross-validation
+# without shuffling the data at first.
+
+# %%
+cv = KFold(shuffle=False)
+results = cross_validate(model, X, y, cv=cv, n_jobs=-1)
+test_score_no_shuffling = results["test_score"]
+print(f"The average accuracy is {test_score_no_shuffling.mean():.3f}")
+
+# %%
+cv = KFold(shuffle=True)
+results = cross_validate(model, X, y, cv=cv, n_jobs=-1)
+test_score_with_shuffling = results["test_score"]
+print(f"The average accuracy is {test_score_with_shuffling.mean():.3f}")
+
+# %% [markdown]
+# We observe that shuffling the data allows to improve the mean accuracy.
+# We could go a little further and plot the distribution of the generalization
+# score.
+
+# %%
+sns.displot(data=pd.DataFrame(
+    [test_score_no_shuffling, test_score_with_shuffling],
+    index=["KFold without shuffling", "KFold with shuffling"],
+).T, kde=True, bins=10)
+plt.xlim([0.8, 1.0])
+plt.xlabel("Accuracy score")
+
+# %% [markdown]
+# The generalization error of the cross-validation that uses the shuffling
+# has less variance than the one that does not impose any shuffling. It means
+# that some specific fold lead to poor score in the unshuffle case.
+
+# %%
+print(test_score_no_shuffling)
+
+# %% [markdown]
+# Thus, there is an underlying structure in the data that shuffling will
+# break and allows to get better results. To get a better understanding, we
+# should read the documentation shipped with the dataset.
+
+# %%
+print(digits.DESCR)
+
+# %% [markdown]
+# If we read carefully, we see that there is 13 writers that wrote our dataset
+# of 1797 samples. Thus, a writer wrote several times the same digits. Let's
+# suppose for now that the samples of writer are grouped together, not
+# shuffling the data might allow to keep all the samples together either in
+# the training or the testing sets. Shuffling the data will break this
+# structure and therefore the a digit written by the same writer will be
+# available in both the training and testing sets.
+#
+# Usually, a writer will tend to write digits from the same manner. Thus,
+# our model will learn to identify the pattern of a writer writing a specific
+# digits instead of identifying the digit itself.
+#
+# We can solve this problem by making sure that the data associated with a
+# writer should either belong to the training or the testing set. Thus, we want
+# to group samples by writer.
+#
+# Here, we will manually define the group for the 13 writers.
+
+# %%
+from itertools import count
+
+# defines the lower and upper bounds of sample indices
+# for each writer
+writer_boundaries = [
+    0, 130, 256, 386, 516, 646, 776, 915, 1029,
+    1157, 1287, 1415, 1545, 1667, 1797
+]
+groups = np.zeros_like(y)
+
+for group_id, lower_bound, upper_bound in zip(
+    count(),
+    writer_boundaries[:-1],
+    writer_boundaries[1:]
+):
+    groups[lower_bound:upper_bound] = group_id
+groups
+
+# %% [markdown]
+# Once we created compiling the information about the writers, we can use
+# a cross-validation which will take this information into account: the `Group`
+# strategies are used for this purpose.
+
+# %%
+from sklearn.model_selection import GroupKFold
+
+cv = GroupKFold()
+results = cross_validate(model, X, y, groups=groups, cv=cv, n_jobs=-1)
+test_score = results["test_score"]
+print(f"The average accuracy is {test_score.mean():.3f}")
+
+# %% [markdown]
+# We see that this strategy is the less optimistic regarding the model
+# performance. However, this is the most reliable if our goal is to make
+# handwritten digits recognition writers independent.

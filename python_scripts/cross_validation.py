@@ -37,7 +37,9 @@
 # ### Load the California housing dataset
 
 # %%
+from matplotlib.colors import Normalize
 from sklearn.datasets import fetch_california_housing
+from sklearn.utils import shuffle
 
 housing = fetch_california_housing(as_frame=True)
 X, y = housing.data, housing.target
@@ -55,7 +57,7 @@ X.head()
 
 # %% [markdown]
 # To simplify future visualization, we transform the target such that it is
-# later shown in k$
+# later shown in k$.
 
 # %%
 y *= 100
@@ -490,3 +492,146 @@ _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
 # ## Choice of cross-validation
+# In the previous sections, we presented the cross-validation framework.
+# However, we always use the `ShuffleSplit` strategy to repeat the split.
+# One should question if this approach is always the best option and if there
+# is some other cross-validation strategies. Indeed, we will focus on three
+# aspects that influenced the choice of strategy: class stratification,
+# sample grouping, feature dependence.
+#
+# ### Stratification
+# Let's start with the concept of stratification by giving an example where
+# we can get into trouble if we are not careful. We load the iris dataset.
+
+# %%
+from sklearn.datasets import load_iris
+
+X, y = load_iris(as_frame=True, return_X_y=True)
+
+# %% [markdown]
+# At this point, we create a basic machine-learning model: a logistic
+# regression. We expect this model to work quite well on the iris dataset since
+# this is a toy dataset.
+
+# %%
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+
+model = make_pipeline(
+    StandardScaler(), LogisticRegression(max_iter=1000)
+)
+
+# %% [markdown]
+# Once our model is created, we will use the cross-validation framework to
+# evaluate our model. In this regard, we will use a strategy called `KFold`.
+# We give a simple usage example of the `KFold` to get an intuition of the way
+# it splits the dataset. We will define a dataset with 9 samples and ask to
+# repeat the cross-validation 3 times (i.e. `n_splits`).
+
+# %%
+from sklearn.model_selection import KFold
+
+X_random = np.random.randn(9, 1)
+cv = KFold(n_splits=3)
+for train_index, test_index in cv.split(X_random):
+    print("TRAIN:", train_index, "TEST:", test_index)
+
+# %% [markdown]
+# By defining 3 splits, we will use each time 3 samples for testing and 6 for
+# training. `KFold` does not shuffle by default. It means that at the first
+# split, it will select the 3 first samples for the testing set, then the 3
+# next samples for the second split, etc. At the end, all samples have been
+# used in testing at least once among the different splits.
+#
+# Now, let's apply this strategy to check the performance of our model.
+
+# %%
+cv = KFold(n_splits=3)
+results = cross_validate(model, X, y, cv=cv)
+test_score = results["test_score"]
+print(f"The average accuracy is {test_score.mean()}")
+
+# %% [markdown]
+# This is a real surprise that our model is not able to classify properly
+# any sample in any split of the cross-validation. While we should have start
+# with this step, we will check the value of our target to understand the
+# issue.
+
+# %%
+y.tolist()
+
+# %%
+y.value_counts(normalize=True)
+
+# %% [markdown]
+# By looking at our target, we see that samples are grouped by class and that
+# there is the same amount of samples in each class. Thus, splitting the data
+# with 3 splits will exactly use all samples of a single class as testing.
+# So our model is not able to predict this class at testing since the no
+# samples of this class was given during the training.
+#
+# One possibility to solve the issue is to shuffle the data before to split the
+# data into 3 groups.
+
+# %%
+cv = KFold(n_splits=3, shuffle=True, random_state=0)
+results = cross_validate(model, X, y, cv=cv)
+test_score = results["test_score"]
+print(f"The average accuracy is {test_score.mean():.3f}")
+
+# %% [markdown]
+# We get results which are closer to what we would expect with an accuracy
+# above 90%. Now that we solved our first issue, it would be interesting to
+# check if the class frequency in the training and testing set are equal to
+# the class frequency of our original set. It would ensure that we are training
+# and testing our model with class distribution that we will encounter in
+# production.
+
+# %%
+for train_index, test_index in cv.split(X, y):
+    print(
+        f"Class frequency in the training set:\n"
+        f"{y[train_index].value_counts(normalize=True).sort_index()}"
+    )
+    print(
+        f"Class frequency in the testing set:\n"
+        f"{y[test_index].value_counts(normalize=True).sort_index()}"
+    )
+
+# %% [markdown]
+# We see that neither the training and testing sets have the same class
+# frequencies than our original dataset. Thus, it means that one might want
+# to split our data by preserving the origina class frequencies: we want to
+# **stratify** our data by class. In scikit-learn, some cross-validation
+# strategies are implementing the stratification and contains `Stratified` in
+# their names.
+
+# %%
+from sklearn.model_selection import StratifiedKFold
+
+cv = StratifiedKFold(n_splits=3)
+for train_index, test_index in cv.split(X, y):
+    print(
+        f"Class frequency in the training set:\n"
+        f"{y[train_index].value_counts(normalize=True).sort_index()}"
+    )
+    print(
+        f"Class frequency in the testing set:\n"
+        f"{y[test_index].value_counts(normalize=True).sort_index()}"
+    )
+
+# %%
+results = cross_validate(model, X, y, cv=cv)
+test_score = results["test_score"]
+print(f"The average accuracy is {test_score.mean():.3f}")
+
+# %% [markdown]
+# In this case, we observe that the class frequencies are very close. The
+# difference is due to the small number of samples in the iris dataset.
+#
+# As a conclusion, in classification, this is a good practice to use
+# stratification within the cross-validation framework.
+#
+# ### Sample grouping
+# We are going to linger into the concept of samples group.

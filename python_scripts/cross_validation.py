@@ -14,7 +14,7 @@
 # ---
 
 # %% [markdown]
-# # Evaluation of your predictive model: the adequate framework.
+# # Evaluation of your predictive model: the cross-validation framework.
 
 # %% [markdown]
 # ## Introduction
@@ -38,7 +38,9 @@
 
 # %%
 from matplotlib.colors import Normalize
+from matplotlib.pyplot import grid
 from numpy.core.defchararray import lower, upper
+from scipy.stats.stats import mode
 from sklearn.datasets import fetch_california_housing
 from sklearn.utils import shuffle
 
@@ -928,6 +930,150 @@ print(f"The mean R2 is: {test_score.mean():.2f}")
 
 # %% [markdown]
 # ## Nested cross-validation
+# Cross-validation is a powerful tool to evaluate the performance of a model.
+# It is also used to select the best model from a pool of models. This pool of
+# models can be the exact same family of predictor but with different
+# paramaters. In this case, we call this procedure "fine-tuning" of the model
+# hyper-parameters.
+#
+# We could as well imagine that we would like to choose among heterogeneous
+# model which will use the cross-validation in a similar manner.
+#
+# In the example below, we show an minimal example of using the utility
+# `GridSearchCV` to find the best parameters of a model via cross-validation.
+
+# %%
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+
+X, y = load_breast_cancer(return_X_y=True)
+
+
+param_grid = {
+    "C": [0.1, 1, 10],
+    "gamma": [.01, .1],
+}
+
+model = GridSearchCV(
+    estimator=SVC(),
+    param_grid=param_grid,
+    cv=KFold(),
+    n_jobs=-1,
+)
+model.fit(X, y)
+
+# %% [markdown]
+# We recall that `GridSearchCV` will train a model with some specific parameter
+# on a training set and evaluate it on a testing. However, this evaluation is
+# done via cross-validation using the `cv` parameter. This procedure is
+# repeated for all possible combination of parameters given in `param_grid`.
+#
+# The attribute `best_params_` will give us the best set of parameters which
+# maximize the mean score on the internal test sets.
+
+# %%
+print(f"The best parameter found are: {model.best_params_}")
+
+# %% [markdown]
+# We can now the mean score obtained using the parameter `best_score_`.
+
+# %%
+print(f"The mean score in CV is: {model.best_score_:.3f}")
+
+# %% [markdown]
+# At this stage, one should be extremely careful using this score. The
+# misinterpretation would be the following: since the score was computed on a
+# test set, it could be considered as the generalization score of our model.
+#
+# However, we should not forget that we used this score to pick-up the best
+# model. It means that we used knowledge from the test set (i.e. test score) to
+# make a decision regarding the training parameter of our model.
+#
+# Thus, this score is not a good estimate of our generalization error. Indeed,
+# it can be shown that it will be too optimistic in practice. The good practice
+# is to use a "nested" cross-validation. We will use an innder cross-validation
+# corresponding to the previous procedure shown to optimize the
+# hyper-parameters. In addition, we will include this procedure within an outer
+# cross-validation which will be used to estimate the generalization error of
+# our fine-tuned model.
+#
+# In this case, our inner cross-validation will always get the training set of
+# the outer cross-validation making it possible to compute the generalization
+# score on a completely independent set.
+#
+# We will show below how we can create such nested cross-validation and obtain
+# the generalization score.
+
+# %%
+# Declare the inner and outer cross-validation
+inner_cv = KFold(n_splits=4, shuffle=True, random_state=0)
+outer_cv = KFold(n_splits=4, shuffle=True, random_state=0)
+
+# Inner cross-validation for parameter search
+model = GridSearchCV(
+    estimator=SVC(), param_grid=param_grid, cv=inner_cv,
+    n_jobs=-1,
+)
+
+# Outer cross-validation to compute the generalization score
+result = cross_validate(
+    model, X, y, cv=outer_cv, n_jobs=-1,
+)
+test_score = result["test_score"].mean()
+print(
+    f"The mean score using nested cross-validation is: "
+    f"{test_score.mean():.3f}"
+)
+
+# %% [markdown]
+# In the example above, the reported score is more trustful and should be close
+# to the expected performance in production.
+#
+# We will illustrate the difference between the score obtained within the
+# nested and non-nested cross-validation to show that the latter one will be
+# to optimistic in practice.
+
+# %%
+test_score_not_nested = []
+test_score_nested = []
+
+N_TRIALS = 20
+for i in range(N_TRIALS):
+    inner_cv = KFold(n_splits=4, shuffle=True, random_state=i)
+    outer_cv = KFold(n_splits=4, shuffle=True, random_state=i)
+
+    # Non_nested parameter search and scoring
+    model = GridSearchCV(
+        estimator=SVC(), param_grid=param_grid, cv=inner_cv,
+        n_jobs=-1,
+    )
+    model.fit(X, y)
+    test_score_not_nested.append(model.best_score_)
+
+    # Nested CV with parameter optimization
+    result = cross_validate(
+        model, X, y, cv=outer_cv, n_jobs=-1,
+    )
+    test_score_nested.append(result["test_score"].mean())
+
+# %%
+df = pd.DataFrame(
+    {
+        "Not nested CV": test_score_not_nested,
+        "Nested CV": test_score_nested,
+    }
+)
+ax = df.plot(kind="box")
+ax.set_ylabel("Accuracy")
+_ = ax.set_title(
+    "Comparison of mean accuracy obtained on the test sets with\n"
+    "and without nested cross-validation"
+)
+
+# %% [markdown]
+# We observe that the performance of the model with the nested cross-validation
+# are not as good as the non-nested cross-validation.
 
 # %% [markdown]
 # ## When cross-validation is not enough

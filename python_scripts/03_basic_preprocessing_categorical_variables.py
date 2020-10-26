@@ -29,7 +29,7 @@ import pandas as pd
 df = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name].to_numpy()
+target = df[target_name]
 
 data = df.drop(columns=[target_name, "fnlwgt"])
 

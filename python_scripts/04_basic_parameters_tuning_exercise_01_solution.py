@@ -31,7 +31,7 @@ from sklearn.model_selection import train_test_split
 df = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name].to_numpy()
+target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 df_train, df_test, target_train, target_test = train_test_split(

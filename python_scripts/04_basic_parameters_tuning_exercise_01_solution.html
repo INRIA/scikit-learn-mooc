@@ -413,15 +413,15 @@ the model by setting the parameters. The evaluation of the model should be
 performed using <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code>. We can propose to define the following
 parameters search:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> for the values 0.01, 0.1, 1 and 10</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> for the values 3, 10, 30</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> for the values 0.05, 0.1, 0.5, 1 and 5</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> for the values 3, 10, 30 and 100</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
 
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-<span class="n">max_leaf_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">max_leaf_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
 
 <span class="n">best_score</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">best_params</span> <span class="o">=</span> <span class="p">{}</span>
@@ -447,26 +447,29 @@ parameters search:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating model with learning rate 0.010 and max leaf nodes 3... 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Evaluating model with learning rate 0.050 and max leaf nodes 3... 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.788
-Found new best model with score 0.788!
-Evaluating model with learning rate 0.010 and max leaf nodes 10... 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.846
+Found new best model with score 0.846!
+Evaluating model with learning rate 0.050 and max leaf nodes 10... 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.837
-Found new best model with score 0.837!
-Evaluating model with learning rate 0.010 and max leaf nodes 30... 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.855
+Found new best model with score 0.855!
+Evaluating model with learning rate 0.050 and max leaf nodes 30... 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.843
-Found new best model with score 0.843!
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.859
+Found new best model with score 0.859!
+Evaluating model with learning rate 0.050 and max leaf nodes 100... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.854
 Evaluating model with learning rate 0.100 and max leaf nodes 3... 
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.851
-Found new best model with score 0.851!
 Evaluating model with learning rate 0.100 and max leaf nodes 10... 
 </pre></div>
 </div>
@@ -476,6 +479,26 @@ Evaluating model with learning rate 0.100 and max leaf nodes 30...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.860
+Evaluating model with learning rate 0.100 and max leaf nodes 100... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.850
+Evaluating model with learning rate 0.500 and max leaf nodes 3... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.858
+Evaluating model with learning rate 0.500 and max leaf nodes 10... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.851
+Evaluating model with learning rate 0.500 and max leaf nodes 30... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.841
+Evaluating model with learning rate 0.500 and max leaf nodes 100... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.839
 Evaluating model with learning rate 1.000 and max leaf nodes 3... 
 </pre></div>
 </div>
@@ -488,12 +511,20 @@ Evaluating model with learning rate 1.000 and max leaf nodes 30...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.815
-Evaluating model with learning rate 10.000 and max leaf nodes 3... score: 0.366
-Evaluating model with learning rate 10.000 and max leaf nodes 10... 
+Evaluating model with learning rate 1.000 and max leaf nodes 100... 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.548
-Evaluating model with learning rate 10.000 and max leaf nodes 30... score: 0.727
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.832
+Evaluating model with learning rate 5.000 and max leaf nodes 3... score: 0.501
+Evaluating model with learning rate 5.000 and max leaf nodes 10... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.434
+Evaluating model with learning rate 5.000 and max leaf nodes 30... score: 0.619
+Evaluating model with learning rate 5.000 and max leaf nodes 100... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.758
 The best accuracy obtained is 0.861
 The best parameters found are:
  {&#39;learning-rate&#39;: 0.1, &#39;max leaf nodes&#39;: 10}

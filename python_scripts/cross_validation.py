@@ -1074,6 +1074,3 @@ _ = ax.set_title(
 # %% [markdown]
 # We observe that the performance of the model with the nested cross-validation
 # are not as good as the non-nested cross-validation.
-
-# %% [markdown]
-# ## When cross-validation is not enough

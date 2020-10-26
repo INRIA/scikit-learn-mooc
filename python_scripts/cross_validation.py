@@ -293,25 +293,21 @@ ax.set_title("Validation curve for decision tree")
 _ = plt.legend()
 
 # %% [markdown]
-# The validation curve can be divided into 3 areas. For `max_depth < 10`,
-# the decision tree clearly underfit. Both empirical and generalization errors
-# are high. For `max_depth=10` corresponds to the parameter for which the
-# decision tree generalizes the best. For `max_depth > 10`, the decision tree
-# overfit. The empirical error becomes small while the generalization error
-# increases.
+# The validation curve can be divided into three areas. For `max_depth < 10`,
+# the decision tree underfit. Both empirical and generalization errors are
+# high. For `max_depth=10` corresponds to the parameter for which the decision
+# tree generalizes the best. For `max_depth > 10`, the decision tree overfit.
+# The empirical error becomes small, while the generalization error increases.
 #
-# In the analysis that we carried out above, we were lucky because the variance
-# of the errors were small. Now, we will focus on one factor that can affect
-# this variance: the size of the dataset.
-#
-# ### Effect of the sample size on the variance analysis
-# We are quite lucky. Our dataset count many samples.
+# We were lucky in the analysis that we carried out above because the errors'
+# variance was small. We will now focus on one factor that can affect this
+# variance: the size of the dataset.
 
 # %%
 y.size
 
 # %% [markdown]
-# Let's make an experiment and reduce the number of samples and repeat the
+# Let's do an experiment and reduce the number of samples and repeat the
 # previous experiment.
 
 
@@ -353,16 +349,16 @@ _ = plt.title(
 )
 
 # %% [markdown]
-# For the different sample size, we plotted the distribution of the
-# generalization error. We observe that smaller is the sample size, larger is
+# For the different sample sizes, we plotted the distribution of the
+# generalization error. We observe that smaller is the sample size; larger is
 # the variance of the generalization errors. Thus, having a small number of
-# samples might put us in the situation where it is impossible to get a
-# reliable evaluation.
+# samples might put us in a situation where it is impossible to get a reliable
+# evaluation.
 #
 # Here, we plotted the different curve to highlight the issue of small sample
-# size. However, this experiment is also used to draw the so-called
-# "learning curve". This curve give some additional indication regarding the
-# benefit of adding new training samples to improve the performance of a model.
+# size. However, this experiment is also used to draw the so-called **learning
+# curve**. This curve gives some additional indication regarding the benefit of
+# adding new training samples to improve a model's performance.
 
 # %%
 from sklearn.model_selection import learning_curve
@@ -417,10 +413,10 @@ ax.set_title("Learning curve for decision tree")
 _ = plt.legend()
 
 # %% [markdown]
-# On this learning curve, we see that more samples we add in the training set,
-# lower the error becomes. With this curve, we are searching for the "plateau",
-# for which there is not benefit to add anymore samples or address the
-# potential gain of adding more sample into the training set.
+# We see that the more samples we add to the training set on this learning
+# curve, the lower the error becomes. With this curve, we are searching for the
+# plateau for which there is no benefit to adding samples anymore or assessing
+# the potential gain of adding more samples into the training set.
 #
 # ## Comparing results with baseline and chance level
 # Previously, we compare the generalization error by taking into account the
@@ -456,9 +452,9 @@ score, permutation_score, pvalue = permutation_test_score(
 )
 
 # %% [markdown]
-# We plot the generalization errors for each of the experiment. We see that
-# even our regressor does not perform well, it is far above chances our a
-# regressor that would predict the mean target.
+# We plot the generalization errors for each of the experiments. Even if our
+# regressor does not perform well, it is far above a regressor that would
+# predict the mean target.
 
 # %%
 final_result = pd.concat(
@@ -482,12 +478,12 @@ _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
 # ## Choice of cross-validation
-# In the previous sections, we presented the cross-validation framework.
-# However, we always use the `ShuffleSplit` strategy to repeat the split.
-# One should question if this approach is always the best option and if there
-# is some other cross-validation strategies. Indeed, we will focus on three
-# aspects that influenced the choice of strategy: class stratification,
-# sample grouping, feature dependence.
+# In the previous section, we presented the cross-validation framework.
+# However, we always use the `ShuffleSplit` strategy to repeat the split. One
+# should question if this approach is always the best option and that some
+# other cross-validation strategies would be better adapted. Indeed, we will
+# focus on three aspects that influenced the choice of the cross-validation
+# strategy: class stratification, sample grouping, feature dependence.
 #
 # ### Stratification
 # Let's start with the concept of stratification by giving an example where
@@ -513,11 +509,11 @@ model = make_pipeline(
 )
 
 # %% [markdown]
-# Once our model is created, we will use the cross-validation framework to
-# evaluate our model. In this regard, we will use a strategy called `KFold`.
-# We give a simple usage example of the `KFold` to get an intuition of the way
-# it splits the dataset. We will define a dataset with 9 samples and ask to
-# repeat the cross-validation 3 times (i.e. `n_splits`).
+# Once we created our model, we will use the cross-validation framework to
+# evaluate it. We will use a strategy called `KFold` cross-validation. We give
+# a simple usage example of the `KFold` strategy to get an intuition of how it
+# splits the dataset. We will define a dataset with nine samples and repeat the
+# cross-validation three times (i.e. `n_splits`).
 
 # %%
 from sklearn.model_selection import KFold
@@ -528,11 +524,12 @@ for train_index, test_index in cv.split(X_random):
     print("TRAIN:", train_index, "TEST:", test_index)
 
 # %% [markdown]
-# By defining 3 splits, we will use each time 3 samples for testing and 6 for
-# training. `KFold` does not shuffle by default. It means that at the first
-# split, it will select the 3 first samples for the testing set, then the 3
-# next samples for the second split, etc. At the end, all samples have been
-# used in testing at least once among the different splits.
+# By defining three splits, we will use three samples each time for testing and
+# 6 for training. `KFold` does not shuffle by default. It means that it will
+# select the three first samples for the testing set at the first split, then
+# the three next three samples for the second split, and the three next for the
+# last split. In the end, all samples have been used in testing at least once
+# among the different splits.
 #
 # Now, let's apply this strategy to check the performance of our model.
 
@@ -543,10 +540,9 @@ test_score = results["test_score"]
 print(f"The average accuracy is {test_score.mean()}")
 
 # %% [markdown]
-# This is a real surprise that our model is not able to classify properly
-# any sample in any split of the cross-validation. While we should have start
-# with this step, we will check the value of our target to understand the
-# issue.
+# It is a real surprise that our model cannot correctly classify any sample in
+# any cross-validation split. We will now check our target's value to
+# understand the issue while we should have started with this step.
 
 # %%
 y.tolist()
@@ -555,14 +551,13 @@ y.tolist()
 y.value_counts(normalize=True)
 
 # %% [markdown]
-# By looking at our target, we see that samples are grouped by class and that
-# there is the same amount of samples in each class. Thus, splitting the data
-# with 3 splits will exactly use all samples of a single class as testing.
-# So our model is not able to predict this class at testing since the no
-# samples of this class was given during the training.
+# By looking at our target, samples of a class are grouped together. Also, the
+# sample count per class is the same. Thus, splitting the data with three
+# splits use all samples of a single class during testing. So our model is
+# unable to predict this class that was unseen during the training stage.
 #
 # One possibility to solve the issue is to shuffle the data before to split the
-# data into 3 groups.
+# data into three groups.
 
 # %%
 cv = KFold(n_splits=3, shuffle=True, random_state=0)
@@ -571,12 +566,11 @@ test_score = results["test_score"]
 print(f"The average accuracy is {test_score.mean():.3f}")
 
 # %% [markdown]
-# We get results which are closer to what we would expect with an accuracy
-# above 90%. Now that we solved our first issue, it would be interesting to
-# check if the class frequency in the training and testing set are equal to
-# the class frequency of our original set. It would ensure that we are training
-# and testing our model with class distribution that we will encounter in
-# production.
+# We get results that are closer to what we would expect with an accuracy above
+# 90%. Now that we solved our first issue, it would be interesting to check if
+# the class frequency in the training and testing set is equal to our original
+# set's class frequency. It would ensure that we are training and testing our
+# model with a class distribution that we will encounter in production.
 
 # %%
 for train_index, test_index in cv.split(X, y):
@@ -591,8 +585,8 @@ for train_index, test_index in cv.split(X, y):
 
 # %% [markdown]
 # We see that neither the training and testing sets have the same class
-# frequencies than our original dataset. Thus, it means that one might want
-# to split our data by preserving the origina class frequencies: we want to
+# frequencies as our original dataset. Thus, it means that one might want to
+# split our data by preserving the original class frequencies: we want to
 # **stratify** our data by class. In scikit-learn, some cross-validation
 # strategies are implementing the stratification and contains `Stratified` in
 # their names.
@@ -619,14 +613,14 @@ print(f"The average accuracy is {test_score.mean():.3f}")
 # %% [markdown]
 # In this case, we observe that the class frequencies are very close. The
 # difference is due to the small number of samples in the iris dataset.
-#
-# As a conclusion, in classification, this is a good practice to use
-# stratification within the cross-validation framework.
-#
-# ### Sample grouping
+
+# In conclusion, this is a good practice to use stratification within the
+# cross-validation framework when dealing with a classification problem.
+
+### Sample grouping
 # We are going to linger into the concept of samples group. As in the previous
-# section, we will give an example to highlight some surprising results.
-# This time, we will use the handwritten digits dataset.
+# section, we will give an example to highlight some surprising results. This
+# time, we will use the handwritten digits dataset.
 
 # %%
 from sklearn.datasets import load_digits
@@ -651,7 +645,7 @@ test_score_with_shuffling = results["test_score"]
 print(f"The average accuracy is {test_score_with_shuffling.mean():.3f}")
 
 # %% [markdown]
-# We observe that shuffling the data allows to improve the mean accuracy.
+# We observe that shuffling the data allows to improving the mean accuracy.
 # We could go a little further and plot the distribution of the generalization
 # score.
 
@@ -664,37 +658,37 @@ plt.xlim([0.8, 1.0])
 plt.xlabel("Accuracy score")
 
 # %% [markdown]
-# The generalization error of the cross-validation that uses the shuffling
-# has less variance than the one that does not impose any shuffling. It means
-# that some specific fold lead to poor score in the unshuffle case.
+# The cross-validation generalization error that uses the shuffling has less
+# variance than the one that does not impose any shuffling. It means that some
+# specific fold leads to a low score in the unshuffle case.
 
 # %%
 print(test_score_no_shuffling)
 
 # %% [markdown]
-# Thus, there is an underlying structure in the data that shuffling will
-# break and allows to get better results. To get a better understanding, we
-# should read the documentation shipped with the dataset.
+# Thus, there is an underlying structure in the data that shuffling will break
+# and get better results. To get a better understanding, we should read the
+# documentation shipped with the dataset.
 
 # %%
 print(digits.DESCR)
 
 # %% [markdown]
-# If we read carefully, we see that there is 13 writers that wrote our dataset
-# of 1797 samples. Thus, a writer wrote several times the same digits. Let's
-# suppose for now that the samples of writer are grouped together, not
-# shuffling the data might allow to keep all the samples together either in
-# the training or the testing sets. Shuffling the data will break this
-# structure and therefore the a digit written by the same writer will be
-# available in both the training and testing sets.
+# If we read carefully, 13 writers wrote the digits of our dataset, accounting
+# for a total amount of 1797 samples. Thus, a writer wrote several times the
+# same numbers. Let's suppose that the writer samples are grouped.
+# Subsequently, not shuffling the data will keep all writer samples together
+# either in the training or the testing sets. Mixing the data will break this
+# structure, and therefore digits written by the same writer will be available
+# in both the training and testing sets.
 #
-# Usually, a writer will tend to write digits from the same manner. Thus,
-# our model will learn to identify the pattern of a writer writing a specific
-# digits instead of identifying the digit itself.
+# Besides, a writer will usually tend to write digits in the same manner. Thus,
+# our model will learn to identify a writer's pattern for each digit instead of
+# recognizing the digit itself.
 #
-# We can solve this problem by making sure that the data associated with a
-# writer should either belong to the training or the testing set. Thus, we want
-# to group samples by writer.
+# We can solve this problem by ensuring that the data associated with a writer
+# should either belong to the training or the testing set. Thus, we want to
+# group samples for each writer.
 #
 # Here, we will manually define the group for the 13 writers.
 
@@ -718,9 +712,8 @@ for group_id, lower_bound, upper_bound in zip(
 groups
 
 # %% [markdown]
-# Once we created compiling the information about the writers, we can use
-# a cross-validation which will take this information into account: the `Group`
-# strategies are used for this purpose.
+# Once we group the digits by writer, we can use cross-validation to take this
+# information into account: the class containing `Group` should be used.
 
 # %%
 from sklearn.model_selection import GroupKFold
@@ -731,20 +724,18 @@ test_score = results["test_score"]
 print(f"The average accuracy is {test_score.mean():.3f}")
 
 # %% [markdown]
-# We see that this strategy is the less optimistic regarding the model
-# performance. However, this is the most reliable if our goal is to make
-# handwritten digits recognition writers independent.
-#
-# ### Non i.i.d. data
-# In machine-learning, it is quite common to assume that the data are i.i.d
-# meaning that the generative process do not have any memory of past samples
+# We see that this strategy is less optimistic regarding the model performance. However, this is the most reliable if our goal is to make handwritten digits recognition writers independent.
+
+### Non i.i.d. data
+# In machine learning, it is quite common to assume that the data are i.i.d,
+# meaning that the generative process does not have any memory of past samples
 # to generate new samples.
 #
-# This assumption is usually violated when dealing with time series. Samples
-# from the future will be generated using samples from the past.
+# This assumption is usually violated when dealing with time series. A sample
+# depends on past information.
 #
-# We will take an example to highlight the issue of such non-i.i.d. data
-# in the previous cross-validation strategies presented. We are going to load
+# We will take an example to highlight such issues with non-i.i.d. data in the
+# previous cross-validation strategies presented. We are going to load
 # financial quotations from some energy companies.
 
 # %%
@@ -767,24 +758,23 @@ for symbol in symbols:
 quotes = pd.DataFrame(quotes)
 
 # %% [markdown]
-# We can start by plotting the different financial quotations.
+# We can start by plotting different financial quotations.
 
 # %%
 _, ax = plt.subplots(figsize=(10, 6))
 _ = quotes.plot(ax=ax)
 
 # %% [markdown]
-# We can formulate the following regression problem. We would like to be
-# able to predict the quotation of Chevron using all other energie companies'
-# quotations.
+# We can formulate the following regression problem. We want to be able to
+# predict the quotation of Chevron using all other energy companies' quotes.
 
 # %%
 X, y = quotes.drop(columns=["Chevron"]), quotes["Chevron"]
 
 # %% [markdown]
-# We will use a decision tree regressor which we expect to overfit and thus not
-# being able to generalize to unseen data. We will use a `ShuffleSplit`
-# cross-validation to check the performance of our model.
+# We will use a decision tree regressor that we expect to overfit and thus not
+# generalize to unseen data. We will use a `ShuffleSplit` cross-validation to
+# check the performance of our model.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -797,12 +787,12 @@ test_score = results["test_score"]
 print(f"The mean R2 is: {test_score.mean():.2f}")
 
 # %% [markdown]
-# Surprisingly, we get outstanding performance. We will try to investigate
-# and find the reason of such good results with a model that is expected to
-# fail. We previously mentioned that `ShuffleSplit` is an iterative
-# cross-validation scheme which shuffle data and split. We will simplify
-# this procedure with a single split and plot the prediction. We can use
-# `train_test_split` for this purpose.
+# Surprisingly, we get outstanding performance. We will investigate and find
+# the reason for such good results with a model that is expected to fail. We
+# previously mentioned that `ShuffleSplit` is an iterative cross-validation
+# scheme that shuffles data and split. We will simplify this procedure with a
+# single split and plot the prediction. We can use `train_test_split` for this
+# purpose.
 
 # %%
 X_train, X_test, y_train, y_test = train_test_split(
@@ -823,8 +813,8 @@ test_score = r2_score(y_test, y_pred)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
-# We obtain similar good results in terms of R2. We will plot the training,
-# testing and predictions samples.
+# We obtain similar good results in terms of :math`R^2`. We will plot the
+# training, testing and prediction samples.
 
 # %%
 _, ax = plt.subplots(figsize=(10, 8))
@@ -836,15 +826,14 @@ _ = plt.legend()
 # %% [markdown]
 # So in this context, it seems that the model predictions are following the
 # testing. But we can as well see that the testing samples are next to some
-# training sample. And with these time-series, we see that there is a
-# relationship between a sample at time `t` and a sample at `t+1`. In this
-# case, we are violating the i.i.d. assumption. The insight to get is the
-# following: a model can output of its training set at time `t` for a testing
-# sample at time `t+1`. This prediction will be closed to the true value even
-# if our model did not learn anything else than memorizing the training
-# dataset.
-#
-# An easy way to verify this hypothesis is to not shuffle the data when making
+# training sample. And with these time-series, we see a relationship between a
+# sample at the time `t` and a sample at `t+1`. In this case, we are violating
+# the i.i.d. assumption. The insight to get is the following: a model can
+# output of its training set at the time `t` for a testing sample at the time
+# `t+1`. This prediction would be closed to the true value even if our model
+# did not learn anything else than memorizing the training dataset.
+
+# An easy way to verify this hypothesis is not to shuffle the data when doing
 # the split. In this case, we will use the first 75% of the data to train and
 # the remaining data to test.
 
@@ -862,8 +851,8 @@ print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
 # In this case, we see that our model is not magical anymore. Indeed, it
-# performs worse than just predicting the mean of the target. We can check
-# visually what we are predicting.
+# performs worse than just predicting the mean of the target. We can visually
+# check what we are predicting.
 
 # %%
 _, ax = plt.subplots(figsize=(10, 8))
@@ -873,13 +862,12 @@ y_pred.plot(ax=ax, label="Prediction")
 _ = plt.legend()
 
 # %% [markdown]
-# Now, we see that our model cannot predict anything because it doesn't have
-# information of samples around the testing sample. Let's check how we could
-# have make a proper cross-validation scheme to get a good performance
-# estimate.
+# We see that our model cannot predict anything because it doesn't have samples
+# around the testing sample. Let's check how we could have made a proper
+# cross-validation scheme to get a reasonable performance estimate.
 #
 # One solution would be to group the samples into time blocks, e.g. by quarter,
-# and predict for each of these group by using information from the other
+# and predict each group's information by using information from the other
 # groups. We can use the `LeaveOneGroupOut` cross-validation for this purpose.
 
 # %%
@@ -895,14 +883,14 @@ test_score = results["test_score"]
 print(f"The mean R2 is: {test_score.mean():.2f}")
 
 # %% [markdown]
-# In this case, we see that we are not able to make good prediction which is
-# less surprising than our original results.
+# In this case, we see that we cannot make good predictions, which is less
+# surprising than our original results.
 #
 # Another thing to consider is the actual application of our solution. If our
-# model is developed for forecasting (i.e. predict future data from past data),
-# we should not use training data which with are ulterior to the testing data.
-# In this case, we can use the `TimeSeriesSplit` cross-validation to enforce
-# this behaviour.
+# model is aimed at forecasting (i.e., predicting future data from past data),
+# we should not use training data that are ulterior to the testing data. In
+# this case, we can use the `TimeSeriesSplit` cross-validation to enforce this
+# behaviour.
 
 # %%
 from sklearn.model_selection import TimeSeriesSplit
@@ -919,15 +907,15 @@ print(f"The mean R2 is: {test_score.mean():.2f}")
 # ## Nested cross-validation
 # Cross-validation is a powerful tool to evaluate the performance of a model.
 # It is also used to select the best model from a pool of models. This pool of
-# models can be the exact same family of predictor but with different
-# paramaters. In this case, we call this procedure "fine-tuning" of the model
-# hyper-parameters.
+# models can be the same family of predictor but with different parameters. In
+# this case, we call this procedure **fine-tuning** of the model
+# hyperparameters.
 #
-# We could as well imagine that we would like to choose among heterogeneous
-# model which will use the cross-validation in a similar manner.
+# We could also imagine that we would like to choose among heterogeneous models
+# that will similarly use the cross-validation.
 #
-# In the example below, we show an minimal example of using the utility
-# `GridSearchCV` to find the best parameters of a model via cross-validation.
+# In the example below, we show a minimal example of using the utility
+# `GridSearchCV` to find the best parameters via cross-validation.
 
 # %%
 from sklearn.datasets import load_breast_cancer
@@ -935,7 +923,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
 
 X, y = load_breast_cancer(return_X_y=True)
-
 
 param_grid = {
     "C": [0.1, 1, 10],
@@ -952,18 +939,18 @@ model.fit(X, y)
 
 # %% [markdown]
 # We recall that `GridSearchCV` will train a model with some specific parameter
-# on a training set and evaluate it on a testing. However, this evaluation is
+# on a training set and evaluate it on testing. However, this evaluation is
 # done via cross-validation using the `cv` parameter. This procedure is
-# repeated for all possible combination of parameters given in `param_grid`.
+# repeated for all possible combinations of parameters given in `param_grid`.
 #
-# The attribute `best_params_` will give us the best set of parameters which
+# The attribute `best_params_` will give us the best set of parameters that
 # maximize the mean score on the internal test sets.
 
 # %%
 print(f"The best parameter found are: {model.best_params_}")
 
 # %% [markdown]
-# We can now the mean score obtained using the parameter `best_score_`.
+# We can now show the mean score obtained using the parameter `best_score_`.
 
 # %%
 print(f"The mean score in CV is: {model.best_score_:.3f}")
@@ -971,22 +958,22 @@ print(f"The mean score in CV is: {model.best_score_:.3f}")
 # %% [markdown]
 # At this stage, one should be extremely careful using this score. The
 # misinterpretation would be the following: since the score was computed on a
-# test set, it could be considered as the generalization score of our model.
+# test set, it could be considered our model's generalization score.
 #
 # However, we should not forget that we used this score to pick-up the best
 # model. It means that we used knowledge from the test set (i.e. test score) to
-# make a decision regarding the training parameter of our model.
+# decide our model's training parameter.
 #
-# Thus, this score is not a good estimate of our generalization error. Indeed,
-# it can be shown that it will be too optimistic in practice. The good practice
-# is to use a "nested" cross-validation. We will use an innder cross-validation
+# Thus, this score is not a reasonable estimate of our generalization error.
+# Indeed, we can show that it will be too optimistic in practice. The good way
+# is to use a "nested" cross-validation. We will use an inner cross-validation
 # corresponding to the previous procedure shown to optimize the
-# hyper-parameters. In addition, we will include this procedure within an outer
-# cross-validation which will be used to estimate the generalization error of
+# hyper-parameters. We will also include this procedure within an outer
+# cross-validation, which will be used to estimate the generalization error of
 # our fine-tuned model.
 #
 # In this case, our inner cross-validation will always get the training set of
-# the outer cross-validation making it possible to compute the generalization
+# the outer cross-validation, making it possible to compute the generalization
 # score on a completely independent set.
 #
 # We will show below how we can create such nested cross-validation and obtain
@@ -1015,11 +1002,11 @@ print(
 
 # %% [markdown]
 # In the example above, the reported score is more trustful and should be close
-# to the expected performance in production.
+# to production's expected performance.
 #
-# We will illustrate the difference between the score obtained within the
-# nested and non-nested cross-validation to show that the latter one will be
-# to optimistic in practice.
+# We will illustrate the difference between the nested and non-nested
+# cross-validation scores to show that the latter one will be too optimistic in
+# practice.
 
 # %%
 test_score_not_nested = []
@@ -1059,5 +1046,16 @@ _ = ax.set_title(
 )
 
 # %% [markdown]
-# We observe that the performance of the model with the nested cross-validation
-# are not as good as the non-nested cross-validation.
+# We observe that the model's performance with the nested cross-validation is
+# not as good as the non-nested cross-validation.
+#
+# ## Take away
+# In this notebook, we presented the framework used in machine-learning to
+# evaluate a predictive model's performance: the cross-validation.
+#
+# Besides, we presented several splitting strategies that can be used in the
+# general cross-validation framework. These strategies should be used wisely
+# when encountering some specific patterns or types of data.
+#
+# Finally, we show how to perform nested cross-validation to select an optimal
+# model and evaluate its generalization performance.

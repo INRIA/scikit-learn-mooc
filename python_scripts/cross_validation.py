@@ -24,9 +24,8 @@
 # cross-validation framework and emphasizes the importance of evaluating a
 # model with such a framework.
 #
-# Besides, we will show a couple of examples of good practices to always apply,
-# such as nested cross-validation, when a model's parameter should be
-# fine-tuned.
+# Besides, we will show some good practices to follow, such as nested
+# cross-validation, when tuning model parameters.
 
 # %% [markdown]
 # ## Train and test datasets
@@ -54,14 +53,14 @@ print(housing.DESCR)
 X.head()
 
 # %% [markdown]
-# To simplify future visualization, we transform the target in k$.
+# To simplify future visualization, we transform the target in k\$.
 
 # %%
 y *= 100
 y.head()
 
 # %% [markdown]
-# ### empirical error vs. generalization error
+# ### Empirical error vs generalization error
 # As mentioned previously, we start by fitting a decision tree regressor on the
 # full dataset.
 
@@ -74,7 +73,7 @@ regressor.fit(X, y)
 # %% [markdown]
 # After training the regressor, we would like to know the regressor's potential
 # performance once deployed in production. For this purpose, we use the mean
-# absolute error, which gives us an error in the native unit, i.e. k$.
+# absolute error, which gives us an error in the native unit, i.e. k\$.
 
 #  %%
 from sklearn.metrics import mean_absolute_error
@@ -89,10 +88,11 @@ print(f"In average, our regressor make an error of {score:.2f} k$")
 # is potentially a node. Therefore, our decision tree memorizes the dataset
 # given during `fit`.
 #
-# This error computed is called the **empirical error**. In some sort, we try
-# to learn a predictive model that minimizes this error but, at the same time,
-# should minimize an error on an unseen dataset. This error is also called the
-# **generalization error**. Thus, the most basic evaluation involves:
+# This error computed is called the **empirical error**. We trained a
+# predictive model to minimize the empirical error but our aim is to minimize
+# the error on a dataset that has not been seen during training. This error is
+# also called the **generalization error**. Thus, the most basic evaluation
+# involves:
 #
 # * splitting our dataset into two subsets: a training set and a testing set;
 # * estimating the empirical error on the training set and the generalization
@@ -119,15 +119,17 @@ score = mean_absolute_error(y_pred, y_test)
 print(f"The generalization error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# However, the previous framework does not give any indication regarding the
+# However when doing a train-test split we do not have not give any indication regarding the
 # robustness of our predictive model. We could have been lucky while splitting
 # our dataset, and the generalization error could be over-optimistic.
 #
 # Cross-validation allows estimating the robustness of a predictive model by
-# repeating the splitting procedure. It will give several
-# empirical-generalization errors and, thus, some confidence interval of the
-# model performance. Note that we could define different splitting procedures;
-# we will present the other strategies later.
+# repeating the splitting procedure. It will give several empirical and
+# generalization errors and thus some variability estimate of the model
+# performance.
+#
+# There are different cross-validation strategies, for now we are going to
+# focus on one called shuffle-split.
 #
 # The most straightforward strategy is to shuffle our data and split into two
 # sets, as we previously did and repeated several times fit/predict. In
@@ -141,18 +143,18 @@ from sklearn.model_selection import ShuffleSplit
 
 cv = ShuffleSplit(n_splits=30, test_size=0.2)
 
-result_cv = cross_validate(
+cv_results = cross_validate(
     regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
 )
-result_cv = pd.DataFrame(result_cv)
+cv_results = pd.DataFrame(cv_results)
 # revert the negation to get the error and not the negative score
-result_cv["test_score"] *= -1
+cv_results["test_score"] *= -1
 
 # %% [markdown]
 # Let's check the results reported by the cross-validation.
 
 # %%
-result_cv.head()
+cv_results.head()
 
 # %% [markdown]
 # We get timing information to fit and predict at each round of
@@ -160,7 +162,7 @@ result_cv.head()
 # generalization error on each of the split.
 
 # %%
-len(result_cv)
+len(cv_results)
 
 # %% [markdown]
 # We get 30 entries in our resulting dataframe because we performed 30 splits.
@@ -171,12 +173,12 @@ len(result_cv)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.displot(result_cv["test_score"], kde=True, bins=20)
+sns.displot(cv_results["test_score"], kde=True, bins=20)
 _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
-# We observe that the generalization error is centred around 45.5 k$ and ranges
-# from 44 k$ to 47 k$. While this information is interesting, it is not enough
+# We observe that the generalization error is centred around 45.5 k\$ and ranges
+# from 44 k\$ to 47 k\$. While this information is interesting, it is not enough
 # to conclude that our evaluation or our model is working.
 #
 # To know if we should trust our evaluation, we should access the variance of
@@ -193,14 +195,14 @@ plt.xlabel("Median House Value (k$)")
 print(f"The target variance is: {y.var():.2f} k$")
 
 # %% [markdown]
-# We observe that the target ranges from 0 k$ up to 500 k$ and, we also
+# We observe that the target ranges from 0 k\$ up to 500 k\$ and, we also
 # reported the variance. Now, we can check the same statistic with the
 # generalization error.
 
 # %%
 print(
     f"The variance of the generalization error is: "
-    f"{result_cv['test_score'].var():.2f} k$"
+    f"{cv_results['test_score'].var():.2f} k$"
 )
 # %% [markdown]
 # We observe that the variance of the generalization error is indeed small in
@@ -208,15 +210,15 @@ print(
 # results.
 #
 # Now, let's check if our predictive model gives us a good performance. We
-# recall that our model makes, on average, an error of 45 k$. With this
+# recall that our model makes, on average, an error of 45 k\$. With this
 # information and looking at the target distribution, such an error might be
-# acceptable when predicting houses with a 500 k$. However, it would be an
-# issue with a house with a value of 50 k$. Thus, this indicates that our
+# acceptable when predicting houses with a 500 k\$. However, it would be an
+# issue with a house with a value of 50 k\$. Thus, this indicates that our
 # metric is not ideal. We should have to take a metric relative to the target
 # value to predict: the mean absolute percentage error would have been a much
 # better choice.
 #
-# But in all cases, an error of 45 k$ might be too large to automatically use
+# But in all cases, an error of 45 k\$ might be too large to automatically use
 # our model to tag house value without expert supervision.
 #
 # We should note that it is also interesting to compare the generalization
@@ -224,14 +226,14 @@ print(
 # training set, which is possible using the `cross_validate` function.
 
 # %%
-result_cv = cross_validate(
+cv_results = cross_validate(
     regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
     return_train_score=True,
 )
-result_cv = pd.DataFrame(result_cv)
+cv_results = pd.DataFrame(cv_results)
 
 # %%
-scores = result_cv[["train_score", "test_score"]] * -1
+scores = cv_results[["train_score", "test_score"]] * -1
 sns.histplot(scores, bins=50)
 _ = plt.xlabel("Mean absolute error (k$)")
 
@@ -314,13 +316,13 @@ y.size
 # %%
 def make_cv_analysis(regressor, X, y):
     cv = ShuffleSplit(n_splits=10, test_size=0.2)
-    result_cv = pd.DataFrame(
+    cv_results = pd.DataFrame(
         cross_validate(
             regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
             return_train_score=True
         )
     )
-    return (result_cv["test_score"] * -1).values
+    return (cv_results["test_score"] * -1).values
 
 # %%
 import numpy as np
@@ -459,7 +461,7 @@ score, permutation_score, pvalue = permutation_test_score(
 # %%
 final_result = pd.concat(
     [
-        result_cv["test_score"] * -1,
+        cv_results["test_score"] * -1,
         pd.Series(result_dummy["test_score"]) * -1,
         pd.Series(permutation_score) * -1,
     ],

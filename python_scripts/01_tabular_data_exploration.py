@@ -175,7 +175,7 @@ plt.rcdefaults()
 import seaborn as sns
 _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
                  hue=target_column, plot_kws={'alpha': 0.2},
-                 height=3, diag_kind='hist')
+                 height=3, diag_kind='hist', diag_kws={'bins': 30})
 
 # %% [markdown]
 #

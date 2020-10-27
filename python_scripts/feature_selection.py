@@ -156,7 +156,75 @@ for idx, pipeline in enumerate(cv_results_with_selection["estimator"]):
 # miserably fail.
 #
 # ### Selecting features without cross-validation
-# TODO: find an example
+# The biggest mistake to be made when selecting features is similar to one that
+# can be made when optimizing hyperparameters of a model: find the subset of
+# features on the same dataset as well used to evaluate the model's
+# generalization performance.
+#
+# We will generate a synthetic dataset with a large number of features and a
+# few samples to emphasize the issue. This use-case is typical in
+# bioinformatics when dealing with RNA-seq. However, we will use completely
+# randomized features such that we don't have a link between the data and the
+# target. Thus, the performance of any machine-learning model should not
+# perform better than the chance-level. In our example, we will use a logistic
+# regressin classifier.
+
+# %%
+rng = np.random.RandomState(42)
+X, y = rng.randn(100, 100000), rng.randint(0, 2, size=100)
+
+# %%
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression()
+test_score = cross_val_score(model, X, y, n_jobs=-1)
+print(f"The mean accuracy is: {test_score.mean():.3f}")
+
+# %% [markdown]
+# There is no surprise that the logistic regression model performs as the
+# chance level when we provide the full dataset.
+#
+# We will then show the **wrong** pattern that one should not apply: select the
+# feature by using the entire dataset. We will choose ten features with the
+# highest ANOVA F-score computed on the full dataset. Subsequently, we
+# subsample the dataset `X` by selecting the features' subset. Finally, we
+# train and test a logistic regression model.
+
+# %%
+from sklearn.model_selection import cross_val_score
+
+feature_selector = SelectKBest(score_func=f_classif, k=10)
+test_score = cross_val_score(model, feature_selector.fit_transform(X, y), y)
+print(f"The mean accuracy is: {test_score.mean():.3f}")
+
+# %% [markdown]
+# Surprisingly, the logistic regression succeeded in having a fantastic
+# accuracy using data with no link with the target, initially. We, therefore,
+# know that these results are not legit.
+#
+# The reasons for obtaining these results are two folds: the pool of available
+# features is large compared to the number of samples. It is possible to find a
+# subset of features that will link the data and the target. By not splitting
+# the data, we leak knowledge from the entire dataset and could use this
+# knowledge will evaluating our model.
+#
+# Instead, we will now split our dataset into a training and testing set and
+# only compute the univariate test on the training set. Then, we will use the
+# best features found on the training set during the scoring.
+
+# %%
+model = make_pipeline(feature_selector, LogisticRegression())
+test_score = cross_val_score(model, X, y)
+print(f"The mean accuracy is: {test_score.mean():.3f}")
+
+# %% [markdown]
+# We see that selecting feature only on the training set will not help when
+# testing our model. In this case, we obtained the expected results.
+#
+# Therefore, as with hyperparameters optimization or model selection, tuning
+# the feature space should be done solely on the training set, keeping a part
+# of the data left-out.
 #
 # ### Limitation of selecting feature using a model
 # An advanced strategy to select features is to use a machine learning model.
@@ -166,13 +234,8 @@ for idx, pipeline in enumerate(cv_results_with_selection["estimator"]):
 # Therefore, this method works as far as the relative feature importances given
 # by the model is sufficient to select the meaningful feature.
 #
-# As presented in the model inspection notebook, the decision tree's relative
-# feature importance will overestimate the importance of random feature when
-# the decision tree overfits the training set.
-#
 # Here, we will generate a dataset that contains a large number of random
-# features. Thus, when using a random forest to select features, we can expect
-# that some of the random features will be wrongly selected.
+# features.
 
 # %%
 X, y = make_classification(
@@ -228,6 +291,12 @@ _ = plt.title("Limitation of using a random forest for feature selection")
 
 # %% [markdown]
 # The model that selected a subset of feature is less performant than a
-# random forest fitted on the full dataset. This is due to the fact that the
-# random features have been used extensively by the random forest which is the
-# case with overfit forest.
+# random forest fitted on the full dataset.
+#
+# We can rely on some aspects tackled in the notebook presenting the model
+# inspection to explain this behaviour. The decision tree's relative feature
+# importance will overestimate the importance of random feature when the
+# decision tree overfits the training set.
+#
+# Therefore, it is good to keep in mind that feature selection relies on
+# procedures making some assumptions, which can be perfectible.

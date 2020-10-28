@@ -702,24 +702,24 @@ error on the testing set.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.10 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.05 k$
 </pre></div>
 </div>
 </div>
 </div>
-<p>However when doing a train-test split we do not have not give any indication regarding the
-robustness of our predictive model. We could have been lucky while splitting
-our dataset, and the generalization error could be over-optimistic.</p>
+<p>However when doing a train-test split we do not have not give any indication
+regarding the robustness of our predictive model. We could have been lucky
+while splitting our dataset, and the generalization error could be
+over-optimistic.</p>
 <p>Cross-validation allows estimating the robustness of a predictive model by
 repeating the splitting procedure. It will give several empirical and
 generalization errors and thus some variability estimate of the model
 performance.</p>
 <p>There are different cross-validation strategies, for now we are going to
-focus on one called shuffle-split.</p>
-<p>The most straightforward strategy is to shuffle our data and split into two
-sets, as we previously did and repeated several times fit/predict. In
-scikit-learn, using the function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> with the cross-validation
-<code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> allows us to make such an evaluation.</p>
+focus on one called shuffle-split : we shuffle our data, split it into a
+train and a test set and we repeat this procedure <code class="docutils literal notranslate"><span class="pre">n_splits</span></code> time.
+To evaluate the performance of our regressor, we can use <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>
+with a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -772,33 +772,33 @@ scikit-learn, using the function <code class="docutils literal notranslate"><spa
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.238839</td>
-      <td>0.003904</td>
-      <td>44.202290</td>
+      <td>0.229212</td>
+      <td>0.003514</td>
+      <td>45.113972</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.198967</td>
-      <td>0.003824</td>
-      <td>47.248247</td>
+      <td>0.182390</td>
+      <td>0.003282</td>
+      <td>45.932500</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.206995</td>
-      <td>0.003419</td>
-      <td>45.485819</td>
+      <td>0.180748</td>
+      <td>0.003680</td>
+      <td>47.466833</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.200652</td>
-      <td>0.003608</td>
-      <td>45.663464</td>
+      <td>0.197472</td>
+      <td>0.003733</td>
+      <td>45.381758</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.197139</td>
-      <td>0.003666</td>
-      <td>46.209051</td>
+      <td>0.189294</td>
+      <td>0.003615</td>
+      <td>45.525184</td>
     </tr>
   </tbody>
 </table>
@@ -873,7 +873,7 @@ generalization error.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The variance of the generalization error is: 1.64 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The variance of the generalization error is: 0.85 k$
 </pre></div>
 </div>
 </div>
@@ -1538,9 +1538,7 @@ Class frequency in the training set:
 1    0.33
 2    0.36
 Name: target, dtype: float64
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Class frequency in the testing set:
+Class frequency in the testing set:
 0    0.38
 1    0.34
 2    0.28
@@ -1669,7 +1667,7 @@ without shuffling the data at first.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.968
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.967
 </pre></div>
 </div>
 </div>
@@ -1991,7 +1989,7 @@ the remaining data to test.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.18
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.05
 </pre></div>
 </div>
 </div>
@@ -2035,7 +2033,7 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.21
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.09
 </pre></div>
 </div>
 </div>
@@ -2062,7 +2060,7 @@ behaviour.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -2.12
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -118.64
 </pre></div>
 </div>
 </div>

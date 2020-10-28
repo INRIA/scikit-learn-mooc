@@ -119,9 +119,10 @@ score = mean_absolute_error(y_pred, y_test)
 print(f"The generalization error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# However when doing a train-test split we do not have not give any indication regarding the
-# robustness of our predictive model. We could have been lucky while splitting
-# our dataset, and the generalization error could be over-optimistic.
+# However when doing a train-test split we do not have not give any indication
+# regarding the robustness of our predictive model. We could have been lucky
+# while splitting our dataset, and the generalization error could be
+# over-optimistic.
 #
 # Cross-validation allows estimating the robustness of a predictive model by
 # repeating the splitting procedure. It will give several empirical and
@@ -129,12 +130,10 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # performance.
 #
 # There are different cross-validation strategies, for now we are going to
-# focus on one called shuffle-split.
-#
-# The most straightforward strategy is to shuffle our data and split into two
-# sets, as we previously did and repeated several times fit/predict. In
-# scikit-learn, using the function `cross_validate` with the cross-validation
-# `ShuffleSplit` allows us to make such an evaluation.
+# focus on one called shuffle-split : we shuffle our data, split it into a
+# train and a test set and we repeat this procedure `n_splits` time.
+# To evaluate the performance of our regressor, we can use `cross_validate`
+# with a `ShuffleSplit` object:
 
 # %%
 import pandas as pd

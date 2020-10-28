@@ -60,7 +60,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Evaluation of your predictive model" href="metrics.html" />
+    <link rel="next" title="Evaluation of your predictive model: the cross-validation framework." href="cross_validation.html" />
     <link rel="prev" title="Decision tree in depth" href="trees.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -179,13 +179,25 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
+  Cross-validation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cross_validation.html">
+   Evaluation of your predictive model: the cross-validation framework.
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
   Metrics
  </span>
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="metrics.html">
-   Evaluation of your predictive model
+   Evaluation of your predictive model: which metric to choose?
   </a>
  </li>
 </ul>
@@ -661,7 +673,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.690531</td>
       <td>1</td>
-      <td>0.088359</td>
+      <td>0.087382</td>
     </tr>
     <tr>
       <th>62</th>
@@ -670,7 +682,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.679867</td>
       <td>2</td>
-      <td>0.095053</td>
+      <td>0.093827</td>
     </tr>
     <tr>
       <th>47</th>
@@ -679,7 +691,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.678336</td>
       <td>3</td>
-      <td>0.058094</td>
+      <td>0.066421</td>
     </tr>
     <tr>
       <th>46</th>
@@ -688,7 +700,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.676595</td>
       <td>4</td>
-      <td>0.058506</td>
+      <td>0.064078</td>
     </tr>
     <tr>
       <th>45</th>
@@ -697,7 +709,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.674313</td>
       <td>5</td>
-      <td>0.058153</td>
+      <td>0.064830</td>
     </tr>
     <tr>
       <th>...</th>
@@ -715,7 +727,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.501931</td>
       <td>49</td>
-      <td>0.026577</td>
+      <td>0.032558</td>
     </tr>
     <tr>
       <th>10</th>
@@ -724,7 +736,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.022609</td>
+      <td>0.026324</td>
     </tr>
     <tr>
       <th>8</th>
@@ -733,7 +745,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.022939</td>
+      <td>0.027408</td>
     </tr>
     <tr>
       <th>9</th>
@@ -742,7 +754,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.022328</td>
+      <td>0.025086</td>
     </tr>
     <tr>
       <th>11</th>
@@ -751,7 +763,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.486399</td>
       <td>61</td>
-      <td>0.025699</td>
+      <td>0.028460</td>
     </tr>
   </tbody>
 </table>
@@ -780,7 +792,7 @@ optimal decision tree on the left-out testing data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 7.50 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 8.21 seconds
 Best R2 score of a single tree: 0.691
 </pre></div>
 </div>
@@ -818,7 +830,7 @@ we are not going to tune any parameter of the decision tree.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 5.41 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 5.74 seconds
 R2 score: 0.792
 </pre></div>
 </div>
@@ -893,7 +905,7 @@ However, a decision tree is capable of fitting such data</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ffad8c26450&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f15595f0810&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_17_1.png" src="../_images/ensemble_17_1.png" />
@@ -1129,7 +1141,7 @@ bagging regressor on the “California housing” dataset.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of random forest: 0.794
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.795
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.792
 </pre></div>
 </div>
 </div>
@@ -1279,7 +1291,7 @@ misclassified on the training set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ffad3fc68d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f15589d4310&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_37_1.png" src="../_images/ensemble_37_1.png" />
@@ -1316,7 +1328,7 @@ classified samples will assigned to a weight of 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ffad38f2f50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f15580a6e10&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_39_1.png" src="../_images/ensemble_39_1.png" />
@@ -1566,7 +1578,7 @@ explain how the predictions of both trees are combined.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ffad86a2950&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f1559282690&gt;
 </pre></div>
 </div>
 <img alt="../_images/ensemble_53_1.png" src="../_images/ensemble_53_1.png" />
@@ -1683,11 +1695,11 @@ the California housing dataset.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of gradient-boosting are:0.804
-Fitting time took: 7.05 seconds
+Fitting time took: 7.66 seconds
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of random-forest are:0.794
-Fitting time took: 11.02 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of random-forest are:0.795
+Fitting time took: 11.60 seconds
 </pre></div>
 </div>
 </div>
@@ -1760,55 +1772,55 @@ underfitted forest.</p>
     <tr>
       <th>8</th>
       <td>{'max_depth': None, 'n_estimators': 30}</td>
-      <td>0.795578</td>
+      <td>0.793784</td>
       <td>1</td>
     </tr>
     <tr>
       <th>7</th>
       <td>{'max_depth': None, 'n_estimators': 20}</td>
-      <td>0.790122</td>
+      <td>0.790635</td>
       <td>2</td>
     </tr>
     <tr>
       <th>6</th>
       <td>{'max_depth': None, 'n_estimators': 10}</td>
-      <td>0.777074</td>
+      <td>0.774123</td>
       <td>3</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>{'max_depth': 5, 'n_estimators': 30}</td>
-      <td>0.663414</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>{'max_depth': 5, 'n_estimators': 10}</td>
-      <td>0.662927</td>
-      <td>5</td>
     </tr>
     <tr>
       <th>4</th>
       <td>{'max_depth': 5, 'n_estimators': 20}</td>
-      <td>0.661648</td>
+      <td>0.664612</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>{'max_depth': 5, 'n_estimators': 30}</td>
+      <td>0.662757</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'max_depth': 5, 'n_estimators': 10}</td>
+      <td>0.656989</td>
       <td>6</td>
     </tr>
     <tr>
       <th>2</th>
       <td>{'max_depth': 3, 'n_estimators': 30}</td>
-      <td>0.560217</td>
+      <td>0.564011</td>
       <td>7</td>
     </tr>
     <tr>
       <th>0</th>
       <td>{'max_depth': 3, 'n_estimators': 10}</td>
-      <td>0.559284</td>
+      <td>0.562411</td>
       <td>8</td>
     </tr>
     <tr>
       <th>1</th>
       <td>{'max_depth': 3, 'n_estimators': 20}</td>
-      <td>0.559266</td>
+      <td>0.561753</td>
       <td>9</td>
     </tr>
   </tbody>
@@ -1889,55 +1901,55 @@ similar to having a too large tree depth.</p>
     <tr>
       <th>5</th>
       <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
-      <td>0.798296</td>
+      <td>0.798402</td>
       <td>1</td>
     </tr>
     <tr>
       <th>11</th>
       <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
-      <td>0.783949</td>
+      <td>0.784421</td>
       <td>2</td>
     </tr>
     <tr>
       <th>10</th>
       <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
-      <td>0.781397</td>
+      <td>0.779854</td>
       <td>3</td>
     </tr>
     <tr>
       <th>4</th>
       <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
-      <td>0.766456</td>
+      <td>0.767553</td>
       <td>4</td>
     </tr>
     <tr>
       <th>2</th>
       <td>{'learning_rate': 0.1, 'max_depth': 3, 'n_esti...</td>
-      <td>0.754044</td>
+      <td>0.754025</td>
       <td>5</td>
     </tr>
     <tr>
       <th>12</th>
       <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
-      <td>0.752382</td>
+      <td>0.752508</td>
       <td>6</td>
     </tr>
     <tr>
       <th>13</th>
       <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
-      <td>0.747725</td>
+      <td>0.747179</td>
       <td>7</td>
     </tr>
     <tr>
       <th>9</th>
       <td>{'learning_rate': 1, 'max_depth': 3, 'n_estima...</td>
-      <td>0.743908</td>
+      <td>0.744140</td>
       <td>8</td>
     </tr>
     <tr>
       <th>14</th>
       <td>{'learning_rate': 1, 'max_depth': 5, 'n_estima...</td>
-      <td>0.732039</td>
+      <td>0.732069</td>
       <td>9</td>
     </tr>
     <tr>
@@ -1949,43 +1961,43 @@ similar to having a too large tree depth.</p>
     <tr>
       <th>7</th>
       <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
-      <td>0.634854</td>
+      <td>0.634510</td>
       <td>11</td>
     </tr>
     <tr>
       <th>6</th>
       <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
-      <td>0.626982</td>
+      <td>0.626600</td>
       <td>12</td>
     </tr>
     <tr>
       <th>8</th>
       <td>{'learning_rate': 0.1, 'max_depth': None, 'n_e...</td>
-      <td>0.622938</td>
+      <td>0.623883</td>
       <td>13</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
-      <td>0.597551</td>
-      <td>14</td>
     </tr>
     <tr>
       <th>3</th>
       <td>{'learning_rate': 0.1, 'max_depth': 5, 'n_esti...</td>
-      <td>0.597211</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
-      <td>0.591900</td>
-      <td>16</td>
+      <td>0.597305</td>
+      <td>14</td>
     </tr>
     <tr>
       <th>15</th>
       <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
-      <td>0.591099</td>
+      <td>0.596241</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
+      <td>0.594385</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>{'learning_rate': 1, 'max_depth': None, 'n_est...</td>
+      <td>0.589026</td>
       <td>17</td>
     </tr>
     <tr>
@@ -2049,7 +2061,7 @@ computation time with the earlier experiment in the previous section.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The performance of histogram gradient-boosting are:0.845
-Fitting time took: 1.14 seconds
+Fitting time took: 1.03 seconds
 </pre></div>
 </div>
 </div>
@@ -2100,7 +2112,7 @@ which are state-of-the-art methods.</p>
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="trees.html" title="previous page">Decision tree in depth</a>
-    <a class='right-next' id="next-link" href="metrics.html" title="next page">Evaluation of your predictive model</a>
+    <a class='right-next' id="next-link" href="cross_validation.html" title="next page">Evaluation of your predictive model: the cross-validation framework.</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

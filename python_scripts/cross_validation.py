@@ -129,7 +129,7 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # %% [markdown]
 # ### Stability of the cross-validation estimates
 #
-# When doing a single train-test split we do not have not give any indication
+# When doing a single train-test split we don't give any indication
 # regarding the robustness of the evaluation of our predictive model: in
 # particular, if the test set is small, this estimate of the generalization
 # error can be be unstable and not reflect the "true error rate" we would have

@@ -1158,5 +1158,3 @@ _ = ax.set_title(
 #
 # Finally, we show how to perform nested cross-validation to select an optimal
 # model and evaluate its generalization performance.
-
-# %%

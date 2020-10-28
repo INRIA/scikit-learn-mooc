@@ -327,6 +327,8 @@ ax.invert_yaxis()
 #   histograms.
 
 # %%
+# %%time
+
 from scipy.stats import reciprocal
 from sklearn.model_selection import RandomizedSearchCV
 from pprint import pprint
@@ -494,6 +496,8 @@ fig.show()
 # other `EstimatorCV` class.
 
 # %%
+# %%time
+
 from sklearn.model_selection import cross_val_score
 
 # recall the definition of our grid-search

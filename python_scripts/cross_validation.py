@@ -132,7 +132,7 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # When doing a single train-test split we don't give any indication
 # regarding the robustness of the evaluation of our predictive model: in
 # particular, if the test set is small, this estimate of the generalization
-# error can be be unstable and not reflect the "true error rate" we would have
+# error can be unstable and do not reflect the "true error rate" we would have
 # observed with the same model on an unlimitted amount of test data.
 #
 # For instance, we could have been lucky when we did our random split of our

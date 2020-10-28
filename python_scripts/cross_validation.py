@@ -385,7 +385,7 @@ _ = plt.legend()
 # between the empirical error and the generalization error. It can also
 # potentially underfit also a bit at the same time, because the empirical error
 # is still far from zero (more than 30 k\\$), meaning that the model might
-# still be two constrained to model interesting parts of the data. However the
+# still be too constrained to model interesting parts of the data. However the
 # generalization error is minimal, and this is what really matters. This is the
 # best compromise we could reach by just tuning this parameter.
 #

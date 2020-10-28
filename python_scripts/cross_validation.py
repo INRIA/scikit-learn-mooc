@@ -257,7 +257,7 @@ train_scores, test_scores = validation_curve(
     regressor, X, y,
     param_name="max_depth", param_range=max_depth,
     cv=cv, scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
 )
 
 # %%
@@ -371,7 +371,7 @@ results = learning_curve(
     train_sizes=sample_sizes[:-1],
     cv=cv,
     scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
 )
 train_size, train_scores, test_scores = results[:3]
 
@@ -448,7 +448,7 @@ score, permutation_score, pvalue = permutation_test_score(
     y,
     cv=cv,
     scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
     n_permutations=30,
 )
 
@@ -635,13 +635,13 @@ X, y = digits.data, digits.target
 
 # %%
 cv = KFold(shuffle=False)
-results = cross_validate(model, X, y, cv=cv, n_jobs=-1)
+results = cross_validate(model, X, y, cv=cv, n_jobs=2)
 test_score_no_shuffling = results["test_score"]
 print(f"The average accuracy is {test_score_no_shuffling.mean():.3f}")
 
 # %%
 cv = KFold(shuffle=True)
-results = cross_validate(model, X, y, cv=cv, n_jobs=-1)
+results = cross_validate(model, X, y, cv=cv, n_jobs=2)
 test_score_with_shuffling = results["test_score"]
 print(f"The average accuracy is {test_score_with_shuffling.mean():.3f}")
 
@@ -720,7 +720,7 @@ groups
 from sklearn.model_selection import GroupKFold
 
 cv = GroupKFold()
-results = cross_validate(model, X, y, groups=groups, cv=cv, n_jobs=-1)
+results = cross_validate(model, X, y, groups=groups, cv=cv, n_jobs=2)
 test_score = results["test_score"]
 print(f"The average accuracy is {test_score.mean():.3f}")
 
@@ -783,7 +783,7 @@ from sklearn.tree import DecisionTreeRegressor
 regressor = DecisionTreeRegressor()
 
 cv = ShuffleSplit(random_state=0)
-results = cross_validate(regressor, X_train, y_train, cv=cv, n_jobs=-1)
+results = cross_validate(regressor, X_train, y_train, cv=cv, n_jobs=2)
 test_score = results["test_score"]
 print(f"The mean R2 is: {test_score.mean():.2f}")
 
@@ -878,7 +878,7 @@ groups = quotes.index.to_period("Q")
 cv = LeaveOneGroupOut()
 results = cross_validate(
     regressor, X, y, cv=cv, groups=groups,
-    n_jobs=-1
+    n_jobs=2
 )
 test_score = results["test_score"]
 print(f"The mean R2 is: {test_score.mean():.2f}")
@@ -899,7 +899,7 @@ from sklearn.model_selection import TimeSeriesSplit
 cv = TimeSeriesSplit(n_splits=groups.nunique())
 results = cross_validate(
     regressor, X, y, cv=cv, groups=groups,
-    n_jobs=-1
+    n_jobs=2
 )
 test_score = results["test_score"]
 print(f"The mean R2 is: {test_score.mean():.2f}")
@@ -934,7 +934,7 @@ model = GridSearchCV(
     estimator=SVC(),
     param_grid=param_grid,
     cv=KFold(),
-    n_jobs=-1,
+    n_jobs=2,
 )
 model.fit(X, y)
 
@@ -988,12 +988,12 @@ outer_cv = KFold(n_splits=4, shuffle=True, random_state=0)
 # Inner cross-validation for parameter search
 model = GridSearchCV(
     estimator=SVC(), param_grid=param_grid, cv=inner_cv,
-    n_jobs=-1,
+    n_jobs=2,
 )
 
 # Outer cross-validation to compute the generalization score
 result = cross_validate(
-    model, X, y, cv=outer_cv, n_jobs=-1,
+    model, X, y, cv=outer_cv, n_jobs=2,
 )
 test_score = result["test_score"].mean()
 print(
@@ -1021,14 +1021,14 @@ for i in range(N_TRIALS):
     # Non_nested parameter search and scoring
     model = GridSearchCV(
         estimator=SVC(), param_grid=param_grid, cv=inner_cv,
-        n_jobs=-1,
+        n_jobs=2,
     )
     model.fit(X, y)
     test_score_not_nested.append(model.best_score_)
 
     # Nested CV with parameter optimization
     result = cross_validate(
-        model, X, y, cv=outer_cv, n_jobs=-1,
+        model, X, y, cv=outer_cv, n_jobs=2,
     )
     test_score_nested.append(result["test_score"].mean())
 

@@ -279,7 +279,6 @@ print(f"The standard deviation of the target is: {y.std():.2f} k$")
 # training set, which is possible using the `cross_validate` function.
 
 # %%
-# %%time
 cv_results = cross_validate(
     regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
     return_train_score=True,

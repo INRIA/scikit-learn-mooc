@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # Exercise 02
+# # Solution for Exercise 02
 #
 # The goal is to find the best set of hyper-parameters which maximize the
 # performance on a training set.
@@ -38,8 +38,6 @@ df_train, df_test, target_train, target_test = train_test_split(
     data, target, train_size=0.2, random_state=42)
 
 # %% [markdown]
-# TODO: create your machine learning pipeline
-#
 # You should:
 # * preprocess the categorical columns using a `OneHotEncoder` and use a
 #   `StandardScaler` to normalize the numerical data.

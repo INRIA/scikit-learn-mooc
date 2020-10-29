@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# #  Exercise 01
+# # Solution for Exercise 01
 #
 # The goal is to write an exhaustive search to find the best parameters
 # combination maximizing the model performance.
@@ -64,8 +64,6 @@ model = Pipeline([
 ])
 
 # %% [markdown]
-# TODO: write your solution below
-#
 # Use the previously defined model (called `model`) and using two nested `for`
 # loops, make a search of the best combinations of the `learning_rate` and
 # `max_leaf_nodes` parameters. In this regard, you will need to train and test

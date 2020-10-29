@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # Loading data into machine learning
+# # Tabular data exploration
 #
 # In this notebook, we will look at the necessary steps required before any machine learning takes place.
 # * load the data

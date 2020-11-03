@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # Introduction to scikit-learn: basic model hyper-parameters tuning
+# # Hyper-parameter tuning
 #
 # The process of learning a predictive model is driven by a set of internal
 # parameters and a set of training data. These internal parameters are called
@@ -169,6 +169,11 @@ for param_name in model.get_params().keys():
 #   sequence of trees;
 # - `'classifier__max_leaf_nodes'`: this parameter will
 #   control the depth of each tree.
+
+# TODO I can not really split here ... (we have not done much yet) also the
+# exercise gives intuition about the GridSearchCV So maybe this should not be
+# an exercise ... I replace it with the correction
+
 
 # %% [markdown]
 # ## Exercise 1:
@@ -541,6 +546,6 @@ print(scores)
 #   parameters to search;
 # * a randomized-search will always run with a fixed given budget;
 # * when assessing the performance of a model, hyper-parameters search should
-#   be tuned on the training data of a predifined train test split;
+#   be tuned on the training data of a predefined train test split;
 # * alternatively it is possible to nest parameter tuning within a
 #   cross-validation scheme.

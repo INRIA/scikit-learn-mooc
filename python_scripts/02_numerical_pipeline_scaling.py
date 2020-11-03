@@ -1,5 +1,5 @@
 # ---
-# jupyter:
+#fit bote jupyter:
 #   jupytext:
 #     text_representation:
 #       extension: .py
@@ -13,9 +13,15 @@
 # ---
 
 # %% [markdown]
-# TODO do an intro here even for shorter notebooks?
-# TODO better title
-# TODO do I want to remind people what we did before i.e. 
+#
+# In this notebook, we present: how to build predictive models on tabular
+# datasets, with only numerical features.
+#
+# In particular we will highlight:
+# * an example of preprocessing, namely the **scaling numerical variables**
+# * using a scikit-learn **pipeline** to chain preprocessing and model training
+# * assessed the performance of our model via **cross-validation**
+#
 # # Preprocessing for numerical features
 
 # %% [markdown]
@@ -32,7 +38,7 @@ target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 # %% [markdown]
-# We only work keep numerical features
+# We only keep numerical features
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -189,8 +195,6 @@ print(f"The mean cross-validation accuracy is: "
 
 # %% [markdown]
 # In this notebook we have:
-# * **split** our dataset into a training dataset and a testing dataset
-# * fitted a **logistic regression** model
 # * seen the importance of **scaling numerical variables**
-# * used a **pipeline** to fit both the scaler and the logistic regression
+# * used a **pipeline** to chain scaling and logistic regression training
 # * assessed the performance of our model via **cross-validation**

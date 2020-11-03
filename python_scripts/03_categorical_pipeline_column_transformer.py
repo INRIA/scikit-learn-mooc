@@ -13,9 +13,11 @@
 # ---
 # %%
 
-# TODO intro
 # %% [markdown]
 # # Using numerical and categorical variables together
+#
+# In this notebook, we will present typical ways to deal with **categorical
+# variables**, namely **ordinal encoding** and **one-hot encoding**.
 #
 # Let us reload the dataset
 
@@ -198,9 +200,7 @@ model.score(data_test, target_test)
 # %% [markdown]
 #
 # In this notebook we have:
-# * encoded categorical features with both an **ordinal encoding** and
-#   an **one hot encoding**
-# * used a pipeline to process **both numerical and categorical** features before
-#  fitting a logistic regression
-# * seen that **gradient boosting methods** can outperforms the basic linear approach
-#
+# * used a `ColumnTransformer` to apply different preprocessing for categorical and numerical variables
+# * used a pipeline to chain the `ColumnTransformer` preprocessing and logistic regresssion fitting
+# * seen that **gradient boosting methods** can outperforms the basic linear
+#   approach

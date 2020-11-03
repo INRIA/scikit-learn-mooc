@@ -15,10 +15,8 @@
 # %% [markdown]
 # # Encoding of categorical variables
 #
-# In this notebook, we will present:
-# * typical ways to deal with **categorical variables**
-# * how to train a predictive model on **mixed types** of data
-# (i.e. numerical and categorical together)
+# In this notebook, we will present typical ways to deal with **categorical
+# variables**, namely **ordinal encoding** and **one-hot encoding**.
 
 # %% [markdown]
 # Let's first load the data as we did in the previous notebook.
@@ -149,14 +147,16 @@ print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
-# Let's wrap this numpy array in a dataframe with informative column names as provided by the encoder object:
+# Let's wrap this numpy array in a dataframe with informative column names as
+# provided by the encoder object:
 
 # %%
 columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]
-# Look at how the "workclass" variable of the first 3 records has been encoded and compare this to the original string representation.
+# Look at how the "workclass" variable of the first 3 records has been encoded
+# and compare this to the original string representation.
 #
 # The number of features after the encoding is more than 10 times larger than in the
 # original data because some variables such as `occupation` and `native-country`
@@ -187,3 +187,11 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 # As you can see, this representation of the categorical variables of the data
 # is slightly more predictive of the revenue than the numerical variables that
 # we used previously.
+
+# %% [markdown]
+#
+# In this notebook we have:
+# * seen two common strategies for encoding categorical features : **ordinal
+#   encoding** and **one-hot encoding**
+# * used a pipeline to process **both numerical and categorical** features
+#   before fitting a logistic regression

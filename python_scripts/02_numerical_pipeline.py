@@ -4,14 +4,11 @@
 # ## Basic preprocessing and model fitting
 #
 # In this notebook, we present how to build predictive models on tabular
-# datasets, with numerical features. Categorical features will be discussed
-# in the next notebook.
+# datasets, with only numerical features.
 #
-# TODO need to change the wording after splitting the notebook
 # In particular we will highlight:
-# * working with numerical features
-# * the importance of scaling numerical variables
-# * evaluate the performance of a model via cross-validation
+# * the scikit-learn API : `.fit`/`.predict`/`.score`
+# * how to evaluate the performance of a model with a train-test split
 #
 # ## Loading the dataset
 #
@@ -48,8 +45,8 @@ data.head()
 # ## Working with numerical data
 #
 # Numerical data is the most natural type of data used in machine learning
-# and can (almost) directly be fed to predictive models. We can quickly have a
-# look at such data by selecting the subset of numerical columns from the
+# and can (almost) directly be fed into predictive models. We can quickly have
+# a look at such data by selecting the subset of numerical columns from the
 # original data.
 #
 # We will use this subset of data to fit a linear classification model to
@@ -153,4 +150,9 @@ print(f"The test accuracy using a {model.__class__.__name__} is "
 (target_test == target_predicted).mean()
 
 # %% [markdown]
-# TODO : do we want a summary here even for shorter notebooks ...
+# In this notebook we have:
+# * **split** our dataset into a training dataset and a testing dataset to eva
+# * fitted a **logistic regression** model on the training data
+# * evaluated its performance on the testing data
+# * presented the scikit-learn API `.fit` (to train a model), `.predict` (to
+#   make predictions) and `.score` (to evaluate a model)

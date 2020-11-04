@@ -1,5 +1,5 @@
 # ---
-#fit bote jupyter:
+#jupyter:
 #   jupytext:
 #     text_representation:
 #       extension: .py

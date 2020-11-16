@@ -13,12 +13,10 @@
 # ---
 
 # %% [markdown]
-# # Working with both numerical & categorical variables
+# # Encoding of categorical variables
 #
-# In this notebook, we will present:
-# * typical ways to deal with **categorical variables**
-# * how to train a predictive model on **mixed types** of data
-# (i.e. numerical and categorical together)
+# In this notebook, we will present typical ways to deal with **categorical
+# variables**, namely **ordinal encoding** and **one-hot encoding**.
 
 # %% [markdown]
 # Let's first load the data as we did in the previous notebook.
@@ -149,14 +147,16 @@ print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
-# Let's wrap this numpy array in a dataframe with informative column names as provided by the encoder object:
+# Let's wrap this numpy array in a dataframe with informative column names as
+# provided by the encoder object:
 
 # %%
 columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]
-# Look at how the "workclass" variable of the first 3 records has been encoded and compare this to the original string representation.
+# Look at how the "workclass" variable of the first 3 records has been encoded
+# and compare this to the original string representation.
 #
 # The number of features after the encoding is more than 10 times larger than in the
 # original data because some variables such as `occupation` and `native-country`
@@ -184,190 +184,14 @@ scores
 print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# As you can see, this representation of the categorical variables of the data is slightly more predictive of the revenue than the numerical variables that we used previously.
-
-# %% [markdown]
-# ## Exercise 1:
-#
-# - Try to fit a logistic regression model on categorical data transformed by
-#   the OrdinalEncoder instead. What do you observe?
-#
-# Open the dedicated notebook to do this exercise.
-
-
-# %% [markdown]
-# ## Using numerical and categorical variables together
-#
-# In the previous sections, we saw that we need to treat data differently
-# depending on their nature (i.e. numerical or categorical).
-#
-# Scikit-learn provides a `ColumnTransformer` class which will send
-# specific columns to a specific transformer, making it easy to fit a single
-# predictive model on a dataset that combines both kinds of variables together
-# (heterogeneously typed tabular data).
-#
-# We can first define the columns depending on their data type:
-# * **binary encoding** will be applied to categorical columns with only too
-#   possible values (e.g. sex=male or sex=female in this example). Each binary
-#   categorical columns will be mapped to one numerical columns with 0 or 1
-#   values.
-# * **one-hot encoding** will be applied to categorical columns with more that
-#   two possible categories. This encoding will create one additional column for
-#   each possible categorical value.
-# * **numerical scaling** numerical features which will be standardized.
-
-
-# %%
-binary_encoding_columns = ['sex']
-
-one_hot_encoding_columns = [
-    'workclass', 'education', 'marital-status', 'occupation',
-    'relationship', 'race', 'native-country']
-
-scaling_columns = [
-    'age', 'education-num', 'hours-per-week', 'capital-gain',
-    'capital-loss']
-
-# %% [markdown]
-# We can now create our `ColumnTransfomer` by specifying a list of triplet
-# (preprocessor name, transformer, columns). Finally, we can define a pipeline
-# to stack this "preprocessor" with our classifier (logistic regression).
-
-# %%
-from sklearn.preprocessing import StandardScaler
-from sklearn.compose import ColumnTransformer
-
-preprocessor = ColumnTransformer([
-    ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
-    ('one-hot-encoder', OneHotEncoder(handle_unknown='ignore'),
-     one_hot_encoding_columns),
-    ('standard-scaler', StandardScaler(), scaling_columns)])
-
-# %%
-model = make_pipeline(
-    preprocessor, LogisticRegression(max_iter=1000))
-
-# %% [markdown]
-# Starting from `scikit-learn` 0.23, the notebooks can display an interactive view of the pipelines.
-
-# %%
-from sklearn import set_config
-set_config(display='diagram')
-
-model
-
-# %% [markdown]
-# The final model is more complex than the previous models but still follows the
-# same API:
-# - the `fit` method is called to preprocess the data then train the classifier;
-# - the `predict` method can make predictions on new data;
-# - the `score` method is used to predict on the test data and compare the
-#   predictions to the expected test labels to compute the accuracy.
-
-# %%
-from sklearn.model_selection import train_test_split
-
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
-
-# %%
-_ = model.fit(data_train, target_train)
-
-# %%
-data_test.head()
-
-# %%
-model.predict(data_test)[:5]
-
-# %%
-target_test[:5]
-
-# %%
-model.score(data_test, target_test)
-
-# %% [markdown]
-# This model can also be cross-validated as usual (instead of using a single
-# train-test split):
-
-# %%
-scores = cross_val_score(model, data, target, cv=5)
-scores
-
-# %%
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
-
-# %% [markdown]
-# The compound model has a higher predictive accuracy than the
-# two models that used numerical and categorical variables in
-# isolation.
-
-# %% [markdown]
-# # Fitting a more powerful model
-#
-# **Linear models** are very nice because they are usually very cheap to train,
-# **small** to deploy, **fast** to predict and give a **good baseline**.
-#
-# However, it is often useful to check whether more complex models such as an
-# ensemble of decision trees can lead to higher predictive performance.
-#
-# In the following cell we try a scalable implementation of the **Gradient Boosting
-# Machine** algorithm. For this class of models, we know that contrary to linear
-# models, it is **useless to scale the numerical features** and furthermore it is
-# both safe and significantly more computationally efficient to use an arbitrary
-# **integer encoding for the categorical variables** even if the ordering is
-# arbitrary. Therefore we adapt the preprocessing pipeline as follows:
-
-# %%
-from sklearn.experimental import enable_hist_gradient_boosting
-from sklearn.ensemble import HistGradientBoostingClassifier
-
-# For each categorical column, extract the list of all possible categories
-# in some arbritrary order.
-categories = [
-    data[column].unique()
-    for column in categorical_columns
-]
-
-preprocessor = ColumnTransformer([
-    ('categorical', OrdinalEncoder(categories=categories),
-     categorical_columns)], remainder="passthrough")
-
-model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-
-# %%
-# %%time
-_ = model.fit(data_train, target_train)
-
-# %%
-model.score(data_test, target_test)
-
-# %% [markdown]
-# We can observe that we get significantly higher accuracies with the Gradient
-# Boosting model. This is often what we observe whenever the dataset has a large
-# number of samples and limited number of informative features (e.g. less than
-# 1000) with a mix of numerical and categorical variables.
-#
-# This explains why Gradient Boosted Machines are very popular among datascience
-# practitioners who work with tabular data.
-
-
-# %% [markdown]
-# ## Exercise 2:
-#
-# - Check that scaling the numerical features does not impact the speed or
-#   accuracy of `HistGradientBoostingClassifier`
-# - Check that one-hot encoding the categorical variable does not improve the
-#   accuracy of `HistGradientBoostingClassifier` but slows down the training.
-#
-# Open the dedicated notebook to do this exercise.
-
+# As you can see, this representation of the categorical variables of the data
+# is slightly more predictive of the revenue than the numerical variables that
+# we used previously.
 
 # %% [markdown]
 #
 # In this notebook we have:
-# * encoded categorical features with both an **ordinal encoding** and
-#   an **one hot encoding**
-# * used a pipeline to process **both numerical and categorical** features before
-#  fitting a logistic regression
-# * seen that **gradient boosting methods** can outperforms the basic linear approach
-#
+# * seen two common strategies for encoding categorical features : **ordinal
+#   encoding** and **one-hot encoding**
+# * used a pipeline to process **both numerical and categorical** features
+#   before fitting a logistic regression

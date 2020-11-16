@@ -64,14 +64,18 @@ model = Pipeline([
 ])
 
 # %% [markdown]
+#
 # Use the previously defined model (called `model`) and using two nested `for`
 # loops, make a search of the best combinations of the `learning_rate` and
 # `max_leaf_nodes` parameters. In this regard, you will need to train and test
 # the model by setting the parameters. The evaluation of the model should be
-# performed using `cross_val_score`. We can propose to define the following
-# parameters search:
-# - `learning_rate` for the values 0.05, 0.1, 0.5, 1 and 5
-# - `max_leaf_nodes` for the values 3, 10, 30 and 100
+# performed using `cross_val_score`. We will use the following parameters
+# search:
+# - `learning_rate` for the values 0.01, 0.1, 1 and 10. This parameter controls
+#   the ability of a new tree to correct the error of the previous sequence of
+#   trees
+# - `max_leaf_nodes` for the values 3, 10, 30. This parameter controls the
+#   depth of each tree.
 
 # %%
 from sklearn.model_selection import cross_val_score

@@ -1,4 +1,4 @@
-# Preprocessing for categorical data
+# Handling categorical data
 
 ```{tableofcontents}
 ```

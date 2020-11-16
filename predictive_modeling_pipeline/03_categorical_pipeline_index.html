@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Preprocessing for categorical data &#8212; Scikit-learn tutorial</title>
+    <title>Handling categorical data &#8212; Scikit-learn tutorial</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -46,7 +46,7 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -61,8 +61,8 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Working with both numerical &amp; categorical variables" href="../python_scripts/03_categorical_pipeline.html" />
-    <link rel="prev" title="Solution for Exercise 01" href="../python_scripts/02_numerical_pipeline_sol_01.html" />
+    <link rel="next" title="Encoding of categorical variables" href="../python_scripts/03_categorical_pipeline.html" />
+    <link rel="prev" title="Preprocessing for numerical features" href="../python_scripts/02_numerical_pipeline_scaling.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -87,15 +87,12 @@
   <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
   
 </a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
-
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Machine Learning Concepts
  </span>
@@ -107,7 +104,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   The Predictive Modeling Pipeline
  </span>
@@ -118,24 +115,43 @@
    Tabular data exploration
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="02_numerical_pipeline_index.html">
    Fitting a scikit-learn model on numerical data
   </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Preprocessing for categorical data
-  </a>
-  <ul>
+  <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="../python_scripts/03_categorical_pipeline.html">
-     Working with both numerical &amp; categorical variables
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline.html">
+     First model with scikit-learn
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../python_scripts/03_categorical_pipeline.html#fitting-a-more-powerful-model">
-     Fitting a more powerful model
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="current reference internal" href="#">
+   Handling categorical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline.html">
+     Encoding of categorical variables
     </a>
    </li>
    <li class="toctree-l2">
@@ -149,6 +165,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../python_scripts/03_categorical_pipeline_ex_02.html">
      Exercise 02
     </a>
@@ -159,14 +180,50 @@
     </a>
    </li>
   </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="04_parameter_tuning_index.html">
-   Parameter tuning
+   Hyper-parameter tuning
   </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/04_parameter_tuning.html">
+     Introduction to hyper-parameter tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/04_parameter_tuning_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/04_parameter_tuning_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/04_parameter_tuning_search.html">
+     Hyper-parameter tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/04_parameter_tuning_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/04_parameter_tuning_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Linear models
  </span>
@@ -188,7 +245,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Decision Trees and Ensemble Models
  </span>
@@ -210,7 +267,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Cross-validation
  </span>
@@ -222,7 +279,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Metrics
  </span>
@@ -234,7 +291,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Feature selection
  </span>
@@ -246,7 +303,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Interpretation
  </span>
@@ -263,7 +320,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Overfitting/Underfitting
  </span>
@@ -276,9 +333,7 @@
  </li>
 </ul>
 
-</nav>
-
- <!-- To handle the deprecated key -->
+</nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
   Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
@@ -307,11 +362,11 @@
             <i class="fas fa-arrow-up"></i>
         </button>
         
-        <div class="dropdown-buttons-trigger">
+        
+<div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
 
-    
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         
@@ -323,8 +378,8 @@
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
-    
 </div>
+
         <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -366,14 +421,14 @@
         
               <div>
                 
-  <div class="section" id="preprocessing-for-categorical-data">
-<h1>Preprocessing for categorical data<a class="headerlink" href="#preprocessing-for-categorical-data" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="handling-categorical-data">
+<h1>Handling categorical data<a class="headerlink" href="#handling-categorical-data" title="Permalink to this headline">¶</a></h1>
 <div class="tableofcontents-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline.html">Working with both numerical &amp; categorical variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline.html#fitting-a-more-powerful-model">Fitting a more powerful model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline.html">Encoding of categorical variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline_ex_01.html">Exercise 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline_sol_01.html">Solution for Exercise 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline_column_transformer.html">Using numerical and categorical variables together</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline_ex_02.html">Exercise 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python_scripts/03_categorical_pipeline_sol_02.html">Solution for Exercise 02</a></li>
 </ul>
@@ -410,8 +465,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../python_scripts/02_numerical_pipeline_sol_01.html" title="previous page">Solution for Exercise 01</a>
-    <a class='right-next' id="next-link" href="../python_scripts/03_categorical_pipeline.html" title="next page">Working with both numerical &amp; categorical variables</a>
+    <a class='left-prev' id="prev-link" href="../python_scripts/02_numerical_pipeline_scaling.html" title="previous page">Preprocessing for numerical features</a>
+    <a class='right-next' id="next-link" href="../python_scripts/03_categorical_pipeline.html" title="next page">Encoding of categorical variables</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

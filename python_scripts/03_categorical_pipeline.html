@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Working with both numerical &amp; categorical variables &#8212; Scikit-learn tutorial</title>
+    <title>Encoding of categorical variables &#8212; Scikit-learn tutorial</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -46,7 +46,7 @@
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -62,7 +62,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Exercise 01" href="03_categorical_pipeline_ex_01.html" />
-    <link rel="prev" title="Preprocessing for categorical data" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html" />
+    <link rel="prev" title="Handling categorical data" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -87,15 +87,12 @@
   <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
   
 </a>
-</div>
-
-<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
-
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-  <p class="caption">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Machine Learning Concepts
  </span>
@@ -107,7 +104,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   The Predictive Modeling Pipeline
  </span>
@@ -118,24 +115,43 @@
    Tabular data exploration
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html">
    Fitting a scikit-learn model on numerical data
   </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
-   Preprocessing for categorical data
-  </a>
-  <ul class="current">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     Working with both numerical &amp; categorical variables
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline.html">
+     First model with scikit-learn
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="#fitting-a-more-powerful-model">
-     Fitting a more powerful model
+    <a class="reference internal" href="02_numerical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
+   Handling categorical data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Encoding of categorical variables
     </a>
    </li>
    <li class="toctree-l2">
@@ -149,6 +165,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
      Exercise 02
     </a>
@@ -159,14 +180,50 @@
     </a>
    </li>
   </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../predictive_modeling_pipeline/04_parameter_tuning_index.html">
-   Parameter tuning
+   Hyper-parameter tuning
   </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning.html">
+     Introduction to hyper-parameter tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_search.html">
+     Hyper-parameter tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Linear models
  </span>
@@ -188,7 +245,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Decision Trees and Ensemble Models
  </span>
@@ -210,7 +267,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Cross-validation
  </span>
@@ -222,7 +279,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Metrics
  </span>
@@ -234,7 +291,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Feature selection
  </span>
@@ -246,7 +303,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Interpretation
  </span>
@@ -263,7 +320,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption collapsible-parent">
  <span class="caption-text">
   Overfitting/Underfitting
  </span>
@@ -276,9 +333,7 @@
  </li>
 </ul>
 
-</nav>
-
- <!-- To handle the deprecated key -->
+</nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
   Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
@@ -307,11 +362,11 @@
             <i class="fas fa-arrow-up"></i>
         </button>
         
-        <div class="dropdown-buttons-trigger">
+        
+<div class="dropdown-buttons-trigger">
     <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
             class="fas fa-download"></i></button>
 
-    
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         
@@ -323,8 +378,8 @@
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
-    
 </div>
+
         <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -381,48 +436,19 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Working with both numerical &amp; categorical variables
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#working-with-categorical-variables">
+   Working with categorical variables
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#working-with-categorical-variables">
-     Working with categorical variables
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#encoding-ordinal-categories">
-       Encoding ordinal categories
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#encoding-nominal-categories-without-assuming-any-order">
-       Encoding nominal categories (without assuming any order)
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-1">
-     Exercise 1:
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoding-ordinal-categories">
+     Encoding ordinal categories
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#using-numerical-and-categorical-variables-together">
-     Using numerical and categorical variables together
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fitting-a-more-powerful-model">
-   Fitting a more powerful model
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#exercise-2">
-     Exercise 2:
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoding-nominal-categories-without-assuming-any-order">
+     Encoding nominal categories (without assuming any order)
     </a>
    </li>
   </ul>
@@ -438,14 +464,10 @@
         
               <div>
                 
-  <div class="section" id="working-with-both-numerical-categorical-variables">
-<h1>Working with both numerical &amp; categorical variables<a class="headerlink" href="#working-with-both-numerical-categorical-variables" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will present:</p>
-<ul class="simple">
-<li><p>typical ways to deal with <strong>categorical variables</strong></p></li>
-<li><p>how to train a predictive model on <strong>mixed types</strong> of data
-(i.e. numerical and categorical together)</p></li>
-</ul>
+  <div class="section" id="encoding-of-categorical-variables">
+<h1>Encoding of categorical variables<a class="headerlink" href="#encoding-of-categorical-variables" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will present typical ways to deal with <strong>categorical
+variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot encoding</strong>.</p>
 <p>Let’s first load the data as we did in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -505,8 +527,8 @@ it encodes the data using a finite list of possible countries (along with the
  Portugal                         67
  Taiwan                           65
  Iran                             59
- Nicaragua                        49
  Greece                           49
+ Nicaragua                        49
  Peru                             46
  Ecuador                          45
  France                           38
@@ -515,9 +537,9 @@ it encodes the data using a finite list of possible countries (along with the
  Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
+ Outlying-US(Guam-USVI-etc)       23
  Yugoslavia                       23
  Laos                             23
- Outlying-US(Guam-USVI-etc)       23
  Scotland                         21
  Honduras                         20
  Hungary                          19
@@ -920,7 +942,8 @@ be set to <code class="docutils literal notranslate"><span class="pre">0</span><
 </div>
 </div>
 </div>
-<p>Let’s wrap this numpy array in a dataframe with informative column names as provided by the encoder object:</p>
+<p>Let’s wrap this numpy array in a dataframe with informative column names as
+provided by the encoder object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -1096,7 +1119,8 @@ be set to <code class="docutils literal notranslate"><span class="pre">0</span><
 <p>5 rows × 102 columns</p>
 </div></div></div>
 </div>
-<p>Look at how the “workclass” variable of the first 3 records has been encoded and compare this to the original string representation.</p>
+<p>Look at how the “workclass” variable of the first 3 records has been encoded
+and compare this to the original string representation.</p>
 <p>The number of features after the encoding is more than 10 times larger than in the
 original data because some variables such as <code class="docutils literal notranslate"><span class="pre">occupation</span></code> and <code class="docutils literal notranslate"><span class="pre">native-country</span></code>
 have many possible categories.</p>
@@ -1142,417 +1166,17 @@ using cross-validation.</p>
 </div>
 </div>
 </div>
-<p>As you can see, this representation of the categorical variables of the data is slightly more predictive of the revenue than the numerical variables that we used previously.</p>
-</div>
-</div>
-<div class="section" id="exercise-1">
-<h2>Exercise 1:<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Try to fit a logistic regression model on categorical data transformed by
-the OrdinalEncoder instead. What do you observe?</p></li>
-</ul>
-<p>Open the dedicated notebook to do this exercise.</p>
-</div>
-<div class="section" id="using-numerical-and-categorical-variables-together">
-<h2>Using numerical and categorical variables together<a class="headerlink" href="#using-numerical-and-categorical-variables-together" title="Permalink to this headline">¶</a></h2>
-<p>In the previous sections, we saw that we need to treat data differently
-depending on their nature (i.e. numerical or categorical).</p>
-<p>Scikit-learn provides a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> class which will send
-specific columns to a specific transformer, making it easy to fit a single
-predictive model on a dataset that combines both kinds of variables together
-(heterogeneously typed tabular data).</p>
-<p>We can first define the columns depending on their data type:</p>
-<ul class="simple">
-<li><p><strong>binary encoding</strong> will be applied to categorical columns with only too
-possible values (e.g. sex=male or sex=female in this example). Each binary
-categorical columns will be mapped to one numerical columns with 0 or 1
-values.</p></li>
-<li><p><strong>one-hot encoding</strong> will be applied to categorical columns with more that
-two possible categories. This encoding will create one additional column for
-each possible categorical value.</p></li>
-<li><p><strong>numerical scaling</strong> numerical features which will be standardized.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binary_encoding_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span>
-
-<span class="n">one_hot_encoding_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;workclass&#39;</span><span class="p">,</span> <span class="s1">&#39;education&#39;</span><span class="p">,</span> <span class="s1">&#39;marital-status&#39;</span><span class="p">,</span> <span class="s1">&#39;occupation&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;relationship&#39;</span><span class="p">,</span> <span class="s1">&#39;race&#39;</span><span class="p">,</span> <span class="s1">&#39;native-country&#39;</span><span class="p">]</span>
-
-<span class="n">scaling_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;education-num&#39;</span><span class="p">,</span> <span class="s1">&#39;hours-per-week&#39;</span><span class="p">,</span> <span class="s1">&#39;capital-gain&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;capital-loss&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can now create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying a list of triplet
-(preprocessor name, transformer, columns). Finally, we can define a pipeline
-to stack this “preprocessor” with our classifier (logistic regression).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;binary-encoder&#39;</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">(),</span> <span class="n">binary_encoding_columns</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;one-hot-encoder&#39;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">),</span>
-     <span class="n">one_hot_encoding_columns</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;standard-scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">scaling_columns</span><span class="p">)])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Starting from <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> 0.23, the notebooks can display an interactive view of the pipelines.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
-<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s1">&#39;diagram&#39;</span><span class="p">)</span>
-
-<span class="n">model</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="30107f0f-2e92-4d92-9942-af0be1ca03c5" type="checkbox" ><label class="sk-toggleable__label" for="30107f0f-2e92-4d92-9942-af0be1ca03c5">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('columntransformer',
-                 ColumnTransformer(transformers=[('binary-encoder',
-                                                  OrdinalEncoder(), ['sex']),
-                                                 ('one-hot-encoder',
-                                                  OneHotEncoder(handle_unknown='ignore'),
-                                                  ['workclass', 'education',
-                                                   'marital-status',
-                                                   'occupation', 'relationship',
-                                                   'race', 'native-country']),
-                                                 ('standard-scaler',
-                                                  StandardScaler(),
-                                                  ['age', 'education-num',
-                                                   'hours-per-week',
-                                                   'capital-gain',
-                                                   'capital-loss'])])),
-                ('logisticregression', LogisticRegression(max_iter=1000))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="17e3feba-84e1-4a20-ba80-4bf309fffa2a" type="checkbox" ><label class="sk-toggleable__label" for="17e3feba-84e1-4a20-ba80-4bf309fffa2a">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('binary-encoder', OrdinalEncoder(), ['sex']),
-                                ('one-hot-encoder',
-                                 OneHotEncoder(handle_unknown='ignore'),
-                                 ['workclass', 'education', 'marital-status',
-                                  'occupation', 'relationship', 'race',
-                                  'native-country']),
-                                ('standard-scaler', StandardScaler(),
-                                 ['age', 'education-num', 'hours-per-week',
-                                  'capital-gain', 'capital-loss'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="5e111d57-8333-4bd8-966c-05503e443d5b" type="checkbox" ><label class="sk-toggleable__label" for="5e111d57-8333-4bd8-966c-05503e443d5b">binary-encoder</label><div class="sk-toggleable__content"><pre>['sex']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="b406fd1f-5a5c-44ce-9766-b302463fe6a3" type="checkbox" ><label class="sk-toggleable__label" for="b406fd1f-5a5c-44ce-9766-b302463fe6a3">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder()</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="69dffff2-7bb4-4bab-939d-651f146de2b4" type="checkbox" ><label class="sk-toggleable__label" for="69dffff2-7bb4-4bab-939d-651f146de2b4">one-hot-encoder</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="6e93fd06-abab-4806-b6d0-f4ef60ce8dd4" type="checkbox" ><label class="sk-toggleable__label" for="6e93fd06-abab-4806-b6d0-f4ef60ce8dd4">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown='ignore')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3fe4db36-dc63-47f8-8da9-dab7418cc10e" type="checkbox" ><label class="sk-toggleable__label" for="3fe4db36-dc63-47f8-8da9-dab7418cc10e">standard-scaler</label><div class="sk-toggleable__content"><pre>['age', 'education-num', 'hours-per-week', 'capital-gain', 'capital-loss']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3b9067c8-5cb1-48f0-b2e3-0f842abca17b" type="checkbox" ><label class="sk-toggleable__label" for="3b9067c8-5cb1-48f0-b2e3-0f842abca17b">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="cb29bc35-c826-4ca7-af3a-19112ff2c80c" type="checkbox" ><label class="sk-toggleable__label" for="cb29bc35-c826-4ca7-af3a-19112ff2c80c">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=1000)</pre></div></div></div></div></div></div></div></div></div>
-</div>
-<p>The final model is more complex than the previous models but still follows the
-same API:</p>
-<ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to preprocess the data then train the classifier;</p></li>
-<li><p>the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method can make predictions on new data;</p></li>
-<li><p>the <code class="docutils literal notranslate"><span class="pre">score</span></code> method is used to predict on the test data and compare the
-predictions to the expected test labels to compute the accuracy.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>age</th>
-      <th>workclass</th>
-      <th>education</th>
-      <th>education-num</th>
-      <th>marital-status</th>
-      <th>occupation</th>
-      <th>relationship</th>
-      <th>race</th>
-      <th>sex</th>
-      <th>capital-gain</th>
-      <th>capital-loss</th>
-      <th>hours-per-week</th>
-      <th>native-country</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>7762</th>
-      <td>56</td>
-      <td>Private</td>
-      <td>HS-grad</td>
-      <td>9</td>
-      <td>Divorced</td>
-      <td>Other-service</td>
-      <td>Unmarried</td>
-      <td>White</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>23881</th>
-      <td>25</td>
-      <td>Private</td>
-      <td>HS-grad</td>
-      <td>9</td>
-      <td>Married-civ-spouse</td>
-      <td>Transport-moving</td>
-      <td>Own-child</td>
-      <td>Other</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>30507</th>
-      <td>43</td>
-      <td>Private</td>
-      <td>Bachelors</td>
-      <td>13</td>
-      <td>Divorced</td>
-      <td>Prof-specialty</td>
-      <td>Not-in-family</td>
-      <td>White</td>
-      <td>Female</td>
-      <td>14344</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>28911</th>
-      <td>32</td>
-      <td>Private</td>
-      <td>HS-grad</td>
-      <td>9</td>
-      <td>Married-civ-spouse</td>
-      <td>Transport-moving</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>19484</th>
-      <td>39</td>
-      <td>Private</td>
-      <td>Bachelors</td>
-      <td>13</td>
-      <td>Married-civ-spouse</td>
-      <td>Sales</td>
-      <td>Wife</td>
-      <td>White</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>0</td>
-      <td>30</td>
-      <td>United-States</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;], dtype=object)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7762      &lt;=50K
-23881     &lt;=50K
-30507      &gt;50K
-28911     &lt;=50K
-19484     &lt;=50K
-Name: class, dtype: object
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8578331013021047
-</pre></div>
-</div>
-</div>
-</div>
-<p>This model can also be cross-validated as usual (instead of using a single
-train-test split):</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">scores</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.85116184, 0.8498311 , 0.84756347, 0.85268223, 0.85513923])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The accuracy is: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy is: 0.851 +- 0.003
-</pre></div>
-</div>
-</div>
-</div>
-<p>The compound model has a higher predictive accuracy than the
-two models that used numerical and categorical variables in
-isolation.</p>
-</div>
-</div>
-<div class="section" id="fitting-a-more-powerful-model">
-<h1>Fitting a more powerful model<a class="headerlink" href="#fitting-a-more-powerful-model" title="Permalink to this headline">¶</a></h1>
-<p><strong>Linear models</strong> are very nice because they are usually very cheap to train,
-<strong>small</strong> to deploy, <strong>fast</strong> to predict and give a <strong>good baseline</strong>.</p>
-<p>However, it is often useful to check whether more complex models such as an
-ensemble of decision trees can lead to higher predictive performance.</p>
-<p>In the following cell we try a scalable implementation of the <strong>Gradient Boosting
-Machine</strong> algorithm. For this class of models, we know that contrary to linear
-models, it is <strong>useless to scale the numerical features</strong> and furthermore it is
-both safe and significantly more computationally efficient to use an arbitrary
-<strong>integer encoding for the categorical variables</strong> even if the ordering is
-arbitrary. Therefore we adapt the preprocessing pipeline as follows:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
-
-<span class="c1"># For each categorical column, extract the list of all possible categories</span>
-<span class="c1"># in some arbritrary order.</span>
-<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">categorical_columns</span>
-<span class="p">]</span>
-
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">),</span>
-     <span class="n">categorical_columns</span><span class="p">)],</span> <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.29 s, sys: 32 ms, total: 1.32 s
-Wall time: 1.32 s
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8796986323806404
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can observe that we get significantly higher accuracies with the Gradient
-Boosting model. This is often what we observe whenever the dataset has a large
-number of samples and limited number of informative features (e.g. less than
-1000) with a mix of numerical and categorical variables.</p>
-<p>This explains why Gradient Boosted Machines are very popular among datascience
-practitioners who work with tabular data.</p>
-<div class="section" id="exercise-2">
-<h2>Exercise 2:<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Check that scaling the numerical features does not impact the speed or
-accuracy of <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code></p></li>
-<li><p>Check that one-hot encoding the categorical variable does not improve the
-accuracy of <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> but slows down the training.</p></li>
-</ul>
-<p>Open the dedicated notebook to do this exercise.</p>
+<p>As you can see, this representation of the categorical variables of the data
+is slightly more predictive of the revenue than the numerical variables that
+we used previously.</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
-<li><p>encoded categorical features with both an <strong>ordinal encoding</strong> and
-an <strong>one hot encoding</strong></p></li>
-<li><p>used a pipeline to process <strong>both numerical and categorical</strong> features before
-fitting a logistic regression</p></li>
-<li><p>seen that <strong>gradient boosting methods</strong> can outperforms the basic linear approach</p></li>
+<li><p>seen two common strategies for encoding categorical features : <strong>ordinal
+encoding</strong> and <strong>one-hot encoding</strong></p></li>
+<li><p>used a pipeline to process <strong>both numerical and categorical</strong> features
+before fitting a logistic regression</p></li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -1584,7 +1208,7 @@ fitting a logistic regression</p></li>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html" title="previous page">Preprocessing for categorical data</a>
+    <a class='left-prev' id="prev-link" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html" title="previous page">Handling categorical data</a>
     <a class='right-next' id="next-link" href="03_categorical_pipeline_ex_01.html" title="next page">Exercise 01</a>
 
     </div>

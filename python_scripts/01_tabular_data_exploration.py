@@ -35,7 +35,7 @@ import pandas as pd
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We can look at the OpenML webpage to learn more about this dataset: http://www.openml.org/d/1590
+# We can look at the OpenML webpage to learn more about this dataset: <http://www.openml.org/d/1590>
 #
 # The goal with this data is to predict whether a person earns over 50K a year
 # from heterogeneous data such as age, employment, education, family
@@ -46,7 +46,8 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 #
 # The data are stored in a pandas dataframe.
 #
-# Pandas is a Python library to manipulate tables, a bit like Excel but programming: https://pandas.pydata.org/
+# Pandas is a Python library to manipulate tables, a bit like Excel but
+# programming: <https://pandas.pydata.org/>
 
 # %%
 adult_census.head()  # Look at the first few lines of our dataframe

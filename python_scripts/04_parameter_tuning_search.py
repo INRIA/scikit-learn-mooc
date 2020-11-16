@@ -17,7 +17,7 @@
 #
 # In the previous notebook, we saw that hyperparameters can affect the
 # performance of a model. In this notebook, we will show:
-# # * how to tune these hyper-parameters;
+# * how to tune these hyper-parameters;
 # * how to evaluate the model performance together with hyper-parameter
 #   tuning.
 

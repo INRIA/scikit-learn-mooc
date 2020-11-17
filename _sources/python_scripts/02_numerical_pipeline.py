@@ -75,7 +75,7 @@ data.dtypes
 # %%
 from sklearn.compose import make_column_selector as selector
 
-numerical_columns_selector = selector(dtype_include=["int", "float"])
+numerical_columns_selector = selector(dtype_exclude=object)
 numerical_columns = numerical_columns_selector(data)
 numerical_columns
 

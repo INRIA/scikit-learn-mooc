@@ -48,7 +48,7 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 # %%
 from sklearn.compose import make_column_selector as selector
 
-categorical_columns_selector = selector(dtype_exclude=["int", "float"])
+categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 

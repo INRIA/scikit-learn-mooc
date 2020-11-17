@@ -60,7 +60,7 @@ data.dtypes
 # %%
 from sklearn.compose import make_column_selector as selector
 
-categorical_columns_selector = selector(dtype_exclude=["int", "float"])
+categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 categorical_columns
 

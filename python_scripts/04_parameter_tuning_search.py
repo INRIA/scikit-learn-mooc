@@ -53,11 +53,12 @@ df_train, df_test, target_train, target_test = train_test_split(
 
 # %%
 from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_selector as selector
+
 from sklearn.preprocessing import OrdinalEncoder
 
-categorical_columns = [
-    'workclass', 'education', 'marital-status', 'occupation',
-    'relationship', 'race', 'native-country', 'sex']
+categorical_columns_selector = selector(dtype_include=object)
+categorical_columns = categorical_columns_selector(data)
 
 categories = [
     data[column].unique() for column in data[categorical_columns]]

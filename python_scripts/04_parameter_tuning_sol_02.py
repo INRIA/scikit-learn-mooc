@@ -47,15 +47,16 @@ df_train, df_test, target_train, target_test = train_test_split(
 # Start by defining the columns and the preprocessing pipelines to be applied
 # on each columns.
 # %%
-categorical_columns = [
-    'workclass', 'education', 'marital-status', 'occupation',
-    'relationship', 'race', 'native-country', 'sex']
+from sklearn.compose import make_column_selector as selector
+
+categorical_columns_selector = selector(dtype_include=object)
+categorical_columns = categorical_columns_selector(data)
 
 categories = [data[column].unique()
               for column in data[categorical_columns]]
 
-numerical_columns = [
-    'age', 'capital-gain', 'capital-loss', 'hours-per-week']
+numerical_columns_selector = selector(dtype_exclude=object)
+numerical_columns = numerical_columns_selector(data)
 
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler

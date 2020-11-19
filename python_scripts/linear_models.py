@@ -112,19 +112,18 @@ print(
 )
 
 # %% [markdown]
-# Instead of calling the transformer to transform the data and then calling
-# the regressor, scikit-learn provides a `Pipeline`, which 'chains' the
-# transformer and regressor together. The pipeline allows you to use a
-# sequence of transformer(s) followed by a regressor or a classifier, in one
-# call. (i.e. fitting the pipeline will fit both the transformer(s) and the regressor. 
-# Then predicting from the pipeline will first transform the data through the transformer(s)
-# then predict with the regressor from the transformed data)
+# Instead of calling the transformer to transform the data and then calling the
+# regressor, scikit-learn provides a `Pipeline`, which 'chains' the transformer
+# and regressor together. The pipeline allows you to use a sequence of
+# transformer(s) followed by a regressor or a classifier, in one call. (i.e.
+# fitting the pipeline will fit both the transformer(s) and the regressor. Then
+# predicting from the pipeline will first transform the data through the
+# transformer(s) then predict with the regressor from the transformed data)
 #
-# This pipeline exposes the same API as the regressor and classifier
-# and will manage the calls to `fit` and `transform` for you, avoiding any
-# problems with data leakage (when knowledge of the test data was 
-# inadvertently included in training a model, as when fitting a transformer
-# on the test data).
+# This pipeline exposes the same API as the regressor and classifier and will
+# manage the calls to `fit` and `transform` for you, avoiding any problems with
+# data leakage (when knowledge of the test data was inadvertently included in
+# training a model, as when fitting a transformer on the test data).
 #
 # We already presented `Pipeline` in the second notebook and we will use it
 # here to combine both the scaling and the linear regression.

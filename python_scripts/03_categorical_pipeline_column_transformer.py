@@ -75,15 +75,9 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-preprocessor = ColumnTransformer(
-    [
-        (
-            "one-hot-encoder",
-            OneHotEncoder(drop="if_binary"),
-            categorical_columns,
-        ),
-        ("standard-scaler", StandardScaler(), numerical_columns),
-    ]
+preprocessor = ColumnTransformer([
+    ("one-hot-encoder", OneHotEncoder(drop="if_binary"), categorical_columns),
+    ("standard-scaler", StandardScaler(), numerical_columns)]
 )
 
 # %%

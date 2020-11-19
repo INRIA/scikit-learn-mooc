@@ -64,7 +64,7 @@ plt.plot(
     weight_flipper_length * flipper_length_range + intercept_body_mass,
     linewidth=4,
 )
-plt.title("Model using LinearRegression from scikit-learn")
+_ = plt.title("Model using LinearRegression from scikit-learn")
 
 # %%
 # In the solution of the previous exercise, we implemented a function to

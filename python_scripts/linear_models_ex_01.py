@@ -2,10 +2,12 @@
 # # Exercise 01
 #
 # The aim of this exercise is three-fold:
+#
 # * understand the parametrization of a linear model;
-# * quantify the goodness of fit of a set of such model;
+# * quantify the goodness of fit of a set of such model.
 #
 # We will reuse part of the code of the course to:
+#
 # * load data;
 # * create the function representing a linear model;
 # * plot the data and the linear model function.
@@ -109,6 +111,7 @@ flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 def goodness_fit_measure(true_values, predictions):
     # TODO: define a measure indicating the goodness of fit of a model given
     # the true values and the model predictions.
+    pass
 
 
 # %%

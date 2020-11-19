@@ -51,64 +51,20 @@ intercept_body_mass
 # %% [markdown]
 # We will use the weight and intercept to plot the model found using the
 # scikit-learn.
-#
-# First, we need to redefine the helper functions saw in the previous notebook.
-
-
-# %%
-def linear_model_flipper_mass(
-    flipper_length, weight_flipper_length, intercept_body_mass
-):
-    """Linear model of the form y = a * x + b"""
-    body_mass = weight_flipper_length * flipper_length + intercept_body_mass
-    return body_mass
-
-
-# %%
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-
-# %% [markdown]
-# ### Data and model visualization
-
-
-def plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass,
-    ax=None,
-):
-    """Compute and plot the prediction."""
-    inferred_body_mass = linear_model_flipper_mass(
-        flipper_length_range,
-        weight_flipper_length=weight_flipper_length,
-        intercept_body_mass=intercept_body_mass,
-    )
-
-    if ax is None:
-        _, ax = plt.subplots()
-
-    sns.scatterplot(data=data, x=feature_names, y=target_name, ax=ax)
-    ax.plot(
-        flipper_length_range,
-        inferred_body_mass,
-        linewidth=3,
-        label=(
-            f"{weight_flipper_length:.2f} (g / mm) * flipper length + "
-            f"{intercept_body_mass:.2f} (g)"
-        ),
-    )
-    plt.legend()
-
-# %% [markdown]
-# Now, we can use the weight and intercept of the scikit-learn model to make
-# the plot.
 
 # %%
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 flipper_length_range = np.linspace(X.min(), X.max(), num=300)
-plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass
+sns.scatterplot(x=X[feature_names], y=y)
+plt.plot(
+    flipper_length_range,
+    weight_flipper_length * flipper_length_range + intercept_body_mass,
+    linewidth=4,
 )
+plt.title("Model using LinearRegression from scikit-learn")
 
 # %%
 # In the solution of the previous exercise, we implemented a function to

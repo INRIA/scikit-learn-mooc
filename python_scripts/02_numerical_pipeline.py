@@ -28,11 +28,16 @@
 #
 # We will use the same dataset "adult_census" described in the previous notebook.
 # For more details about the dataset see <http://www.openml.org/d/1590>.
+#
+# As Numerical data is the most natural type of data used in machine
+# learning and can (almost) directly be fed into predictive models. We
+# will load a the subset of the original data with only the numerical
+# columns.
 
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+df = pd.read_csv("../datasets/adult-census-numeric.csv")
 
 # %% [markdown]
 # Let's have a look at the first records of this data frame:
@@ -46,42 +51,20 @@ target = df[target_name]
 target
 
 # %% [markdown]
-# For simplicity, we will ignore the "fnlwgt" (final weight) column that was
-# crafted by the creators of the dataset when sampling the dataset to be
-# representative of the full census database.
+# We now separate out the data that we will use to predict from the
+# prediction target
 
 # %%
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = df.drop(columns=[target_name, ])
 data.head()
 
 
 # %% [markdown]
-# ## Working with numerical data
-#
-# Numerical data is the most natural type of data used in machine learning
-# and can (almost) directly be fed into predictive models. We can quickly have
-# a look at such data by selecting the subset of numerical columns from the
-# original data.
-#
 # We will use this subset of data to fit a linear classification model to
 # predict the income class.
 
 # %%
 data.columns
-
-# %%
-data.dtypes
-
-# %%
-from sklearn.compose import make_column_selector as selector
-
-numerical_columns_selector = selector(dtype_exclude=object)
-numerical_columns = numerical_columns_selector(data)
-numerical_columns
-
-# %%
-data_numeric = data[numerical_columns]
-data_numeric.head()
 
 # %% [markdown]
 # When building a machine learning model, it is important to leave out a
@@ -97,7 +80,7 @@ data_numeric.head()
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data_numeric, target, random_state=42)
+    data, target, random_state=42)
 
 # %%
 print(

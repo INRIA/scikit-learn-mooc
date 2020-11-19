@@ -29,7 +29,7 @@
 # We will use the same dataset "adult_census" described in the previous notebook.
 # For more details about the dataset see <http://www.openml.org/d/1590>.
 #
-# As numerical data is the most natural type of data used in machine
+# Numerical data is the most natural type of data used in machine
 # learning and can (almost) directly be fed into predictive models. We
 # will load a the subset of the original data with only the numerical
 # columns.

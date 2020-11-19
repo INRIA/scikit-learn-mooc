@@ -2,10 +2,9 @@ class: titlepage
 
 .header[MOOC Machine learning with scikit-learn]
 
-# Overfit and underfit
+# Overfitting and underfitting
 
-This lesson covers overfit and underfit. These are concepts important to
-understand why a model generalizes well or not to new data
+Understand when and why a model generalizes well or not on unseen data.
 
 <img src="../figures/scikit-learn-logo.svg">
 
@@ -380,7 +379,7 @@ this is where good machine-learning models lie.
 ---
 class: center, middle
 
-# With varying sample size
+# Varying sample size
 
 Learning curves
 
@@ -394,7 +393,7 @@ learning curve.
 
 ---
 
-# Train vs test error: varying sample size
+# Varying sample size
 
 .shift-left.pull-left[<img
 		       src="../figures/polynomial_overfit_ntrain_42.svg"
@@ -413,7 +412,7 @@ error will be low, but the test error will be high.
 
 ---
 
-# Train vs test error: varying sample size
+# Varying varying sample size
 
 .shift-left.pull-left[<img
 		       src="../figures/polynomial_overfit_ntrain_145.svg"
@@ -429,7 +428,7 @@ the train error increases: the models are less overfitting.
 
 ---
 
-# Train vs test error: varying sample size
+# Varying sample size
 
 .shift-left.pull-left[<img
 		       src="../figures/polynomial_overfit_ntrain_1179.svg"
@@ -447,7 +446,7 @@ longer overfit.
 
 ---
 
-# Train vs test error: varying sample size
+# Varying sample size
 
 .shift-left.pull-left[<img
 		       src="../figures/polynomial_overfit_ntrain_6766.svg"
@@ -474,12 +473,15 @@ to try more complex models.
 
 ---
 
-# Bayes rate: no improvement possible
+# Bayes error rate
+
 
 .shift-left.pull-left[<img
 		       src="../figures/polynomial_overfit_ntrain_6766.svg"
 		       width=110%>]
 .width50.pull-right[
+The error of the best model trained on unlimited data.
+
 Here, the data-generating process is a degree-9 polynomial 
 
 We cannot do better
@@ -519,14 +521,14 @@ Crucial to match
 ]
 ]
 
-.centered[So far: polynomes for both]
+.centered[So far: polynomials for both]
 
 ???
 
-The excellent performance that we just observed for degree-9 polynomes
+The excellent performance that we just observed for degree-9 polynomials
 when there is plenty of data comes from the perfect match between the
 statistical model used to analyse the data and the data-generating process. So far, we have used
-polynomes for both of them. But in practice, given data, we seldom know
+polynomials for both of them. But in practice, given data, we seldom know
 a simple form of model in which the data is drawn. 
 
 For this reason, the choice of family of model is crucial.
@@ -550,7 +552,7 @@ Different model families come with different form of bias, which we call
 inductive bias, and of complexity.
 
 For instance, polynomial regressions tend to be smooth, and their
-complexity is controlled by the degree of the polynome used to fit the
+complexity is controlled by the degree of the polynomials used to fit the
 data. On the other hand, decision trees are locally constant. Their
 complexity is controlled by the number of constant regions that they fit.
 

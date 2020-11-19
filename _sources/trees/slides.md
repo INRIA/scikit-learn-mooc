@@ -1,3 +1,3 @@
-# Presentation: intuitions on tree-based models
+# 🖵  intuitions on tree-based models
 
 <iframe src="../slides/index.html?file=../slides/trees.md#p1"/>

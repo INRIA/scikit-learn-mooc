@@ -1,8 +1,9 @@
 # %% [markdown]
 # # Solution for Exercise 01
 #
-# The aim of this exercise is to get intuitions regarding the parameters of a
-# simple linear model and how to quantify the error of such model.
+# The aim of this exercise is three-fold:
+# * understand the parametrization of a linear model;
+# * quantify the goodness of fit of a set of such model;
 #
 # We will reuse part of the code of the course to:
 # * load data;

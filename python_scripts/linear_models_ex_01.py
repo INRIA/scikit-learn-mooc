@@ -1,15 +1,16 @@
 # %% [markdown]
-# # Solution for Exercise 01
+# # Exercise 01
 #
-# The aim of this exercise is to get intuitions regarding the parameters of a
-# simple linear model and how to quantify the error of such model.
+# The aim of this exercise is three-fold:
+# * understand the parametrization of a linear model;
+# * quantify the goodness of fit of a set of such model;
 #
 # We will reuse part of the code of the course to:
 # * load data;
 # * create the function representing a linear model;
 # * plot the data and the linear model function.
 #
-# ## Prerequisite
+# ## Prerequisites
 #
 # ### Data loading
 
@@ -87,8 +88,9 @@ import numpy as np
 flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 
 # %%
-weights = [...]
-intercepts = [...]
+# TODO
+# weights = [...]
+# intercepts = [...]
 
 
 # %% [markdown]
@@ -110,10 +112,11 @@ def goodness_fit_measure(true_values, predictions):
 
 
 # %%
-for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
-    y_pred = linear_model_flipper_mass(X, weight, intercept)
-    print(f"Model #{model_idx}:")
-    print(f"{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)")
-    print(f"Error: {goodness_fit_measure(y, y_pred):.3f}\n")
+# TODO: uncomment
+# for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
+#     y_pred = linear_model_flipper_mass(X, weight, intercept)
+#     print(f"Model #{model_idx}:")
+#     print(f"{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)")
+#     print(f"Error: {goodness_fit_measure(y, y_pred):.3f}\n")
 
 # %%

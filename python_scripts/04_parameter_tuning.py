@@ -20,7 +20,7 @@
 # hyper-parameters and are specific for each family of models. In addition, a
 # specific set of hyper-parameters are optimal for a specific dataset and thus
 # they need to be optimized. In this notebook we will use the words
-# "hyper-parameters" and "parameters" interchangeably
+# "hyper-parameters" and "parameters" interchangeably.
 #
 # This notebook shows:
 # * the influence of changing model hyper-parameters;
@@ -70,9 +70,8 @@ categories = [
 categorical_preprocessor = OrdinalEncoder(categories=categories)
 
 preprocessor = ColumnTransformer([
-    ('cat-preprocessor', categorical_preprocessor,
-     categorical_columns),], remainder='passthrough',
-                                 sparse_threshold=0)
+    ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    remainder='passthrough', sparse_threshold=0)
 
 # %% [markdown]
 # Finally, we use a tree-based classifier (i.e. histogram gradient-boosting) to
@@ -87,8 +86,7 @@ from sklearn.pipeline import Pipeline
 
 model = Pipeline([
     ("preprocessor", preprocessor),
-    ("classifier",
-     HistGradientBoostingClassifier(random_state=42))])
+    ("classifier", HistGradientBoostingClassifier(random_state=42))])
 model.fit(df_train, target_train)
 
 print(

@@ -55,19 +55,12 @@ categorical_columns = categorical_columns_selector(data)
 # (heterogeneously typed tabular data).
 #
 # We can first define the columns depending on their data type:
-# * **binary encoding** will be applied to categorical columns with only too
-#   possible values (e.g. sex=male or sex=female in this example). Each binary
-#   categorical columns will be mapped to one numerical columns with 0 or 1
-#   values.
-# * **one-hot encoding** will be applied to categorical columns with more that
-#   two possible categories. This encoding will create one additional column for
-#   each possible categorical value.
+# * **one-hot encoding** will be applied to categorical columns. Besides, we
+#   provide the option `drop="if_binary"` to keep only one of the encoded
+#   column when the feature contains only two categories (e.g. sex="male" or
+#   sex="female"). In this particular case, one column is the invert of the
+#   other, and they both carry the same information.
 # * **numerical scaling** numerical features which will be standardized.
-
-# %%
-binary_encoding_columns = ['sex']
-one_hot_encoding_columns = [
-    c for c in categorical_columns if c not in binary_encoding_columns]
 
 # %% [markdown]
 # We can now create our `ColumnTransfomer` by specifying a list of triplet
@@ -82,11 +75,16 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-preprocessor = ColumnTransformer([
-    ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
-    ('one-hot-encoder', OneHotEncoder(handle_unknown='ignore'),
-     one_hot_encoding_columns),
-    ('standard-scaler', StandardScaler(), numerical_columns)])
+preprocessor = ColumnTransformer(
+    [
+        (
+            "one-hot-encoder",
+            OneHotEncoder(drop="if_binary"),
+            categorical_columns,
+        ),
+        ("standard-scaler", StandardScaler(), numerical_columns),
+    ]
+)
 
 # %%
 model = make_pipeline(
@@ -102,9 +100,10 @@ with config_context(display='diagram'):
     model
 
 # %% [markdown]
-# The final model is more complex than the previous models but still follows the
-# same API:
-# - the `fit` method is called to preprocess the data then train the classifier;
+# The final model is more complex than the previous models but still follows
+# the same API:
+# - the `fit` method is called to preprocess the data then train the
+#   classifier;
 # - the `predict` method can make predictions on new data;
 # - the `score` method is used to predict on the test data and compare the
 #   predictions to the expected test labels to compute the accuracy.
@@ -157,12 +156,13 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # However, it is often useful to check whether more complex models such as an
 # ensemble of decision trees can lead to higher predictive performance.
 #
-# In the following cell we try a scalable implementation of the **Gradient Boosting
-# Machine** algorithm. For this class of models, we know that contrary to linear
-# models, it is **useless to scale the numerical features** and furthermore it is
-# both safe and significantly more computationally efficient to use an arbitrary
-# **integer encoding for the categorical variables** even if the ordering is
-# arbitrary. Therefore we adapt the preprocessing pipeline as follows:
+# In the following cell we try a scalable implementation of the **Gradient
+# Boosting Machine** algorithm. For this class of models, we know that contrary
+# to linear models, it is **useless to scale the numerical features** and
+# furthermore it is both safe and significantly more computationally efficient
+# to use an arbitrary **integer encoding for the categorical variables** even
+# if the ordering is arbitrary. Therefore we adapt the preprocessing pipeline
+# as follows:
 
 # %%
 from sklearn.experimental import enable_hist_gradient_boosting
@@ -190,17 +190,19 @@ model.score(data_test, target_test)
 
 # %% [markdown]
 # We can observe that we get significantly higher accuracies with the Gradient
-# Boosting model. This is often what we observe whenever the dataset has a large
-# number of samples and limited number of informative features (e.g. less than
-# 1000) with a mix of numerical and categorical variables.
+# Boosting model. This is often what we observe whenever the dataset has a
+# large number of samples and limited number of informative features (e.g. less
+# than # 1000) with a mix of numerical and categorical variables.
 #
-# This explains why Gradient Boosted Machines are very popular among datascience
-# practitioners who work with tabular data.
+# This explains why Gradient Boosted Machines are very popular among
+# datascience practitioners who work with tabular data.
 
 # %% [markdown]
 #
 # In this notebook we have:
-# * used a `ColumnTransformer` to apply different preprocessing for categorical and numerical variables
-# * used a pipeline to chain the `ColumnTransformer` preprocessing and logistic regresssion fitting
+# * used a `ColumnTransformer` to apply different preprocessing for categorical
+#   and numerical variables
+# * used a pipeline to chain the `ColumnTransformer` preprocessing and logistic
+#   regresssion fitting
 # * seen that **gradient boosting methods** can outperforms the basic linear
 #   approach

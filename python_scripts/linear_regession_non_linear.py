@@ -10,6 +10,9 @@
 # We will provide examples where we will use a kernel support vector machine
 # to perform classification on some toy-datasets where it is impossible to
 # find a perfect linear separation.
+#
+# First, we redefine our plotting utility to show the decision boundary of a
+# classifier.
 
 # %%
 import numpy as np
@@ -43,6 +46,10 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
     return ax
 
 
+# %% [markdown]
+# We will generate some synthetic data with special pattern which are known to
+# be non-linear.
+
 # %%
 import pandas as pd
 from sklearn.datasets import (
@@ -68,39 +75,71 @@ datasets = [
 ]
 range_features = {"feature #1": (-5, 5), "feature #2": (-5, 5)}
 
+# %% [markdown]
+# We will first visualize the different datasets.
+
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
 
-_, axs = plt.subplots(ncols=3, nrows=2, figsize=(12, 9))
+_, axs = plt.subplots(ncols=3, nrows=1, figsize=(12, 4))
 
-linear_model = make_pipeline(StandardScaler(), SVC(kernel="linear"))
-kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf"))
-
-for ax, (X, y) in zip(axs[0], datasets):
-    linear_model.fit(X, y)
-    plot_decision_function(linear_model, range_features, ax=ax)
-    sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
-                    palette=["tab:red", "tab:blue"], ax=ax)
-
-for ax, (X, y) in zip(axs[1], datasets):
-    kernel_model.fit(X, y)
-    plot_decision_function(kernel_model, range_features, ax=ax)
+for ax, (X, y) in zip(axs, datasets):
     sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
                     palette=["tab:red", "tab:blue"], ax=ax)
 
 # %% [markdown]
+# Inspecting these three datasets, it is clear that a linear model cannot
+# separate the two classes. Now, we will train a SVC classifier where we will
+# use a linear kernel to show the limitation of such linear model on the
+# following dataset
+
+# %%
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+
+linear_model = make_pipeline(StandardScaler(), SVC(kernel="linear"))
+
+_, axs = plt.subplots(ncols=3, nrows=1, figsize=(12, 4))
+for ax, (X, y) in zip(axs, datasets):
+    linear_model.fit(X, y)
+    plot_decision_function(linear_model, range_features, ax=ax)
+    sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
+                    palette=["tab:red", "tab:blue"], ax=ax)
+    ax.set_title(f"Accuracy: {linear_model.score(X, y):.3f}")
+
+# %% [markdown]
+# As expected, the linear model parametrization is not enough to adapt the
+# synthetic dataset.
+#
+# Now, we will fit an SVC with an RBF kernel that will handle the non-linearity
+# using the kernel trick.
+
+# %%
+kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf"))
+
+_, axs = plt.subplots(ncols=3, nrows=1, figsize=(12, 4))
+for ax, (X, y) in zip(axs, datasets):
+    kernel_model.fit(X, y)
+    plot_decision_function(kernel_model, range_features, ax=ax)
+    sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
+                    palette=["tab:red", "tab:blue"], ax=ax)
+    ax.set_title(f"Accuracy: {kernel_model.score(X, y):.3f}")
+
+# %% [markdown]
+# In this later case, we can see that the accuracy is close to be perfect and
+# that the decision boundary is non-linear. Thus, kernel trick or data
+# augmentation are the tricks to make a linear classifier more expressive.
+
+# %% [markdown]
 # # Main take away
 #
-# - `LinearRegression` find the best slope which minimize the mean squared
-#   error on the train set
-# - `Ridge` could be better on the test set, thanks to its regularization
-# - `RidgeCV` and `LogisiticRegressionCV` find the best relugarization thanks
-#   to cross validation on the training data
-# - `pipeline` can be used to combinate a scaler and a model
-# - If the data are not linearly separable, we shall use a more complex model
-#   or use feature augmentation
+# - a linear model as a specific parametrization defined by some weights and an
+#   intercept;
+# - linear models require to scale the data before to be trained;
+# - regularization allows to fight over-fitting;
+# - the regularization parameter needs to be fine tuned for each application;
+# - linear models can be used with data presenting non-linear links but require
+#   extra work such as the use of data augmentation or kernel trick.
 #

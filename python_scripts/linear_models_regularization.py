@@ -27,7 +27,7 @@ X.head()
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
+    X, y, random_state=0, test_size=0.5
 )
 
 # %%
@@ -86,7 +86,7 @@ weights = pd.Series(
         input_features=X.columns)
 )
 _, ax = plt.subplots(figsize=(6, 12))
-weights.plot(kind="barh", ax=ax)
+_ = weights.plot(kind="barh", ax=ax)
 
 # %% [markdown]
 # We can force the linear regression model to consider all features in a more
@@ -99,7 +99,7 @@ from sklearn.linear_model import Ridge
 
 ridge = make_pipeline(
     PolynomialFeatures(degree=2),
-    Ridge(alpha=1e4)
+    Ridge(alpha=0.5)
 )
 ridge.fit(X_train, y_train)
 
@@ -126,11 +126,11 @@ weights = pd.Series(
         input_features=X.columns)
 )
 _, ax = plt.subplots(figsize=(6, 12))
-weights.plot(kind="barh", ax=ax)
+_ = weights.plot(kind="barh", ax=ax)
 
 # %% [markdown]
-# We see that the magnitude of the weights are more homogeneous across weights
-# and all closer to zero.
+# We see that the magnitude of the weights are shrinked towards zero in
+# comparison with the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization
@@ -233,7 +233,7 @@ print(
 ridge = make_pipeline(
     PolynomialFeatures(degree=2),
     StandardScaler(),
-    Ridge(alpha=0.1)
+    Ridge(alpha=0.5)
 )
 ridge.fit(X_train, y_train)
 
@@ -246,9 +246,9 @@ print(
 # In the previous example, we see the benefit of using a pipeline. It
 # simplifies the manual handling.
 #
-# When creating the model, we also modify the value of `alpha` of the ridge
-# model. Indeed, this parameter does not have a default good value. It depends
-# on the data provided. Therefore, it needs to be tuned for each dataset.
+# When creating the model, keeping the same `alpha` does not give good results.
+# It depends on the data provided. Therefore, it needs to be tuned for each
+# dataset.
 #
 # In the next section, we will present the steps to tune the parameters.
 #
@@ -270,18 +270,18 @@ print(
 # alpha.
 
 # %%
-X_train, X_valid, y_train, y_valid = train_test_split(
-    X_train, y_train, random_state=0
+X_sub_train, X_valid, y_sub_train, y_valid = train_test_split(
+    X_train, y_train, random_state=0, test_size=0.25
 )
 
 # %%
 import numpy as np
 
-alphas = np.logspace(0, 2, num=20)
+alphas = np.logspace(-10, -1, num=30)
 list_ridge_scores = []
 for alpha in alphas:
     ridge.set_params(ridge__alpha=alpha)
-    ridge.fit(X_train, y_train)
+    ridge.fit(X_sub_train, y_sub_train)
     list_ridge_scores.append(ridge.score(X_valid, y_valid))
 
 
@@ -294,12 +294,27 @@ _ = plt.legend()
 # We see that, just like adding salt in cooking, adding regularization in our
 # model could improve its error on the validation set. But too much
 # regularization, like too much salt, decreases its performance.
-#
-# We can see visually that the best `alpha` should be around 45.
 
 # %%
 best_alpha = alphas[np.argmax(list_ridge_scores)]
 best_alpha
+
+# %%
+# We can retrain a ridge model on the full training set and set the alpha and
+# check the score on the left out dataset.
+
+# %%
+ridge = make_pipeline(
+    PolynomialFeatures(degree=2),
+    StandardScaler(),
+    Ridge(alpha=best_alpha)
+)
+ridge.fit(X_train, y_train)
+
+print(
+    f"R2 score of ridge model on the test set:\n"
+    f"{ridge.score(X_test, y_test):.3f}"
+)
 
 # %% [markdown]
 # In the next exercise, you will use a scikit-learn estimator which allows to

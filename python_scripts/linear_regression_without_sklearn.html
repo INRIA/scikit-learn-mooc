@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linear regression without scikit-learn &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Exercise 01" href="linear_models_ex_01.html" />
+    <link rel="prev" title="🖵 Intuitions on linear models" href="../linear_models/slides.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Machine Learning Concepts
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/slides.html">
+   🖵  Introducing machine-learning concepts
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  The Predictive Modeling Pipeline
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_tabular_data_exploration.html">
+   Tabular data exploration
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html">
+   Fitting a scikit-learn model on numerical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline.html">
+     First model with scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
+   Handling categorical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline.html">
+     Encoding of categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/04_parameter_tuning_index.html">
+   Hyper-parameter tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning.html">
+     Introduction to hyper-parameter tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_search.html">
+     Hyper-parameter tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/slides.html">
+   🖵  Intuitions on linear models
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Linear regression without scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_01.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_in_sklearn.html">
+   Linear regression using scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_non_linear_link.html">
+   Linear regression with non-linear link between data and target
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_03.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_03.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_regularization.html">
+   Regularization of linear regression model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_04.html">
+   Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_04.html">
+   Solution for Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="logistic_regression.html">
+   Linear model for classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_05.html">
+   Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_05.html">
+   Solution for Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regession_non_linear.html">
+   Beyond linear separation in classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regession_non_linear.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Tree-based Models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/slides.html">
+   🖵  Intuitions on tree-based models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees.html">
+   Decision tree in depth
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble.html">
+   Ensemble learning: when many are better that the one
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Evaluating model performance
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cross_validation.html">
+   Evaluation of your predictive model: the cross-validation framework.
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="metrics.html">
+   Evaluation of your predictive model: which metric to choose?
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Feature selection
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection.html">
+   Feature selection
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Overfitting/Underfitting
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/slides.html">
+   Slides
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/python_scripts/linear_regression_without_sklearn.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.py</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/INRIA/scikit-learn-mooc"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/linear_regression_without_sklearn.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/linear_regression_without_sklearn.py"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="linear-regression-without-scikit-learn">
+<h1>Linear regression without scikit-learn<a class="headerlink" href="#linear-regression-without-scikit-learn" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we introduce linear regression. Before to present class
+available in scikit-learn, we present some insights with a simple example.
+We will use a dataset that contains information about penguins.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>studyName</th>
+      <th>Sample Number</th>
+      <th>Species</th>
+      <th>Region</th>
+      <th>Island</th>
+      <th>Stage</th>
+      <th>Individual ID</th>
+      <th>Clutch Completion</th>
+      <th>Date Egg</th>
+      <th>Culmen Length (mm)</th>
+      <th>Culmen Depth (mm)</th>
+      <th>Flipper Length (mm)</th>
+      <th>Body Mass (g)</th>
+      <th>Sex</th>
+      <th>Delta 15 N (o/oo)</th>
+      <th>Delta 13 C (o/oo)</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PAL0708</td>
+      <td>1</td>
+      <td>Adelie Penguin (Pygoscelis adeliae)</td>
+      <td>Anvers</td>
+      <td>Torgersen</td>
+      <td>Adult, 1 Egg Stage</td>
+      <td>N1A1</td>
+      <td>Yes</td>
+      <td>2007-11-11</td>
+      <td>39.1</td>
+      <td>18.7</td>
+      <td>181.0</td>
+      <td>3750.0</td>
+      <td>MALE</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Not enough blood for isotopes.</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PAL0708</td>
+      <td>2</td>
+      <td>Adelie Penguin (Pygoscelis adeliae)</td>
+      <td>Anvers</td>
+      <td>Torgersen</td>
+      <td>Adult, 1 Egg Stage</td>
+      <td>N1A2</td>
+      <td>Yes</td>
+      <td>2007-11-11</td>
+      <td>39.5</td>
+      <td>17.4</td>
+      <td>186.0</td>
+      <td>3800.0</td>
+      <td>FEMALE</td>
+      <td>8.94956</td>
+      <td>-24.69454</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PAL0708</td>
+      <td>3</td>
+      <td>Adelie Penguin (Pygoscelis adeliae)</td>
+      <td>Anvers</td>
+      <td>Torgersen</td>
+      <td>Adult, 1 Egg Stage</td>
+      <td>N2A1</td>
+      <td>Yes</td>
+      <td>2007-11-16</td>
+      <td>40.3</td>
+      <td>18.0</td>
+      <td>195.0</td>
+      <td>3250.0</td>
+      <td>FEMALE</td>
+      <td>8.36821</td>
+      <td>-25.33302</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PAL0708</td>
+      <td>4</td>
+      <td>Adelie Penguin (Pygoscelis adeliae)</td>
+      <td>Anvers</td>
+      <td>Torgersen</td>
+      <td>Adult, 1 Egg Stage</td>
+      <td>N2A2</td>
+      <td>Yes</td>
+      <td>2007-11-16</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Adult not sampled.</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PAL0708</td>
+      <td>5</td>
+      <td>Adelie Penguin (Pygoscelis adeliae)</td>
+      <td>Anvers</td>
+      <td>Torgersen</td>
+      <td>Adult, 1 Egg Stage</td>
+      <td>N3A1</td>
+      <td>Yes</td>
+      <td>2007-11-16</td>
+      <td>36.7</td>
+      <td>19.3</td>
+      <td>193.0</td>
+      <td>3450.0</td>
+      <td>FEMALE</td>
+      <td>8.76651</td>
+      <td>-25.32426</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This dataset contains measurements taken of penguins. We will formulate the
+following problem: using the flipper length of a penguin, we would like
+to infer its mass.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">feature_names</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
+
+<span class="c1"># select the features of interest</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">feature_names</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_regression_without_sklearn_3_0.png" src="../_images/linear_regression_without_sklearn_3_0.png" />
+</div>
+</div>
+<p>In this problem, penguin mass is our target. It is a continuous
+variable that roughly varies between 2700 g and 6300 g. Thus, this is a
+regression problem (in contrast to classification). We also see that there is
+almost a linear relationship between the body mass of the penguin and the
+flipper length. The longer the flipper, the heavier the penguin.</p>
+<p>Thus, we could come up with a simple formula, where given a flipper length
+we could compute the body mass of a penguin using a linear relationship of
+of the form <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">b</span></code> where <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are the 2 parameters of our
+model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">linear_model_flipper_mass</span><span class="p">(</span>
+    <span class="n">flipper_length</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Linear model of the form y = a * x + b&quot;&quot;&quot;</span>
+    <span class="n">body_mass</span> <span class="o">=</span> <span class="n">weight_flipper_length</span> <span class="o">*</span> <span class="n">flipper_length</span> <span class="o">+</span> <span class="n">intercept_body_mass</span>
+    <span class="k">return</span> <span class="n">body_mass</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the model we defined above, we can check the body mass values
+predicted for a range of flipper lengths. We will set <code class="docutils literal notranslate"><span class="pre">weight_flipper_length</span></code>
+to be 45 and <code class="docutils literal notranslate"><span class="pre">intercept_body_mass</span></code> to be -5000.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">plot_data_and_model</span><span class="p">(</span>
+    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute and plot the prediction.&quot;&quot;&quot;</span>
+    <span class="n">inferred_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
+        <span class="n">flipper_length_range</span><span class="p">,</span>
+        <span class="n">weight_flipper_length</span><span class="o">=</span><span class="n">weight_flipper_length</span><span class="p">,</span>
+        <span class="n">intercept_body_mass</span><span class="o">=</span><span class="n">intercept_body_mass</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">flipper_length_range</span><span class="p">,</span>
+        <span class="n">inferred_body_mass</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">weight_flipper_length</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">intercept_body_mass</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g)&quot;</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+
+<span class="n">weight_flipper_length</span> <span class="o">=</span> <span class="mi">45</span>
+<span class="n">intercept_body_mass</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5000</span>
+
+<span class="n">flipper_length_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plot_data_and_model</span><span class="p">(</span>
+    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_regression_without_sklearn_7_0.png" src="../_images/linear_regression_without_sklearn_7_0.png" />
+</div>
+</div>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">weight_flipper_length</span></code> is a weight applied to the feature
+<code class="docutils literal notranslate"><span class="pre">flipper_length</span></code> in
+order to make the inference. When this coefficient is positive, it means that
+penguins with longer flipper lengths will have larger body masses.
+If the coefficient is negative, it means that penguins with shorter flipper
+flipper lengths have larger body masses. Graphically, this coefficient is
+represented by the slope of the curve in the plot. Below we show what the
+curve would look like when the <code class="docutils literal notranslate"><span class="pre">weight_flipper_length</span></code> coefficient is
+negative.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight_flipper_length</span> <span class="o">=</span> <span class="o">-</span><span class="mi">40</span>
+<span class="n">intercept_body_mass</span> <span class="o">=</span> <span class="mi">13000</span>
+
+<span class="n">flipper_length_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plot_data_and_model</span><span class="p">(</span>
+    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_regression_without_sklearn_9_0.png" src="../_images/linear_regression_without_sklearn_9_0.png" />
+</div>
+</div>
+<p>In our case, this coefficient has a meaningful unit: g/mm.
+For instance, a coefficient of 40 g/mm, means that for each
+additional millimeter in flipper length, the body weight predicted will
+increase by 40 g.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">body_mass_180</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
+    <span class="n">flipper_length</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">body_mass_181</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
+    <span class="n">flipper_length</span><span class="o">=</span><span class="mi">181</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The body mass for a flipper length of 180 mm is </span><span class="si">{</span><span class="n">body_mass_180</span><span class="si">}</span><span class="s2"> g and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">body_mass_181</span><span class="si">}</span><span class="s2"> g for a flipper length of 181 mm&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The body mass for a flipper length of 180 mm is 7200 g and 7240 g for a flipper length of 181 mm
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also see that we have a parameter <code class="docutils literal notranslate"><span class="pre">intercept_body_mass</span></code> in our model.
+This parameter corresponds to the value on the y-axis if <code class="docutils literal notranslate"><span class="pre">flipper_length=0</span></code>
+(which in our case is only a mathematical consideration, as in our data,
+the value of <code class="docutils literal notranslate"><span class="pre">flipper_length</span></code> only goes from 170mm to 230mm). This y-value
+when x=0 is called the y-intercept. If <code class="docutils literal notranslate"><span class="pre">intercept_body_mass</span></code> is 0, the curve
+will pass through the origin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight_flipper_length</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">intercept_body_mass</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">flipper_length_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plot_data_and_model</span><span class="p">(</span>
+    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_regression_without_sklearn_13_0.png" src="../_images/linear_regression_without_sklearn_13_0.png" />
+</div>
+</div>
+<p>Otherwise, it will pass through the <code class="docutils literal notranslate"><span class="pre">intercept_body_mass</span></code> value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight_flipper_length</span> <span class="o">=</span> <span class="mi">45</span>
+<span class="n">intercept_body_mass</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5000</span>
+
+<span class="n">flipper_length_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plot_data_and_model</span><span class="p">(</span>
+    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_regression_without_sklearn_15_0.png" src="../_images/linear_regression_without_sklearn_15_0.png" />
+</div>
+</div>
+<p>In this notebook, we have seen the parametrization of a linear regression
+model and more precisely meaning of the terms weights and intercepts.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./python_scripts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../linear_models/slides.html" title="previous page">🖵  Intuitions on linear models</a>
+    <a class='right-next' id="next-link" href="linear_models_ex_01.html" title="next page">Exercise 01</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

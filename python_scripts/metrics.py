@@ -41,16 +41,13 @@
 
 # %%
 import pandas as pd
-from sklearn.datasets import fetch_openml
 
-X, y = fetch_openml(
-    name="blood-transfusion-service-center",
-    as_frame=True, return_X_y=True,
-)
+data = pd.read_csv("../datasets/blood_transfusion.csv")
+X, y = data[["V1", "V2", "V3", "V4"]], data["Class"]
 # Make columns and classes more human-readable
 X.columns = ["Recency", "Frequency", "Monetary", "Time"]
 y = y.apply(
-    lambda x: "donated" if x == "2" else "not donated"
+    lambda x: "donated" if x == 2 else "not donated"
 ).astype("category")
 y.cat.categories
 
@@ -731,13 +728,13 @@ plot_predicted_vs_actual(y_test, y_pred)
 # Let's take an example using the house prices in Ames.
 
 # %%
+import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import RidgeCV
 
-X, y = fetch_openml(name="house_prices", as_frame=True, return_X_y=True)
-X = X.select_dtypes(np.number).drop(
-    columns=["LotFrontage", "GarageYrBlt", "MasVnrArea"]
-)
+data = pd.read_csv("../datasets/house_prices.csv")
+X, y = data.drop(columns="SalePrice"), data["SalePrice"]
+X = X.select_dtypes(np.number)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
 
@@ -781,3 +778,5 @@ plot_predicted_vs_actual(y_test, y_pred, title="House prices in Ames")
 # In this notebook, we presented the metrics and plots useful to evaluate and
 # get insights about models. We both focus on regression and classification
 # problems.
+
+# %%

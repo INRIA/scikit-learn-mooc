@@ -47,7 +47,7 @@ import matplotlib.pyplot as plt
 # %% [markdown]
 # ### Data and model visualization
 
-
+# %%
 def plot_data_and_model(
     flipper_length_range, weight_flipper_length, intercept_body_mass,
     ax=None,

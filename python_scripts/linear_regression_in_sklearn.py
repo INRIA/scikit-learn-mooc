@@ -66,7 +66,7 @@ plt.plot(
 )
 _ = plt.title("Model using LinearRegression from scikit-learn")
 
-# %%
+# %% [markdown]
 # In the solution of the previous exercise, we implemented a function to
 # compute the error of the model. Instead of using it, we will import the
 # metric directly from scikit-learn.

@@ -30,7 +30,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, random_state=0, test_size=0.5
 )
 
-# %%
+# %% [markdown]
 # In one of the previous notebook, we show that linear model could be used
 # even in setting where `X` and `y` are not linearly linked. We showed that one
 # can use the `PolynomialFeatures` transformer to create new feature encoding
@@ -61,6 +61,7 @@ print(
 # overfitting. We can compute the score on the training set to confirm this
 # intuition.
 
+# %%
 print(
     f"R2 score of linear regresion model on the train set:\n"
     f"{linear_regression.score(X_train, y_train):.3f}"
@@ -155,21 +156,17 @@ _ = weights.plot(kind="barh", ax=ax)
 #
 # Therefore, we get an intuition that if we want to use regularization, dealing
 # with rescaled data would make it easier to find an optimal regularization
-# parameter and thus an adequate model.
-#
-# As a side note, some solver based on gradient computation are expecting such
-# rescaled data. Unscaled data will be detrimental when computing the optimal
-# weights.
-#
-# Therefore, when working with a linear model and numerical data, this is in
-# general a good practice to scale the data.
+# parameter and thus an adequate model. As a side note, some solver based on
+# gradient computation are expecting such rescaled data. Unscaled data will be
+# detrimental when computing the optimal weights. Therefore, when working with
+# a linear model and numerical data, this is in general a good practice to
+# scale the data.
 #
 # In the remaining of this section, we will present the basics on how to
-# incorporate a scaler within your machine learning pipeline.
-#
-# Scikit-learn provides several tools to preprocess the data. The
-# `StandardScaler` transforms the data such that each feature will have a mean
-# of zero and a standard deviation of 1.
+# incorporate a scaler within your machine learning pipeline. Scikit-learn
+# provides several tools to preprocess the data. The `StandardScaler`
+# transforms the data such that each feature will have a mean of zero and a
+# standard deviation of 1.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -188,8 +185,8 @@ X_test_scaled = scaler.transform(X_test)
 # classifiers and regressors.
 
 # %%
-print('mean records on the training set:', scaler.mean_)
-print('standard deviation records on the training set:', scaler.scale_)
+print('mean records on the training set:\n', scaler.mean_)
+print('standard deviation records on the training set:\n', scaler.scale_)
 
 # %% [markdown]
 # In the example above, `X_train_scaled` is the data scaled, using the
@@ -299,7 +296,7 @@ _ = plt.legend()
 best_alpha = alphas[np.argmax(list_ridge_scores)]
 best_alpha
 
-# %%
+# %% [markdown]
 # We can retrain a ridge model on the full training set and set the alpha and
 # check the score on the left out dataset.
 

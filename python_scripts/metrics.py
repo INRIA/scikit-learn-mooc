@@ -728,6 +728,7 @@ plot_predicted_vs_actual(y_test, y_pred)
 # Let's take an example using the house prices in Ames.
 
 # %%
+from sklearn.datasets import fetch_openml
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import RidgeCV
 

@@ -254,5 +254,50 @@ print(
 # ## Fine tuning the regularization parameter
 #
 # As mentioned, the regularization parameter needs to be tuned on each dataset.
-# The default parameter will not lead to the optimal model.
+# The default parameter will not lead to the optimal model. Therefore, we need
+# to tune the `alpha` parameter.
+#
+# Tuning model hyperparameter should be done with care. Indeed, we want to find
+# an optimal parameter that maximize some metrics. Thus, it requires a training
+# and testing sets. However, this testing set should be different from the
+# out-of-sample testing set that we used to evaluate our model. If we use
+# the same test, we are using an `alpha` which was optimized for this testing
+# set and it breaks the out-of-sample rule.
+#
+# Therefore, we can split our previous training set into two subsets: a
+# new training set and a validation set allowing to later pick the optimal
+# alpha.
 
+# %%
+X_train, X_valid, y_train, y_valid = train_test_split(
+    X_train, y_train, random_state=0
+)
+
+# %%
+import numpy as np
+
+list_alphas = np.logspace(-1, 2, num=30)
+list_ridge_scores = []
+for alpha in list_alphas:
+    ridge.set_params(ridge__alpha=alpha)
+    ridge.fit(X_train, y_train)
+    list_ridge_scores.append(ridge.score(X_valid, y_valid))
+
+
+plt.plot(list_alphas, list_ridge_scores, "+-", label='Ridge')
+plt.xlabel('alpha (regularization strength)')
+plt.ylabel('R2 score (higher is better)')
+_ = plt.legend()
+
+# %% [markdown]
+# We see that, just like adding salt in cooking, adding regularization in our
+# model could improve its error on the validation set. But too much
+# regularization, like too much salt, decreases its performance.
+#
+# We can see visually that the best `alpha` should be around 45.
+
+# %%
+best_alpha = list_alphas[np.argmax(list_ridge_scores)]
+best_alpha
+
+# %%

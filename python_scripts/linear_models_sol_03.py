@@ -54,6 +54,6 @@ import matplotlib.pyplot as plt
 
 weights = pd.Series(linear_regression.coef_, index=X.columns)
 weights.plot(kind="barh")
-plt.title("Value of linear regression coefficients")
+_ = plt.title("Value of linear regression coefficients")
 
 # %%

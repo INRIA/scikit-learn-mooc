@@ -41,16 +41,13 @@
 
 # %%
 import pandas as pd
-from sklearn.datasets import fetch_openml
 
-X, y = fetch_openml(
-    name="blood-transfusion-service-center",
-    as_frame=True, return_X_y=True,
-)
+data = pd.read_csv("../datasets/blood_transfusion.csv")
+X, y = data[["V1", "V2", "V3", "V4"]], data["Class"]
 # Make columns and classes more human-readable
 X.columns = ["Recency", "Frequency", "Monetary", "Time"]
 y = y.apply(
-    lambda x: "donated" if x == "2" else "not donated"
+    lambda x: "donated" if x == 2 else "not donated"
 ).astype("category")
 y.cat.categories
 

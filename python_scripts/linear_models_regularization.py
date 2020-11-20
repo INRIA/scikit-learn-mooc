@@ -276,15 +276,15 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 # %%
 import numpy as np
 
-list_alphas = np.logspace(-1, 2, num=30)
+alphas = np.logspace(0, 2, num=20)
 list_ridge_scores = []
-for alpha in list_alphas:
+for alpha in alphas:
     ridge.set_params(ridge__alpha=alpha)
     ridge.fit(X_train, y_train)
     list_ridge_scores.append(ridge.score(X_valid, y_valid))
 
 
-plt.plot(list_alphas, list_ridge_scores, "+-", label='Ridge')
+plt.plot(alphas, list_ridge_scores, "+-", label='Ridge')
 plt.xlabel('alpha (regularization strength)')
 plt.ylabel('R2 score (higher is better)')
 _ = plt.legend()
@@ -297,7 +297,13 @@ _ = plt.legend()
 # We can see visually that the best `alpha` should be around 45.
 
 # %%
-best_alpha = list_alphas[np.argmax(list_ridge_scores)]
+best_alpha = alphas[np.argmax(list_ridge_scores)]
 best_alpha
 
-# %%
+# %% [markdown]
+# In the next exercise, you will use a scikit-learn estimator which allows to
+# make some parameters tuning instead of programming yourself a `for` loop by
+# hand.
+#
+# As a conclusion, you learnt in this notebook about the concept of
+# regularization and the importance of preprocessing and parameter tuning.

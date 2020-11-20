@@ -31,7 +31,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # %%
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge
 
 ridge = make_pipeline(StandardScaler(), Ridge())

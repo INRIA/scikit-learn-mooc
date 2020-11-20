@@ -90,9 +90,9 @@ weights.plot(kind="barh", ax=ax)
 
 # %% [markdown]
 # We can force the linear regression model to consider all features in a more
-# homogeneous manner, meaning the norm of each weight should be close to each
-# other. This is known as regularization. We will use a ridge model which
-# enforce such behaviour.
+# homogeneous manner. In fact, we could force large positive or negative weight
+# to shrink toward zero. This is known as regularization. We will use a ridge
+# model which enforce such behaviour.
 
 # %%
 from sklearn.linear_model import Ridge
@@ -129,7 +129,8 @@ _, ax = plt.subplots(figsize=(6, 12))
 weights.plot(kind="barh", ax=ax)
 
 # %% [markdown]
-# We see that the magnitude of the weights are more homogeneous across weights.
+# We see that the magnitude of the weights are more homogeneous across weights
+# and all closer to zero.
 #
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization

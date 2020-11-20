@@ -12,290 +12,8 @@
 #     name: python3
 # ---
 
-
-# - use `LinearRegression` and its regularized version `Ridge` which is more
-#   robust;
-# - use `LogisticRegression` with `pipeline`;
-# - see examples of linear separability.
-
-
-
 # %% [markdown]
-# ### Linear regression in higher dimension
-# In the previous example, we only used a single feature. But we have
-# already shown that we could add new feature to make the model more expressive
-# by deriving new features, based on the original feature.
-#
-# Indeed, we could also use additional features (not related to the
-# original feature) and these could help us to predict the target.
-#
-# We will load a dataset about house prices in California.
-# The dataset consists of 8 features regarding the demography and geography of
-# districts in California and the aim is to predict the median house price of
-# each district. We will use all 8 features to predict the target, median
-# house price.
-
-# %%
-from sklearn.datasets import fetch_california_housing
-
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
-X.head()
-
-# %% [markdown]
-# We will compare the score of `LinearRegression` and `Ridge` (which is a
-# regularized version of linear regression).
-#
-# The scorer we will use to evaluate our model is the mean squared error, as in
-# the previous example. The lower the score, the better.
-
-# %% [markdown]
-# Here, we will divide our data into a training set, a validation set and a
-# testing set.
-# The validation set will be used to evaluate selection of the
-# hyper-parameters, while the testing set should only be used to calculate the
-# score of our final model.
-
-# %%
-from sklearn.model_selection import train_test_split
-
-X_train_valid, X_test, y_train_valid, y_test = train_test_split(
-    X, y, random_state=1
-)
-
-X_train, X_valid, y_train, y_valid = train_test_split(
-    X_train_valid, y_train_valid, random_state=1
-)
-
-# %% [markdown]
-# Note that in the first example, we did not care about scaling our data in
-# order to keep the original units and have better intuition. However, it is
-# good practice to scale the data such that each feature has a similar standard
-# deviation. It will be even more important if the solver used by the model
-# is a gradient-descent-based solver.
-
-# %%
-from sklearn.preprocessing import StandardScaler
-
-scaler = StandardScaler()
-X_train_scaled = scaler.fit(X_train).transform(X_train)
-X_valid_scaled = scaler.transform(X_valid)
-
-# %% [markdown]
-# Scikit-learn provides several tools to preprocess the data. The
-# `StandardScaler` transforms the data such that each feature will have a mean
-# of zero and a standard deviation of 1.
-#
-# This scikit-learn estimator is known as a transformer: it computes some
-# statistics (i.e the mean and the standard deviation) and stores them as
-#  attributes (scaler.mean_, scaler.scale_)
-# when calling `fit`. Using these statistics, it
-# transform the data when `transform` is called. Therefore, it is important to
-# note that `fit` should only be called on the training data, similar to
-# classifiers and regressors.
-
-# %%
-print('mean records on the training set:', scaler.mean_)
-print('standard deviation records on the training set:', scaler.scale_)
-
-# %% [markdown]
-# In the example above, `X_train_scaled` is the data scaled, using the
-# mean and standard deviation of each feature, computed using the training
-# data `X_train`.
-
-# %%
-linear_regression = LinearRegression()
-linear_regression.fit(X_train_scaled, y_train)
-y_pred = linear_regression.predict(X_valid_scaled)
-print(
-    f"Mean squared error on the validation set: "
-    f"{mean_squared_error(y_valid, y_pred):.4f}"
-)
-
-# %% [markdown]
-# Instead of calling the transformer to transform the data and then calling the
-# regressor, scikit-learn provides a `Pipeline`, which 'chains' the transformer
-# and regressor together. The pipeline allows you to use a sequence of
-# transformer(s) followed by a regressor or a classifier, in one call. (i.e.
-# fitting the pipeline will fit both the transformer(s) and the regressor. Then
-# predicting from the pipeline will first transform the data through the
-# transformer(s) then predict with the regressor from the transformed data)
-#
-# This pipeline exposes the same API as the regressor and classifier and will
-# manage the calls to `fit` and `transform` for you, avoiding any problems with
-# data leakage (when knowledge of the test data was inadvertently included in
-# training a model, as when fitting a transformer on the test data).
-#
-# We already presented `Pipeline` in the second notebook and we will use it
-# here to combine both the scaling and the linear regression.
-#
-# We will can create a `Pipeline` by using `make_pipeline` and giving as
-# arguments the transformation(s) to be performed (in order) and the regressor
-# model.
-#
-# So the two cells above can be reduced to this new one:
-
-# %%
-from sklearn.pipeline import make_pipeline
-
-linear_regression = make_pipeline(StandardScaler(), LinearRegression())
-
-linear_regression.fit(X_train, y_train)
-y_pred_valid = linear_regression.predict(X_valid)
-linear_regression_score = mean_squared_error(y_valid, y_pred_valid)
-y_pred_test = linear_regression.predict(X_test)
-
-print(
-    f"Mean squared error on the validation set: "
-    f"{mean_squared_error(y_valid, y_pred_valid):.4f}"
-)
-print(
-    f"Mean squared error on the test set: "
-    f"{mean_squared_error(y_test, y_pred_test):.4f}"
-)
-
-# %% [markdown]
-# Now we want to compare this basic `LinearRegression` versus its regularized
-# form `Ridge`.
-#
-# We will tune the parameter `alpha` in `Ridge` and compare the results with
-# the `LinearRegression` model which is not regularized.
-
-# %%
-from sklearn.linear_model import Ridge
-
-ridge = make_pipeline(StandardScaler(), Ridge())
-
-list_alphas = np.logspace(-2, 2.1, num=40)
-list_ridge_scores = []
-for alpha in list_alphas:
-    ridge.set_params(ridge__alpha=alpha)
-    ridge.fit(X_train, y_train)
-    y_pred = ridge.predict(X_valid)
-    list_ridge_scores.append(mean_squared_error(y_valid, y_pred))
-
-plt.plot(
-    list_alphas, [linear_regression_score] * len(list_alphas), '--',
-    label='LinearRegression',
-)
-plt.plot(list_alphas, list_ridge_scores, "+-", label='Ridge')
-plt.xlabel('alpha (regularization strength)')
-plt.ylabel('Mean squared error (lower is better')
-_ = plt.legend()
-
-# %% [markdown]
-# We see that, just like adding salt in cooking, adding regularization in our
-# model could improve its error on the validation set. But too much
-# regularization, like too much salt, decreases its performance.
-#
-# We can see visually that the best `alpha` should be around 40.
-
-# %%
-best_alpha = list_alphas[np.argmin(list_ridge_scores)]
-best_alpha
-
-# %% [markdown]
-# Note that, we selected this alpha *without* using the testing set ; but
-# instead by using the validation set which is a subset of the training
-# data. This is so we do not "overfit" the test data and
-# can be seen in the lesson *basic hyper-parameters tuning*.
-# We can finally compare the performance of the `LinearRegression` model to the
-# best `Ridge` model, on the testing set.
-
-# %%
-print("Linear Regression")
-y_pred_test = linear_regression.predict(X_test)
-print(
-    f"Mean squared error on the test set: "
-    f"{mean_squared_error(y_test, y_pred_test):.4f}"
-)
-
-print("Ridge Regression")
-ridge.set_params(ridge__alpha=alpha)
-ridge.fit(X_train, y_train)
-y_pred_test = ridge.predict(X_test)
-print(
-    f"Mean squared error on the test set: "
-    f"{mean_squared_error(y_test, y_pred_test):.4f}"
-)
-# FIXME add explication why Ridge is not better (equivalent) than linear 
-# regression here.
-
-# %% [markdown]
-# The hyper-parameter search could have been made using `GridSearchCV`
-# instead of manually splitting the training data (into training and
-# validation subsets) and selecting the best alpha.
-
-# %%
-from sklearn.model_selection import GridSearchCV
-
-ridge = GridSearchCV(
-    make_pipeline(StandardScaler(), Ridge()),
-    param_grid={"ridge__alpha": list_alphas},
-)
-ridge.fit(X_train_valid, y_train_valid)
-print(ridge.best_params_)
-
-# %% [markdown]
-# The `GridSearchCV` tests all possible given `alpha` values and picks
-# the best one with a cross-validation scheme. We can now compare with
-# `LinearRegression`.
-
-# %%
-print("Linear Regression")
-linear_regression.fit(X_train_valid, y_train_valid)
-y_pred_test = linear_regression.predict(X_test)
-print(
-    f"Mean squared error on the test set: "
-    f"{mean_squared_error(y_test, y_pred_test):.4f}"
-)
-
-print("Ridge Regression")
-y_pred_test = ridge.predict(X_test)
-print(
-    f"Mean squared error on the test set: "
-    f"{mean_squared_error(y_test, y_pred_test):.4f}"
-)
-
-# %% [markdown]
-# It is also interesting to know that several regressors and classifiers
-# in scikit-learn are optimized to make this parameter tuning. They usually
-# finish with the term "CV" for "Cross Validation" (e.g. `RidgeCV`).
-# They are more efficient than using `GridSearchCV` and you should use them
-# instead.
-#
-# We will repeat the equivalent of the hyper-parameter search but instead of
-# using a `GridSearchCV`, we will use `RidgeCV`.
-
-# %%
-from sklearn.linear_model import RidgeCV
-
-ridge = make_pipeline(
-    StandardScaler(), RidgeCV(alphas=[.1, .5, 1, 5, 10, 50, 100])
-)
-ridge.fit(X_train_valid, y_train_valid)
-ridge[-1].alpha_
-
-# %%
-print("Linear Regression")
-y_pred_test = linear_regression.predict(X_test)
-print(
-    f"Mean squared error on the test set: "
-    f"{mean_squared_error(y_test, y_pred_test):.4f}"
-)
-
-print("Ridge Regression")
-y_pred_test = ridge.predict(X_test)
-print(
-    f"Mean squared error on the test set: "
-    f"{mean_squared_error(y_test, y_pred_test):.4f}"
-)
-
-# %% [markdown]
-# Note that the best hyper-parameter value is different because the
-# cross-validation used in the different approach is internally different.
-
-# %% [markdown]
-# ## 2. Classification
+# # 2. Classification
 # In regression, we saw that the target to be predicted was a continuous
 # variable. In classification, this target will be discrete (e.g. categorical).
 #
@@ -305,6 +23,8 @@ print(
 # species to solve a binary classification problem.
 
 # %%
+import pandas as pd
+
 data = pd.read_csv("../datasets/penguins.csv")
 
 # select the features of interest
@@ -320,6 +40,7 @@ data = data.dropna()
 # We can quickly start by visualizing the feature distribution by class:
 
 # %%
+import seaborn as sns
 _ = sns.pairplot(data=data, hue="Species")
 
 # %% [markdown]
@@ -347,6 +68,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 
 # %%
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 def plot_decision_function(X, y, clf, title="auto", ax=None):
     """Plot the boundary of the decision function of a classifier."""
     from sklearn.preprocessing import LabelEncoder
@@ -403,6 +128,8 @@ def plot_decision_function(X, y, clf, title="auto", ax=None):
 # algorithm.
 
 # %%
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 logistic_regression = make_pipeline(

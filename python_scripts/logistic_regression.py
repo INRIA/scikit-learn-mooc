@@ -11,16 +11,12 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins.csv")
+data = pd.read_csv("../datasets/penguins_classification.csv")
 
 # select the features of interest
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
-
-data = data[culmen_columns + [target_column]]
-data[target_column] = data[target_column].str.split().str[0]
 data = data[data[target_column].apply(lambda x: x in ("Adelie", "Chinstrap"))]
-data = data.dropna()
 
 # %% [markdown]
 # We can quickly start by visualizing the feature distribution by class:

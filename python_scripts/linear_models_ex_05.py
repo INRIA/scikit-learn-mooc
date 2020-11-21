@@ -14,17 +14,14 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv("../datasets/penguins.csv")
+data = pd.read_csv("../datasets/penguins_classification.csv")
+# only keep the Adelie and Chinstrap classes
+data = data.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
 
-# select the features of interest
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
-
-data = data[culmen_columns + [target_column]]
-data[target_column] = data[target_column].str.split().str[0]
-data = data[data[target_column].apply(lambda x: x in ("Adelie", "Chinstrap"))]
-data = data.dropna()
 X, y = data[culmen_columns], data[target_column]
+
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, stratify=y, random_state=0,
 )

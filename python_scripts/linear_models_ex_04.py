@@ -58,7 +58,7 @@ alphas = np.logspace(-1, 2, num=30)
 
 # %% [markdown]
 # Once that you found the best parameter `alpha`, use the grid-search estimator
-# that you created to predict and estimate the R2 score of this model.
+# that you created to predict and estimate the $R^2$ score of this model.
 
 # %%
 # TODO

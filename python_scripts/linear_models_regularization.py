@@ -56,8 +56,8 @@ print(
 )
 
 # %% [markdown]
-# We see that we obtain an R2 score below zero. It means that our model is far
-# worth than predicting the mean of `y_train`. This is issue is due to
+# We see that we obtain an $R^2$ score below zero. It means that our model is
+# far worth than predicting the mean of `y_train`. This is issue is due to
 # overfitting. We can compute the score on the training set to confirm this
 # intuition.
 

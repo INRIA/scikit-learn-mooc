@@ -34,6 +34,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+
 def plot_classification(model, X, y, ax=None):
     from sklearn.preprocessing import LabelEncoder
     model.fit(X, y)

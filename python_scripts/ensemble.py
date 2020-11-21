@@ -180,11 +180,9 @@ print(f"R2 score: {bagging_regressor.score(X_test, y_test):.3f}")
 #
 # ## Bagging
 #
-# Bagging stands for Bootstrap AGGregatING. It uses bootstrap 
-# (random sampling 
-# with replacement) to learn several models.
-# At predict time, the predictions of each learner
-# are aggregated to give the final predictions.
+# Bagging stands for Bootstrap AGGregatING. It uses bootstrap (random sampling
+# with replacement) to learn several models. At predict time, the predictions
+# of each learner are aggregated to give the final predictions.
 #
 # Let's define a simple dataset (which we have used before in a previous
 # notebook).

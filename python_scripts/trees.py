@@ -47,28 +47,15 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins.csv")
+data = pd.read_csv("../datasets/penguins_classification.csv")
 
-# select the features of interest
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
-
-data = data[culmen_columns + [target_column]]
-data[target_column] = data[target_column].str.split().str[0]
 
 # %% [markdown]
 # Let's check the dataset more into details.
 
 # %%
-data.info()
-
-# %% [markdown]
-# We can observe that there are 2 missing records in this dataset and for the
-# sake of simplicity, we will drop the records corresponding to these 2
-# samples.
-
-# %%
-data = data.dropna()
 data.info()
 
 # %% [markdown]
@@ -320,13 +307,10 @@ print(
 # the body mass of a penguin given its flipper length.
 
 # %%
-data = pd.read_csv("../datasets/penguins.csv")
+data = pd.read_csv("../datasets/penguins_regression.csv")
 
 data_columns = ["Flipper Length (mm)"]
 target_column = "Body Mass (g)"
-
-data = data[data_columns + [target_column]]
-data = data.dropna()
 
 X, y = data[data_columns], data[target_column]
 X_train, X_test, y_train, y_test = train_test_split(
@@ -485,18 +469,11 @@ _ = plot_regression_model(X_train, y_train, tree, extrapolate=True, ax=ax)
 # We will first regenerate the classification and regression dataset.
 
 # %%
-data = pd.read_csv("../datasets/penguins.csv")
+data_clf = pd.read_csv("../datasets/penguins_classification.csv")
 
 # %%
 data_clf_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_clf_column = "Species"
-
-data_clf = data[
-    data_clf_columns + [target_clf_column]
-]
-data_clf[target_clf_column] = data_clf[
-    target_clf_column].str.split().str[0]
-data_clf = data_clf.dropna()
 
 X_clf, y_clf = data_clf[data_clf_columns], data_clf[target_clf_column]
 X_train_clf, X_test_clf, y_train_clf, y_test_clf = train_test_split(
@@ -507,8 +484,7 @@ X_train_clf, X_test_clf, y_train_clf, y_test_clf = train_test_split(
 data_reg_columns = ["Flipper Length (mm)"]
 target_reg_column = "Body Mass (g)"
 
-data_reg = data[data_reg_columns + [target_reg_column]]
-data_reg = data_reg.dropna()
+data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 
 X_reg, y_reg = data_reg[data_reg_columns], data_reg[target_reg_column]
 X_train_reg, X_test_reg, y_train_reg, y_test_reg = train_test_split(

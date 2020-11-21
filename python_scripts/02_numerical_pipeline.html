@@ -557,11 +557,6 @@
    Loading the dataset
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#working-with-numerical-data">
-   Working with numerical data
-  </a>
- </li>
 </ul>
 
         </nav>
@@ -589,11 +584,15 @@ datasets, with only numerical features.</p>
 <h2>Loading the dataset<a class="headerlink" href="#loading-the-dataset" title="Permalink to this headline">¶</a></h2>
 <p>We will use the same dataset “adult_census” described in the previous notebook.
 For more details about the dataset see <a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a>.</p>
+<p>Numerical data is the most natural type of data used in machine
+learning and can (almost) directly be fed into predictive models. We
+will load a the subset of the original data with only the numerical
+columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -624,112 +623,64 @@ For more details about the dataset see <a class="reference external" href="http:
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>Unnamed: 0</th>
       <th>age</th>
-      <th>workclass</th>
-      <th>fnlwgt</th>
-      <th>education</th>
       <th>education-num</th>
-      <th>marital-status</th>
-      <th>occupation</th>
-      <th>relationship</th>
-      <th>race</th>
-      <th>sex</th>
       <th>capital-gain</th>
       <th>capital-loss</th>
       <th>hours-per-week</th>
-      <th>native-country</th>
       <th>class</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>0</td>
       <td>25</td>
-      <td>Private</td>
-      <td>226802</td>
-      <td>11th</td>
       <td>7</td>
-      <td>Never-married</td>
-      <td>Machine-op-inspct</td>
-      <td>Own-child</td>
-      <td>Black</td>
-      <td>Male</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
-      <td>United-States</td>
       <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>1</td>
       <td>38</td>
-      <td>Private</td>
-      <td>89814</td>
-      <td>HS-grad</td>
       <td>9</td>
-      <td>Married-civ-spouse</td>
-      <td>Farming-fishing</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
       <td>0</td>
       <td>0</td>
       <td>50</td>
-      <td>United-States</td>
       <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>2</td>
       <td>28</td>
-      <td>Local-gov</td>
-      <td>336951</td>
-      <td>Assoc-acdm</td>
       <td>12</td>
-      <td>Married-civ-spouse</td>
-      <td>Protective-serv</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
-      <td>United-States</td>
       <td>&gt;50K</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>3</td>
       <td>44</td>
-      <td>Private</td>
-      <td>160323</td>
-      <td>Some-college</td>
       <td>10</td>
-      <td>Married-civ-spouse</td>
-      <td>Machine-op-inspct</td>
-      <td>Husband</td>
-      <td>Black</td>
-      <td>Male</td>
       <td>7688</td>
       <td>0</td>
       <td>40</td>
-      <td>United-States</td>
       <td>&gt;50K</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>4</td>
       <td>18</td>
-      <td>?</td>
-      <td>103497</td>
-      <td>Some-college</td>
       <td>10</td>
-      <td>Never-married</td>
-      <td>?</td>
-      <td>Own-child</td>
-      <td>White</td>
-      <td>Female</td>
       <td>0</td>
       <td>0</td>
       <td>30</td>
-      <td>United-States</td>
       <td>&lt;=50K</td>
     </tr>
   </tbody>
@@ -761,12 +712,11 @@ Name: class, Length: 48842, dtype: object
 </div>
 </div>
 </div>
-<p>For simplicity, we will ignore the “fnlwgt” (final weight) column that was
-crafted by the creators of the dataset when sampling the dataset to be
-representative of the full census database.</p>
+<p>We now separate out the data that we will use to predict from the
+prediction target</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -790,113 +740,64 @@ representative of the full census database.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>Unnamed: 0</th>
       <th>age</th>
-      <th>workclass</th>
-      <th>education</th>
       <th>education-num</th>
-      <th>marital-status</th>
-      <th>occupation</th>
-      <th>relationship</th>
-      <th>race</th>
-      <th>sex</th>
       <th>capital-gain</th>
       <th>capital-loss</th>
       <th>hours-per-week</th>
-      <th>native-country</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>0</td>
       <td>25</td>
-      <td>Private</td>
-      <td>11th</td>
       <td>7</td>
-      <td>Never-married</td>
-      <td>Machine-op-inspct</td>
-      <td>Own-child</td>
-      <td>Black</td>
-      <td>Male</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
-      <td>United-States</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>1</td>
       <td>38</td>
-      <td>Private</td>
-      <td>HS-grad</td>
       <td>9</td>
-      <td>Married-civ-spouse</td>
-      <td>Farming-fishing</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
       <td>0</td>
       <td>0</td>
       <td>50</td>
-      <td>United-States</td>
     </tr>
     <tr>
       <th>2</th>
+      <td>2</td>
       <td>28</td>
-      <td>Local-gov</td>
-      <td>Assoc-acdm</td>
       <td>12</td>
-      <td>Married-civ-spouse</td>
-      <td>Protective-serv</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
-      <td>United-States</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>3</td>
       <td>44</td>
-      <td>Private</td>
-      <td>Some-college</td>
       <td>10</td>
-      <td>Married-civ-spouse</td>
-      <td>Machine-op-inspct</td>
-      <td>Husband</td>
-      <td>Black</td>
-      <td>Male</td>
       <td>7688</td>
       <td>0</td>
       <td>40</td>
-      <td>United-States</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>4</td>
       <td>18</td>
-      <td>?</td>
-      <td>Some-college</td>
       <td>10</td>
-      <td>Never-married</td>
-      <td>?</td>
-      <td>Own-child</td>
-      <td>White</td>
-      <td>Female</td>
       <td>0</td>
       <td>0</td>
       <td>30</td>
-      <td>United-States</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-</div>
-<div class="section" id="working-with-numerical-data">
-<h2>Working with numerical data<a class="headerlink" href="#working-with-numerical-data" title="Permalink to this headline">¶</a></h2>
-<p>Numerical data is the most natural type of data used in machine learning
-and can (almost) directly be fed into predictive models. We can quickly have
-a look at such data by selecting the subset of numerical columns from the
-original data.</p>
 <p>We will use this subset of data to fit a linear classification model to
 predict the income class.</p>
 <div class="cell docutils container">
@@ -906,132 +807,12 @@ predict the income class.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;workclass&#39;, &#39;education&#39;, &#39;education-num&#39;, &#39;marital-status&#39;,
-       &#39;occupation&#39;, &#39;relationship&#39;, &#39;race&#39;, &#39;sex&#39;, &#39;capital-gain&#39;,
-       &#39;capital-loss&#39;, &#39;hours-per-week&#39;, &#39;native-country&#39;],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Unnamed: 0&#39;, &#39;age&#39;, &#39;education-num&#39;, &#39;capital-gain&#39;, &#39;capital-loss&#39;,
+       &#39;hours-per-week&#39;],
       dtype=&#39;object&#39;)
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                int64
-workclass         object
-education         object
-education-num      int64
-marital-status    object
-occupation        object
-relationship      object
-race              object
-sex               object
-capital-gain       int64
-capital-loss       int64
-hours-per-week     int64
-native-country    object
-dtype: object
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
-
-<span class="n">numerical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_exclude</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-<span class="n">numerical_columns</span> <span class="o">=</span> <span class="n">numerical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">numerical_columns</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;age&#39;, &#39;education-num&#39;, &#39;capital-gain&#39;, &#39;capital-loss&#39;, &#39;hours-per-week&#39;]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
-<span class="n">data_numeric</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>age</th>
-      <th>education-num</th>
-      <th>capital-gain</th>
-      <th>capital-loss</th>
-      <th>hours-per-week</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>25</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>38</td>
-      <td>9</td>
-      <td>0</td>
-      <td>0</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>28</td>
-      <td>12</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>44</td>
-      <td>10</td>
-      <td>7688</td>
-      <td>0</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>18</td>
-      <td>10</td>
-      <td>0</td>
-      <td>0</td>
-      <td>30</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>When building a machine learning model, it is important to leave out a
 subset of the data which we can use later to evaluate the trained model.
@@ -1045,7 +826,7 @@ the data are shuffled randomly before splitting the data.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1059,7 +840,7 @@ the data are shuffled randomly before splitting the data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The training dataset contains 36631 samples and 5 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The training dataset contains 36631 samples and 6 features
 </pre></div>
 </div>
 </div>
@@ -1073,7 +854,7 @@ the data are shuffled randomly before splitting the data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 12211 samples and 5 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 12211 samples and 6 features
 </pre></div>
 </div>
 </div>
@@ -1099,17 +880,7 @@ iterations done by the solver to find a solution.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The model LogisticRegression was trained in 0.476 seconds for [100] iterations
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The model LogisticRegression was trained in 0.279 seconds for [48] iterations
 </pre></div>
 </div>
 </div>
@@ -1176,6 +947,7 @@ Name: class, dtype: object
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>Unnamed: 0</th>
       <th>age</th>
       <th>education-num</th>
       <th>capital-gain</th>
@@ -1189,6 +961,7 @@ Name: class, dtype: object
   <tbody>
     <tr>
       <th>7762</th>
+      <td>7762</td>
       <td>56</td>
       <td>9</td>
       <td>0</td>
@@ -1200,6 +973,7 @@ Name: class, dtype: object
     </tr>
     <tr>
       <th>23881</th>
+      <td>23881</td>
       <td>25</td>
       <td>9</td>
       <td>0</td>
@@ -1211,6 +985,7 @@ Name: class, dtype: object
     </tr>
     <tr>
       <th>30507</th>
+      <td>30507</td>
       <td>43</td>
       <td>13</td>
       <td>14344</td>
@@ -1222,6 +997,7 @@ Name: class, dtype: object
     </tr>
     <tr>
       <th>28911</th>
+      <td>28911</td>
       <td>32</td>
       <td>9</td>
       <td>0</td>
@@ -1233,6 +1009,7 @@ Name: class, dtype: object
     </tr>
     <tr>
       <th>19484</th>
+      <td>19484</td>
       <td>39</td>
       <td>13</td>
       <td>0</td>
@@ -1257,7 +1034,7 @@ problem.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a LogisticRegression is 0.818
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a LogisticRegression is 0.802
 </pre></div>
 </div>
 </div>
@@ -1271,7 +1048,7 @@ the model makes a correct prediction on the test set:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8177053476373761
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8022274997952665
 </pre></div>
 </div>
 </div>

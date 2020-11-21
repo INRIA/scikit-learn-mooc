@@ -425,7 +425,7 @@ print(
 
 
 # %% [markdown]
-# 0.86 over .97 is very relevant (note the R2 score could go below 0). So we
+# 0.86 over .97 is very relevant (note the $R^2$ score could go below 0). So we
 # can imagine our model relies heavily on this feature to predict the class.
 # We can now compute the feature permutation importance for all the features
 

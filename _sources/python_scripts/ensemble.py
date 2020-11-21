@@ -453,7 +453,7 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # with a regression problem.
 #
 # Then, the aggregation method is different in regression and classification:
-# - in regression, the average prediction is computed. For instance, if 
+# - in regression, the average prediction is computed. For instance, if
 # three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33,
 # - while in classification, the class which highest probability
 # (after averaging the predicted probabilities) is predicted. For instance, if
@@ -489,16 +489,10 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # We will predict penguin species from the features culmen length and depth.
 
 # %%
-data = pd.read_csv("../datasets/penguins.csv")
+data = pd.read_csv("../datasets/penguins_classification.csv")
 
-# select the features of interest
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
-
-data = data[culmen_columns + [target_column]]
-data[target_column] = data[target_column].str.split().str[0]
-data = data.dropna()
-
 X, y = data[culmen_columns], data[target_column]
 
 # %% [markdown]

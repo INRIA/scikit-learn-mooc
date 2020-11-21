@@ -499,7 +499,7 @@ We will use a dataset that contains information about penguins.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -523,125 +523,35 @@ We will use a dataset that contains information about penguins.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>studyName</th>
-      <th>Sample Number</th>
-      <th>Species</th>
-      <th>Region</th>
-      <th>Island</th>
-      <th>Stage</th>
-      <th>Individual ID</th>
-      <th>Clutch Completion</th>
-      <th>Date Egg</th>
-      <th>Culmen Length (mm)</th>
-      <th>Culmen Depth (mm)</th>
       <th>Flipper Length (mm)</th>
       <th>Body Mass (g)</th>
-      <th>Sex</th>
-      <th>Delta 15 N (o/oo)</th>
-      <th>Delta 13 C (o/oo)</th>
-      <th>Comments</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>PAL0708</td>
-      <td>1</td>
-      <td>Adelie Penguin (Pygoscelis adeliae)</td>
-      <td>Anvers</td>
-      <td>Torgersen</td>
-      <td>Adult, 1 Egg Stage</td>
-      <td>N1A1</td>
-      <td>Yes</td>
-      <td>2007-11-11</td>
-      <td>39.1</td>
-      <td>18.7</td>
       <td>181.0</td>
       <td>3750.0</td>
-      <td>MALE</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Not enough blood for isotopes.</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>PAL0708</td>
-      <td>2</td>
-      <td>Adelie Penguin (Pygoscelis adeliae)</td>
-      <td>Anvers</td>
-      <td>Torgersen</td>
-      <td>Adult, 1 Egg Stage</td>
-      <td>N1A2</td>
-      <td>Yes</td>
-      <td>2007-11-11</td>
-      <td>39.5</td>
-      <td>17.4</td>
       <td>186.0</td>
       <td>3800.0</td>
-      <td>FEMALE</td>
-      <td>8.94956</td>
-      <td>-24.69454</td>
-      <td>NaN</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>PAL0708</td>
-      <td>3</td>
-      <td>Adelie Penguin (Pygoscelis adeliae)</td>
-      <td>Anvers</td>
-      <td>Torgersen</td>
-      <td>Adult, 1 Egg Stage</td>
-      <td>N2A1</td>
-      <td>Yes</td>
-      <td>2007-11-16</td>
-      <td>40.3</td>
-      <td>18.0</td>
       <td>195.0</td>
       <td>3250.0</td>
-      <td>FEMALE</td>
-      <td>8.36821</td>
-      <td>-25.33302</td>
-      <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>PAL0708</td>
-      <td>4</td>
-      <td>Adelie Penguin (Pygoscelis adeliae)</td>
-      <td>Anvers</td>
-      <td>Torgersen</td>
-      <td>Adult, 1 Egg Stage</td>
-      <td>N2A2</td>
-      <td>Yes</td>
-      <td>2007-11-16</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Adult not sampled.</td>
+      <td>193.0</td>
+      <td>3450.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>PAL0708</td>
-      <td>5</td>
-      <td>Adelie Penguin (Pygoscelis adeliae)</td>
-      <td>Anvers</td>
-      <td>Torgersen</td>
-      <td>Adult, 1 Egg Stage</td>
-      <td>N3A1</td>
-      <td>Yes</td>
-      <td>2007-11-16</td>
-      <td>36.7</td>
-      <td>19.3</td>
-      <td>193.0</td>
-      <td>3450.0</td>
-      <td>FEMALE</td>
-      <td>8.76651</td>
-      <td>-25.32426</td>
-      <td>NaN</td>
+      <td>190.0</td>
+      <td>3650.0</td>
     </tr>
   </tbody>
 </table>
@@ -656,17 +566,17 @@ to infer its mass.</p>
 
 <span class="n">feature_names</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">feature_names</span><span class="p">]],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
-
-<span class="c1"># select the features of interest</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">feature_names</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_regression_without_sklearn_3_0.png" src="../_images/linear_regression_without_sklearn_3_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Flipper Length (mm)&#39;, ylabel=&#39;Body Mass (g)&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/linear_regression_without_sklearn_3_1.png" src="../_images/linear_regression_without_sklearn_3_1.png" />
 </div>
 </div>
 <p>In this problem, penguin mass is our target. It is a continuous

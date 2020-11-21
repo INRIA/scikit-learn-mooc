@@ -589,14 +589,10 @@ learn more about the penguins’ culmen with illustration below:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
 
-<span class="c1"># select the features of interest</span>
 <span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
 <span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">culmen_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]]</span>
-<span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -610,32 +606,7 @@ learn more about the penguins’ culmen with illustration below:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 344 entries, 0 to 343
-Data columns (total 3 columns):
- #   Column              Non-Null Count  Dtype  
----  ------              --------------  -----  
- 0   Culmen Length (mm)  342 non-null    float64
- 1   Culmen Depth (mm)   342 non-null    float64
- 2   Species             344 non-null    object 
-dtypes: float64(2), object(1)
-memory usage: 8.2+ KB
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can observe that there are 2 missing records in this dataset and for the
-sake of simplicity, we will drop the records corresponding to these 2
-samples.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Int64Index: 342 entries, 0 to 343
+RangeIndex: 342 entries, 0 to 341
 Data columns (total 3 columns):
  #   Column              Non-Null Count  Dtype  
 ---  ------              --------------  -----  
@@ -643,7 +614,7 @@ Data columns (total 3 columns):
  1   Culmen Depth (mm)   342 non-null    float64
  2   Species             342 non-null    object 
 dtypes: float64(2), object(1)
-memory usage: 10.7+ KB
+memory usage: 8.1+ KB
 </pre></div>
 </div>
 </div>
@@ -673,7 +644,7 @@ inspect our dataset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_9_0.png" src="../_images/trees_9_0.png" />
+<img alt="../_images/trees_7_0.png" src="../_images/trees_7_0.png" />
 </div>
 </div>
 <p>We can first check the feature distributions by looking at the diagonal plots
@@ -747,7 +718,7 @@ prediction from one class to another.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_13_0.png" src="../_images/trees_13_0.png" />
+<img alt="../_images/trees_11_0.png" src="../_images/trees_11_0.png" />
 </div>
 </div>
 <p>We see that the lines are a combination of the input features since they are
@@ -783,7 +754,7 @@ space.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_17_0.png" src="../_images/trees_17_0.png" />
+<img alt="../_images/trees_15_0.png" src="../_images/trees_15_0.png" />
 </div>
 </div>
 <p>The partitions found by the algorithm separates the data along the axis
@@ -800,7 +771,7 @@ split. We can look more in depth the tree structure.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_19_0.png" src="../_images/trees_19_0.png" />
+<img alt="../_images/trees_17_0.png" src="../_images/trees_17_0.png" />
 </div>
 </div>
 <p>We see that the split was done the first feature <code class="docutils literal notranslate"><span class="pre">X[0]</span></code> (i.e. “Culmen
@@ -932,7 +903,7 @@ level of the tree will be using the feature “Culmen Depth”.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_33_0.png" src="../_images/trees_33_0.png" />
+<img alt="../_images/trees_31_0.png" src="../_images/trees_31_0.png" />
 </div>
 </div>
 <p>As expected, the decision tree made two new partitions using the “Culmen
@@ -975,13 +946,10 @@ regression problem instead of a classification problem. We will try to infer
 the body mass of a penguin given its flipper length.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
 
 <span class="n">data_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">]</span>
 <span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data_columns</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
@@ -1001,7 +969,7 @@ the body mass of a penguin given its flipper length.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Flipper Length (mm)&#39;, ylabel=&#39;Body Mass (g)&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/trees_39_1.png" src="../_images/trees_39_1.png" />
+<img alt="../_images/trees_37_1.png" src="../_images/trees_37_1.png" />
 </div>
 </div>
 <p>Here, we deal with a regression problem because our target is a continuous
@@ -1067,7 +1035,7 @@ function used to plot the decision boundaries for classification.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_44_0.png" src="../_images/trees_44_0.png" />
+<img alt="../_images/trees_42_0.png" src="../_images/trees_42_0.png" />
 </div>
 </div>
 <p>On the plot above, we see that a non-regularized <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> is able
@@ -1088,10 +1056,10 @@ will be on the line.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4e22004c90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f71e5c71e10&gt;
 </pre></div>
 </div>
-<img alt="../_images/trees_46_1.png" src="../_images/trees_46_1.png" />
+<img alt="../_images/trees_44_1.png" src="../_images/trees_44_1.png" />
 </div>
 </div>
 <p>Contrary to linear models, decision trees are non-parametric models, so they
@@ -1114,7 +1082,7 @@ differences.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_49_0.png" src="../_images/trees_49_0.png" />
+<img alt="../_images/trees_47_0.png" src="../_images/trees_47_0.png" />
 </div>
 </div>
 <p>We see that the decision tree model does not have a priori distribution for
@@ -1130,7 +1098,7 @@ tree structure to see what was the threshold found during the training.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_51_0.png" src="../_images/trees_51_0.png" />
+<img alt="../_images/trees_49_0.png" src="../_images/trees_49_0.png" />
 </div>
 </div>
 <p>The threshold for our feature (flipper length) is 206.5 mm. The predicted
@@ -1147,7 +1115,7 @@ thus the number of constant values that the tree is capable of predicting.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_53_0.png" src="../_images/trees_53_0.png" />
+<img alt="../_images/trees_51_0.png" src="../_images/trees_51_0.png" />
 </div>
 </div>
 <p>This lead us to question whether or not our decision trees are able to
@@ -1163,7 +1131,7 @@ linear model because it is a parametric model.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Flipper Length (mm)&#39;, ylabel=&#39;Body Mass (g)&#39;&gt;
 </pre></div>
 </div>
-<img alt="../_images/trees_55_1.png" src="../_images/trees_55_1.png" />
+<img alt="../_images/trees_53_1.png" src="../_images/trees_53_1.png" />
 </div>
 </div>
 <p>The linear model will extrapolate using the fitted model for flipper lengths
@@ -1177,7 +1145,7 @@ and regression trees.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_57_0.png" src="../_images/trees_57_0.png" />
+<img alt="../_images/trees_55_0.png" src="../_images/trees_55_0.png" />
 </div>
 </div>
 <p>For the regression tree, we see that it cannot extrapolate outside of the
@@ -1198,7 +1166,7 @@ regression probelms that we previously used.</p>
 <p>We will first regenerate the classification and regression dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_clf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1208,27 +1176,10 @@ regression probelms that we previously used.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
 <span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
 
-<span class="n">data_clf</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
-    <span class="n">data_clf_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span>
-<span class="p">]</span>
-<span class="n">data_clf</span><span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_clf</span><span class="p">[</span>
-    <span class="n">target_clf_column</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">data_clf</span> <span class="o">=</span> <span class="n">data_clf</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-
 <span class="n">X_clf</span><span class="p">,</span> <span class="n">y_clf</span> <span class="o">=</span> <span class="n">data_clf</span><span class="p">[</span><span class="n">data_clf_columns</span><span class="p">],</span> <span class="n">data_clf</span><span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span>
 <span class="n">X_train_clf</span><span class="p">,</span> <span class="n">X_test_clf</span><span class="p">,</span> <span class="n">y_train_clf</span><span class="p">,</span> <span class="n">y_test_clf</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">X_clf</span><span class="p">,</span> <span class="n">y_clf</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_clf</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/ipykernel_launcher.py:8: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  
 </pre></div>
 </div>
 </div>
@@ -1238,8 +1189,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_reg_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">]</span>
 <span class="n">target_reg_column</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
 
-<span class="n">data_reg</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data_reg_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_reg_column</span><span class="p">]]</span>
-<span class="n">data_reg</span> <span class="o">=</span> <span class="n">data_reg</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">data_reg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
 
 <span class="n">X_reg</span><span class="p">,</span> <span class="n">y_reg</span> <span class="o">=</span> <span class="n">data_reg</span><span class="p">[</span><span class="n">data_reg_columns</span><span class="p">],</span> <span class="n">data_reg</span><span class="p">[</span><span class="n">target_reg_column</span><span class="p">]</span>
 <span class="n">X_train_reg</span><span class="p">,</span> <span class="n">X_test_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">,</span> <span class="n">y_test_reg</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
@@ -1267,7 +1217,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_62_0.png" src="../_images/trees_62_0.png" />
+<img alt="../_images/trees_60_0.png" src="../_images/trees_60_0.png" />
 </div>
 </div>
 </div>
@@ -1290,7 +1240,7 @@ a shallow tree and then deeper tree (for both classification and regression).</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_64_0.png" src="../_images/trees_64_0.png" />
+<img alt="../_images/trees_62_0.png" src="../_images/trees_62_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1307,7 +1257,7 @@ a shallow tree and then deeper tree (for both classification and regression).</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_65_0.png" src="../_images/trees_65_0.png" />
+<img alt="../_images/trees_63_0.png" src="../_images/trees_63_0.png" />
 </div>
 </div>
 <p>For both classification and regression setting, we can observe that
@@ -1342,7 +1292,7 @@ grid-search.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/trees_68_0.png" src="../_images/trees_68_0.png" />
+<img alt="../_images/trees_66_0.png" src="../_images/trees_66_0.png" />
 </div>
 </div>
 <p>The other parameters are used to fine tune the decision tree and have less

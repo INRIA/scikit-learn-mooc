@@ -8,7 +8,7 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins.csv")
+data = pd.read_csv("../datasets/penguins_regression.csv")
 data.head()
 
 # %% [markdown]
@@ -21,12 +21,9 @@ import seaborn as sns
 
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
+X, y = data[[feature_names]], data[target_name]
 
 sns.scatterplot(data=data, x=feature_names, y=target_name)
-
-# select the features of interest
-X = data[[feature_names]].dropna()
-y = data[target_name].dropna()
 
 # %% [markdown]
 # In this problem, penguin mass is our target. It is a continuous

@@ -19,12 +19,10 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins.csv")
-# select the features of interest
+data = pd.read_csv("../datasets/penguins_regression.csv")
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-X = data[[feature_names]].dropna()
-y = data[target_name].dropna()
+X, y = data[[feature_names]], data[target_name]
 
 # %% [markdown]
 # ### Model definition

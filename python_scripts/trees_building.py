@@ -177,7 +177,7 @@ tree.predict([[0, 17]])
 y_proba = pd.Series(
     tree.predict_proba([[0, 17]])[0], index=tree.classes_)
 ax = y_proba.plot(kind="bar")
-ax.set_title("Probability to belong to a penguin class")
+_ = ax.set_title("Probability to belong to a penguin class")
 
 # %% [markdown]
 # We can manually compute the different probability directly from the tree
@@ -214,46 +214,6 @@ print(
 # Indeed, it is not a surprise. We saw earlier that a single feature will not
 # be able to separate all three species. However, from the previous analysis we
 # saw that by using both features we should be able to get fairly good results.
-# Considering the splitting mechanism of the decision tree illustrated above,
-# we should repeat the partitioning on the resulting rectangles created by the
-# first split. In this regard, we expect that the two partitions at the second
-# level of the tree will be using the feature "Culmen Depth".
-
-# %%
-tree = DecisionTreeClassifier(max_depth=2)
-tree.fit(X_train, y_train)
-
-ax = sns.scatterplot(
-    x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"])
-_ = plot_decision_function(tree, range_features, ax=ax)
-
-# %% [markdown]
-# As expected, the decision tree made two new partitions using the "Culmen
-# Length".
-
-# %%
-_, ax = plt.subplots(figsize=(16, 12))
-_ = plot_tree(
-    tree, feature_names=culmen_columns, class_names=tree.classes_,
-    impurity=False, ax=ax)
-
-# %% [markdown]
-# Now, our tree is more powerful with similar performance to our linear
-# model.
-
-# %%
-print(
-    f"Accuracy of the {tree.__class__.__name__}: "
-    f"{tree.fit(X_train, y_train).score(X_test, y_test):.2f}"
-)
-
-# %% [markdown]
-# At this stage, we have the intuition that a decision tree is built by
-# successively partitioning the feature space, considering one feature at a
-# time.
 #
-# We predict an Adelie penguin if the feature value is below the threshold,
-# which is not surprising since this partition was almost pure. If the feature
-# value is above the threshold, we predict the Gentoo penguin, the class that
-# is most probable.
+# In the next exercise, you will increase the size of the tree depth. You will
+# get intuitions on how the space partitioning is repeated over time.

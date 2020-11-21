@@ -321,12 +321,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
 
 # %% [markdown]
-# Here, we deal with a regression problem because our target is a continuous
-# variable ranging from 2.7 kg to 6.3 kg. From the scatter plot above, we can
-# observe that we have a linear relationship between the flipper length
-# and the body mass. The longer the flipper of a penguin, the heavier the
-# penguin.
-#
 # For this problem, we would expect the simple linear model to be able to
 # model this relationship.
 

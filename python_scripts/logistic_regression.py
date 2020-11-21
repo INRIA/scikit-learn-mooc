@@ -13,10 +13,10 @@ import pandas as pd
 
 data = pd.read_csv("../datasets/penguins_classification.csv")
 
-# select the features of interest
+# only keep the Adelie and Chinstrap classes
+data = data.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
-data = data[data[target_column].apply(lambda x: x in ("Adelie", "Chinstrap"))]
 
 # %% [markdown]
 # We can quickly start by visualizing the feature distribution by class:

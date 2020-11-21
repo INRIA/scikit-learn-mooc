@@ -16,7 +16,6 @@ from sklearn.model_selection import train_test_split
 
 data = pd.read_csv("../datasets/penguins_classification.csv")
 
-# select the features of interest
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 X, y = data[culmen_columns], data[target_column]

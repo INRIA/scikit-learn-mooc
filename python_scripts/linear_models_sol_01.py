@@ -20,7 +20,6 @@
 import pandas as pd
 
 data = pd.read_csv("../datasets/penguins_regression.csv")
-# select the features of interest
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 X, y = data[[feature_names]], data[target_name]

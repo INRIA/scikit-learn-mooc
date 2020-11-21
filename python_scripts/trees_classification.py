@@ -1,5 +1,5 @@
 # %% [markdown]
-# # How are decision tree built?
+# # Build a classification decision tree
 #
 # We will illustrate how decision tree fit data with a simple classification
 # problem using the penguins dataset.

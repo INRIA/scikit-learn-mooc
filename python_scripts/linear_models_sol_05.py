@@ -15,6 +15,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 data = pd.read_csv("../datasets/penguins_classification.csv")
+# only keep the Adelie and Chinstrap classes
+data = data.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
 
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
@@ -58,6 +60,7 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
     ax.set_ylabel(feature_names[1])
 
     return ax
+
 
 # %% [markdown]
 # Given the following candidate for the parameter `C`, find out what is the

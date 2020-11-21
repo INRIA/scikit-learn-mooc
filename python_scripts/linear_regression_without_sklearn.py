@@ -21,6 +21,7 @@ import seaborn as sns
 
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
+X, y = data[[feature_names]], data[target_name]
 
 sns.scatterplot(data=data, x=feature_names, y=target_name)
 

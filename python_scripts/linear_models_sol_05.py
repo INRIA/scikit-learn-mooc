@@ -80,23 +80,27 @@ logistic_regression = make_pipeline(
 import seaborn as sns
 sns.set_context("talk")
 
-_, axs = plt.subplots(
-    nrows=2, ncols=4, sharey="row", sharex="row", figsize=(16, 12))
+_, axs = plt.subplots(ncols=4, sharey=True, sharex=True, figsize=(16, 4))
 
-for ax, C in zip(axs.T, Cs):
+weights_ridge = []
+for ax, C in zip(axs, Cs):
     logistic_regression.set_params(logisticregression__C=C)
     logistic_regression.fit(X_train, y_train)
     # plot the decision function
-    plot_decision_function(logistic_regression, range_features, ax=ax[0])
+    plot_decision_function(logistic_regression, range_features, ax=ax)
     sns.scatterplot(
         x=X_test.iloc[:, 0], y=X_test.iloc[:, 1], hue=y_test,
-        palette=["tab:red", "tab:blue"], ax=ax[0])
-    # plot the weights
-    weights = pd.Series(
-        logistic_regression[-1].coef_.ravel(), index=X.columns)
-    weights.plot(kind="barh", ax=ax[1])
-    # title
-    ax[0].set_title(f"C: {C}")
+        palette=["tab:red", "tab:blue"], ax=ax)
+    ax.set_title(f"C: {C}")
+    # store the weights
+    weights_ridge.append(pd.Series(
+        logistic_regression[-1].coef_.ravel(), index=X.columns))
+plt.subplots_adjust(wspace=0.35)
+
+# %%
+weights_ridge = pd.concat(
+    weights_ridge, axis=1, keys=[f"C: {C}" for C in Cs])
+_ = weights_ridge.plot(kind="barh")
 
 # %% [markdown]
 # We see that a small `C` will shrink the weights values toward zero. It means

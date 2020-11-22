@@ -23,10 +23,12 @@ y = x ** 3 - 0.5 * x ** 2 + noise
 
 # %%
 import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_context("talk")
 
 plt.scatter(x, y)
-plt.xlabel('x', size=26)
-_ = plt.ylabel('y', size=26)
+plt.xlabel('x')
+_ = plt.ylabel('y')
 
 # %% [markdown]
 # We observe that the link between the data `x` and target `y` is non-linear.

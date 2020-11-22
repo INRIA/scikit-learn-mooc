@@ -152,4 +152,8 @@ print(f"R2 score: {bagging_regressor.score(X_test, y_test):.3f}")
 # baseline with decent performance without any parameter tuning.
 #
 # Now, we will discuss in detail two ensemble families: bagging and
-# boosting.
+# boosting:
+#
+# * ensemble using bootstrap (e.g. bagging and random-forest);
+# * ensemble using boosting (e.g. adaptive boosting and gradient-boosting
+#   decision tree).

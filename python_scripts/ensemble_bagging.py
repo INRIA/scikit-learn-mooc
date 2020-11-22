@@ -1,38 +1,44 @@
 # %% [markdown]
 # # Bagging
 #
+# In this notebook, we will present the first ensemble using bootstrap samples
+# called bagging.
+#
 # Bagging stands for Bootstrap AGGregatING. It uses bootstrap (random sampling
 # with replacement) to learn several models. At predict time, the predictions
 # of each learner are aggregated to give the final predictions.
 #
-# Let's define a simple dataset (which we have used before in a previous
-# notebook).
+# First, we will generate a simple synthetic dataset to get insights regarding
+# bootstraping.
 
 # %%
 import pandas as pd
 import numpy as np
 
+# create a random number generator that
+# will be used to set the randomness
 rng = np.random.RandomState(0)
 
 
-def generate_data(n_samples=50, sorted=False):
+def generate_data(n_samples=50):
+    """Generate synthetic dataset. Returns `X_train`, `X_test`, `y_train`."""
     x_max, x_min = 1.4, -1.4
     len_x = x_max - x_min
     x = rng.rand(n_samples) * len_x - len_x / 2
     noise = rng.randn(n_samples) * 0.3
     y = x ** 3 - 0.5 * x ** 2 + noise
-    if sorted:
-        sorted_idx = np.argsort(x)
-        x, y = x[sorted_idx], y[sorted_idx]
-    return (
-        pd.DataFrame(x, columns=["Feature"]),
-        pd.DataFrame(np.linspace(x_max, x_min, num=300),
-                     columns=["Feature"]),
-        pd.Series(y, name="Target"))
+
+    X_train = pd.DataFrame(x, columns=["Feature"])
+    X_test = pd.DataFrame(
+        np.linspace(x_max, x_min, num=300), columns=["Feature"])
+    y_train = pd.Series(y, name="Target")
+
+    return X_train, X_test, y_train
 
 
 # %%
 import seaborn as sns
+sns.set_context("talk")
 
 X_train, X_test, y_train = generate_data(n_samples=50)
 sns.scatterplot(x=X_train["Feature"], y=y_train)
@@ -59,23 +65,22 @@ _ = ax.legend()
 # ## Bootstrap sample
 #
 # A bootstrap sample corresponds to a resampling, with replacement, of the
-# original dataset, a sample that is the same size as the
-# original dataset. Thus, the bootstrap sample will contain some
-# data points several times while some of the original data points will
-# not be present.
+# original dataset, a sample that is the same size as the original dataset.
+# Thus, the bootstrap sample will contain some data points several times while
+# some of the original data points will not be present.
 #
-# We will create a function that given `x` and `y` will return a bootstrap
-# sample `x_bootstrap` and `y_bootstrap`.
+# We will create a function that given `X` and `y` will return a bootstrap
+# sample `X_bootstrap` and `y_bootstrap`.
 
 
 # %%
-def bootstrap_sample(x, y):
+def bootstrap_sample(X, y):
     bootstrap_indices = rng.choice(
         np.arange(y.shape[0]), size=y.shape[0], replace=True,
     )
-    x_bootstrap_sample = x.iloc[bootstrap_indices]
+    X_bootstrap_sample = X.iloc[bootstrap_indices]
     y_bootstrap_sample = y.iloc[bootstrap_indices]
-    return x_bootstrap_sample, y_bootstrap_sample
+    return X_bootstrap_sample, y_bootstrap_sample
 
 
 # %% [markdown]
@@ -90,12 +95,25 @@ _, axs = plt.subplots(
     ncols=n_bootstrap, figsize=(16, 6), sharex=True, sharey=True
 )
 
-for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
+for ax, bootstrap_idx in zip(axs, range(n_bootstrap)):
     X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
         X_train, y_train)
     sns.scatterplot(
         x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample, ax=ax)
-    ax.set_title(f"Bootstrap sample #{idx}")
+    ax.set_title(f"Bootstrap sample #{bootstrap_idx}")
+
+# %%
+
+_, ax = plt.subplots(figsize=(8, 6))
+
+for marker, bootstrap_idx in zip(["o", "^", "x"], range(n_bootstrap)):
+    X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
+        X_train, y_train)
+    sns.scatterplot(
+        x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample,
+        label=f"Bootstrap sample #{bootstrap_idx}", marker=marker,
+        alpha=0.5, ax=ax)
+
 
 # %% [markdown]
 # We observe that the 3 generated bootstrap samples are all different. To

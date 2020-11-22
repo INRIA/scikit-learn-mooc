@@ -60,32 +60,73 @@ data.head()
 
 
 # %% [markdown]
-# We will use this subset of data to fit a linear classification model to
-# predict the income class.
+# We will use this data to fit a linear classification model to predict
+# the income class.
 
 # %%
 data.columns
 
-# %% [markdown]
-# When building a machine learning model, it is important to leave out a
-# subset of the data which we can use later to evaluate the trained model.
-# The data used to fit a model is called training data while the one used to
-# assess a model is called testing data.
-#
-# Scikit-learn provides a helper function `train_test_split` which will
-# split the dataset into a training and a testing set. It will also ensure that
-# the data are shuffled randomly before splitting the data.
-
-# %%
-from sklearn.model_selection import train_test_split
-
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
-
 # %%
 print(
-    f"The training dataset contains {data_train.shape[0]} samples and "
-    f"{data_train.shape[1]} features")
+    f"The dataset contains {data.shape[0]} samples and "
+    f"{data.shape[1]} features")
+
+# %% [markdown]
+# We will build a classification model using the "K Nearest Neighbor"
+# strategy. The `fit` method is called to train the model from the input
+# (features) and target data.
+# %%
+from sklearn.neighbors import KNeighborsClassifier
+
+model = KNeighborsClassifier()
+model.fit(data, target)
+
+# %% [markdown]
+# Let'us to use our model to make some predictions on the first five
+# records of the held out test set:
+
+# %%
+target_predicted = model.predict(data)
+target_predicted[:5]
+
+# %% [markdown]
+# We can compare these predictions to the actual data
+
+# %%
+utarget[:5]
+
+# %% [markdown]
+# To get a better assessment, we can compute the average success rate
+
+# %%
+(target == target_predicted).mean()
+
+# %% [markdown]
+# But, can this evaluation be trusted, or is it too good to be true?
+#
+# When building a machine learning model, it is important evaluate the
+# trained model on data that was not used to fit the model, as
+# generalization is more than memorization. It is harder to conclude on
+# instances never seen than on those already seen.
+#
+# Correct evaluation is easily done by leaving out a subset of the data
+# when training the model and using it after for model evaluation. The
+# data used to fit a model is called training data while the one used to
+# assess a model is called testing data.
+#
+# We can load more data, which was actually left-out from the original
+# data set
+
+# %%
+df_test = pd.read_csv('../datasets/adult-census-numeric-test.csv')
+
+# %% [markdown]
+# From this new data, we separate out input features and the target to
+# predict
+
+# %%
+target_test = df_test[target_name]
+data_test = df_test.drop(columns=[target_name, ])
 
 # %%
 print(
@@ -93,42 +134,11 @@ print(
     f"{data_test.shape[1]} features")
 
 # %% [markdown]
-# We will build a linear classification model called "Logistic Regression". The
-# `fit` method is called to train the model from the input (features) and
-# target data. Only the training data should be given for this purpose.
-#
-# In addition, check the time required to train the model and the number of
-# iterations done by the solver to find a solution.
-# %%
-from sklearn.linear_model import LogisticRegression
-import time
+# Note that scikit-learn provides a helper function `train_test_split`
+# which can be used to split the dataset into a training and a testing
+# set. It will also ensure that the data are shuffled randomly before
+# splitting the data.
 
-model = LogisticRegression()
-start = time.time()
-model.fit(data_train, target_train)
-elapsed_time = time.time() - start
-
-print(f"The model {model.__class__.__name__} was trained in "
-      f"{elapsed_time:.3f} seconds for {model.n_iter_} iterations")
-
-# %% [markdown]
-# Let's ignore the convergence warning for now and instead let's try
-# to use our model to make some predictions on the first five records
-# of the held out test set:
-
-# %%
-target_predicted = model.predict(data_test)
-target_predicted[:5]
-
-# %%
-target_test[:5]
-
-# %%
-predictions = data_test.copy()
-predictions['predicted-class'] = target_predicted
-predictions['expected-class'] = target_test
-predictions['correct'] = target_predicted == target_test
-predictions.head()
 
 # %% [markdown]
 # To quantitatively evaluate our model, we can use the method `score`. It will
@@ -140,16 +150,25 @@ print(f"The test accuracy using a {model.__class__.__name__} is "
       f"{model.score(data_test, target_test):.3f}")
 
 # %% [markdown]
-# This is mathematically equivalent as computing the average number of time
-# the model makes a correct prediction on the test set:
+# We can now compute the model predictions on the test set:
 
 # %%
-(target_test == target_predicted).mean()
+target_test_predicted = model.predict(data_test)
+
+# %% [markdown]
+# And compute the average accuracy on the test set:
+
+# %%
+(target_test == target_test_predicted).mean()
+
+# %% [markdown]
+# If we compare with the accuracy obtained by wrongly evaluating the model
+# on the training set, we find that this evaluation was indeed optimistic
 
 # %% [markdown]
 # In this notebook we have:
 # * **split** our dataset into a training dataset and a testing dataset to eva
-# * fitted a **logistic regression** model on the training data
+# * fitted a **nearest neighbor** model on the training data
 # * evaluated its performance on the testing data
 # * presented the scikit-learn API `.fit` (to train a model), `.predict` (to
 #   make predictions) and `.score` (to evaluate a model)

@@ -32,8 +32,9 @@ X_test = pd.DataFrame(np.arange(X_train[data_columns[0]].min(),
 
 # %%
 import seaborn as sns
+sns.set_context("talk")
 
-sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
+_ = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
 
 # %% [markdown]
 # We will first illustrate the difference between a linear model and a decision

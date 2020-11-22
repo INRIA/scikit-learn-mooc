@@ -23,8 +23,9 @@ target_column = "Species"
 
 # %%
 import seaborn as sns
+sns.set_context("talk")
 
-_ = sns.pairplot(data=data, hue="Species")
+_ = sns.pairplot(data=data, hue="Species", height=3.3)
 
 # %% [markdown]
 # We can observe that we have quite a simple problem. When the culmen
@@ -79,8 +80,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
     if ax is None:
         _, ax = plt.subplots()
     ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
-    ax.set_xlabel(feature_names[0])
-    ax.set_ylabel(feature_names[1])
 
     return ax
 
@@ -119,7 +118,7 @@ _ = sns.scatterplot(
 
 # %%
 weights = pd.Series(logistic_regression[-1].coef_.ravel(), index=X.columns)
-weights.plot(kind="barh")
+_ = weights.plot(kind="barh")
 
 # %% [markdown]
 # Indeed, both coefficients are non-null.

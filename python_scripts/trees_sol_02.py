@@ -58,17 +58,12 @@ y_pred_tree = tree.predict(X_test)
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
+sns.set_context("talk")
 
-ax = sns.scatterplot(
-    data=data,
-    x="Flipper Length (mm)",
-    y="Body Mass (g)",
-    color="black",
-    alpha=0.5,
-)
+ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+                     color="black", alpha=0.5)
 ax.plot(
-    X_test, y_pred_linear_regression, linewidth=4, label="Linear regression"
-)
+    X_test, y_pred_linear_regression, linewidth=4, label="Linear regression")
 ax.plot(X_test, y_pred_tree, linewidth=4, label="Decision tree regression")
 _ = plt.legend()
 
@@ -104,13 +99,8 @@ y_pred_tree = tree.predict(X_test)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-ax = sns.scatterplot(
-    data=data,
-    x="Flipper Length (mm)",
-    y="Body Mass (g)",
-    color="black",
-    alpha=0.5,
-)
+ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+                     color="black", alpha=0.5)
 ax.plot(
     X_test, y_pred_linear_regression, linewidth=4, label="Linear regression"
 )

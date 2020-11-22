@@ -51,6 +51,7 @@ flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
+sns.set_context("talk")
 
 weights = [-40, 45, 90]
 intercepts = [15000, -5000, -14000]
@@ -66,7 +67,7 @@ for weight, intercept in zip(weights, intercepts):
         flipper_length_range, predicted_body_mass,
         label=label.format(weight, intercept),
         linewidth=4)
-    _ = ax.legend()
+    _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.25), ncol=1)
 
 # %% [markdown]
 # In the previous question, you were asked to create several linear models.

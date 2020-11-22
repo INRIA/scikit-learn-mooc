@@ -18,12 +18,13 @@ data.head()
 
 # %%
 import seaborn as sns
+sns.set_context("talk")
 
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 X, y = data[[feature_names]], data[target_name]
 
-sns.scatterplot(data=data, x=feature_names, y=target_name)
+_ = sns.scatterplot(data=data, x=feature_names, y=target_name)
 
 # %% [markdown]
 # In this problem, penguin mass is our target. It is a continuous
@@ -69,7 +70,7 @@ ax.plot(
     flipper_length_range, predicted_body_mass,
     label=label.format(weight_flipper_length, intercept_body_mass),
     linewidth=4)
-_ = ax.legend()
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %% [markdown]
 # The variable `weight_flipper_length` is a weight applied to the feature
@@ -96,7 +97,7 @@ ax.plot(
     flipper_length_range, predicted_body_mass,
     label=label.format(weight_flipper_length, intercept_body_mass),
     linewidth=4)
-_ = ax.legend()
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 
 # %% [markdown]
@@ -140,7 +141,7 @@ ax.plot(
     flipper_length_range, predicted_body_mass,
     label=label.format(weight_flipper_length, intercept_body_mass),
     linewidth=4)
-_ = ax.legend()
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %% [markdown]
 # Otherwise, it will pass through the `intercept_body_mass` value:
@@ -158,7 +159,7 @@ ax.plot(
     flipper_length_range, predicted_body_mass,
     label=label.format(weight_flipper_length, intercept_body_mass),
     linewidth=4)
-_ = ax.legend()
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %% [markdown]
 #  In this notebook, we have seen the parametrization of a linear regression

@@ -41,7 +41,7 @@ import seaborn as sns
 sns.set_context("talk")
 
 X_train, X_test, y_train = generate_data(n_samples=50)
-sns.scatterplot(x=X_train["Feature"], y=y_train)
+_ = sns.scatterplot(x=X_train["Feature"], y=y_train)
 
 # %% [markdown]
 # The link between our feature and the target to predict is non-linear.
@@ -91,19 +91,6 @@ def bootstrap_sample(X, y):
 import matplotlib.pyplot as plt
 
 n_bootstrap = 3
-_, axs = plt.subplots(
-    ncols=n_bootstrap, figsize=(16, 6), sharex=True, sharey=True
-)
-
-for ax, bootstrap_idx in zip(axs, range(n_bootstrap)):
-    X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
-        X_train, y_train)
-    sns.scatterplot(
-        x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample, ax=ax)
-    ax.set_title(f"Bootstrap sample #{bootstrap_idx}")
-
-# %%
-
 _, ax = plt.subplots(figsize=(8, 6))
 
 for marker, bootstrap_idx in zip(["o", "^", "x"], range(n_bootstrap)):

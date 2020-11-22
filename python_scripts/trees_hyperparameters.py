@@ -33,6 +33,7 @@ data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+sns.set_context("talk")
 
 
 def plot_classification(model, X, y, ax=None):
@@ -63,8 +64,6 @@ def plot_classification(model, X, y, ax=None):
     sns.scatterplot(
         x=data_clf_columns[0], y=data_clf_columns[1], hue=target_clf_column,
         data=data_clf, ax=axs[0], palette=["tab:red", "tab:blue", "black"])
-    ax.set_xlabel(feature_names[0])
-    ax.set_ylabel(feature_names[1])
 
     return ax
 
@@ -102,7 +101,7 @@ max_depth = 2
 tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
-fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
 plot_classification(
     tree_clf, data_clf[data_clf_columns], data_clf[target_clf_column],
     ax=axs[0]
@@ -110,7 +109,8 @@ plot_classification(
 plot_regression(
     tree_reg, data_reg[data_reg_columns], data_reg[target_reg_column],
     ax=axs[1])
-_ = fig.suptitle(f"Shallow tree with a max-depth of {max_depth}")
+fig.suptitle(f"Shallow tree with a max-depth of {max_depth}")
+plt.subplots_adjust(wspace=0.3)
 
 
 # %%
@@ -118,7 +118,7 @@ max_depth = 30
 tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
-fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
 plot_classification(
     tree_clf, data_clf[data_clf_columns], data_clf[target_clf_column],
     ax=axs[0]
@@ -126,7 +126,8 @@ plot_classification(
 plot_regression(
     tree_reg, data_reg[data_reg_columns], data_reg[target_reg_column],
     ax=axs[1])
-_ = fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
+fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
+plt.subplots_adjust(wspace=0.3)
 
 # %% [markdown]
 # For both classification and regression setting, we can observe that
@@ -144,7 +145,7 @@ tree_clf = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid)
 tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid)
 
 # %%
-fig, axs = plt.subplots(ncols=2, figsize=(10, 5))
+fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
 plot_classification(
     tree_clf, data_clf[data_clf_columns], data_clf[target_clf_column],
     ax=axs[0]
@@ -155,9 +156,10 @@ plot_regression(
 axs[0].set_title(
     f"Optimal depth found via CV: {tree_clf.best_params_['max_depth']}"
 )
-_ = axs[1].set_title(
+axs[1].set_title(
     f"Optimal depth found via CV: {tree_reg.best_params_['max_depth']}"
 )
+plt.subplots_adjust(wspace=0.3)
 
 # %% [markdown]
 # The other parameters are used to fine tune the decision tree and have less

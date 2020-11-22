@@ -54,6 +54,7 @@ intercept_body_mass
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+sns.set_context("talk")
 
 flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 sns.scatterplot(x=X[feature_names], y=y)

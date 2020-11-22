@@ -49,8 +49,9 @@ data.head()
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
+sns.set_context("talk")
 
-_, axs = plt.subplots(ncols=3, figsize=(15, 4))
+_, axs = plt.subplots(ncols=3, figsize=(16, 4))
 
 sns.scatterplot(
     x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
@@ -61,6 +62,7 @@ sns.kdeplot(
 sns.kdeplot(
     data=data, x=culmen_columns[1], hue=target_column,
     ax=axs[2])
+plt.subplots_adjust(wspace=0.4)
 
 # %% [markdown]
 # We can first check the feature distributions by looking at the diagonal plots
@@ -88,7 +90,7 @@ data_columns = ["Flipper Length (mm)"]
 target_column = "Body Mass (g)"
 
 # %%
-sns.scatterplot(data=data, x=data_columns[0], y=target_column)
+_ = sns.scatterplot(data=data, x=data_columns[0], y=target_column)
 
 # %% [markdown]
 # Here, we deal with a regression problem because our target is a continuous

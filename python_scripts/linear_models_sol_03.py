@@ -51,6 +51,8 @@ print(f"Mean absolute error on testing set: "
 # %%
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_context("talk")
 
 weights = pd.Series(linear_regression.coef_, index=X.columns)
 weights.plot(kind="barh")

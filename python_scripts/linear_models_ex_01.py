@@ -9,8 +9,7 @@
 # We will reuse part of the code of the course to:
 #
 # * load data;
-# * create the function representing a linear model;
-# * plot the data and the linear model function.
+# * create the function representing a linear model.
 #
 # ## Prerequisites
 #
@@ -37,46 +36,8 @@ def linear_model_flipper_mass(
     return body_mass
 
 
-# %%
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-
-# %% [markdown]
-# ### Data and model visualization
-
-
-def plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass,
-    ax=None,
-):
-    """Compute and plot the prediction."""
-    inferred_body_mass = linear_model_flipper_mass(
-        flipper_length_range,
-        weight_flipper_length=weight_flipper_length,
-        intercept_body_mass=intercept_body_mass,
-    )
-
-    if ax is None:
-        _, ax = plt.subplots()
-
-    sns.scatterplot(data=data, x=feature_names, y=target_name, ax=ax)
-    ax.plot(
-        flipper_length_range,
-        inferred_body_mass,
-        linewidth=3,
-        label=(
-            f"{weight_flipper_length:.2f} (g / mm) * flipper length + "
-            f"{intercept_body_mass:.2f} (g)"
-        ),
-    )
-    plt.legend()
-
-
 # %% [markdown]
 # ## Main exercise
-#
-# ### Question 1.
 #
 # Given a vector of the flipper length, several weights and intercepts to
 # plot several linear model that could fit our data. Use the above
@@ -94,8 +55,6 @@ flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 
 
 # %% [markdown]
-# ### Question 2.
-#
 # In the previous question, you were asked to create several linear models.
 # The visualization allowed you to qualitatively assess if a model was better
 # than another.

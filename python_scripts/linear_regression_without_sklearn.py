@@ -18,12 +18,13 @@ data.head()
 
 # %%
 import seaborn as sns
+sns.set_context("talk")
 
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 X, y = data[[feature_names]], data[target_name]
 
-sns.scatterplot(data=data, x=feature_names, y=target_name)
+_ = sns.scatterplot(data=data, x=feature_names, y=target_name)
 
 # %% [markdown]
 # In this problem, penguin mass is our target. It is a continuous
@@ -53,44 +54,23 @@ def linear_model_flipper_mass(
 # to be 45 and `intercept_body_mass` to be -5000.
 
 # %%
-import matplotlib.pyplot as plt
 import numpy as np
-
-
-def plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass,
-    ax=None,
-):
-    """Compute and plot the prediction."""
-    inferred_body_mass = linear_model_flipper_mass(
-        flipper_length_range,
-        weight_flipper_length=weight_flipper_length,
-        intercept_body_mass=intercept_body_mass,
-    )
-
-    if ax is None:
-        _, ax = plt.subplots()
-
-    sns.scatterplot(data=data, x=feature_names, y=target_name, ax=ax)
-    ax.plot(
-        flipper_length_range,
-        inferred_body_mass,
-        linewidth=3,
-        label=(
-            f"{weight_flipper_length:.2f} (g / mm) * flipper length + "
-            f"{intercept_body_mass:.2f} (g)"
-        ),
-    )
-    plt.legend()
-
 
 weight_flipper_length = 45
 intercept_body_mass = -5000
 
 flipper_length_range = np.linspace(X.min(), X.max(), num=300)
-plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass
-)
+predicted_body_mass = linear_model_flipper_mass(
+    flipper_length_range, weight_flipper_length, intercept_body_mass)
+
+label = ("{0:.2f} (g / mm) * flipper length + "
+         "{1:.2f} (g)")
+ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax.plot(
+    flipper_length_range, predicted_body_mass,
+    label=label.format(weight_flipper_length, intercept_body_mass),
+    linewidth=4)
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %% [markdown]
 # The variable `weight_flipper_length` is a weight applied to the feature
@@ -107,10 +87,17 @@ plot_data_and_model(
 weight_flipper_length = -40
 intercept_body_mass = 13000
 
-flipper_length_range = np.linspace(X.min(), X.max(), num=300)
-plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass
-)
+predicted_body_mass = linear_model_flipper_mass(
+    flipper_length_range, weight_flipper_length, intercept_body_mass)
+
+label = ("{0:.2f} (g / mm) * flipper length + "
+         "{1:.2f} (g)")
+ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax.plot(
+    flipper_length_range, predicted_body_mass,
+    label=label.format(weight_flipper_length, intercept_body_mass),
+    linewidth=4)
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 
 # %% [markdown]
@@ -144,10 +131,17 @@ print(
 weight_flipper_length = 25
 intercept_body_mass = 0
 
-flipper_length_range = np.linspace(0, X.max(), num=300)
-plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass
-)
+predicted_body_mass = linear_model_flipper_mass(
+    flipper_length_range, weight_flipper_length, intercept_body_mass)
+
+label = ("{0:.2f} (g / mm) * flipper length + "
+         "{1:.2f} (g)")
+ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax.plot(
+    flipper_length_range, predicted_body_mass,
+    label=label.format(weight_flipper_length, intercept_body_mass),
+    linewidth=4)
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %% [markdown]
 # Otherwise, it will pass through the `intercept_body_mass` value:
@@ -156,10 +150,16 @@ plot_data_and_model(
 weight_flipper_length = 45
 intercept_body_mass = -5000
 
-flipper_length_range = np.linspace(0, X.max(), num=300)
-plot_data_and_model(
-    flipper_length_range, weight_flipper_length, intercept_body_mass
-)
+predicted_body_mass = linear_model_flipper_mass(
+    flipper_length_range, weight_flipper_length, intercept_body_mass)
+
+label = ("{0:.2f} (g / mm) * flipper length + {1:.2f} (g)")
+ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax.plot(
+    flipper_length_range, predicted_body_mass,
+    label=label.format(weight_flipper_length, intercept_body_mass),
+    linewidth=4)
+_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %% [markdown]
 #  In this notebook, we have seen the parametrization of a linear regression

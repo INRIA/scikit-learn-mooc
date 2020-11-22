@@ -80,14 +80,16 @@ print(
 # %%
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_context("talk")
 
-weights = pd.Series(
+weights_linear_regression = pd.Series(
     linear_regression[-1].coef_,
     index=linear_regression[0].get_feature_names(
         input_features=X.columns)
 )
-_, ax = plt.subplots(figsize=(6, 12))
-_ = weights.plot(kind="barh", ax=ax)
+_, ax = plt.subplots(figsize=(6, 16))
+_ = weights_linear_regression.plot(kind="barh", ax=ax)
 
 # %% [markdown]
 # We can force the linear regression model to consider all features in a more
@@ -118,16 +120,23 @@ print(
 
 # %% [markdown]
 # We see that the training and testing score are much closer, indicating that
-# our model is less overfitting. We can check the values of the weights.
+# our model is less overfitting. We can compare the values of the weights of
+# ridge with the un-regularized linear regression.
 
 # %%
-weights = pd.Series(
+weights_ridge = pd.Series(
     ridge[-1].coef_,
     index=ridge[0].get_feature_names(
         input_features=X.columns)
 )
-_, ax = plt.subplots(figsize=(6, 12))
-_ = weights.plot(kind="barh", ax=ax)
+
+# %%
+weights = pd.concat(
+    [weights_linear_regression, weights_ridge], axis=1,
+    keys=["Linear regression", "Ridge"])
+
+_, ax = plt.subplots(figsize=(6, 16))
+weights.plot(kind="barh", ax=ax)
 
 # %% [markdown]
 # We see that the magnitude of the weights are shrinked towards zero in

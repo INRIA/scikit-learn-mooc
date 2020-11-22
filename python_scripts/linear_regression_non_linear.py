@@ -40,8 +40,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
     if ax is None:
         _, ax = plt.subplots()
     ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
-    ax.set_xlabel(feature_names[0])
-    ax.set_ylabel(feature_names[1])
 
     return ax
 
@@ -73,7 +71,7 @@ datasets = [
     [pd.DataFrame(X_gauss, columns=["Feature #0", "Feature #1"]),
      pd.Series(y_gauss, name="class")],
 ]
-range_features = {"feature #1": (-5, 5), "feature #2": (-5, 5)}
+range_features = {"Feature #0": (-5, 5), "Feature #1": (-5, 5)}
 
 # %% [markdown]
 # We will first visualize the different datasets.
@@ -81,8 +79,9 @@ range_features = {"feature #1": (-5, 5), "feature #2": (-5, 5)}
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
+sns.set_context("talk")
 
-_, axs = plt.subplots(ncols=3, nrows=1, figsize=(12, 4))
+_, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
 
 for ax, (X, y) in zip(axs, datasets):
     sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
@@ -101,7 +100,7 @@ from sklearn.svm import SVC
 
 linear_model = make_pipeline(StandardScaler(), SVC(kernel="linear"))
 
-_, axs = plt.subplots(ncols=3, nrows=1, figsize=(12, 4))
+_, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
 for ax, (X, y) in zip(axs, datasets):
     linear_model.fit(X, y)
     plot_decision_function(linear_model, range_features, ax=ax)
@@ -119,7 +118,7 @@ for ax, (X, y) in zip(axs, datasets):
 # %%
 kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf"))
 
-_, axs = plt.subplots(ncols=3, nrows=1, figsize=(12, 4))
+_, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
 for ax, (X, y) in zip(axs, datasets):
     kernel_model.fit(X, y)
     plot_decision_function(kernel_model, range_features, ax=ax)
@@ -142,4 +141,3 @@ for ax, (X, y) in zip(axs, datasets):
 # - the regularization parameter needs to be fine tuned for each application;
 # - linear models can be used with data presenting non-linear links but require
 #   extra work such as the use of data augmentation or kernel trick.
-#

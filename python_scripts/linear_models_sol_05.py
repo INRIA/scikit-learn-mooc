@@ -78,8 +78,10 @@ logistic_regression = make_pipeline(
 
 # %%
 import seaborn as sns
+sns.set_context("talk")
 
-_, axs = plt.subplots(nrows=2, ncols=4, sharey="row", figsize=(12, 8))
+_, axs = plt.subplots(
+    nrows=2, ncols=4, sharey="row", sharex="row", figsize=(16, 12))
 
 for ax, C in zip(axs.T, Cs):
     logistic_regression.set_params(logisticregression__C=C)
@@ -92,7 +94,7 @@ for ax, C in zip(axs.T, Cs):
     # plot the weights
     weights = pd.Series(
         logistic_regression[-1].coef_.ravel(), index=X.columns)
-    weights.plot(kind="bar", ax=ax[1])
+    weights.plot(kind="barh", ax=ax[1])
     # title
     ax[0].set_title(f"C: {C}")
 

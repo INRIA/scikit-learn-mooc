@@ -61,8 +61,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
     if ax is None:
         _, ax = plt.subplots()
     ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
-    ax.set_xlabel(feature_names[0])
-    ax.set_ylabel(feature_names[1])
 
     return ax
 
@@ -75,13 +73,15 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # %%
 import seaborn as sns
 from sklearn.linear_model import LogisticRegression
+sns.set_context("talk")
 
 linear_model = LogisticRegression()
 linear_model.fit(X_train, y_train)
 
-ax = sns.scatterplot(
+_, ax = plt.subplots(figsize=(8, 6))
+sns.scatterplot(
     x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"])
+    data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
 _ = plot_decision_function(linear_model, range_features, ax=ax)
 
 # %% [markdown]
@@ -115,9 +115,10 @@ from sklearn.tree import DecisionTreeClassifier
 tree = DecisionTreeClassifier(max_depth=1)
 tree.fit(X_train, y_train)
 
-ax = sns.scatterplot(
+_, ax = plt.subplots(figsize=(8, 6))
+sns.scatterplot(
     x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"])
+    data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
@@ -177,6 +178,7 @@ tree.predict([[0, 17]])
 y_proba = pd.Series(
     tree.predict_proba([[0, 17]])[0], index=tree.classes_)
 ax = y_proba.plot(kind="bar")
+ax.set_ylabel("Probability")
 _ = ax.set_title("Probability to belong to a penguin class")
 
 # %% [markdown]

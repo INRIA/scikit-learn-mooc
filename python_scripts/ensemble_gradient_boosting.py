@@ -217,6 +217,7 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 
 # %%
 from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
 
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
@@ -241,6 +242,8 @@ print(f"Fit time: {fit_time_gradient_boosting:.2f} s")
 print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
 
 # %%
+from sklearn.ensemble import RandomForestRegressor
+
 random_forest = RandomForestRegressor(n_estimators=200, n_jobs=-1)
 
 start_time = time()

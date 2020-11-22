@@ -79,7 +79,7 @@ start_time = time()
 score_gradient_boosting = gradient_boosting.score(X_test, y_test)
 score_time_gradient_boosting = time() - start_time
 
-print("Gradient boosting decision tree")
+print("KBinsDiscritizer + Gradient boosting decision tree")
 print(f"R2 score: {score_gradient_boosting:.3f}")
 print(f"Fit time: {fit_time_gradient_boosting:.2f} s")
 print(f"Score time: {score_time_gradient_boosting:.5f} s\n")

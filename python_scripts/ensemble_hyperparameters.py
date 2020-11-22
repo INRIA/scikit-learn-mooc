@@ -79,7 +79,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 # similar to having a too large tree depth.
 
 # %%
-from sklearn.preprocessing import GradientBoostingRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 
 param_grid = {
     "n_estimators": [10, 30, 50],

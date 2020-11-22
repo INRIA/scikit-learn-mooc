@@ -58,7 +58,7 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 # with the parameter `max_features="sqrt"` to `BaggingRegressor` if we wanted
 # it to have the same behaviour as the random forest classifier.
 #
-# ### Classifiers details
+# ## Classifiers details
 #
 # Up to now, we have only focused on regression problems. There is a little
 # difference between regression and classification.
@@ -77,7 +77,7 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 #   and (0.31, 0.69), the aggregation probability is (0.33, 0.67) and the
 #   second class would be predicted.
 #
-# # Summary
+# # Midpoint summary
 #
 # We saw in this section two algorithms that use bootstrap samples to create
 # an ensemble of classifiers or regressors. These algorithms train several

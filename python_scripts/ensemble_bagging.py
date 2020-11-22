@@ -41,7 +41,8 @@ import seaborn as sns
 sns.set_context("talk")
 
 X_train, X_test, y_train = generate_data(n_samples=50)
-_ = sns.scatterplot(x=X_train["Feature"], y=y_train)
+_ = sns.scatterplot(
+    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
 
 # %% [markdown]
 # The link between our feature and the target to predict is non-linear.
@@ -55,7 +56,8 @@ tree.fit(X_train, y_train)
 y_pred = tree.predict(X_test)
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train)
+ax = sns.scatterplot(
+    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
 ax.plot(X_test, y_pred, label="Fitted tree")
 _ = ax.legend()
 
@@ -146,7 +148,8 @@ for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
     y_pred = forest[-1].predict(X_test)
 
     sns.scatterplot(
-        x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample, ax=ax)
+        x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample, ax=ax,
+        color="black", alpha=0.5)
     ax.plot(X_test, y_pred, linewidth=3, label="Fitted tree")
     ax.set_title(f"Bootstrap sample #{idx}")
     ax.legend()
@@ -155,7 +158,8 @@ for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
 # We can plot these decision functions on the same plot to see the difference.
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train)
+ax = sns.scatterplot(
+    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
 y_pred_forest = []
 for tree_idx, tree in enumerate(forest):
     y_pred = tree.predict(X_test)
@@ -173,7 +177,8 @@ _ = plt.legend()
 # plot the averaged predictions from the previous example.
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train)
+ax = sns.scatterplot(
+    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
 y_pred_forest = []
 for tree_idx, tree in enumerate(forest):
     y_pred = tree.predict(X_test)
@@ -189,3 +194,49 @@ _ = plt.legend()
 # %% [markdown]
 # The unbroken red line shows the averaged predictions, which would be the
 # final preditions given by our 'bag' of decision tree regressors.
+#
+# ## Bagging in scikit-learn
+#
+# Scikit-learn implements bagging estimators. It takes a base model that is the
+# model trained on each bootstrap sample.
+
+# %%
+from sklearn.ensemble import BaggingRegressor
+
+bagging = BaggingRegressor(
+    base_estimator=DecisionTreeRegressor(), n_estimators=3)
+bagging.fit(X_train, y_train)
+y_pred_forest = bagging.predict(X_test)
+
+# %%
+ax = sns.scatterplot(
+    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+ax.plot(X_test, y_pred_forest, label="Bag of decision trees",
+        linestyle="-", linewidth=3, alpha=0.8)
+_ = plt.legend()
+
+# %% [markdown]
+# While we used a decision tree as a base model, nothing prevent us of using
+# any other type of model. We will give an example that will use a linear
+# regression.
+
+# %%
+from sklearn.linear_model import LinearRegression
+
+bagging = BaggingRegressor(
+    base_estimator=LinearRegression(), n_estimators=3)
+bagging.fit(X_train, y_train)
+y_pred_linear = bagging.predict(X_test)
+
+# %%
+ax = sns.scatterplot(
+    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+ax.plot(X_test, y_pred_forest, label="Bag of decision trees",
+        linestyle="-", linewidth=3, alpha=0.8)
+ax.plot(X_test, y_pred_linear, label="Bag of linear regression",
+        linestyle="-", linewidth=3, alpha=0.8)
+_ = plt.legend()
+
+# %% [markdown]
+# However, we see that using a bag of linear models is not helpful here because
+# we still obtain a linear model.

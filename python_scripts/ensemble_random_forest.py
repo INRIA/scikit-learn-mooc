@@ -22,11 +22,12 @@ from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=0, test_size=0.5)
 
 # %%
 from sklearn.ensemble import BaggingRegressor
-from sklearn.ensemble import DecisionTreeRegressor
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 
 random_forest = RandomForestRegressor(
@@ -76,7 +77,7 @@ print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
 #   and (0.31, 0.69), the aggregation probability is (0.33, 0.67) and the
 #   second class would be predicted.
 #
-# ## Summary
+# # Summary
 #
 # We saw in this section two algorithms that use bootstrap samples to create
 # an ensemble of classifiers or regressors. These algorithms train several

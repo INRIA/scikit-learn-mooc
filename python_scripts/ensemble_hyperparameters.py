@@ -1,3 +1,4 @@
+# %% [markdown]
 # # Hyper-parameters tuning
 #
 # In the previous section, we did not discuss the parameters of random forest

@@ -97,12 +97,6 @@ print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
 # Below we will give an example of a large dataset and we can compare
 # computation time with the earlier experiment in the previous section.
 
-
-
-
-
-
-
 # %%
 from time import time
 from sklearn.experimental import enable_hist_gradient_boosting

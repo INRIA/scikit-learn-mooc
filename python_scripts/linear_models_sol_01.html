@@ -545,29 +545,12 @@
      Model definition
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#data-and-model-visualization">
-     Data and model visualization
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-exercise">
    Main exercise
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#question-1">
-     Question 1.
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#question-2">
-     Question 2.
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -585,13 +568,12 @@
 <p>The aim of this exercise is three-fold:</p>
 <ul class="simple">
 <li><p>understand the parametrization of a linear model;</p></li>
-<li><p>quantify the goodness of fit of a set of such model;</p></li>
+<li><p>quantify the goodness of fit of a set of such model.</p></li>
 </ul>
 <p>We will reuse part of the code of the course to:</p>
 <ul class="simple">
 <li><p>load data;</p></li>
-<li><p>create the function representing a linear model;</p></li>
-<li><p>plot the data and the linear model function.</p></li>
+<li><p>create the function representing a linear model.</p></li>
 </ul>
 <div class="section" id="prerequisite">
 <h2>Prerequisite<a class="headerlink" href="#prerequisite" title="Permalink to this headline">¶</a></h2>
@@ -624,54 +606,10 @@
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="data-and-model-visualization">
-<h3>Data and model visualization<a class="headerlink" href="#data-and-model-visualization" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_data_and_model</span><span class="p">(</span>
-    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">,</span>
-    <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute and plot the prediction.&quot;&quot;&quot;</span>
-    <span class="n">inferred_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
-        <span class="n">flipper_length_range</span><span class="p">,</span>
-        <span class="n">weight_flipper_length</span><span class="o">=</span><span class="n">weight_flipper_length</span><span class="p">,</span>
-        <span class="n">intercept_body_mass</span><span class="o">=</span><span class="n">intercept_body_mass</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-
-    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">flipper_length_range</span><span class="p">,</span>
-        <span class="n">inferred_body_mass</span><span class="p">,</span>
-        <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">weight_flipper_length</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">intercept_body_mass</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g)&quot;</span>
-        <span class="p">),</span>
-    <span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="section" id="main-exercise">
 <h2>Main exercise<a class="headerlink" href="#main-exercise" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="question-1">
-<h3>Question 1.<a class="headerlink" href="#question-1" title="Permalink to this headline">¶</a></h3>
 <p>Given a vector of the flipper length, several weights and intercepts to
 plot several linear model that could fit our data. Use the above
 visualization helper function to visualize both the model and data.</p>
@@ -686,24 +624,31 @@ visualization helper function to visualize both the model and data.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
 <span class="n">intercepts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15000</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="o">-</span><span class="mi">14000</span><span class="p">]</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">intercepts</span><span class="p">):</span>
-    <span class="n">plot_data_and_model</span><span class="p">(</span>
-        <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span>
-    <span class="p">)</span>
+    <span class="n">predicted_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
+        <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
+
+    <span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + </span><span class="si">{1:.2f}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">predicted_body_mass</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">),</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_sol_01_9_0.png" src="../_images/linear_models_sol_01_9_0.png" />
+<img alt="../_images/linear_models_sol_01_6_0.png" src="../_images/linear_models_sol_01_6_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="question-2">
-<h3>Question 2.<a class="headerlink" href="#question-2" title="Permalink to this headline">¶</a></h3>
 <p>In the previous question, you were asked to create several linear models.
 The visualization allowed you to qualitatively assess if a model was better
 than another.</p>
@@ -751,7 +696,6 @@ Model #2:
 90.00 (g / mm) * flipper length + -14000.00 (g)
 Error: 573.041
 </pre></div>
-</div>
 </div>
 </div>
 </div>

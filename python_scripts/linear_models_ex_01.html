@@ -545,29 +545,12 @@
      Model definition
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#data-and-model-visualization">
-     Data and model visualization
-    </a>
-   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#main-exercise">
    Main exercise
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#question-1">
-     Question 1.
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#question-2">
-     Question 2.
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -590,8 +573,7 @@
 <p>We will reuse part of the code of the course to:</p>
 <ul class="simple">
 <li><p>load data;</p></li>
-<li><p>create the function representing a linear model;</p></li>
-<li><p>plot the data and the linear model function.</p></li>
+<li><p>create the function representing a linear model.</p></li>
 </ul>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
@@ -624,49 +606,10 @@
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="data-and-model-visualization">
-<h3>Data and model visualization<a class="headerlink" href="#data-and-model-visualization" title="Permalink to this headline">¶</a></h3>
-<p>def plot_data_and_model(
-flipper_length_range, weight_flipper_length, intercept_body_mass,
-ax=None,
-):
-“””Compute and plot the prediction.”””
-inferred_body_mass = linear_model_flipper_mass(
-flipper_length_range,
-weight_flipper_length=weight_flipper_length,
-intercept_body_mass=intercept_body_mass,
-)</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>if ax is None:
-    _, ax = plt.subplots()
-
-sns.scatterplot(data=data, x=feature_names, y=target_name, ax=ax)
-ax.plot(
-    flipper_length_range,
-    inferred_body_mass,
-    linewidth=3,
-    label=(
-        f&quot;{weight_flipper_length:.2f} (g / mm) * flipper length + &quot;
-        f&quot;{intercept_body_mass:.2f} (g)&quot;
-    ),
-)
-plt.legend()
-</pre></div>
-</div>
 </div>
 </div>
 <div class="section" id="main-exercise">
 <h2>Main exercise<a class="headerlink" href="#main-exercise" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="question-1">
-<h3>Question 1.<a class="headerlink" href="#question-1" title="Permalink to this headline">¶</a></h3>
 <p>Given a vector of the flipper length, several weights and intercepts to
 plot several linear model that could fit our data. Use the above
 visualization helper function to visualize both the model and data.</p>
@@ -688,9 +631,6 @@ visualization helper function to visualize both the model and data.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="question-2">
-<h3>Question 2.<a class="headerlink" href="#question-2" title="Permalink to this headline">¶</a></h3>
 <p>In the previous question, you were asked to create several linear models.
 The visualization allowed you to qualitatively assess if a model was better
 than another.</p>
@@ -716,7 +656,6 @@ in a single scalar and allow you to pick up the best model.</p>
 <span class="c1">#     print(f&quot;{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)&quot;)</span>
 <span class="c1">#     print(f&quot;Error: {goodness_fit_measure(y, y_pred):.3f}\n&quot;)</span>
 </pre></div>
-</div>
 </div>
 </div>
 </div>

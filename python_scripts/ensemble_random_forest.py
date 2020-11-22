@@ -44,17 +44,17 @@ bagging = BaggingRegressor(
 random_forest.fit(X_train, y_train)
 bagging.fit(X_train, y_train)
 
-print(
-    f"Performance of random forest: {random_forest.score(X_test, y_test):.3f}"
-)
-print(f"Performance of bagging: {bagging.score(X_test, y_test):.3f}")
+print(f"Performance of random forest: "
+      f"{random_forest.score(X_test, y_test):.3f}")
+print(f"Performance of bagging: "
+      f"{bagging.score(X_test, y_test):.3f}")
 
 # %% [markdown]
 # Notice that we don't need to provide a `base_estimator` parameter to
 # `RandomForestRegressor`, it is always a tree classifier. Also note that the
-# scores are almost identical. This is because our
-# problem is a regression problem and therefore, the number of features used
-# in random forest and bagging is the same.
+# scores are almost identical. This is because our problem is a regression
+# problem and therefore, the number of features used in random forest and
+# bagging is the same.
 #
 # For classification problems, we would need to pass a tree model instance
 # with the parameter `max_features="sqrt"` to `BaggingRegressor` if we wanted

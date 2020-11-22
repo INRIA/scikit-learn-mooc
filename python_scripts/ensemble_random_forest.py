@@ -1,12 +1,14 @@
 # %% [markdown]
 # # Random forest
 #
-# A popular machine-learning algorithm is the random forest. A Random forest
-# is a modification of the bagging algorithm. In bagging, any classifier or
-# regressor can be used. In a random forest, the base classifier or regressor
-# must be a decision tree. In our previous example, we used a decision
-# tree but we could have used a linear model as the regressor for our
-# bagging algorithm.
+# In this notebook, we will present random forest models and show the
+# differences with a bagging classifiers.
+#
+# A random forest, a popular model in machine learning, is a modification of
+# the bagging algorithm. In bagging, any classifier or regressor can be used.
+# In a random forest, the base classifier or regressor must be a decision tree.
+# In our previous example, we used a decision tree but we could have used a
+# linear model as the regressor for our bagging algorithm.
 #
 # In addition, random forest is different from bagging when used with
 # classifiers: when searching for the best split, only a subset of the original

@@ -84,5 +84,6 @@ gbdt.fit(X_train, y_train)
 gbdt.n_estimators_
 
 # %% [markdown]
-# We see that using around 100 trees is enough with the current dataset.
-# Training the GBDT with the entire 1000 trees would have been useless.
+# We see that the number of trees used is far below 1000 with the current
+# dataset. Training the GBDT with the entire 1000 trees would have been
+# useless.

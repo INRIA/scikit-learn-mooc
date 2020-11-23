@@ -93,7 +93,7 @@ target_predicted[:5]
 # We can compare these predictions to the actual data
 
 # %%
-utarget[:5]
+target[:5]
 
 # %% [markdown]
 # To get a better assessment, we can compute the average success rate
@@ -167,8 +167,7 @@ target_test_predicted = model.predict(data_test)
 
 # %% [markdown]
 # In this notebook we have:
-# * **split** our dataset into a training dataset and a testing dataset to eva
-# * fitted a **nearest neighbor** model on the training data
+# * fit a **nearest neighbor** model on training dataset
 # * evaluated its performance on the testing data
 # * presented the scikit-learn API `.fit` (to train a model), `.predict` (to
 #   make predictions) and `.score` (to evaluate a model)

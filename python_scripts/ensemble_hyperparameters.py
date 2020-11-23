@@ -102,16 +102,3 @@ cv_results[columns].sort_values(by="rank_test_score")
 # %% [markdown]
 # Here, we tune the `n_estimators` but be aware that using early-stopping as
 # in the previous exercise will be better.
-
-# %% [markdown]
-# # Main take away
-#
-# So in this notebook we discussed ensemble learners which are a type of
-# learner that combines simpler learners together. We saw two strategies:
-# one based on bootstrap samples allowing learners to be fit in a parallel
-# manner and the other called boosting which fit learners in a sequential
-# manner.
-#
-# From these two families, we mainly focused on giving intuitions regarding the
-# internal machinery of the random forest and gradient-boosting algorithms
-# which are state-of-the-art methods.

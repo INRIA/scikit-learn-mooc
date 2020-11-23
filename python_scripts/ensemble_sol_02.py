@@ -16,7 +16,7 @@ target_name = "Body Mass (g)"
 X, y = data[feature_names], data[target_name]
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
-# %%
+# %% [markdown]
 # Create a random forest containing only three trees. Train the forest and
 # check the performance on the testing set.
 
@@ -27,7 +27,7 @@ forest = RandomForestRegressor(n_estimators=3)
 forest.fit(X_train, y_train)
 print(f"Accuracy score: {forest.score(X_test, y_test):.3f}")
 
-# %%
+# %% [markdown]
 # The forest that you created contains three trees that can be accessed with
 # the attribute `estimators_`. You will have to:
 #

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Solution for Exercise 02
+# # Exercise 02
 #
 # The aim of this exercise it to explore some attributes available in
 # scikit-learn random forest.
@@ -16,14 +16,14 @@ target_name = "Body Mass (g)"
 X, y = data[feature_names], data[target_name]
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
-# %%
+# %% [markdown]
 # Create a random forest containing only three trees. Train the forest and
 # check the performance on the testing set.
 
 # %%
 # TODO
 
-# %%
+# %% [markdown]
 # The forest that you created contains three trees that can be accessed with
 # the attribute `estimators_`. You will have to:
 #

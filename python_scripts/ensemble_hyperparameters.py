@@ -5,6 +5,10 @@
 # and gradient-boosting. However, there are a couple of things to keep in mind
 # when setting these parameters.
 #
+# This notebook gives crucial information regarding how to set the
+# hyperparameters of both random forest and gradient boostin decision tree
+# models.
+#
 # ## Random forest
 #
 # The main parameter to tune with random forest is the `n_estimators`
@@ -37,11 +41,11 @@ param_grid = {
     "max_depth": [3, 5, None],
 }
 grid_search = GridSearchCV(
-    RandomForestRegressor(n_jobs=-1), param_grid=param_grid, n_jobs=-1,
-)
+    RandomForestRegressor(n_jobs=-1), param_grid=param_grid, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
-columns = ["params", "mean_test_score", "rank_test_score"]
+columns = [f"param_{name}" for name in param_grid.keys()]
+columns += ["mean_test_score", "rank_test_score"]
 cv_results = pd.DataFrame(grid_search.cv_results_)
 cv_results[columns].sort_values(by="rank_test_score")
 
@@ -87,15 +91,20 @@ param_grid = {
     "learning_rate": [0.1, 1],
 }
 grid_search = GridSearchCV(
-    GradientBoostingRegressor(), param_grid=param_grid, n_jobs=-1,
-)
+    GradientBoostingRegressor(), param_grid=param_grid, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
+columns = [f"param_{name}" for name in param_grid.keys()]
+columns += ["mean_test_score", "rank_test_score"]
 cv_results = pd.DataFrame(grid_search.cv_results_)
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
-# # Wrap-up
+# Here, we tune the `n_estimators` but be aware that using early-stopping as
+# in the previous exercise will be better.
+
+# %% [markdown]
+# # Main take away
 #
 # So in this notebook we discussed ensemble learners which are a type of
 # learner that combines simpler learners together. We saw two strategies:

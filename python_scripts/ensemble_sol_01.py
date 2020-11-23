@@ -60,10 +60,10 @@ search.fit(X_train, y_train)
 # %%
 import pandas as pd
 
+columns = [f"param_{name}" for name in param_grid.keys()]
+columns += ["mean_test_score", "std_test_score", "rank_test_score"]
 cv_results = pd.DataFrame(search.cv_results_)
-cv_results = cv_results[
-    ["params", "mean_test_score", "std_test_score", "rank_test_score"]
-].sort_values(by="rank_test_score")
+cv_results = cv_results[columns].sort_values(by="rank_test_score")
 cv_results
 
 # %%

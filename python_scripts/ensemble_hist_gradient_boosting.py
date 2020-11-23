@@ -61,15 +61,36 @@ print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
 # data before to give them into the gradient boosting. A transformer called
 # `KBinsDiscretizer` is doing such transformation. Thus, we can pipeline
 # this preprocessing with the gradient boosting.
+#
+# We can first demonstrate the transformation done by the `KBinsDiscretizer`.
 
 # %%
+import numpy as np
 from sklearn.preprocessing import KBinsDiscretizer
+
+discretizer = KBinsDiscretizer(
+    n_bins=256, encode="ordinal", strategy="quantile")
+X_trans = discretizer.fit_transform(X_train)
+X_trans
+
+# %% [markdown]
+# We see that the discretizer transform the original data into an integer.
+# This integer represents the bin index when the distribution by quantile is
+# performed. We can check the number of bins per feature.
+
+# %%
+[len(np.unique(col)) for col in X_trans.T]
+
+# %% [markdown]
+# After this transformation, we see that we have at most 256 unique values per
+# features. Now, we will use this transformer to discretize data before to
+# train the gradient boosting regressor.
+
+# %%
 from sklearn.pipeline import make_pipeline
 
 gradient_boosting = make_pipeline(
-    KBinsDiscretizer(n_bins=256, encode="ordinal", strategy="quantile"),
-    GradientBoostingRegressor(n_estimators=200)
-)
+    discretizer, GradientBoostingRegressor(n_estimators=200))
 
 start_time = time()
 gradient_boosting.fit(X_train, y_train)

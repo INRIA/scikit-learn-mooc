@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Evaluation of your predictive model: which metric to choose?" href="metrics.html" />
-    <link rel="prev" title="Ensemble learning: when many are better that the one" href="ensemble.html" />
+    <link rel="prev" title="Main take away" href="ensemble_take_away.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -372,16 +372,111 @@
    Importance of decision tree hyper-parameters on generalization
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_hyperparameters.html#main-take-away">
+   Main take away
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
-  Ensemble of decision tree
+  Ensemble of models
  </span>
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="ensemble.html">
-   Ensemble learning: when many are better that the one
+  <a class="reference internal" href="ensemble_introduction.html">
+   Introductory example to ensemble models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_bagging.html">
+   Bagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_01.html">
+   Solution of Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_random_forest.html">
+   Random forest
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_random_forest.html#midpoint-summary">
+   Midpoint summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_adaboost.html">
+   Adaptive Boosting (AdaBoost)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_03.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_03.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_gradient_boosting.html">
+   Gradient-boosting decision tree (GBDT)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_04.html">
+   Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_04.html">
+   Solution for Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_hist_gradient_boosting.html">
+   Speeding-up gradient-boosting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_hyperparameters.html">
+   Hyper-parameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_05.html">
+   Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_05.html">
+   Solution for Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_take_away.html">
+   Main take away
   </a>
  </li>
 </ul>
@@ -922,7 +1017,7 @@ to minimize the error on data that has not been seen during training.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.38 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.32 k$
 </pre></div>
 </div>
 </div>
@@ -1019,73 +1114,73 @@ score:</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.227668</td>
-      <td>0.003932</td>
-      <td>-43.994491</td>
-      <td>43.994491</td>
+      <td>0.203367</td>
+      <td>0.003877</td>
+      <td>-47.509837</td>
+      <td>47.509837</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.215494</td>
-      <td>0.003925</td>
-      <td>-45.813174</td>
-      <td>45.813174</td>
+      <td>0.210025</td>
+      <td>0.003798</td>
+      <td>-44.057403</td>
+      <td>44.057403</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.216192</td>
-      <td>0.003967</td>
-      <td>-46.326757</td>
-      <td>46.326757</td>
+      <td>0.221201</td>
+      <td>0.003933</td>
+      <td>-45.790836</td>
+      <td>45.790836</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.216587</td>
-      <td>0.004802</td>
-      <td>-45.426830</td>
-      <td>45.426830</td>
+      <td>0.208846</td>
+      <td>0.003480</td>
+      <td>-45.081823</td>
+      <td>45.081823</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.220743</td>
-      <td>0.005671</td>
-      <td>-45.922473</td>
-      <td>45.922473</td>
+      <td>0.196183</td>
+      <td>0.003593</td>
+      <td>-44.954592</td>
+      <td>44.954592</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.217981</td>
-      <td>0.005106</td>
-      <td>-45.880270</td>
-      <td>45.880270</td>
+      <td>0.191473</td>
+      <td>0.003337</td>
+      <td>-45.765663</td>
+      <td>45.765663</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.214973</td>
-      <td>0.004234</td>
-      <td>-46.233956</td>
-      <td>46.233956</td>
+      <td>0.193746</td>
+      <td>0.003309</td>
+      <td>-47.660706</td>
+      <td>47.660706</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.212529</td>
-      <td>0.005144</td>
-      <td>-45.839621</td>
-      <td>45.839621</td>
+      <td>0.205720</td>
+      <td>0.003243</td>
+      <td>-44.615227</td>
+      <td>44.615227</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.222417</td>
-      <td>0.003952</td>
-      <td>-45.613412</td>
-      <td>45.613412</td>
+      <td>0.199342</td>
+      <td>0.003501</td>
+      <td>-45.351233</td>
+      <td>45.351233</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.229940</td>
-      <td>0.004966</td>
-      <td>-46.176662</td>
-      <td>46.176662</td>
+      <td>0.205104</td>
+      <td>0.003740</td>
+      <td>-47.154626</td>
+      <td>47.154626</td>
     </tr>
   </tbody>
 </table>
@@ -1135,7 +1230,7 @@ ranges from 43 k\\\)</span> to 49 k\$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 45.93 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 45.99 k$
 </pre></div>
 </div>
 </div>
@@ -1150,7 +1245,7 @@ ranges from 43 k\\\)</span> to 49 k\$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 0.81 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 1.02 k$
 </pre></div>
 </div>
 </div>
@@ -1270,8 +1365,8 @@ trade-off between under-fitting and over-fitting.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 479 ms, sys: 9.14 ms, total: 488 ms
-Wall time: 13.7 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 434 ms, sys: 41.4 ms, total: 475 ms
+Wall time: 13 s
 </pre></div>
 </div>
 </div>
@@ -2257,7 +2352,7 @@ check the performance of our model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: 0.60
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: 0.59
 </pre></div>
 </div>
 </div>
@@ -2344,7 +2439,7 @@ the remaining data to test.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.16
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.43
 </pre></div>
 </div>
 </div>
@@ -2388,7 +2483,7 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -0.74
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -0.82
 </pre></div>
 </div>
 </div>
@@ -2415,7 +2510,7 @@ behaviour.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.51
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -2.27
 </pre></div>
 </div>
 </div>
@@ -2638,7 +2733,7 @@ model and evaluate its generalization performance.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="ensemble.html" title="previous page">Ensemble learning: when many are better that the one</a>
+    <a class='left-prev' id="prev-link" href="ensemble_take_away.html" title="previous page">Main take away</a>
     <a class='right-next' id="next-link" href="metrics.html" title="next page">Evaluation of your predictive model: which metric to choose?</a>
 
     </div>

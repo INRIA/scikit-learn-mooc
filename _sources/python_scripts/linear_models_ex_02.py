@@ -49,10 +49,10 @@ def f(x, weight=0, intercept=0):
 
 
 # %%
-# TODO: plot both the data and the model predictions
+# Write your code here.: plot both the data and the model predictions
 
 # %%
-# TODO: compute the mean squared error
+# Write your code here.: compute the mean squared error
 
 # %% [markdown]
 # Train a linear regression model and plot both the data and the predictions
@@ -61,10 +61,11 @@ def f(x, weight=0, intercept=0):
 # %%
 from sklearn.linear_model import LinearRegression
 
-# TODO: fit a linear regression
+# Write your code here.: fit a linear regression
 
 # %%
-# TODO: plot the data and the prediction of the linear regression model
+# Write your code here.: plot the data and the prediction of the linear
+# regression model
 
 # %%
-# TODO: compute the mean squared error
+# Write your code here.: compute the mean squared error

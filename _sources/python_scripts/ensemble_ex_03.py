@@ -24,14 +24,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 # estimators between 1 and 60.*
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Plot both the mean training and test scores. You can as well plot the
 # standard deviation of the scores.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Plotting the validation curve, we can see that AdaBoost is not immune against
@@ -42,4 +42,4 @@ X_train, X_test, y_train, y_test = train_test_split(
 # Repeat the experiment using a random forest instead of an AdaBoost regressor.
 
 # %%
-# TODO
+# Write your code here.

@@ -49,7 +49,7 @@ import numpy as np
 flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 
 # %%
-# TODO
+# Write your code here.
 # weights = [...]
 # intercepts = [...]
 
@@ -66,13 +66,14 @@ flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 
 # %%
 def goodness_fit_measure(true_values, predictions):
-    # TODO: define a measure indicating the goodness of fit of a model given
-    # the true values and the model predictions.
+    # Write your code here.
+    # Define a measure indicating the goodness of fit of a model given the true
+    # values and the model predictions.
     pass
 
 
 # %%
-# TODO: uncomment
+# Uncomment the code below.
 # for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
 #     y_pred = linear_model_flipper_mass(X, weight, intercept)
 #     print(f"Model #{model_idx}:")

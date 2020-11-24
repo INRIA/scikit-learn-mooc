@@ -69,17 +69,17 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # decision boundary to see the benefit of increasing the depth.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Did we make use of the feature "Culmen Length"? To get a confirmation, you
 # plot the tree using the function `sklearn.tree.plot_tree`.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Compute the accuracy of the decision tree on the testing data.
 
 # %%
-# TODO
+# Write your code here.

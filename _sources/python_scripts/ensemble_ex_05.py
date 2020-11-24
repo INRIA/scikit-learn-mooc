@@ -19,7 +19,7 @@ X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 # will use early-stopping.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # We will use a grid-search to find some optimal parameter for this model.
@@ -33,7 +33,7 @@ X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 # grid-search providing the previous gradient boosting instance as model.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Finally, we will run our experiment through cross-validation. In this regard,
@@ -43,14 +43,14 @@ X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 # such that we can investigate the inner model trained via cross-validation.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # We got the results of the cross-validation. First check what is the mean and
 # standard deviation score.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Inspect the results of the inner CV for each estimator of the outer CV.
@@ -58,4 +58,4 @@ X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 # plot of these scores.
 
 # %%
-# TODO
+# Write your code here.

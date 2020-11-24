@@ -21,7 +21,7 @@
 
 # %%
 import numpy as np
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Now, create a logistic regression model and use cross-validation to check
@@ -29,7 +29,7 @@ import numpy as np
 # predict anything meaningful from random data.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Now, we will ask you to program the **wrong** pattern to select feature.
@@ -41,7 +41,7 @@ import numpy as np
 # You should get some surprising results.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Now, we will make you program the **right** way to do the feature selection.
@@ -50,7 +50,7 @@ import numpy as np
 # testing sets before to train and test the logistic regression.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # This is not a surprise that our model is not working. We see that selecting
@@ -72,4 +72,4 @@ import numpy as np
 # of your model performance.
 
 # %%
-# TODO
+# Write your code here.

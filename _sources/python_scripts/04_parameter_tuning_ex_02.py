@@ -38,7 +38,7 @@ df_train, df_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
 
 # %% [markdown]
-# TODO: create your machine learning pipeline
+# Create your machine learning pipeline
 #
 # You should:
 # * preprocess the categorical columns using a `OneHotEncoder` and use a
@@ -69,7 +69,7 @@ from sklearn.linear_model import LogisticRegression
 
 
 # %% [markdown]
-# TODO: make your random search
+# Make your random search
 #
 # Use a `RandomizedSearchCV` to find the best set of hyper-parameters by tuning
 # the following parameters for the `LogisticRegression` model:

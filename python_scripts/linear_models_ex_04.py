@@ -54,14 +54,14 @@ alphas = np.logspace(-1, 2, num=30)
 # check what is the value of the best parameters found.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Once that you found the best parameter `alpha`, use the grid-search estimator
 # that you created to predict and estimate the $R^2$ score of this model.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # It is also interesting to know that several regressors and classifiers
@@ -75,4 +75,4 @@ alphas = np.logspace(-1, 2, num=30)
 # on how to use it.
 
 # %%
-# TODO
+# Write your code here.

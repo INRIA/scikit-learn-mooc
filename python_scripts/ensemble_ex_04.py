@@ -25,7 +25,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # on the performance of the model.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Unlike AdaBoost, the gradient boosting model will always improve when
@@ -44,4 +44,4 @@ X_train, X_test, y_train, y_test = train_test_split(
 # allow to improve the overall performance.
 
 # %%
-# TODO
+# Write your code here.

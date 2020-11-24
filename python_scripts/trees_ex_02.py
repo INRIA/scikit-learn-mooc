@@ -25,7 +25,7 @@ X_train, y_train = data[data_columns], data[target_column]
 # 3 levels for the decision tree.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Create a testing dataset, ranging from the minimum to the maximum of the
@@ -33,14 +33,14 @@ X_train, y_train = data[data_columns], data[target_column]
 # using this test dataset.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Create a scatter plot containing the training samples and superimpose the
 # predictions of both model on the top.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Now, we will check the extrapolation capabilities of each model. Create a
@@ -49,11 +49,11 @@ X_train, y_train = data[data_columns], data[target_column]
 # during training.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Finally, make predictions with both model on this new testing set. Repeat
 # the plotting of the previous exercise.
 
 # %%
-# TODO
+# Write your code here.

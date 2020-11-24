@@ -29,4 +29,4 @@ X.head()
 # * show the values of the coefficients for each feature.
 
 # %%
-# TODO: make the exercise
+# Write your code here.: make the exercise

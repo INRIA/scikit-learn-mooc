@@ -58,4 +58,4 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
 
-# TODO: write me!
+# Write your code here.

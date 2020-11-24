@@ -21,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 # check the performance on the testing set.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # The forest that you created contains three trees that can be accessed with
@@ -34,4 +34,4 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 # - plot the decision of the random forest using this newly created dataset.
 
 # %%
-# TODO
+# Write your code here.

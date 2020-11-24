@@ -22,7 +22,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # performance on the testing set.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # Now, create a `RandomizedSearchCV` instance using the previous model and
@@ -31,7 +31,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 # are able to find a set of parameters which improve the default regressor.
 
 # %%
-# TODO
+# Write your code here.
 
 # %% [markdown]
 # We see that the bagging regressor provides a predictor in which fine tuning

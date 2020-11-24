@@ -71,7 +71,7 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # Let's write a similar pipeline that also scales the numerical features using `StandardScaler` (or similar):
 
 # %%
-# TODO write me!
+# Write your code here.
 
 # %% [markdown]
 # ## One-hot encoding of categorical variables
@@ -88,4 +88,4 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a dense representation as a workaround.
 
 # %%
-# TODO: write me!
+# Write your code here.

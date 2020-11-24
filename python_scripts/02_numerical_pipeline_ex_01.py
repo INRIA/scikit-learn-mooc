@@ -50,4 +50,4 @@ data_numeric = data[numerical_columns]
 from sklearn.model_selection import train_test_split
 from sklearn.dummy import DummyClassifier
 
-# TODO: write me!
+# Write your code here.

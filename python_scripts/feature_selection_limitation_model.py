@@ -32,7 +32,7 @@ X, y = make_classification(
 # %%
 from sklearn.ensemble import RandomForestClassifier
 
-model_without_selection = RandomForestClassifier(n_jobs=-1)
+model_without_selection = RandomForestClassifier()
 
 # %% [markdown]
 # We will evaluate this model by a k-fold cross validation and store the

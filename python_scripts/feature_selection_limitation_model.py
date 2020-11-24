@@ -1,6 +1,9 @@
 # %% [markdown]
 # # Limitation of selecting feature using a model
-# An advanced strategy to select features is to use a machine learning model.
+#
+# In this notebook, we want to show a limitation when using a machine-learning
+# model to make a selection.
+#
 # Indeed, one can inspect a model and find relative feature importances. For
 # instance, the parameters `coef_` for the linear models or
 # `feature_importances_` for the tree-based models carries such information.
@@ -24,40 +27,44 @@ X, y = make_classification(
 )
 
 # %% [markdown]
-# First, let's build a model which will not make any features selection. We
-# will use a cross-validation to evaluate this model.
+# First, let's build a model which will not make any features selection.
+
+# %%
+from sklearn.ensemble import RandomForestClassifier
+
+model_without_selection = RandomForestClassifier(n_jobs=-1)
+
+# %% [markdown]
+# We will evaluate this model by a k-fold cross validation and store the
+# results in a pandas dataframe.
 
 # %%
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_validate
 
-model_without_selection = RandomForestClassifier(n_jobs=-1)
-cv_results_without_selection = pd.DataFrame(
-    cross_validate(model_without_selection, X, y, cv=5)
-)
+cv_results_without_selection = cross_validate(
+    model_without_selection, X, y, cv=5)
+cv_results_without_selection = pd.DataFrame(cv_results_without_selection)
 
 # %% [markdown]
 # Then, we will build another model which will include a feature selection
-# step based on a random forest. We will also evaluate the performance of the
-# model via cross-validation.
+# step based on a random forest and evaluate it as well with cross-validation.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.feature_selection import SelectFromModel
 
+feature_selector = SelectFromModel(RandomForestClassifier())
 model_with_selection = make_pipeline(
-    SelectFromModel(
-        estimator=RandomForestClassifier(n_jobs=-1),
-    ),
-    RandomForestClassifier(n_jobs=-1),
-)
-cv_results_with_selection = pd.DataFrame(
-    cross_validate(model_with_selection, X, y, cv=5)
-)
+    feature_selector, RandomForestClassifier())
+
+# %%
+cv_results_with_selection = cross_validate(model_with_selection, X, y, cv=5)
+cv_results_with_selection = pd.DataFrame(cv_results_with_selection)
 
 # %% [markdown]
-# We can compare the generalization score of the two models.
+# We can compare the generalization score of the two models. For this matter,
+# we are combining results in a single dataframe.
 
 # %%
 cv_results = pd.concat(
@@ -66,6 +73,8 @@ cv_results = pd.concat(
     keys=["Without feature selection", "With feature selection"],
 ).swaplevel(axis="columns")
 
+# %% [markdown]
+# Finally, we can check the generalization score of each the model.
 
 # %%
 import matplotlib.pyplot as plt
@@ -96,3 +105,16 @@ _ = plt.title("Limitation of using a random forest for feature selection")
 #
 # Therefore, it is good to keep in mind that feature selection relies on
 # procedures making some assumptions, which can be perfectible.
+#
+# # Main take away
+#
+# In this chapter, we presented the principle of feature selection. In short,
+# feature selection is not a magical tool to get marginal gains. We tackle
+# the following aspects:
+#
+# * you should use feature selection to speed-up training and testing rather
+#   than seeking for marginal performance gains;
+# * you should be careful regarding the framework and how to include a feature
+#   selector within your pipeline;
+# * you should be aware of the limitation of a feature selector based on
+#   machine-learning models.

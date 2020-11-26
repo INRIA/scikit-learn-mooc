@@ -1,0 +1,302 @@
+# Quiz for each lesson
+
+## lesson 2, basic preprocessing / first model with numerical feature
+
+1. Why do we split the data into a training and a testing part ?
+
+a) to train the model faster
+b) to gain insight of how to tune the hyper-parameters
+c) to validate the model on unseen data
+
+2. scaling the data before fitting a linear model allows us to:
+
+a) train the model faster
+b) achieve better performance
+c) none of the above
+
+
+3. Cross validation allows us to:
+
+a) train the model faster
+b) have better performance
+c) compute the error/score variability
+d) avoid overfitting
+
+
+
+4. `make_pipeline` is used for:
+
+a) run cross validation
+b) combine a scaler and a model
+c) try severals model at the same time
+d) avoid overfitting
+
+
+
+## lesson 3, categorical feature
+
+1. Ordinal categories correspond to:
+
+a) categorical variable with few categories
+b) categorical variable with meaningful order (e.g. "slow", "meduim", "fast")
+c) categorical variable with only number
+
+
+
+2. One-hot encoding will:
+
+a) transform a categorical variable onto a numerical variable
+b) transform a numerical variable onto a catergorical variable
+c) create one additional column for each possible categorical value
+d) transform string variable onto numerical representation
+
+
+
+## lesson 4, hyper-parameters tuning
+
+cf inside the notebook
+
+## Linear models
+
+0. Could you explain what the LinearRegression's attribute `coef_` and `intercept_` is?
+
+
+1. At which conditions does linearRegression find the optimal error.
+
+a) never
+b) if the data are linear
+c) if the data are polynomial
+d) if the data are one dimensional
+e) always
+
+
+2. mean squared error is a measure:
+
+a) for regression b) for classification
+c) better when higher d) better when lower
+
+
+3. Ridge model is:
+
+a) same as LinearRegression with penalized weights
+b) same as LogisticRegression with penalized weights
+c) a Linear model
+d) a non linear model
+
+
+4. The parameter alpha in Ridge is:
+
+a) Learnt during the fit on the train set
+b) choose by cross validation on the train set
+c) choose by cross validation on the test set
+d) could be choose by hand a priori
+
+
+5. Which error/score could be used for classification:
+
+a) Mean squared error
+b) R2 score
+c) Accuracy score
+
+
+6. In a linear model, the number of parameters learnt are:
+
+a) proportional to the number of samples
+b) proportional to the number of features
+c) fixed (chose by hand a priori)
+d) proportional to the number of iteration
+
+
+## Trees
+
+1. How could we prevent overfitting within a tree model ?
+
+a) with a weight regularization
+b) by increasing max_depth
+c) by decreasing max_depth
+d) with early stopping
+
+
+2. Tree are build:
+
+a) incrementally by splitting leafs
+b) by refining the rules of each nodes
+c) by refining the prediction of each leaf
+
+
+2. In a decision tree, to choose a split, we have to:
+
+a) randomly choose a feature
+b) randomly choose a value
+c) maximize an equation
+d) maximize nb_features equations
+
+
+3. In regression setting, what represent a leaf in a decision tree:
+
+a) a value
+b) a value distribution
+c) a class
+d) probabilities of each class
+
+
+3. In classification setting, what represent a leaf in a decision tree:
+
+a) a value
+b) a value distribution
+c) a class
+d) probabilities of each class
+
+
+4. Decision tree could be used for:
+
+a) regression
+b) classification
+c) clustering
+d) dimension reduction
+
+
+## Metrics
+
+1. What is the accuracy score ?
+
+
+2. What is true positive:
+
+a) the number of positive prediction (sample classified positive by the model)
+b) the number of positive label (sample with positive label)
+c) the number of positive prediction which have positive label
+d) the accuracy
+
+
+2. What is false positive:
+
+a) 1 - true positive
+b) the number of positive prediction which have negative label
+c) the number of negative prediction which have positive label
+d) neither of the above
+
+
+3. the confusion matrix is useful if:
+
+a) the class label are imbalanced
+b) there are few features
+c) there are few samples
+d) we want to get insight of the model failure
+
+
+4. Precision correspond to:
+
+a) true positive rate
+b) accuracy
+c) ratio of positive prediction over positive label
+d) ratio of correct positive prediction over the number of positive prediction
+e) ratio of correct prediction over the number of prediction
+
+
+5. F1 is useful if:
+
+a) the accuracy is too high
+b) class label are imbalanced
+c) there are few samples
+
+
+6. the area under the ROC curve:
+
+a) characterize a dataset
+b) characterize the performance of a classification model
+c) characterize the performance of a regression model
+
+
+## Ensemble
+
+1. In bagging method, what the `base_estimator` is ?
+
+a) a base learner (model) used severals times
+b) a variable indicating if we do either regression or classification
+c) (necessarily) a decision tree
+
+
+2. If you use an ensemble of different base models, is it necessary to tune the hyper parameters of all base models to improve the ensemble performance?
+
+a) True
+b) False
+
+
+3. Which of the following is true about bagging?
+
+a) Bagging can be parallel
+b) The aim of bagging is to reduce bias not variance
+c) The aim of bagging is to reduce variance not bias
+d) Bagging helps in reducing overfitting
+
+
+4. In boosting, individual base learners can be parallel.
+
+a) True
+b) False
+
+
+5. What is true about an ensembled classifier?
+
+a) Classifiers that are more "sure" can vote with more conviction
+b) Classifiers can be more "sure" about a particular part of the space
+c) Most of the times, it performs better than a single classifier
+
+
+6. Which of the following algorithm is an example of an ensemble method?
+
+a) Neural network
+b) Random Forest
+c) Gradient Boosting
+d) Decision Tree
+
+7. Which of the following option are correct regarding benefits of ensemble model?
+
+a) Better performance
+b) Generalized models
+c) Better interpretability
+
+
+## Feature selection
+
+## Feature importance
+
+1. With a same dataset, feature importance might differs if:
+
+a) we use two different models
+b) we use two different train/test split with a same model
+c) we use a same model with a different set of hyper-parameters
+d) we use a same model with the same set of hyper-parameters but a different random_state
+
+
+2. In linear model, the feature importance:
+
+a) might be infer from the coefficients
+b) might be infer by `importance_permutation`
+c) need a regularization to infer the importance
+d) is a built-in attribute
+
+
+3. If two feature are the same (thus correlated)
+
+a) their feature importance will be the same
+b) their feature importance will be divided by 2
+c) only one will receive all the feature importance, the second one will be 0
+d) it depends
+
+
+5. RandomForest.feature_importances_
+
+a) has bias for categorical feature
+b) has bias for continous (high cardinality) feature
+c) is independant from the train/test split
+d) is independant from the hyper-parameters
+
+
+6. To evaluate the feature importance for a specific model, one could:
+
+a) drop a column and compare the score
+b) shuffle a column and compare the score
+c) put all column to 0 and compare the score
+d) change a column value to random number and compare the score

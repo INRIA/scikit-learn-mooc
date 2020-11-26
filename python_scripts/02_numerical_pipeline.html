@@ -767,47 +767,47 @@ columns.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>25</td>
-      <td>7</td>
+      <td>41</td>
+      <td>12</td>
       <td>0</td>
       <td>0</td>
-      <td>40</td>
+      <td>92</td>
       <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>38</td>
-      <td>9</td>
+      <td>48</td>
+      <td>3</td>
       <td>0</td>
       <td>0</td>
-      <td>50</td>
+      <td>40</td>
       <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>28</td>
-      <td>12</td>
+      <td>60</td>
+      <td>9</td>
       <td>0</td>
       <td>0</td>
-      <td>40</td>
-      <td>&gt;50K</td>
+      <td>25</td>
+      <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>44</td>
-      <td>10</td>
-      <td>7688</td>
+      <td>37</td>
+      <td>9</td>
       <td>0</td>
-      <td>40</td>
-      <td>&gt;50K</td>
+      <td>0</td>
+      <td>45</td>
+      <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>18</td>
+      <td>73</td>
       <td>10</td>
+      <td>3273</td>
       <td>0</td>
-      <td>0</td>
-      <td>30</td>
+      <td>40</td>
       <td>&lt;=50K</td>
     </tr>
   </tbody>
@@ -825,16 +825,16 @@ columns.</p>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0         &lt;=50K
 1         &lt;=50K
-2          &gt;50K
-3          &gt;50K
+2         &lt;=50K
+3         &lt;=50K
 4         &lt;=50K
           ...  
-48837     &lt;=50K
-48838      &gt;50K
-48839     &lt;=50K
-48840     &lt;=50K
-48841      &gt;50K
-Name: class, Length: 48842, dtype: object
+39068     &lt;=50K
+39069     &lt;=50K
+39070      &gt;50K
+39071     &lt;=50K
+39072      &gt;50K
+Name: class, Length: 39073, dtype: object
 </pre></div>
 </div>
 </div>
@@ -877,50 +877,50 @@ prediction target</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>25</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>38</td>
-      <td>9</td>
-      <td>0</td>
-      <td>0</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>28</td>
+      <td>41</td>
       <td>12</td>
       <td>0</td>
       <td>0</td>
+      <td>92</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>48</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
       <td>40</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>60</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>25</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>44</td>
-      <td>10</td>
-      <td>7688</td>
+      <td>37</td>
+      <td>9</td>
       <td>0</td>
-      <td>40</td>
+      <td>0</td>
+      <td>45</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>18</td>
+      <td>73</td>
       <td>10</td>
+      <td>3273</td>
       <td>0</td>
-      <td>0</td>
-      <td>30</td>
+      <td>40</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We will use this subset of data to fit a linear classification model to
-predict the income class.</p>
+<p>We will use this data to fit a linear classification model to predict
+the income class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
@@ -935,33 +935,108 @@ predict the income class.</p>
 </div>
 </div>
 </div>
-<p>When building a machine learning model, it is important to leave out a
-subset of the data which we can use later to evaluate the trained model.
-The data used to fit a model is called training data while the one used to
-assess a model is called testing data.</p>
-<p>Scikit-learn provides a helper function <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> which will
-split the dataset into a training and a testing set. It will also ensure that
-the data are shuffled randomly before splitting the data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The training dataset contains </span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+    <span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The training dataset contains 36631 samples and 5 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset contains 39073 samples and 5 features
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will build a classification model using the “K Nearest Neighbor”
+strategy. The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to train the model from the input
+(features) and target data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNeighborsClassifier()
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’us to use our model to make some predictions on the first five
+records of the held out test set:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can compare these predictions to the actual data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     &lt;=50K
+1     &lt;=50K
+2     &lt;=50K
+3     &lt;=50K
+4     &lt;=50K
+Name: class, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get a better assessment, we can compute the average success rate</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8516366800603997
+</pre></div>
+</div>
+</div>
+</div>
+<p>But, can this evaluation be trusted, or is it too good to be true?</p>
+<p>When building a machine learning model, it is important evaluate the
+trained model on data that was not used to fit the model, as
+generalization is more than memorization. It is harder to conclude on
+instances never seen than on those already seen.</p>
+<p>Correct evaluation is easily done by leaving out a subset of the data
+when training the model and using it after for model evaluation. The
+data used to fit a model is called training data while the one used to
+assess a model is called testing data.</p>
+<p>We can load more data, which was actually left-out from the original
+data set</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../datasets/adult-census-numeric-test.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>From this new data, we separate out input features and the target to
+predict</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -975,179 +1050,15 @@ the data are shuffled randomly before splitting the data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 12211 samples and 5 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 9769 samples and 5 features
 </pre></div>
 </div>
 </div>
 </div>
-<p>We will build a linear classification model called “Logistic Regression”. The
-<code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to train the model from the input (features) and
-target data. Only the training data should be given for this purpose.</p>
-<p>In addition, check the time required to train the model and the number of
-iterations done by the solver to find a solution.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The model </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> was trained in &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds for </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2"> iterations&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The model LogisticRegression was trained in 0.461 seconds for [100] iterations
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let’s ignore the convergence warning for now and instead let’s try
-to use our model to make some predictions on the first five records
-of the held out test set:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;], dtype=object)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7762      &lt;=50K
-23881     &lt;=50K
-30507      &gt;50K
-28911     &lt;=50K
-19484     &lt;=50K
-Name: class, dtype: object
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">data_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;predicted-class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_predicted</span>
-<span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;expected-class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_test</span>
-<span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;correct&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_predicted</span> <span class="o">==</span> <span class="n">target_test</span>
-<span class="n">predictions</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>age</th>
-      <th>education-num</th>
-      <th>capital-gain</th>
-      <th>capital-loss</th>
-      <th>hours-per-week</th>
-      <th>predicted-class</th>
-      <th>expected-class</th>
-      <th>correct</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>7762</th>
-      <td>56</td>
-      <td>9</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>&lt;=50K</td>
-      <td>&lt;=50K</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>23881</th>
-      <td>25</td>
-      <td>9</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>&lt;=50K</td>
-      <td>&lt;=50K</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>30507</th>
-      <td>43</td>
-      <td>13</td>
-      <td>14344</td>
-      <td>0</td>
-      <td>40</td>
-      <td>&gt;50K</td>
-      <td>&gt;50K</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>28911</th>
-      <td>32</td>
-      <td>9</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>&lt;=50K</td>
-      <td>&lt;=50K</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>19484</th>
-      <td>39</td>
-      <td>13</td>
-      <td>0</td>
-      <td>0</td>
-      <td>30</td>
-      <td>&lt;=50K</td>
-      <td>&lt;=50K</td>
-      <td>True</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
+<p>Note that scikit-learn provides a helper function <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code>
+which can be used to split the dataset into a training and a testing
+set. It will also ensure that the data are shuffled randomly before
+splitting the data.</p>
 <p>To quantitatively evaluate our model, we can use the method <code class="docutils literal notranslate"><span class="pre">score</span></code>. It will
 compute the classification accuracy when dealing with a classification
 problem.</p>
@@ -1159,29 +1070,37 @@ problem.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a LogisticRegression is 0.818
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a KNeighborsClassifier is 0.822
 </pre></div>
 </div>
 </div>
 </div>
-<p>This is mathematically equivalent as computing the average number of time
-the model makes a correct prediction on the test set:</p>
+<p>We can now compute the model predictions on the test set:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target_test</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And compute the average accuracy on the test set:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target_test</span> <span class="o">==</span> <span class="n">target_test_predicted</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8177053476373761
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8221926502200839
 </pre></div>
 </div>
 </div>
 </div>
+<p>If we compare with the accuracy obtained by wrongly evaluating the model
+on the training set, we find that this evaluation was indeed optimistic</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
-<li><p><strong>split</strong> our dataset into a training dataset and a testing dataset to eva</p></li>
-<li><p>fitted a <strong>logistic regression</strong> model on the training data</p></li>
+<li><p>fit a <strong>nearest neighbor</strong> model on training dataset</p></li>
 <li><p>evaluated its performance on the testing data</p></li>
 <li><p>presented the scikit-learn API <code class="docutils literal notranslate"><span class="pre">.fit</span></code> (to train a model), <code class="docutils literal notranslate"><span class="pre">.predict</span></code> (to
 make predictions) and <code class="docutils literal notranslate"><span class="pre">.score</span></code> (to evaluate a model)</p></li>

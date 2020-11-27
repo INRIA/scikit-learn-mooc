@@ -1,3 +1,4 @@
+# %% [markdown]
 # # Comparing results with baseline and chance level
 #
 # Previously, we compare the generalization error by taking into account the

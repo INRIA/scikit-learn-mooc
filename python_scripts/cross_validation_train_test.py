@@ -474,10 +474,10 @@ for name, errors in zip(
     ["Empirical error", "Generalization error"], [train_errors, test_errors]
 ):
     ax.plot(
-        max_depth, errors.mean(axis=1), linestyle="-.", label=name,
+        train_size, errors.mean(axis=1), linestyle="-.", label=name,
         alpha=0.8)
     ax.fill_between(
-        max_depth, errors.mean(axis=1) - errors.std(axis=1),
+        train_size, errors.mean(axis=1) - errors.std(axis=1),
         errors.mean(axis=1) + errors.std(axis=1),
         alpha=0.5, label=f"std. dev. {name.lower()}")
 

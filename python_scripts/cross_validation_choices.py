@@ -1,5 +1,6 @@
 # %% [markdown]
 # # Choice of cross-validation
+#
 # In the previous section, we presented the cross-validation framework.
 # However, we always use the `ShuffleSplit` strategy to repeat the split. One
 # should question if this approach is always the best option and that some
@@ -26,8 +27,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-model = make_pipeline(
-    StandardScaler(), LogisticRegression(max_iter=1000))
+model = make_pipeline(StandardScaler(), LogisticRegression())
 
 # %% [markdown]
 # Once we created our model, we will use the cross-validation framework to

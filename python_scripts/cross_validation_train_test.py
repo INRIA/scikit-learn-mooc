@@ -1,8 +1,10 @@
 # %% [markdown]
-# # Train and test datasets
-# Before discussing the cross-validation framework, we will linger on the
-# reasons for always having training and testing sets. Let's first look at the
-# limitation of using a unique dataset.
+# # The framework and why do we need it
+#
+# In this notebook, we present the general cross-validation framework. Before
+# to go into details, we will linger on the reasons for always having training
+# and testing sets. Let's first look at the limitation of using a dataset
+# without keeping any samples out.
 #
 # To illustrate the different concepts, we will use the california housing
 # dataset.
@@ -35,7 +37,7 @@ y.head()
 # ## Empirical error vs generalization error
 #
 # As mentioned previously, we start by fitting a decision tree regressor on the
-# full dataset.
+# entire dataset.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -56,8 +58,8 @@ score = mean_absolute_error(y_pred, y)
 print(f"In average, our regressor make an error of {score:.2f} k$")
 
 # %% [markdown]
-# A perfect prediction is with no error is too optimistic and almost always
-# revealing a methodological problem when doing machine learning.
+# We get perfect prediction with no error. It is too optimistic and almost
+# always revealing a methodological problem when doing machine learning.
 #
 # Indeed, we trained and predicted on the same dataset. Since our decision tree
 # was fully grown, every sample in the dataset is stored in a leaf node.
@@ -77,24 +79,42 @@ print(f"In average, our regressor make an error of {score:.2f} k$")
 # * fitting the model on the training set;
 # * estimating the empirical error on the training set;
 # * estimating the generalization error on the testing set.
-
+#
+# So let's split our dataset.
 # %%
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
+# %% [mardown]
+# Now, we train our model only on the training set.
+
 # %%
 regressor.fit(X_train, y_train)
+
+# %% [markdown]
+# Finally, we can estimate the different type of errors. Let's start by
+# computing the empirical error.
 
 # %%
 y_pred = regressor.predict(X_train)
 score = mean_absolute_error(y_pred, y_train)
 print(f"The empirical error of our model is {score:.2f} k$")
 
+# %% [markdown]
+# We observe the same phenomena than in the previous experiment. Our model
+# memorized the training set. However, we can now compute the generalization
+# error on the testing set.
+
 # %%
 y_pred = regressor.predict(X_test)
 score = mean_absolute_error(y_pred, y_test)
 print(f"The generalization error of our model is {score:.2f} k$")
+
+# %% [markdown]
+# The generalization error is not minimum and equal to zero. Indeed, this
+# error is closer to the performance of our model if it was deployed in
+# production.
 
 # %% [markdown]
 # ## Stability of the cross-validation estimates
@@ -131,28 +151,29 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # with a `ShuffleSplit` object:
 
 # %%
-import pandas as pd
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import ShuffleSplit
 
 cv = ShuffleSplit(n_splits=30, test_size=0.2)
-
 cv_results = cross_validate(
-    regressor,
-    X,
-    y,
-    cv=cv,
-    scoring="neg_mean_absolute_error",
-)
+    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error")
+
+# %% [markdown]
+# The results `cv_results` are stored into a Python dictionary. We will convert
+# it into a pandas dataframe to ease visualization and manipulation.
+
+# %%
+import pandas as pd
+
 cv_results = pd.DataFrame(cv_results)
+cv_results.head()
 
 # %% [markdown]
 # By convention, scikit-learn model evaluation tools always use a convention
 # where "higher is better", this explains we used
 # `scoring="neg_mean_absolute_error"` (meaning "negative mean absolute error").
 #
-# Let us revert the negation to get the actual error and not the negative
-# score:
+# Let us revert the negation to get the actual error:
 
 # %%
 cv_results["test_error"] = -cv_results["test_score"]
@@ -186,8 +207,8 @@ sns.displot(cv_results["test_error"], kde=True, bins=10)
 _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
-# We observe that the generalization error is clustered around 45.5 k\\$ and
-# ranges from 43 k\\$ to 49 k\\$.
+# We observe that the generalization error is clustered around 45.5 k\$ and
+# ranges from 43 k\$ to 49 k\$.
 
 # %%
 print(
@@ -201,18 +222,17 @@ print(
     f"{cv_results['test_error'].std():.2f} k$"
 )
 # %% [markdown]
-# Note that the standard deviation is much smaller than the mean:
-# we could summarize that our cross-validation estimate of the
-# generalization error is 45.7 +/- 1.1 k\\$.
+# Note that the standard deviation is much smaller than the mean: we could
+# summarize that our cross-validation estimate of the generalization error is
+# 45.7 +/- 1.1 k\$.
 #
 # If we were to train a single model on the full dataset (without
-# cross-validation) and then had later access to an unlimited
-# amount of test data, we would expect its true generalization
-# error to fall close to that region.
+# cross-validation) and then had later access to an unlimited amount of test
+# data, we would expect its true generalization error to fall close to that
+# region.
 #
-# While this information is interesting in it-self, this should be
-# contrasted to the scale of the natural variability of the target `y`
-# in our dataset.
+# While this information is interesting in it-self, this should be contrasted
+# to the scale of the natural variability of the target `y` in our dataset.
 #
 # Let us plot the distribution of the target variable:
 
@@ -224,13 +244,13 @@ _ = plt.xlabel("Median House Value (k$)")
 print(f"The standard deviation of the target is: {y.std():.2f} k$")
 
 # %% [markdown]
-# The target variable ranges from close to 0 k\\$ up to 500 k\\$ and, with a
-# standard deviation around 115 k\\$.
+# The target variable ranges from close to 0 k\$ up to 500 k\$ and, with a
+# standard deviation around 115 k\$.
 #
-# We notice that the mean estimate of the generalization error obtained
-# by cross-validation is a bit than the natural scale of variation
-# of the target variable. Furthermore the standard deviation of the cross
-# validation estimate of the generalization error is even much smaller.
+# We notice that the mean estimate of the generalization error obtained by
+# cross-validation is a bit than the natural scale of variation of the target
+# variable. Furthermore the standard deviation of the cross validation estimate
+# of the generalization error is even much smaller.
 #
 # This is a good start, but not necessarily enough to decide whether the
 # generalization performance is good enough to make our prediction useful in
@@ -238,37 +258,33 @@ print(f"The standard deviation of the target is: {y.std():.2f} k$")
 #
 # We recall that our model makes, on average, an error around 45 k\$. With this
 # information and looking at the target distribution, such an error might be
-# acceptable when predicting houses with a 500 k\\$. However, it would be an
-# issue with a house with a value of 50 k\\$. Thus, this indicates that our
+# acceptable when predicting houses with a 500 k\$. However, it would be an
+# issue with a house with a value of 50 k\$. Thus, this indicates that our
 # metric (Mean Absolute Error) is not ideal.
 #
-# We might instead choose a metric relative to the target
-# value to predict: the mean absolute percentage error would have been a much
-# better choice.
+# We might instead choose a metric relative to the target value to predict: the
+# mean absolute percentage error would have been a much better choice.
 #
 # But in all cases, an error of 45 k\$ might be too large to automatically use
 # our model to tag house value without expert supervision.
 #
-# To better understand the performance of our model and maybe find insights
-# on how to improve it we will compare the generalization
-# error with the empirical error. Thus, we need to compute the error on the
-# training set, which is possible using the `cross_validate` function.
+# To better understand the performance of our model and maybe find insights on
+# how to improve it we will compare the generalization error with the empirical
+# error. Thus, we need to compute the error on the training set, which is
+# possible using the `cross_validate` function.
 
 # %%
 cv_results = cross_validate(
-    regressor,
-    X,
-    y,
-    cv=cv,
-    scoring="neg_mean_absolute_error",
-    return_train_score=True,
-    n_jobs=2,
-)
+    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
+    return_train_score=True, n_jobs=2)
 cv_results = pd.DataFrame(cv_results)
+
+# %% [markdown]
+# We will select the train and test score and take the error instead.
 
 # %%
 scores = pd.DataFrame()
-scores[["train_error", "test_score"]] = -cv_results[
+scores[["train error", "test error"]] = -cv_results[
     ["train_score", "test_score"]
 ]
 sns.histplot(scores, bins=50)
@@ -303,16 +319,14 @@ from sklearn.model_selection import validation_curve
 
 max_depth = [1, 5, 10, 15, 20, 25]
 train_scores, test_scores = validation_curve(
-    regressor,
-    X,
-    y,
-    param_name="max_depth",
-    param_range=max_depth,
-    cv=cv,
-    scoring="neg_mean_absolute_error",
-    n_jobs=2,
-)
+    regressor, X, y, param_name="max_depth", param_range=max_depth,
+    cv=cv, scoring="neg_mean_absolute_error", n_jobs=2)
 train_errors, test_errors = -train_scores, -test_scores
+
+# %% [markdown]
+# Now that we collected the results, we will show the validation curve by
+# plotting the empirical and generalization errors (as well as their
+# deviations).
 
 # %%
 _, ax = plt.subplots()
@@ -321,19 +335,12 @@ for name, errors in zip(
     ["Empirical error", "Generalization error"], [train_errors, test_errors]
 ):
     ax.plot(
-        max_depth,
-        errors.mean(axis=1),
-        linestyle="-.",
-        label=name,
-        alpha=0.8,
-    )
+        max_depth, errors.mean(axis=1), linestyle="-.", label=name,
+        alpha=0.8)
     ax.fill_between(
-        max_depth,
-        errors.mean(axis=1) - errors.std(axis=1),
-        errors.mean(axis=1) + errors.std(axis=1),
-        alpha=0.5,
-        label=f"std. dev. {name.lower()}",
-    )
+        max_depth, errors.mean(axis=1) - errors.std(axis=1),
+        errors.mean(axis=1) + errors.std(axis=1), alpha=0.5,
+        label=f"std. dev. {name.lower()}")
 
 ax.set_xticks(max_depth)
 ax.set_xlabel("Maximum depth of decision tree")
@@ -349,23 +356,20 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 #   constrained and cannot capture much of the variability of the target
 #   variable.
 #
-#
 # - The region around `max_depth = 10` corresponds to the parameter for which
 #   the decision tree generalizes the best. It is flexible enough to capture a
 #   fraction of the variability of the target that generalizes, while not
 #   memorizing all of the noise in the target.
-#
 #
 # - For `max_depth > 10`, the decision tree overfits. The empirical error
 #   becomes very small, while the generalization error increases. In this
 #   region, the models captures too much of the noisy part of the variations of
 #   the target and this harms its ability to generalize well to test data.
 #
-#
 # Note that for `max_depth = 10`, the model overfits a bit as there is a gap
 # between the empirical error and the generalization error. It can also
 # potentially underfit also a bit at the same time, because the empirical error
-# is still far from zero (more than 30 k\\$), meaning that the model might
+# is still far from zero (more than 30 k\$), meaning that the model might
 # still be too constrained to model interesting parts of the data. However the
 # generalization error is minimal, and this is what really matters. This is the
 # best compromise we could reach by just tuning this parameter.
@@ -382,41 +386,53 @@ y.size
 
 # %% [markdown]
 # Let's do an experiment and reduce the number of samples and repeat the
-# previous experiment.
+# previous experiment. We will create a function that define a `ShuffleSplit`
+# and given a regressor and the data `X` and `y` will run a cross-validation.
+# The function will finally return the generalization error as a NumPy array.
 
 
 # %%
 def make_cv_analysis(regressor, X, y):
     cv = ShuffleSplit(n_splits=10, test_size=0.2)
-    cv_results = pd.DataFrame(
-        cross_validate(
-            regressor,
-            X,
-            y,
-            cv=cv,
-            scoring="neg_mean_absolute_error",
-            return_train_score=True,
-        )
-    )
+    cv_results = cross_validate(
+        regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
+        return_train_score=True)
+    cv_results = pd.DataFrame(cv_results)
     return (cv_results["test_score"] * -1).values
 
+
+# %% [markdown]
+# Now that we have a function to run each experiment, we will create an array
+# defining the number of samples for which we want to run the experiments.
+
+# %%
+sample_sizes = [100, 500, 1000, 5000, 10000, 15000, y.size]
 
 # %%
 import numpy as np
 
-sample_sizes = [100, 500, 1000, 5000, 10000, 15000, y.size]
-
-scores_sample_sizes = {"# samples": [], "test score": []}
+# to make our results reproducible
 rng = np.random.RandomState(0)
+
+# create a dictionary where we will store the result of each run
+scores_sample_sizes = {"# samples": [], "test error": []}
 for n_samples in sample_sizes:
+    # select a subset of the data with a specific number of samples
     sample_idx = rng.choice(np.arange(y.size), size=n_samples, replace=False)
     X_sampled, y_sampled = X.iloc[sample_idx], y[sample_idx]
+    # run the experiment
     score = make_cv_analysis(regressor, X_sampled, y_sampled)
+    # store the results
     scores_sample_sizes["# samples"].append(n_samples)
-    scores_sample_sizes["test score"].append(score)
+    scores_sample_sizes["test error"].append(score)
 
+# %% [markdown]
+# Now, we collected all our results and we will create a pandas dataframe to
+# easily make some plot.
+
+# %%
 scores_sample_sizes = pd.DataFrame(
-    np.array(scores_sample_sizes["test score"]).T,
+    np.array(scores_sample_sizes["test error"]).T,
     columns=scores_sample_sizes["# samples"],
 )
 
@@ -443,16 +459,13 @@ _ = plt.title(
 from sklearn.model_selection import learning_curve
 
 results = learning_curve(
-    regressor,
-    X,
-    y,
-    train_sizes=sample_sizes[:-1],
-    cv=cv,
-    scoring="neg_mean_absolute_error",
-    n_jobs=2,
-)
+    regressor, X, y, train_sizes=sample_sizes[:-1], cv=cv,
+    scoring="neg_mean_absolute_error", n_jobs=2)
 train_size, train_scores, test_scores = results[:3]
 train_errors, test_errors = -train_scores, -test_scores
+
+# %% [markdown]
+# Now, we can plot the curve curve.
 
 # %%
 _, ax = plt.subplots()
@@ -461,19 +474,12 @@ for name, errors in zip(
     ["Empirical error", "Generalization error"], [train_errors, test_errors]
 ):
     ax.plot(
-        max_depth,
-        errors.mean(axis=1),
-        linestyle="-.",
-        label=name,
-        alpha=0.8,
-    )
+        max_depth, errors.mean(axis=1), linestyle="-.", label=name,
+        alpha=0.8)
     ax.fill_between(
-        max_depth,
-        errors.mean(axis=1) - errors.std(axis=1),
+        max_depth, errors.mean(axis=1) - errors.std(axis=1),
         errors.mean(axis=1) + errors.std(axis=1),
-        alpha=0.5,
-        label=f"std. dev. {name.lower()}",
-    )
+        alpha=0.5, label=f"std. dev. {name.lower()}")
 
 ax.set_xticks(train_size)
 ax.set_xscale("log")
@@ -491,3 +497,14 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 # For this dataset we notice that our decision tree model would really benefit
 # from additional datapoints to reduce the amount of over-fitting and hopefully
 # reduce the generalization error even further.
+#
+# ## Summary
+#
+# In this notebook, we saw:
+#
+# * the necessity of splitting the data into a train and test set;
+# * the meaning of the empirical and generalization errors;
+# * the overall cross-validation framework with the possibility to study
+#   performance variations;
+# * the effect of hyperparameter tuning using the validation curve;
+# * the effect of sample size using the learning curve.

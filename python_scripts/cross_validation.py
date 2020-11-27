@@ -14,26 +14,13 @@
 # ---
 
 # %% [markdown]
-# # Evaluation of your predictive model: the cross-validation framework.
-
-# %% [markdown]
-# ## Introduction
-# In the previous notebooks, we check how to fit a machine-learning model. When
-# we evaluate our model's performance, we did not detail the evaluation
-# framework that one should use in machine-learning. This notebook presents the
-# cross-validation framework and emphasizes the importance of evaluating a
-# model with such a framework.
-#
-# Besides, we will show some good practices to follow, such as nested
-# cross-validation, when tuning model parameters.
-
-# %% [markdown]
-# ## Train and test datasets
+# # Train and test datasets
 # Before discussing the cross-validation framework, we will linger on the
 # reasons for always having training and testing sets. Let's first look at the
 # limitation of using a unique dataset.
 #
-# ### Load the California housing dataset
+# To illustrate the different concepts, we will use the california housing
+# dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -42,9 +29,9 @@ housing = fetch_california_housing(as_frame=True)
 X, y = housing.data, housing.target
 
 # %% [markdown]
-# We use this dataset to predict the median value of houses in an area in
-# California. The feature collected are based on general real-estate
-# and geographical information.
+# We recall that in this dataset, the aim is to predict the median value of
+# houses in an area in California. The feature collected are based on general
+# real-estate and geographical information.
 
 # %%
 print(housing.DESCR)
@@ -60,7 +47,7 @@ y *= 100
 y.head()
 
 # %% [markdown]
-# ### Empirical error vs generalization error
+# ## Empirical error vs generalization error
 #
 # As mentioned previously, we start by fitting a decision tree regressor on the
 # full dataset.
@@ -127,13 +114,13 @@ score = mean_absolute_error(y_pred, y_test)
 print(f"The generalization error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# ### Stability of the cross-validation estimates
+# ## Stability of the cross-validation estimates
 #
 # When doing a single train-test split we don't give any indication
 # regarding the robustness of the evaluation of our predictive model: in
 # particular, if the test set is small, this estimate of the generalization
 # error can be unstable and do not reflect the "true error rate" we would have
-# observed with the same model on an unlimitted amount of test data.
+# observed with the same model on an unlimited amount of test data.
 #
 # For instance, we could have been lucky when we did our random split of our
 # limited dataset and isolated some of the easiest cases to predict in the
@@ -514,7 +501,7 @@ _ = plt.legend()
 # reduce the generalization error even further.
 #
 #
-# ## Comparing results with baseline and chance level
+# # Comparing results with baseline and chance level
 #
 # Previously, we compare the generalization error by taking into account the
 # target distribution. A good practice is to compare the generalization error
@@ -574,7 +561,7 @@ sns.displot(final_result, kind="kde")
 _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
-# ## Choice of cross-validation
+# # Choice of cross-validation
 # In the previous section, we presented the cross-validation framework.
 # However, we always use the `ShuffleSplit` strategy to repeat the split. One
 # should question if this approach is always the best option and that some
@@ -582,7 +569,7 @@ _ = plt.xlabel("Mean absolute error (k$)")
 # focus on three aspects that influenced the choice of the cross-validation
 # strategy: class stratification, sample grouping, feature dependence.
 #
-# ### Stratification
+# ## Stratification
 # Let's start with the concept of stratification by giving an example where
 # we can get into trouble if we are not careful. We load the iris dataset.
 
@@ -1003,7 +990,7 @@ test_score = results["test_score"]
 print(f"The mean R2 is: {test_score.mean():.2f}")
 
 # %% [markdown]
-# ## Nested cross-validation
+# # Nested cross-validation
 # Cross-validation is a powerful tool to evaluate the performance of a model.
 # It is also used to select the best model from a pool of models. This pool of
 # models can be the same family of predictor but with different parameters. In
@@ -1148,7 +1135,7 @@ _ = ax.set_title(
 # We observe that the model's performance with the nested cross-validation is
 # not as good as the non-nested cross-validation.
 #
-# ## Take away
+# # Take away
 # In this notebook, we presented the framework used in machine-learning to
 # evaluate a predictive model's performance: the cross-validation.
 #

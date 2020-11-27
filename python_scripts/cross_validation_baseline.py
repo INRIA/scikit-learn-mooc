@@ -39,7 +39,7 @@ from sklearn.model_selection import cross_validate
 
 regressor = DecisionTreeRegressor()
 result_regressor = cross_validate(
-    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=2
+    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=-1
 )
 
 errors_regressor = pd.Series(
@@ -56,7 +56,7 @@ from sklearn.dummy import DummyRegressor
 
 dummy = DummyRegressor()
 result_dummy = cross_validate(
-    dummy, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=2
+    dummy, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=-1
 )
 errors_dummy = pd.Series(-result_dummy["test_score"], name="Dummy error")
 
@@ -71,14 +71,8 @@ from sklearn.model_selection import permutation_test_score
 
 regressor = DecisionTreeRegressor()
 score, permutation_score, pvalue = permutation_test_score(
-    regressor,
-    X,
-    y,
-    cv=cv,
-    scoring="neg_mean_absolute_error",
-    n_jobs=-1,
-    n_permutations=30,
-)
+    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=-1,
+    n_permutations=30)
 errors_permutation = pd.Series(-permutation_score, name="Permuted error")
 
 # %% [markdown]

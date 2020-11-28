@@ -70,6 +70,26 @@ print(f"The average accuracy is "
 # understand the issue while we should have started with this step.
 
 # %%
+import seaborn as sns
+sns.set_context("talk")
+
+ax = y.plot()
+ax.set_xlabel("Sample index")
+ax.set_ylabel("Class")
+ax.set_yticks(y.unique())
+_ = ax.set_title("Class value in target y")
+
+# %% [markdown]
+# We see that the target vector `y` is ordered. It will have some unexpected
+# consequences when using the `KFold` cross-validation. To illustrate the
+# consequences, we will show the class count in each fold of the
+# cross-validation in the train and test set.
+#
+# For this matter, we create a function, because we will reuse it, which given
+# a cross-validation object and the data `X` and `y`, is returning a dataframe
+# with the class counts by folds and by split sets.
+
+# %%
 from collections import Counter
 import pandas as pd
 
@@ -94,11 +114,11 @@ def compute_class_count_cv(cv, X, y):
         class_probability, columns=["Set", "CV", "Class", "Count"])
     return class_probability
 
+# %% [markdown]
+# Let's compute the statistics using the `KFold` cross-validation and we will
+# plot these information in a bar plot.
 
 # %%
-import seaborn as sns
-sns.set_context("talk")
-
 kfold_class_count = compute_class_count_cv(cv, X, y)
 kfold_class_count
 
@@ -111,10 +131,10 @@ g.add_legend()
 _ = g.fig.suptitle("Class count with K-fold cross-validation", y=1.05)
 
 # %% [markdown]
-# By looking at our target, samples of a class are grouped together. Also, the
-# sample count per class is the same. Thus, splitting the data with three
-# splits use all samples of a single class during testing. So our model is
-# unable to predict this class that was unseen during the training stage.
+# We can confirm that in each fold, only two of the three classes are present
+# in the training set and all samples of the remaining class is used as a test
+# set. So our model is unable to predict this class that was unseen during the
+# training stage.
 #
 # One possibility to solve the issue is to shuffle the data before to split the
 # data into three groups.
@@ -146,11 +166,13 @@ _ = g.fig.suptitle(
 
 # %% [markdown]
 # We see that neither the training and testing sets have the same class
-# frequencies as our original dataset. Thus, it means that one might want to
-# split our data by preserving the original class frequencies: we want to
-# **stratify** our data by class. In scikit-learn, some cross-validation
-# strategies are implementing the stratification and contains `Stratified` in
-# their names.
+# frequencies as our original dataset because the count for each class is
+# varying a little.
+#
+# However, one might want to split our data by preserving the original class
+# frequencies: we want to **stratify** our data by class. In scikit-learn, some
+# cross-validation strategies are implementing the stratification and contains
+# `Stratified` in their names.
 
 # %%
 from sklearn.model_selection import StratifiedKFold
@@ -175,8 +197,9 @@ _ = g.fig.suptitle(
     "Class count with stratifiedK-fold cross-validation", y=1.05)
 
 # %% [markdown]
-# In this case, we observe that the class frequencies are very close. The
-# difference is due to the small number of samples in the iris dataset.
+# In this case, we observe that the class counts either in the train set or the
+# test set are very close. The difference is due to the small number of samples
+# in the iris dataset.
 #
 # In conclusion, this is a good practice to use stratification within the
 # cross-validation framework when dealing with a classification problem.
@@ -384,7 +407,7 @@ test_score = r2_score(y_test, y_pred)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
-# We obtain similar good results in terms of :math`R^2`. We will plot the
+# We obtain similar good results in terms of $R^2$. We will plot the
 # training, testing and prediction samples.
 
 # %%

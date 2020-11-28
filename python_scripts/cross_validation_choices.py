@@ -61,7 +61,8 @@ from sklearn.model_selection import cross_validate
 cv = KFold(n_splits=3)
 results = cross_validate(model, X, y, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is {test_score.mean()}")
+print(f"The average accuracy is "
+      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
 # %% [markdown]
 # It is a real surprise that our model cannot correctly classify any sample in
@@ -69,25 +70,28 @@ print(f"The average accuracy is {test_score.mean()}")
 # understand the issue while we should have started with this step.
 
 # %%
+from collections import Counter
 import pandas as pd
 
 
-def compute_class_probabilty_cv(cv, X, y):
+def compute_class_count_cv(cv, X, y):
     class_probability = []
     for cv_idx, (train_index, test_index) in enumerate(cv.split(X, y)):
         # Compute the class probability for the training set
-        train_class = y[train_index].value_counts(normalize=True).sort_values()
-        for klass, proportion in train_class.iteritems():
-            class_probability.append(
-                ["Train set", f"CV #{cv_idx}", klass, proportion])
+        train_class = Counter(y[train_index])
+        class_probability += [
+            ["Train set", f"CV #{cv_idx}", klass, proportion]
+            for klass, proportion in train_class.items()
+        ]
         # Compute the class probability for the test set
-        test_class = y[test_index].value_counts(normalize=True).sort_values()
-        for klass, proportion in test_class.iteritems():
-            class_probability.append(
-                ["Test set", f"CV #{cv_idx}", klass, proportion])
+        test_class = Counter(y[test_index])
+        class_probability += [
+            ["Test set", f"CV #{cv_idx}", klass, proportion]
+            for klass, proportion in test_class.items()
+        ]
 
     class_probability = pd.DataFrame(
-        class_probability, columns=["Set", "CV", "Class", "Probability"])
+        class_probability, columns=["Set", "CV", "Class", "Count"])
     return class_probability
 
 
@@ -95,13 +99,16 @@ def compute_class_probabilty_cv(cv, X, y):
 import seaborn as sns
 sns.set_context("talk")
 
-kfold_class_proba = compute_class_probabilty_cv(cv, X, y)
+kfold_class_count = compute_class_count_cv(cv, X, y)
+kfold_class_count
 
-g = sns.FacetGrid(kfold_class_proba, col="Set")
+# %%
+g = sns.FacetGrid(kfold_class_count, col="Set")
 g.map_dataframe(
-    sns.barplot, x="Class", y="Probability", hue="CV", palette="tab10")
-g.set_axis_labels("Class", "Probability")
+    sns.barplot, x="Class", y="Count", hue="CV", palette="tab10")
+g.set_axis_labels("Class", "Count")
 g.add_legend()
+_ = g.fig.suptitle("Class count with K-fold cross-validation", y=1.05)
 
 # %% [markdown]
 # By looking at our target, samples of a class are grouped together. Also, the
@@ -127,13 +134,15 @@ print(f"The average accuracy is "
 # model with a class distribution that we will encounter in production.
 
 # %%
-kfold_shuffled_class_proba = compute_class_probabilty_cv(cv, X, y)
+kfold_shuffled_class_count = compute_class_count_cv(cv, X, y)
 
-g = sns.FacetGrid(kfold_shuffled_class_proba, col="Set")
+g = sns.FacetGrid(kfold_shuffled_class_count, col="Set")
 g.map_dataframe(
-    sns.barplot, x="Class", y="Probability", hue="CV", palette="tab10")
-g.set_axis_labels("Class", "Probability")
+    sns.barplot, x="Class", y="Count", hue="CV", palette="tab10")
+g.set_axis_labels("Class", "Count")
 g.add_legend()
+_ = g.fig.suptitle(
+    "Class count with shuffled K-fold cross-validation", y=1.05)
 
 # %% [markdown]
 # We see that neither the training and testing sets have the same class
@@ -151,16 +160,19 @@ cv = StratifiedKFold(n_splits=3)
 # %%
 results = cross_validate(model, X, y, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is {test_score.mean():.3f}")
+print(f"The average accuracy is "
+      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
 # %%
-stratified_kfold_class_proba = compute_class_probabilty_cv(cv, X, y)
+stratified_kfold_class_count = compute_class_count_cv(cv, X, y)
 
-g = sns.FacetGrid(stratified_kfold_class_proba, col="Set")
+g = sns.FacetGrid(stratified_kfold_class_count, col="Set")
 g.map_dataframe(
-    sns.barplot, x="Class", y="Probability", hue="CV", palette="tab10")
-g.set_axis_labels("Class", "Probability")
+    sns.barplot, x="Class", y="Count", hue="CV", palette="tab10")
+g.set_axis_labels("Class", "Count")
 g.add_legend()
+_ = g.fig.suptitle(
+    "Class count with stratifiedK-fold cross-validation", y=1.05)
 
 # %% [markdown]
 # In this case, we observe that the class frequencies are very close. The

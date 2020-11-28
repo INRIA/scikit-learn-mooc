@@ -114,6 +114,7 @@ def compute_class_count_cv(cv, X, y):
         class_probability, columns=["Set", "CV", "Class", "Count"])
     return class_probability
 
+
 # %% [markdown]
 # Let's compute the statistics using the `KFold` cross-validation and we will
 # plot these information in a bar plot.

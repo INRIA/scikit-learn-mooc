@@ -69,10 +69,39 @@ print(f"The average accuracy is {test_score.mean()}")
 # understand the issue while we should have started with this step.
 
 # %%
-y.tolist()
+import pandas as pd
+
+
+def compute_class_probabilty_cv(cv, X, y):
+    class_probability = []
+    for cv_idx, (train_index, test_index) in enumerate(cv.split(X, y)):
+        # Compute the class probability for the training set
+        train_class = y[train_index].value_counts(normalize=True).sort_values()
+        for klass, proportion in train_class.iteritems():
+            class_probability.append(
+                ["Train set", f"CV #{cv_idx}", klass, proportion])
+        # Compute the class probability for the test set
+        test_class = y[test_index].value_counts(normalize=True).sort_values()
+        for klass, proportion in test_class.iteritems():
+            class_probability.append(
+                ["Test set", f"CV #{cv_idx}", klass, proportion])
+
+    class_probability = pd.DataFrame(
+        class_probability, columns=["Set", "CV", "Class", "Probability"])
+    return class_probability
+
 
 # %%
-y.value_counts(normalize=True)
+import seaborn as sns
+sns.set_context("talk")
+
+kfold_class_proba = compute_class_probabilty_cv(cv, X, y)
+
+g = sns.FacetGrid(kfold_class_proba, col="Set")
+g.map_dataframe(
+    sns.barplot, x="Class", y="Probability", hue="CV", palette="tab10")
+g.set_axis_labels("Class", "Probability")
+g.add_legend()
 
 # %% [markdown]
 # By looking at our target, samples of a class are grouped together. Also, the
@@ -87,7 +116,8 @@ y.value_counts(normalize=True)
 cv = KFold(n_splits=3, shuffle=True, random_state=0)
 results = cross_validate(model, X, y, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is {test_score.mean():.3f}")
+print(f"The average accuracy is "
+      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
 # %% [markdown]
 # We get results that are closer to what we would expect with an accuracy above
@@ -97,15 +127,13 @@ print(f"The average accuracy is {test_score.mean():.3f}")
 # model with a class distribution that we will encounter in production.
 
 # %%
-for train_index, test_index in cv.split(X, y):
-    print(
-        f"Class frequency in the training set:\n"
-        f"{y[train_index].value_counts(normalize=True).sort_index()}"
-    )
-    print(
-        f"Class frequency in the testing set:\n"
-        f"{y[test_index].value_counts(normalize=True).sort_index()}"
-    )
+kfold_shuffled_class_proba = compute_class_probabilty_cv(cv, X, y)
+
+g = sns.FacetGrid(kfold_shuffled_class_proba, col="Set")
+g.map_dataframe(
+    sns.barplot, x="Class", y="Probability", hue="CV", palette="tab10")
+g.set_axis_labels("Class", "Probability")
+g.add_legend()
 
 # %% [markdown]
 # We see that neither the training and testing sets have the same class
@@ -119,20 +147,20 @@ for train_index, test_index in cv.split(X, y):
 from sklearn.model_selection import StratifiedKFold
 
 cv = StratifiedKFold(n_splits=3)
-for train_index, test_index in cv.split(X, y):
-    print(
-        f"Class frequency in the training set:\n"
-        f"{y[train_index].value_counts(normalize=True).sort_index()}"
-    )
-    print(
-        f"Class frequency in the testing set:\n"
-        f"{y[test_index].value_counts(normalize=True).sort_index()}"
-    )
 
 # %%
 results = cross_validate(model, X, y, cv=cv)
 test_score = results["test_score"]
 print(f"The average accuracy is {test_score.mean():.3f}")
+
+# %%
+stratified_kfold_class_proba = compute_class_probabilty_cv(cv, X, y)
+
+g = sns.FacetGrid(stratified_kfold_class_proba, col="Set")
+g.map_dataframe(
+    sns.barplot, x="Class", y="Probability", hue="CV", palette="tab10")
+g.set_axis_labels("Class", "Probability")
+g.add_legend()
 
 # %% [markdown]
 # In this case, we observe that the class frequencies are very close. The
@@ -174,10 +202,7 @@ print(f"The average accuracy is {test_score_with_shuffling.mean():.3f}")
 # score.
 
 # %%
-import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
 
 sns.displot(data=pd.DataFrame(
     [test_score_no_shuffling, test_score_with_shuffling],

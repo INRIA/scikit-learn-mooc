@@ -1,4 +1,5 @@
 # %% [markdown]
+# # Stratification
 # Let's start with the concept of stratification by giving an example where
 # we can get into trouble if we are not careful. We load the iris dataset.
 

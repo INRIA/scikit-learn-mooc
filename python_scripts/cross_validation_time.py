@@ -1,4 +1,5 @@
 # %% [markdown]
+# # Non i.i.d. data
 # In machine learning, it is quite common to assume that the data are i.i.d,
 # meaning that the generative process does not have any memory of past samples
 # to generate new samples.

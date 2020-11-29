@@ -1,4 +1,5 @@
 # %% [markdown]
+# # Sample grouping
 # We are going to linger into the concept of samples group. As in the previous
 # section, we will give an example to highlight some surprising results. This
 # time, we will use the handwritten digits dataset.

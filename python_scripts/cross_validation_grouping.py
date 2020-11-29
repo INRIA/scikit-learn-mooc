@@ -22,18 +22,20 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 # without shuffling the data at first.
 
 # %%
-from sklearn.model_selection import cross_validate, KFold
+from sklearn.model_selection import cross_val_score, KFold
 
 cv = KFold(shuffle=False)
-results = cross_validate(model, X, y, cv=cv, n_jobs=-1)
-test_score_no_shuffling = results["test_score"]
-print(f"The average accuracy is {test_score_no_shuffling.mean():.3f}")
+test_score_no_shuffling = cross_val_score(model, X, y, cv=cv, n_jobs=-1)
+print(f"The average accuracy is "
+      f"{test_score_no_shuffling.mean():.3f} +/- "
+      f"{test_score_no_shuffling.std():.3f}")
 
 # %%
 cv = KFold(shuffle=True)
-results = cross_validate(model, X, y, cv=cv, n_jobs=-1)
-test_score_with_shuffling = results["test_score"]
-print(f"The average accuracy is {test_score_with_shuffling.mean():.3f}")
+test_score_with_shuffling = cross_val_score(model, X, y, cv=cv, n_jobs=-1)
+print(f"The average accuracy is "
+      f"{test_score_with_shuffling.mean():.3f} +/- "
+      f"{test_score_with_shuffling.std():.3f}")
 
 # %% [markdown]
 # We observe that shuffling the data allows to improving the mean accuracy.
@@ -116,9 +118,10 @@ groups
 from sklearn.model_selection import GroupKFold
 
 cv = GroupKFold()
-results = cross_validate(model, X, y, groups=groups, cv=cv, n_jobs=-1)
-test_score = results["test_score"]
-print(f"The average accuracy is {test_score.mean():.3f}")
+test_score = cross_val_score(model, X, y, groups=groups, cv=cv, n_jobs=-1)
+print(f"The average accuracy is "
+      f"{test_score.mean():.3f} +/- "
+      f"{test_score.std():.3f}")
 
 # %% [markdown]
 # We see that this strategy is less optimistic regarding the model performance.

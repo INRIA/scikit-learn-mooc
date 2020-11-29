@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Introductory exercise for stratification cross-validation
+# # Introductory exercise regarding stratification
 #
 # The goal of this exercise is to find the limitation blindly a k-fold
 # cross-validation.

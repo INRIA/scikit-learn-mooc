@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Introductory exercise for grouping
+# # Introductory exercise for sample grouping
 #
 # This exercise aims at highlighting issues that one could encounter when
 # discarding grouping pattern existing in a dataset.

@@ -1,16 +1,27 @@
 # %% [markdown]
 # # Introductory exercise for non i.i.d. data
 #
-# This exercise aims at showing some aspects to consider when dealing non i.i.d
-# data, typically time series.
+# This exercise aims at showing some aspects to consider when dealing with non
+# i.i.d data, typically time series.
 #
-# For this purpose, we will create a synthetic dataset simulating stocks.
+# For this purpose, we will create a synthetic dataset simulating stock values.
+# We will formulate the following data science problem: predict the value of a
+# specific stock given other stock.
+#
+# To make this problem interesting, we want to ensure that any predictive model
+# should **not** work. In this regard, the stocks will be generated completely
+# randomly without any link between them. We will only add a constraint: the
+# value of a stock at a given time `t` will depend on the value of the stock
+# from the past.
+#
+# We will create a function to generate such data.
+
 # %%
 import numpy as np
 import pandas as pd
 
 
-def generate_random_stock_market(n_stock=4, seed=0):
+def generate_random_stock_market(n_stock=3, seed=0):
     rng = np.random.RandomState(seed)
 
     date_range = pd.date_range(start="01/01/2010", end="31/12/2020")
@@ -26,32 +37,59 @@ def generate_random_stock_market(n_stock=4, seed=0):
     )
 
 
+# %% [markdown]
+# Now that we have our data generator, let's create three quotes, corresponding
+# to the quotes of three different companies for instance. We will plot
+# the stock values
+
 # %%
 stocks = generate_random_stock_market()
-
-
-# %%
-stocks.plot()
+stocks.head()
 
 # %%
-from sklearn.model_selection import train_test_split
+import seaborn as sns
 
-X, y = stocks.drop(columns="Stock 0"), stocks["Stock 0"]
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
-)
+sns.set_context("talk")
 
-# %%
-from sklearn.ensemble import GradientBoostingRegressor
+ax = stocks.plot()
+ax.set_ylabel("Stock value")
+_ = ax.set_title("Stock values over time")
 
-model = GradientBoostingRegressor()
-model.fit(X_train, y_train)
-
-# %%
-from sklearn.metrics import r2_score
-
-y_pred = model.predict(X_test)
-r2_score(y_test, y_pred)
-
+# %% [markdown]
+# Because the stocks are generated randomly, there is no possibility for a
+# predictive model to be able to predict the value of a stock depending on the
+# other stocks. By using the cross-validation framework from the previous
+# exercise, we will check that we get such expected results.
+#
+# First, let's organise our data into a matrix `X` and a target `y`. Split
+# the data such that the `Stock 0` is the stock that we want to predict and
+# the `Stock 1` and `Stock 2` are stocks used to build our model.
 
 # %%
+# Write your code here.
+
+# %% [markdown]
+# Let's create a machine learning model. We can use a
+# `GradientBoostingRegressor`.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Now, we have to define a cross-validation strategy to evaluate our model.
+# Use a `ShuffleSplit` cross-validation.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# We should be set to make our evaluation. Call the function `cross_val_score`
+# to compute the $R^2$ score for the different split and report the mean
+# and standard deviation of the model.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Your model is not giving random predictions. Could you ellaborate on what
+# are the reasons of such a success on random data.

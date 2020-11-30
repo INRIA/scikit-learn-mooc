@@ -800,16 +800,24 @@
                 
   <div class="section" id="introductory-exercise-for-non-i-i-d-data">
 <h1>Introductory exercise for non i.i.d. data<a class="headerlink" href="#introductory-exercise-for-non-i-i-d-data" title="Permalink to this headline">¶</a></h1>
-<p>This exercise aims at showing some aspects to consider when dealing non i.i.d
-data, typically time series.</p>
-<p>For this purpose, we will create a synthetic dataset simulating stocks.</p>
+<p>This exercise aims at showing some aspects to consider when dealing with non
+i.i.d data, typically time series.</p>
+<p>For this purpose, we will create a synthetic dataset simulating stock values.
+We will formulate the following data science problem: predict the value of a
+specific stock given other stock.</p>
+<p>To make this problem interesting, we want to ensure that any predictive model
+should <strong>not</strong> work. In this regard, the stocks will be generated completely
+randomly without any link between them. We will only add a constraint: the
+value of a stock at a given time <code class="docutils literal notranslate"><span class="pre">t</span></code> will depend on the value of the stock
+from the past.</p>
+<p>We will create a function to generate such data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-<span class="k">def</span> <span class="nf">generate_random_stock_market</span><span class="p">(</span><span class="n">n_stock</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">generate_random_stock_market</span><span class="p">(</span><span class="n">n_stock</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
 
     <span class="n">date_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">&quot;01/01/2010&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;31/12/2020&quot;</span><span class="p">)</span>
@@ -827,68 +835,135 @@ data, typically time series.</p>
 </div>
 </div>
 </div>
+<p>Now that we have our data generator, let’s create three quotes, corresponding
+to the quotes of three different companies for instance. We will plot
+the stock values</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stocks</span> <span class="o">=</span> <span class="n">generate_random_stock_market</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stocks</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">stocks</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
-</pre></div>
-</div>
-<img alt="../_images/cross_validation_ex_05_3_1.png" src="../_images/cross_validation_ex_05_3_1.png" />
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Stock 0</th>
+      <th>Stock 1</th>
+      <th>Stock 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2010-01-01</th>
+      <td>145.122795</td>
+      <td>121.931662</td>
+      <td>190.469167</td>
+    </tr>
+    <tr>
+      <th>2010-01-02</th>
+      <td>145.425600</td>
+      <td>120.771145</td>
+      <td>190.261145</td>
+    </tr>
+    <tr>
+      <th>2010-01-03</th>
+      <td>145.496459</td>
+      <td>122.281423</td>
+      <td>191.566923</td>
+    </tr>
+    <tr>
+      <th>2010-01-04</th>
+      <td>145.569501</td>
+      <td>122.174231</td>
+      <td>191.399200</td>
+    </tr>
+    <tr>
+      <th>2010-01-05</th>
+      <td>144.147175</td>
+      <td>123.107346</td>
+      <td>189.082024</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">stocks</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Stock 0&quot;</span><span class="p">),</span> <span class="n">stocks</span><span class="p">[</span><span class="s2">&quot;Stock 0&quot;</span><span class="p">]</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">stocks</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Stock value&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Stock values over time&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GradientBoostingRegressor()
-</pre></div>
+<img alt="../_images/cross_validation_ex_05_4_0.png" src="../_images/cross_validation_ex_05_4_0.png" />
 </div>
 </div>
-</div>
+<p>Because the stocks are generated randomly, there is no possibility for a
+predictive model to be able to predict the value of a stock depending on the
+other stocks. By using the cross-validation framework from the previous
+exercise, we will check that we get such expected results.</p>
+<p>First, let’s organise our data into a matrix <code class="docutils literal notranslate"><span class="pre">X</span></code> and a target <code class="docutils literal notranslate"><span class="pre">y</span></code>. Split
+the data such that the <code class="docutils literal notranslate"><span class="pre">Stock</span> <span class="pre">0</span></code> is the stock that we want to predict and
+the <code class="docutils literal notranslate"><span class="pre">Stock</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">Stock</span> <span class="pre">2</span></code> are stocks used to build our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
-
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7585690174259206
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Let’s create a machine learning model. We can use a
+<code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we have to define a cross-validation strategy to evaluate our model.
+Use a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We should be set to make our evaluation. Call the function <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code>
+to compute the <span class="math notranslate nohighlight">\(R^2\)</span> score for the different split and report the mean
+and standard deviation of the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Your model is not giving random predictions. Could you ellaborate on what
+are the reasons of such a success on random data.</p>
 </div>
 
     <script type="text/x-thebe-config">

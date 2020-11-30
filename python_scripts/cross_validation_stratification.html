@@ -1,0 +1,1206 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stratification &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introductory exercise for sample grouping" href="cross_validation_ex_04.html" />
+    <link rel="prev" title="Introductory exercise regarding stratification" href="cross_validation_ex_03.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Machine Learning Concepts
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/slides.html">
+   📰 Introducing machine-learning concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  The Predictive Modeling Pipeline
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_index.html">
+   Tabular data exploration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration.html">
+     Tabular data exploration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html">
+   Fitting a scikit-learn model on numerical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline.html">
+     First model with scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
+   Handling categorical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline.html">
+     Encoding of categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/04_parameter_tuning_index.html">
+   Hyper-parameter tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning.html">
+     Introduction to hyper-parameter tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_search.html">
+     Hyper-parameter tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/04_parameter_tuning_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Overfitting/Underfitting
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/slides.html">
+   📰 Slides
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/slides.html">
+   📰 Intuitions on linear models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_without_sklearn.html">
+   Linear regression without scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_01.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_in_sklearn.html">
+   Linear regression using scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_non_linear_link.html">
+   Linear regression with non-linear link between data and target
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_03.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_03.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_regularization.html">
+   Regularization of linear regression model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_04.html">
+   Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_04.html">
+   Solution for Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="logistic_regression.html">
+   Linear model for classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_05.html">
+   Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_05.html">
+   Solution for Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_non_linear.html">
+   Beyond linear separation in classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_non_linear.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Decision tree models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/slides.html">
+   📰 Intuitions on tree-based models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_dataset.html">
+   Presentation of the datasets
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_classification.html">
+   Build a classification decision tree
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_sol_01.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_regression.html">
+   Decision tree for regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_hyperparameters.html">
+   Importance of decision tree hyper-parameters on generalization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_hyperparameters.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Ensemble of models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_introduction.html">
+   Introductory example to ensemble models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_bagging.html">
+   Bagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_01.html">
+   Solution of Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_random_forest.html">
+   Random forest
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_random_forest.html#midpoint-summary">
+   Midpoint summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_adaboost.html">
+   Adaptive Boosting (AdaBoost)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_03.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_03.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_gradient_boosting.html">
+   Gradient-boosting decision tree (GBDT)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_04.html">
+   Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_04.html">
+   Solution for Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_hist_gradient_boosting.html">
+   Speeding-up gradient-boosting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_hyperparameters.html">
+   Hyper-parameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_05.html">
+   Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_05.html">
+   Solution for Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_take_away.html">
+   Main take away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Evaluating model performance
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../evaluation/01_cross_validation.html">
+   The cross-validation framework
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_train_test.html">
+     The framework and why do we need it
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_01.html">
+     Solution fo Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_baseline.html">
+     Comparing results with baseline and chance level
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2 current active collapsible-parent">
+    <a class="reference internal" href="../evaluation/cross_validation_choices.html">
+     Choice of cross-validation
+    </a>
+    <ul class="current collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_03.html">
+       Introductory exercise regarding stratification
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       Stratification
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_04.html">
+       Introductory exercise for sample grouping
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_grouping.html">
+       Sample grouping
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_05.html">
+       Introductory exercise for non i.i.d. data
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_time.html">
+       Non i.i.d. data
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_nested.html">
+     Nested cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_nested.html#take-away">
+     Take away
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/02_metrics.html">
+   The evaluation metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics.html">
+     Evaluation of your predictive model: which metric to choose?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../evaluation/02_metrics_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Feature selection
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_introduction.html">
+   Compelling advantage of using feature selection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_sol_01.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_limitation_model.html">
+   Limitation of selecting feature using a model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_limitation_model.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../interpretation/interpretation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/python_scripts/cross_validation_stratification.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.py</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/INRIA/scikit-learn-mooc"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/cross_validation_stratification.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/cross_validation_stratification.py"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="stratification">
+<h1>Stratification<a class="headerlink" href="#stratification" title="Permalink to this headline">¶</a></h1>
+<p>Let’s start with the concept of stratification by giving an example where
+we can get into trouble if we are not careful. We load the iris dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>At this point, we create a basic machine-learning model: a logistic
+regression. We expect this model to work quite well on the iris dataset since
+this is a toy dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we created our model, we will use the cross-validation framework to
+evaluate it. We will use a strategy called <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation. We give
+a simple usage example of the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> strategy to get an intuition of how it
+splits the dataset. We will define a dataset with nine samples and repeat the
+cross-validation three times (i.e. <code class="docutils literal notranslate"><span class="pre">n_splits</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
+
+<span class="n">X_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X_random</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TRAIN:&quot;</span><span class="p">,</span> <span class="n">train_index</span><span class="p">,</span> <span class="s2">&quot;TEST:&quot;</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TRAIN: [3 4 5 6 7 8] TEST: [0 1 2]
+TRAIN: [0 1 2 6 7 8] TEST: [3 4 5]
+TRAIN: [0 1 2 3 4 5] TEST: [6 7 8]
+</pre></div>
+</div>
+</div>
+</div>
+<p>By defining three splits, we will use three samples each time for testing and
+6 for training. <code class="docutils literal notranslate"><span class="pre">KFold</span></code> does not shuffle by default. It means that it will
+select the three first samples for the testing set at the first split, then
+the three next three samples for the second split, and the three next for the
+last split. In the end, all samples have been used in testing at least once
+among the different splits.</p>
+<p>Now, let’s apply this strategy to check the performance of our model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.000 +/- 0.000
+</pre></div>
+</div>
+</div>
+</div>
+<p>It is a real surprise that our model cannot correctly classify any sample in
+any cross-validation split. We will now check our target’s value to
+understand the issue while we should have started with this step.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Sample index&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Class value in target y&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_stratification_9_0.png" src="../_images/cross_validation_stratification_9_0.png" />
+</div>
+</div>
+<p>We see that the target vector <code class="docutils literal notranslate"><span class="pre">y</span></code> is ordered. It will have some unexpected
+consequences when using the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation. To illustrate the
+consequences, we will show the class count in each fold of the
+cross-validation in the train and test set.</p>
+<p>For this matter, we create a function, because we will reuse it, which given
+a cross-validation object and the data <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, is returning a dataframe
+with the class counts by folds and by split sets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="k">def</span> <span class="nf">compute_class_count_cv</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">class_probability</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cv_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+        <span class="c1"># Compute the class probability for the training set</span>
+        <span class="n">train_class</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">train_index</span><span class="p">])</span>
+        <span class="n">class_probability</span> <span class="o">+=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="s2">&quot;Train set&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;CV #</span><span class="si">{</span><span class="n">cv_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">klass</span><span class="p">,</span> <span class="n">proportion</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">klass</span><span class="p">,</span> <span class="n">proportion</span> <span class="ow">in</span> <span class="n">train_class</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">]</span>
+        <span class="c1"># Compute the class probability for the test set</span>
+        <span class="n">test_class</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">test_index</span><span class="p">])</span>
+        <span class="n">class_probability</span> <span class="o">+=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="s2">&quot;Test set&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;CV #</span><span class="si">{</span><span class="n">cv_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">klass</span><span class="p">,</span> <span class="n">proportion</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">klass</span><span class="p">,</span> <span class="n">proportion</span> <span class="ow">in</span> <span class="n">test_class</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">]</span>
+
+    <span class="n">class_probability</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">class_probability</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Set&quot;</span><span class="p">,</span> <span class="s2">&quot;CV&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">class_probability</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s compute the statistics using the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation and we will
+plot these information in a bar plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kfold_class_count</span> <span class="o">=</span> <span class="n">compute_class_count_cv</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">kfold_class_count</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Set</th>
+      <th>CV</th>
+      <th>Class</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Train set</td>
+      <td>CV #0</td>
+      <td>1</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Train set</td>
+      <td>CV #0</td>
+      <td>2</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Test set</td>
+      <td>CV #0</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Train set</td>
+      <td>CV #1</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Train set</td>
+      <td>CV #1</td>
+      <td>2</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Test set</td>
+      <td>CV #1</td>
+      <td>1</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Train set</td>
+      <td>CV #2</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Train set</td>
+      <td>CV #2</td>
+      <td>1</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Test set</td>
+      <td>CV #2</td>
+      <td>2</td>
+      <td>50</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">FacetGrid</span><span class="p">(</span><span class="n">kfold_class_count</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;Set&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">map_dataframe</span><span class="p">(</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Count&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;CV&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Class count with K-fold cross-validation&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_stratification_14_0.png" src="../_images/cross_validation_stratification_14_0.png" />
+</div>
+</div>
+<p>We can confirm that in each fold, only two of the three classes are present
+in the training set and all samples of the remaining class is used as a test
+set. So our model is unable to predict this class that was unseen during the
+training stage.</p>
+<p>One possibility to solve the issue is to shuffle the data before to split the
+data into three groups.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.953 +/- 0.009
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get results that are closer to what we would expect with an accuracy above
+90%. Now that we solved our first issue, it would be interesting to check if
+the class frequency in the training and testing set is equal to our original
+set’s class frequency. It would ensure that we are training and testing our
+model with a class distribution that we will encounter in production.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kfold_shuffled_class_count</span> <span class="o">=</span> <span class="n">compute_class_count_cv</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">FacetGrid</span><span class="p">(</span><span class="n">kfold_shuffled_class_count</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;Set&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">map_dataframe</span><span class="p">(</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Count&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;CV&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+    <span class="s2">&quot;Class count with shuffled K-fold cross-validation&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_stratification_18_0.png" src="../_images/cross_validation_stratification_18_0.png" />
+</div>
+</div>
+<p>We see that neither the training and testing sets have the same class
+frequencies as our original dataset because the count for each class is
+varying a little.</p>
+<p>However, one might want to split our data by preserving the original class
+frequencies: we want to <strong>stratify</strong> our data by class. In scikit-learn, some
+cross-validation strategies are implementing the stratification and contains
+<code class="docutils literal notranslate"><span class="pre">Stratified</span></code> in their names.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+
+<span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.960 +/- 0.016
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stratified_kfold_class_count</span> <span class="o">=</span> <span class="n">compute_class_count_cv</span><span class="p">(</span><span class="n">cv</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">FacetGrid</span><span class="p">(</span><span class="n">stratified_kfold_class_count</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;Set&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">map_dataframe</span><span class="p">(</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Count&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;CV&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+    <span class="s2">&quot;Class count with stratifiedK-fold cross-validation&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_stratification_22_0.png" src="../_images/cross_validation_stratification_22_0.png" />
+</div>
+</div>
+<p>In this case, we observe that the class counts either in the train set or the
+test set are very close. The difference is due to the small number of samples
+in the iris dataset.</p>
+<p>In conclusion, this is a good practice to use stratification within the
+cross-validation framework when dealing with a classification problem.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./python_scripts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="cross_validation_ex_03.html" title="previous page">Introductory exercise regarding stratification</a>
+    <a class='right-next' id="next-link" href="cross_validation_ex_04.html" title="next page">Introductory exercise for sample grouping</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

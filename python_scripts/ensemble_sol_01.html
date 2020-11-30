@@ -553,8 +553,82 @@
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="cross_validation.html">
-     Evaluation of your predictive model: the cross-validation framework.
+    <a class="reference internal" href="cross_validation_train_test.html">
+     The framework and why do we need it
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_01.html">
+     Solution fo Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_baseline.html">
+     Comparing results with baseline and chance level
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../evaluation/cross_validation_choices.html">
+     Choice of cross-validation
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_03.html">
+       Introductory exercise regarding stratification
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_stratification.html">
+       Stratification
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_04.html">
+       Introductory exercise for sample grouping
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_grouping.html">
+       Sample grouping
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_05.html">
+       Introductory exercise for non i.i.d. data
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_time.html">
+       Non i.i.d. data
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_nested.html">
+     Nested cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_nested.html#take-away">
+     Take away
     </a>
    </li>
   </ul>
@@ -764,7 +838,7 @@ performance on the testing set.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score og a bagging regressor:
-0.77
+0.78
 </pre></div>
 </div>
 </div>
@@ -829,10 +903,10 @@ warm_start
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RandomizedSearchCV(estimator=BaggingRegressor(base_estimator=DecisionTreeRegressor(),
                                               n_jobs=-1),
                    n_iter=20,
-                   param_distributions={&#39;base_estimator__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f2d883ced90&gt;,
+                   param_distributions={&#39;base_estimator__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7feaa9709990&gt;,
                                         &#39;max_features&#39;: [0.5, 0.8, 1.0],
                                         &#39;max_samples&#39;: [0.5, 0.8, 1.0],
-                                        &#39;n_estimators&#39;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f2d883ced10&gt;})
+                                        &#39;n_estimators&#39;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7feaa97099d0&gt;})
 </pre></div>
 </div>
 </div>
@@ -879,203 +953,203 @@ warm_start
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>12</td>
+      <th>9</th>
+      <td>17</td>
       <td>1</td>
-      <td>1</td>
-      <td>8</td>
-      <td>0.739531</td>
-      <td>0.016818</td>
+      <td>0.8</td>
+      <td>9</td>
+      <td>0.761887</td>
+      <td>0.018249</td>
       <td>1</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>19</td>
-      <td>0.8</td>
+      <td>27</td>
       <td>1</td>
-      <td>7</td>
-      <td>0.721566</td>
-      <td>0.018694</td>
+      <td>0.8</td>
+      <td>8</td>
+      <td>0.759371</td>
+      <td>0.018491</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>11</td>
-      <td>1</td>
-      <td>0.5</td>
-      <td>9</td>
-      <td>0.713628</td>
-      <td>0.031037</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>16</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>0.706321</td>
-      <td>0.023279</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>24</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>9</td>
-      <td>0.705411</td>
-      <td>0.025500</td>
-      <td>5</td>
-    </tr>
-    <tr>
       <th>13</th>
-      <td>13</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>0.702182</td>
-      <td>0.014619</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>21</td>
+      <td>29</td>
       <td>0.5</td>
       <td>1</td>
-      <td>6</td>
-      <td>0.701762</td>
-      <td>0.019933</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>27</td>
-      <td>0.8</td>
-      <td>1</td>
-      <td>6</td>
-      <td>0.701031</td>
-      <td>0.022494</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>17</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>5</td>
-      <td>0.676463</td>
-      <td>0.018022</td>
       <td>9</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>10</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>6</td>
-      <td>0.666152</td>
-      <td>0.035745</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>24</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>4</td>
-      <td>0.628728</td>
-      <td>0.017166</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>16</td>
-      <td>0.8</td>
-      <td>0.5</td>
-      <td>5</td>
-      <td>0.628393</td>
-      <td>0.013003</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>23</td>
-      <td>0.8</td>
-      <td>1</td>
-      <td>4</td>
-      <td>0.624247</td>
-      <td>0.023582</td>
-      <td>13</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>17</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>4</td>
-      <td>0.622260</td>
-      <td>0.025051</td>
-      <td>14</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>12</td>
-      <td>1</td>
-      <td>0.5</td>
-      <td>4</td>
-      <td>0.605836</td>
-      <td>0.013689</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>12</td>
-      <td>1</td>
-      <td>0.5</td>
-      <td>4</td>
-      <td>0.570966</td>
-      <td>0.012855</td>
-      <td>16</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>17</td>
-      <td>0.8</td>
-      <td>1</td>
+      <td>0.756612</td>
+      <td>0.014987</td>
       <td>3</td>
-      <td>0.564261</td>
-      <td>0.022583</td>
-      <td>17</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>10</td>
-      <td>1</td>
-      <td>1</td>
-      <td>3</td>
-      <td>0.559553</td>
-      <td>0.024885</td>
-      <td>18</td>
     </tr>
     <tr>
       <th>17</th>
+      <td>24</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>8</td>
+      <td>0.750135</td>
+      <td>0.012858</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>23</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>8</td>
+      <td>0.737210</td>
+      <td>0.013183</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>16</td>
+      <td>0.8</td>
+      <td>0.8</td>
+      <td>7</td>
+      <td>0.734739</td>
+      <td>0.021808</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>25</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>7</td>
+      <td>0.732858</td>
+      <td>0.015471</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>25</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>7</td>
+      <td>0.727403</td>
+      <td>0.018216</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>15</td>
+      <td>0.8</td>
+      <td>1</td>
+      <td>7</td>
+      <td>0.720694</td>
+      <td>0.023936</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>24</td>
+      <td>0.8</td>
+      <td>0.8</td>
+      <td>6</td>
+      <td>0.709078</td>
+      <td>0.016679</td>
       <td>10</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>12</td>
+      <td>1</td>
       <td>0.5</td>
+      <td>8</td>
+      <td>0.708186</td>
+      <td>0.020832</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>26</td>
       <td>0.5</td>
-      <td>3</td>
-      <td>0.505744</td>
-      <td>0.042839</td>
-      <td>19</td>
+      <td>0.8</td>
+      <td>5</td>
+      <td>0.675062</td>
+      <td>0.018826</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>15</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>5</td>
+      <td>0.642780</td>
+      <td>0.014516</td>
+      <td>13</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>10</td>
+      <td>28</td>
+      <td>0.5</td>
       <td>1</td>
+      <td>4</td>
+      <td>0.632233</td>
+      <td>0.020626</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>28</td>
+      <td>1</td>
+      <td>0.8</td>
+      <td>4</td>
+      <td>0.627447</td>
+      <td>0.017121</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>17</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0.572272</td>
+      <td>0.021318</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>23</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0.571463</td>
+      <td>0.020555</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>17</td>
+      <td>0.8</td>
+      <td>0.8</td>
+      <td>3</td>
+      <td>0.566429</td>
+      <td>0.025625</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>11</td>
+      <td>1</td>
+      <td>0.8</td>
+      <td>3</td>
+      <td>0.560509</td>
+      <td>0.019152</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>12</td>
+      <td>0.5</td>
       <td>0.5</td>
       <td>3</td>
-      <td>0.497993</td>
-      <td>0.041660</td>
+      <td>0.505574</td>
+      <td>0.043689</td>
       <td>20</td>
     </tr>
   </tbody>
@@ -1093,7 +1167,7 @@ warm_start
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score og a bagging regressor:
-0.73
+0.78
 </pre></div>
 </div>
 </div>

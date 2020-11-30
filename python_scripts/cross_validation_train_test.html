@@ -1,0 +1,1809 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The framework and why do we need it &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Exercise 01" href="cross_validation_ex_01.html" />
+    <link rel="prev" title="The cross-validation framework" href="../evaluation/01_cross_validation.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Machine Learning Concepts
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/slides.html">
+   📰 Introducing machine-learning concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  The Predictive Modeling Pipeline
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_index.html">
+   Tabular data exploration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration.html">
+     Tabular data exploration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html">
+   Fitting a scikit-learn model on numerical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline.html">
+     First model with scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
+   Handling categorical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline.html">
+     Encoding of categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/04_parameter_tuning_index.html">
+   Hyper-parameter tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning.html">
+     Introduction to hyper-parameter tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_01.html">
+     Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_search.html">
+     Hyper-parameter tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_parameter_tuning_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/04_parameter_tuning_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Overfitting/Underfitting
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/slides.html">
+   📰 Slides
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/slides.html">
+   📰 Intuitions on linear models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_without_sklearn.html">
+   Linear regression without scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_01.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_in_sklearn.html">
+   Linear regression using scikit-learn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_non_linear_link.html">
+   Linear regression with non-linear link between data and target
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_03.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_03.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_regularization.html">
+   Regularization of linear regression model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_04.html">
+   Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_04.html">
+   Solution for Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="logistic_regression.html">
+   Linear model for classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_ex_05.html">
+   Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_models_sol_05.html">
+   Solution for Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_non_linear.html">
+   Beyond linear separation in classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="linear_regression_non_linear.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Decision tree models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/slides.html">
+   📰 Intuitions on tree-based models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_dataset.html">
+   Presentation of the datasets
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_classification.html">
+   Build a classification decision tree
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_sol_01.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_regression.html">
+   Decision tree for regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_hyperparameters.html">
+   Importance of decision tree hyper-parameters on generalization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_hyperparameters.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Ensemble of models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_introduction.html">
+   Introductory example to ensemble models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_bagging.html">
+   Bagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_01.html">
+   Solution of Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_random_forest.html">
+   Random forest
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_random_forest.html#midpoint-summary">
+   Midpoint summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_02.html">
+   Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_02.html">
+   Solution for Exercise 02
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_adaboost.html">
+   Adaptive Boosting (AdaBoost)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_03.html">
+   Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_03.html">
+   Solution for Exercise 03
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_gradient_boosting.html">
+   Gradient-boosting decision tree (GBDT)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_04.html">
+   Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_04.html">
+   Solution for Exercise 04
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_hist_gradient_boosting.html">
+   Speeding-up gradient-boosting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_hyperparameters.html">
+   Hyper-parameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_ex_05.html">
+   Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_sol_05.html">
+   Solution for Exercise 05
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_take_away.html">
+   Main take away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Evaluating model performance
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../evaluation/01_cross_validation.html">
+   The cross-validation framework
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     The framework and why do we need it
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_01.html">
+     Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_01.html">
+     Solution fo Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_baseline.html">
+     Comparing results with baseline and chance level
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_02.html">
+     Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html">
+     Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../evaluation/cross_validation_choices.html">
+     Choice of cross-validation
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_03.html">
+       Introductory exercise regarding stratification
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_stratification.html">
+       Stratification
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_04.html">
+       Introductory exercise for sample grouping
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_grouping.html">
+       Sample grouping
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_ex_05.html">
+       Introductory exercise for non i.i.d. data
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="cross_validation_time.html">
+       Non i.i.d. data
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_nested.html">
+     Nested cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_nested.html#take-away">
+     Take away
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/02_metrics.html">
+   The evaluation metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics.html">
+     Evaluation of your predictive model: which metric to choose?
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../evaluation/02_metrics_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Feature selection
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_introduction.html">
+   Compelling advantage of using feature selection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_ex_01.html">
+   Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_sol_01.html">
+   Solution for Exercise 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_limitation_model.html">
+   Limitation of selecting feature using a model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_limitation_model.html#main-take-away">
+   Main take away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../interpretation/interpretation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/python_scripts/cross_validation_train_test.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.py</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/INRIA/scikit-learn-mooc"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/cross_validation_train_test.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/cross_validation_train_test.py"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empirical-error-vs-generalization-error">
+   Empirical error vs generalization error
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stability-of-the-cross-validation-estimates">
+   Stability of the cross-validation estimates
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-framework-and-why-do-we-need-it">
+<h1>The framework and why do we need it<a class="headerlink" href="#the-framework-and-why-do-we-need-it" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we present the general cross-validation framework. Before
+to go into details, we will linger on the reasons for always having training
+and testing sets. Let’s first look at the limitation of using a dataset
+without keeping any samples out.</p>
+<p>To illustrate the different concepts, we will use the california housing
+dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+
+<span class="n">housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">housing</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We recall that in this dataset, the aim is to predict the median value of
+houses in an area in California. The feature collected are based on general
+real-estate and geographical information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">housing</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.. _california_housing_dataset:
+
+California Housing dataset
+--------------------------
+
+**Data Set Characteristics:**
+
+    :Number of Instances: 20640
+
+    :Number of Attributes: 8 numeric, predictive attributes and the target
+
+    :Attribute Information:
+        - MedInc        median income in block
+        - HouseAge      median house age in block
+        - AveRooms      average number of rooms
+        - AveBedrms     average number of bedrooms
+        - Population    block population
+        - AveOccup      average house occupancy
+        - Latitude      house block latitude
+        - Longitude     house block longitude
+
+    :Missing Attribute Values: None
+
+This dataset was obtained from the StatLib repository.
+http://lib.stat.cmu.edu/datasets/
+
+The target variable is the median house value for California districts.
+
+This dataset was derived from the 1990 U.S. census, using one row per census
+block group. A block group is the smallest geographical unit for which the U.S.
+Census Bureau publishes sample data (a block group typically has a population
+of 600 to 3,000 people).
+
+It can be downloaded/loaded using the
+:func:`sklearn.datasets.fetch_california_housing` function.
+
+.. topic:: References
+
+    - Pace, R. Kelley and Ronald Barry, Sparse Spatial Autoregressions,
+      Statistics and Probability Letters, 33 (1997) 291-297
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MedInc</th>
+      <th>HouseAge</th>
+      <th>AveRooms</th>
+      <th>AveBedrms</th>
+      <th>Population</th>
+      <th>AveOccup</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8.3252</td>
+      <td>41.0</td>
+      <td>6.984127</td>
+      <td>1.023810</td>
+      <td>322.0</td>
+      <td>2.555556</td>
+      <td>37.88</td>
+      <td>-122.23</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8.3014</td>
+      <td>21.0</td>
+      <td>6.238137</td>
+      <td>0.971880</td>
+      <td>2401.0</td>
+      <td>2.109842</td>
+      <td>37.86</td>
+      <td>-122.22</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.2574</td>
+      <td>52.0</td>
+      <td>8.288136</td>
+      <td>1.073446</td>
+      <td>496.0</td>
+      <td>2.802260</td>
+      <td>37.85</td>
+      <td>-122.24</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.6431</td>
+      <td>52.0</td>
+      <td>5.817352</td>
+      <td>1.073059</td>
+      <td>558.0</td>
+      <td>2.547945</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.8462</td>
+      <td>52.0</td>
+      <td>6.281853</td>
+      <td>1.081081</td>
+      <td>565.0</td>
+      <td>2.181467</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To simplify future visualization, we transform the target in k$.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">*=</span> <span class="mi">100</span>
+<span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    452.6
+1    358.5
+2    352.1
+3    341.3
+4    342.2
+Name: MedHouseVal, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="empirical-error-vs-generalization-error">
+<h2>Empirical error vs generalization error<a class="headerlink" href="#empirical-error-vs-generalization-error" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned previously, we start by fitting a decision tree regressor on the
+entire dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+
+<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+<span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DecisionTreeRegressor()
+</pre></div>
+</div>
+</div>
+</div>
+<p>After training the regressor, we would like to know the regressor’s potential
+performance once deployed in production. For this purpose, we use the mean
+absolute error, which gives us an error in the native unit, i.e. k$.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;In average, our regressor make an error of </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In average, our regressor make an error of 0.00 k$
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get perfect prediction with no error. It is too optimistic and almost
+always revealing a methodological problem when doing machine learning.</p>
+<p>Indeed, we trained and predicted on the same dataset. Since our decision tree
+was fully grown, every sample in the dataset is stored in a leaf node.
+Therefore, our decision tree fully memorized the dataset given during <code class="docutils literal notranslate"><span class="pre">fit</span></code>
+and make no single error when predicting on the same data.</p>
+<p>This error computed above is called the <strong>empirical error</strong> or <strong>training
+error</strong>.</p>
+<p>We trained a predictive model to minimize the empirical error but our aim is
+to minimize the error on data that has not been seen during training.</p>
+<p>This error is also called the <strong>generalization error</strong> or the “true”
+<strong>testing error</strong>. Thus, the most basic evaluation involves:</p>
+<ul class="simple">
+<li><p>splitting our dataset into two subsets: a training set and a testing set;</p></li>
+<li><p>fitting the model on the training set;</p></li>
+<li><p>estimating the empirical error on the training set;</p></li>
+<li><p>estimating the generalization error on the testing set.</p></li>
+</ul>
+<p>So let’s split our dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we train our model only on the training set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DecisionTreeRegressor()
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can estimate the different type of errors. Let’s start by
+computing the empirical error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The empirical error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The empirical error of our model is 0.00 k$
+</pre></div>
+</div>
+</div>
+</div>
+<p>We observe the same phenomena than in the previous experiment. Our model
+memorized the training set. However, we can now compute the generalization
+error on the testing set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The generalization error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.37 k$
+</pre></div>
+</div>
+</div>
+</div>
+<p>The generalization error is not minimum and equal to zero. Indeed, this
+error is closer to the performance of our model if it was deployed in
+production.</p>
+</div>
+<div class="section" id="stability-of-the-cross-validation-estimates">
+<h2>Stability of the cross-validation estimates<a class="headerlink" href="#stability-of-the-cross-validation-estimates" title="Permalink to this headline">¶</a></h2>
+<p>When doing a single train-test split we don’t give any indication
+regarding the robustness of the evaluation of our predictive model: in
+particular, if the test set is small, this estimate of the generalization
+error can be unstable and do not reflect the “true error rate” we would have
+observed with the same model on an unlimited amount of test data.</p>
+<p>For instance, we could have been lucky when we did our random split of our
+limited dataset and isolated some of the easiest cases to predict in the
+testing set just by chance: the estimation of the generalization error would
+be overly optimistic, in this case.</p>
+<p><strong>Cross-validation</strong> allows estimating the robustness of a predictive model
+by repeating the splitting procedure. It will give several empirical and
+generalization errors and thus some <strong>estimate of the variability of the
+model performance</strong>.</p>
+<p>There are different cross-validation strategies, for now we are going to
+focus on one called “shuffle-split”. At each iteration of this strategy we:</p>
+<ul class="simple">
+<li><p>shuffle the order of the samples of a copy of the full data at random;</p></li>
+<li><p>split the shuffled dataset into a train and a test set;</p></li>
+<li><p>train a new model on the train set;</p></li>
+<li><p>evaluate the generalization error on the test set.</p></li>
+</ul>
+<p>We repeat this procedure <code class="docutils literal notranslate"><span class="pre">n_splits</span></code> times. Using <code class="docutils literal notranslate"><span class="pre">n_splits=30</span></code> means that we
+will train 30 models in total and all of them will be discarded: we just
+record their performance on each variant of the test set.</p>
+<p>To evaluate the performance of our regressor, we can use <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>
+with a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
+
+<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The results <code class="docutils literal notranslate"><span class="pre">cv_results</span></code> are stored into a Python dictionary. We will convert
+it into a pandas dataframe to ease visualization and manipulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="n">cv_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fit_time</th>
+      <th>score_time</th>
+      <th>test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.208762</td>
+      <td>0.003942</td>
+      <td>-47.213653</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.207945</td>
+      <td>0.003793</td>
+      <td>-46.646794</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.205948</td>
+      <td>0.003709</td>
+      <td>-46.723592</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.206737</td>
+      <td>0.003927</td>
+      <td>-46.078797</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.207336</td>
+      <td>0.003824</td>
+      <td>-47.019496</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>By convention, scikit-learn model evaluation tools always use a convention
+where “higher is better”, this explains we used
+<code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_absolute_error&quot;</span></code> (meaning “negative mean absolute error”).</p>
+<p>Let us revert the negation to get the actual error:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check the results reported by the cross-validation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fit_time</th>
+      <th>score_time</th>
+      <th>test_score</th>
+      <th>test_error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.208762</td>
+      <td>0.003942</td>
+      <td>-47.213653</td>
+      <td>47.213653</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.207945</td>
+      <td>0.003793</td>
+      <td>-46.646794</td>
+      <td>46.646794</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.205948</td>
+      <td>0.003709</td>
+      <td>-46.723592</td>
+      <td>46.723592</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.206737</td>
+      <td>0.003927</td>
+      <td>-46.078797</td>
+      <td>46.078797</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.207336</td>
+      <td>0.003824</td>
+      <td>-47.019496</td>
+      <td>47.019496</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.206227</td>
+      <td>0.003869</td>
+      <td>-46.061188</td>
+      <td>46.061188</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.210773</td>
+      <td>0.003827</td>
+      <td>-45.473054</td>
+      <td>45.473054</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.206836</td>
+      <td>0.003778</td>
+      <td>-46.298828</td>
+      <td>46.298828</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.210313</td>
+      <td>0.003881</td>
+      <td>-45.452562</td>
+      <td>45.452562</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.206414</td>
+      <td>0.003872</td>
+      <td>-47.604840</td>
+      <td>47.604840</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We get timing information to fit and predict at each round of
+cross-validation. Also, we get the test score, which corresponds to the
+generalization error on each of the split.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get 30 entries in our resulting dataframe because we performed 30 splits.
+Therefore, we can show the generalization error distribution and thus, have
+an estimate of its variability.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_error&quot;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_train_test_31_0.png" src="../_images/cross_validation_train_test_31_0.png" />
+</div>
+</div>
+<p>We observe that the generalization error is clustered around 45.5 k$ and
+ranges from 43 k$ to 49 k$.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The mean cross-validated generalization error is: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 46.11 k$
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The standard deviation of the generalization error is: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 0.91 k$
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the standard deviation is much smaller than the mean: we could
+summarize that our cross-validation estimate of the generalization error is
+45.7 +/- 1.1 k$.</p>
+<p>If we were to train a single model on the full dataset (without
+cross-validation) and then had later access to an unlimited amount of test
+data, we would expect its true generalization error to fall close to that
+region.</p>
+<p>While this information is interesting in it-self, this should be contrasted
+to the scale of the natural variability of the target <code class="docutils literal notranslate"><span class="pre">y</span></code> in our dataset.</p>
+<p>Let us plot the distribution of the target variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Median House Value (k$)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_train_test_36_0.png" src="../_images/cross_validation_train_test_36_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The standard deviation of the target is: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the target is: 115.40 k$
+</pre></div>
+</div>
+</div>
+</div>
+<p>The target variable ranges from close to 0 k$ up to 500 k$ and, with a
+standard deviation around 115 k$.</p>
+<p>We notice that the mean estimate of the generalization error obtained by
+cross-validation is a bit than the natural scale of variation of the target
+variable. Furthermore the standard deviation of the cross validation estimate
+of the generalization error is even much smaller.</p>
+<p>This is a good start, but not necessarily enough to decide whether the
+generalization performance is good enough to make our prediction useful in
+practice.</p>
+<p>We recall that our model makes, on average, an error around 45 k$. With this
+information and looking at the target distribution, such an error might be
+acceptable when predicting houses with a 500 k$. However, it would be an
+issue with a house with a value of 50 k$. Thus, this indicates that our
+metric (Mean Absolute Error) is not ideal.</p>
+<p>We might instead choose a metric relative to the target value to predict: the
+mean absolute percentage error would have been a much better choice.</p>
+<p>But in all cases, an error of 45 k$ might be too large to automatically use
+our model to tag house value without expert supervision.</p>
+<p>To better understand the performance of our model and maybe find insights on
+how to improve it we will compare the generalization error with the empirical
+error. Thus, we need to compute the error on the training set, which is
+possible using the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will select the train and test score and take the error instead.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">scores</span><span class="p">[[</span><span class="s2">&quot;train error&quot;</span><span class="p">,</span> <span class="s2">&quot;test error&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span>
+    <span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">,</span> <span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_train_test_41_0.png" src="../_images/cross_validation_train_test_41_0.png" />
+</div>
+</div>
+<p>By plotting the distribution of the empirical and generalization errors, we
+get information about whether our model is over-fitting, under-fitting (or
+both at the same time).</p>
+<p>Here, we observe a <strong>small empirical error</strong> (actually zero), meaning that
+the model is <strong>not under-fitting</strong>: it is flexible enough to capture any
+variations present in the training set.</p>
+<p>However the <strong>significantly larger generalization error</strong> tells us that the
+model is <strong>over-fitting</strong>: the model has memorized many variations of the
+training set that could be considered “noisy” because they do not generalize
+to help us make good prediction on the test set.</p>
+<p>Some model hyper-parameters are usually the key to go from a model that
+underfits to a model that overfits, hopefully going through a region were we
+can get a good balance between the two. We can acquire knowledge by plotting
+a curve called the validation curve. This curve applies the above experiment
+and varies the value of a hyper-parameter.</p>
+<p>For the decision tree, the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> the main parameter to control the
+trade-off between under-fitting and over-fitting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">validation_curve</span>
+
+<span class="n">max_depth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
+    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 525 ms, sys: 33.2 ms, total: 559 ms
+Wall time: 13.4 s
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we collected the results, we will show the validation curve by
+plotting the empirical and generalization errors (as well as their
+deviations).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">errors</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;Empirical error&quot;</span><span class="p">,</span> <span class="s2">&quot;Generalization error&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">max_depth</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+        <span class="n">max_depth</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;std. dev. </span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">max_depth</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Maximum depth of decision tree&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Validation curve for decision tree&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_train_test_45_0.png" src="../_images/cross_validation_train_test_45_0.png" />
+</div>
+</div>
+<p>The validation curve can be divided into three areas:</p>
+<ul class="simple">
+<li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&lt;</span> <span class="pre">10</span></code>, the decision tree underfits. The empirical error and
+therefore also the generalization error are both high. The model is too
+constrained and cannot capture much of the variability of the target
+variable.</p></li>
+<li><p>The region around <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code> corresponds to the parameter for which
+the decision tree generalizes the best. It is flexible enough to capture a
+fraction of the variability of the target that generalizes, while not
+memorizing all of the noise in the target.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&gt;</span> <span class="pre">10</span></code>, the decision tree overfits. The empirical error
+becomes very small, while the generalization error increases. In this
+region, the models captures too much of the noisy part of the variations of
+the target and this harms its ability to generalize well to test data.</p></li>
+</ul>
+<p>Note that for <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code>, the model overfits a bit as there is a gap
+between the empirical error and the generalization error. It can also
+potentially underfit also a bit at the same time, because the empirical error
+is still far from zero (more than 30 k$), meaning that the model might
+still be too constrained to model interesting parts of the data. However the
+generalization error is minimal, and this is what really matters. This is the
+best compromise we could reach by just tuning this parameter.</p>
+<p>We were lucky that the variance of the errors was small compared to their
+respective values, and therefore the conclusions above are quite clear. This
+is not necessarily always the case.</p>
+<p>We will now focus on one factor that can affect this variance, namely, the
+size of the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20640
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s do an experiment and reduce the number of samples and repeat the
+previous experiment. We will create a function that define a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
+and given a regressor and the data <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> will run a cross-validation.
+The function will finally return the generalization error as a NumPy array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_cv_analysis</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+        <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+        <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have a function to run each experiment, we will create an array
+defining the number of samples for which we want to run the experiments.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># to make our results reproducible</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># create a dictionary where we will store the result of each run</span>
+<span class="n">scores_sample_sizes</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;# samples&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;test error&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="n">sample_sizes</span><span class="p">:</span>
+    <span class="c1"># select a subset of the data with a specific number of samples</span>
+    <span class="n">sample_idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">X_sampled</span><span class="p">,</span> <span class="n">y_sampled</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sample_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">sample_idx</span><span class="p">]</span>
+    <span class="c1"># run the experiment</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">make_cv_analysis</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X_sampled</span><span class="p">,</span> <span class="n">y_sampled</span><span class="p">)</span>
+    <span class="c1"># store the results</span>
+    <span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;# samples&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+    <span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;test error&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we collected all our results and we will create a pandas dataframe to
+easily make some plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores_sample_sizes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;test error&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;# samples&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">scores_sample_sizes</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="s2">&quot;Generalization errors distribution </span><span class="se">\n</span><span class="s2">by varying the sample size&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_train_test_55_0.png" src="../_images/cross_validation_train_test_55_0.png" />
+</div>
+</div>
+<p>For the different sample sizes, we plotted the distribution of the
+generalization error. We observe that smaller is the sample size; larger is
+the variance of the generalization errors. Thus, having a small number of
+samples might put us in a situation where it is impossible to get a reliable
+evaluation.</p>
+<p>Here, we plotted the different curve to highlight the issue of small sample
+size. However, this experiment is also used to draw the so-called <strong>learning
+curve</strong>. This curve gives some additional indication regarding the benefit of
+adding new training samples to improve a model’s performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">learning_curve</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">learning_curve</span><span class="p">(</span>
+    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_sizes</span><span class="o">=</span><span class="n">sample_sizes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">train_size</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we can plot the curve curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">errors</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;Empirical error&quot;</span><span class="p">,</span> <span class="s2">&quot;Generalization error&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">train_size</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+        <span class="n">train_size</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;std. dev. </span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">train_size</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples in the training set&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Learning curve for decision tree&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_train_test_59_0.png" src="../_images/cross_validation_train_test_59_0.png" />
+</div>
+</div>
+<p>We see that the more samples we add to the training set on this learning
+curve, the lower the error becomes. With this curve, we are searching for the
+plateau for which there is no benefit to adding samples anymore or assessing
+the potential gain of adding more samples into the training set.</p>
+<p>For this dataset we notice that our decision tree model would really benefit
+from additional datapoints to reduce the amount of over-fitting and hopefully
+reduce the generalization error even further.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>In this notebook, we saw:</p>
+<ul class="simple">
+<li><p>the necessity of splitting the data into a train and test set;</p></li>
+<li><p>the meaning of the empirical and generalization errors;</p></li>
+<li><p>the overall cross-validation framework with the possibility to study
+performance variations;</p></li>
+<li><p>the effect of hyperparameter tuning using the validation curve;</p></li>
+<li><p>the effect of sample size using the learning curve.</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./python_scripts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../evaluation/01_cross_validation.html" title="previous page">The cross-validation framework</a>
+    <a class='right-next' id="next-link" href="cross_validation_ex_01.html" title="next page">Exercise 01</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

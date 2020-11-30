@@ -1,4 +1,10 @@
-
+# %% [markdown]
+# # Introductory exercise for non i.i.d. data
+#
+# This exercise aims at showing some aspects to consider when dealing non i.i.d
+# data, typically time series.
+#
+# For this purpose, we will create a synthetic dataset simulating stocks.
 # %%
 import numpy as np
 import pandas as pd

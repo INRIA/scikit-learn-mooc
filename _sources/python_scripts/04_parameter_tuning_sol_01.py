@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # Solution for Exercise 01
+# # 📃 Solution for Exercise 01
 #
 # The goal is to write an exhaustive search to find the best parameters
 # combination maximizing the model performance.

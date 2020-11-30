@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Solution for Exercise 02
+# # 📃 Solution for Exercise 02
 #
 # The goal of this exercise is to build an intuition on what will be the
 # parameters' values of a linear model when the link between the data and the

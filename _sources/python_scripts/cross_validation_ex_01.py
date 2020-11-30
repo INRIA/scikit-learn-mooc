@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 01
+# # 📝 Exercise 01
 #
 # The aim of this exercise is to make the following experiments:
 #

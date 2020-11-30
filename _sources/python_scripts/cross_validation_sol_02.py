@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Solution for Exercise 02
+# # 📃 Solution for Exercise 02
 #
 # This notebook aims at building baselines classifier with which we can compare
 # our predictive model. Besides, we will check the differences with the

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 02
+# # 📝 Exercise 02
 #
 # The aim of this exercise it to explore some attributes available in
 # scikit-learn random forest.

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 01
+# # 📝 Exercise 01
 #
 # The aim of this exercise is to highlight caveats to have in mind when using
 # feature selection. You have to be extremely careful regarding the set of

@@ -1,5 +1,5 @@
 # %% [markdown]
-# ### Linear regression with non-linear link between data and target
+# # Linear regression with non-linear link between data and target
 #
 # In the previous exercise, you were asked to train a linear regression model
 # on a dataset where the matrix `X` and the target `y` do not have a linear

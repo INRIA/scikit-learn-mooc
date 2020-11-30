@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 03
+# # 📝 Exercise 03
 #
 # In all previous notebooks, we only used a single feature in `X`. But we have
 # already shown that we could add new feature to make the model more expressive

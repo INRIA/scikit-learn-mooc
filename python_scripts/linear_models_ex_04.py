@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 04
+# # 📝 Exercise 04
 #
 # In the previous notebook, we illustrated how a regularization parameter of
 # ridge model need to be optimized by hand. However, this way of optimizing

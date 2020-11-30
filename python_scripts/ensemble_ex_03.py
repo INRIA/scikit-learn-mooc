@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 03
+# # 📝 Exercise 03
 #
 # This exercise aims at studying if AdaBoost is a model that is able to
 # over-fit. We will make a grid-search and check the scores by varying the

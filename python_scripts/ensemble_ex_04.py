@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 04
+# # 📝 Exercise 04
 #
 # The aim of this exercise is to study:
 #

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Solution of Exercise 01
+# # 📃 Solution of Exercise 01
 #
 # The aim in this notebook is to investigate if we can fine-tune a bagging
 # regressor and evaluate the gain obtained.

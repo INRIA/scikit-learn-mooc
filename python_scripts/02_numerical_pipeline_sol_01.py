@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # Solution for Exercise 01
+# # 📃 Solution for Exercise 01
 #
 # The goal of this exercise is to compare the performance of our classifier
 # (81% accuracy) to some baseline classifiers that would ignore the input data

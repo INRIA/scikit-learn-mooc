@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Exercise 02
+# # 📝 Exercise 02
 #
 # The aim of this exercise is to find out whether or not a model is able to
 # extrapolate.

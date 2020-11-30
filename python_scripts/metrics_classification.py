@@ -1,27 +1,37 @@
 # %% [markdown]
-# ## Classification
-# We can recall that in a classification setting, the target `y` is categorical
-# rather than continuous. We will use the blood transfusion dataset that will
-# be fetched from OpenML.
+# # Classification
+#
+# This notebook aims at giving an overview of the classification metrics that
+# can be used to evaluate the predictive model performance.  We can recall that
+# in a classification setting, the target `y` is categorical rather than
+# continuous.
+#
+# We will load the blood transfusion dataset.
 
 # %%
 import pandas as pd
 
 data = pd.read_csv("../datasets/blood_transfusion.csv")
-X, y = data[["V1", "V2", "V3", "V4"]], data["Class"]
-# Make columns and classes more human-readable
-X.columns = ["Recency", "Frequency", "Monetary", "Time"]
-y = y.apply(
-    lambda x: "donated" if x == 2 else "not donated"
-).astype("category")
-y.cat.categories
+X, y = data.drop(columns="Class"), data["Class"]
 
 # %% [markdown]
-# We can see that the target `y` contains 2 categories corresponding to whether
+# Let's start by checking the classes present in the target vector `y`.
+
+# %%
+import seaborn as sns
+sns.set_context("talk")
+
+ax = y.value_counts().plot(kind="barh")
+ax.set_xlabel("Number of samples")
+_ = ax.set_title("Number of samples per classes present\n in the target")
+
+# %% [markdown]
+# We can see that the target `y` contains 2 classes corresponding to whether
 # or not a subject gave blood or not. We will use a logistic regression
 # classifier to predict this outcome.
 #
-# First, we split the data into a training and a testing set.
+# To focus on the metrics presentation, we will only use a single split instead
+# of cross-validation.
 
 # %%
 from sklearn.model_selection import train_test_split

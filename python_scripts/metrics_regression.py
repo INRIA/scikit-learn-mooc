@@ -1,5 +1,5 @@
 # %% [markdown]
-# ## Regression
+# # Regression
 # Unlike in classification problems, the target `y` is a continuous
 # variable in regression problems. Therefore, classification metrics cannot
 # be used to evaluate the performance of regression models. Instead, there

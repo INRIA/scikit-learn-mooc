@@ -33,19 +33,26 @@ for symbol in symbols:
 quotes = pd.DataFrame(quotes)
 
 # %% [markdown]
-# We can start by plotting different financial quotations.
+# We can start by plotting the different financial quotations.
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-_, ax = plt.subplots(figsize=(10, 6))
-_ = quotes.plot(ax=ax)
+_, ax = plt.subplots(figsize=(10, 7))
+quotes.plot(ax=ax)
+_ = ax.set_ylabel("Quote value")
 
 # %% [markdown]
-# We can formulate the following regression problem. We want to be able to
-# predict the quotation of Chevron using all other energy companies' quotes.
+# We will repeat the experiment asked during the exercise. Instead of using
+# random data, we will use real quotations this time. While it was obvious that
+# a predictive model could not work in practice on random data, this indeed the
+# same on these real data. So here, we want to predict the quotation of Chevron
+# using all other energy companies' quotes.
+#
+# To make explanatory plots, we will use a single split in addition to the
+# cross-validation that you used in the introductory exercise.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -59,17 +66,31 @@ X_train, X_test, y_train, y_test = train_test_split(
 # We will use a decision tree regressor that we expect to overfit and thus not
 # generalize to unseen data. We will use a `ShuffleSplit` cross-validation to
 # check the performance of our model.
+#
+# Let's first define our model
 
 # %%
-from sklearn.model_selection import cross_validate, ShuffleSplit
 from sklearn.tree import DecisionTreeRegressor
 
 regressor = DecisionTreeRegressor()
 
+# %% [markdown]
+# And now the cross-validation strategy.
+
+# %%
+from sklearn.model_selection import ShuffleSplit
+
 cv = ShuffleSplit(random_state=0)
-results = cross_validate(regressor, X_train, y_train, cv=cv, n_jobs=-1)
-test_score = results["test_score"]
-print(f"The mean R2 is: {test_score.mean():.2f}")
+
+# %% [markdown]
+# And finally, we perform the evaluation.
+
+# %%
+from sklearn.model_selection import cross_val_score
+
+test_score = cross_val_score(regressor, X_train, y_train, cv=cv, n_jobs=-1)
+print(f"The mean R2 is: "
+      f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
 
 # %% [markdown]
 # Surprisingly, we get outstanding performance. We will investigate and find
@@ -157,12 +178,10 @@ from sklearn.model_selection import LeaveOneGroupOut
 
 groups = quotes.index.to_period("Q")
 cv = LeaveOneGroupOut()
-results = cross_validate(
-    regressor, X, y, cv=cv, groups=groups,
-    n_jobs=-1
-)
-test_score = results["test_score"]
-print(f"The mean R2 is: {test_score.mean():.2f}")
+test_score = cross_val_score(
+    regressor, X, y, cv=cv, groups=groups, n_jobs=-1)
+print(f"The mean R2 is: "
+      f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
 
 # %% [markdown]
 # In this case, we see that we cannot make good predictions, which is less
@@ -178,9 +197,15 @@ print(f"The mean R2 is: {test_score.mean():.2f}")
 from sklearn.model_selection import TimeSeriesSplit
 
 cv = TimeSeriesSplit(n_splits=groups.nunique())
-results = cross_validate(
+test_score = cross_val_score(
     regressor, X, y, cv=cv, groups=groups,
     n_jobs=-1
 )
-test_score = results["test_score"]
-print(f"The mean R2 is: {test_score.mean():.2f}")
+print(f"The mean R2 is: "
+      f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
+
+# %% [markdown]
+# In conclusion, it is really important to not use an out of the shelves
+# cross-validation strategy which do not respect some assumptions such as
+# having i.i.d data. It might lead to absurd results which could make think
+# that a predictive model might work.

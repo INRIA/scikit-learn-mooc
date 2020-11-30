@@ -166,4 +166,9 @@ all_scores = pd.DataFrame(
 # %%
 sns.kdeplot(data=all_scores)
 plt.xlim([0.8, 1.0])
-plt.xlabel("Accuracy score")
+_ = plt.xlabel("Accuracy score")
+
+# %% [markdown]
+# As a conclusion, it is really important to take any sample grouping pattern
+# into account when evaluating a model. Otherwise, the results obtained will
+# be over-optimistic in regards with reality.

@@ -19,6 +19,7 @@ import numpy as np
 data = pd.read_csv("../datasets/house_prices.csv")
 X, y = data.drop(columns="SalePrice"), data["SalePrice"]
 X = X.select_dtypes(np.number)
+y /= 1000
 
 # %% [markdown]
 # Let's start by splitting our dataset intro a train and test set.
@@ -121,7 +122,7 @@ print(f"Median absolute error: "
 # the predicted values versus the true values.
 
 # %%
-predicted_actual = {"True values": y_test, "Predicted values": y_pred}
+predicted_actual = {"True values (k$)": y_test, "Predicted values (k$)": y_pred}
 predicted_actual = pd.DataFrame(predicted_actual)
 
 # %%
@@ -129,12 +130,9 @@ import seaborn as sns
 sns.set_context("talk")
 
 ax = sns.scatterplot(
-    data=predicted_actual, x="True values", y="Predicted values")
-ax.plot([0, predicted_actual["True values"].max()],
-        [0, predicted_actual["Predicted values"].max()],
-        color="tab:orange", linewidth=3, label="Perfect fit")
-ax.set_xlim([0, predicted_actual.max().max()])
-ax.set_ylim([0, predicted_actual.max().max()])
+    data=predicted_actual, x="True values (k$)", y="Predicted values (k$)")
+ax.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
+ax.set_aspect('equal', 'box')
 _ = ax.legend()
 
 # %% [markdown]
@@ -164,11 +162,8 @@ predicted_actual = pd.DataFrame(predicted_actual)
 
 ax = sns.scatterplot(
     data=predicted_actual, x="True values", y="Predicted values")
-ax.plot([0, predicted_actual["True values"].max()],
-        [0, predicted_actual["Predicted values"].max()],
-        color="tab:orange", linewidth=3, label="Perfect fit")
-ax.set_xlim([0, predicted_actual.max().max()])
-ax.set_ylim([0, predicted_actual.max().max()])
+ax.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
+ax.set_aspect('equal', 'box')
 _ = ax.legend()
 
 # %% [markdown]

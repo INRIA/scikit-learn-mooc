@@ -15,15 +15,22 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 02
 #
-# The goal of this exercise is to evaluate the impact of feature preprocessing on a pipeline that uses a  decision-tree-based classifier instead of logistic regression.
+# The goal of this exercise is to evaluate the impact of feature preprocessing
+# on a pipeline that uses a decision-tree-based classifier instead of logistic
+# regression.
 #
-# - The first question is to empirically evaluate whether scaling numerical feature is helpful or not;
+# - The first question is to empirically evaluate whether scaling numerical
+#   feature is helpful or not;
 #
-# - The second question is to evaluate whether it is empirically better (both from a computational and a statistical perspective) to use integer coded or one-hot encoded categories.
+# - The second question is to evaluate whether it is empirically better (both
+#   from a computational and a statistical perspective) to use integer coded or
+#   one-hot encoded categories.
 #
 #
-# Hint: `HistGradientBoostingClassifier` does not yet support sparse input data. You might want to use
-# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a dense representation as a workaround.
+# Hint: `HistGradientBoostingClassifier` does not yet support sparse input
+# data. You might want to use
+# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a
+# dense representation as a workaround.
 
 # %%
 import pandas as pd
@@ -55,7 +62,8 @@ categories = [
 # %% [markdown]
 # ## Reference pipeline (no numerical scaling and integer-coded categories)
 #
-# First let's time the pipeline we used in the main notebook to serve as a reference:
+# First let's time the pipeline we used in the main notebook to serve as a
+# reference:
 
 # %%
 # %%time
@@ -89,9 +97,12 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # %% [markdown]
 # ### Analysis
 #
-# We can observe that both the accuracy and the training time are approximately the same as the reference pipeline (any time difference you might observe is not significant).
+# We can observe that both the accuracy and the training time are approximately
+# the same as the reference pipeline (any time difference you might observe is
+# not significant).
 #
-# Scaling numerical features is indeed useless for most decision tree models in general and for `HistGradientBoostingClassifier` in particular.
+# Scaling numerical features is indeed useless for most decision tree models in
+# general and for `HistGradientBoostingClassifier` in particular.
 
 # %% [markdown]
 # ## One-hot encoding of categorical variables
@@ -102,16 +113,34 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # case as the cross-validation of the reference pipeline with
 # `OrdinalEncoder` is good.
 #
-# Let's see if we can get an even better accuracy with `OneHotEncoding`:
+# Let's see if we can get an even better accuracy with `OneHotEncoder`:
+
+# %% [markdown]
+# Reminder: in order to avoid creating fully correlated features it is
+# preferable to use a `OrdinalEncoder` for binary features (in this case `sex`)
+# rather than a `OneHotEncoder`.
+
+# %%
+binary_encoding_columns = ['sex']
+one_hot_encoding_columns = [
+    c for c in categorical_columns if c not in binary_encoding_columns]
+
+# %% [markdown]
+# Hint: `HistGradientBoostingClassifier` does not yet support sparse input
+# data. You might want to use
+# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a
+# dense representation as a workaround.
 
 # %%
 # %%time
 from sklearn.preprocessing import OneHotEncoder
 
 preprocessor = ColumnTransformer([
-    ('categorical',
+    ('binary-encoder', OrdinalEncoder(), binary_encoding_columns),
+    ('one-hot-encoder',
      OneHotEncoder(handle_unknown="ignore", sparse=False),
-     categorical_columns),], remainder="passthrough")
+     one_hot_encoding_columns)],
+    remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 scores = cross_val_score(model, data, target)

@@ -23,7 +23,7 @@
 # variables. This preprocessor is assembled in a pipeline with
 # `LogisticRegression`. The performance of the pipeline can be evaluated as
 # usual by cross-validation and then compared to the score obtained when using
-# `OneHotEncoding` or to some other baseline score.
+# `OneHotEncoder` or to some other baseline score.
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
 # prediction time, we need to pre-compute the list of all possible categories

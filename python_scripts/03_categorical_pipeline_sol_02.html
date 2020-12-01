@@ -589,7 +589,7 @@
     <ul class="collapse-ul">
      <li class="toctree-l3">
       <a class="reference internal" href="cross_validation_ex_03.html">
-       Introductory exercise regarding stratification
+       📝 Introductory exercise regarding stratification
       </a>
      </li>
      <li class="toctree-l3">
@@ -599,7 +599,7 @@
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="cross_validation_ex_04.html">
-       Introductory exercise for sample grouping
+       📝 Introductory exercise for sample grouping
       </a>
      </li>
      <li class="toctree-l3">
@@ -609,7 +609,7 @@
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="cross_validation_ex_05.html">
-       Introductory exercise for non i.i.d. data
+       📝 Introductory exercise for non i.i.d. data
       </a>
      </li>
      <li class="toctree-l3">
@@ -641,8 +641,33 @@
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="metrics.html">
-     Evaluation of your predictive model: which metric to choose?
+    <a class="reference internal" href="metrics_classification.html">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_regression.html">
+     Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_sol_02.html">
+     📃 Solution for Exercise 02
     </a>
    </li>
    <li class="toctree-l2">
@@ -855,13 +880,20 @@
                 
   <div class="section" id="solution-for-exercise-02">
 <h1>📃 Solution for Exercise 02<a class="headerlink" href="#solution-for-exercise-02" title="Permalink to this headline">¶</a></h1>
-<p>The goal of this exercise is to evaluate the impact of feature preprocessing on a pipeline that uses a  decision-tree-based classifier instead of logistic regression.</p>
+<p>The goal of this exercise is to evaluate the impact of feature preprocessing
+on a pipeline that uses a decision-tree-based classifier instead of logistic
+regression.</p>
 <ul class="simple">
-<li><p>The first question is to empirically evaluate whether scaling numerical feature is helpful or not;</p></li>
-<li><p>The second question is to evaluate whether it is empirically better (both from a computational and a statistical perspective) to use integer coded or one-hot encoded categories.</p></li>
+<li><p>The first question is to empirically evaluate whether scaling numerical
+feature is helpful or not;</p></li>
+<li><p>The second question is to evaluate whether it is empirically better (both
+from a computational and a statistical perspective) to use integer coded or
+one-hot encoded categories.</p></li>
 </ul>
-<p>Hint: <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> does not yet support sparse input data. You might want to use
-<code class="docutils literal notranslate"><span class="pre">OneHotEncoder(handle_unknown=&quot;ignore&quot;,</span> <span class="pre">sparse=False)</span></code> to force the use a dense representation as a workaround.</p>
+<p>Hint: <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> does not yet support sparse input
+data. You might want to use
+<code class="docutils literal notranslate"><span class="pre">OneHotEncoder(handle_unknown=&quot;ignore&quot;,</span> <span class="pre">sparse=False)</span></code> to force the use a
+dense representation as a workaround.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -903,7 +935,8 @@
 </div>
 <div class="section" id="reference-pipeline-no-numerical-scaling-and-integer-coded-categories">
 <h2>Reference pipeline (no numerical scaling and integer-coded categories)<a class="headerlink" href="#reference-pipeline-no-numerical-scaling-and-integer-coded-categories" title="Permalink to this headline">¶</a></h2>
-<p>First let’s time the pipeline we used in the main notebook to serve as a reference:</p>
+<p>First let’s time the pipeline we used in the main notebook to serve as a
+reference:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
@@ -921,10 +954,10 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The different scores obtained are: 
-[0.8729655  0.87317023 0.87325962 0.87387387 0.87755938]
-The accuracy is: 0.874 +- 0.002
-CPU times: user 6.64 s, sys: 188 ms, total: 6.83 s
-Wall time: 6.83 s
+[0.87276077 0.87102058 0.87325962 0.87438575 0.87919738]
+The accuracy is: 0.874 +- 0.003
+CPU times: user 6.24 s, sys: 123 ms, total: 6.37 s
+Wall time: 6.36 s
 </pre></div>
 </div>
 </div>
@@ -951,18 +984,21 @@ Wall time: 6.83 s
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The different scores obtained are: 
-[0.87204422 0.87173713 0.87387387 0.87305487 0.876638  ]
-The accuracy is: 0.873 +- 0.002
-CPU times: user 6.65 s, sys: 51.8 ms, total: 6.7 s
-Wall time: 6.69 s
+[0.8712253  0.87020166 0.8729525  0.8737715  0.87807125]
+The accuracy is: 0.873 +- 0.003
+CPU times: user 6.63 s, sys: 75.9 ms, total: 6.71 s
+Wall time: 6.71 s
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="analysis">
 <h3>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h3>
-<p>We can observe that both the accuracy and the training time are approximately the same as the reference pipeline (any time difference you might observe is not significant).</p>
-<p>Scaling numerical features is indeed useless for most decision tree models in general and for <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> in particular.</p>
+<p>We can observe that both the accuracy and the training time are approximately
+the same as the reference pipeline (any time difference you might observe is
+not significant).</p>
+<p>Scaling numerical features is indeed useless for most decision tree models in
+general and for <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> in particular.</p>
 </div>
 </div>
 <div class="section" id="one-hot-encoding-of-categorical-variables">
@@ -972,16 +1008,34 @@ variables can be very detrimental. However for
 <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> models, it does not seem to be the
 case as the cross-validation of the reference pipeline with
 <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is good.</p>
-<p>Let’s see if we can get an even better accuracy with <code class="docutils literal notranslate"><span class="pre">OneHotEncoding</span></code>:</p>
+<p>Let’s see if we can get an even better accuracy with <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>:</p>
+<p>Reminder: in order to avoid creating fully correlated features it is
+preferable to use a <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> for binary features (in this case <code class="docutils literal notranslate"><span class="pre">sex</span></code>)
+rather than a <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binary_encoding_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span>
+<span class="n">one_hot_encoding_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">categorical_columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">binary_encoding_columns</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hint: <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> does not yet support sparse input
+data. You might want to use
+<code class="docutils literal notranslate"><span class="pre">OneHotEncoder(handle_unknown=&quot;ignore&quot;,</span> <span class="pre">sparse=False)</span></code> to force the use a
+dense representation as a workaround.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;binary-encoder&#39;</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">(),</span> <span class="n">binary_encoding_columns</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;one-hot-encoder&#39;</span><span class="p">,</span>
      <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-     <span class="n">categorical_columns</span><span class="p">),],</span> <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
+     <span class="n">one_hot_encoding_columns</span><span class="p">)],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
@@ -992,10 +1046,10 @@ case as the cross-validation of the reference pipeline with
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The different scores obtained are: 
-[0.87204422 0.87398915 0.87192875 0.87438575 0.87530713]
-The accuracy is: 0.874 +- 0.001
-CPU times: user 21.6 s, sys: 948 ms, total: 22.5 s
-Wall time: 22.5 s
+[0.87091821 0.87204422 0.8713145  0.87366912 0.87653563]
+The accuracy is: 0.873 +- 0.002
+CPU times: user 21.4 s, sys: 532 ms, total: 22 s
+Wall time: 22 s
 </pre></div>
 </div>
 </div>

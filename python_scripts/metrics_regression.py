@@ -1,53 +1,27 @@
 # %% [markdown]
 # # Regression
-# Unlike in classification problems, the target `y` is a continuous
-# variable in regression problems. Therefore, classification metrics cannot
-# be used to evaluate the performance of regression models. Instead, there
-# exists a set of metrics dedicated to regression.
+#
+# In this notebook, we will present the metrics that can be used in regression.
+#
+# Unlike in classification problems, the target `y` is a continuous variable in
+# regression problems. Therefore, classification metrics cannot be used to
+# evaluate the performance of regression models. Instead, there exists a set of
+# metrics dedicated to regression.
+#
+# We will use the Ames housing dataset where the goal is to predict the price
+# of houses in Ames town. As for the classification, we will only use a single
+# train-test split to focus only on the regression metrics.
 
 # %%
 import pandas as pd
+import numpy as np
 
-data = pd.read_csv(
-    ("https://raw.githubusercontent.com/christophM/interpretable-ml-book/"
-     "master/data/bike.csv"),
-)
-# rename the columns with human-readable names
-data = data.rename(columns={
-    "yr": "year", "mnth": "month", "temp": "temperature", "hum": "humidity",
-    "cnt": "count", "days_since_2011": "days since 2011"
-})
-# convert the categorical columns with a proper category data type
-for col in data.columns:
-    if data[col].dtype.kind == "O":
-        data[col] = data[col].astype("category")
-
-# separate the target from the original data
-X = data.drop(columns=["count"])
-y = data["count"]
-
-# %%
-X.head()
-
-# %%
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
-
-plt.hist(y, bins=50, density=True)
-plt.xlabel("Number of bike rentals")
-plt.ylabel("Probability")
-_ = plt.title("Target distribution")
+data = pd.read_csv("../datasets/house_prices.csv")
+X, y = data.drop(columns="SalePrice"), data["SalePrice"]
+X = X.select_dtypes(np.number)
 
 # %% [markdown]
-# Our problem can be formulated as follows: we would like to infer the number
-# of bike rentals in a day using information about the day. The number of bike
-# rentals is a number that can vary in the interval [0, max_number_of_bikes).
-# As in the previous section, we will train a
-# model and evaluate its performance while introducing different
-# regression metrics.
-#
-# First, we split the data into training and a testing sets.
+# Let's start by splitting our dataset intro a train and test set.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -57,188 +31,145 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# ### Baseline model
-# We will use a random forest as a model. However, we first need to check the
-# type of data that we are dealing with:
+# Some machine learning models were designed to be solved as an optimization
+# problem: minimzing an error (also known as loss function) using a training
+# set. A basic loss function used in regression is the mean squared error.
+# Thus, this metric is sometimes used to evaluate a model since this is also
+# the loss function optimized by a model.
+#
+# We will give an example using a linear regression model.
 
 # %%
-X_train.info()
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
-# %% [markdown]
-# While some features are numeric, some have been tagged as `category`. These
-# features need to be encoded such that our random forest can
-# deal with them. The simplest solution is to use an `OrdinalEncoder`.
-# Regarding, the numerical features, we don't need to do anything. Thus, we
-# will create preprocessing steps to take care of the encoding.
-
-# %%
-from sklearn.compose import make_column_transformer
-from sklearn.compose import make_column_selector as selector
-from sklearn.preprocessing import OrdinalEncoder
-
-categorical_selector = selector(dtype_include="category")
-preprocessor = make_column_transformer(
-    (OrdinalEncoder(), categorical_selector),
-    remainder="passthrough",
-)
-
-X_train_preprocessed = pd.DataFrame(
-    preprocessor.fit_transform(X_train),
-    columns=(
-        categorical_selector(X_train) +
-        [col for col in X_train.columns
-         if col not in categorical_selector(X_train)]
-    )
-)
-X_train_preprocessed.head()
-
-# %% [markdown]
-# Just to have some insight about the preprocessing, we preprocess
-# the training data show the result. We can observe that the original strings
-# are now encoded with numbers. We can now create our model.
-
-# %%
-from sklearn.pipeline import make_pipeline
-from sklearn.ensemble import RandomForestRegressor
-
-regressor = make_pipeline(preprocessor, RandomForestRegressor())
+regressor = LinearRegression()
 regressor.fit(X_train, y_train)
+y_pred = regressor.predict(X_train)
+
+print(f"Mean squared error on the training set: "
+      f"{mean_squared_error(y_train, y_pred):.3f}")
 
 # %% [markdown]
-# As for scikit-learn classifiers, scikit-learn regressors have a `score`
-# method that computes the
-# :math:`R^2` score (also known as the coefficient of determination):
+# Our linear regression model is the moodel minimizing the mean squared error
+# on the training set. It means that there is no other set of coefficients
+# which will decrease the error.
+#
+# Then, we can compute the mean squared error on the test set.
+
+# %%
+y_pred = regressor.predict(X_test)
+
+print(f"Mean squared error on the testing set: "
+      f"{mean_squared_error(y_test, y_pred):.3f}")
+
+# %% [markdown]
+# The raw MSE can be difficult to interpret. One way is to rescale the MSE
+# by the variance of the target. This score is known as the $R^2$ also called
+# the coefficient of determination. Indeed, this is the default score used
+# in scikit-learn by calliing the method `score`.
 
 # %%
 regressor.score(X_test, y_test)
 
 # %% [markdown]
-# The :math:`R^2` score represents the proportion of variance of the target
-# that is explained by the independent variables in the model. The best score
-# possible
-# is 1 but there is no lower bound. However, a model that predicts the
-# expected value of the target would get a score of 0.
+# The $R^2$ score represents the proportion of variance of the target that is
+# explained by the independent variables in the model. The best score possible
+# is 1 but there is no lower bound. However, a model that predicts the expected
+# value of the target would get a score of 0.
 
 # %%
 from sklearn.dummy import DummyRegressor
 
 dummy_regressor = DummyRegressor(strategy="mean")
-dummy_regressor.fit(X_train, y_train).score(X_test, y_test)
+dummy_regressor.fit(X_train, y_train)
+print(f"R2 score for a regressor predicting the mean:"
+      f"{dummy_regressor.score(X_test, y_test):.3f}")
 
 # %% [markdown]
-# The :math:`R^2` score gives insight into the goodness of fit of the
-# model. However, this score cannot be compared from one dataset to another and
-# the value obtained does not have a meaningful interpretation relative the
-# original unit of the target. If we wanted to get an interpretable score, we
-# would be interested in the median or mean absolute error.
+# The $R^2$ score gives insight into the goodness of fit of the model. However,
+# this score cannot be compared from one dataset to another and the value
+# obtained does not have a meaningful interpretation relative the original unit
+# of the target. If we wanted to get an interpretable score, we would be
+# interested in the median or mean absolute error.
 
 # %%
 from sklearn.metrics import mean_absolute_error
 
 y_pred = regressor.predict(X_test)
-print(
-    f"Mean absolute error: {mean_absolute_error(y_test, y_pred):.0f}"
-)
+print(f"Mean absolute error: "
+      f"{mean_absolute_error(y_test, y_pred):.3f} k$")
 
 # %% [markdown]
 # By computing the mean absolute error, we can interpret that our model is
-# predicting on average 507 bike rentals away from the truth. A disadvantage
-# of this metric is that the mean can be
-# impacted by large error. For some applications, we might not want these
-# large errors to have such a big influence on our metric. In this case we can
-# use the median absolute error.
+# predicting on average 22.6 k$ away from the true house price. A disadvantage
+# of this metric is that the mean can be impacted by large error. For some
+# applications, we might not want these large errors to have such a big
+# influence on our metric. In this case we can use the median absolute error.
 
 # %%
 from sklearn.metrics import median_absolute_error
 
-print(
-    f"Median absolute error: {median_absolute_error(y_test, y_pred):.0f}"
-)
+print(f"Median absolute error: "
+      f"{median_absolute_error(y_test, y_pred):.3f} k$")
 
 # %% [markdown]
-# This metric tells us that, our model makes a median error of 405 bikes.
-# FIXME: **not sure how to introduce the `mean_squared_error`.**
+# **FIXME: in 0.24, introduce median absolute percentage error**
 
 # %% [markdown]
 # In addition of metrics, we can visually represent the results by plotting
 # the predicted values versus the true values.
 
+# %%
+predicted_actual = {"True values": y_test, "Predicted values": y_pred}
+predicted_actual = pd.DataFrame(predicted_actual)
 
 # %%
-import numpy as np
+import seaborn as sns
+sns.set_context("talk")
 
-
-def plot_predicted_vs_actual(y_true, y_pred, title=None):
-    plt.scatter(y_true, y_pred)
-
-    max_value = np.max([y_true.max(), y_pred.max()])
-    plt.plot(
-        [0, max_value],
-        [0, max_value],
-        color="tab:orange",
-        linewidth=3,
-        label="Perfect fit",
-    )
-
-    plt.xlabel("True values")
-    plt.ylabel("Predicted values")
-    plt.axis("square")
-    plt.legend()
-    if title is not None:
-        plt.title(title)
-
-
-plot_predicted_vs_actual(y_test, y_pred)
+ax = sns.scatterplot(
+    data=predicted_actual, x="True values", y="Predicted values")
+ax.plot([0, predicted_actual["True values"].max()],
+        [0, predicted_actual["Predicted values"].max()],
+        color="tab:orange", linewidth=3, label="Perfect fit")
+ax.set_xlim([0, predicted_actual.max().max()])
+ax.set_ylim([0, predicted_actual.max().max()])
+_ = ax.legend()
 
 # %% [markdown]
 # On this plot, correct predictions would lie on the diagonal line. This plot
 # allows us to detect if the model makes errors in a consistent way, i.e.
 # has some bias.
 #
-# Let's take an example using the house prices in Ames.
-
-# %%
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import RidgeCV
-
-data = pd.read_csv("../datasets/house_prices.csv")
-X, y = data.drop(columns="SalePrice"), data["SalePrice"]
-X = X.select_dtypes(np.number)
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
-
-# %% [markdown]
-# We will fit a ridge regressor on the data and plot the prediction versus the
-# actual values.
-
-# %%
-model = make_pipeline(StandardScaler(), RidgeCV())
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-
-plot_predicted_vs_actual(y_test, y_pred, title="House prices in Ames")
-
-# %% [markdown]
 # On this plot, we see that for the large True price values, our model tends to
-# under-estimate the price of the house. Typically, this issue arises when
-# the target to predict does not follow a normal distribution. In these cases
-# the model would benefit from target transformation.
+# under-estimate the price of the house. Typically, this issue arises when the
+# target to predict does not follow a normal distribution. In these cases the
+# model would benefit from target transformation.
 
 # %%
 from sklearn.preprocessing import QuantileTransformer
 from sklearn.compose import TransformedTargetRegressor
 
+transformer = QuantileTransformer(
+    n_quantiles=900, output_distribution="normal")
 model_transformed_target = TransformedTargetRegressor(
-    regressor=model,
-    transformer=QuantileTransformer(
-        n_quantiles=900, output_distribution="normal"
-    ),
-)
+    regressor=regressor, transformer=transformer)
 model_transformed_target.fit(X_train, y_train)
 y_pred = model_transformed_target.predict(X_test)
 
-plot_predicted_vs_actual(y_test, y_pred, title="House prices in Ames")
+# %%
+predicted_actual = {"True values": y_test, "Predicted values": y_pred}
+predicted_actual = pd.DataFrame(predicted_actual)
+
+ax = sns.scatterplot(
+    data=predicted_actual, x="True values", y="Predicted values")
+ax.plot([0, predicted_actual["True values"].max()],
+        [0, predicted_actual["Predicted values"].max()],
+        color="tab:orange", linewidth=3, label="Perfect fit")
+ax.set_xlim([0, predicted_actual.max().max()])
+ax.set_ylim([0, predicted_actual.max().max()])
+_ = ax.legend()
 
 # %% [markdown]
 # Thus, once we transformed the target, we see that we corrected some of the

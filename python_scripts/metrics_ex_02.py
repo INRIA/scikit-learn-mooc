@@ -1,0 +1,3 @@
+# %% [markdown]
+# # 📝 Exercise 02
+#

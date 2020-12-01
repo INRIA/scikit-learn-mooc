@@ -122,7 +122,8 @@ print(f"Median absolute error: "
 # the predicted values versus the true values.
 
 # %%
-predicted_actual = {"True values (k$)": y_test, "Predicted values (k$)": y_pred}
+predicted_actual = {
+    "True values (k$)": y_test, "Predicted values (k$)": y_pred}
 predicted_actual = pd.DataFrame(predicted_actual)
 
 # %%
@@ -157,11 +158,12 @@ model_transformed_target.fit(X_train, y_train)
 y_pred = model_transformed_target.predict(X_test)
 
 # %%
-predicted_actual = {"True values": y_test, "Predicted values": y_pred}
+predicted_actual = {
+    "True values (k$)": y_test, "Predicted values (k$)": y_pred}
 predicted_actual = pd.DataFrame(predicted_actual)
 
 ax = sns.scatterplot(
-    data=predicted_actual, x="True values", y="Predicted values")
+    data=predicted_actual, x="True values (k$)", y="Predicted values (k$)")
 ax.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
 ax.set_aspect('equal', 'box')
 _ = ax.legend()

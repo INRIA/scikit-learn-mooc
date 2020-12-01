@@ -116,9 +116,9 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # Let's see if we can get an even better accuracy with `OneHotEncoder`:
 
 # %% [markdown]
-# Reminder: in order to avoid creating two fully correlated features for binary
-# features it is preferable to use a `OrdinalEncoder` rather than a
-# `OneHotEncoder.
+# Reminder: in order to avoid creating fully correlated features it is
+# preferable to use a `OrdinalEncoder` for binary features (in this case `sex`)
+# rather than a `OneHotEncoder`.
 
 # %%
 binary_encoding_columns = ['sex']

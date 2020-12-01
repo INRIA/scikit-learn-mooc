@@ -55,7 +55,7 @@ categorical_columns = categorical_columns_selector(data)
 # (heterogeneously typed tabular data).
 #
 # We can first define the columns depending on their data type:
-# * **binary encoding** will be applied to categorical columns with only too
+# * **binary encoding** will be applied to categorical columns with only two
 #   possible values (e.g. sex=male or sex=female in this example). Each binary
 #   categorical columns will be mapped to one numerical columns with 0 or 1
 #   values.

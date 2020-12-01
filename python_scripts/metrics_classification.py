@@ -26,7 +26,7 @@ ax.set_xlabel("Number of samples")
 _ = ax.set_title("Number of samples per classes present\n in the target")
 
 # %% [markdown]
-# We can see that the target `y` contains 2 classes corresponding to whether
+# We can see that the target `y` contains two classes corresponding to whether
 # or not a subject gave blood or not. We will use a logistic regression
 # classifier to predict this outcome.
 #
@@ -41,9 +41,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# Once our data are split, we can learn a logistic regression classifier using
-# only the training data, keeping the testing data for evaluation of the
-# model.
+# We will use a logistic regression classifier as a base model. We will train
+# the model on the train set and we will later use the test set to compute the
+# different classification metric.
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -52,32 +52,39 @@ classifier = LogisticRegression()
 classifier.fit(X_train, y_train)
 
 # %% [markdown]
-# Now that our classifier is trained, we can provide some information about a
-# subject and the classifier can predict whether or not the subject will donate
-# blood.
+# ## Classifier predictions
+# Before to go into details regarding the metrics, we will recall what type
+# of predictions a classifier can provide.
 #
-# Let's create a synthetic sample for a new potential
-# donor: he/she donated blood 6 months ago and has given a total of 1000 c.c.
-# of blood, twice in the past. He/she gave blood for the first time 20
-# months ago.
+# In this purpose, we create a synthetic sample for a new potential donor:
+# he/she donated blood 6 months ago and has given a total of 1000 c.c. of
+# blood, twice in the past. He/she gave blood for the first time 20 months ago.
 
 # %%
 new_donor = [[6, 2, 1000, 20]]
+
+# %% [markdown]
+# We can get the class predicted by the classifier calling the method
+# `predict`.
+
+# %%
 classifier.predict(new_donor)
 
 # %% [markdown]
 # With this information, our classifier predicts that this synthetic subject
-# is more likely to not donate blood again. However, we cannot check if the
-# prediction is correct or not (we do not know the true target value). That's
-# the purpose of the testing set. First, we predict whether or not a
-# subject will give blood with the help of the trained classifier.
+# is more likely to not donate blood again.
+#
+# However, we cannot check if the prediction is correct or not (we do not know
+# the true target value). That's the purpose of the testing set. First, we
+# predict whether or not a subject will give blood with the help of the trained
+# classifier.
 
 # %%
 y_pred = classifier.predict(X_test)
 y_pred[:5]
 
 # %% [markdown]
-# ### Accuracy as a baseline
+# ## Accuracy as a baseline
 # Now that we have these predictions, we can compare them with the true
 # predictions (sometimes called ground-truth) which we did not use up to now.
 
@@ -105,7 +112,8 @@ np.mean(y_test == y_pred)
 # %%
 from sklearn.metrics import accuracy_score
 
-accuracy_score(y_test, y_pred)
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.3f}")
 
 # %% [markdown]
 # Scikit-learn also has a method named `score`, built into
@@ -115,12 +123,13 @@ accuracy_score(y_test, y_pred)
 classifier.score(X_test, y_test)
 
 # %% [markdown]
-# ### Confusion matrix and derived metrics
+# ## Confusion matrix and derived metrics
 # The comparison that we did above and the accuracy that we calculated did not
 # take into account the type of error our classifier was making. Accuracy
 # is an aggregate of the errors made by the classifier. We may be interested
 # in finer granularity - to know independently what the error is for each of
 # the two following cases:
+#
 # - we predicted that a person will give blood but she/he did not;
 # - we predicted that a person will not give blood but she/he did.
 
@@ -163,72 +172,69 @@ plot_confusion_matrix(classifier, X_test, y_test)
 # %%
 from sklearn.metrics import precision_score, recall_score
 
-print(
-    f"Precision score: {precision_score(y_test, y_pred, pos_label='donated')}"
-    f"\nRecall score: {recall_score(y_test, y_pred, pos_label='donated')}"
-)
+precision = precision_score(y_test, y_pred, pos_label="donated")
+recall = recall_score(y_test, y_pred, pos_label="donated")
+
+print(f"Precision score: {precision:.3f}")
+print(f"Recall score: {recall:.3f}")
 
 # %% [markdown]
-# These results are in line with what was seen in the confusion matrix.
-# Looking at the left column, more than half of the "donated" predictions were
-# correct, leading
-# to a precision above 0.5. However, our classifier mislabeled a lot of people
-# who gave blood as "not donated", leading to a very low recall of around 0.1.
+# These results are in line with what was seen in the confusion matrix. Looking
+# at the left column, more than half of the "donated" predictions were correct,
+# leading to a precision above 0.5. However, our classifier mislabeled a lot of
+# people who gave blood as "not donated", leading to a very low recall of
+# around 0.1.
 #
-# ### The issue of class imbalance
+# ## The issue of class imbalance
 # At this stage, we could ask ourself a reasonable question. While the accuracy
 # did not look bad (i.e. 77%), the F1 score is relatively low (i.e. 21%).
 #
-# As we mentioned, precision and recall only focuses on samples predicted to
-# be positive, while
-# accuracy takes both into account. In addition,
-# we did not look at the ratio of classes (labels).
-# We could check this ratio in the training set.
+# As we mentioned, precision and recall only focuses on samples predicted to be
+# positive, while accuracy takes both into account. In addition, we did not
+# look at the ratio of classes (labels). We could check this ratio in the
+# training set.
 
 # %%
-from collections import Counter
-
-class_counts = pd.Series(Counter(y_train))
-class_counts /= class_counts.sum()
-class_counts
+ax = y_train.value_counts(normalize=True).plot(kind="barh")
+ax.set_xlabel("Class frequency")
+_ = ax.set_title("Class frequency in the training set")
 
 # %% [markdown]
-# We can observe that the positive class, `'donated'`, comprises only 24% of
-# the of the samples. The good accuracy of our classifier is then linked
-# to its ability to predict correctly the negative class `'not donated'`
-# which may or may not be relevant, depending on the application. We can
-# illustrate the issue using a dummy classifier as a baseline.
+# We observe that the positive class, `'donated'`, comprises only 24% of the of
+# the samples. The good accuracy of our classifier is then linked to its
+# ability to predict correctly the negative class `'not donated'` which may or
+# may not be relevant, depending on the application. We can illustrate the
+# issue using a dummy classifier as a baseline.
 
 # %%
 from sklearn.dummy import DummyClassifier
 
-dummy_classifier = DummyClassifier(
-    strategy="constant", constant="not donated"
-)
-dummy_classifier.fit(X_train, y_train).score(X_test, y_test)
+dummy_classifier = DummyClassifier(strategy="most_frequent")
+dummy_classifier.fit(X_train, y_train)
+print(f"Accuracy of the dummy classifier: "
+      f"{dummy_classifier.score(X_test, y_test):.3f}")
 
 # %% [markdown]
-# With the dummy classifier, which always predicts the negative class
-# `'not donated'`,
-# we obtain an accuracy score of 76%. Therefore, it means that this classifier,
-# without learning anything from the data `X`, is capable of predicting as
-# accurately as our logistic regression model.
+# With the dummy classifier, which always predicts the negative class `'not
+# donated'`, we obtain an accuracy score of 76%. Therefore, it means that this
+# classifier, without learning anything from the data `X`, is capable of
+# predicting as accurately as our logistic regression model.
 #
 # The problem illustrated above is also known as the class imbalance problem.
 # When the classes are imbalanced, accuracy should not be used. In this case,
-# one should either use
-# the precision, recall, or F1 score as presented above or the balanced
-# accuracy score instead of accuracy.
+# one should either use the precision and recall as presented above or the
+# balanced accuracy score instead of accuracy.
 
 # %%
 from sklearn.metrics import balanced_accuracy_score
 
-balanced_accuracy_score(y_test, y_pred)
+balanced_accuracy = balanced_accuracy_score(y_test, y_pred)
+print(f"Balanced accuracy: {balanced_accuracy:.3f}")
 # %% [markdown]
-# The balanced accuracy is equivalent to accuracy in the context of
-# balanced classes. It is defined as the average recall obtained on each class.
+# The balanced accuracy is equivalent to accuracy in the context of balanced
+# classes. It is defined as the average recall obtained on each class.
 #
-# ### Evaluation and different probability thresholds
+# ## Evaluation and different probability thresholds
 #
 # All statistics that we presented up to now rely on `classifier.predict` which
 # outputs the most likely label. We haven't made use use of the probability
@@ -240,21 +246,19 @@ balanced_accuracy_score(y_test, y_pred)
 
 # %%
 y_proba = pd.DataFrame(
-    classifier.predict_proba(X_test),
-    columns=classifier.classes_
-)
+    classifier.predict_proba(X_test), columns=classifier.classes_)
 y_proba[:5]
 
 # %%
 y_pred = classifier.predict(X_test)
 y_pred[:5]
 
-# %%
+# %% [markdown]
 # Since probabilities sum to 1 we can get the class with the highest
 # probability without using the threshold 0.5.
-equivalence_pred_proba = (
-    y_proba.idxmax(axis=1).to_numpy() == y_pred
-)
+
+# %%
+equivalence_pred_proba = (y_proba.idxmax(axis=1).to_numpy() == y_pred)
 np.all(equivalence_pred_proba)
 
 # %% [markdown]
@@ -262,10 +266,9 @@ np.all(equivalence_pred_proba)
 # leads to optimal performance of our classifier. In this case, one can vary
 # the decision threshold, and therefore the underlying prediction, and compute
 # the same statistics presented earlier. Usually, the two metrics recall and
-# precision are computed and plotted on a graph. Each metric plotted on a
-# graph axis and each point on
-# the graph corresponds to a specific decision threshold. Let's start by
-# computing the precision-recall curve.
+# precision are computed and plotted on a graph. Each metric plotted on a graph
+# axis and each point on the graph corresponds to a specific decision
+# threshold. Let's start by computing the precision-recall curve.
 
 # %%
 import matplotlib.pyplot as plt
@@ -298,24 +301,24 @@ plt.legend()
 # )
 
 # %% [markdown]
-# On this curve, each blue dot corresponds to a level of probability
-# which we used as a decision threshold. We can see that by varying this
-# decision threshold, we get different precision vs. recall values.
+# On this curve, each blue dot corresponds to a level of probability which we
+# used as a decision threshold. We can see that by varying this decision
+# threshold, we get different precision vs. recall values.
 #
-# A perfect classifier would have a precision of 1 for all recall
-# values. A metric characterizing the curve is linked to the area under the
-# curve (AUC) and is named average precision. With an ideal classifier, the
-# average precision would be 1.
+# A perfect classifier would have a precision of 1 for all recall values. A
+# metric characterizing the curve is linked to the area under the curve (AUC)
+# and is named average precision. With an ideal classifier, the average
+# precision would be 1.
 #
 # The precision and recall metric focuses on the positive class however, one
 # might be interested in the compromise between accurately discriminating the
 # positive class and accurately discriminating the negative classes. The
 # statistics used for this are sensitivity and specificity. Sensitivity is just
 # another name for recall. However, specificity measures the proportion of
-# correctly classified samples in the negative class defined as:
-# TN / (TN + FP). Similar to the precision-recall curve, sensitivity and
-# specificity are generally plotted as a curve called the receiver operating
-# characteristic (ROC) curve. Below is such a curve:
+# correctly classified samples in the negative class defined as: TN / (TN +
+# FP). Similar to the precision-recall curve, sensitivity and specificity are
+# generally plotted as a curve called the receiver operating characteristic
+# (ROC) curve. Below is such a curve:
 
 # %%
 from sklearn.metrics import roc_curve
@@ -343,16 +346,16 @@ plt.legend()
 # plot_roc_curve(classifier, X_test, y_test, pos_label='donated')
 
 # %% [markdown]
-# This curve was built using the same principle as the precision-recall
-# curve: we vary the probability threshold for determining "hard" prediction
-# and compute the metrics. As with the precision-recall curve, we can
-# compute the area under the ROC (ROC-AUC) to characterize the performance of
-# our classifier. However, it is important to observer that the lower bound
-# of the ROC-AUC is 0.5. Indeed, we show the performance of a dummy
-# classifier (the green dashed line) to show that the even worst performance
-# obtained will always be above this line.
+# This curve was built using the same principle as the precision-recall curve:
+# we vary the probability threshold for determining "hard" prediction and
+# compute the metrics. As with the precision-recall curve, we can compute the
+# area under the ROC (ROC-AUC) to characterize the performance of our
+# classifier. However, it is important to observer that the lower bound of the
+# ROC-AUC is 0.5. Indeed, we show the performance of a dummy classifier (the
+# green dashed line) to show that the even worst performance obtained will
+# always be above this line.
 #
-# ### Link between confusion matrix, precision-recall curve and ROC curve
+# ## Link between confusion matrix, precision-recall curve and ROC curve
 #
 # TODO: ipywidgets to play with interactive curve
 
@@ -511,3 +514,5 @@ def plot_pr_roc_interactive():
 
 # %%
 plot_pr_roc_interactive()
+
+# %%

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Introductory exercise for non i.i.d. data
+# # 📝 Introductory exercise for non i.i.d. data
 #
 # This exercise aims at showing some aspects to consider when dealing with non
 # i.i.d data, typically time series.

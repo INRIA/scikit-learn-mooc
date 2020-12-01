@@ -40,22 +40,34 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 # of a sequence of arithmetic instructions such as additions and
 # multiplications.
 #
-# In contrast, categorical variables have discrete values, typically represented
-# by string labels taken from a finite list of possible choices. For instance,
-# the variable `native-country` in our dataset is a categorical variable because
-# it encodes the data using a finite list of possible countries (along with the
-# `?` symbol when this information is missing):
+# In contrast, categorical variables have discrete values, typically
+# represented by string labels taken from a finite list of possible choices.
+# For instance, the variable `native-country` in our dataset is a categorical
+# variable because it encodes the data using a finite list of possible
+# countries (along with the `?` symbol when this information is missing):
 
 # %%
 data["native-country"].value_counts()
 
 # %% [markdown]
-# In the remainder of this section, we will present different strategies to
-# encode categorical data into numerical data which can be used by a
-# machine-learning algorithm.
+# One might question how could we easily recognize categorical columns. One
+# useful tip is to look at the data type of each column.
 
 # %%
 data.dtypes
+
+# %% [markdown]
+# If we look at the "native-country" column data type, we observe it is of
+# `object` dtype. The reason is that categories are represented with string.
+#
+# Sometimes, categorical columns could also be encoded with integer. In this
+# case, looking at the data type will not be enough. One needs to investigate
+# the dataset and check the meaning of the columns.
+#
+# Luckily, categorical columns only corresponds to the object dtype columns.
+# Scikit-learn provides a tools allowing to select the column based on their
+# data types. It is called `make_column_selector`. We will illustrate how to
+# use this helper.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -64,21 +76,28 @@ categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 categorical_columns
 
+# %% [markdown]
+# We can create the selector by passing the data type to include or exclude.
+# Once the selector created, we can pass the input dataset and the name of
+# the selected columns will be returned.
+
 # %%
 data_categorical = data[categorical_columns]
 data_categorical.head()
 
 # %%
-print(
-    f"The dataset is composed of {data_categorical.shape[1]} features"
-)
+print(f"The dataset is composed of {data_categorical.shape[1]} features")
+
+# %% [markdown]
+# In the remainder of this section, we will present different strategies to
+# encode categorical data into numerical data which can be used by a
+# machine-learning algorithm.
 
 # %% [markdown]
 # ### Encoding ordinal categories
 #
 # The most intuitive strategy is to encode each category with a different
 # number. The `OrdinalEncoder` will transform the data in such manner.
-
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
@@ -90,6 +109,7 @@ data_encoded[:5]
 # %%
 print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
+
 # %% [markdown]
 # We can see that the categories have been encoded for each feature (column)
 # independently. We can also note that the number of features before and after
@@ -101,19 +121,19 @@ print(
 # etc.
 #
 # By default, `OrdinalEncoder` uses a lexicographical strategy to map string
-# category labels to integers. This strategy is completely arbitrary and often be
-# meaningless. For instance suppose the dataset has a categorical variable named
-# "size" with categories such as "S", "M", "L", "XL". We would like the integer
-# representation to respect the meaning of the sizes by mapping them to increasing
-# integers such as 0, 1, 2, 3. However lexicographical strategy used by default
-# would map the labels "S", "M", "L", "XL" to 2, 1, 0, 3.
+# category labels to integers. This strategy is completely arbitrary and often
+# be meaningless. For instance suppose the dataset has a categorical variable
+# named "size" with categories such as "S", "M", "L", "XL". We would like the
+# integer representation to respect the meaning of the sizes by mapping them to
+# increasing integers such as 0, 1, 2, 3. However lexicographical strategy used
+# by default would map the labels "S", "M", "L", "XL" to 2, 1, 0, 3.
 #
-# The `OrdinalEncoder` class accepts a "categories" constructor argument to pass
-# in the correct ordering explicitly.
+# The `OrdinalEncoder` class accepts a "categories" constructor argument to
+# pass in the correct ordering explicitly.
 #
-# If a categorical variable does not carry any meaningful order information then
-# this encoding might be misleading to downstream statistical models and you might
-# consider using one-hot encoding instead (see below).
+# If a categorical variable does not carry any meaningful order information
+# then this encoding might be misleading to downstream statistical models and
+# you might consider using one-hot encoding instead (see below).
 #
 # Note however that the impact of violating this ordering assumption is really
 # dependent on the downstream models (for instance linear models are much more
@@ -125,13 +145,12 @@ print(
 # models to make a false assumption about the ordering of categories. For a
 # given feature, it will create as many new columns as there are possible
 # categories. For a given sample, the value of the column corresponding to the
-# category will be set to `1` while all the columns of the other categories will
-# be set to `0`.
+# category will be set to `1` while all the columns of the other categories
+# will be set to `0`.
 
 # %%
 print(
-    f"The dataset is composed of {data_categorical.shape[1]} features"
-)
+    f"The dataset is composed of {data_categorical.shape[1]} features")
 data_categorical.head()
 
 # %%
@@ -142,7 +161,6 @@ data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
 
 # %%
-
 print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
 
@@ -158,25 +176,55 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # Look at how the "workclass" variable of the first 3 records has been encoded
 # and compare this to the original string representation.
 #
-# The number of features after the encoding is more than 10 times larger than in the
-# original data because some variables such as `occupation` and `native-country`
-# have many possible categories.
+# The number of features after the encoding is more than 10 times larger than
+# in the original data because some variables such as `occupation` and
+# `native-country` have many possible categories.
 #
 # We can now integrate this encoder inside a machine learning pipeline like we
-# did with numerical data: let's train a linear classifier on
-# the encoded data and check the performance of this machine learning pipeline
-# using cross-validation.
+# did with numerical data: let's train a linear classifier on the encoded data
+# and check the performance of this machine learning pipeline using
+# cross-validation.
+#
+# Before to create the pipeline, we have to linger on the `native-country`.
+# Let's recall some statistics regarding this column.
+
+# %%
+data["native-country"].value_counts()
+
+# %% [markdown]
+# We see that the `Holand-Netherlands` category is occuring rarely. This will
+# be a problem during cross-validation: if the sample is in the test set then
+# the classifier would not have seen the category during training and will not
+# be able to encode it.
+#
+# In scikit-learn, there is two solutions to bypass this issue:
+#
+# * list all the possible categories and provide it to the `categories`;
+# * set the parameter `handle_unknown="ignore"`.
+#
+# Here, we will use the former strategy because we are going to use it as well
+# for the ordinal encoder later on.
+
+# %%
+categories = [data_categorical[column].unique()
+              for column in data_categorical]
+
+# %% [markdown]
+# We can now create our machine learning pipeline.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_score
 
 model = make_pipeline(
-    OneHotEncoder(handle_unknown='ignore'),
-    LogisticRegression(max_iter=1000))
+    OneHotEncoder(categories=categories), LogisticRegression())
+
+# %% [markdown]
+# Finally, we can check the model's performance only using the categorical
+# columns.
 
 # %%
+from sklearn.model_selection import cross_val_score
 scores = cross_val_score(model, data_categorical, target)
 scores
 

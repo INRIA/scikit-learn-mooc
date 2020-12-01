@@ -58,6 +58,7 @@ categories = [data[column].unique()
 numerical_columns_selector = selector(dtype_exclude=object)
 numerical_columns = numerical_columns_selector(data)
 
+# %%
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
@@ -98,9 +99,9 @@ model = make_pipeline(preprocessor, LogisticRegression())
 # data.
 #
 # Notes: some combinations of the hyper-parameters proposed above are invalid.
-# You can make the parameter search accept such failures by setting `error_score`
-# to `np.nan`. The warning messages give more details on which parameter
-# combinations but the computation will proceed.
+# You can make the parameter search accept such failures by setting
+# `error_score` to `np.nan`. The warning messages give more details on which
+# parameter combinations but the computation will proceed.
 #
 # Once the computation has completed, print the best combination of parameters
 # stored in the `best_params_` attribute.
@@ -128,8 +129,8 @@ model_random_search.best_params_
 # going to load the results obtained from a similar search with many more
 # iterations (200 instead of 20).
 #
-# This way we can have a more detailed plot while being able to run this notebook
-# in a reasonably short amount of time.
+# This way we can have a more detailed plot while being able to run this
+# notebook in a reasonably short amount of time.
 
 # %%
 # Uncomment this cell if you want to regenerate the results csv file. This

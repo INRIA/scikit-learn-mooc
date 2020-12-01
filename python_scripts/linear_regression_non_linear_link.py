@@ -134,10 +134,10 @@ _ = plt.title(
 #
 # Instead, one is usually creating interaction between features (e.g. $x_1 *
 # x_2$) with different orders (e.g. $x_1, x_1^2, x_1^3$), at the risk of
-# creating a model with too much expressivity and which might overfit. In
-# scikit-learn, the `PolynomialFeatures` is a transformer to create such
-# feature interactions which we could have used instead of manually creating
-# new features.
+# creating a model with too much flexibility where the polynomial terms allows
+# to fit noise in the dataset and thus lead overfit. In scikit-learn, the
+# `PolynomialFeatures` is a transformer to create such feature interactions
+# which we could have used instead of manually creating new features.
 #
 # To demonstrate `PolynomialFeatures`, we are going to use a scikit-learn
 # pipeline which will first create the new features and then fit the model.

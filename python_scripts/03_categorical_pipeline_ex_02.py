@@ -15,11 +15,16 @@
 # %% [markdown]
 # # 📝 Exercise 02
 #
-# The goal of this exercise is to evaluate the impact of feature preprocessing on a pipeline that uses a  decision-tree-based classifier instead of logistic regression.
+# The goal of this exercise is to evaluate the impact of feature preprocessing
+# on a pipeline that uses a decision-tree-based classifier instead of logistic
+# regression.
 #
-# - The first question is to empirically evaluate whether scaling numerical feature is helpful or not;
+# - The first question is to empirically evaluate whether scaling numerical
+#   feature is helpful or not;
 #
-# - The second question is to evaluate whether it is empirically better (both from a computational and a statistical perspective) to use integer coded or one-hot encoded categories.
+# - The second question is to evaluate whether it is empirically better (both
+#   from a computational and a statistical perspective) to use integer coded or
+#   one-hot encoded categories.
 
 # %%
 import pandas as pd
@@ -51,7 +56,8 @@ categories = [
 # %% [markdown]
 # ## Reference pipeline (no numerical scaling and integer-coded categories)
 #
-# First let's time the pipeline we used in the main notebook to serve as a reference:
+# First let's time the pipeline we used in the main notebook to serve as a
+# reference:
 
 # %%
 # %%time
@@ -68,7 +74,8 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # %% [markdown]
 # ## Scaling numerical features
 #
-# Let's write a similar pipeline that also scales the numerical features using `StandardScaler` (or similar):
+# Let's write a similar pipeline that also scales the numerical features using
+# `StandardScaler` (or similar):
 
 # %%
 # Write your code here.
@@ -82,10 +89,23 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # case as the cross-validation of the reference pipeline with
 # `OrdinalEncoder` is good.
 #
-# Let's see if we can get an even better accuracy with `OneHotEncoding`.
-#
-# Hint: `HistGradientBoostingClassifier` does not yet support sparse input data. You might want to use
-# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a dense representation as a workaround.
+# Let's see if we can get an even better accuracy with `OneHotEncoder`.
+
+# %% [markdown]
+# Reminder: in order to avoid creating fully correlated features it is
+# preferable to use a `OrdinalEncoder` for binary features, in this case
+# `sex`.
+
+# %%
+binary_encoding_columns = ['sex']
+one_hot_encoding_columns = [
+    c for c in categorical_columns if c not in binary_encoding_columns]
+
+# %% [markdown]
+# Hint: `HistGradientBoostingClassifier` does not yet support sparse input
+# data. You might want to use
+# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a
+# dense representation as a workaround.
 
 # %%
 # Write your code here.

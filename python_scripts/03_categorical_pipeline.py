@@ -217,7 +217,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
 model = make_pipeline(
-    OneHotEncoder(categories=categories), LogisticRegression())
+    OneHotEncoder(categories=categories, drop="if_binary"),
+    LogisticRegression())
 
 # %% [markdown]
 # Finally, we can check the model's performance only using the categorical

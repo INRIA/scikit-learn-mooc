@@ -130,8 +130,8 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # %%time
 from sklearn.preprocessing import OneHotEncoder
 
-categorical_preprocessor = OneHotEncoder(categories=categories,
-                                         sparse=False)
+categorical_preprocessor = OneHotEncoder(
+    categories=categories, drop="if_binary", sparse=False)
 preprocessor = ColumnTransformer([
     ('one-hot-encoder', categorical_preprocessor, categorical_columns)],
     remainder="passthrough")

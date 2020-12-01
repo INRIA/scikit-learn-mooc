@@ -62,7 +62,8 @@ numerical_columns = numerical_columns_selector(data)
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
-categorical_processor = OneHotEncoder(categories=categories)
+categorical_processor = OneHotEncoder(categories=categories,
+                                      drop="if_binary")
 numerical_processor = StandardScaler()
 
 # %% [markdown]

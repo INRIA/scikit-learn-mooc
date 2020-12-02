@@ -890,19 +890,9 @@ feature is helpful or not;</p></li>
 from a computational and a statistical perspective) to use integer coded or
 one-hot encoded categories.</p></li>
 </ul>
-<p>Hint: <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> does not yet support sparse input
-data. You might want to use
-<code class="docutils literal notranslate"><span class="pre">OneHotEncoder(handle_unknown=&quot;ignore&quot;,</span> <span class="pre">sparse=False)</span></code> to force the use a
-dense representation as a workaround.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 </pre></div>
@@ -913,11 +903,14 @@ dense representation as a workaround.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>As in the previous notebooks, we use the utility <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>
+to only select column with a specific data type. Besides, we list in
+advance all categories for the categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -940,6 +933,12 @@ reference:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
 
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">)</span>
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
@@ -955,10 +954,10 @@ reference:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The different scores obtained are: 
-[0.87255604 0.8729655  0.87428337 0.87346437 0.87858313]
+[0.87214659 0.87071348 0.874181   0.87469287 0.87694513]
 The accuracy is: 0.874 +- 0.002
-CPU times: user 7.52 s, sys: 148 ms, total: 7.67 s
-Wall time: 7.67 s
+CPU times: user 6.72 s, sys: 128 ms, total: 6.85 s
+Wall time: 6.85 s
 </pre></div>
 </div>
 </div>
@@ -985,10 +984,10 @@ Wall time: 7.67 s
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The different scores obtained are: 
-[0.87224895 0.87255604 0.87325962 0.87479525 0.87755938]
-The accuracy is: 0.874 +- 0.002
-CPU times: user 7.69 s, sys: 96.1 ms, total: 7.78 s
-Wall time: 7.78 s
+[0.86958747 0.86907565 0.87346437 0.8737715  0.87807125]
+The accuracy is: 0.873 +- 0.003
+CPU times: user 6.69 s, sys: 71.9 ms, total: 6.76 s
+Wall time: 6.76 s
 </pre></div>
 </div>
 </div>
@@ -1006,9 +1005,8 @@ general and for <code class="docutils literal notranslate"><span class="pre">His
 <h2>One-hot encoding of categorical variables<a class="headerlink" href="#one-hot-encoding-of-categorical-variables" title="Permalink to this headline">¶</a></h2>
 <p>For linear models, we have observed that integer coding of categorical
 variables can be very detrimental. However for
-<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> models, it does not seem to be the
-case as the cross-validation of the reference pipeline with
-<code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is good.</p>
+<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> models, it does not seem to be the case as
+the cross-validation of the reference pipeline with <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is good.</p>
 <p>Let’s see if we can get an even better accuracy with <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>:</p>
 <p>Reminder: in order to avoid creating fully correlated features it is
 preferable to use a <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> with the option <code class="docutils literal notranslate"><span class="pre">drop=&quot;if_binary&quot;</span></code>.</p>
@@ -1036,10 +1034,10 @@ dense representation as a workaround.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The different scores obtained are: 
-[0.87204422 0.87102058 0.87356675 0.87448812 0.87602375]
-The accuracy is: 0.873 +- 0.002
-CPU times: user 24.9 s, sys: 825 ms, total: 25.7 s
-Wall time: 25.7 s
+[0.87173713 0.8732726  0.87192875 0.87397625 0.876638  ]
+The accuracy is: 0.874 +- 0.002
+CPU times: user 23.1 s, sys: 844 ms, total: 24 s
+Wall time: 24 s
 </pre></div>
 </div>
 </div>

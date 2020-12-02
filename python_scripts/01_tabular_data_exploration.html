@@ -866,13 +866,15 @@
                 
   <div class="section" id="tabular-data-exploration">
 <h1>Tabular data exploration<a class="headerlink" href="#tabular-data-exploration" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will look at the necessary steps required before any machine learning takes place.</p>
+<p>In this notebook, we will look at the necessary steps required before any
+machine learning takes place.</p>
 <ul class="simple">
-<li><p>load the data</p></li>
+<li><p>load the data;</p></li>
 <li><p>look at the variables in the dataset, in particular, differentiate
 between numerical and categorical variables, which need different
-preprocessing in most machine learning workflows</p></li>
-<li><p>visualize the distribution of the variables to gain some insights into the dataset</p></li>
+preprocessing in most machine learning workflows;</p></li>
+<li><p>visualize the distribution of the variables to gain some insights into the
+dataset.</p></li>
 </ul>
 <div class="section" id="loading-the-adult-census-dataset">
 <h2>Loading the adult census dataset<a class="headerlink" href="#loading-the-adult-census-dataset" title="Permalink to this headline">¶</a></h2>
@@ -887,7 +889,8 @@ downloaded from <a class="reference external" href="http://openml.org/">OpenML</
 </div>
 </div>
 </div>
-<p>We can look at the OpenML webpage to learn more about this dataset: <a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a></p>
+<p>We can look at the OpenML webpage to learn more about this dataset:
+<a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a></p>
 <p>The goal with this data is to predict whether a person earns over 50K a year
 from heterogeneous data such as age, employment, education, family
 information, etc.</p>
@@ -1036,9 +1039,9 @@ programming: <a class="reference external" href="https://pandas.pydata.org/">htt
 </div>
 <p>The column named <strong>class</strong> is our target variable (i.e., the variable which
 we want to predict). The two possible classes are <code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> (low-revenue) and
-<code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">50K</span></code> (high-revenue). The resulting prediction problem is therefore a binary
-classification problem,
-while we will use the other columns as input variables for our model.</p>
+<code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">50K</span></code> (high-revenue). The resulting prediction problem is therefore a
+binary classification problem, while we will use the other columns as input
+variables for our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_column</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span>
@@ -1057,8 +1060,8 @@ Name: class, dtype: int64
 <p>Note: classes are slightly imbalanced. Class imbalance happens often in
 practice and may need special techniques for machine learning. For example in
 a medical setting, if we are trying to predict whether patients will develop
-a rare disease, there will be a lot more healthy patients than ill patients in
-the dataset.</p>
+a rare disease, there will be a lot more healthy patients than ill patients
+in the dataset.</p>
 <p>The dataset contains both numerical and categorical data. Numerical values
 can take continuous values for example <code class="docutils literal notranslate"><span class="pre">age</span></code>. Categorical values can have a
 finite number of values, for example <code class="docutils literal notranslate"><span class="pre">native-country</span></code>.</p>
@@ -1104,20 +1107,23 @@ the dataset:</p>
 data:</p>
 <ul class="simple">
 <li><p>maybe the task you are trying to achieve can be solved without machine
-learning</p></li>
-<li><p>you need to check that the information you need for your task is indeed present in
-the dataset</p></li>
+learning;</p></li>
+<li><p>you need to check that the information you need for your task is indeed
+present in the dataset;</p></li>
 <li><p>inspecting the data is a good way to find peculiarities. These can
 arise during data collection (for example, malfunctioning sensor or missing
-values), or from the way the data is processed afterwards (for example capped
-values).</p></li>
+values), or from the way the data is processed afterwards (for example
+capped values).</p></li>
 </ul>
 <p>Let’s look at the distribution of individual variables, to get some insights
 about the data. We can start by plotting histograms, note that this only
 works for numerical variables:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1128,12 +1134,13 @@ works for numerical variables:</p>
 <p>We can already make a few comments about some of the variables:</p>
 <ul class="simple">
 <li><p>age: there are not that many points for ‘age &gt; 70’. The dataset description
-does indicate that retired people have been filtered out (<code class="docutils literal notranslate"><span class="pre">hours-per-week</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>).</p></li>
+does indicate that retired people have been filtered out
+(<code class="docutils literal notranslate"><span class="pre">hours-per-week</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>);</p></li>
 <li><p>education-num: peak at 10 and 13, hard to tell what it corresponds to
-without looking much further. We’ll do that later in this notebook.</p></li>
+without looking much further. We’ll do that later in this notebook;</p></li>
 <li><p>hours per week peaks at 40, this was very likely the standard number of
-working hours at the time of the data collection</p></li>
-<li><p>most values of capital-gain and capital-loss are close to zero</p></li>
+working hours at the time of the data collection;</p></li>
+<li><p>most values of capital-gain and capital-loss are close to zero.</p></li>
 </ul>
 <p>For categorical variables, we can look at the distribution of values:</p>
 <div class="cell docutils container">
@@ -1179,8 +1186,8 @@ Name: education, dtype: int64
 </div>
 </div>
 <p>As noted above, <code class="docutils literal notranslate"><span class="pre">education-num</span></code> distribution has two clear peaks around 10
-and 13. It would be reasonable to expect that <code class="docutils literal notranslate"><span class="pre">education-num</span></code> is the number of
-years of education.</p>
+and 13. It would be reasonable to expect that <code class="docutils literal notranslate"><span class="pre">education-num</span></code> is the number
+of years of education.</p>
 <p>Let’s look at the relationship between <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">education-num</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1559,20 +1566,14 @@ For example, <code class="docutils literal notranslate"><span class="pre">educat
 practice that means we can remove <code class="docutils literal notranslate"><span class="pre">education-num</span></code> without losing information.
 Note that having redundant (or highly correlated) columns can be a problem
 for machine learning algorithms.</p>
-<p>Another way to inspect the data is to do a pairplot and show how each variable
-differs according to our target, <code class="docutils literal notranslate"><span class="pre">class</span></code>. Plots along the diagonal show the
-distribution of individual variables for each <code class="docutils literal notranslate"><span class="pre">class</span></code>. The plots on the
-off-diagonal can reveal interesting interactions between variables.</p>
+<p>Another way to inspect the data is to do a pairplot and show how each
+variable differs according to our target, <code class="docutils literal notranslate"><span class="pre">class</span></code>. Plots along the diagonal
+show the distribution of individual variables for each <code class="docutils literal notranslate"><span class="pre">class</span></code>. The plots on
+the off-diagonal can reveal interesting interactions between variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_samples_to_plot</span> <span class="o">=</span> <span class="mi">5000</span>
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;education-num&#39;</span><span class="p">,</span> <span class="s1">&#39;hours-per-week&#39;</span><span class="p">]</span>
-
-<span class="c1"># reset the plotting style</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcdefaults</span><span class="p">()</span>
-
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span> <span class="nb">vars</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
                  <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span>
                  <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">diag_kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">diag_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;bins&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
@@ -1586,9 +1587,12 @@ off-diagonal can reveal interesting interactions between variables.</p>
 <p>By looking at the data you could infer some hand-written rules to predict the
 class:</p>
 <ul class="simple">
-<li><p>if you are young (less than 25 year-old roughly), you are in the <code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class.</p></li>
-<li><p>if you are old (more than 70 year-old roughly), you are in the <code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class.</p></li>
-<li><p>if you work part-time (less than 40 hours roughly) you are in the <code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class.</p></li>
+<li><p>if you are young (less than 25 year-old roughly), you are in the
+<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class;</p></li>
+<li><p>if you are old (more than 70 year-old roughly), you are in the
+<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class;</p></li>
+<li><p>if you work part-time (less than 40 hours roughly) you are in the
+<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class.</p></li>
 </ul>
 <p>These hand-written rules could work reasonably well without the need for any
 machine learning. Note however that it is not very easy to create rules for
@@ -1599,11 +1603,11 @@ dimensions), whereas machine learning models can build models in
 high-dimensional spaces.</p>
 <p>Another thing worth mentioning in this plot: if you are young (less than 25
 year-old roughly) or old (more than 70 year-old roughly) you tend to work
-less. This is a non-linear relationship between age and hours
-per week. Linear machine learning models can only capture linear interactions, so
-this may be a factor when deciding which model to chose.</p>
-<p>In a machine-learning setting, an algorithm automatically
-create the “rules” in order to make predictions on new data.</p>
+less. This is a non-linear relationship between age and hours per week.
+Linear machine learning models can only capture linear interactions, so this
+may be a factor when deciding which model to chose.</p>
+<p>In a machine-learning setting, an algorithm automatically create the “rules”
+in order to make predictions on new data.</p>
 <p>The plot below shows the rules of a simple model, called decision tree.
 We will explain how this model works in a latter notebook, for now let us
 just consider the model predictions when trained on this dataset:</p>
@@ -1616,8 +1620,8 @@ Values towards 1 (dark orange) indicates that the model predicts
 that the model is not very sure about its prediction.</p>
 <p>Looking at the plot here is what we can gather:</p>
 <ul class="simple">
-<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&lt;</span> <span class="pre">28.5</span></code> (left region) the prediction is <code class="docutils literal notranslate"><span class="pre">low-income</span></code>. The
-dark blue color indicates that the model is quite sure about its
+<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&lt;</span> <span class="pre">28.5</span></code> (left region) the prediction is <code class="docutils literal notranslate"><span class="pre">low-income</span></code>.
+The dark blue color indicates that the model is quite sure about its
 prediction.</p></li>
 <li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">28.5</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&lt;</span> <span class="pre">40.5</span></code>
 (bottom-right region), the prediction is <code class="docutils literal notranslate"><span class="pre">low-income</span></code>. Note that the blue
@@ -1630,28 +1634,28 @@ about its prediction.</p></li>
 </ul>
 <p>It is interesting to see that a simple model create rules similar to the ones
 that we could have created by hand. Note that machine learning is really
-interesting when creating rules by hand is not straightfoward, for example
+interesting when creating rules by hand is not straightforward, for example
 because we are in high dimension (many features) or because there is no
 simple and obvious rules that separate the two classes as in the top-right
 region</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
-<li><p>loaded the data from a CSV file using <code class="docutils literal notranslate"><span class="pre">pandas</span></code></p></li>
-<li><p>looked at the differents kind of variables to differentiate
-between categorical and numerical variables</p></li>
+<li><p>loaded the data from a CSV file using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>;</p></li>
+<li><p>looked at the different kind of variables to differentiate between
+categorical and numerical variables;</p></li>
 <li><p>inspected the data with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> and <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>. Data inspection can allow
 you to decide whether using machine learning is appropriate for your data
-and to highlight potential peculiarities in your data</p></li>
+and to highlight potential peculiarities in your data.</p></li>
 </ul>
 <p>Ideas which will be discussed more in details later:</p>
 <ul class="simple">
 <li><p>if your target variable is imbalanced (e.g., you have more samples from one
-target category than another), you may need special techniques for training and
-evaluating your machine learning model</p></li>
+target category than another), you may need special techniques for training
+and evaluating your machine learning model;</p></li>
 <li><p>having redundant (or highly correlated) columns can be a problem for
-some machine learning algorithms</p></li>
-<li><p>contrary to decision tree, linear models can only capture linear interaction, so be
-aware of non-linear relationships in your data</p></li>
+some machine learning algorithms;</p></li>
+<li><p>contrary to decision tree, linear models can only capture linear
+interaction, so be aware of non-linear relationships in your data.</p></li>
 </ul>
 </div>
 </div>

@@ -62,9 +62,10 @@ categories = [
 # %%
 # %%time
 
+categorical_preprocessor = OrdinalEncoder(categories=categories)
 preprocessor = ColumnTransformer([
-    ('categorical', OrdinalEncoder(categories=categories),
-     categorical_columns),], remainder="passthrough")
+    ('categorical', categorical_preprocessor, categorical_columns)],
+    remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 scores = cross_val_score(model, data, target)
@@ -93,18 +94,12 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
 # %% [markdown]
 # Reminder: in order to avoid creating fully correlated features it is
-# preferable to use a `OrdinalEncoder` for binary features (in this case `sex`)
-# rather than a `OneHotEncoder`.
-
-# %%
-binary_encoding_columns = ['sex']
-one_hot_encoding_columns = [
-    c for c in categorical_columns if c not in binary_encoding_columns]
+# preferable to use a `OneHotEncoder` using the option `drop="if_binary"`.
 
 # %% [markdown]
 # Hint: `HistGradientBoostingClassifier` does not yet support sparse input
 # data. You might want to use
-# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a
+# `OneHotEncoder(categories=categories, sparse=False)` to force the use a
 # dense representation as a workaround.
 
 # %%

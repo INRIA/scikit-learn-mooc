@@ -15,7 +15,7 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 01
 #
-# The goal of this exercise is to evalutate the impact of using an arbitrary
+# The goal of this exercise is to evaluate the impact of using an arbitrary
 # integer encoding for categorical variables along with a linear
 # classification model such as Logistic Regression.
 #
@@ -74,9 +74,13 @@ print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
 # %% [markdown]
-# Using an arbitrary mapping from string labels to integers as done here causes the linear model to make bad assumptions on the relative ordering of  categories.
+# Using an arbitrary mapping from string labels to integers as done here causes
+# the linear model to make bad assumptions on the relative ordering of
+# categories.
 #
-# This prevent the model to learning anything predictive enough and the cross-validated score is even lower that the baseline we obtained by ignoring the input data and just always predict the most frequent class:
+# This prevent the model to learning anything predictive enough and the
+# cross-validated score is even lower that the baseline we obtained by ignoring
+# the input data and just always predict the most frequent class:
 
 # %%
 from sklearn.dummy import DummyClassifier
@@ -87,15 +91,15 @@ print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
 # %% [markdown]
-# By comparison, a categorical encoding that does not assume any ordering in the
-# categories can lead to a significantly higher score:
+# By comparison, a categorical encoding that does not assume any ordering in
+# the categories can lead to a significantly higher score:
 
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
 model = make_pipeline(
-    OneHotEncoder(handle_unknown="ignore"),
-    LogisticRegression(max_iter=1000))
+    OneHotEncoder(categories=categories, drop="if_binary"),
+    LogisticRegression())
 scores = cross_val_score(model, data_categorical, target)
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")

@@ -21,26 +21,28 @@
 #
 # - The first question is to empirically evaluate whether scaling numerical
 #   feature is helpful or not;
-#
 # - The second question is to evaluate whether it is empirically better (both
 #   from a computational and a statistical perspective) to use integer coded or
 #   one-hot encoded categories.
+#
+# Hint: `HistGradientBoostingClassifier` does not yet support sparse input
+# data. You might want to use `OneHotEncoder(categories=categories,
+# sparse=False)` to force the use a dense representation as a workaround.
 
 # %%
 import pandas as pd
-from sklearn.model_selection import cross_val_score
-from sklearn.pipeline import make_pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.experimental import enable_hist_gradient_boosting
-from sklearn.ensemble import HistGradientBoostingClassifier
 
 df = pd.read_csv("../datasets/adult-census.csv")
 
 # %%
 target_name = "class"
 target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = df.drop(columns=[target_name, "fnlwgt", "education-num"])
+
+# %% [markdown]
+# As in the previous notebooks, we use the utility `make_column_selector`
+# to only select column with a specific data type. Besides, we list in
+# advance all categories for the categorical columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -61,6 +63,12 @@ categories = [
 
 # %%
 # %%time
+from sklearn.model_selection import cross_val_score
+from sklearn.pipeline import make_pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.experimental import enable_hist_gradient_boosting
+from sklearn.ensemble import HistGradientBoostingClassifier
 
 categorical_preprocessor = OrdinalEncoder(categories=categories)
 preprocessor = ColumnTransformer([
@@ -86,17 +94,14 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 #
 # For linear models, we have observed that integer coding of categorical
 # variables can be very detrimental. However for
-# `HistGradientBoostingClassifier` models, it does not seem to be the
-# case as the cross-validation of the reference pipeline with
-# `OrdinalEncoder` is good.
+# `HistGradientBoostingClassifier` models, it does not seem to be the case as
+# the cross-validation of the reference pipeline with `OrdinalEncoder` is good.
 #
 # Let's see if we can get an even better accuracy with `OneHotEncoder`.
-
-# %% [markdown]
+#
 # Reminder: in order to avoid creating fully correlated features it is
 # preferable to use a `OneHotEncoder` using the option `drop="if_binary"`.
-
-# %% [markdown]
+#
 # Hint: `HistGradientBoostingClassifier` does not yet support sparse input
 # data. You might want to use
 # `OneHotEncoder(categories=categories, sparse=False)` to force the use a

@@ -17,6 +17,7 @@
 #
 # In the previous notebook, we saw that hyperparameters can affect the
 # performance of a model. In this notebook, we will show:
+#
 # * how to tune these hyper-parameters;
 # * how to evaluate the model performance together with hyper-parameter
 #   tuning.
@@ -35,7 +36,7 @@ target = df[target_name]
 target
 
 # %%
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = df.drop(columns=[target_name, "fnlwgt", "education-num"])
 data.head()
 
 # %% [markdown]
@@ -49,7 +50,8 @@ df_train, df_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Then, we define the preprocessing pipeline to transform differently
-# the numerical and categorical data.
+# the numerical and categorical data. We use an ordinal since we will use a
+# tree-based model as a predictor.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -144,8 +146,7 @@ print(f"The best set of parameters is: "
 # The accuracy and the best parameters of the grid-searched pipeline are
 # similar to the ones we found in the previous exercise, where we searched the
 # best parameters "by hand" through a double for loop.
-
-# %% [markdown]
+#
 # In addition, we can inspect all results which are stored in the attribute
 # `cv_results_` of the grid-search. We will filter some specific columns
 # from these results
@@ -180,8 +181,9 @@ cv_results
 # %% [markdown]
 # With only 2 parameters, we might want to visualize the grid-search as a
 # heatmap. We need to transform our `cv_results` into a dataframe where:
-# - the rows will correspond to the learning-rate values
-# - the columns will correspond to the maximum number of leaf
+#
+# - the rows will correspond to the learning-rate values;
+# - the columns will correspond to the maximum number of leaf;
 # - the content of the dataframe will be the mean test scores.
 
 # %%
@@ -192,42 +194,52 @@ pivoted_cv_results = cv_results.pivot_table(
 pivoted_cv_results
 
 # %%
-import matplotlib.pyplot as plt
-from seaborn import heatmap
+import seaborn as sns
+sns.set_context("talk")
 
-ax = heatmap(pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7,
-             vmax=0.9)
+ax = sns.heatmap(pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7,
+                 vmax=0.9)
 ax.invert_yaxis()
 
 # %% [markdown]
 # The above tables highlights the following things:
 #
-# - for too high values of `learning_rate`, the performance of the model is degraded and adjusting the value of `max_leaf_nodes` cannot fix that problem;
-# - outside of this pathological region, we observe that the optimal choice of `max_leaf_nodes` depends on the value of `learning_rate`;
-# - in particular, we observe a "diagonal" of good models with an accuracy close to the maximal of 0.87: when the value of `max_leaf_nodes` is increased, one should increase the value of `learning_rate` accordingly to preserve a good accuracy.
+# * for too high values of `learning_rate`, the performance of the model is
+#   degraded and adjusting the value of `max_leaf_nodes` cannot fix that
+#   problem;
+# * outside of this pathological region, we observe that the optimal choice
+#   of `max_leaf_nodes` depends on the value of `learning_rate`;
+# * in particular, we observe a "diagonal" of good models with an accuracy
+#   close to the maximal of 0.87: when the value of `max_leaf_nodes` is
+#   increased, one should increase the value of `learning_rate` accordingly
+#   to preserve a good accuracy.
 #
-# The precise meaning of those two parameters will be explained in a latter notebook.
+# The precise meaning of those two parameters will be explained in a latter
+# notebook.
 #
-# For now we will note that, in general, **there is no unique optimal parameter setting**: 6 models out of the 16 parameter configuration reach the maximal accuracy (up to small random fluctuations caused by the sampling of the training set).
+# For now we will note that, in general, **there is no unique optimal parameter
+# setting**: 6 models out of the 16 parameter configuration reach the maximal
+# accuracy (up to small random fluctuations caused by the sampling of the
+# training set).
 
 # %% [markdown]
 # ## Hyper-parameter tuning with Random Search
-#
 #
 # With the `GridSearchCV` estimator, the parameters need to be specified
 # explicitly. We already mentioned that exploring a large number of values for
 # different parameters will be quickly untractable.
 #
 # Instead, we can randomly generate the parameter candidates. The
-# `RandomizedSearchCV` allows for such stochastic search. It is used similarly to
-# the `GridSearchCV` but the sampling distributions need to be specified
+# `RandomizedSearchCV` allows for such stochastic search. It is used similarly
+# to the `GridSearchCV` but the sampling distributions need to be specified
 # instead of the parameter values. For instance, we will draw candidates using
 # a log-uniform distribution also called reciprocal distribution. In addition,
 # we will optimize 3 other parameters:
-# - `max_iter`: it corresponds to the number of trees in the ensemble;
-# - `min_samples_leaf`: it corresponds to the minimum number of samples
-#   required in a leaf.
-# - `max_bins`: it corresponds to the maximum number of bins to construct the
+#
+# * `max_iter`: it corresponds to the number of trees in the ensemble;
+# * `min_samples_leaf`: it corresponds to the minimum number of samples
+#   required in a leaf;
+# * `max_bins`: it corresponds to the maximum number of bins to construct the
 #   histograms.
 
 # %%
@@ -251,7 +263,7 @@ param_distributions = {
     'classifier__learning_rate': reciprocal(0.001, 10),
     'classifier__max_leaf_nodes': reciprocal_int(2, 256),
     'classifier__min_samples_leaf': reciprocal_int(1, 100),
-    'classifier__max_bins': reciprocal_int(2, 255),}
+    'classifier__max_bins': reciprocal_int(2, 255)}
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=10,
     n_jobs=4, cv=5)
@@ -282,9 +294,9 @@ cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
 # %% [markdown]
-# In practice, a randomized hyper-parameter search is usually run with a large number of
-# iterations. In order to avoid the computation cost and still make a decent
-# analysis, we load the results obtained from a similar search with 200
+# In practice, a randomized hyper-parameter search is usually run with a large
+# number of iterations. In order to avoid the computation cost and still make a
+# decent analysis, we load the results obtained from a similar search with 200
 # iterations.
 
 # %%
@@ -317,7 +329,7 @@ fig = px.parallel_coordinates(
         "max_bins": np.log2,
         "min_samples_leaf": np.log10,
         "l2_regularization": np.log10,
-        "mean_test_score": lambda x: x,}),
+        "mean_test_score": lambda x: x}),
     color="mean_test_score",
     color_continuous_scale=px.colors.sequential.Viridis,
 )
@@ -341,7 +353,7 @@ fig.show()
 #
 #
 # Select the worst performing models (for instance models with a
-# "mean_test_score" lower than 0.7): what do have all these moels in common
+# "mean_test_score" lower than 0.7): what do have all these models in common
 # (choose one):
 #
 #
@@ -375,7 +387,7 @@ fig.show()
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
 #   exhaustively searching the best combination from a defined grid;
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
-#   drawing values candidates from some predefined distributions;
+#   drawing values candidates from some predefined distributions.
 #
 # ## Main take-away points
 #
@@ -383,4 +395,4 @@ fig.show()
 #   of parameters to search;
 # * a randomized-search will always run with a fixed given budget;
 # * when assessing the performance of a model, hyper-parameters search should
-#   be tuned on the training data of a predefined train test split;
+#   be tuned on the training data of a predefined train test split.

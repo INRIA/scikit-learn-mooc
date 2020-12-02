@@ -38,7 +38,7 @@ for train_index, test_index in cv.split(X_random):
 
 # %% [markdown]
 # By defining three splits, we will use three samples each time for testing and
-# 6 for training. `KFold` does not shuffle by default. It means that it will
+# six for training. `KFold` does not shuffle by default. It means that it will
 # select the three first samples for the testing set at the first split, then
 # the three next three samples for the second split, and the three next for the
 # last split. In the end, all samples have been used in testing at least once

@@ -52,39 +52,58 @@ from sklearn.model_selection import train_test_split
 data_numeric_train, data_numeric_test, target_train, target_test = \
     train_test_split(data_numeric, target, random_state=0)
 
+# %% [markdown]
+# We will first create as dummy classifier which will always predict the
+# high revenue class class, i.e. `" >50K"`, and check the performance.
+
 # %%
 from sklearn.dummy import DummyClassifier
 
+class_to_predict = " >50K"
 high_revenue_clf = DummyClassifier(strategy="constant",
-                                   constant=" >50K")
+                                   constant=class_to_predict)
 high_revenue_clf.fit(data_numeric_train, target_train)
 score = high_revenue_clf.score(data_numeric_test, target_test)
-print(f"{score:.3f}")
-
-# %%
-low_revenue_clf = DummyClassifier(strategy="constant",
-                                  constant=" <=50K")
-low_revenue_clf.fit(data_numeric_train, target_train)
-score = low_revenue_clf.score(data_numeric_test, target_test)
-print(f"{score:.3f}")
-
-
-# %%
-most_freq_revenue_clf = DummyClassifier(strategy="most_frequent")
-most_freq_revenue_clf.fit(data_numeric_train, target_train)
-score = most_freq_revenue_clf.score(data_numeric_test, target_test)
-print(f"{score:.3f}")
+print(f"Accuracy of a model predicting only high revenue: {score:.3f}")
 
 # %% [markdown]
-# So 81% accuracy is significantly better than 76% which is the score of a
-# baseline model that would always predict the most frequent class which is the
-# low revenue class: `" <=50K"`.
-#
-# In this dataset, we can see that the target classes are imbalanced: almost
-# 3/4 of the records are people with a revenue below 50K:
+# We clearly see that the score is below 0.5 which might be surprising at
+# first. We will now check the performance of a model which always predict the
+# low revenue class, i.e. `" <=50K"`.
+
+# %%
+class_to_predict = " <=50K"
+low_revenue_clf = DummyClassifier(strategy="constant",
+                                  constant=class_to_predict)
+low_revenue_clf.fit(data_numeric_train, target_train)
+score = low_revenue_clf.score(data_numeric_test, target_test)
+print(f"Accuracy of a model predicting only low revenue: {score:.3f}")
+
+# %% [markdown]
+# We observe that this model as an accuracy higher than 0.5. This due to the
+# fact that we have 3/4 of the target belonging to low-revenue class.
+
+# %% [markdown]
+# Therefore, any predictive model giving results below this dummy classifier
+# will not be helpful.
 
 # %%
 df["class"].value_counts()
 
 # %%
 (target == " <=50K").mean()
+
+# %% [markdown]
+# In practice, we could have the strategy `"most_frequent"` to predict the
+# class that appears the most in the training target.
+
+# %%
+most_freq_revenue_clf = DummyClassifier(strategy="most_frequent")
+most_freq_revenue_clf.fit(data_numeric_train, target_train)
+score = most_freq_revenue_clf.score(data_numeric_test, target_test)
+print(f"Accuracy of a model predicting the most frequent class: {score:.3f}")
+
+# %% [markdown]
+# So 81% accuracy is significantly better than 76% which is the score of a
+# baseline model that would always predict the most frequent class which is the
+# low revenue class: `" <=50K"`.

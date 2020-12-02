@@ -894,60 +894,51 @@ models.</p>
 </div>
 </div>
 </div>
+<p>We will first create as dummy classifier which will always predict the
+high revenue class class, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&gt;50K&quot;</span></code>, and check the performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
+<span class="n">class_to_predict</span> <span class="o">=</span> <span class="s2">&quot; &gt;50K&quot;</span>
 <span class="n">high_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
-                                   <span class="n">constant</span><span class="o">=</span><span class="s2">&quot; &gt;50K&quot;</span><span class="p">)</span>
+                                   <span class="n">constant</span><span class="o">=</span><span class="n">class_to_predict</span><span class="p">)</span>
 <span class="n">high_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">high_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting only high revenue: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.241
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of a model predicting only high revenue: 0.241
 </pre></div>
 </div>
 </div>
 </div>
+<p>We clearly see that the score is below 0.5 which might be surprising at
+first. We will now check the performance of a model which always predict the
+low revenue class, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&lt;=50K&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">low_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
-                                  <span class="n">constant</span><span class="o">=</span><span class="s2">&quot; &lt;=50K&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">class_to_predict</span> <span class="o">=</span> <span class="s2">&quot; &lt;=50K&quot;</span>
+<span class="n">low_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+                                  <span class="n">constant</span><span class="o">=</span><span class="n">class_to_predict</span><span class="p">)</span>
 <span class="n">low_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">low_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting only low revenue: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.759
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of a model predicting only low revenue: 0.759
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">most_freq_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
-<span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.759
-</pre></div>
-</div>
-</div>
-</div>
-<p>So 81% accuracy is significantly better than 76% which is the score of a
-baseline model that would always predict the most frequent class which is the
-low revenue class: <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&lt;=50K&quot;</span></code>.</p>
-<p>In this dataset, we can see that the target classes are imbalanced: almost
-3/4 of the records are people with a revenue below 50K:</p>
+<p>We observe that this model as an accuracy higher than 0.5. This due to the
+fact that we have 3/4 of the target belonging to low-revenue class.</p>
+<p>Therefore, any predictive model giving results below this dummy classifier
+will not be helpful.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -974,6 +965,26 @@ Name: class, dtype: int64
 </div>
 </div>
 </div>
+<p>In practice, we could have the strategy <code class="docutils literal notranslate"><span class="pre">&quot;most_frequent&quot;</span></code> to predict the
+class that appears the most in the training target.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">most_freq_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting the most frequent class: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of a model predicting the most frequent class: 0.759
+</pre></div>
+</div>
+</div>
+</div>
+<p>So 81% accuracy is significantly better than 76% which is the score of a
+baseline model that would always predict the most frequent class which is the
+low revenue class: <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&lt;=50K&quot;</span></code>.</p>
 </div>
 
     <script type="text/x-thebe-config">

@@ -847,12 +847,10 @@ parameters and a set of training data. These internal parameters are called
 hyper-parameters and are specific for each family of models. In addition, a
 specific set of hyper-parameters are optimal for a specific dataset and thus
 they need to be optimized. In this notebook we will use the words
-“hyper-parameters” and “parameters” interchangeably</p>
-<p>This notebook shows:</p>
-<ul class="simple">
-<li><p>the influence of changing model hyper-parameters;</p></li>
-</ul>
-<p>Let us reload the dataset as we did previously:</p>
+“hyper-parameters” and “parameters” interchangeably.</p>
+<p>This notebook shows the influence of changing model hyper-parameters.</p>
+<p>We will reload the adult census dataset and ignore some of the columns
+as previously done in previous notebooks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -889,7 +887,7 @@ Name: class, Length: 48842, dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -916,7 +914,6 @@ Name: class, Length: 48842, dtype: object
       <th>age</th>
       <th>workclass</th>
       <th>education</th>
-      <th>education-num</th>
       <th>marital-status</th>
       <th>occupation</th>
       <th>relationship</th>
@@ -934,7 +931,6 @@ Name: class, Length: 48842, dtype: object
       <td>25</td>
       <td>Private</td>
       <td>11th</td>
-      <td>7</td>
       <td>Never-married</td>
       <td>Machine-op-inspct</td>
       <td>Own-child</td>
@@ -950,7 +946,6 @@ Name: class, Length: 48842, dtype: object
       <td>38</td>
       <td>Private</td>
       <td>HS-grad</td>
-      <td>9</td>
       <td>Married-civ-spouse</td>
       <td>Farming-fishing</td>
       <td>Husband</td>
@@ -966,7 +961,6 @@ Name: class, Length: 48842, dtype: object
       <td>28</td>
       <td>Local-gov</td>
       <td>Assoc-acdm</td>
-      <td>12</td>
       <td>Married-civ-spouse</td>
       <td>Protective-serv</td>
       <td>Husband</td>
@@ -982,7 +976,6 @@ Name: class, Length: 48842, dtype: object
       <td>44</td>
       <td>Private</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Married-civ-spouse</td>
       <td>Machine-op-inspct</td>
       <td>Husband</td>
@@ -998,7 +991,6 @@ Name: class, Length: 48842, dtype: object
       <td>18</td>
       <td>?</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Never-married</td>
       <td>?</td>
       <td>Own-child</td>
@@ -1025,7 +1017,9 @@ Name: class, Length: 48842, dtype: object
 </div>
 </div>
 <p>Then, we define the preprocessing pipeline to transform differently
-the numerical and categorical data.</p>
+the numerical and categorical data, identically to the previous notebook.
+We will use an ordinal encoder for the categories because we will use an
+histogram gradient-boosting as predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -1079,8 +1073,8 @@ predict whether or not a person earns more than 50,000 dollars a year.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the gradient boosting pipeline is: 0.88
-CPU times: user 1.35 s, sys: 63.1 ms, total: 1.42 s
-Wall time: 1.42 s
+CPU times: user 1.39 s, sys: 100 ms, total: 1.49 s
+Wall time: 1.49 s
 </pre></div>
 </div>
 </div>
@@ -1136,14 +1130,15 @@ Wall time: 1.42 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the gradient boosting pipeline is: 0.70
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the gradient boosting pipeline is: 0.72
 </pre></div>
 </div>
 </div>
 </div>
-<p>that allows you to change the parameter of a model after it has been created.
-For example, we can set the <code class="docutils literal notranslate"><span class="pre">learning_rate=1e-3</span></code> and check that we get the
-same score as previously:</p>
+<p>Actually scikit-learn estimators have a <code class="docutils literal notranslate"><span class="pre">set_params</span></code> method that allows you
+to change the parameter of a model after it has been created. For example, we
+can set the <code class="docutils literal notranslate"><span class="pre">learning_rate=1e-3</span></code> and check that we get the same score as
+previously:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
@@ -1210,7 +1205,7 @@ classifier__warm_start
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">.get_params</span></code> returns a <code class="docutils literal notranslate"><span class="pre">dict</span></code> whose keys are the parameter names and whose
+<p><code class="docutils literal notranslate"><span class="pre">.get_params()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">dict</span></code> whose keys are the parameter names and whose
 values are the parameter values. If you want to get the value of a single
 parameter, for example <code class="docutils literal notranslate"><span class="pre">classifier__learning_rate</span></code>, you can use:</p>
 <div class="cell docutils container">
@@ -1227,9 +1222,9 @@ parameter, for example <code class="docutils literal notranslate"><span class="p
 </div>
 <p>In this notebook we have seen:</p>
 <ul class="simple">
-<li><p>how hyper-parameters can affect the performance of a model</p></li>
+<li><p>how hyper-parameters can affect the performance of a model;</p></li>
 <li><p>how to use <code class="docutils literal notranslate"><span class="pre">get_params</span></code> and <code class="docutils literal notranslate"><span class="pre">set_params</span></code> to get the parameters of a model
-and set them</p></li>
+and set them.</p></li>
 </ul>
 </div>
 

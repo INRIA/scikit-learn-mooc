@@ -20,13 +20,13 @@
 # hyper-parameters and are specific for each family of models. In addition, a
 # specific set of hyper-parameters are optimal for a specific dataset and thus
 # they need to be optimized. In this notebook we will use the words
-# "hyper-parameters" and "parameters" interchangeably
+# "hyper-parameters" and "parameters" interchangeably.
 #
-# This notebook shows:
-# * the influence of changing model hyper-parameters;
+# This notebook shows the influence of changing model hyper-parameters.
 
 # %% [markdown]
-# Let us reload the dataset as we did previously:
+# We will reload the adult census dataset and ignore some of the columns
+# as previously done in previous notebooks.
 
 # %%
 import pandas as pd
@@ -39,7 +39,7 @@ target = df[target_name]
 target
 
 # %%
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = df.drop(columns=[target_name, "fnlwgt", "education-num"])
 data.head()
 
 # %% [markdown]
@@ -53,7 +53,9 @@ df_train, df_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Then, we define the preprocessing pipeline to transform differently
-# the numerical and categorical data.
+# the numerical and categorical data, identically to the previous notebook.
+# We will use an ordinal encoder for the categories because we will use an
+# histogram gradient-boosting as predictive model.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -139,10 +141,11 @@ print(
 # 4. Try to progressively increase the value of `max_leaf_nodes` to 256 by
 # taking powers of 2. What do you observe?
 
-# %% [markdown] Actually scikit-learn estimators have a `set_params` method
-# that allows you to change the parameter of a model after it has been created.
-# For example, we can set the `learning_rate=1e-3` and check that we get the
-# same score as previously:
+# %% [markdown]
+# Actually scikit-learn estimators have a `set_params` method that allows you
+# to change the parameter of a model after it has been created. For example, we
+# can set the `learning_rate=1e-3` and check that we get the same score as
+# previously:
 
 # %%
 model.set_params(classifier__learning_rate=1e-3)
@@ -157,8 +160,7 @@ print(
 # form `<model_name>__<parameter_name>` (note the double underscore in the
 # middle). In our case, `classifier` comes from the `Pipeline` definition and
 # `learning_rate` is the parameter name of `HistGradientBoostingClassifier`.
-
-# %% [markdown]
+#
 # In general, you can use the `get_params` method on scikit-learn models to
 # list all the parameters with their values. For example, if you want to
 # get all the parameter names, you can use:
@@ -168,7 +170,7 @@ for parameter in model.get_params():
     print(parameter)
 
 # %% [markdown]
-# `.get_params` returns a `dict` whose keys are the parameter names and whose
+# `.get_params()` returns a `dict` whose keys are the parameter names and whose
 # values are the parameter values. If you want to get the value of a single
 # parameter, for example `classifier__learning_rate`, you can use:
 
@@ -177,6 +179,7 @@ model.get_params()['classifier__learning_rate']
 
 # %% [markdown]
 # In this notebook we have seen:
-# - how hyper-parameters can affect the performance of a model
+#
+# - how hyper-parameters can affect the performance of a model;
 # - how to use `get_params` and `set_params` to get the parameters of a model
-#   and set them
+#   and set them.

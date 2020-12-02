@@ -876,6 +876,7 @@ ahead of time:</p>
 </div>
 </div>
 </div>
+<p>We can select the categorical based on the <code class="docutils literal notranslate"><span class="pre">object</span></code> dtype.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -887,11 +888,13 @@ ahead of time:</p>
 </div>
 </div>
 </div>
+<p>As we saw in the lecture notebook, one of the column has rare categories.
+Thus, we can make sure to not run into trouble in the cross-validation by
+specifying the known categories in advance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">categorical_columns</span><span class="p">]]</span>
-
 <span class="n">categories</span>
 </pre></div>
 </div>
@@ -931,6 +934,8 @@ ahead of time:</p>
 </div>
 </div>
 </div>
+<p>Now, let’s make our predictive pipeline by encoding categories with an
+ordinal encoder before to feed a logistic regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>

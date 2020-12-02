@@ -45,6 +45,9 @@ target_name = "class"
 target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
 
+# %% [markdown]
+# We can select the categorical based on the `object` dtype.
+
 # %%
 from sklearn.compose import make_column_selector as selector
 
@@ -52,11 +55,19 @@ categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
+# %% [markdown]
+# As we saw in the lecture notebook, one of the column has rare categories.
+# Thus, we can make sure to not run into trouble in the cross-validation by
+# specifying the known categories in advance.
+
 # %%
 categories = [
     data[column].unique() for column in data[categorical_columns]]
-
 categories
+
+# %% [markdown]
+# Now, let's make our predictive pipeline by encoding categories with an
+# ordinal encoder before to feed a logistic regression.
 
 # %%
 from sklearn.model_selection import cross_val_score

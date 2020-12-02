@@ -15,7 +15,7 @@
 # %% [markdown]
 # # 📝 Exercise 01
 #
-# The goal of this exercise is to evalutate the impact of using an arbitrary
+# The goal of this exercise is to evaluatte the impact of using an arbitrary
 # integer encoding for categorical variables along with a linear
 # classification model such as Logistic Regression.
 #
@@ -44,6 +44,9 @@ df = pd.read_csv("../datasets/adult-census.csv")
 target_name = "class"
 target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
+
+# %% [markdown]
+# We can select the categorical based on the `object` dtype.
 
 # %%
 from sklearn.compose import make_column_selector as selector

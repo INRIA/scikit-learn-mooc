@@ -892,11 +892,11 @@ quantity represented by a real or integer number. These variables can be
 naturally handled by machine learning algorithms that are typically composed
 of a sequence of arithmetic instructions such as additions and
 multiplications.</p>
-<p>In contrast, categorical variables have discrete values, typically represented
-by string labels taken from a finite list of possible choices. For instance,
-the variable <code class="docutils literal notranslate"><span class="pre">native-country</span></code> in our dataset is a categorical variable because
-it encodes the data using a finite list of possible countries (along with the
-<code class="docutils literal notranslate"><span class="pre">?</span></code> symbol when this information is missing):</p>
+<p>In contrast, categorical variables have discrete values, typically
+represented by string labels taken from a finite list of possible choices.
+For instance, the variable <code class="docutils literal notranslate"><span class="pre">native-country</span></code> in our dataset is a categorical
+variable because it encodes the data using a finite list of possible
+countries (along with the <code class="docutils literal notranslate"><span class="pre">?</span></code> symbol when this information is missing):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;native-country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -939,8 +939,8 @@ it encodes the data using a finite list of possible countries (along with the
  Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
- Outlying-US(Guam-USVI-etc)       23
  Yugoslavia                       23
+ Outlying-US(Guam-USVI-etc)       23
  Laos                             23
  Scotland                         21
  Honduras                         20
@@ -951,9 +951,8 @@ Name: native-country, dtype: int64
 </div>
 </div>
 </div>
-<p>In the remainder of this section, we will present different strategies to
-encode categorical data into numerical data which can be used by a
-machine-learning algorithm.</p>
+<p>One might question how could we easily recognize categorical columns. One
+useful tip is to look at the data type of each column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
@@ -979,6 +978,15 @@ dtype: object
 </div>
 </div>
 </div>
+<p>If we look at the “native-country” column data type, we observe it is of
+<code class="docutils literal notranslate"><span class="pre">object</span></code> dtype. The reason is that categories are represented with string.</p>
+<p>Sometimes, categorical columns could also be encoded with integer. In this
+case, looking at the data type will not be enough. One needs to investigate
+the dataset and check the meaning of the columns.</p>
+<p>Luckily, categorical columns only corresponds to the object dtype columns.
+Scikit-learn provides a tools allowing to select the column based on their
+data types. It is called <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>. We will illustrate how to
+use this helper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -1002,6 +1010,9 @@ dtype: object
 </div>
 </div>
 </div>
+<p>We can create the selector by passing the data type to include or exclude.
+Once the selector created, we can pass the input dataset and the name of
+the selected columns will be returned.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_categorical</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">categorical_columns</span><span class="p">]</span>
@@ -1100,9 +1111,7 @@ dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The dataset is composed of </span><span class="si">{</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset is composed of </span><span class="si">{</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1112,6 +1121,9 @@ dtype: object
 </div>
 </div>
 </div>
+<p>In the remainder of this section, we will present different strategies to
+encode categorical data into numerical data which can be used by a
+machine-learning algorithm.</p>
 <div class="section" id="encoding-ordinal-categories">
 <h3>Encoding ordinal categories<a class="headerlink" href="#encoding-ordinal-categories" title="Permalink to this headline">¶</a></h3>
 <p>The most intuitive strategy is to encode each category with a different
@@ -1157,17 +1169,17 @@ integer representation can lead the downstream models to make the assumption
 that the categories are ordered: 0 is smaller than 1 which is smaller than 2,
 etc.</p>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> uses a lexicographical strategy to map string
-category labels to integers. This strategy is completely arbitrary and often be
-meaningless. For instance suppose the dataset has a categorical variable named
-“size” with categories such as “S”, “M”, “L”, “XL”. We would like the integer
-representation to respect the meaning of the sizes by mapping them to increasing
-integers such as 0, 1, 2, 3. However lexicographical strategy used by default
-would map the labels “S”, “M”, “L”, “XL” to 2, 1, 0, 3.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a “categories” constructor argument to pass
-in the correct ordering explicitly.</p>
-<p>If a categorical variable does not carry any meaningful order information then
-this encoding might be misleading to downstream statistical models and you might
-consider using one-hot encoding instead (see below).</p>
+category labels to integers. This strategy is completely arbitrary and often
+be meaningless. For instance suppose the dataset has a categorical variable
+named “size” with categories such as “S”, “M”, “L”, “XL”. We would like the
+integer representation to respect the meaning of the sizes by mapping them to
+increasing integers such as 0, 1, 2, 3. However lexicographical strategy used
+by default would map the labels “S”, “M”, “L”, “XL” to 2, 1, 0, 3.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a “categories” constructor argument to
+pass in the correct ordering explicitly.</p>
+<p>If a categorical variable does not carry any meaningful order information
+then this encoding might be misleading to downstream statistical models and
+you might consider using one-hot encoding instead (see below).</p>
 <p>Note however that the impact of violating this ordering assumption is really
 dependent on the downstream models (for instance linear models are much more
 sensitive than models built from a ensemble of decision trees).</p>
@@ -1178,13 +1190,12 @@ sensitive than models built from a ensemble of decision trees).</p>
 models to make a false assumption about the ordering of categories. For a
 given feature, it will create as many new columns as there are possible
 categories. For a given sample, the value of the column corresponding to the
-category will be set to <code class="docutils literal notranslate"><span class="pre">1</span></code> while all the columns of the other categories will
-be set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+category will be set to <code class="docutils literal notranslate"><span class="pre">1</span></code> while all the columns of the other categories
+will be set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The dataset is composed of </span><span class="si">{</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span>
-<span class="p">)</span>
+    <span class="sa">f</span><span class="s2">&quot;The dataset is composed of </span><span class="si">{</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 <span class="n">data_categorical</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1523,35 +1534,163 @@ provided by the encoder object:</p>
 </div>
 <p>Look at how the “workclass” variable of the first 3 records has been encoded
 and compare this to the original string representation.</p>
-<p>The number of features after the encoding is more than 10 times larger than in the
-original data because some variables such as <code class="docutils literal notranslate"><span class="pre">occupation</span></code> and <code class="docutils literal notranslate"><span class="pre">native-country</span></code>
-have many possible categories.</p>
+<p>The number of features after the encoding is more than 10 times larger than
+in the original data because some variables such as <code class="docutils literal notranslate"><span class="pre">occupation</span></code> and
+<code class="docutils literal notranslate"><span class="pre">native-country</span></code> have many possible categories.</p>
 <p>We can now integrate this encoder inside a machine learning pipeline like we
-did with numerical data: let’s train a linear classifier on
-the encoded data and check the performance of this machine learning pipeline
-using cross-validation.</p>
+did with numerical data: let’s train a linear classifier on the encoded data
+and check the performance of this machine learning pipeline using
+cross-validation.</p>
+<p>Before to create the pipeline, we have to linger on the <code class="docutils literal notranslate"><span class="pre">native-country</span></code>.
+Let’s recall some statistics regarding this column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">),</span>
-    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;native-country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> United-States                 43832
+ Mexico                          951
+ ?                               857
+ Philippines                     295
+ Germany                         206
+ Puerto-Rico                     184
+ Canada                          182
+ El-Salvador                     155
+ India                           151
+ Cuba                            138
+ England                         127
+ China                           122
+ South                           115
+ Jamaica                         106
+ Italy                           105
+ Dominican-Republic              103
+ Japan                            92
+ Guatemala                        88
+ Poland                           87
+ Vietnam                          86
+ Columbia                         85
+ Haiti                            75
+ Portugal                         67
+ Taiwan                           65
+ Iran                             59
+ Nicaragua                        49
+ Greece                           49
+ Peru                             46
+ Ecuador                          45
+ France                           38
+ Ireland                          37
+ Thailand                         30
+ Hong                             30
+ Cambodia                         28
+ Trinadad&amp;Tobago                  27
+ Yugoslavia                       23
+ Outlying-US(Guam-USVI-etc)       23
+ Laos                             23
+ Scotland                         21
+ Honduras                         20
+ Hungary                          19
+ Holand-Netherlands                1
+Name: native-country, dtype: int64
 </pre></div>
 </div>
 </div>
 </div>
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">Holand-Netherlands</span></code> category is occuring rarely. This will
+be a problem during cross-validation: if the sample is in the test set then
+the classifier would not have seen the category during training and will not
+be able to encode it.</p>
+<p>In scikit-learn, there is two solutions to bypass this issue:</p>
+<ul class="simple">
+<li><p>list all the possible categories and provide it to the <code class="docutils literal notranslate"><span class="pre">categories</span></code>;</p></li>
+<li><p>set the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code>.</p></li>
+</ul>
+<p>Here, we will use the former strategy because we are going to use it as well
+for the ordinal encoder later on.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_categorical</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+              <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">data_categorical</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now create our machine learning pipeline.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="s2">&quot;if_binary&quot;</span><span class="p">),</span>
+    <span class="n">LogisticRegression</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can check the model’s performance only using the categorical
+columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 <span class="n">scores</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.83242911, 0.83570478, 0.82862408, 0.83343571, 0.83466421])
 </pre></div>
 </div>
 </div>

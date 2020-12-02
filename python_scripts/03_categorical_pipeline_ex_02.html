@@ -923,9 +923,10 @@ reference:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
 
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">)</span>
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">),</span>
-     <span class="n">categorical_columns</span><span class="p">),],</span> <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
@@ -936,10 +937,10 @@ reference:</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The different scores obtained are: 
-[0.87224895 0.87245368 0.872543   0.87428337 0.87848075]
-The accuracy is: 0.874 +- 0.002
-CPU times: user 6.54 s, sys: 136 ms, total: 6.67 s
-Wall time: 6.67 s
+[0.87276077 0.87143003 0.87192875 0.87305487 0.87817363]
+The accuracy is: 0.873 +- 0.002
+CPU times: user 6.74 s, sys: 144 ms, total: 6.89 s
+Wall time: 6.89 s
 </pre></div>
 </div>
 </div>
@@ -966,20 +967,10 @@ case as the cross-validation of the reference pipeline with
 <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is good.</p>
 <p>Let’s see if we can get an even better accuracy with <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>.</p>
 <p>Reminder: in order to avoid creating fully correlated features it is
-preferable to use a <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> for binary features (in this case <code class="docutils literal notranslate"><span class="pre">sex</span></code>)
-rather than a <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binary_encoding_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span>
-<span class="n">one_hot_encoding_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">categorical_columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">binary_encoding_columns</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
+preferable to use a <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> using the option <code class="docutils literal notranslate"><span class="pre">drop=&quot;if_binary&quot;</span></code>.</p>
 <p>Hint: <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> does not yet support sparse input
 data. You might want to use
-<code class="docutils literal notranslate"><span class="pre">OneHotEncoder(handle_unknown=&quot;ignore&quot;,</span> <span class="pre">sparse=False)</span></code> to force the use a
+<code class="docutils literal notranslate"><span class="pre">OneHotEncoder(categories=categories,</span> <span class="pre">sparse=False)</span></code> to force the use a
 dense representation as a workaround.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

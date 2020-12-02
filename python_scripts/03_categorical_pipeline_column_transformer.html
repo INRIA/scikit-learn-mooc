@@ -892,59 +892,56 @@ variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot
 </div>
 </div>
 </div>
+<p>Besides, we will list before hand the categories for each categorical column
+to avoid issue with rare categories.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+              <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">categorical_columns</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="columntransformer">
 <h2>ColumnTransformer<a class="headerlink" href="#columntransformer" title="Permalink to this headline">¶</a></h2>
 <p>In the previous sections, we saw that we need to treat data differently
 depending on their nature (i.e. numerical or categorical).</p>
-<p>Scikit-learn provides a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> class which will send
-specific columns to a specific transformer, making it easy to fit a single
-predictive model on a dataset that combines both kinds of variables together
+<p>Scikit-learn provides a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> class which will send specific
+columns to a specific transformer, making it easy to fit a single predictive
+model on a dataset that combines both kinds of variables together
 (heterogeneously typed tabular data).</p>
 <p>We can first define the columns depending on their data type:</p>
 <ul class="simple">
-<li><p><strong>binary encoding</strong> will be applied to categorical columns with only two
-possible values (e.g. sex=male or sex=female in this example). Each binary
-categorical columns will be mapped to one numerical columns with 0 or 1
-values.</p></li>
-<li><p><strong>one-hot encoding</strong> will be applied to categorical columns with more that
-two possible categories. This encoding will create one additional column for
-each possible categorical value.</p></li>
+<li><p><strong>one-hot encoding</strong> will be applied to categorical columns. Besides, we
+will use the option <code class="docutils literal notranslate"><span class="pre">drop=&quot;if_binary&quot;</span></code> to drop one of the column since the
+information will be correlated.</p></li>
 <li><p><strong>numerical scaling</strong> numerical features which will be standardized.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binary_encoding_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span>
-<span class="n">one_hot_encoding_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">categorical_columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">binary_encoding_columns</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>We can now create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying a list of triplet
-(preprocessor name, transformer, columns). Finally, we can define a pipeline
-to stack this “preprocessor” with our classifier (logistic regression).</p>
+(preprocessor name, transformer, columns).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
+                                         <span class="n">drop</span><span class="o">=</span><span class="s2">&quot;if_binary&quot;</span><span class="p">)</span>
+<span class="n">numerical_preprocessor</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;binary-encoder&#39;</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">(),</span> <span class="n">binary_encoding_columns</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;one-hot-encoder&#39;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">),</span>
-     <span class="n">one_hot_encoding_columns</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;standard-scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">numerical_columns</span><span class="p">)])</span>
+    <span class="p">(</span><span class="s1">&#39;one-hot-encoder&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;standard-scaler&#39;</span><span class="p">,</span> <span class="n">numerical_preprocessor</span><span class="p">,</span> <span class="n">numerical_columns</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Finally, we can define a pipeline to stack this “preprocessor” with our
+classifier (logistic regression).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -960,14 +957,16 @@ view of the pipelines.</p>
 </div>
 </div>
 </div>
-<p>The final model is more complex than the previous models but still follows the
-same API:</p>
+<p>The final model is more complex than the previous models but still follows
+the same API:</p>
 <ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to preprocess the data then train the classifier;</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to preprocess the data then train the
+classifier;</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method can make predictions on new data;</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">score</span></code> method is used to predict on the test data and compare the
 predictions to the expected test labels to compute the accuracy.</p></li>
 </ul>
+<p>Let’s start by splitting our data into a train and test sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -978,13 +977,30 @@ predictions to the expected test labels to compute the accuracy.</p></li>
 </div>
 </div>
 </div>
+<p>Now, we can train the model on the train set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
 </div>
+</div>
+</div>
+<p>Now, we can use the raw dataset directly to the pipeline. Indeed, we don’t
+need to make any processing. All the preprocessing will be handle when
+calling <code class="docutils literal notranslate"><span class="pre">predict</span></code>. We will give an example by predicting on the five first
+sample from the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1139,6 +1155,8 @@ Name: class, dtype: object
 </div>
 </div>
 </div>
+<p>We can get the accuracy score by calling directly the <code class="docutils literal notranslate"><span class="pre">score</span></code> method. We will
+compute the score on the entire test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
@@ -1146,13 +1164,13 @@ Name: class, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8578331013021047
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8576693145524527
 </pre></div>
 </div>
 </div>
 </div>
-<p>This model can also be cross-validated as usual (instead of using a single
-train-test split):</p>
+<p>This model can also be cross-validated as we previously did (instead of using
+a single train-test split):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
@@ -1163,7 +1181,57 @@ train-test split):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.85105947, 0.8498311 , 0.84756347, 0.85268223, 0.85513923])
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.85136657, 0.84993346, 0.84776822, 0.85268223, 0.85503686])
 </pre></div>
 </div>
 </div>
@@ -1175,7 +1243,7 @@ train-test split):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy is: 0.851 +- 0.003
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy is: 0.851 +- 0.002
 </pre></div>
 </div>
 </div>
@@ -1190,33 +1258,31 @@ isolation.</p>
 <strong>small</strong> to deploy, <strong>fast</strong> to predict and give a <strong>good baseline</strong>.</p>
 <p>However, it is often useful to check whether more complex models such as an
 ensemble of decision trees can lead to higher predictive performance.</p>
-<p>In the following cell we try a scalable implementation of the <strong>Gradient Boosting
-Machine</strong> algorithm. For this class of models, we know that contrary to linear
-models, it is <strong>useless to scale the numerical features</strong> and furthermore it is
-both safe and significantly more computationally efficient to use an arbitrary
-<strong>integer encoding for the categorical variables</strong> even if the ordering is
-arbitrary. Therefore we adapt the preprocessing pipeline as follows:</p>
+<p>In the following cell we try a scalable implementation of the <strong>Gradient
+Boosting Machine</strong> algorithm. For this class of models, we know that contrary
+to linear models, it is <strong>useless to scale the numerical features</strong> and
+furthermore it is both safe and significantly more computationally efficient
+to use an arbitrary <strong>integer encoding for the categorical variables</strong> even
+if the ordering is arbitrary. Therefore we adapt the preprocessing pipeline
+as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
-<span class="c1"># For each categorical column, extract the list of all possible categories</span>
-<span class="c1"># in some arbritrary order.</span>
-<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">categorical_columns</span>
-<span class="p">]</span>
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">)</span>
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">),</span>
-     <span class="n">categorical_columns</span><span class="p">)],</span> <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Now that we created our model, we can check the performance of the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
@@ -1225,8 +1291,8 @@ arbitrary. Therefore we adapt the preprocessing pipeline as follows:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.13 s, sys: 51.9 ms, total: 1.18 s
-Wall time: 1.18 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.13 s, sys: 44.1 ms, total: 1.17 s
+Wall time: 1.17 s
 </pre></div>
 </div>
 </div>
@@ -1238,23 +1304,25 @@ Wall time: 1.18 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8796167390058144
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8786340185079027
 </pre></div>
 </div>
 </div>
 </div>
 <p>We can observe that we get significantly higher accuracies with the Gradient
-Boosting model. This is often what we observe whenever the dataset has a large
-number of samples and limited number of informative features (e.g. less than
-1000) with a mix of numerical and categorical variables.</p>
-<p>This explains why Gradient Boosted Machines are very popular among datascience
-practitioners who work with tabular data.</p>
+Boosting model. This is often what we observe whenever the dataset has a
+large number of samples and limited number of informative features (e.g. less
+than 1000) with a mix of numerical and categorical variables.</p>
+<p>This explains why Gradient Boosted Machines are very popular among
+datascience practitioners who work with tabular data.</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
-<li><p>used a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to apply different preprocessing for categorical and numerical variables</p></li>
-<li><p>used a pipeline to chain the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> preprocessing and logistic regresssion fitting</p></li>
+<li><p>used a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to apply different preprocessing for
+categorical and numerical variables;</p></li>
+<li><p>used a pipeline to chain the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> preprocessing and
+logistic regresssion fitting;</p></li>
 <li><p>seen that <strong>gradient boosting methods</strong> can outperforms the basic linear
-approach</p></li>
+approach.</p></li>
 </ul>
 </div>
 </div>

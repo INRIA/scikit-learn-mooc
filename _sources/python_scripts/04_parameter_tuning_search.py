@@ -66,9 +66,8 @@ categories = [
 categorical_preprocessor = OrdinalEncoder(categories=categories)
 
 preprocessor = ColumnTransformer([
-    ('cat-preprocessor', categorical_preprocessor,
-     categorical_columns),], remainder='passthrough',
-                                 sparse_threshold=0)
+    ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    remainder='passthrough', sparse_threshold=0)
 
 # %% [markdown]
 # Finally, we use a tree-based classifier (i.e. histogram gradient-boosting) to

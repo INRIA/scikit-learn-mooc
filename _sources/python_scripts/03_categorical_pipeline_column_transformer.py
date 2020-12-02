@@ -19,7 +19,7 @@
 # In this notebook, we will present typical ways to deal with **categorical
 # variables**, namely **ordinal encoding** and **one-hot encoding**.
 #
-# Let us reload the dataset
+# We will load the entire adult census dataset.
 
 # %%
 import pandas as pd
@@ -31,8 +31,18 @@ target = df[target_name]
 
 data = df.drop(columns=[target_name, "fnlwgt"])
 
+# ## [markdown]
+# We recall that `"education-num"` and `"education"` columns contains the same
+# information. In the previous notebook, we drop `"education-num"` and only
+# use the latter column. We will do the same processing here.
+
+# %%
+data = data.drop(columns="education-num")
+
 # %% [markdown]
-# We separate categorical and numerical variables as we did previously
+# We separate categorical and numerical variables using the `object` data types
+# as we previously saw that it only corresponds to categorical columns. We make
+# use of the `make_column_selector` to select the corresponding columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -45,7 +55,8 @@ categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
 # Besides, we will list before hand the categories for each categorical column
-# to avoid issue with rare categories.
+# to avoid issue with rare categories when evaluating the model during the
+# cross-validation.
 
 # %%
 categories = [data[column].unique()
@@ -66,23 +77,29 @@ categories = [data[column].unique()
 #
 # * **one-hot encoding** will be applied to categorical columns. Besides, we
 #   will use the option `drop="if_binary"` to drop one of the column since the
-#   information will be correlated.
+#   information will be correlated;
 # * **numerical scaling** numerical features which will be standardized.
 
 
 # %% [markdown]
 # We can now create our `ColumnTransfomer` by specifying a list of triplet
-# (preprocessor name, transformer, columns).
+# (preprocessor name, transformer, columns). First, let's start by creating
+# a transformer for the numerical and categorical part as we did in the
+# previous notebooks.
 
 # %%
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.compose import ColumnTransformer
-from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import make_pipeline
 
 categorical_preprocessor = OneHotEncoder(categories=categories,
                                          drop="if_binary")
 numerical_preprocessor = StandardScaler()
+
+# %% [markdown]
+# Now, we can associate each of these preprocessors with their respective
+# columns.
+
+# %%
+from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer([
     ('one-hot-encoder', categorical_preprocessor, categorical_columns),
@@ -93,6 +110,8 @@ preprocessor = ColumnTransformer([
 # classifier (logistic regression).
 
 # %%
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
 model = make_pipeline(preprocessor, LogisticRegression())
 
 # %% [markdown]
@@ -129,7 +148,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 _ = model.fit(data_train, target_train)
 
 # %% [markdown]
-# Now, we can use the raw dataset directly to the pipeline. Indeed, we don't
+# Then, we can use the raw dataset directly to the pipeline. Indeed, we don't
 # need to make any processing. All the preprocessing will be handle when
 # calling `predict`. We will give an example by predicting on the five first
 # sample from the test set.
@@ -164,9 +183,8 @@ scores
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
 # %% [markdown]
-# The compound model has a higher predictive accuracy than the
-# two models that used numerical and categorical variables in
-# isolation.
+# The compound model has a higher predictive accuracy than the two models that
+# used numerical and categorical variables in isolation.
 
 # %% [markdown]
 # ## Fitting a more powerful model

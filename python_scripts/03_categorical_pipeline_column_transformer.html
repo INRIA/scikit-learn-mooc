@@ -863,7 +863,7 @@
 <h1>Using numerical and categorical variables together<a class="headerlink" href="#using-numerical-and-categorical-variables-together" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we will present typical ways to deal with <strong>categorical
 variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot encoding</strong>.</p>
-<p>Let us reload the dataset</p>
+<p>We will load the entire adult census dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -874,11 +874,25 @@ variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot
 <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">])</span>
+
+<span class="c1"># ## [markdown]</span>
+<span class="c1"># We recall that `&quot;education-num&quot;` and `&quot;education&quot;` columns contains the same</span>
+<span class="c1"># information. In the previous notebook, we drop `&quot;education-num&quot;` and only</span>
+<span class="c1"># use the latter column. We will do the same processing here.</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>We separate categorical and numerical variables as we did previously</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;education-num&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We separate categorical and numerical variables using the <code class="docutils literal notranslate"><span class="pre">object</span></code> data types
+as we previously saw that it only corresponds to categorical columns. We make
+use of the <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code> to select the corresponding columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -893,7 +907,8 @@ variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot
 </div>
 </div>
 <p>Besides, we will list before hand the categories for each categorical column
-to avoid issue with rare categories.</p>
+to avoid issue with rare categories when evaluating the model during the
+cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -914,21 +929,29 @@ model on a dataset that combines both kinds of variables together
 <ul class="simple">
 <li><p><strong>one-hot encoding</strong> will be applied to categorical columns. Besides, we
 will use the option <code class="docutils literal notranslate"><span class="pre">drop=&quot;if_binary&quot;</span></code> to drop one of the column since the
-information will be correlated.</p></li>
+information will be correlated;</p></li>
 <li><p><strong>numerical scaling</strong> numerical features which will be standardized.</p></li>
 </ul>
 <p>We can now create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying a list of triplet
-(preprocessor name, transformer, columns).</p>
+(preprocessor name, transformer, columns). First, let’s start by creating
+a transformer for the numerical and categorical part as we did in the
+previous notebooks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span>
                                          <span class="n">drop</span><span class="o">=</span><span class="s2">&quot;if_binary&quot;</span><span class="p">)</span>
 <span class="n">numerical_preprocessor</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we can associate each of these preprocessors with their respective
+columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
     <span class="p">(</span><span class="s1">&#39;one-hot-encoder&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
@@ -941,7 +964,9 @@ information will be correlated.</p></li>
 classifier (logistic regression).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -997,7 +1022,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 </div>
-<p>Now, we can use the raw dataset directly to the pipeline. Indeed, we don’t
+<p>Then, we can use the raw dataset directly to the pipeline. Indeed, we don’t
 need to make any processing. All the preprocessing will be handle when
 calling <code class="docutils literal notranslate"><span class="pre">predict</span></code>. We will give an example by predicting on the five first
 sample from the test set.</p>
@@ -1029,7 +1054,6 @@ sample from the test set.</p>
       <th>age</th>
       <th>workclass</th>
       <th>education</th>
-      <th>education-num</th>
       <th>marital-status</th>
       <th>occupation</th>
       <th>relationship</th>
@@ -1047,7 +1071,6 @@ sample from the test set.</p>
       <td>56</td>
       <td>Private</td>
       <td>HS-grad</td>
-      <td>9</td>
       <td>Divorced</td>
       <td>Other-service</td>
       <td>Unmarried</td>
@@ -1063,7 +1086,6 @@ sample from the test set.</p>
       <td>25</td>
       <td>Private</td>
       <td>HS-grad</td>
-      <td>9</td>
       <td>Married-civ-spouse</td>
       <td>Transport-moving</td>
       <td>Own-child</td>
@@ -1079,7 +1101,6 @@ sample from the test set.</p>
       <td>43</td>
       <td>Private</td>
       <td>Bachelors</td>
-      <td>13</td>
       <td>Divorced</td>
       <td>Prof-specialty</td>
       <td>Not-in-family</td>
@@ -1095,7 +1116,6 @@ sample from the test set.</p>
       <td>32</td>
       <td>Private</td>
       <td>HS-grad</td>
-      <td>9</td>
       <td>Married-civ-spouse</td>
       <td>Transport-moving</td>
       <td>Husband</td>
@@ -1111,7 +1131,6 @@ sample from the test set.</p>
       <td>39</td>
       <td>Private</td>
       <td>Bachelors</td>
-      <td>13</td>
       <td>Married-civ-spouse</td>
       <td>Sales</td>
       <td>Wife</td>
@@ -1164,7 +1183,7 @@ compute the score on the entire test set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8576693145524527
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8574236344279748
 </pre></div>
 </div>
 </div>
@@ -1231,7 +1250,7 @@ Please also refer to the documentation for alternative solver options:
   extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.85136657, 0.84993346, 0.84776822, 0.85268223, 0.85503686])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.8512642 , 0.84993346, 0.84766585, 0.8523751 , 0.85503686])
 </pre></div>
 </div>
 </div>
@@ -1248,9 +1267,8 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 </div>
-<p>The compound model has a higher predictive accuracy than the
-two models that used numerical and categorical variables in
-isolation.</p>
+<p>The compound model has a higher predictive accuracy than the two models that
+used numerical and categorical variables in isolation.</p>
 </div>
 <div class="section" id="fitting-a-more-powerful-model">
 <h2>Fitting a more powerful model<a class="headerlink" href="#fitting-a-more-powerful-model" title="Permalink to this headline">¶</a></h2>
@@ -1291,8 +1309,8 @@ as follows:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.2 s, sys: 36 ms, total: 1.24 s
-Wall time: 1.24 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.2 s, sys: 47.9 ms, total: 1.25 s
+Wall time: 1.25 s
 </pre></div>
 </div>
 </div>
@@ -1304,7 +1322,7 @@ Wall time: 1.24 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8796167390058144
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8805994595037262
 </pre></div>
 </div>
 </div>

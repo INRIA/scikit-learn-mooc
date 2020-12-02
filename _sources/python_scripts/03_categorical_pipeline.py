@@ -19,7 +19,8 @@
 # variables**, namely **ordinal encoding** and **one-hot encoding**.
 
 # %% [markdown]
-# Let's first load the data as we did in the previous notebook.
+# Let's first load the entire adult dataset containing both numerical and
+# categorical data.
 
 # %%
 import pandas as pd
@@ -58,16 +59,28 @@ data.dtypes
 
 # %% [markdown]
 # If we look at the "native-country" column data type, we observe it is of
-# `object` dtype. The reason is that categories are represented with string.
+# `object` data type. The reason is that categories are represented with
+# string.
 #
 # Sometimes, categorical columns could also be encoded with integer. In this
-# case, looking at the data type will not be enough. One needs to investigate
-# the dataset and check the meaning of the columns.
+# case, looking at the data type will not be enough. In the exploration and in
+# the previous notebook, we saw that the column `"education-num"` is such a
+# column.
+
+# %%
+data["education-num"].value_counts()
+
+# %% [markdown]
+# When considering categorical columns, we should include this columns.
+# However, we also saw that `"education-num"` and `"education"` columns
+# represent exactly the same information. Therefore, we can use one of the two
+# columns. So, we can make the choice to consider only `object` dtype columns.
 #
-# Luckily, categorical columns only corresponds to the object dtype columns.
-# Scikit-learn provides a tools allowing to select the column based on their
-# data types. It is called `make_column_selector`. We will illustrate how to
-# use this helper.
+# In the previous notebook, we manually defined the numerical columns. We could
+# to the same here. However, since that we can select columns based on a
+# specific dtypes, we can use a scikit-learn helper allowing to select the
+# column based on their data types. It is called `make_column_selector`. We
+# will illustrate how to use this helper.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -241,6 +254,6 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 #
 # In this notebook we have:
 # * seen two common strategies for encoding categorical features : **ordinal
-#   encoding** and **one-hot encoding**
+#   encoding** and **one-hot encoding**;
 # * used a pipeline to process **both numerical and categorical** features
-#   before fitting a logistic regression
+#   before fitting a logistic regression.

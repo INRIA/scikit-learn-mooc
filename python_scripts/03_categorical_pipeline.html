@@ -870,7 +870,8 @@
 <h1>Encoding of categorical variables<a class="headerlink" href="#encoding-of-categorical-variables" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we will present typical ways to deal with <strong>categorical
 variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot encoding</strong>.</p>
-<p>Let’s first load the data as we did in the previous notebook.</p>
+<p>Let’s first load the entire adult dataset containing both numerical and
+categorical data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -935,12 +936,12 @@ countries (along with the <code class="docutils literal notranslate"><span class
  Ecuador                          45
  France                           38
  Ireland                          37
- Thailand                         30
  Hong                             30
+ Thailand                         30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
- Laos                             23
  Outlying-US(Guam-USVI-etc)       23
+ Laos                             23
  Yugoslavia                       23
  Scotland                         21
  Honduras                         20
@@ -979,14 +980,49 @@ dtype: object
 </div>
 </div>
 <p>If we look at the “native-country” column data type, we observe it is of
-<code class="docutils literal notranslate"><span class="pre">object</span></code> dtype. The reason is that categories are represented with string.</p>
+<code class="docutils literal notranslate"><span class="pre">object</span></code> data type. The reason is that categories are represented with
+string.</p>
 <p>Sometimes, categorical columns could also be encoded with integer. In this
-case, looking at the data type will not be enough. One needs to investigate
-the dataset and check the meaning of the columns.</p>
-<p>Luckily, categorical columns only corresponds to the object dtype columns.
-Scikit-learn provides a tools allowing to select the column based on their
-data types. It is called <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>. We will illustrate how to
-use this helper.</p>
+case, looking at the data type will not be enough. In the exploration and in
+the previous notebook, we saw that the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> is such a
+column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9     15784
+10    10878
+13     8025
+14     2657
+11     2061
+7      1812
+12     1601
+6      1389
+4       955
+15      834
+5       756
+8       657
+16      594
+3       509
+2       247
+1        83
+Name: education-num, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>When considering categorical columns, we should include this columns.
+However, we also saw that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> columns
+represent exactly the same information. Therefore, we can use one of the two
+columns. So, we can make the choice to consider only <code class="docutils literal notranslate"><span class="pre">object</span></code> dtype columns.</p>
+<p>In the previous notebook, we manually defined the numerical columns. We could
+to the same here. However, since that we can select columns based on a
+specific dtypes, we can use a scikit-learn helper allowing to select the
+column based on their data types. It is called <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>. We
+will illustrate how to use this helper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -1581,12 +1617,12 @@ Let’s recall some statistics regarding this column.</p>
  Ecuador                          45
  France                           38
  Ireland                          37
- Thailand                         30
  Hong                             30
+ Thailand                         30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
- Laos                             23
  Outlying-US(Guam-USVI-etc)       23
+ Laos                             23
  Yugoslavia                       23
  Scotland                         21
  Honduras                         20
@@ -1713,9 +1749,9 @@ we used previously.</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
 <li><p>seen two common strategies for encoding categorical features : <strong>ordinal
-encoding</strong> and <strong>one-hot encoding</strong></p></li>
+encoding</strong> and <strong>one-hot encoding</strong>;</p></li>
 <li><p>used a pipeline to process <strong>both numerical and categorical</strong> features
-before fitting a logistic regression</p></li>
+before fitting a logistic regression.</p></li>
 </ul>
 </div>
 </div>

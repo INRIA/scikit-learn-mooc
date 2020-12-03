@@ -29,6 +29,10 @@
 # as previously done in previous notebooks.
 
 # %%
+from sklearn import set_config
+set_config(display='diagram')
+
+# %%
 import pandas as pd
 
 df = pd.read_csv("../datasets/adult-census.csv")
@@ -74,6 +78,7 @@ categorical_preprocessor = OrdinalEncoder(categories=categories)
 preprocessor = ColumnTransformer([
     ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
     remainder='passthrough', sparse_threshold=0)
+preprocessor
 
 # %% [markdown]
 # Finally, we use a tree-based classifier (i.e. histogram gradient-boosting) to
@@ -90,12 +95,16 @@ model = Pipeline([
     ("preprocessor", preprocessor),
     ("classifier",
      HistGradientBoostingClassifier(random_state=42))])
+model
+
+# %%
 model.fit(df_train, target_train)
 
 print(
     f"The test accuracy score of the gradient boosting pipeline is: "
     f"{model.score(df_test, target_test):.2f}")
 
+# %% [markdown]
 # In the previous example, we created an histogram gradient-boosting classifier
 # using the default parameters by omitting to explicitely set these parameters.
 #
@@ -125,7 +134,7 @@ print(
     f"The test accuracy score of the gradient boosting pipeline is: "
     f"{model.score(df_test, target_test):.2f}")
 
-# # %% [markdown]
+# %% [markdown]
 # ## Quizz
 #
 # 1. What is the default value of the `learning_rate` parameter of the
@@ -142,6 +151,8 @@ print(
 # taking powers of 2. What do you observe?
 
 # %% [markdown]
+# ## Setting a model's parameter
+#
 # Actually scikit-learn estimators have a `set_params` method that allows you
 # to change the parameter of a model after it has been created. For example, we
 # can set the `learning_rate=1e-3` and check that we get the same score as

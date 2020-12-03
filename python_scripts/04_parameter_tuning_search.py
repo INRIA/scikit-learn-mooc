@@ -26,6 +26,11 @@
 # Let us reload the dataset as we did previously:
 
 # %%
+from sklearn import set_config
+
+set_config(display="diagram")
+
+# %%
 import pandas as pd
 
 df = pd.read_csv("../datasets/adult-census.csv")
@@ -111,8 +116,15 @@ model_grid_search = GridSearchCV(model, param_grid=param_grid,
                                  n_jobs=4, cv=2)
 model_grid_search.fit(df_train, target_train)
 
-print(f"The test accuracy score of the grid-searched pipeline is: "
-      f"{model_grid_search.score(df_test, target_test):.2f}")
+# %% [markdown]
+# Finally, we will check the accuracy of our model using the test set.
+
+# %%
+accuracy = model_grid_search.score(df_test, target_test)
+print(
+    f"The test accuracy score of the grid-searched pipeline is: "
+    f"{accuracy:.2f}"
+)
 
 # %% [markdown]
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines
@@ -193,6 +205,9 @@ pivoted_cv_results = cv_results.pivot_table(
 
 pivoted_cv_results
 
+# %% [markdown]
+# We can use a heatmap representation to show the above dataframe visually.
+
 # %%
 import seaborn as sns
 sns.set_context("talk")
@@ -241,11 +256,12 @@ ax.invert_yaxis()
 #   required in a leaf;
 # * `max_bins`: it corresponds to the maximum number of bins to construct the
 #   histograms.
+#
+# We first define a callable class that will cast a floating number to integral
+# number when using the `reciprocal` generator.
 
 # %%
 from scipy.stats import reciprocal
-from sklearn.model_selection import RandomizedSearchCV
-from pprint import pprint
 
 
 class reciprocal_int:
@@ -258,21 +274,35 @@ class reciprocal_int:
         return self._distribution.rvs(*args, **kwargs).astype(int)
 
 
+# %% [markdown]
+# Now, we can define the randomized search using the different distributions.
+
+# %%
+from sklearn.model_selection import RandomizedSearchCV
+
 param_distributions = {
     'classifier__l2_regularization': reciprocal(1e-6, 1e3),
     'classifier__learning_rate': reciprocal(0.001, 10),
     'classifier__max_leaf_nodes': reciprocal_int(2, 256),
     'classifier__min_samples_leaf': reciprocal_int(1, 100),
     'classifier__max_bins': reciprocal_int(2, 255)}
+
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=10,
     n_jobs=4, cv=5)
 model_random_search.fit(df_train, target_train)
 
-print(f"The test accuracy score of the best model is "
-      f"{model_random_search.score(df_test, target_test):.2f}")
+# %% [markdown]
+# Then, we can compute the accuracy score on the test set.
 
 # %%
+accuracy = model_random_search.score(df_test, target_test)
+
+print(f"The test accuracy score of the best model is " f"{accuracy:.2f}")
+
+# %%
+from pprint import pprint
+
 print("The best parameters are:")
 pprint(model_random_search.best_params_)
 
@@ -349,8 +379,7 @@ fig.show()
 # the range selection and cross two selections to see the intersections.
 
 # %% [markdown]
-# **Quizz**
-#
+# ## Quizz
 #
 # Select the worst performing models (for instance models with a
 # "mean_test_score" lower than 0.7): what do have all these models in common
@@ -382,7 +411,7 @@ fig.show()
 # | too large `max_bins`          |      |       |
 
 # %% [markdown]
-# ## In this notebook, we have:
+# In this notebook, we have:
 #
 # * automatically tuned the hyper-parameters of a machine-learning pipeline by
 #   exhaustively searching the best combination from a defined grid;

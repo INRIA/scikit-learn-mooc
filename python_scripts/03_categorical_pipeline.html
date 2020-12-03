@@ -200,6 +200,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_column_transformer.html#selection-based-on-data-types">
+     Selection based on data types
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
      📝 Exercise 02
     </a>
@@ -844,21 +849,29 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#working-with-categorical-variables">
-   Working with categorical variables
+  <a class="reference internal nav-link" href="#identify-categorical-variables">
+   Identify categorical variables
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#encoding-ordinal-categories">
-     Encoding ordinal categories
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#encoding-nominal-categories-without-assuming-any-order">
-     Encoding nominal categories (without assuming any order)
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#select-features-based-on-their-data-type">
+   Select features based on their data type
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoding-ordinal-categories">
+   Encoding ordinal categories
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoding-nominal-categories-without-assuming-any-order">
+   Encoding nominal categories (without assuming any order)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluate-our-predictive-pipeline">
+   Evaluate our predictive pipeline
+  </a>
  </li>
 </ul>
 
@@ -891,8 +904,8 @@ categorical data.</p>
 </div>
 </div>
 </div>
-<div class="section" id="working-with-categorical-variables">
-<h2>Working with categorical variables<a class="headerlink" href="#working-with-categorical-variables" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="identify-categorical-variables">
+<h2>Identify categorical variables<a class="headerlink" href="#identify-categorical-variables" title="Permalink to this headline">¶</a></h2>
 <p>As we have seen in the previous section, a numerical variable is a continuous
 quantity represented by a real or integer number. These variables can be
 naturally handled by machine learning algorithms that are typically composed
@@ -905,53 +918,53 @@ variable because it encodes the data using a finite list of possible
 countries (along with the <code class="docutils literal notranslate"><span class="pre">?</span></code> symbol when this information is missing):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;native-country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;native-country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> United-States                 43832
- Mexico                          951
- ?                               857
- Philippines                     295
- Germany                         206
- Puerto-Rico                     184
- Canada                          182
- El-Salvador                     155
- India                           151
- Cuba                            138
- England                         127
- China                           122
- South                           115
- Jamaica                         106
- Italy                           105
- Dominican-Republic              103
- Japan                            92
- Guatemala                        88
- Poland                           87
- Vietnam                          86
- Columbia                         85
- Haiti                            75
- Portugal                         67
- Taiwan                           65
- Iran                             59
- Nicaragua                        49
- Greece                           49
- Peru                             46
- Ecuador                          45
- France                           38
- Ireland                          37
- Thailand                         30
- Hong                             30
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> ?                               857
  Cambodia                         28
- Trinadad&amp;Tobago                  27
- Outlying-US(Guam-USVI-etc)       23
- Laos                             23
- Yugoslavia                       23
- Scotland                         21
- Honduras                         20
- Hungary                          19
+ Canada                          182
+ China                           122
+ Columbia                         85
+ Cuba                            138
+ Dominican-Republic              103
+ Ecuador                          45
+ El-Salvador                     155
+ England                         127
+ France                           38
+ Germany                         206
+ Greece                           49
+ Guatemala                        88
+ Haiti                            75
  Holand-Netherlands                1
+ Honduras                         20
+ Hong                             30
+ Hungary                          19
+ India                           151
+ Iran                             59
+ Ireland                          37
+ Italy                           105
+ Jamaica                         106
+ Japan                            92
+ Laos                             23
+ Mexico                          951
+ Nicaragua                        49
+ Outlying-US(Guam-USVI-etc)       23
+ Peru                             46
+ Philippines                     295
+ Poland                           87
+ Portugal                         67
+ Puerto-Rico                     184
+ Scotland                         21
+ South                           115
+ Taiwan                           65
+ Thailand                         30
+ Trinadad&amp;Tobago                  27
+ United-States                 43832
+ Vietnam                          86
+ Yugoslavia                       23
 Name: native-country, dtype: int64
 </pre></div>
 </div>
@@ -1023,6 +1036,9 @@ Name: education-num, dtype: int64
 However, we also saw that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> columns
 represent exactly the same information. Therefore, we can use one of the two
 columns. So, we can make the choice to consider only <code class="docutils literal notranslate"><span class="pre">object</span></code> dtype columns.</p>
+</div>
+<div class="section" id="select-features-based-on-their-data-type">
+<h2>Select features based on their data type<a class="headerlink" href="#select-features-based-on-their-data-type" title="Permalink to this headline">¶</a></h2>
 <p>In the previous notebook, we manually defined the numerical columns. We could
 to the same here. However, since that we can select columns based on a
 specific dtypes, we can use a scikit-learn helper allowing to select the
@@ -1165,8 +1181,9 @@ the selected columns will be returned.</p>
 <p>In the remainder of this section, we will present different strategies to
 encode categorical data into numerical data which can be used by a
 machine-learning algorithm.</p>
+</div>
 <div class="section" id="encoding-ordinal-categories">
-<h3>Encoding ordinal categories<a class="headerlink" href="#encoding-ordinal-categories" title="Permalink to this headline">¶</a></h3>
+<h2>Encoding ordinal categories<a class="headerlink" href="#encoding-ordinal-categories" title="Permalink to this headline">¶</a></h2>
 <p>The most intuitive strategy is to encode each category with a different
 number. The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will transform the data in such manner.</p>
 <div class="cell docutils container">
@@ -1205,6 +1222,8 @@ number. The <code class="docutils literal notranslate"><span class="pre">Ordinal
 <p>We can see that the categories have been encoded for each feature (column)
 independently. We can also note that the number of features before and after
 the encoding is the same.</p>
+<p>This transform was used by the researchers providing the dataset to transform
+<code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> into <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> for instance.</p>
 <p>However, one has to be careful when using this encoding strategy. Using this
 integer representation can lead the downstream models to make the assumption
 that the categories are ordered: 0 is smaller than 1 which is smaller than 2,
@@ -1226,7 +1245,7 @@ dependent on the downstream models (for instance linear models are much more
 sensitive than models built from a ensemble of decision trees).</p>
 </div>
 <div class="section" id="encoding-nominal-categories-without-assuming-any-order">
-<h3>Encoding nominal categories (without assuming any order)<a class="headerlink" href="#encoding-nominal-categories-without-assuming-any-order" title="Permalink to this headline">¶</a></h3>
+<h2>Encoding nominal categories (without assuming any order)<a class="headerlink" href="#encoding-nominal-categories-without-assuming-any-order" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is an alternative encoder that can prevent the dowstream
 models to make a false assumption about the ordering of categories. For a
 given feature, it will create as many new columns as there are possible
@@ -1396,7 +1415,7 @@ will be set to <code class="docutils literal notranslate"><span class="pre">0</s
 </div>
 </div>
 </div>
-<p>Let’s wrap this numpy array in a dataframe with informative column names as
+<p>Let’s wrap this NumPy array in a dataframe with informative column names as
 provided by the encoder object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1578,6 +1597,9 @@ and compare this to the original string representation.</p>
 <p>The number of features after the encoding is more than 10 times larger than
 in the original data because some variables such as <code class="docutils literal notranslate"><span class="pre">occupation</span></code> and
 <code class="docutils literal notranslate"><span class="pre">native-country</span></code> have many possible categories.</p>
+</div>
+<div class="section" id="evaluate-our-predictive-pipeline">
+<h2>Evaluate our predictive pipeline<a class="headerlink" href="#evaluate-our-predictive-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>We can now integrate this encoder inside a machine learning pipeline like we
 did with numerical data: let’s train a linear classifier on the encoded data
 and check the performance of this machine learning pipeline using
@@ -1616,19 +1638,19 @@ Let’s recall some statistics regarding this column.</p>
  Portugal                         67
  Taiwan                           65
  Iran                             59
- Nicaragua                        49
  Greece                           49
+ Nicaragua                        49
  Peru                             46
  Ecuador                          45
  France                           38
  Ireland                          37
- Thailand                         30
  Hong                             30
+ Thailand                         30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
+ Yugoslavia                       23
  Outlying-US(Guam-USVI-etc)       23
  Laos                             23
- Yugoslavia                       23
  Scotland                         21
  Honduras                         20
  Hungary                          19
@@ -1665,7 +1687,7 @@ for the ordinal encoder later on.</p>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="s2">&quot;if_binary&quot;</span><span class="p">),</span>
-    <span class="n">LogisticRegression</span><span class="p">())</span>
+    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1681,57 +1703,7 @@ columns.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.83242911, 0.83570478, 0.82862408, 0.83343571, 0.83466421])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83456183])
 </pre></div>
 </div>
 </div>
@@ -1758,7 +1730,6 @@ encoding</strong> and <strong>one-hot encoding</strong>;</p></li>
 <li><p>used a pipeline to process <strong>both numerical and categorical</strong> features
 before fitting a logistic regression.</p></li>
 </ul>
-</div>
 </div>
 </div>
 

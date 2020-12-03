@@ -200,6 +200,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="#selection-based-on-data-types">
+     Selection based on data types
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
      📝 Exercise 02
     </a>
@@ -843,15 +848,32 @@
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#columntransformer">
-   ColumnTransformer
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Using numerical and categorical variables together
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fitting-a-more-powerful-model">
-   Fitting a more powerful model
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selection-based-on-data-types">
+   Selection based on data types
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dispatch-some-columns-to-a-specific-processor">
+     Dispatch some columns to a specific processor
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluation-of-the-model-with-cross-validation">
+     Evaluation of the model with cross-validation
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fitting-a-more-powerful-model">
+     Fitting a more powerful model
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -879,15 +901,13 @@ variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot
 <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">])</span>
-
-<span class="c1"># ## [markdown]</span>
-<span class="c1"># We recall that `&quot;education-num&quot;` and `&quot;education&quot;` columns contains the same</span>
-<span class="c1"># information. In the previous notebook, we drop `&quot;education-num&quot;` and only</span>
-<span class="c1"># use the latter column. We will do the same processing here.</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>We recall that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> columns contains the same
+information. In the previous notebook, we drop <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and only
+use the latter column. We will do the same processing here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;education-num&quot;</span><span class="p">)</span>
@@ -895,6 +915,9 @@ variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="selection-based-on-data-types">
+<h1>Selection based on data types<a class="headerlink" href="#selection-based-on-data-types" title="Permalink to this headline">¶</a></h1>
 <p>We separate categorical and numerical variables using the <code class="docutils literal notranslate"><span class="pre">object</span></code> data types
 as we previously saw that it only corresponds to categorical columns. We make
 use of the <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code> to select the corresponding columns.</p>
@@ -922,8 +945,8 @@ cross-validation.</p>
 </div>
 </div>
 </div>
-<div class="section" id="columntransformer">
-<h2>ColumnTransformer<a class="headerlink" href="#columntransformer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dispatch-some-columns-to-a-specific-processor">
+<h2>Dispatch some columns to a specific processor<a class="headerlink" href="#dispatch-some-columns-to-a-specific-processor" title="Permalink to this headline">¶</a></h2>
 <p>In the previous sections, we saw that we need to treat data differently
 depending on their nature (i.e. numerical or categorical).</p>
 <p>Scikit-learn provides a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> class which will send specific
@@ -971,7 +994,8 @@ classifier (logistic regression).</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -980,12 +1004,67 @@ classifier (logistic regression).</p>
 view of the pipelines.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">config_context</span>
-<span class="k">with</span> <span class="n">config_context</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s1">&#39;diagram&#39;</span><span class="p">):</span>
-    <span class="n">model</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
+<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s1">&#39;diagram&#39;</span><span class="p">)</span>
+<span class="n">model</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9a91eec9-fd77-47d2-b904-76dae71cd8d4" type="checkbox" ><label class="sk-toggleable__label" for="9a91eec9-fd77-47d2-b904-76dae71cd8d4">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('columntransformer',
+                 ColumnTransformer(transformers=[('one-hot-encoder',
+                                                  OneHotEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                                                                            array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
+       ' Prof-school', ' 7th-8th', ' Bachelors', ' Mas...
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)],
+                                                                drop='if_binary'),
+                                                  ['workclass', 'education',
+                                                   'marital-status',
+                                                   'occupation', 'relationship',
+                                                   'race', 'sex',
+                                                   'native-country']),
+                                                 ('standard-scaler',
+                                                  StandardScaler(),
+                                                  ['age', 'capital-gain',
+                                                   'capital-loss',
+                                                   'hours-per-week'])])),
+                ('logisticregression', LogisticRegression(max_iter=500))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="01fabc08-ab4b-4228-8224-166d1075f651" type="checkbox" ><label class="sk-toggleable__label" for="01fabc08-ab4b-4228-8224-166d1075f651">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('one-hot-encoder',
+                                 OneHotEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                                                           array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
+       ' Prof-school', ' 7th-8th', ' Bachelors', ' Masters', ' Doctorate',
+       ' 5th-6th', ' Assoc-vo...
+       ' Scotland', ' Jamaica', ' Ecuador', ' Yugoslavia', ' Hungary',
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)],
+                                               drop='if_binary'),
+                                 ['workclass', 'education', 'marital-status',
+                                  'occupation', 'relationship', 'race', 'sex',
+                                  'native-country']),
+                                ('standard-scaler', StandardScaler(),
+                                 ['age', 'capital-gain', 'capital-loss',
+                                  'hours-per-week'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="7c7cd492-1c0a-4862-b683-c46a1ef0095b" type="checkbox" ><label class="sk-toggleable__label" for="7c7cd492-1c0a-4862-b683-c46a1ef0095b">one-hot-encoder</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8a15687c-7ca9-40cb-b14f-4dd3994f1c04" type="checkbox" ><label class="sk-toggleable__label" for="8a15687c-7ca9-40cb-b14f-4dd3994f1c04">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                          array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
+       ' Prof-school', ' 7th-8th', ' Bachelors', ' Masters', ' Doctorate',
+       ' 5th-6th', ' Assoc-voc', ' 9th', ' 12th', ' 1st-4th',
+       ' Preschool'], dtype=object...
+       ' Thailand', ' Haiti', ' El-Salvador', ' Puerto-Rico', ' Vietnam',
+       ' South', ' Columbia', ' Japan', ' India', ' Cambodia', ' Poland',
+       ' Laos', ' England', ' Cuba', ' Taiwan', ' Italy', ' Canada',
+       ' Portugal', ' China', ' Nicaragua', ' Honduras', ' Iran',
+       ' Scotland', ' Jamaica', ' Ecuador', ' Yugoslavia', ' Hungary',
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)],
+              drop='if_binary')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="64e2d8da-f202-4b2c-afe4-429b08f2a433" type="checkbox" ><label class="sk-toggleable__label" for="64e2d8da-f202-4b2c-afe4-429b08f2a433">standard-scaler</label><div class="sk-toggleable__content"><pre>['age', 'capital-gain', 'capital-loss', 'hours-per-week']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="23d2cf45-f47a-4997-b5db-e3b604cbd30d" type="checkbox" ><label class="sk-toggleable__label" for="23d2cf45-f47a-4997-b5db-e3b604cbd30d">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="7d18cb4a-daf6-4773-915a-6ae7c4601a1b" type="checkbox" ><label class="sk-toggleable__label" for="7d18cb4a-daf6-4773-915a-6ae7c4601a1b">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=500)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>The final model is more complex than the previous models but still follows
 the same API:</p>
@@ -1011,18 +1090,6 @@ predictions to the expected test labels to compute the accuracy.</p></li>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
 </pre></div>
 </div>
 </div>
@@ -1188,11 +1255,14 @@ compute the score on the entire test set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8574236344279748
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8576693145524527
 </pre></div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="evaluation-of-the-model-with-cross-validation">
+<h2>Evaluation of the model with cross-validation<a class="headerlink" href="#evaluation-of-the-model-with-cross-validation" title="Permalink to this headline">¶</a></h2>
 <p>This model can also be cross-validated as we previously did (instead of using
 a single train-test split):</p>
 <div class="cell docutils container">
@@ -1205,57 +1275,7 @@ a single train-test split):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
-STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
-
-Increase the number of iterations (max_iter) or scale the data as shown in:
-    https://scikit-learn.org/stable/modules/preprocessing.html
-Please also refer to the documentation for alternative solver options:
-    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
-  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.8512642 , 0.84993346, 0.84766585, 0.8523751 , 0.85503686])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.8512642 , 0.8498311 , 0.84756347, 0.8523751 , 0.85524161])
 </pre></div>
 </div>
 </div>
@@ -1267,7 +1287,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy is: 0.851 +- 0.002
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy is: 0.851 +- 0.003
 </pre></div>
 </div>
 </div>
@@ -1314,8 +1334,8 @@ as follows:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.24 s, sys: 12 ms, total: 1.25 s
-Wall time: 1.25 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.15 s, sys: 32.1 ms, total: 1.19 s
+Wall time: 1.18 s
 </pre></div>
 </div>
 </div>
@@ -1327,7 +1347,7 @@ Wall time: 1.25 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8802718860044222
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8792891655065105
 </pre></div>
 </div>
 </div>

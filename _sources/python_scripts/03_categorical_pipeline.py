@@ -33,7 +33,8 @@ target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 # %% [markdown]
-# ## Working with categorical variables
+#
+# ## Identify categorical variables
 #
 # As we have seen in the previous section, a numerical variable is a continuous
 # quantity represented by a real or integer number. These variables can be
@@ -48,7 +49,7 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 # countries (along with the `?` symbol when this information is missing):
 
 # %%
-data["native-country"].value_counts()
+data["native-country"].value_counts().sort_index()
 
 # %% [markdown]
 # One might question how could we easily recognize categorical columns. One
@@ -75,6 +76,8 @@ data["education-num"].value_counts()
 # However, we also saw that `"education-num"` and `"education"` columns
 # represent exactly the same information. Therefore, we can use one of the two
 # columns. So, we can make the choice to consider only `object` dtype columns.
+#
+# ## Select features based on their data type
 #
 # In the previous notebook, we manually defined the numerical columns. We could
 # to the same here. However, since that we can select columns based on a
@@ -107,7 +110,7 @@ print(f"The dataset is composed of {data_categorical.shape[1]} features")
 # machine-learning algorithm.
 
 # %% [markdown]
-# ### Encoding ordinal categories
+# ## Encoding ordinal categories
 #
 # The most intuitive strategy is to encode each category with a different
 # number. The `OrdinalEncoder` will transform the data in such manner.
@@ -127,6 +130,9 @@ print(
 # We can see that the categories have been encoded for each feature (column)
 # independently. We can also note that the number of features before and after
 # the encoding is the same.
+#
+# This transform was used by the researchers providing the dataset to transform
+# `"education"` into `"education-num"` for instance.
 #
 # However, one has to be careful when using this encoding strategy. Using this
 # integer representation can lead the downstream models to make the assumption
@@ -152,7 +158,7 @@ print(
 # dependent on the downstream models (for instance linear models are much more
 # sensitive than models built from a ensemble of decision trees).
 #
-# ### Encoding nominal categories (without assuming any order)
+# ## Encoding nominal categories (without assuming any order)
 #
 # `OneHotEncoder` is an alternative encoder that can prevent the dowstream
 # models to make a false assumption about the ordering of categories. For a
@@ -178,7 +184,7 @@ print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
-# Let's wrap this numpy array in a dataframe with informative column names as
+# Let's wrap this NumPy array in a dataframe with informative column names as
 # provided by the encoder object:
 
 # %%
@@ -192,6 +198,8 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # The number of features after the encoding is more than 10 times larger than
 # in the original data because some variables such as `occupation` and
 # `native-country` have many possible categories.
+#
+# ## Evaluate our predictive pipeline
 #
 # We can now integrate this encoder inside a machine learning pipeline like we
 # did with numerical data: let's train a linear classifier on the encoded data
@@ -231,7 +239,7 @@ from sklearn.linear_model import LogisticRegression
 
 model = make_pipeline(
     OneHotEncoder(categories=categories, drop="if_binary"),
-    LogisticRegression())
+    LogisticRegression(max_iter=500))
 
 # %% [markdown]
 # Finally, we can check the model's performance only using the categorical

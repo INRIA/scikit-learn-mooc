@@ -963,7 +963,7 @@ to train the model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.335 seconds in 59 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.329 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
@@ -1028,6 +1028,7 @@ optimal model;</p></li>
 the input data before training a model. In our case, we will standardize the
 data and then train a new logistic regression model on that new version of
 the dataset.</p>
+<p>Let’s start by checking some feature statistics or the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1120,6 +1121,24 @@ the dataset.</p>
 </table>
 </div></div></div>
 </div>
+<p>We see that features in the dataset have very different range. Indeed, having
+normalized feature is important. Indeed, some algorithms make assumptions
+regarding feature distributions and having normalized feature is usually one
+of them. For instance, some benefits are:</p>
+<ul class="simple">
+<li><p>predictor using Euclidean distance (e.g k-nearest  neighbors) should have
+normalized feature such that each feature contribute equally distance
+computation;</p></li>
+<li><p>predictor internally using gradient-descent based algorithms
+(e.g. logistic regression) to find optimal parameters work better
+and faster;</p></li>
+<li><p>predictor using regularization (e.g. logistic regression) require
+normalized features such that the penalty is properly applied to the
+weights.</p></li>
+</ul>
+<p>We show how to apply such normalization using a scikit-learn transformer
+called <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. This transformer intend to transform feature such
+that they will all have a zero mean and a unit standard deviation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
@@ -1264,7 +1283,7 @@ followed by the classifier or regressor model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.120 seconds in [12] iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.122 seconds in [12] iterations
 </pre></div>
 </div>
 </div>
@@ -1297,8 +1316,8 @@ defines the splitting strategy.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.24 s, sys: 338 ms, total: 1.58 s
-Wall time: 819 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.23 s, sys: 420 ms, total: 1.65 s
+Wall time: 868 ms
 </pre></div>
 </div>
 </div>

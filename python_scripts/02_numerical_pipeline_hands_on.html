@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>First model with scikit-learn &#8212; Scikit-learn tutorial</title>
+    <title>Working with numerical data &#8212; Scikit-learn tutorial</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="📝 Exercise 01" href="02_numerical_pipeline_ex_01.html" />
-    <link rel="prev" title="Fitting a scikit-learn model on numerical data" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html" />
+    <link rel="prev" title="First model with scikit-learn" href="02_numerical_pipeline_introduction.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -140,9 +140,14 @@
    Fitting a scikit-learn model on numerical data
   </a>
   <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_introduction.html">
+     First model with scikit-learn
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     First model with scikit-learn
+     Working with numerical data
     </a>
    </li>
    <li class="toctree-l2">
@@ -773,7 +778,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/python_scripts/02_numerical_pipeline.py"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/python_scripts/02_numerical_pipeline_hands_on.py"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
@@ -793,10 +798,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/02_numerical_pipeline.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/02_numerical_pipeline_hands_on.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/02_numerical_pipeline.py"><button
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/02_numerical_pipeline_hands_on.py"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -811,23 +816,6 @@
 
         <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master?urlpath=tree/python_scripts/02_numerical_pipeline.py"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
-    </div>
-</div>
-
     </div>
 
     <!-- Table of contents -->
@@ -839,23 +827,18 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loading-the-dataset-with-pandas">
-   Loading the dataset with Pandas
+  <a class="reference internal nav-link" href="#loading-the-entire-dataset">
+   Loading the entire dataset
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#separate-the-data-and-the-target">
-   Separate the data and the target
+  <a class="reference internal nav-link" href="#identify-numerical-data">
+   Identify numerical data
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fit-a-model-and-make-predictions">
-   Fit a model and make predictions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#train-test-data-split">
-   Train-test data split
+  <a class="reference internal nav-link" href="#train-test-split-the-dataset">
+   Train-test split the dataset
   </a>
  </li>
 </ul>
@@ -869,36 +852,31 @@
         
               <div>
                 
-  <div class="section" id="first-model-with-scikit-learn">
-<h1>First model with scikit-learn<a class="headerlink" href="#first-model-with-scikit-learn" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we present how to build predictive models on tabular
-datasets, with only numerical features.</p>
-<p>In particular we will highlight:</p>
+  <div class="section" id="working-with-numerical-data">
+<h1>Working with numerical data<a class="headerlink" href="#working-with-numerical-data" title="Permalink to this headline">¶</a></h1>
+<p>In the previous notebook, we trained a k-nearest neighbors on some data.
+However, we oversimplify the procedure by loading a dataset that only
+contained numerical data. Besides, we used datasets which were already
+split into train-test sets.</p>
+<p>In this notebook, we aim at:</p>
 <ul class="simple">
-<li><p>the scikit-learn API : <code class="docutils literal notranslate"><span class="pre">.fit(X,</span> <span class="pre">y)</span></code>/<code class="docutils literal notranslate"><span class="pre">.predict(X)</span></code>/<code class="docutils literal notranslate"><span class="pre">.score(X,</span> <span class="pre">y)</span></code>;</p></li>
-<li><p>how to evaluate the performance of a model with a train-test split.</p></li>
+<li><p>identifying numerical data in a heterogeneous dataset;</p></li>
+<li><p>select the subset of columns corresponding to numerical data;</p></li>
+<li><p>use scikit-learn helper to separate data into train-test sets;</p></li>
+<li><p>train and evaluate a more complex scikit-learn model.</p></li>
 </ul>
-<div class="section" id="loading-the-dataset-with-pandas">
-<h2>Loading the dataset with Pandas<a class="headerlink" href="#loading-the-dataset-with-pandas" title="Permalink to this headline">¶</a></h2>
-<p>We will use the same dataset “adult_census” described in the previous
-notebook. For more details about the dataset see
-<a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a>.</p>
-<p>Numerical data is the most natural type of data used in machine learning and
-can (almost) directly be fed into predictive models. We will load a the
-subset of the original data with only the numerical columns.</p>
+<p>We will start by loading the adult census dataset used during the data
+exploration.</p>
+<div class="section" id="loading-the-entire-dataset">
+<h2>Loading the entire dataset<a class="headerlink" href="#loading-the-entire-dataset" title="Permalink to this headline">¶</a></h2>
+<p>As in the previous notebook, we rely on Pandas to open the CSV file into
+a dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric.csv&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let’s have a look at the first records of this dataframe:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -922,100 +900,477 @@ subset of the original data with only the numerical columns.</p>
     <tr style="text-align: right;">
       <th></th>
       <th>age</th>
+      <th>workclass</th>
+      <th>fnlwgt</th>
+      <th>education</th>
       <th>education-num</th>
+      <th>marital-status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
       <th>capital-gain</th>
       <th>capital-loss</th>
       <th>hours-per-week</th>
+      <th>native-country</th>
       <th>class</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>41</td>
-      <td>12</td>
+      <td>25</td>
+      <td>Private</td>
+      <td>226802</td>
+      <td>11th</td>
+      <td>7</td>
+      <td>Never-married</td>
+      <td>Machine-op-inspct</td>
+      <td>Own-child</td>
+      <td>Black</td>
+      <td>Male</td>
       <td>0</td>
       <td>0</td>
-      <td>92</td>
+      <td>40</td>
+      <td>United-States</td>
       <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>48</td>
-      <td>3</td>
+      <td>38</td>
+      <td>Private</td>
+      <td>89814</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Farming-fishing</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
       <td>0</td>
       <td>0</td>
-      <td>40</td>
+      <td>50</td>
+      <td>United-States</td>
       <td>&lt;=50K</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>60</td>
-      <td>9</td>
+      <td>28</td>
+      <td>Local-gov</td>
+      <td>336951</td>
+      <td>Assoc-acdm</td>
+      <td>12</td>
+      <td>Married-civ-spouse</td>
+      <td>Protective-serv</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
       <td>0</td>
       <td>0</td>
-      <td>25</td>
-      <td>&lt;=50K</td>
+      <td>40</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>37</td>
-      <td>9</td>
+      <td>44</td>
+      <td>Private</td>
+      <td>160323</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Married-civ-spouse</td>
+      <td>Machine-op-inspct</td>
+      <td>Husband</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>7688</td>
       <td>0</td>
-      <td>0</td>
-      <td>45</td>
-      <td>&lt;=50K</td>
+      <td>40</td>
+      <td>United-States</td>
+      <td>&gt;50K</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>73</td>
+      <td>18</td>
+      <td>?</td>
+      <td>103497</td>
+      <td>Some-college</td>
       <td>10</td>
-      <td>3273</td>
+      <td>Never-married</td>
+      <td>?</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Female</td>
       <td>0</td>
-      <td>40</td>
+      <td>0</td>
+      <td>30</td>
+      <td>United-States</td>
       <td>&lt;=50K</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We see that this CSV file contains all information: the target that we would
-like to predict (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;class&quot;</span></code>) and the data that we want to use to train
-our predictive model (i.e. the remaining columns). The first step is to
-separate columns to get on one side the target and on the other side the
-data.</p>
-</div>
-<div class="section" id="separate-the-data-and-the-target">
-<h2>Separate the data and the target<a class="headerlink" href="#separate-the-data-and-the-target" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to separate the target from the data. We will replacate the
+same step than in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">target</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>fnlwgt</th>
+      <th>education</th>
+      <th>education-num</th>
+      <th>marital-status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+      <th>native-country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>Private</td>
+      <td>226802</td>
+      <td>11th</td>
+      <td>7</td>
+      <td>Never-married</td>
+      <td>Machine-op-inspct</td>
+      <td>Own-child</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>Private</td>
+      <td>89814</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Farming-fishing</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>28</td>
+      <td>Local-gov</td>
+      <td>336951</td>
+      <td>Assoc-acdm</td>
+      <td>12</td>
+      <td>Married-civ-spouse</td>
+      <td>Protective-serv</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44</td>
+      <td>Private</td>
+      <td>160323</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Married-civ-spouse</td>
+      <td>Machine-op-inspct</td>
+      <td>Husband</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>?</td>
+      <td>103497</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>?</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+      <td>United-States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0         &lt;=50K
 1         &lt;=50K
-2         &lt;=50K
-3         &lt;=50K
+2          &gt;50K
+3          &gt;50K
 4         &lt;=50K
           ...  
-39068     &lt;=50K
-39069     &lt;=50K
-39070      &gt;50K
-39071     &lt;=50K
-39072      &gt;50K
-Name: class, Length: 39073, dtype: object
+48837     &lt;=50K
+48838      &gt;50K
+48839     &lt;=50K
+48840     &lt;=50K
+48841      &gt;50K
+Name: class, Length: 48842, dtype: object
 </pre></div>
 </div>
 </div>
 </div>
+<p>At this stage, we can focus on the data that we want to use to train or
+future predictive model.</p>
+</div>
+<div class="section" id="identify-numerical-data">
+<h2>Identify numerical data<a class="headerlink" href="#identify-numerical-data" title="Permalink to this headline">¶</a></h2>
+<p>Numerical data are represented with numbers. They are linked to data that is
+measurable such as age or the number of hours a person works per week.</p>
+<p>Predictive models are designed to work with numerical data natively and it
+is a type of data that require a small amount of work to get started.</p>
+<p>The first task here will be to identify numerical data in our dataset. As we
+mentioned, numerical data are represented with numbers, but numbers are not
+always representing numerical data. Thus, we can check the data type for each
+of the column in the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                int64
+workclass         object
+fnlwgt             int64
+education         object
+education-num      int64
+marital-status    object
+occupation        object
+relationship      object
+race              object
+sex               object
+capital-gain       int64
+capital-loss       int64
+hours-per-week     int64
+native-country    object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>We observe two types data type. We can make sure by checking the unique data
+types.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([dtype(&#39;int64&#39;), dtype(&#39;O&#39;)], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thus, we see two types of data types: integer and object. We can look at
+the first few lines of the dataframe to understand the meaning of the
+<code class="docutils literal notranslate"><span class="pre">object</span></code> data types.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>fnlwgt</th>
+      <th>education</th>
+      <th>education-num</th>
+      <th>marital-status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+      <th>native-country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>Private</td>
+      <td>226802</td>
+      <td>11th</td>
+      <td>7</td>
+      <td>Never-married</td>
+      <td>Machine-op-inspct</td>
+      <td>Own-child</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>Private</td>
+      <td>89814</td>
+      <td>HS-grad</td>
+      <td>9</td>
+      <td>Married-civ-spouse</td>
+      <td>Farming-fishing</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>28</td>
+      <td>Local-gov</td>
+      <td>336951</td>
+      <td>Assoc-acdm</td>
+      <td>12</td>
+      <td>Married-civ-spouse</td>
+      <td>Protective-serv</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44</td>
+      <td>Private</td>
+      <td>160323</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Married-civ-spouse</td>
+      <td>Machine-op-inspct</td>
+      <td>Husband</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>?</td>
+      <td>103497</td>
+      <td>Some-college</td>
+      <td>10</td>
+      <td>Never-married</td>
+      <td>?</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+      <td>United-States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We see that <code class="docutils literal notranslate"><span class="pre">object</span></code> data type corresponds to columns containing strings. As
+we saw in the exploration section, these columns contains categories and we
+will see later how to handle those. We can select the columns containing
+integers and check their content.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">]</span>
+<span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1043,265 +1398,203 @@ Name: class, Length: 39073, dtype: object
       <th>capital-gain</th>
       <th>capital-loss</th>
       <th>hours-per-week</th>
+      <th>fnlwgt</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>41</td>
-      <td>12</td>
+      <td>25</td>
+      <td>7</td>
       <td>0</td>
       <td>0</td>
-      <td>92</td>
+      <td>40</td>
+      <td>226802</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>48</td>
-      <td>3</td>
+      <td>38</td>
+      <td>9</td>
       <td>0</td>
       <td>0</td>
-      <td>40</td>
+      <td>50</td>
+      <td>89814</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>60</td>
-      <td>9</td>
+      <td>28</td>
+      <td>12</td>
       <td>0</td>
       <td>0</td>
-      <td>25</td>
+      <td>40</td>
+      <td>336951</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>37</td>
-      <td>9</td>
+      <td>44</td>
+      <td>10</td>
+      <td>7688</td>
       <td>0</td>
-      <td>0</td>
-      <td>45</td>
+      <td>40</td>
+      <td>160323</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>73</td>
+      <td>18</td>
       <td>10</td>
-      <td>3273</td>
       <td>0</td>
-      <td>40</td>
+      <td>0</td>
+      <td>30</td>
+      <td>103497</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We can now linger on the variables, also denominated features, that we will
-use to build our predictive model. In addition, we can as well check how many
-samples are available in our dataset.</p>
+<p>Now that we limited the dataset to numerical columns only, we can check
+closely what these numbers represent. Discarding <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> aside for the
+moment, we can identify two types of usage.</p>
+<p>The former is related to a measurement such as age. The data are continuous
+meaning that they can take any value in a range. We can give the range for
+age column as an example,</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;education-num&#39;, &#39;capital-gain&#39;, &#39;capital-loss&#39;,
-       &#39;hours-per-week&#39;],
-      dtype=&#39;object&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    48842.000000
+mean        38.643585
+std         13.710510
+min         17.000000
+25%         28.000000
+50%         37.000000
+75%         48.000000
+max         90.000000
+Name: age, dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
+<p>The age varies between 17 years and 90 years and can take any value in this
+range.</p>
+<p>The latter is related categorical data. These data are discrete, in contrast
+with continuous. It means that the variable can take only certain values
+which are known as categories. We will come back later on this type of data
+and how to handle them. Here, we are only interested to recognize them.</p>
+<p>Here, the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> gives an example. The number encode the
+education level which can only correspond to specific values. We can quickly
+check the number of occurrence of each category to get convinced.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset contains 39073 samples and 5 features
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1        83
+2       247
+3       509
+4       955
+5       756
+6      1389
+7      1812
+8       657
+9     15784
+10    10878
+11     2061
+12     1601
+13     8025
+14     2657
+15      834
+16      594
+Name: education-num, dtype: int64
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="fit-a-model-and-make-predictions">
-<h2>Fit a model and make predictions<a class="headerlink" href="#fit-a-model-and-make-predictions" title="Permalink to this headline">¶</a></h2>
-<p>We will build a classification model using the “K-nearest neighbors”
-strategy. The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to train the model from the input
-(features) and target data.</p>
+<p>Therefore, we should ignore such type of columns because they would require
+a specific processing which is different from the continuous variable.</p>
+<p>Finally, we can mention that we will ignore the <code class="docutils literal notranslate"><span class="pre">&quot;fnwgt&quot;</span></code> column because it
+corresponds to an hand-crafted variable and we make the choice to only work
+with variable which has been collected. In the next notebook, we will
+regularly ignore this variable as well.</p>
+<p>Now, we can select the subset of numerical columns and store them inside a
+new dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="train-test-split-the-dataset">
+<h2>Train-test split the dataset<a class="headerlink" href="#train-test-split-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>In the previous notebook, we loaded separately two datasets: a training and a
+testing dataset. We mentioned that scikit-learn provides an helper function
+<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.train_test_split</span></code> allowing to do this split.
+Here, we will use this tool instead of loading some new data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We recall that the <code class="docutils literal notranslate"><span class="pre">random_state</span></code> parameter allows to get a deterministic
+results even if we use some random process (i.e. data shuffling).</p>
+<p>In the previous notebook, we used a k-nearest neighbors predictor. While this
+model is really intuitive to understand, it is not widely used. Here, we will
+a predictive model belonging to the linear model families. In short, these
+models find a set of weights to combine each column in the data matrix to
+predict the target. Thus, we will use a logistic regression classifier and
+train it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KNeighborsClassifier()
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LogisticRegression()
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s use our model to make some predictions using the same dataset. In a
-sake of simplicity, we will look at the five first predicted targets.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;], dtype=object)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Indeed, we can compare these predictions to the actual data…</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     &lt;=50K
-1     &lt;=50K
-2     &lt;=50K
-3     &lt;=50K
-4     &lt;=50K
-Name: class, dtype: object
-</pre></div>
-</div>
-</div>
-</div>
-<p>…and we could even check if the predictions agree with the real targets:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    False
-1     True
-2     True
-3     True
-4     True
-Name: class, dtype: bool
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of correct prediction: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> / 5&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of correct prediction: 4 / 5
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here, we see that our model does a mistake when predicting for the first
-sample.</p>
-<p>To get a better assessment, we can compute the average success rate.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8516366800603997
-</pre></div>
-</div>
-</div>
-</div>
-<p>But, can this evaluation be trusted, or is it too good to be true?</p>
-</div>
-<div class="section" id="train-test-data-split">
-<h2>Train-test data split<a class="headerlink" href="#train-test-data-split" title="Permalink to this headline">¶</a></h2>
-<p>When building a machine learning model, it is important evaluate the trained
-model on data that was not used to fit the model, as generalization is more
-than memorization. It is harder to conclude on instances never seen than on
-those already seen.</p>
-<p>Correct evaluation is easily done by leaving out a subset of the data when
-training the model and using it after for model evaluation. The data used to
-fit a model is called training data while the one used to assess a model is
-called testing data.</p>
-<p>We can load more data, which was actually left-out from the original data
-set.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../datasets/adult-census-numeric-test.csv&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>From this new data, we separate out input features and the target to predict,
-as in the beginning of this notebook.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can check the number of features and samples available in this new set.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The testing dataset contains </span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 9769 samples and 5 features
-</pre></div>
-</div>
-</div>
-</div>
-<p>Note that scikit-learn provides a helper function <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> which
-can be used to split the dataset into a training and a testing set. It will
-also ensure that the data are shuffled randomly before splitting the data.</p>
-<p>Instead of computing the prediction and computing manually the average
-success rate, we can use the method <code class="docutils literal notranslate"><span class="pre">score</span></code>. When dealing with classifiers
-this method return this performance metric.</p>
+<p>We can now check the performance of the model using the test set which we
+left out until now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="n">model_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy using a </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of logistic regresssion: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a KNeighborsClassifier is 0.822
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of logistic regresssion: 0.807
 </pre></div>
 </div>
 </div>
 </div>
-<p>If we compare with the accuracy obtained by wrongly evaluating the model
-on the training set, we find that this evaluation was indeed optimistic
-compared to the score obtained on an held-out test set.</p>
-<p>It shows the importance to always test the performance of predictive models
-on a different set than the one used to train these models. We will come
-back more into details regarding how predictive models should be evaluated.</p>
-<p>In this notebook we have:</p>
+<p>Now the real question is: is this performance relevant of a good predictive
+model? You will answer to this question by solving the next exercise.</p>
+<p>In this notebook, we have learnt to:</p>
 <ul class="simple">
-<li><p>fit a <strong>k-nearest neighbors</strong> model on training dataset;</p></li>
-<li><p>evaluated its performance on the testing data;</p></li>
-<li><p>presented the scikit-learn API <code class="docutils literal notranslate"><span class="pre">.fit(X,</span> <span class="pre">y)</span></code> (to train a model),
-<code class="docutils literal notranslate"><span class="pre">.predict(X)</span></code> (to make predictions) and <code class="docutils literal notranslate"><span class="pre">.score(X,</span> <span class="pre">y)</span></code>
-(to evaluate a model).</p></li>
+<li><p>identify numerical data in a heterogeneous dataset;</p></li>
+<li><p>select the subset of columns corresponding to numerical data;</p></li>
+<li><p>use scikit-learn helper to separate data into train-test sets;</p></li>
+<li><p>train and evaluate a more complex scikit-learn model.</p></li>
 </ul>
 </div>
 </div>
@@ -1334,7 +1627,7 @@ back more into details regarding how predictive models should be evaluated.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html" title="previous page">Fitting a scikit-learn model on numerical data</a>
+    <a class='left-prev' id="prev-link" href="02_numerical_pipeline_introduction.html" title="previous page">First model with scikit-learn</a>
     <a class='right-next' id="next-link" href="02_numerical_pipeline_ex_01.html" title="next page">📝 Exercise 01</a>
 
     </div>

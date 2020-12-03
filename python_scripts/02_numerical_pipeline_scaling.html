@@ -141,8 +141,13 @@
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="02_numerical_pipeline.html">
+    <a class="reference internal" href="02_numerical_pipeline_introduction.html">
      First model with scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_hands_on.html">
+     Working with numerical data
     </a>
    </li>
    <li class="toctree-l2">
@@ -833,6 +838,25 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   Data preparation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-fitting-without-preprocessing">
+   Model fitting without preprocessing
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -840,17 +864,20 @@
         
               <div>
                 
-  <p>In this notebook, we present: how to build predictive models on tabular
+  <div class="section" id="preprocessing-for-numerical-features">
+<h1>Preprocessing for numerical features<a class="headerlink" href="#preprocessing-for-numerical-features" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we present how to build predictive models on tabular
 datasets, with only numerical features.</p>
 <p>In particular we will highlight:</p>
 <ul class="simple">
 <li><p>an example of preprocessing, namely the <strong>scaling numerical variables</strong>;</p></li>
 <li><p>using a scikit-learn <strong>pipeline</strong> to chain preprocessing and model
 training;</p></li>
-<li><p>assessed the performance of our model via <strong>cross-validation</strong>.</p></li>
+<li><p>assessed the performance of our model via <strong>cross-validation</strong> instead of
+a single train-test split.</p></li>
 </ul>
-<div class="section" id="preprocessing-for-numerical-features">
-<h1>Preprocessing for numerical features<a class="headerlink" href="#preprocessing-for-numerical-features" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="data-preparation">
+<h2>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
 <p>Let’s charge the full adult census dataset and split the target from the
 actual data used for modeling.</p>
 <div class="cell docutils container">
@@ -858,270 +885,23 @@ actual data used for modeling.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
-
-<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will first split our dataset to have the target separated from the data
+used to train our predictive model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>In this notebook, we will only focus on the numerical processing. Thus, we
-need to recognize and select the columns corresponding to numerical features.
-We can first investigate the type of data for each of the columns.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                int64
-workclass         object
-education         object
-education-num      int64
-marital-status    object
-occupation        object
-relationship      object
-race              object
-sex               object
-capital-gain       int64
-capital-loss       int64
-hours-per-week     int64
-native-country    object
-dtype: object
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([dtype(&#39;int64&#39;), dtype(&#39;O&#39;)], dtype=object)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Thus, we see two types of data types: integer and object. We can look at
-the first few lines of the dataframe to understand the meaning of the
-<code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>age</th>
-      <th>workclass</th>
-      <th>education</th>
-      <th>education-num</th>
-      <th>marital-status</th>
-      <th>occupation</th>
-      <th>relationship</th>
-      <th>race</th>
-      <th>sex</th>
-      <th>capital-gain</th>
-      <th>capital-loss</th>
-      <th>hours-per-week</th>
-      <th>native-country</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>25</td>
-      <td>Private</td>
-      <td>11th</td>
-      <td>7</td>
-      <td>Never-married</td>
-      <td>Machine-op-inspct</td>
-      <td>Own-child</td>
-      <td>Black</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>38</td>
-      <td>Private</td>
-      <td>HS-grad</td>
-      <td>9</td>
-      <td>Married-civ-spouse</td>
-      <td>Farming-fishing</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>50</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>28</td>
-      <td>Local-gov</td>
-      <td>Assoc-acdm</td>
-      <td>12</td>
-      <td>Married-civ-spouse</td>
-      <td>Protective-serv</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>44</td>
-      <td>Private</td>
-      <td>Some-college</td>
-      <td>10</td>
-      <td>Married-civ-spouse</td>
-      <td>Machine-op-inspct</td>
-      <td>Husband</td>
-      <td>Black</td>
-      <td>Male</td>
-      <td>7688</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>18</td>
-      <td>?</td>
-      <td>Some-college</td>
-      <td>10</td>
-      <td>Never-married</td>
-      <td>?</td>
-      <td>Own-child</td>
-      <td>White</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>0</td>
-      <td>30</td>
-      <td>United-States</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>We can see that <code class="docutils literal notranslate"><span class="pre">object</span></code> data type corresponds to columns containing string.
-As we saw in the exploration section, these columns contains categories and
-we will see later how to handle those. We can select the columns containing
-integers and check their content.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
-<span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>age</th>
-      <th>education-num</th>
-      <th>capital-gain</th>
-      <th>capital-loss</th>
-      <th>hours-per-week</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>25</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>38</td>
-      <td>9</td>
-      <td>0</td>
-      <td>0</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>28</td>
-      <td>12</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>44</td>
-      <td>10</td>
-      <td>7688</td>
-      <td>0</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>18</td>
-      <td>10</td>
-      <td>0</td>
-      <td>0</td>
-      <td>30</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>Now that we limited the dataset to numerical columns only, we should check
-that none of the columns are containing categorical columns using integer.
-Indeed, the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> represents such information. Thus, we
-need to exclude it from the columns to consider.</p>
+<p>We start by selecting only the numerical columns as seen in the previous
+notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
@@ -1143,18 +923,18 @@ need to exclude it from the columns to consider.</p>
 </div>
 </div>
 </div>
-<p>Let’s consider the <code class="docutils literal notranslate"><span class="pre">ConvergenceWarning</span></code> message that was raised previously
-when calling the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method to train our model. This warning informs us
-that our model stopped learning because it reached the maximum number of
-iterations allowed by the user. This could potentially be detrimental for the
-model accuracy. We can follow the (bad) advice given in the warning message
-and increase the maximum number of iterations allowed.</p>
+</div>
+<div class="section" id="model-fitting-without-preprocessing">
+<h2>Model fitting without preprocessing<a class="headerlink" href="#model-fitting-without-preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>We will use the logistic regression classifier as in the previous notebook.
+This time, besides fitting the model, we will also compute the time needed
+to train the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
 <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
@@ -1168,23 +948,73 @@ and increase the maximum number of iterations allowed.</p>
 <span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The accuracy using a </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;with a fitting time of </span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;in </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2"> iterations&quot;</span><span class="p">)</span>
+      <span class="sa">f</span><span class="s2">&quot;in </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">n_iter_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> iterations&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.279 seconds in [59] iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.315 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
 </div>
-<p>We now observe a longer training time but no significant improvement in the
-predictive performance. Instead of increasing the number of iterations, we
-can try to help fit the model faster by scaling the data first. A range of
-preprocessing algorithms in scikit-learn allows us to transform the input
-data before training a model.</p>
-<p>In our case, we will standardize the data and then train a new logistic
-regression model on that new version of the dataset.</p>
+<p>We did not have issues with our model training: it converged in 59 iterations
+while we gave maximum number of iterations of 100. However, we can give an
+hint that this model could converge and train faster. In some case, we might
+even get a <code class="docutils literal notranslate"><span class="pre">ConvergenceWarning</span></code> using the above pattern. We will show such
+example by reducing the number of maximum iterations allowed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py:764: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  extra_warning_msg=_LOGISTIC_SOLVER_CONVERGENCE_MSG)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The accuracy using a </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;with a fitting time of </span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;in </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">n_iter_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> iterations&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.274 seconds in 50 iterations
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, the score is closed to the previous case because our algorithm
+is closed to the same solution. The warning suggested by scikit-learn
+provides two solutions to solve this issue:</p>
+<ul class="simple">
+<li><p>increase <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> which is indeed what happens in the former case. We let
+the algorithm converge, it will take more time but we are sure to get an
+optimal model;</p></li>
+<li><p>standardize the data which is expected to improve convergence.</p></li>
+</ul>
+<p>We will investigate the second option.</p>
+<p>A range of preprocessing algorithms in scikit-learn allows us to transform
+the input data before training a model. In our case, we will standardize the
+data and then train a new logistic regression model on that new version of
+the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1421,7 +1251,7 @@ followed by the classifier or regressor model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.102 seconds in [12] iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.116 seconds in [12] iterations
 </pre></div>
 </div>
 </div>
@@ -1451,8 +1281,8 @@ defines the splitting strategy.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.04 s, sys: 340 ms, total: 1.38 s
-Wall time: 725 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.17 s, sys: 438 ms, total: 1.61 s
+Wall time: 841 ms
 </pre></div>
 </div>
 </div>
@@ -1510,6 +1340,7 @@ trained to the full training set, along with an estimate of the variability
 <li><p>used a <strong>pipeline</strong> to chain scaling and logistic regression training;</p></li>
 <li><p>assessed the performance of our model via <strong>cross-validation</strong>.</p></li>
 </ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

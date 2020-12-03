@@ -34,17 +34,27 @@ import pandas as pd
 
 df = pd.read_csv("../datasets/adult-census.csv")
 
+# %% [markdown]
+# We will first split our dataset to have the target separated from the data
+# used to train our predictive model.
+
 # %%
 target_name = "class"
 target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = df.drop(columns=target_name)
+
+# %% [markdown]
+# We start by selecting only the numerical columns as seen in the previous
+# notebook.
 
 # %%
-from sklearn.compose import make_column_selector as selector
+numerical_columns = [
+    "age", "capital-gain", "capital-loss", "hours-per-week"]
 
-numerical_columns_selector = selector(dtype_exclude=object)
-numerical_columns = numerical_columns_selector(data)
 data_numeric = data[numerical_columns]
+
+# %% [markdown]
+# Next, let's split the data and target into a train and test set.
 
 # %%
 from sklearn.model_selection import train_test_split

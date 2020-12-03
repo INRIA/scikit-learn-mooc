@@ -13,8 +13,9 @@
 # ---
 
 # %% [markdown]
+# # Preprocessing for numerical features
 #
-# In this notebook, we present: how to build predictive models on tabular
+# In this notebook, we present how to build predictive models on tabular
 # datasets, with only numerical features.
 #
 # In particular we will highlight:
@@ -22,11 +23,11 @@
 # * an example of preprocessing, namely the **scaling numerical variables**;
 # * using a scikit-learn **pipeline** to chain preprocessing and model
 #   training;
-# * assessed the performance of our model via **cross-validation**.
+# * assessed the performance of our model via **cross-validation** instead of
+#   a single train-test split.
 #
-# # Preprocessing for numerical features
-
-# %% [markdown]
+# ## Data preparation
+#
 # Let's charge the full adult census dataset and split the target from the
 # actual data used for modeling.
 
@@ -35,46 +36,18 @@ import pandas as pd
 
 df = pd.read_csv("../datasets/adult-census.csv")
 
+# %% [markdown]
+# We will first split our dataset to have the target separated from the data
+# used to train our predictive model.
+
+# %%
 target_name = "class"
 target = df[target_name]
-
-data = df.drop(columns=[target_name, "fnlwgt"])
-
-# %% [markdown]
-# In this notebook, we will only focus on the numerical processing. Thus, we
-# need to recognize and select the columns corresponding to numerical features.
-# We can first investigate the type of data for each of the columns.
-
-# %%
-data.dtypes
-
-# %%
-data.dtypes.unique()
+data = df.drop(columns=target_name)
 
 # %% [markdown]
-# Thus, we see two types of data types: integer and object. We can look at
-# the first few lines of the dataframe to understand the meaning of the
-# `object` data type.
-
-# %%
-data.head()
-
-# %% [markdown]
-# We can see that `object` data type corresponds to columns containing string.
-# As we saw in the exploration section, these columns contains categories and
-# we will see later how to handle those. We can select the columns containing
-# integers and check their content.
-
-# %%
-numerical_columns = [
-    "age", "education-num", "capital-gain", "capital-loss", "hours-per-week"]
-data[numerical_columns].head()
-
-# %% [markdown]
-# Now that we limited the dataset to numerical columns only, we should check
-# that none of the columns are containing categorical columns using integer.
-# Indeed, the column `"education-num"` represents such information. Thus, we
-# need to exclude it from the columns to consider.
+# We start by selecting only the numerical columns as seen in the previous
+# notebook.
 
 # %%
 numerical_columns = [
@@ -91,20 +64,18 @@ from sklearn.model_selection import train_test_split
 data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
-
 # %% [markdown]
-# Let's consider the `ConvergenceWarning` message that was raised previously
-# when calling the `fit` method to train our model. This warning informs us
-# that our model stopped learning because it reached the maximum number of
-# iterations allowed by the user. This could potentially be detrimental for the
-# model accuracy. We can follow the (bad) advice given in the warning message
-# and increase the maximum number of iterations allowed.
+# ## Model fitting without preprocessing
+#
+# We will use the logistic regression classifier as in the previous notebook.
+# This time, besides fitting the model, we will also compute the time needed
+# to train the model.
 
 # %%
-from sklearn.linear_model import LogisticRegression
 import time
+from sklearn.linear_model import LogisticRegression
 
-model = LogisticRegression(max_iter=50000)
+model = LogisticRegression()
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start
@@ -114,17 +85,44 @@ model_name = model.__class__.__name__
 score = model.score(data_test, target_test)
 print(f"The accuracy using a {model_name} is {score:.3f} "
       f"with a fitting time of {elapsed_time:.3f} seconds "
-      f"in {model.n_iter_} iterations")
+      f"in {model.n_iter_[0]} iterations")
 
 # %% [markdown]
-# We now observe a longer training time but no significant improvement in the
-# predictive performance. Instead of increasing the number of iterations, we
-# can try to help fit the model faster by scaling the data first. A range of
-# preprocessing algorithms in scikit-learn allows us to transform the input
-# data before training a model.
+# We did not have issues with our model training: it converged in 59 iterations
+# while we gave maximum number of iterations of 100. However, we can give an
+# hint that this model could converge and train faster. In some case, we might
+# even get a `ConvergenceWarning` using the above pattern. We will show such
+# example by reducing the number of maximum iterations allowed.
+
+# %%
+model = LogisticRegression(max_iter=50)
+start = time.time()
+model.fit(data_train, target_train)
+elapsed_time = time.time() - start
+
+# %%
+model_name = model.__class__.__name__
+score = model.score(data_test, target_test)
+print(f"The accuracy using a {model_name} is {score:.3f} "
+      f"with a fitting time of {elapsed_time:.3f} seconds "
+      f"in {model.n_iter_[0]} iterations")
+
+# %% [markdown]
+# In this case, the score is closed to the previous case because our algorithm
+# is closed to the same solution. The warning suggested by scikit-learn
+# provides two solutions to solve this issue:
 #
-# In our case, we will standardize the data and then train a new logistic
-# regression model on that new version of the dataset.
+# * increase `max_iter` which is indeed what happens in the former case. We let
+#   the algorithm converge, it will take more time but we are sure to get an
+#   optimal model;
+# * standardize the data which is expected to improve convergence.
+#
+# We will investigate the second option.
+#
+#  A range of preprocessing algorithms in scikit-learn allows us to transform
+# the input data before training a model. In our case, we will standardize the
+# data and then train a new logistic regression model on that new version of
+# the dataset.
 
 # %%
 data_train.describe()

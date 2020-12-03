@@ -43,7 +43,7 @@ df = pd.read_csv("../datasets/adult-census.csv")
 # %%
 target_name = "class"
 target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = df.drop(columns=[target_name, "fnlwgt", "education-num"])
 
 # %% [markdown]
 # We can select the categorical based on the `object` dtype.
@@ -77,7 +77,7 @@ from sklearn.linear_model import LogisticRegression
 
 model = make_pipeline(
     OrdinalEncoder(categories=categories),
-    LogisticRegression(max_iter=1000))
+    LogisticRegression(max_iter=500))
 scores = cross_val_score(model, data_categorical, target)
 print(f"The different scores obtained are: \n{scores}")
 
@@ -110,7 +110,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 model = make_pipeline(
     OneHotEncoder(categories=categories, drop="if_binary"),
-    LogisticRegression())
+    LogisticRegression(max_iter=500))
 scores = cross_val_score(model, data_categorical, target)
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")

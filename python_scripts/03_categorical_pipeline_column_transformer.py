@@ -31,7 +31,7 @@ target = df[target_name]
 
 data = df.drop(columns=[target_name, "fnlwgt"])
 
-# ## [markdown]
+# %% [markdown]
 # We recall that `"education-num"` and `"education"` columns contains the same
 # information. In the previous notebook, we drop `"education-num"` and only
 # use the latter column. We will do the same processing here.
@@ -40,6 +40,8 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 data = data.drop(columns="education-num")
 
 # %% [markdown]
+# # Selection based on data types
+#
 # We separate categorical and numerical variables using the `object` data types
 # as we previously saw that it only corresponds to categorical columns. We make
 # use of the `make_column_selector` to select the corresponding columns.
@@ -63,7 +65,7 @@ categories = [data[column].unique()
               for column in categorical_columns]
 
 # %% [markdown]
-# ## ColumnTransformer
+# ## Dispatch some columns to a specific processor
 #
 # In the previous sections, we saw that we need to treat data differently
 # depending on their nature (i.e. numerical or categorical).
@@ -79,9 +81,7 @@ categories = [data[column].unique()
 #   will use the option `drop="if_binary"` to drop one of the column since the
 #   information will be correlated;
 # * **numerical scaling** numerical features which will be standardized.
-
-
-# %% [markdown]
+#
 # We can now create our `ColumnTransfomer` by specifying a list of triplet
 # (preprocessor name, transformer, columns). First, let's start by creating
 # a transformer for the numerical and categorical part as we did in the
@@ -112,16 +112,17 @@ preprocessor = ColumnTransformer([
 # %%
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
-model = make_pipeline(preprocessor, LogisticRegression())
+
+model = make_pipeline(preprocessor, LogisticRegression(max_iter=500))
 
 # %% [markdown]
 # Starting from `scikit-learn` 0.23, the notebooks can display an interactive
 # view of the pipelines.
 
 # %%
-from sklearn import config_context
-with config_context(display='diagram'):
-    model
+from sklearn import set_config
+set_config(display='diagram')
+model
 
 # %% [markdown]
 # The final model is more complex than the previous models but still follows
@@ -170,6 +171,8 @@ target_test[:5]
 model.score(data_test, target_test)
 
 # %% [markdown]
+# ## Evaluation of the model with cross-validation
+#
 # This model can also be cross-validated as we previously did (instead of using
 # a single train-test split):
 

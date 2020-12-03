@@ -15,8 +15,6 @@
 # %% [markdown]
 # # First model with scikit-learn
 #
-# ## Basic preprocessing and model fitting
-#
 # In this notebook, we present how to build predictive models on tabular
 # datasets, with only numerical features.
 #
@@ -25,7 +23,7 @@
 # * the scikit-learn API : `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
 # * how to evaluate the performance of a model with a train-test split.
 #
-# ## Loading the dataset
+# ## Loading the dataset with Pandas
 #
 # We will use the same dataset "adult_census" described in the previous
 # notebook. For more details about the dataset see
@@ -41,7 +39,7 @@ import pandas as pd
 df = pd.read_csv("../datasets/adult-census-numeric.csv")
 
 # %% [markdown]
-# Let's have a look at the first records of this data frame:
+# Let's have a look at the first records of this dataframe:
 
 # %%
 df.head()
@@ -50,8 +48,10 @@ df.head()
 # We see that this CSV file contains all information: the target that we would
 # like to predict (i.e. `"class"`) and the data that we want to use to train
 # our predictive model (i.e. the remaining columns). The first step is to
-# split our entire dataset to get on one side the target and on the other side
-# the data.
+# separate columns to get on one side the target and on the other side the
+# data.
+#
+# ## Separate the data and the target
 
 # %%
 target_name = "class"
@@ -76,6 +76,8 @@ print(
     f"{data.shape[1]} features")
 
 # %% [markdown]
+# ## Fit a model and make predictions
+#
 # We will build a classification model using the "K-nearest neighbors"
 # strategy. The `fit` method is called to train the model from the input
 # (features) and target data.
@@ -122,6 +124,8 @@ print(f"Number of correct prediction: "
 # %% [markdown]
 # But, can this evaluation be trusted, or is it too good to be true?
 #
+# ## Train-test data split
+#
 # When building a machine learning model, it is important evaluate the trained
 # model on data that was not used to fit the model, as generalization is more
 # than memorization. It is harder to conclude on instances never seen than on
@@ -158,9 +162,7 @@ print(
 # Note that scikit-learn provides a helper function `train_test_split` which
 # can be used to split the dataset into a training and a testing set. It will
 # also ensure that the data are shuffled randomly before splitting the data.
-
-
-# %% [markdown]
+#
 # Instead of computing the prediction and computing manually the average
 # success rate, we can use the method `score`. When dealing with classifiers
 # this method return this performance metric.

@@ -843,6 +843,25 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quizz">
+   Quizz
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setting-a-model-s-parameter">
+   Setting a model’s parameter
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -861,6 +880,14 @@ they need to be optimized. In this notebook we will use the words
 <p>This notebook shows the influence of changing model hyper-parameters.</p>
 <p>We will reload the adult census dataset and ignore some of the columns
 as previously done in previous notebooks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
+<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s1">&#39;diagram&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1048,9 +1075,41 @@ histogram gradient-boosting as predictive model.</p>
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
     <span class="p">(</span><span class="s1">&#39;cat-preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
     <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span> <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">preprocessor</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="25fedc32-833a-4179-aa6d-2bce9edab24f" type="checkbox" ><label class="sk-toggleable__label" for="25fedc32-833a-4179-aa6d-2bce9edab24f">ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                  transformers=[('cat-preprocessor',
+                                 OrdinalEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                                                            array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
+       ' Prof-school', ' 7th-8th', ' Bachelo...
+       ' Laos', ' England', ' Cuba', ' Taiwan', ' Italy', ' Canada',
+       ' Portugal', ' China', ' Nicaragua', ' Honduras', ' Iran',
+       ' Scotland', ' Jamaica', ' Ecuador', ' Yugoslavia', ' Hungary',
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)]),
+                                 ['workclass', 'education', 'marital-status',
+                                  'occupation', 'relationship', 'race', 'sex',
+                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="0aa03685-f26f-40f5-b2ad-4159112da139" type="checkbox" ><label class="sk-toggleable__label" for="0aa03685-f26f-40f5-b2ad-4159112da139">cat-preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="213a5692-7898-4c8a-be28-b6fdae749c55" type="checkbox" ><label class="sk-toggleable__label" for="213a5692-7898-4c8a-be28-b6fdae749c55">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                           array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
+       ' Prof-school', ' 7th-8th', ' Bachelors', ' Masters', ' Doctorate',
+       ' 5th-6th', ' Assoc-voc', ' 9th', ' 12th', ' 1st-4th',
+       ' Preschool'], dtype=objec...
+       ' Thailand', ' Haiti', ' El-Salvador', ' Puerto-Rico', ' Vietnam',
+       ' South', ' Columbia', ' Japan', ' India', ' Cambodia', ' Poland',
+       ' Laos', ' England', ' Cuba', ' Taiwan', ' Italy', ' Canada',
+       ' Portugal', ' China', ' Nicaragua', ' Honduras', ' Iran',
+       ' Scotland', ' Jamaica', ' Ecuador', ' Yugoslavia', ' Hungary',
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)])</pre></div></div></div></div></div></div></div></div></div></div></div></div>
 </div>
 <p>Finally, we use a tree-based classifier (i.e. histogram gradient-boosting) to
 predict whether or not a person earns more than 50,000 dollars a year.</p>
@@ -1066,29 +1125,85 @@ predict whether or not a person earns more than 50,000 dollars a year.</p>
     <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
      <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))])</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 49.4 ms, sys: 0 ns, total: 49.4 ms
+Wall time: 49.2 ms
+</pre></div>
+</div>
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="513380d2-c72e-4cb3-8f23-272268bcef29" type="checkbox" ><label class="sk-toggleable__label" for="513380d2-c72e-4cb3-8f23-272268bcef29">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('preprocessor',
+                 ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                                   transformers=[('cat-preprocessor',
+                                                  OrdinalEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                                                                             array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',...
+       ' Portugal', ' China', ' Nicaragua', ' Honduras', ' Iran',
+       ' Scotland', ' Jamaica', ' Ecuador', ' Yugoslavia', ' Hungary',
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)]),
+                                                  ['workclass', 'education',
+                                                   'marital-status',
+                                                   'occupation', 'relationship',
+                                                   'race', 'sex',
+                                                   'native-country'])])),
+                ('classifier',
+                 HistGradientBoostingClassifier(random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="56d7795c-e040-4b73-97a4-fffa4bfe6ea6" type="checkbox" ><label class="sk-toggleable__label" for="56d7795c-e040-4b73-97a4-fffa4bfe6ea6">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                  transformers=[('cat-preprocessor',
+                                 OrdinalEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                                                            array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
+       ' Prof-school', ' 7th-8th', ' Bachelo...
+       ' Laos', ' England', ' Cuba', ' Taiwan', ' Italy', ' Canada',
+       ' Portugal', ' China', ' Nicaragua', ' Honduras', ' Iran',
+       ' Scotland', ' Jamaica', ' Ecuador', ' Yugoslavia', ' Hungary',
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)]),
+                                 ['workclass', 'education', 'marital-status',
+                                  'occupation', 'relationship', 'race', 'sex',
+                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="08cd4726-f5c0-4667-95f6-ebd9d7a04caa" type="checkbox" ><label class="sk-toggleable__label" for="08cd4726-f5c0-4667-95f6-ebd9d7a04caa">cat-preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="6352e1ca-0c17-43b9-8000-8c7b8829076a" type="checkbox" ><label class="sk-toggleable__label" for="6352e1ca-0c17-43b9-8000-8c7b8829076a">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+       ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
+       ' Never-worked'], dtype=object),
+                           array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
+       ' Prof-school', ' 7th-8th', ' Bachelors', ' Masters', ' Doctorate',
+       ' 5th-6th', ' Assoc-voc', ' 9th', ' 12th', ' 1st-4th',
+       ' Preschool'], dtype=objec...
+       ' Thailand', ' Haiti', ' El-Salvador', ' Puerto-Rico', ' Vietnam',
+       ' South', ' Columbia', ' Japan', ' India', ' Cambodia', ' Poland',
+       ' Laos', ' England', ' Cuba', ' Taiwan', ' Italy', ' Canada',
+       ' Portugal', ' China', ' Nicaragua', ' Honduras', ' Iran',
+       ' Scotland', ' Jamaica', ' Ecuador', ' Yugoslavia', ' Hungary',
+       ' Hong', ' Greece', ' Trinadad&Tobago',
+       ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
+      dtype=object)])</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="c6283332-4210-46e3-95df-e75ea52c34cb" type="checkbox" ><label class="sk-toggleable__label" for="c6283332-4210-46e3-95df-e75ea52c34cb">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(random_state=42)</pre></div></div></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;The test accuracy score of the gradient boosting pipeline is: &quot;</span>
     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">df_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># In the previous example, we created an histogram gradient-boosting classifier</span>
-<span class="c1"># using the default parameters by omitting to explicitely set these parameters.</span>
-<span class="c1">#</span>
-<span class="c1"># However, there is no reason that these parameters are optimal for our</span>
-<span class="c1"># dataset. For instance, we can try to set the `learning_rate` parameter and</span>
-<span class="c1"># see how it changes the score:</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the gradient boosting pipeline is: 0.88
-CPU times: user 1.38 s, sys: 48.7 ms, total: 1.43 s
-Wall time: 1.43 s
 </pre></div>
 </div>
 </div>
 </div>
+<p>In the previous example, we created an histogram gradient-boosting classifier
+using the default parameters by omitting to explicitely set these parameters.</p>
+<p>However, there is no reason that these parameters are optimal for our
+dataset. For instance, we can try to set the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> parameter and
+see how it changes the score:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
@@ -1120,22 +1235,6 @@ Wall time: 1.43 s
 <span class="nb">print</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;The test accuracy score of the gradient boosting pipeline is: &quot;</span>
     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">df_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># # %% [markdown]</span>
-<span class="c1"># ## Quizz</span>
-<span class="c1">#</span>
-<span class="c1"># 1. What is the default value of the `learning_rate` parameter of the</span>
-<span class="c1"># `HistGradientBoostingClassifier` class? ([link to the API documentation](</span>
-<span class="c1"># https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html))</span>
-<span class="c1">#</span>
-<span class="c1"># 2. Decrease progressively value of `learning_rate`: can you find a value that</span>
-<span class="c1"># yields an accuracy higher than with the default learning rate?</span>
-<span class="c1">#</span>
-<span class="c1"># 3. Fix `learning_rate` to 0.05 and try setting the value of `max_leaf_nodes`</span>
-<span class="c1"># to the minimum value of 2. Does it improve the accuracy?</span>
-<span class="c1">#</span>
-<span class="c1"># 4. Try to progressively increase the value of `max_leaf_nodes` to 256 by</span>
-<span class="c1"># taking powers of 2. What do you observe?</span>
 </pre></div>
 </div>
 </div>
@@ -1145,6 +1244,21 @@ Wall time: 1.43 s
 </div>
 </div>
 </div>
+<div class="section" id="quizz">
+<h2>Quizz<a class="headerlink" href="#quizz" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p>What is the default value of the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> parameter of the
+<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> class? (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html">link to the API documentation</a>)</p></li>
+<li><p>Decrease progressively value of <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>: can you find a value that
+yields an accuracy higher than with the default learning rate?</p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> to 0.05 and try setting the value of <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>
+to the minimum value of 2. Does it improve the accuracy?</p></li>
+<li><p>Try to progressively increase the value of <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> to 256 by
+taking powers of 2. What do you observe?</p></li>
+</ol>
+</div>
+<div class="section" id="setting-a-model-s-parameter">
+<h2>Setting a model’s parameter<a class="headerlink" href="#setting-a-model-s-parameter" title="Permalink to this headline">¶</a></h2>
 <p>Actually scikit-learn estimators have a <code class="docutils literal notranslate"><span class="pre">set_params</span></code> method that allows you
 to change the parameter of a model after it has been created. For example, we
 can set the <code class="docutils literal notranslate"><span class="pre">learning_rate=1e-3</span></code> and check that we get the same score as
@@ -1236,6 +1350,7 @@ parameter, for example <code class="docutils literal notranslate"><span class="p
 <li><p>how to use <code class="docutils literal notranslate"><span class="pre">get_params</span></code> and <code class="docutils literal notranslate"><span class="pre">set_params</span></code> to get the parameters of a model
 and set them.</p></li>
 </ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

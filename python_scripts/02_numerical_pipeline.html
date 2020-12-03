@@ -123,7 +123,7 @@
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="01_tabular_data_exploration.html">
-     Tabular data exploration
+     First look at our dataset
     </a>
    </li>
    <li class="toctree-l2">
@@ -839,13 +839,23 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#basic-preprocessing-and-model-fitting">
-   Basic preprocessing and model fitting
+  <a class="reference internal nav-link" href="#loading-the-dataset-with-pandas">
+   Loading the dataset with Pandas
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loading-the-dataset">
-   Loading the dataset
+  <a class="reference internal nav-link" href="#separate-the-data-and-the-target">
+   Separate the data and the target
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fit-a-model-and-make-predictions">
+   Fit a model and make predictions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#train-test-data-split">
+   Train-test data split
   </a>
  </li>
 </ul>
@@ -861,8 +871,6 @@
                 
   <div class="section" id="first-model-with-scikit-learn">
 <h1>First model with scikit-learn<a class="headerlink" href="#first-model-with-scikit-learn" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="basic-preprocessing-and-model-fitting">
-<h2>Basic preprocessing and model fitting<a class="headerlink" href="#basic-preprocessing-and-model-fitting" title="Permalink to this headline">¶</a></h2>
 <p>In this notebook, we present how to build predictive models on tabular
 datasets, with only numerical features.</p>
 <p>In particular we will highlight:</p>
@@ -870,9 +878,8 @@ datasets, with only numerical features.</p>
 <li><p>the scikit-learn API : <code class="docutils literal notranslate"><span class="pre">.fit(X,</span> <span class="pre">y)</span></code>/<code class="docutils literal notranslate"><span class="pre">.predict(X)</span></code>/<code class="docutils literal notranslate"><span class="pre">.score(X,</span> <span class="pre">y)</span></code>;</p></li>
 <li><p>how to evaluate the performance of a model with a train-test split.</p></li>
 </ul>
-</div>
-<div class="section" id="loading-the-dataset">
-<h2>Loading the dataset<a class="headerlink" href="#loading-the-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="loading-the-dataset-with-pandas">
+<h2>Loading the dataset with Pandas<a class="headerlink" href="#loading-the-dataset-with-pandas" title="Permalink to this headline">¶</a></h2>
 <p>We will use the same dataset “adult_census” described in the previous
 notebook. For more details about the dataset see
 <a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a>.</p>
@@ -888,7 +895,7 @@ subset of the original data with only the numerical columns.</p>
 </div>
 </div>
 </div>
-<p>Let’s have a look at the first records of this data frame:</p>
+<p>Let’s have a look at the first records of this dataframe:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -975,8 +982,11 @@ subset of the original data with only the numerical columns.</p>
 <p>We see that this CSV file contains all information: the target that we would
 like to predict (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;class&quot;</span></code>) and the data that we want to use to train
 our predictive model (i.e. the remaining columns). The first step is to
-split our entire dataset to get on one side the target and on the other side
-the data.</p>
+separate columns to get on one side the target and on the other side the
+data.</p>
+</div>
+<div class="section" id="separate-the-data-and-the-target">
+<h2>Separate the data and the target<a class="headerlink" href="#separate-the-data-and-the-target" title="Permalink to this headline">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
@@ -1111,6 +1121,9 @@ samples are available in our dataset.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="fit-a-model-and-make-predictions">
+<h2>Fit a model and make predictions<a class="headerlink" href="#fit-a-model-and-make-predictions" title="Permalink to this headline">¶</a></h2>
 <p>We will build a classification model using the “K-nearest neighbors”
 strategy. The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to train the model from the input
 (features) and target data.</p>
@@ -1209,6 +1222,9 @@ sample.</p>
 </div>
 </div>
 <p>But, can this evaluation be trusted, or is it too good to be true?</p>
+</div>
+<div class="section" id="train-test-data-split">
+<h2>Train-test data split<a class="headerlink" href="#train-test-data-split" title="Permalink to this headline">¶</a></h2>
 <p>When building a machine learning model, it is important evaluate the trained
 model on data that was not used to fit the model, as generalization is more
 than memorization. It is harder to conclude on instances never seen than on

@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # Tabular data exploration
+# # First look at our dataset
 #
 # In this notebook, we will look at the necessary steps required before any
 #  machine learning takes place.
@@ -27,8 +27,7 @@
 
 # %% [markdown]
 # ## Loading the adult census dataset
-
-# %% [markdown]
+#
 # We will use data from the "Current Population adult_census" from 1994 that we
 # downloaded from [OpenML](http://openml.org/).
 

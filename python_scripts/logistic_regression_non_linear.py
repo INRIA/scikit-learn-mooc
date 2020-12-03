@@ -130,14 +130,3 @@ for ax, (X, y) in zip(axs, datasets):
 # In this later case, we can see that the accuracy is close to be perfect and
 # that the decision boundary is non-linear. Thus, kernel trick or data
 # augmentation are the tricks to make a linear classifier more expressive.
-
-# %% [markdown]
-# # Main take away
-#
-# - a linear model as a specific parametrization defined by some weights and an
-#   intercept;
-# - linear models require to scale the data before to be trained;
-# - regularization allows to fight over-fitting;
-# - the regularization parameter needs to be fine tuned for each application;
-# - linear models can be used with data presenting non-linear links but require
-#   extra work such as the use of data augmentation or kernel trick.

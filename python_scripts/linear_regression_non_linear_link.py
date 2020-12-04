@@ -25,18 +25,32 @@ sorted_idx = np.argsort(x)
 noise = rng.randn(n_sample) * .3
 y = x ** 3 - 0.5 * x ** 2 + noise
 
+# %% [markdown]
+# ```{note}
+# To ease the plotting, we will create a Pandas dataframe containing the data
+# and target
+# ```
+
+# %%
+import pandas as pd
+data = pd.DataFrame({"x": x, "y": y})
+
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-plt.scatter(x, y)
-plt.xlabel('x')
-_ = plt.ylabel('y')
-
+_ = sns.scatterplot(data=data, x="x", y="y")
 # %% [markdown]
 # We will highlight the limitations of fitting a linear regression model as
 # done in the previous exercise.
+#
+# ```{warning}
+# In scikit-learn, by convention `X` should be a 2D matrix of shape
+# `(n_samples, n_features)`. If `X` is a 1D vector, you need to reshape it
+# into a matrix with a single column if the vector represents a feature or a
+# single row if the vector represents a sample.
+# ```
 
 # %%
 from sklearn.linear_model import LinearRegression
@@ -48,14 +62,11 @@ X = x.reshape((-1, 1))
 linear_regression.fit(X, y)
 
 y_pred = linear_regression.predict(X)
-plt.plot(x, y_pred, color="tab:orange")
-plt.scatter(x, y)
-plt.xlabel("x")
-plt.ylabel("y")
-_ = plt.title(
-    f"Mean squared error = "
-    f"{mean_squared_error(y, y_pred):.2f}"
-)
+mse = mean_squared_error(y, y_pred)
+
+ax = sns.scatterplot(data=data, x="x", y="y")
+ax.plot(x, y_pred, color="tab:orange")
+_ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 
 # %% [markdown]
@@ -64,10 +75,8 @@ _ = plt.title(
 # attributes of the model learnt as follows:
 
 # %%
-print(
-    f"weight: {linear_regression.coef_[0]:.2f}, "
-    f"intercept: {linear_regression.intercept_:.2f}"
-)
+print(f"weight: {linear_regression.coef_[0]:.2f}, "
+      f"intercept: {linear_regression.intercept_:.2f}")
 
 # %% [markdown]
 # It is important to note that the model learnt will not be able to handle
@@ -79,7 +88,7 @@ print(
 # 1. choose a model that natively can deal with non-linearity,
 # 2. "augment" features by including expert knowledge which can be used by
 #    the model, or
-# 2. use a "kernel" to have a locally-based decision function instead of a
+# 3. use a "kernel" to have a locally-based decision function instead of a
 #    global linear decision function.
 #
 # Let's illustrate quickly the first point by using a decision tree regressor
@@ -90,15 +99,11 @@ from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=3).fit(X, y)
 y_pred = tree.predict(X)
+mse = mean_squared_error(y, y_pred)
 
-plt.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
-plt.scatter(x, y)
-plt.xlabel("x")
-plt.ylabel("y")
-_ = plt.title(
-    f"Mean squared error = "
-    f"{mean_squared_error(y, y_pred):.2f}"
-)
+ax = sns.scatterplot(data=data, x="x", y="y")
+ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+_ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # In this case, the model can handle non-linearity. Instead of having a model
@@ -113,18 +118,12 @@ X = np.vstack([x, x ** 2, x ** 3]).T
 
 linear_regression.fit(X, y)
 y_pred = linear_regression.predict(X)
+mse = mean_squared_error(y, y_pred)
 
-plt.plot(
-    x[sorted_idx], y_pred[sorted_idx],
-    linewidth=4, color="tab:orange"
-)
-plt.scatter(x, y)
-plt.xlabel("x", size=26)
-plt.ylabel("y", size=26)
-_ = plt.title(
-    f"Mean squared error = "
-    f"{mean_squared_error(y, y_pred):.2f}"
-)
+ax = sns.scatterplot(data=data, x="x", y="y")
+ax.plot(x[sorted_idx], y_pred[sorted_idx],
+        linewidth=4, color="tab:orange")
+_ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # We can see that even with a linear model, we can overcome the linearity
@@ -132,8 +131,8 @@ _ = plt.title(
 # additional features. Here, we created new feature by knowing the way the
 # target was generated. In practice, this is usually not the case.
 #
-# Instead, one is usually creating interaction between features (e.g. $x_1 *
-# x_2$) with different orders (e.g. $x_1, x_1^2, x_1^3$), at the risk of
+# Instead, one is usually creating interaction between features (e.g. $x_1
+# \times x_2$) with different orders (e.g. $x_1, x_1^2, x_1^3$), at the risk of
 # creating a model with too much flexibility where the polynomial terms allows
 # to fit noise in the dataset and thus lead overfit. In scikit-learn, the
 # `PolynomialFeatures` is a transformer to create such feature interactions
@@ -149,20 +148,15 @@ from sklearn.preprocessing import PolynomialFeatures
 
 X = x.reshape(-1, 1)
 
-model = make_pipeline(
-    PolynomialFeatures(degree=3), LinearRegression()
-)
+model = make_pipeline(PolynomialFeatures(degree=3),
+                      LinearRegression())
 model.fit(X, y)
 y_pred = model.predict(X)
+mse = mean_squared_error(y, y_pred)
 
-plt.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
-plt.scatter(x, y)
-plt.xlabel("x")
-plt.ylabel("y")
-_ = plt.title(
-    f"Mean squared error = "
-    f"{mean_squared_error(y, y_pred):.2f}"
-)
+ax = sns.scatterplot(data=data, x="x", y="y")
+ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+_ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # Thus, we saw that `PolynomialFeatures` is actually doing the same
@@ -180,15 +174,11 @@ from sklearn.svm import SVR
 svr = SVR(kernel="linear")
 svr.fit(X, y)
 y_pred = svr.predict(X)
+mse = mean_squared_error(y, y_pred)
 
-plt.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
-plt.scatter(x, y)
-plt.xlabel("x")
-plt.ylabel("y")
-_ = plt.title(
-    f"Mean squared error = "
-    f"{mean_squared_error(y, y_pred):.2f}"
-)
+ax = sns.scatterplot(data=data, x="x", y="y")
+ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+_ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # The algorithm can be modified such that it can use non-linear kernel. Then,
@@ -199,15 +189,11 @@ _ = plt.title(
 svr = SVR(kernel="poly", degree=3)
 svr.fit(X, y)
 y_pred = svr.predict(X)
+mse = mean_squared_error(y, y_pred)
 
-plt.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
-plt.scatter(x, y)
-plt.xlabel("x", size=26)
-plt.ylabel("y", size=26)
-_ = plt.title(
-    f"Mean squared error = "
-    f"{mean_squared_error(y, y_pred):.2f}"
-)
+ax = sns.scatterplot(data=data, x="x", y="y")
+ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+_ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # A method supporting kernel, as SVM, allows to efficiently create a non-linear

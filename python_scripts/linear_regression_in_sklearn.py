@@ -58,11 +58,9 @@ sns.set_context("talk")
 
 flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 sns.scatterplot(x=X[feature_names], y=y)
-plt.plot(
-    flipper_length_range,
-    weight_flipper_length * flipper_length_range + intercept_body_mass,
-    linewidth=4,
-)
+plt.plot(flipper_length_range,
+         weight_flipper_length * flipper_length_range + intercept_body_mass,
+         linewidth=4)
 _ = plt.title("Model using LinearRegression from scikit-learn")
 
 # %% [markdown]

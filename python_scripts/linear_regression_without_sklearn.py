@@ -63,25 +63,27 @@ flipper_length_range = np.linspace(X.min(), X.max(), num=300)
 predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
+# %% [markdown]
+# We can now plot all samples and the linear model prediction.
+
+# %%
 label = ("{0:.2f} (g / mm) * flipper length + "
          "{1:.2f} (g)")
 ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
-ax.plot(
-    flipper_length_range, predicted_body_mass,
-    label=label.format(weight_flipper_length, intercept_body_mass),
-    linewidth=4)
+ax.plot(flipper_length_range, predicted_body_mass,
+        label=label.format(weight_flipper_length, intercept_body_mass),
+        linewidth=4)
 _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %% [markdown]
 # The variable `weight_flipper_length` is a weight applied to the feature
-# `flipper_length` in
-# order to make the inference. When this coefficient is positive, it means that
-# penguins with longer flipper lengths will have larger body masses.
-# If the coefficient is negative, it means that penguins with shorter flipper
-# flipper lengths have larger body masses. Graphically, this coefficient is
-# represented by the slope of the curve in the plot. Below we show what the
-# curve would look like when the `weight_flipper_length` coefficient is
-# negative.
+# `flipper_length` in order to make the inference. When this coefficient is
+# positive, it means that penguins with longer flipper lengths will have larger
+# body masses. If the coefficient is negative, it means that penguins with
+# shorter flipper flipper lengths have larger body masses. Graphically, this
+# coefficient is represented by the slope of the curve in the plot. Below we
+# show what the curve would look like when the `weight_flipper_length`
+# coefficient is negative.
 
 # %%
 weight_flipper_length = -40
@@ -90,13 +92,16 @@ intercept_body_mass = 13000
 predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
+# %% [markdown]
+# We can now plot all samples and the linear model prediction.
+
+# %%
 label = ("{0:.2f} (g / mm) * flipper length + "
          "{1:.2f} (g)")
 ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
-ax.plot(
-    flipper_length_range, predicted_body_mass,
-    label=label.format(weight_flipper_length, intercept_body_mass),
-    linewidth=4)
+ax.plot(flipper_length_range, predicted_body_mass,
+        label=label.format(weight_flipper_length, intercept_body_mass),
+        linewidth=4)
 _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 
@@ -108,11 +113,9 @@ _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 
 # %%
 body_mass_180 = linear_model_flipper_mass(
-    flipper_length=180, weight_flipper_length=40, intercept_body_mass=0
-)
+    flipper_length=180, weight_flipper_length=40, intercept_body_mass=0)
 body_mass_181 = linear_model_flipper_mass(
-    flipper_length=181, weight_flipper_length=40, intercept_body_mass=0
-)
+    flipper_length=181, weight_flipper_length=40, intercept_body_mass=0)
 
 print(
     f"The body mass for a flipper length of 180 mm is {body_mass_180} g and "
@@ -134,6 +137,7 @@ intercept_body_mass = 0
 predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
+# %%
 label = ("{0:.2f} (g / mm) * flipper length + "
          "{1:.2f} (g)")
 ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
@@ -153,6 +157,7 @@ intercept_body_mass = -5000
 predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
+# %%
 label = ("{0:.2f} (g / mm) * flipper length + {1:.2f} (g)")
 ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
 ax.plot(

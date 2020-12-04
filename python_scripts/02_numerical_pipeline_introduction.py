@@ -82,6 +82,12 @@ print(
 # strategy. The `fit` method is called to train the model from the input
 # (features) and target data.
 
+# ```{caution}
+# We use a K-nearest neighbors here. However, be aware that it is seldom useful
+# in practice. We use it because it is an intuitive algorithm. In the next
+# notebook, we will introduce better models.
+# ```
+
 # %%
 from sklearn.neighbors import KNeighborsClassifier
 

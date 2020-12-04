@@ -135,17 +135,21 @@ data_train.describe()
 # We see that features in the dataset have very different range. Indeed, having
 # normalized feature is important. Indeed, some algorithms make assumptions
 # regarding feature distributions and having normalized feature is usually one
-# of them. For instance, some benefits are:
+# of them.
+#
+# ```{tip}
+# Some of the reasons for scaling features are:
 #
 # * predictor using Euclidean distance (e.g k-nearest  neighbors) should have
 #   normalized feature such that each feature contribute equally distance
 #   computation;
 # * predictor internally using gradient-descent based algorithms
 #   (e.g. logistic regression) to find optimal parameters work better
-#   and faster;
+#   and faster simplify choice of parameters as learning-rate;
 # * predictor using regularization (e.g. logistic regression) require
 #   normalized features such that the penalty is properly applied to the
 #   weights.
+# ```
 #
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer intend to transform feature such
@@ -212,8 +216,6 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 from sklearn.model_selection import cross_val_score
 
 scores = cross_val_score(model, data_numeric, target, cv=5)
-
-# %%
 scores
 
 # %%

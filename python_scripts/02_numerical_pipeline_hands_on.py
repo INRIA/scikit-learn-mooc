@@ -160,10 +160,15 @@ data_train, data_test, target_train, target_test = train_test_split(
 #
 # In the previous notebook, we used a k-nearest neighbors predictor. While this
 # model is really intuitive to understand, it is not widely used. Here, we will
-# a predictive model belonging to the linear model families. In short, these
-# models find a set of weights to combine each column in the data matrix to
-# predict the target. Thus, we will use a logistic regression classifier and
-# train it.
+# a predictive model belonging to the linear model families.
+#
+# ```{note}
+# In short, these models find a set of weights to combine each column in the
+# data matrix to predict the target. For instance, the model can come with
+# rules such as `0.1 * age + 3.3 * education-num = "> 50k"`.
+# ```
+#
+# Thus, we will use a logistic regression classifier and train it.
 
 # %%
 from sklearn.linear_model import LogisticRegression

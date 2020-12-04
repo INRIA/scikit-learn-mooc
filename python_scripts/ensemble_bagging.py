@@ -41,8 +41,8 @@ import seaborn as sns
 sns.set_context("talk")
 
 X_train, X_test, y_train = generate_data(n_samples=50)
-_ = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+_ = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+                    alpha=0.5)
 
 # %% [markdown]
 # The link between our feature and the target to predict is non-linear.
@@ -56,8 +56,8 @@ tree.fit(X_train, y_train)
 y_pred = tree.predict(X_test)
 
 # %%
-ax = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+                     alpha=0.5)
 ax.plot(X_test, y_pred, label="Fitted tree")
 _ = ax.legend()
 
@@ -98,10 +98,10 @@ _, ax = plt.subplots(figsize=(8, 6))
 for marker, bootstrap_idx in zip(["o", "^", "x"], range(n_bootstrap)):
     X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
         X_train, y_train)
-    sns.scatterplot(
-        x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample,
-        label=f"Bootstrap sample #{bootstrap_idx}", marker=marker,
-        alpha=0.5, ax=ax)
+
+    sns.scatterplot(x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample,
+                    label=f"Bootstrap sample #{bootstrap_idx}",
+                    marker=marker, alpha=0.5, ax=ax)
 
 
 # %% [markdown]
@@ -131,25 +131,21 @@ print(
 # tree shall be slightly different as well.
 
 # %%
-_, axs = plt.subplots(
-    ncols=n_bootstrap, figsize=(16, 6), sharex=True, sharey=True,
-)
+_, axs = plt.subplots(ncols=n_bootstrap, figsize=(16, 4),
+                      sharex=True, sharey=True)
 
 forest = []
 for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
     X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
         X_train, y_train)
-    forest.append(
-        DecisionTreeRegressor(max_depth=3, random_state=0).fit(
-            X_bootstrap_sample, y_bootstrap_sample
-        )
-    )
+    tree = DecisionTreeRegressor(max_depth=3, random_state=0)
+    tree.fit(X_bootstrap_sample, y_bootstrap_sample)
+    forest.append(tree)
 
     y_pred = forest[-1].predict(X_test)
 
-    sns.scatterplot(
-        x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample, ax=ax,
-        color="black", alpha=0.5)
+    sns.scatterplot(x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample,
+                    ax=ax, color="black", alpha=0.5)
     ax.plot(X_test, y_pred, linewidth=3, label="Fitted tree")
     ax.set_title(f"Bootstrap sample #{idx}")
     ax.legend()
@@ -158,8 +154,7 @@ for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
 # We can plot these decision functions on the same plot to see the difference.
 
 # %%
-ax = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
 y_pred_forest = []
 for tree_idx, tree in enumerate(forest):
     y_pred = tree.predict(X_test)
@@ -177,8 +172,8 @@ _ = plt.legend()
 # plot the averaged predictions from the previous example.
 
 # %%
-ax = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+                     alpha=0.5)
 y_pred_forest = []
 for tree_idx, tree in enumerate(forest):
     y_pred = tree.predict(X_test)
@@ -203,14 +198,14 @@ _ = plt.legend()
 # %%
 from sklearn.ensemble import BaggingRegressor
 
-bagging = BaggingRegressor(
-    base_estimator=DecisionTreeRegressor(), n_estimators=3)
+bagging = BaggingRegressor(base_estimator=DecisionTreeRegressor(),
+                           n_estimators=3)
 bagging.fit(X_train, y_train)
 y_pred_forest = bagging.predict(X_test)
 
 # %%
-ax = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+                     alpha=0.5)
 ax.plot(X_test, y_pred_forest, label="Bag of decision trees",
         linestyle="-", linewidth=3, alpha=0.8)
 _ = plt.legend()
@@ -223,14 +218,14 @@ _ = plt.legend()
 # %%
 from sklearn.linear_model import LinearRegression
 
-bagging = BaggingRegressor(
-    base_estimator=LinearRegression(), n_estimators=3)
+bagging = BaggingRegressor(base_estimator=LinearRegression(),
+                           n_estimators=3)
 bagging.fit(X_train, y_train)
 y_pred_linear = bagging.predict(X_test)
 
 # %%
-ax = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+                     alpha=0.5)
 ax.plot(X_test, y_pred_forest, label="Bag of decision trees",
         linestyle="-", linewidth=3, alpha=0.8)
 ax.plot(X_test, y_pred_linear, label="Bag of linear regression",

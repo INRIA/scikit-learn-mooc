@@ -24,12 +24,10 @@ from sklearn.model_selection import train_test_split
 
 X, y = data[culmen_columns], data[target_column]
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
-)
+    X, y, random_state=0)
 range_features = {
     feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X.columns
-}
+    for feature_name in X.columns}
 
 # %%
 import numpy as np
@@ -75,9 +73,8 @@ tree = DecisionTreeClassifier(max_depth=2)
 tree.fit(X_train, y_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(
-    x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
@@ -88,9 +85,8 @@ _ = plot_decision_function(tree, range_features, ax=ax)
 from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(16, 12))
-_ = plot_tree(
-    tree, feature_names=culmen_columns, class_names=tree.classes_,
-    impurity=False, ax=ax)
+_ = plot_tree(tree, feature_names=culmen_columns,
+              class_names=tree.classes_, impurity=False, ax=ax)
 
 # %% [markdown]
 # We can see that the second tree level have used the "Culmen Length" to make
@@ -100,10 +96,9 @@ _ = plot_tree(
 # Compute the accuracy of the decision tree on the testing data.
 
 # %%
-print(
-    f"Accuracy of the {tree.__class__.__name__}: "
-    f"{tree.fit(X_train, y_train).score(X_test, y_test):.2f}"
-)
+model_name = tree.__class__.__name__
+test_score = tree.fit(X_train, y_train).score(X_test, y_test)
+print(f"Accuracy of the {model_name}: {test_score:.2f}")
 
 # %% [markdown]
 # At this stage, we have the intuition that a decision tree is built by

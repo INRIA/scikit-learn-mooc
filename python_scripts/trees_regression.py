@@ -50,9 +50,8 @@ y_pred = linear_model.predict(X_test)
 # %%
 import matplotlib.pyplot as plt
 
-ax = sns.scatterplot(
-    data=data, x="Flipper Length (mm)", y="Body Mass (g)",
-    color="black", alpha=0.5)
+ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+                     color="black", alpha=0.5)
 ax.plot(X_test, y_pred, linewidth=4, label="Linear regression")
 _ = plt.legend()
 
@@ -62,9 +61,8 @@ _ = plt.legend()
 # will be on the line.
 
 # %%
-ax = sns.scatterplot(
-    data=data, x="Flipper Length (mm)", y="Body Mass (g)",
-    color="black", alpha=0.5)
+ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+                     color="black", alpha=0.5)
 ax.plot(X_test, y_pred, linewidth=4, label="Linear regression")
 ax.plot(X_test[::3], y_pred[::3], label="Test predictions",
         color="tab:orange", marker=".", markersize=15, linestyle="")
@@ -84,9 +82,8 @@ tree.fit(X_train, y_train)
 y_pred = tree.predict(X_test)
 
 # %%
-ax = sns.scatterplot(
-    data=data, x="Flipper Length (mm)", y="Body Mass (g)",
-    color="black", alpha=0.5)
+ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+                     color="black", alpha=0.5)
 ax.plot(X_test, y_pred, linewidth=4, label="Decision tree")
 _ = plt.legend()
 
@@ -102,7 +99,8 @@ _ = plt.legend()
 # %%
 from sklearn.tree import plot_tree
 
-_ = plot_tree(tree, feature_names=data_columns)
+_, ax = plt.subplots(figsize=(8, 6))
+_ = plot_tree(tree, feature_names=data_columns, ax=ax)
 
 # %% [markdown]
 # The threshold for our feature (flipper length) is 202.5 mm. The predicted
@@ -120,9 +118,8 @@ tree.fit(X_train, y_train)
 y_pred = tree.predict(X_test)
 
 # %%
-ax = sns.scatterplot(
-    data=data, x="Flipper Length (mm)", y="Body Mass (g)",
-    color="black", alpha=0.5)
+ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+                     color="black", alpha=0.5)
 ax.plot(X_test, y_pred, linewidth=4, label="Decision tree")
 _ = plt.legend()
 

@@ -20,12 +20,10 @@ from sklearn.model_selection import train_test_split
 
 X, y = data[culmen_columns], data[target_column]
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
-)
+    X, y, random_state=0)
 range_features = {
     feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X.columns
-}
+    for feature_name in X.columns}
 
 # %% [markdown]
 # In a previous notebook, we learnt that a linear classifier will define a
@@ -75,13 +73,15 @@ import seaborn as sns
 from sklearn.linear_model import LogisticRegression
 sns.set_context("talk")
 
+# create a palette to be used in the scatterplot
+palette = ["tab:red", "tab:blue", "black"]
+
 linear_model = LogisticRegression()
 linear_model.fit(X_train, y_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(
-    x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=data, palette=palette, ax=ax)
 _ = plot_decision_function(linear_model, range_features, ax=ax)
 
 # %% [markdown]
@@ -94,10 +94,9 @@ _ = plot_decision_function(linear_model, range_features, ax=ax)
 # such problem as it gives good accuracy.
 
 # %%
-print(
-    f"Accuracy of the {linear_model.__class__.__name__}: "
-    f"{linear_model.fit(X_train, y_train).score(X_test, y_test):.2f}"
-)
+model_name = linear_model.__class__.__name__
+test_score = linear_model.fit(X_train, y_train).score(X_test, y_test)
+print(f"Accuracy of the {model_name}: {test_score:.2f}")
 
 # %% [markdown]
 # Unlike linear models, decision trees are non-parametric models: they are not
@@ -116,9 +115,8 @@ tree = DecisionTreeClassifier(max_depth=1)
 tree.fit(X_train, y_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(
-    x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=data, palette=palette, ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
@@ -131,9 +129,8 @@ _ = plot_decision_function(tree, range_features, ax=ax)
 from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(8, 6))
-_ = plot_tree(
-    tree, feature_names=culmen_columns, class_names=tree.classes_,
-    impurity=False, ax=ax)
+_ = plot_tree(tree, feature_names=culmen_columns,
+              class_names=tree.classes_, impurity=False, ax=ax)
 
 # %% [markdown]
 # We see that the split was done the culmen length feature. The original
@@ -175,8 +172,8 @@ tree.predict([[0, 17]])
 # partition.
 
 # %%
-y_proba = pd.Series(
-    tree.predict_proba([[0, 17]])[0], index=tree.classes_)
+y_proba = pd.Series(tree.predict_proba([[0, 17]])[0],
+                    index=tree.classes_)
 ax = y_proba.plot(kind="bar")
 ax.set_ylabel("Probability")
 _ = ax.set_title("Probability to belong to a penguin class")
@@ -186,12 +183,10 @@ _ = ax.set_title("Probability to belong to a penguin class")
 # structure
 
 # %%
-print(
-    f"Probabilities for the different classes:\n"
-    f"Adelie: {103 / 161:.3f}\n"
-    f"Chinstrap: {52 / 161:.3f}\n"
-    f"Gentoo: {6 / 161:.3f}\n"
-)
+print(f"Probabilities for the different classes:\n"
+      f"Adelie: {103 / 161:.3f}\n"
+      f"Chinstrap: {52 / 161:.3f}\n"
+      f"Gentoo: {6 / 161:.3f}\n")
 
 # %% [markdown]
 # It is also important to note that the culmen depth has been disregarded for
@@ -207,10 +202,9 @@ tree.predict_proba([[10000, 17]])
 # accuracy is low when compared to the linear model.
 
 # %%
-print(
-    f"Accuracy of the {tree.__class__.__name__}: "
-    f"{tree.fit(X_train, y_train).score(X_test, y_test):.2f}"
-)
+model_name = tree.__class__.__name__
+test_score = tree.fit(X_train, y_train).score(X_test, y_test)
+print(f"Accuracy of the {model_name}: {test_score:.2f}")
 
 # %% [markdown]
 # Indeed, it is not a surprise. We saw earlier that a single feature will not

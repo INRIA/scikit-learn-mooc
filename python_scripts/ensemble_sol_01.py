@@ -13,8 +13,7 @@ from sklearn.model_selection import train_test_split
 
 X, y = fetch_california_housing(as_frame=True, return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5
-)
+    X, y, random_state=0, test_size=0.5)
 
 # %% [markdown]
 # Create a `BaggingRegressor` providing a `DecisionTreeRegressor` with default
@@ -28,11 +27,9 @@ from sklearn.ensemble import BaggingRegressor
 tree = DecisionTreeRegressor()
 bagging = BaggingRegressor(base_estimator=tree, n_jobs=-1)
 bagging.fit(X_train, y_train)
-
-print(
-    f"Basic R2 score og a bagging regressor:\n"
-    f"{bagging.score(X_test, y_test):.2f}"
-)
+test_score = bagging.score(X_test, y_test)
+print(f"Basic R2 score of a bagging regressor:\n"
+      f"{test_score:.2f}")
 
 # %% [markdown]
 # Now, create a `RandomizedSearchCV` instance using the previous model and
@@ -55,7 +52,7 @@ param_grid = {
     "base_estimator__max_depth": randint(3, 10),
 }
 search = RandomizedSearchCV(bagging, param_grid, n_iter=20)
-search.fit(X_train, y_train)
+_ = search.fit(X_train, y_train)
 
 # %%
 import pandas as pd
@@ -67,10 +64,9 @@ cv_results = cv_results[columns].sort_values(by="rank_test_score")
 cv_results
 
 # %%
-print(
-    f"Basic R2 score og a bagging regressor:\n"
-    f"{search.score(X_test, y_test):.2f}"
-)
+test_score = search.score(X_test, y_test)
+print(f"Basic R2 score of a bagging regressor:\n"
+      f"{test_score:.2f}")
 
 # %% [markdown]
 # We see that the bagging regressor provides a predictor in which fine tuning

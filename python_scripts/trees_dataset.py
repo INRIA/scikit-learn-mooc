@@ -53,15 +53,12 @@ sns.set_context("talk")
 
 _, axs = plt.subplots(ncols=3, figsize=(16, 4))
 
-sns.scatterplot(
-    x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, ax=axs[0])
-sns.kdeplot(
-    data=data, x=culmen_columns[0], hue=target_column,
-    ax=axs[1])
-sns.kdeplot(
-    data=data, x=culmen_columns[1], hue=target_column,
-    ax=axs[2])
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=data, ax=axs[0])
+sns.kdeplot(data=data, x=culmen_columns[0], hue=target_column,
+            ax=axs[1])
+sns.kdeplot(data=data, x=culmen_columns[1], hue=target_column,
+            ax=axs[2])
 plt.subplots_adjust(wspace=0.4)
 
 # %% [markdown]

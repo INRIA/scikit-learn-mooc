@@ -1044,31 +1044,35 @@ to be 45 and <code class="docutils literal notranslate"><span class="pre">interc
 <span class="n">flipper_length_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 <span class="n">predicted_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
     <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">)</span>
-
-<span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now plot all samples and the linear model prediction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
          <span class="s2">&quot;</span><span class="si">{1:.2f}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">predicted_body_mass</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">),</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">predicted_body_mass</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">),</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_regression_without_sklearn_7_0.png" src="../_images/linear_regression_without_sklearn_7_0.png" />
+<img alt="../_images/linear_regression_without_sklearn_9_0.png" src="../_images/linear_regression_without_sklearn_9_0.png" />
 </div>
 </div>
 <p>The variable <code class="docutils literal notranslate"><span class="pre">weight_flipper_length</span></code> is a weight applied to the feature
-<code class="docutils literal notranslate"><span class="pre">flipper_length</span></code> in
-order to make the inference. When this coefficient is positive, it means that
-penguins with longer flipper lengths will have larger body masses.
-If the coefficient is negative, it means that penguins with shorter flipper
-flipper lengths have larger body masses. Graphically, this coefficient is
-represented by the slope of the curve in the plot. Below we show what the
-curve would look like when the <code class="docutils literal notranslate"><span class="pre">weight_flipper_length</span></code> coefficient is
-negative.</p>
+<code class="docutils literal notranslate"><span class="pre">flipper_length</span></code> in order to make the inference. When this coefficient is
+positive, it means that penguins with longer flipper lengths will have larger
+body masses. If the coefficient is negative, it means that penguins with
+shorter flipper flipper lengths have larger body masses. Graphically, this
+coefficient is represented by the slope of the curve in the plot. Below we
+show what the curve would look like when the <code class="docutils literal notranslate"><span class="pre">weight_flipper_length</span></code>
+coefficient is negative.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weight_flipper_length</span> <span class="o">=</span> <span class="o">-</span><span class="mi">40</span>
@@ -1076,20 +1080,25 @@ negative.</p>
 
 <span class="n">predicted_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
     <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">)</span>
-
-<span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now plot all samples and the linear model prediction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
          <span class="s2">&quot;</span><span class="si">{1:.2f}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">predicted_body_mass</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">),</span>
-    <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">predicted_body_mass</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">),</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_regression_without_sklearn_9_0.png" src="../_images/linear_regression_without_sklearn_9_0.png" />
+<img alt="../_images/linear_regression_without_sklearn_13_0.png" src="../_images/linear_regression_without_sklearn_13_0.png" />
 </div>
 </div>
 <p>In our case, this coefficient has a meaningful unit: g/mm.
@@ -1099,11 +1108,9 @@ increase by 40 g.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">body_mass_180</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
-    <span class="n">flipper_length</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="o">=</span><span class="mi">0</span>
-<span class="p">)</span>
+    <span class="n">flipper_length</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">body_mass_181</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
-    <span class="n">flipper_length</span><span class="o">=</span><span class="mi">181</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="o">=</span><span class="mi">0</span>
-<span class="p">)</span>
+    <span class="n">flipper_length</span><span class="o">=</span><span class="mi">181</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;The body mass for a flipper length of 180 mm is </span><span class="si">{</span><span class="n">body_mass_180</span><span class="si">}</span><span class="s2"> g and &quot;</span>
@@ -1131,8 +1138,13 @@ will pass through the origin:</p>
 
 <span class="n">predicted_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
     <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">)</span>
-
-<span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + &quot;</span>
          <span class="s2">&quot;</span><span class="si">{1:.2f}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
@@ -1144,7 +1156,7 @@ will pass through the origin:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_regression_without_sklearn_13_0.png" src="../_images/linear_regression_without_sklearn_13_0.png" />
+<img alt="../_images/linear_regression_without_sklearn_18_0.png" src="../_images/linear_regression_without_sklearn_18_0.png" />
 </div>
 </div>
 <p>Otherwise, it will pass through the <code class="docutils literal notranslate"><span class="pre">intercept_body_mass</span></code> value:</p>
@@ -1155,8 +1167,13 @@ will pass through the origin:</p>
 
 <span class="n">predicted_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
     <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span><span class="p">)</span>
-
-<span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + </span><span class="si">{1:.2f}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + </span><span class="si">{1:.2f}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">predicted_body_mass</span><span class="p">,</span>
@@ -1167,7 +1184,7 @@ will pass through the origin:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_regression_without_sklearn_15_0.png" src="../_images/linear_regression_without_sklearn_15_0.png" />
+<img alt="../_images/linear_regression_without_sklearn_21_0.png" src="../_images/linear_regression_without_sklearn_21_0.png" />
 </div>
 </div>
 <p>In this notebook, we have seen the parametrization of a linear regression

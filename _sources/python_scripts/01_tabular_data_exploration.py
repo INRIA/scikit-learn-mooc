@@ -100,9 +100,8 @@ adult_census = adult_census[all_columns]
 # the dataset:
 
 # %%
-print(
-    f"The dataset contains {adult_census.shape[0]} samples and "
-    f"{adult_census.shape[1]} features")
+print(f"The dataset contains {adult_census.shape[0]} samples and "
+      f"{adult_census.shape[1]} features")
 
 # %% [markdown]
 # ## Visual inspection of the data
@@ -130,6 +129,18 @@ sns.set_context("talk")
 _ = adult_census.hist(figsize=(20, 14))
 
 # %% [markdown]
+# ```{tip}
+# In the code cell, we are using `sns.set_context` to globally change
+# the rendering of the figure with larger fonts and line. We will use this
+# call in all notebooks.
+# ```
+# ```{tip}
+# In the cell, we are calling the following pattern: `_ = func()`. It assigns
+# the output of `func()` into the variable called `_`. By convention, in Python
+# `_` serves as a "garbage" variable to store results that we are not
+# interested in.
+# ```
+#
 # We can already make a few comments about some of the variables:
 #
 # * age: there are not that many points for 'age > 70'. The dataset description

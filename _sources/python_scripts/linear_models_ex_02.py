@@ -6,7 +6,11 @@
 # target is non-linear.
 #
 # First, we will generate such non-linear data.
-
+#
+# ```{tip}
+# `np.random.RandomState` allows to create a random number generator which can
+# be later used to get deterministic results.
+# ```
 
 # %%
 import numpy as np
@@ -32,9 +36,9 @@ _ = plt.ylabel('y')
 
 # %% [markdown]
 # We observe that the link between the data `x` and target `y` is non-linear.
-# For instance, x could represent to be the years of experience (normalized)
-# and y the salary (normalized). Therefore, the problem here would be to infer
-# the salary given the years of experience.
+# For instance, `x` could represent to be the years of experience (normalized)
+# and `y` the salary (normalized). Therefore, the problem here would be to
+# infer the salary given the years of experience.
 #
 # Using the function `f` defined below, find both the `weight` and the
 # `intercept` that you think will lead to a good linear model. Plot both the

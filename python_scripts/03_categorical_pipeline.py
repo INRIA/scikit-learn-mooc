@@ -114,11 +114,35 @@ print(f"The dataset is composed of {data_categorical.shape[1]} features")
 #
 # The most intuitive strategy is to encode each category with a different
 # number. The `OrdinalEncoder` will transform the data in such manner.
+# We will start by encoding a single column to understand how the encoding
+# works.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
 
+education_column = data_categorical[["education"]]
+
 encoder = OrdinalEncoder()
+education_encoded = encoder.fit_transform(education_column)
+
+# %% [markdown]
+# We can visually check the encoding obtained.
+
+# %%
+import seaborn as sns
+sns.set_context("talk")
+
+df = pd.DataFrame(
+    education_encoded[:10], columns=education_column.columns)
+ax = sns.heatmap(df, annot=True, cmap="tab20", cbar=False)
+ax.set_ylabel("Sample index")
+_ = ax.set_title("Ordinal encoding of 'education' column")
+
+# %% [markdown]
+# We see that each category in `"education"` has been replaced by a numeric
+# values. Now, we can check the encoding applied on all categorical features.
+
+# %%
 data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
 
@@ -131,8 +155,10 @@ print(
 # independently. We can also note that the number of features before and after
 # the encoding is the same.
 #
-# This transform was used by the researchers providing the dataset to transform
-# `"education"` into `"education-num"` for instance.
+# ```{tip}
+# This encoding was used by the persons who published the dataset to transform
+# the `"education"` feature into the `"education-num"` feature for instance.
+# ```
 #
 # However, one has to be careful when using this encoding strategy. Using this
 # integer representation can lead the downstream models to make the assumption
@@ -147,16 +173,18 @@ print(
 # increasing integers such as 0, 1, 2, 3. However lexicographical strategy used
 # by default would map the labels "S", "M", "L", "XL" to 2, 1, 0, 3.
 #
-# The `OrdinalEncoder` class accepts a "categories" constructor argument to
+# The `OrdinalEncoder` class accepts a `categories` constructor argument to
 # pass in the correct ordering explicitly.
 #
 # If a categorical variable does not carry any meaningful order information
 # then this encoding might be misleading to downstream statistical models and
 # you might consider using one-hot encoding instead (see below).
 #
+# ```{important}
 # Note however that the impact of violating this ordering assumption is really
 # dependent on the downstream models (for instance linear models are much more
 # sensitive than models built from a ensemble of decision trees).
+# ```
 #
 # ## Encoding nominal categories (without assuming any order)
 #
@@ -166,6 +194,39 @@ print(
 # categories. For a given sample, the value of the column corresponding to the
 # category will be set to `1` while all the columns of the other categories
 # will be set to `0`.
+#
+# We will start by encoding a single feature (e.g. `"education"`) to illustrate
+# how the encoding works.
+#
+# ```{note}
+# We will pass the argument `sparse=False` to the `OneHotEncoder` which will
+# avoid obtaining a sparse matrix, which is less efficient but easier to
+# inspect results for didactic purposes.
+# ```
+
+# %%
+from sklearn.preprocessing import OneHotEncoder
+
+encoder = OneHotEncoder(sparse=False)
+education_encoded = encoder.fit_transform(education_column)
+
+# %% [markdown]
+# As in the previous section, we will visually check the encoding.
+
+# %%
+df = pd.DataFrame(
+    education_encoded[:10],
+    columns=encoder.get_feature_names(education_column.columns))
+ax = sns.heatmap(df, annot=True, cmap="RdBu", cbar=False)
+ax.set_ylabel("Sample index")
+_ = ax.set_title("Ordinal encoding of 'education' column")
+
+# %% [markdown]
+# So we observed that each category in education becomes a column and the
+# data resulting from the encoding is indicating whether or not the sample
+# belong to this category.
+#
+# Let's apply this encoding on the full dataset.
 
 # %%
 print(
@@ -173,9 +234,6 @@ print(
 data_categorical.head()
 
 # %%
-from sklearn.preprocessing import OneHotEncoder
-
-encoder = OneHotEncoder(sparse=False)
 data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
 

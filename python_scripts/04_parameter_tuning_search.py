@@ -257,8 +257,11 @@ ax.invert_yaxis()
 # * `max_bins`: it corresponds to the maximum number of bins to construct the
 #   histograms.
 #
-# We first define a callable class that will cast a floating number to integral
-# number when using the `reciprocal` generator.
+# ```{note}
+# The `reciprocal` function from SciPy returns a floating number. Since we
+# want to us this distribution to create integer, we will create a class that
+# will cast the floating number into an integer.
+# ```
 
 # %%
 from scipy.stats import reciprocal
@@ -371,8 +374,10 @@ fig.show()
 # are able to quickly inspect if there is a range of hyper-parameters which is
 # working or not.
 #
-# Note that we **transformed most axis values by taking a log10 or log2** to
+# ```{note}
+# We **transformed most axis values by taking a log10 or log2** to
 # spread the active ranges and improve the readability of the plot.
+# ```
 #
 # It is possible to **select a range of results by clicking and holding on
 # any axis** of the parallel coordinate plot. You can then slide (move)

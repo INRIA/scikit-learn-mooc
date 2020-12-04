@@ -1058,7 +1058,7 @@ to train the model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.316 seconds in 59 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.320 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
@@ -1101,7 +1101,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.273 seconds in 50 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.272 seconds in 50 iterations
 </pre></div>
 </div>
 </div>
@@ -1219,18 +1219,22 @@ the dataset.</p>
 <p>We see that features in the dataset have very different range. Indeed, having
 normalized feature is important. Indeed, some algorithms make assumptions
 regarding feature distributions and having normalized feature is usually one
-of them. For instance, some benefits are:</p>
+of them.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Some of the reasons for scaling features are:</p>
 <ul class="simple">
 <li><p>predictor using Euclidean distance (e.g k-nearest  neighbors) should have
 normalized feature such that each feature contribute equally distance
 computation;</p></li>
 <li><p>predictor internally using gradient-descent based algorithms
 (e.g. logistic regression) to find optimal parameters work better
-and faster;</p></li>
+and faster simplify choice of parameters as learning-rate;</p></li>
 <li><p>predictor using regularization (e.g. logistic regression) require
 normalized features such that the penalty is properly applied to the
 weights.</p></li>
 </ul>
+</div>
 <p>We show how to apply such normalization using a scikit-learn transformer
 called <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. This transformer intend to transform feature such
 that they will all have a zero mean and a unit standard deviation.</p>
@@ -1407,23 +1411,15 @@ defines the splitting strategy.</p>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
 
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">scores</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.13 s, sys: 466 ms, total: 1.6 s
-Wall time: 837 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.2 s, sys: 382 ms, total: 1.58 s
+Wall time: 833 ms
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])
 </pre></div>
 </div>

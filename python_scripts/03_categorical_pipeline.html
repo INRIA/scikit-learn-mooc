@@ -1275,13 +1275,44 @@ machine-learning algorithm.</p>
 <div class="section" id="encoding-ordinal-categories">
 <h2>Encoding ordinal categories<a class="headerlink" href="#encoding-ordinal-categories" title="Permalink to this headline">¶</a></h2>
 <p>The most intuitive strategy is to encode each category with a different
-number. The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will transform the data in such manner.</p>
+number. The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will transform the data in such manner.
+We will start by encoding a single column to understand how the encoding
+works.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
+<span class="n">education_column</span> <span class="o">=</span> <span class="n">data_categorical</span><span class="p">[[</span><span class="s2">&quot;education&quot;</span><span class="p">]]</span>
+
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">()</span>
-<span class="n">data_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_categorical</span><span class="p">)</span>
+<span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can visually check the encoding obtained.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">education_encoded</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">education_column</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab20&quot;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sample index&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ordinal encoding of &#39;education&#39; column&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/03_categorical_pipeline_18_0.png" src="../_images/03_categorical_pipeline_18_0.png" />
+</div>
+</div>
+<p>We see that each category in <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> has been replaced by a numeric
+values. Now, we can check the encoding applied on all categorical features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_categorical</span><span class="p">)</span>
 <span class="n">data_encoded</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1312,8 +1343,11 @@ number. The <code class="docutils literal notranslate"><span class="pre">Ordinal
 <p>We can see that the categories have been encoded for each feature (column)
 independently. We can also note that the number of features before and after
 the encoding is the same.</p>
-<p>This transform was used by the researchers providing the dataset to transform
-<code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> into <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> for instance.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This encoding was used by the persons who published the dataset to transform
+the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> feature into the <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> feature for instance.</p>
+</div>
 <p>However, one has to be careful when using this encoding strategy. Using this
 integer representation can lead the downstream models to make the assumption
 that the categories are ordered: 0 is smaller than 1 which is smaller than 2,
@@ -1325,14 +1359,17 @@ named “size” with categories such as “S”, “M”, “L”, “XL”. We
 integer representation to respect the meaning of the sizes by mapping them to
 increasing integers such as 0, 1, 2, 3. However lexicographical strategy used
 by default would map the labels “S”, “M”, “L”, “XL” to 2, 1, 0, 3.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a “categories” constructor argument to
+<p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a <code class="docutils literal notranslate"><span class="pre">categories</span></code> constructor argument to
 pass in the correct ordering explicitly.</p>
 <p>If a categorical variable does not carry any meaningful order information
 then this encoding might be misleading to downstream statistical models and
 you might consider using one-hot encoding instead (see below).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>Note however that the impact of violating this ordering assumption is really
 dependent on the downstream models (for instance linear models are much more
 sensitive than models built from a ensemble of decision trees).</p>
+</div>
 </div>
 <div class="section" id="encoding-nominal-categories-without-assuming-any-order">
 <h2>Encoding nominal categories (without assuming any order)<a class="headerlink" href="#encoding-nominal-categories-without-assuming-any-order" title="Permalink to this headline">¶</a></h2>
@@ -1342,6 +1379,44 @@ given feature, it will create as many new columns as there are possible
 categories. For a given sample, the value of the column corresponding to the
 category will be set to <code class="docutils literal notranslate"><span class="pre">1</span></code> while all the columns of the other categories
 will be set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<p>We will start by encoding a single feature (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>) to illustrate
+how the encoding works.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We will pass the argument <code class="docutils literal notranslate"><span class="pre">sparse=False</span></code> to the <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> which will
+avoid obtaining a sparse matrix, which is less efficient but easier to
+inspect results for didactic purposes.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As in the previous section, we will visually check the encoding.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">education_encoded</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span><span class="n">education_column</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sample index&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ordinal encoding of &#39;education&#39; column&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/03_categorical_pipeline_25_0.png" src="../_images/03_categorical_pipeline_25_0.png" />
+</div>
+</div>
+<p>So we observed that each category in education becomes a column and the
+data resulting from the encoding is indicating whether or not the sample
+belong to this category.</p>
+<p>Let’s apply this encoding on the full dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
@@ -1444,10 +1519,7 @@ will be set to <code class="docutils literal notranslate"><span class="pre">0</s
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
-
-<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">data_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_categorical</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_categorical</span><span class="p">)</span>
 <span class="n">data_encoded</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1728,18 +1800,18 @@ Let’s recall some statistics regarding this column.</p>
  Portugal                         67
  Taiwan                           65
  Iran                             59
- Greece                           49
  Nicaragua                        49
+ Greece                           49
  Peru                             46
  Ecuador                          45
  France                           38
  Ireland                          37
- Hong                             30
  Thailand                         30
+ Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
- Yugoslavia                       23
  Laos                             23
+ Yugoslavia                       23
  Outlying-US(Guam-USVI-etc)       23
  Scotland                         21
  Honduras                         20

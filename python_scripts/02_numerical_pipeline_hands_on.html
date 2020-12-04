@@ -1278,10 +1278,14 @@ future predictive model.</p>
 measurable such as age or the number of hours a person works per week.</p>
 <p>Predictive models are designed to work with numerical data natively and it
 is a type of data that require a small amount of work to get started.</p>
-<p>The first task here will be to identify numerical data in our dataset. As we
-mentioned, numerical data are represented with numbers, but numbers are not
-always representing numerical data. Thus, we can check the data type for each
-of the column in the dataset.</p>
+<p>The first task here will be to identify numerical data in our dataset.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Numerical data are represented with numbers, but numbers are not always
+representing numerical data. Categories could already be encoded with
+numbers and you will need to identify these features.</p>
+</div>
+<p>Thus, we can check the data type for each of the column in the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
@@ -1644,14 +1648,21 @@ Here, we will use this tool instead of loading some new data.</p>
 </div>
 </div>
 </div>
-<p>We recall that the <code class="docutils literal notranslate"><span class="pre">random_state</span></code> parameter allows to get a deterministic
-results even if we use some random process (i.e. data shuffling).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">random_state</span></code> parameter allows to get a deterministic results even if we
+use some random process (i.e. data shuffling).</p>
+</div>
 <p>In the previous notebook, we used a k-nearest neighbors predictor. While this
 model is really intuitive to understand, it is not widely used. Here, we will
-a predictive model belonging to the linear model families. In short, these
-models find a set of weights to combine each column in the data matrix to
-predict the target. Thus, we will use a logistic regression classifier and
-train it.</p>
+a predictive model belonging to the linear model families.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In short, these models find a set of weights to combine each column in the
+data matrix to predict the target. For instance, the model can come with
+rules such as <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">*</span> <span class="pre">age</span> <span class="pre">+</span> <span class="pre">3.3</span> <span class="pre">*</span> <span class="pre">education-num</span> <span class="pre">=</span> <span class="pre">&quot;&gt;</span> <span class="pre">50k&quot;</span></code>.</p>
+</div>
+<p>Thus, we will use a logistic regression classifier and train it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>

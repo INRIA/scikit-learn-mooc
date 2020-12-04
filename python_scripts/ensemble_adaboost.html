@@ -933,7 +933,6 @@ will predict penguin species from the features culmen length and depth.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
 <span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
@@ -942,8 +941,7 @@ will predict penguin species from the features culmen length and depth.</p>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 <span class="n">range_features</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">feature_name</span><span class="p">:</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">}</span>
+    <span class="k">for</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -992,13 +990,14 @@ misclassified on the training set.</p>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
 
+<span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
+
 <span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plot_decision_function</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 
 <span class="c1"># find the misclassified samples</span>
@@ -1036,9 +1035,8 @@ classified samples will assigned to a weight of 0.</p>
 <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">plot_decision_function</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -1062,10 +1060,8 @@ that the previously misclassified samples are now correctly classified.</p>
     <span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="n">newly_misclassified_samples_idx</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Number of samples previously misclassified and still misclassified: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_misclassified_samples_idx</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of samples previously misclassified and &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;still misclassified: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_misclassified_samples_idx</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1121,17 +1117,17 @@ look at the underlying decision tree classifiers trained.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
 
 <span class="n">base_estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">adaboost</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
-    <span class="n">base_estimator</span><span class="o">=</span><span class="n">base_estimator</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME&quot;</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">adaboost</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">base_estimator</span><span class="p">,</span>
+                              <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME&quot;</span><span class="p">,</span>
+                              <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">adaboost</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 
 <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">adaboost</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-        <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                    <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="n">plot_decision_function</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span>
 

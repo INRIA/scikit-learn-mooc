@@ -32,14 +32,12 @@ from sklearn.ensemble import BaggingRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 
-random_forest = RandomForestRegressor(
-    n_estimators=100, random_state=0, n_jobs=-1
-)
-bagging = BaggingRegressor(
-    base_estimator=DecisionTreeRegressor(random_state=0),
-    n_estimators=100,
-    n_jobs=-1,
-)
+random_forest = RandomForestRegressor(n_estimators=100, random_state=0,
+                                      n_jobs=-1)
+
+tree = DecisionTreeRegressor(random_state=0)
+bagging = BaggingRegressor(base_estimator=tree, n_estimators=100,
+                           n_jobs=-1,)
 
 random_forest.fit(X_train, y_train)
 bagging.fit(X_train, y_train)

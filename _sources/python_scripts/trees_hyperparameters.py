@@ -87,7 +87,7 @@ def plot_regression(model, X, y, ax=None):
 
 
 # %% [markdown]
-# ### Effect of the `max_depth` parameter
+# ## Effect of the `max_depth` parameter
 #
 # In decision trees, the most important parameter to get a trade-off between
 # under-fitting and over-fitting is the `max_depth` parameter. Let's build
@@ -102,13 +102,10 @@ tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
 fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
-plot_classification(
-    tree_clf, data_clf[data_clf_columns], data_clf[target_clf_column],
-    ax=axs[0]
-)
-plot_regression(
-    tree_reg, data_reg[data_reg_columns], data_reg[target_reg_column],
-    ax=axs[1])
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column], ax=axs[0])
+plot_regression(tree_reg, data_reg[data_reg_columns],
+                data_reg[target_reg_column], ax=axs[1])
 fig.suptitle(f"Shallow tree with a max-depth of {max_depth}")
 plt.subplots_adjust(wspace=0.3)
 
@@ -119,13 +116,10 @@ tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
 fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
-plot_classification(
-    tree_clf, data_clf[data_clf_columns], data_clf[target_clf_column],
-    ax=axs[0]
-)
-plot_regression(
-    tree_reg, data_reg[data_reg_columns], data_reg[target_reg_column],
-    ax=axs[1])
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column], ax=axs[0])
+plot_regression(tree_reg, data_reg[data_reg_columns],
+                data_reg[target_reg_column], ax=axs[1])
 fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
 plt.subplots_adjust(wspace=0.3)
 
@@ -146,19 +140,14 @@ tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid)
 
 # %%
 fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
-plot_classification(
-    tree_clf, data_clf[data_clf_columns], data_clf[target_clf_column],
-    ax=axs[0]
-)
-plot_regression(
-    tree_reg, data_reg[data_reg_columns], data_reg[target_reg_column],
-    ax=axs[1])
-axs[0].set_title(
-    f"Optimal depth found via CV: {tree_clf.best_params_['max_depth']}"
-)
-axs[1].set_title(
-    f"Optimal depth found via CV: {tree_reg.best_params_['max_depth']}"
-)
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column], ax=axs[0])
+plot_regression(tree_reg, data_reg[data_reg_columns],
+                data_reg[target_reg_column], ax=axs[1])
+axs[0].set_title(f"Optimal depth found via CV: "
+                 f"{tree_clf.best_params_['max_depth']}")
+axs[1].set_title(f"Optimal depth found via CV: "
+                 f"{tree_reg.best_params_['max_depth']}")
 plt.subplots_adjust(wspace=0.3)
 
 # %% [markdown]

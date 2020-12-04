@@ -19,7 +19,7 @@ target_column = "Body Mass (g)"
 
 X_train, y_train = data[data_columns], data[target_column]
 
-# %% [markdow]
+# %% [markdown]
 # First, create two models, a linear regression model and a decision tree
 # regression model, and fit them on the training data. Limit the depth at
 # 3 levels for the decision tree.
@@ -42,10 +42,9 @@ tree.fit(X_train, y_train)
 # %%
 import numpy as np
 
-X_test = pd.DataFrame(
-    np.arange(X_train[data_columns[0]].min(), X_train[data_columns[0]].max()),
-    columns=data_columns,
-)
+X_test = pd.DataFrame(np.arange(X_train[data_columns[0]].min(),
+                                X_train[data_columns[0]].max()),
+                      columns=data_columns)
 
 # %%
 y_pred_linear_regression = linear_regression.predict(X_test)
@@ -62,8 +61,8 @@ sns.set_context("talk")
 
 ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(
-    X_test, y_pred_linear_regression, linewidth=4, label="Linear regression")
+ax.plot(X_test, y_pred_linear_regression, linewidth=4,
+        label="Linear regression")
 ax.plot(X_test, y_pred_tree, linewidth=4, label="Decision tree regression")
 _ = plt.legend()
 
@@ -79,13 +78,9 @@ _ = plt.legend()
 
 # %%
 offset = 30
-X_test = pd.DataFrame(
-    np.arange(
-        X_train[data_columns[0]].min() - offset,
-        X_train[data_columns[0]].max() + offset,
-    ),
-    columns=data_columns,
-)
+X_test = pd.DataFrame(np.arange(X_train[data_columns[0]].min() - offset,
+                                X_train[data_columns[0]].max() + offset),
+                      columns=data_columns)
 
 # %% [markdown]
 # Finally, make predictions with both model on this new testing set. Repeat
@@ -101,9 +96,8 @@ import seaborn as sns
 
 ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(
-    X_test, y_pred_linear_regression, linewidth=4, label="Linear regression"
-)
+ax.plot(X_test, y_pred_linear_regression, linewidth=4,
+        label="Linear regression")
 ax.plot(X_test, y_pred_tree, linewidth=4, label="Decision tree regression")
 _ = plt.legend()
 

@@ -106,3 +106,8 @@ _ = weights_ridge.plot(kind="barh")
 # We see that a small `C` will shrink the weights values toward zero. It means
 # that a small `C` provides a more regularized model. Thus, `C` is the inverse
 # of the `alpha` coefficient in the `Ridge` model.
+#
+# Besides, with a strong penalty (i.e. small `C` value), the weight of the
+# feature "Culmen Depth (mm)" is almost zero. It explains why the decision
+# separation in the plot is almost perpendicular to the "Culmen Length (mm)"
+# feature.

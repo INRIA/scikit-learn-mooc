@@ -936,8 +936,7 @@ a testing set.</p>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span>
-<span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -953,16 +952,14 @@ performance on the testing set.</p>
 <span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
 <span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Basic R2 score og a bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bagging</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basic R2 score of a bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score og a bagging regressor:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score of a bagging regressor:
 0.77
 </pre></div>
 </div>
@@ -1020,18 +1017,7 @@ warm_start
     <span class="s2">&quot;base_estimator__max_depth&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
 <span class="p">}</span>
 <span class="n">search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">bagging</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RandomizedSearchCV(estimator=BaggingRegressor(base_estimator=DecisionTreeRegressor(),
-                                              n_jobs=-1),
-                   n_iter=20,
-                   param_distributions={&#39;base_estimator__max_depth&#39;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f4db194fa10&gt;,
-                                        &#39;max_features&#39;: [0.5, 0.8, 1.0],
-                                        &#39;max_samples&#39;: [0.5, 0.8, 1.0],
-                                        &#39;n_estimators&#39;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f4db194f8d0&gt;})
+<span class="n">_</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1078,203 +1064,203 @@ warm_start
   </thead>
   <tbody>
     <tr>
-      <th>6</th>
-      <td>29</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>8</td>
-      <td>0.758182</td>
-      <td>0.011118</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>28</td>
-      <td>0.5</td>
-      <td>1</td>
-      <td>9</td>
-      <td>0.755453</td>
-      <td>0.016513</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>19</td>
-      <td>1</td>
-      <td>1</td>
-      <td>9</td>
-      <td>0.755231</td>
-      <td>0.018008</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>25</td>
-      <td>1</td>
-      <td>1</td>
-      <td>9</td>
-      <td>0.754666</td>
-      <td>0.019298</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>23</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>8</td>
-      <td>0.751360</td>
-      <td>0.014447</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>21</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>7</td>
-      <td>0.739238</td>
-      <td>0.011884</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>10</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>7</td>
-      <td>0.722745</td>
-      <td>0.023760</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>16</td>
-      <td>0.8</td>
-      <td>1</td>
-      <td>7</td>
-      <td>0.716939</td>
-      <td>0.020465</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>18</th>
+      <th>14</th>
       <td>26</td>
-      <td>1</td>
-      <td>0.5</td>
-      <td>8</td>
-      <td>0.714309</td>
-      <td>0.021166</td>
+      <td>0.8</td>
+      <td>0.8</td>
       <td>9</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>22</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>0.710730</td>
-      <td>0.014350</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>14</td>
+      <td>0.769887</td>
+      <td>0.024823</td>
       <td>1</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>0.709663</td>
-      <td>0.019136</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>18</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>0.707111</td>
-      <td>0.019568</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>11</td>
-      <td>0.5</td>
-      <td>1</td>
-      <td>6</td>
-      <td>0.693994</td>
-      <td>0.016259</td>
-      <td>13</td>
     </tr>
     <tr>
       <th>19</th>
       <td>26</td>
-      <td>0.8</td>
       <td>0.5</td>
-      <td>7</td>
-      <td>0.683355</td>
-      <td>0.021059</td>
-      <td>14</td>
+      <td>1</td>
+      <td>9</td>
+      <td>0.754370</td>
+      <td>0.019338</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>12</th>
-      <td>13</td>
+      <th>4</th>
+      <td>18</td>
+      <td>1</td>
+      <td>0.8</td>
+      <td>8</td>
+      <td>0.753512</td>
+      <td>0.013470</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>17</td>
       <td>0.5</td>
+      <td>1</td>
+      <td>9</td>
+      <td>0.751934</td>
+      <td>0.013450</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>14</td>
       <td>0.5</td>
+      <td>0.8</td>
+      <td>8</td>
+      <td>0.749468</td>
+      <td>0.017275</td>
       <td>5</td>
-      <td>0.629492</td>
-      <td>0.023146</td>
-      <td>15</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>11</td>
-      <td>1</td>
-      <td>0.8</td>
-      <td>4</td>
-      <td>0.618019</td>
-      <td>0.018141</td>
-      <td>16</td>
-    </tr>
-    <tr>
-      <th>13</th>
       <td>14</td>
-      <td>1</td>
       <td>0.5</td>
-      <td>4</td>
-      <td>0.577113</td>
-      <td>0.022998</td>
-      <td>17</td>
+      <td>0.8</td>
+      <td>8</td>
+      <td>0.748469</td>
+      <td>0.017079</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>11</td>
+      <td>29</td>
+      <td>1</td>
+      <td>1</td>
+      <td>8</td>
+      <td>0.743225</td>
+      <td>0.019483</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>21</td>
+      <td>0.5</td>
+      <td>1</td>
+      <td>7</td>
+      <td>0.724131</td>
+      <td>0.021071</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>20</td>
       <td>0.8</td>
       <td>1</td>
-      <td>3</td>
-      <td>0.568092</td>
-      <td>0.023313</td>
-      <td>18</td>
+      <td>7</td>
+      <td>0.723230</td>
+      <td>0.021824</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>11</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>8</td>
+      <td>0.687509</td>
+      <td>0.018728</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>16</th>
       <td>27</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>5</td>
+      <td>0.678100</td>
+      <td>0.016005</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>22</td>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>6</td>
+      <td>0.672269</td>
+      <td>0.018001</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>21</td>
       <td>0.8</td>
       <td>1</td>
+      <td>5</td>
+      <td>0.670009</td>
+      <td>0.020977</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>19</td>
+      <td>0.8</td>
+      <td>0.8</td>
+      <td>5</td>
+      <td>0.668456</td>
+      <td>0.018486</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>14</td>
+      <td>1</td>
+      <td>0.5</td>
+      <td>6</td>
+      <td>0.649469</td>
+      <td>0.023157</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>27</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>4</td>
+      <td>0.631351</td>
+      <td>0.018764</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>29</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>4</td>
+      <td>0.599068</td>
+      <td>0.013567</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>19</td>
+      <td>0.8</td>
+      <td>0.8</td>
       <td>3</td>
-      <td>0.567350</td>
-      <td>0.022635</td>
+      <td>0.563441</td>
+      <td>0.006758</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>12</td>
+      <td>1</td>
+      <td>0.8</td>
+      <td>3</td>
+      <td>0.560656</td>
+      <td>0.018822</td>
       <td>19</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>10</td>
-      <td>0.8</td>
-      <td>0.8</td>
+      <th>0</th>
+      <td>19</td>
+      <td>1</td>
+      <td>0.5</td>
       <td>3</td>
-      <td>0.555494</td>
-      <td>0.006253</td>
+      <td>0.503362</td>
+      <td>0.027888</td>
       <td>20</td>
     </tr>
   </tbody>
@@ -1283,16 +1269,15 @@ warm_start
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Basic R2 score og a bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basic R2 score of a bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score og a bagging regressor:
-0.75
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score of a bagging regressor:
+0.76
 </pre></div>
 </div>
 </div>

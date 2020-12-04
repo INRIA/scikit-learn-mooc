@@ -21,8 +21,7 @@ X, y = fetch_california_housing(as_frame=True, return_X_y=True)
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5
-)
+    X, y, random_state=0, test_size=0.5)
 
 # %% [markdown]
 # We will train a decision tree regressor and check its performance.
@@ -58,17 +57,12 @@ from sklearn.tree import DecisionTreeRegressor
 param_grid = {
     "max_depth": [3, 5, 8, None],
     "min_samples_split": [2, 10, 30, 50],
-    "min_samples_leaf": [0.01, 0.05, 0.1, 1],
-}
+    "min_samples_leaf": [0.01, 0.05, 0.1, 1]}
 cv = 3
-tree = GridSearchCV(
-    DecisionTreeRegressor(random_state=0),
-    param_grid=param_grid,
-    cv=cv,
-    n_jobs=-1,
-)
 
-tree.fit(X_train, y_train)
+tree = GridSearchCV(DecisionTreeRegressor(random_state=0),
+                    param_grid=param_grid, cv=cv, n_jobs=-1)
+_ = tree.fit(X_train, y_train)
 
 # %% [markdown]
 # We can create a dataframe storing the important information collected during
@@ -86,6 +80,7 @@ interesting_columns = [
     "rank_test_score",
     "mean_fit_time",
 ]
+
 cv_results = cv_results[interesting_columns].sort_values(by="rank_test_score")
 cv_results
 
@@ -102,13 +97,9 @@ cv_results
 
 # %%
 total_fitting_time = (cv_results["mean_fit_time"] * cv).sum()
-print(
-    f"Required training time of the GridSearchCV: "
-    f"{total_fitting_time:.2f} seconds"
-)
-print(
-    f"Best R2 score of a single tree: {tree.best_score_:.3f}"
-)
+print(f"Required training time of the GridSearchCV: "
+      f"{total_fitting_time:.2f} seconds")
+print(f"Best R2 score of a single tree: {tree.best_score_:.3f}")
 
 # %% [markdown]
 # Hence, we have a model that has an $R^2$ score below 0.7. So this model is

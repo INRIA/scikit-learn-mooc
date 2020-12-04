@@ -946,8 +946,7 @@ in California based on demographic and geographic data.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span>
-<span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -966,7 +965,7 @@ in California based on demographic and geographic data.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score of the default tree:
-0.578
+0.568
 </pre></div>
 </div>
 </div>
@@ -991,25 +990,12 @@ earlier.</p>
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
     <span class="s2">&quot;min_samples_split&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
-    <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-<span class="p">}</span>
+    <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span>
 <span class="n">cv</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">tree</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
-    <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
-<span class="p">)</span>
 
-<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GridSearchCV(cv=3, estimator=DecisionTreeRegressor(random_state=0), n_jobs=-1,
-             param_grid={&#39;max_depth&#39;: [3, 5, 8, None],
-                         &#39;min_samples_leaf&#39;: [0.01, 0.05, 0.1, 1],
-                         &#39;min_samples_split&#39;: [2, 10, 30, 50]})
+<span class="n">tree</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                    <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1029,6 +1015,7 @@ the tuning of the parameters and investigate the results.</p>
     <span class="s2">&quot;rank_test_score&quot;</span><span class="p">,</span>
     <span class="s2">&quot;mean_fit_time&quot;</span><span class="p">,</span>
 <span class="p">]</span>
+
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">interesting_columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
 <span class="n">cv_results</span>
 </pre></div>
@@ -1069,7 +1056,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.669832</td>
       <td>1</td>
-      <td>0.056317</td>
+      <td>0.056892</td>
     </tr>
     <tr>
       <th>62</th>
@@ -1078,7 +1065,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>1</td>
       <td>0.657056</td>
       <td>2</td>
-      <td>0.060327</td>
+      <td>0.063346</td>
     </tr>
     <tr>
       <th>51</th>
@@ -1087,7 +1074,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.01</td>
       <td>0.654699</td>
       <td>3</td>
-      <td>0.039248</td>
+      <td>0.039987</td>
     </tr>
     <tr>
       <th>50</th>
@@ -1096,7 +1083,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.01</td>
       <td>0.654699</td>
       <td>3</td>
-      <td>0.039252</td>
+      <td>0.038673</td>
     </tr>
     <tr>
       <th>49</th>
@@ -1105,7 +1092,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.01</td>
       <td>0.654699</td>
       <td>3</td>
-      <td>0.041999</td>
+      <td>0.040398</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1123,7 +1110,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.495641</td>
       <td>49</td>
-      <td>0.020789</td>
+      <td>0.020952</td>
     </tr>
     <tr>
       <th>10</th>
@@ -1132,7 +1119,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.478877</td>
       <td>61</td>
-      <td>0.020952</td>
+      <td>0.017661</td>
     </tr>
     <tr>
       <th>8</th>
@@ -1141,7 +1128,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.478877</td>
       <td>61</td>
-      <td>0.017800</td>
+      <td>0.017918</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1150,7 +1137,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.478877</td>
       <td>61</td>
-      <td>0.017877</td>
+      <td>0.017921</td>
     </tr>
     <tr>
       <th>11</th>
@@ -1159,7 +1146,7 @@ the tuning of the parameters and investigate the results.</p>
       <td>0.1</td>
       <td>0.478877</td>
       <td>61</td>
-      <td>0.017591</td>
+      <td>0.017723</td>
     </tr>
   </tbody>
 </table>
@@ -1177,18 +1164,14 @@ optimal decision tree on the left-out testing data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_fitting_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_fit_time&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cv</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Required training time of the GridSearchCV: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Best R2 score of a single tree: </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required training time of the GridSearchCV: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best R2 score of a single tree: </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 5.65 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 5.70 seconds
 Best R2 score of a single tree: 0.670
 </pre></div>
 </div>
@@ -1226,7 +1209,7 @@ we are not going to tune any parameter of the decision tree.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 3.74 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 3.88 seconds
 R2 score: 0.788
 </pre></div>
 </div>

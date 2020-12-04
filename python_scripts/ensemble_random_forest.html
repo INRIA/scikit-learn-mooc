@@ -983,14 +983,12 @@ bagging regressor on the “California housing” dataset.</p>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
-<span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span>
-    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
-<span class="p">)</span>
-<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
-    <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                      <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                           <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,)</span>
 
 <span class="n">random_forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
@@ -1006,7 +1004,7 @@ bagging regressor on the “California housing” dataset.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of random forest: 0.790
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.790
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.789
 </pre></div>
 </div>
 </div>

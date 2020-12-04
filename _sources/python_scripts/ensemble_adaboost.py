@@ -10,7 +10,6 @@
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 data = pd.read_csv("../datasets/penguins_classification.csv")
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
@@ -19,8 +18,7 @@ target_column = "Species"
 X, y = data[culmen_columns], data[target_column]
 range_features = {
     feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X.columns
-}
+    for feature_name in X.columns}
 
 # %% [markdown]
 # In addition, we are also using on the function used the previous "tree in
@@ -66,13 +64,14 @@ import seaborn as sns
 from sklearn.tree import DecisionTreeClassifier
 sns.set_context("talk")
 
+palette = ["tab:red", "tab:blue", "black"]
+
 tree = DecisionTreeClassifier(max_depth=2, random_state=0)
 tree.fit(X, y)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(
-    x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=data, palette=palette, ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # find the misclassified samples
@@ -107,9 +106,8 @@ tree = DecisionTreeClassifier(max_depth=2, random_state=0)
 tree.fit(X, y, sample_weight=sample_weight)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(
-    x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-    data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=data, palette=palette, ax=ax)
 plot_decision_function(tree, range_features, ax=ax)
 
 ax.plot(X.iloc[misclassified_samples_idx, 0],
@@ -128,10 +126,8 @@ remaining_misclassified_samples_idx = np.intersect1d(
     misclassified_samples_idx, newly_misclassified_samples_idx
 )
 
-print(
-    f"Number of samples previously misclassified and still misclassified: "
-    f"{len(remaining_misclassified_samples_idx)}"
-)
+print(f"Number of samples previously misclassified and "
+      f"still misclassified: {len(remaining_misclassified_samples_idx)}")
 
 # %% [markdown]
 # However, we are making mistakes on previously well classified samples. Thus,
@@ -178,17 +174,17 @@ ensemble_weight
 from sklearn.ensemble import AdaBoostClassifier
 
 base_estimator = DecisionTreeClassifier(max_depth=3, random_state=0)
-adaboost = AdaBoostClassifier(
-    base_estimator=base_estimator, n_estimators=3, algorithm="SAMME",
-    random_state=0)
+adaboost = AdaBoostClassifier(base_estimator=base_estimator,
+                              n_estimators=3, algorithm="SAMME",
+                              random_state=0)
 adaboost.fit(X, y)
 
 _, axs = plt.subplots(ncols=3, figsize=(18, 6))
 
 for ax, tree in zip(axs, adaboost.estimators_):
-    sns.scatterplot(
-        x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-        data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
+    sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
+                    hue=target_column, data=data,
+                    palette=palette, ax=ax)
     plot_decision_function(tree, range_features, ax=ax)
 plt.subplots_adjust(wspace=0.35)
 

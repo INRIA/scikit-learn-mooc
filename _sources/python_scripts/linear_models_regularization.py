@@ -27,8 +27,7 @@ X.head()
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5
-)
+    X, y, random_state=0, test_size=0.5)
 
 # %% [markdown]
 # In one of the previous notebook, we show that linear model could be used
@@ -44,16 +43,13 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 
-linear_regression = make_pipeline(
-    PolynomialFeatures(degree=2),
-    LinearRegression()
-)
+linear_regression = make_pipeline(PolynomialFeatures(degree=2),
+                                  LinearRegression())
 linear_regression.fit(X_train, y_train)
+test_score = linear_regression.score(X_test, y_test)
 
-print(
-    f"R2 score of linear regresion model on the test set:\n"
-    f"{linear_regression.score(X_test, y_test):.3f}"
-)
+print(f"R2 score of linear regresion model on the test set:\n"
+      f"{test_score:.3f}")
 
 # %% [markdown]
 # We see that we obtain an $R^2$ score below zero. It means that our model is
@@ -62,10 +58,9 @@ print(
 # intuition.
 
 # %%
-print(
-    f"R2 score of linear regresion model on the train set:\n"
-    f"{linear_regression.score(X_train, y_train):.3f}"
-)
+train_score = linear_regression.score(X_train, y_train)
+print(f"R2 score of linear regresion model on the train set:\n"
+      f"{train_score:.3f}")
 
 # %% [markdown]
 # The score on the training set is much better. This performance gap between
@@ -85,9 +80,7 @@ sns.set_context("talk")
 
 weights_linear_regression = pd.Series(
     linear_regression[-1].coef_,
-    index=linear_regression[0].get_feature_names(
-        input_features=X.columns)
-)
+    index=linear_regression[0].get_feature_names(input_features=X.columns))
 _, ax = plt.subplots(figsize=(6, 16))
 _ = weights_linear_regression.plot(kind="barh", ax=ax)
 
@@ -100,23 +93,19 @@ _ = weights_linear_regression.plot(kind="barh", ax=ax)
 # %%
 from sklearn.linear_model import Ridge
 
-ridge = make_pipeline(
-    PolynomialFeatures(degree=2),
-    Ridge(alpha=0.5)
-)
+ridge = make_pipeline(PolynomialFeatures(degree=2),
+                      Ridge(alpha=0.5))
 ridge.fit(X_train, y_train)
 
 # %%
-print(
-    f"R2 score of ridge model on the train set:\n"
-    f"{ridge.score(X_train, y_train):.3f}"
-)
+train_score = ridge.score(X_train, y_train)
+print(f"R2 score of ridge model on the train set:\n"
+      f"{train_score:.3f}")
 
 # %%
-print(
-    f"R2 score of ridge model on the test set:\n"
-    f"{ridge.score(X_test, y_test):.3f}"
-)
+test_score = ridge.score(X_test, y_test)
+print(f"R2 score of ridge model on the test set:\n"
+      f"{test_score:.3f}")
 
 # %% [markdown]
 # We see that the training and testing score are much closer, indicating that
@@ -126,9 +115,7 @@ print(
 # %%
 weights_ridge = pd.Series(
     ridge[-1].coef_,
-    index=ridge[0].get_feature_names(
-        input_features=X.columns)
-)
+    index=ridge[0].get_feature_names(input_features=X.columns))
 
 # %%
 weights = pd.concat(
@@ -187,11 +174,10 @@ X_test_scaled = scaler.transform(X_test)
 # %% [markdown]
 # This scikit-learn estimator is known as a transformer: it computes some
 # statistics (i.e the mean and the standard deviation) and stores them as
-#  attributes (scaler.mean_, scaler.scale_)
-# when calling `fit`. Using these statistics, it
-# transform the data when `transform` is called. Therefore, it is important to
-# note that `fit` should only be called on the training data, similar to
-# classifiers and regressors.
+# attributes (`scaler.mean_`, `scaler.scale_`) when calling `fit`. Using these
+# statistics, it transform the data when `transform` is called. Therefore, it
+# is important to note that `fit` should only be called on the training data,
+# similar to classifiers and regressors.
 
 # %%
 print('mean records on the training set:\n', scaler.mean_)
@@ -206,11 +192,10 @@ print('standard deviation records on the training set:\n', scaler.scale_)
 
 # %%
 ridge.fit(X_train_scaled, y_train)
+test_score = ridge.score(X_test_scaled, y_test)
 
-print(
-    f"R2 score of ridge model on the test set:\n"
-    f"{ridge.score(X_test_scaled, y_test):.3f}"
-)
+print(f"R2 score of ridge model on the test set:\n"
+      f"{test_score:.3f}")
 
 # %% [markdown]
 # Instead of calling the transformer to transform the data and then calling the
@@ -236,17 +221,13 @@ print(
 # Here, we can integrate the scaling phase before to train our model:
 
 # %%
-ridge = make_pipeline(
-    PolynomialFeatures(degree=2),
-    StandardScaler(),
-    Ridge(alpha=0.5)
-)
+ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
+                      Ridge(alpha=0.5))
 ridge.fit(X_train, y_train)
+test_score = ridge.score(X_test, y_test)
 
-print(
-    f"R2 score of ridge model on the test set:\n"
-    f"{ridge.score(X_test, y_test):.3f}"
-)
+print(f"R2 score of ridge model on the test set:\n"
+      f"{test_score:.3f}")
 
 # %% [markdown]
 # In the previous example, we see the benefit of using a pipeline. It
@@ -277,8 +258,7 @@ print(
 
 # %%
 X_sub_train, X_valid, y_sub_train, y_valid = train_test_split(
-    X_train, y_train, random_state=0, test_size=0.25
-)
+    X_train, y_train, random_state=0, test_size=0.25)
 
 # %%
 import numpy as np
@@ -290,7 +270,7 @@ for alpha in alphas:
     ridge.fit(X_sub_train, y_sub_train)
     list_ridge_scores.append(ridge.score(X_valid, y_valid))
 
-
+# %%
 plt.plot(alphas, list_ridge_scores, "+-", label='Ridge')
 plt.xlabel('alpha (regularization strength)')
 plt.ylabel('R2 score (higher is better)')
@@ -310,17 +290,13 @@ best_alpha
 # check the score on the left out dataset.
 
 # %%
-ridge = make_pipeline(
-    PolynomialFeatures(degree=2),
-    StandardScaler(),
-    Ridge(alpha=best_alpha)
-)
+ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
+                      Ridge(alpha=best_alpha))
 ridge.fit(X_train, y_train)
+test_score = ridge.score(X_test, y_test)
 
-print(
-    f"R2 score of ridge model on the test set:\n"
-    f"{ridge.score(X_test, y_test):.3f}"
-)
+print(f"R2 score of ridge model on the test set:\n"
+      f"{test_score:.3f}")
 
 # %% [markdown]
 # In the next exercise, you will use a scikit-learn estimator which allows to

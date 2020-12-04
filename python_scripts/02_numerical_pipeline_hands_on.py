@@ -52,10 +52,15 @@ target
 # Predictive models are designed to work with numerical data natively and it
 # is a type of data that require a small amount of work to get started.
 #
-# The first task here will be to identify numerical data in our dataset. As we
-# mentioned, numerical data are represented with numbers, but numbers are not
-# always representing numerical data. Thus, we can check the data type for each
-# of the column in the dataset.
+# The first task here will be to identify numerical data in our dataset.
+#
+# ```{caution}
+# Numerical data are represented with numbers, but numbers are not always
+# representing numerical data. Categories could already be encoded with
+# numbers and you will need to identify these features.
+# ```
+#
+# Thus, we can check the data type for each of the column in the dataset.
 
 # %%
 data.dtypes
@@ -148,8 +153,10 @@ data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
 # %% [markdown]
-# We recall that the `random_state` parameter allows to get a deterministic
-# results even if we use some random process (i.e. data shuffling).
+# ```{tip}
+# `random_state` parameter allows to get a deterministic results even if we
+# use some random process (i.e. data shuffling).
+# ```
 #
 # In the previous notebook, we used a k-nearest neighbors predictor. While this
 # model is really intuitive to understand, it is not widely used. Here, we will

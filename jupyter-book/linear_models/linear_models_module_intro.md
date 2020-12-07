@@ -4,13 +4,11 @@
 
 <!-- Give in plain English what the module is about -->
 
-This module will give an example of a typical predictive modeling pipeline
-developed using tabular data. We will present this pipeline in a progressive
-way. First, we will make an analysis of the dataset used. Then, we will train
-our first pipeline with a subset of the dataset. Subsequently, we will
-make our pipeline more complex to use all available type of data (i.e.
-numerical and categorical data). Finally, we will show how to tune the pipeline
-parameters.
+This module will present more in details models using a linear parametrization.
+We will see how to use this family of models for both classification and
+regression problems. Besides, we will present how to fight over-fitting using
+regularization. Finally, we will show how linear models can be used with
+complex data presenting non-linearity.
 
 ## Before getting started
 
@@ -21,6 +19,7 @@ The required technical skills to carry on this module are:
 - know Python;
 - having some basic knowledge of the following libraries: NumPy, SciPy,
   Pandas, Matplotlib, and Seaborn;
+- basic understanding of predictive scikit-learn pipeline.
 
 <!-- Point to resources to learning these skills -->
 
@@ -40,11 +39,13 @@ requrired libraries:
 
 The objective in the module are the following:
 
-- build intuition regarding an unknown dataset;
-- identify and differentiate numerical and categorical features;
-- create an advanced predictive pipeline with scikit-learn;
-- fine-tune the parameters of an advanced predictive pipeline.
+- understand the linear models parametrization;
+- implication of linear models in both regression and classification;
+- get intuitions of linear models applied in higher dimensional dataset;
+- understand the effect of regularization on how to set it;
+- understand how linear models can be used even with data showing non-linear
+  relationship with the target to be predicted.
 
 <!-- Give the investment in time -->
 
-The estimated time go through this module is about 5 hours.
+The estimated time go through this module is about 4 hours.

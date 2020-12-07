@@ -24,6 +24,9 @@ The required technical skills to carry on this module are:
 
 <!-- Point to resources to learning these skills -->
 
+The following links will help you to have an introduction to the above
+requrired libraries:
+
 - [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html);
 - [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html);
 - [Introduction to Matplotlib](https://scipy-lectures.org/intro/matplotlib/index.html);

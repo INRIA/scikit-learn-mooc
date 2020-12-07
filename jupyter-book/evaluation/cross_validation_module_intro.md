@@ -4,13 +4,13 @@
 
 <!-- Give in plain English what the module is about -->
 
-This module will give an example of a typical predictive modeling pipeline
-developed using tabular data. We will present this pipeline in a progressive
-way. First, we will make an analysis of the dataset used. Then, we will train
-our first pipeline with a subset of the dataset. Subsequently, we will
-make our pipeline more complex to use all available type of data (i.e.
-numerical and categorical data). Finally, we will show how to tune the pipeline
-parameters.
+This module will go thoroughly into the cross-validation framework. Besides
+presenting the general framework, we will also present simple baseline that
+should be used when evaluating a predictive pipeline. Futhermore, we will give
+more details on the cross-validation strategies to use depending on the type
+of data that you are dealing with. Finally, we will give an example of nested
+cross-validation that is necessary when one optimizes model parameters and
+evaluate the same predictive model at once.
 
 ## Before getting started
 
@@ -21,6 +21,7 @@ The required technical skills to carry on this module are:
 - know Python;
 - having some basic knowledge of the following libraries: NumPy, SciPy,
   Pandas, Matplotlib, and Seaborn;
+- basic understanding of predictive scikit-learn pipeline.
 
 <!-- Point to resources to learning these skills -->
 
@@ -40,11 +41,14 @@ required libraries:
 
 The objective in the module are the following:
 
-- build intuition regarding an unknown dataset;
-- identify and differentiate numerical and categorical features;
-- create an advanced predictive pipeline with scikit-learn;
-- fine-tune the parameters of an advanced predictive pipeline.
+- understand the general cross-validation framework;
+- understand the necessity of using an appropriate cross-validation strategy
+  depending on the data;
+- get the intuitions behind comparing a model with some basic models that
+  can be used as baseline;
+- understand the principle behind using nested cross-validation when the model
+  needs to be evaluated as well as optimized.
 
 <!-- Give the investment in time -->
 
-The estimated time to go through this module is about 5 hours.
+The estimated time to go through this module is about 4 hours 10.

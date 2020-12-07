@@ -14,17 +14,10 @@
 # %%
 import pandas as pd
 
-symbols = {
-    "TOT": "Total",
-    "XOM": "Exxon",
-    "CVX": "Chevron",
-    "COP": "ConocoPhillips",
-    "VLO": "Valero Energy",
-}
-url = (
-    "https://raw.githubusercontent.com/scikit-learn/examples-data/"
-    "master/financial-data/{}.csv"
-)
+symbols = {"TOT": "Total", "XOM": "Exxon", "CVX": "Chevron",
+           "COP": "ConocoPhillips", "VLO": "Valero Energy"}
+url = ("https://raw.githubusercontent.com/scikit-learn/examples-data/"
+       "master/financial-data/{}.csv")
 
 quotes = {}
 for symbol in symbols:
@@ -59,8 +52,7 @@ from sklearn.model_selection import train_test_split
 
 X, y = quotes.drop(columns=["Chevron"]), quotes["Chevron"]
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, shuffle=True, random_state=0,
-)
+    X, y, shuffle=True, random_state=0)
 
 # %% [markdown]
 # We will use a decision tree regressor that we expect to overfit and thus not
@@ -178,8 +170,8 @@ from sklearn.model_selection import LeaveOneGroupOut
 
 groups = quotes.index.to_period("Q")
 cv = LeaveOneGroupOut()
-test_score = cross_val_score(
-    regressor, X, y, cv=cv, groups=groups, n_jobs=-1)
+test_score = cross_val_score(regressor, X, y,
+                             cv=cv, groups=groups, n_jobs=-1)
 print(f"The mean R2 is: "
       f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
 
@@ -197,10 +189,8 @@ print(f"The mean R2 is: "
 from sklearn.model_selection import TimeSeriesSplit
 
 cv = TimeSeriesSplit(n_splits=groups.nunique())
-test_score = cross_val_score(
-    regressor, X, y, cv=cv, groups=groups,
-    n_jobs=-1
-)
+test_score = cross_val_score(regressor, X, y,
+                             cv=cv, groups=groups, n_jobs=-1)
 print(f"The mean R2 is: "
       f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
 

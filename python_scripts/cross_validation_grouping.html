@@ -984,7 +984,7 @@ cross-validation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.971 +/- 0.006
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.972 +/- 0.006
 </pre></div>
 </div>
 </div>
@@ -1117,18 +1117,14 @@ group samples for each writer.</p>
 
 <span class="c1"># defines the lower and upper bounds of sample indices</span>
 <span class="c1"># for each writer</span>
-<span class="n">writer_boundaries</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="mi">0</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">386</span><span class="p">,</span> <span class="mi">516</span><span class="p">,</span> <span class="mi">646</span><span class="p">,</span> <span class="mi">776</span><span class="p">,</span> <span class="mi">915</span><span class="p">,</span> <span class="mi">1029</span><span class="p">,</span>
-    <span class="mi">1157</span><span class="p">,</span> <span class="mi">1287</span><span class="p">,</span> <span class="mi">1415</span><span class="p">,</span> <span class="mi">1545</span><span class="p">,</span> <span class="mi">1667</span><span class="p">,</span> <span class="mi">1797</span>
-<span class="p">]</span>
+<span class="n">writer_boundaries</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">386</span><span class="p">,</span> <span class="mi">516</span><span class="p">,</span> <span class="mi">646</span><span class="p">,</span> <span class="mi">776</span><span class="p">,</span> <span class="mi">915</span><span class="p">,</span> <span class="mi">1029</span><span class="p">,</span>
+                     <span class="mi">1157</span><span class="p">,</span> <span class="mi">1287</span><span class="p">,</span> <span class="mi">1415</span><span class="p">,</span> <span class="mi">1545</span><span class="p">,</span> <span class="mi">1667</span><span class="p">,</span> <span class="mi">1797</span><span class="p">]</span>
 <span class="n">groups</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">lower_bounds</span> <span class="o">=</span> <span class="n">writer_boundaries</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">upper_bounds</span> <span class="o">=</span> <span class="n">writer_boundaries</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
-<span class="k">for</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="n">count</span><span class="p">(),</span>
-    <span class="n">writer_boundaries</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
-    <span class="n">writer_boundaries</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-<span class="p">):</span>
-    <span class="n">groups</span><span class="p">[</span><span class="n">lower_bound</span><span class="p">:</span><span class="n">upper_bound</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_id</span>
+<span class="k">for</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">up</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">count</span><span class="p">(),</span> <span class="n">lower_bounds</span><span class="p">,</span> <span class="n">upper_bounds</span><span class="p">):</span>
+    <span class="n">groups</span><span class="p">[</span><span class="n">lb</span><span class="p">:</span><span class="n">up</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_id</span>
 </pre></div>
 </div>
 </div>

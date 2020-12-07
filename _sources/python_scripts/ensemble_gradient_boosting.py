@@ -34,8 +34,8 @@ def generate_data(n_samples=50):
     y = x ** 3 - 0.5 * x ** 2 + noise
 
     X_train = pd.DataFrame(x, columns=["Feature"])
-    X_test = pd.DataFrame(
-        np.linspace(x_max, x_min, num=300), columns=["Feature"])
+    X_test = pd.DataFrame(np.linspace(x_max, x_min, num=300),
+                          columns=["Feature"])
     y_train = pd.Series(y, name="Target")
 
     return X_train, X_test, y_train
@@ -48,8 +48,8 @@ sns.set_context("talk")
 
 X_train, X_test, y_train = generate_data()
 
-_ = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
+_ = sns.scatterplot(x=X_train["Feature"], y=y_train,
+                    color="black", alpha=0.5)
 
 # %% [markdown]
 # As we previously discussed, boosting will be based on assembling a sequence
@@ -61,24 +61,30 @@ from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=3, random_state=0)
 tree.fit(X_train, y_train)
-y_pred_test = tree.predict(X_test)
-
-_ = sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
-line_predictions = plt.plot(X_test, y_pred_test, "--")
 
 y_pred_train = tree.predict(X_train)
-for idx in range(len(y_train)):
-    lines_residuals = plt.plot(
-        [X_train.iloc[idx], X_train.iloc[idx]],
-        [y_train.iloc[idx], y_pred_train[idx]],
-        color="red")
+y_pred_test = tree.predict(X_test)
 
-_ = plt.legend(
-    [line_predictions[0], lines_residuals[0]], ["Fitted tree", "Residuals"]
-)
+# plot the data
+_ = sns.scatterplot(x=X_train["Feature"], y=y_train,
+                    color="black", alpha=0.5)
+# plot the predictions
+line_predictions = plt.plot(X_test, y_pred_test, "--")
+
+for idx in range(len(y_train)):
+    # plot the residuals
+    lines_residuals = plt.plot([X_train.iloc[idx], X_train.iloc[idx]],
+                               [y_train.iloc[idx], y_pred_train[idx]],
+                               color="red")
+
+_ = plt.legend([line_predictions[0], lines_residuals[0]],
+               ["Fitted tree", "Residuals"])
 
 # %% [markdown]
+# ```{tip}
+# In the cell above, we manually edit the legend to get only a single label
+# for all residual lines.
+# ```
 # Since the tree underfits the data, its accuracy is far from perfect on the
 # training data. We can observe this in the figure by looking at the difference
 # between the predictions and the ground-truth data. We represent these errors,
@@ -97,22 +103,21 @@ residuals = y_train - y_pred_train
 
 tree_residuals = DecisionTreeRegressor(max_depth=5, random_state=0)
 tree_residuals.fit(X_train, residuals)
-y_pred_test_residuals = tree_residuals.predict(X_test)
-
-_ = sns.scatterplot(
-    x=X_train["Feature"], y=residuals, color="black", alpha=0.5)
-line_predictions = plt.plot(X_test, y_pred_test_residuals, "--")
 
 y_pred_train_residuals = tree_residuals.predict(X_train)
-for idx in range(len(y_train)):
-    lines_residuals = plt.plot(
-        [X_train.iloc[idx], X_train.iloc[idx]],
-        [residuals[idx], y_pred_train_residuals[idx]],
-        color="red")
+y_pred_test_residuals = tree_residuals.predict(X_test)
 
-_ = plt.legend(
-    [line_predictions[0], lines_residuals[0]], ["Fitted tree", "Residuals"]
-)
+_ = sns.scatterplot(x=X_train["Feature"], y=residuals,
+                    color="black", alpha=0.5)
+line_predictions = plt.plot(X_test, y_pred_test_residuals, "--")
+
+for idx in range(len(y_train)):
+    lines_residuals = plt.plot([X_train.iloc[idx], X_train.iloc[idx]],
+                               [residuals[idx], y_pred_train_residuals[idx]],
+                               color="red")
+
+_ = plt.legend([line_predictions[0], lines_residuals[0]],
+               ["Fitted tree", "Residuals"])
 
 # %% [markdown]
 # We see that this new tree only manages to fit some of the residuals. We will
@@ -131,23 +136,21 @@ y_true_residual = residuals.iloc[-1]
 _, axs = plt.subplots(ncols=2, figsize=(12, 6), sharex=True)
 
 # plot all samples
-sns.scatterplot(
-    x=X_train["Feature"], y=y_train, color="black", alpha=0.5, ax=axs[0])
+sns.scatterplot(x=X_train["Feature"], y=y_train,
+                color="black", alpha=0.5, ax=axs[0])
 axs[0].plot(X_test, y_pred_test, "--")
-sns.scatterplot(
-    x=X_train["Feature"], y=residuals, color="black", alpha=0.5, ax=axs[1])
+sns.scatterplot(x=X_train["Feature"], y=residuals,
+                color="black", alpha=0.5, ax=axs[1])
 plt.plot(X_test, y_pred_test_residuals, "--")
 
 # plot the predictions of the trees
 for idx in range(len(y_train)):
-    axs[0].plot(
-        [X_train.iloc[idx], X_train.iloc[idx]],
-        [y_train.iloc[idx], y_pred_train[idx]],
-        color="red")
-    axs[1].plot(
-        [X_train.iloc[idx], X_train.iloc[idx]],
-        [residuals[idx], y_pred_train_residuals[idx]],
-        color="red")
+    axs[0].plot([X_train.iloc[idx], X_train.iloc[idx]],
+                [y_train.iloc[idx], y_pred_train[idx]],
+                color="red")
+    axs[1].plot([X_train.iloc[idx], X_train.iloc[idx]],
+                [residuals[idx], y_pred_train_residuals[idx]],
+                color="red")
 
 # plot the sample of interest
 axs[0].scatter(x_max, y_true, label="Sample of interest",
@@ -174,10 +177,8 @@ plt.subplots_adjust(wspace=0.35)
 print(f"True value to predict for f(x={x_max:.3f}) = {y_true:.3f}")
 
 y_pred_first_tree = tree.predict([[x_max]])[0]
-print(
-    f"Prediction of the first decision tree for x={x_max:.3f}: "
-    f"y={y_pred_first_tree:.3f}"
-)
+print(f"Prediction of the first decision tree for x={x_max:.3f}: "
+      f"y={y_pred_first_tree:.3f}")
 print(f"Error of the tree: {y_true - y_pred_first_tree:.3f}")
 
 # %% [markdown]
@@ -185,10 +186,8 @@ print(f"Error of the tree: {y_true - y_pred_first_tree:.3f}")
 # tree to try to predict this residual.
 
 # %%
-print(
-    f"Prediction of the residual for x={x_max:.3f}: "
-    f"{tree_residuals.predict([[x_max]])[0]:.3f}"
-)
+print(f"Prediction of the residual for x={x_max:.3f}: "
+      f"{tree_residuals.predict([[x_max]])[0]:.3f}")
 
 # %% [markdown]
 # We see that our second tree is capable of prediting the exact residual
@@ -199,10 +198,8 @@ print(
 y_pred_first_and_second_tree = (
     y_pred_first_tree + tree_residuals.predict([[x_max]])[0]
 )
-print(
-    f"Prediction of the first and second decision trees combined for "
-    f"x={x_max:.3f}: y={y_pred_first_and_second_tree:.3f}"
-)
+print(f"Prediction of the first and second decision trees combined for "
+      f"x={x_max:.3f}: y={y_pred_first_and_second_tree:.3f}")
 print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 
 # %% [markdown]

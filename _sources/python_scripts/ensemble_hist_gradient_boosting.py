@@ -74,6 +74,11 @@ X_trans = discretizer.fit_transform(X_train)
 X_trans
 
 # %% [markdown]
+# ```{note}
+# The code cell above will generate a couple of warnings. Indeed, for some of
+# the features, we requested too much bins in regard of the data dispersion for
+# those features. The too small bins will be removed.
+# ```
 # We see that the discretizer transform the original data into an integer.
 # This integer represents the bin index when the distribution by quantile is
 # performed. We can check the number of bins per feature.

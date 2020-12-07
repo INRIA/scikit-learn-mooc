@@ -37,8 +37,7 @@ _ = ax.set_title("Number of samples per classes present\n in the target")
 from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, shuffle=True, random_state=0, test_size=0.5
-)
+    X, y, shuffle=True, random_state=0, test_size=0.5)
 
 # %% [markdown]
 # We will use a logistic regression classifier as a base model. We will train
@@ -245,8 +244,8 @@ print(f"Balanced accuracy: {balanced_accuracy:.3f}")
 # we trained.
 
 # %%
-y_proba = pd.DataFrame(
-    classifier.predict_proba(X_test), columns=classifier.classes_)
+y_proba = pd.DataFrame(classifier.predict_proba(X_test),
+                       columns=classifier.classes_)
 y_proba[:5]
 
 # %%
@@ -278,11 +277,9 @@ from sklearn.metrics import average_precision_score
 y_pred = classifier.predict_proba(X_test)
 pos_label = "donated"
 precision, recall, threshold = precision_recall_curve(
-    y_test, y_pred[:, 0], pos_label=pos_label,
-)
+    y_test, y_pred[:, 0], pos_label=pos_label)
 average_precision = average_precision_score(
-    y_test, y_pred[:, 0], pos_label=pos_label,
-)
+    y_test, y_pred[:, 0], pos_label=pos_label)
 plt.plot(
     recall, precision,
     color="tab:orange", linewidth=3,
@@ -329,12 +326,9 @@ fpr, tpr, threshold = roc_curve(y_test, y_pred[:, 0], pos_label=pos_label)
 # vector. Should be changed when the following is merged and released:
 # https://github.com/scikit-learn/scikit-learn/pull/17594
 roc_auc = roc_auc_score(y_test, y_pred[:, 1])
-plt.plot(
-    fpr, tpr,
-    color="tab:orange", linewidth=3,
-    marker=".", markerfacecolor="tab:blue", markeredgecolor="tab:blue",
-    label=f"ROC-AUC: {roc_auc:.2f}"
-)
+plt.plot(fpr, tpr, color="tab:orange", linewidth=3,
+         marker=".", markerfacecolor="tab:blue", markeredgecolor="tab:blue",
+         label=f"ROC-AUC: {roc_auc:.2f}")
 plt.plot([0, 1], [0, 1], "--", color="tab:green", label="Chance")
 plt.xlabel(f"1 - Specificity\n (Positive label: {pos_label})")
 plt.ylabel(f"Sensitivity\n (Positive label: {pos_label})")

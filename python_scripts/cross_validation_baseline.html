@@ -964,12 +964,12 @@ generalization error into a pandas series.</p>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
 <span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
-<span class="n">result_regressor</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
-<span class="p">)</span>
+<span class="n">result_regressor</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                                  <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+                                  <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">errors_regressor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
-    <span class="o">-</span><span class="n">result_regressor</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Regressor error&quot;</span><span class="p">)</span>
+<span class="n">errors_regressor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="o">-</span><span class="n">result_regressor</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span>
+                             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Regressor error&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -983,9 +983,9 @@ information regarding the data <code class="docutils literal notranslate"><span 
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyRegressor</span>
 
 <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyRegressor</span><span class="p">()</span>
-<span class="n">result_dummy</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">dummy</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
-<span class="p">)</span>
+<span class="n">result_dummy</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">dummy</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                              <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+                              <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">errors_dummy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="o">-</span><span class="n">result_dummy</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Dummy error&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1012,10 +1012,8 @@ data where the target vector has been randomized.</p>
 actual regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_errors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">errors_regressor</span><span class="p">,</span> <span class="n">errors_dummy</span><span class="p">,</span> <span class="n">errors_permutation</span><span class="p">],</span>
-    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_errors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">errors_regressor</span><span class="p">,</span> <span class="n">errors_dummy</span><span class="p">,</span> <span class="n">errors_permutation</span><span class="p">],</span>
+                         <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

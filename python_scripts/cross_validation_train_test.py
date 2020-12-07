@@ -211,16 +211,13 @@ _ = plt.xlabel("Mean absolute error (k$)")
 # ranges from 43 k\$ to 49 k\$.
 
 # %%
-print(
-    f"The mean cross-validated generalization error is: "
-    f"{cv_results['test_error'].mean():.2f} k$"
-)
+print(f"The mean cross-validated generalization error is: "
+      f"{cv_results['test_error'].mean():.2f} k$")
 
 # %%
-print(
-    f"The standard deviation of the generalization error is: "
-    f"{cv_results['test_error'].std():.2f} k$"
-)
+print(f"The standard deviation of the generalization error is: "
+      f"{cv_results['test_error'].std():.2f} k$")
+
 # %% [markdown]
 # Note that the standard deviation is much smaller than the mean: we could
 # summarize that our cross-validation estimate of the generalization error is
@@ -274,9 +271,9 @@ print(f"The standard deviation of the target is: {y.std():.2f} k$")
 # possible using the `cross_validate` function.
 
 # %%
-cv_results = cross_validate(
-    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
-    return_train_score=True, n_jobs=2)
+cv_results = cross_validate(regressor, X, y,
+                            cv=cv, scoring="neg_mean_absolute_error",
+                            return_train_score=True, n_jobs=2)
 cv_results = pd.DataFrame(cv_results)
 
 # %% [markdown]
@@ -285,8 +282,7 @@ cv_results = pd.DataFrame(cv_results)
 # %%
 scores = pd.DataFrame()
 scores[["train error", "test error"]] = -cv_results[
-    ["train_score", "test_score"]
-]
+    ["train_score", "test_score"]]
 sns.histplot(scores, bins=50)
 _ = plt.xlabel("Mean absolute error (k$)")
 
@@ -331,16 +327,15 @@ train_errors, test_errors = -train_scores, -test_scores
 # %%
 _, ax = plt.subplots()
 
-for name, errors in zip(
-    ["Empirical error", "Generalization error"], [train_errors, test_errors]
-):
-    ax.plot(
-        max_depth, errors.mean(axis=1), linestyle="-.", label=name,
-        alpha=0.8)
-    ax.fill_between(
-        max_depth, errors.mean(axis=1) - errors.std(axis=1),
-        errors.mean(axis=1) + errors.std(axis=1), alpha=0.5,
-        label=f"std. dev. {name.lower()}")
+error_type = ["Empirical error", "Generalization error"]
+errors = [train_errors, test_errors]
+
+for name, err in zip(error_type, errors):
+    ax.plot(max_depth, err.mean(axis=1), linestyle="-.", label=name,
+            alpha=0.8)
+    ax.fill_between(max_depth, err.mean(axis=1) - err.std(axis=1),
+                    err.mean(axis=1) + err.std(axis=1), alpha=0.5,
+                    label=f"std. dev. {name.lower()}")
 
 ax.set_xticks(max_depth)
 ax.set_xlabel("Maximum depth of decision tree")
@@ -394,9 +389,9 @@ y.size
 # %%
 def make_cv_analysis(regressor, X, y):
     cv = ShuffleSplit(n_splits=10, test_size=0.2)
-    cv_results = cross_validate(
-        regressor, X, y, cv=cv, scoring="neg_mean_absolute_error",
-        return_train_score=True)
+    cv_results = cross_validate(regressor, X, y,
+                                cv=cv, scoring="neg_mean_absolute_error",
+                                return_train_score=True)
     cv_results = pd.DataFrame(cv_results)
     return (cv_results["test_score"] * -1).values
 
@@ -439,9 +434,8 @@ scores_sample_sizes = pd.DataFrame(
 # %%
 sns.displot(scores_sample_sizes, kind="kde")
 plt.xlabel("Mean absolute error (k$)")
-_ = plt.title(
-    "Generalization errors distribution \nby varying the sample size"
-)
+_ = plt.title("Generalization errors distribution \n"
+              "by varying the sample size")
 
 # %% [markdown]
 # For the different sample sizes, we plotted the distribution of the
@@ -470,16 +464,15 @@ train_errors, test_errors = -train_scores, -test_scores
 # %%
 _, ax = plt.subplots()
 
-for name, errors in zip(
-    ["Empirical error", "Generalization error"], [train_errors, test_errors]
-):
-    ax.plot(
-        train_size, errors.mean(axis=1), linestyle="-.", label=name,
-        alpha=0.8)
-    ax.fill_between(
-        train_size, errors.mean(axis=1) - errors.std(axis=1),
-        errors.mean(axis=1) + errors.std(axis=1),
-        alpha=0.5, label=f"std. dev. {name.lower()}")
+error_type = ["Empirical error", "Generalization error"]
+errors = [train_errors, test_errors]
+
+for name, err in zip(error_type, errors):
+    ax.plot(train_size, err.mean(axis=1), linestyle="-.", label=name,
+            alpha=0.8)
+    ax.fill_between(train_size, err.mean(axis=1) - err.std(axis=1),
+                    err.mean(axis=1) + err.std(axis=1),
+                    alpha=0.5, label=f"std. dev. {name.lower()}")
 
 ax.set_xticks(train_size)
 ax.set_xscale("log")

@@ -57,6 +57,9 @@ except ValueError as exc:
     print(exc)
 
 # %% [markdown]
+# ```{tip}
+# We use a `try`/`except` pattern to be able to print the exception.
+# ```
 # We get an exception because by default `pos_label=1` which is not the case
 # in our case. Thus, we would like to specify a parameter linked to the score
 # function. In this case, we need to create a scorer using the scoring function

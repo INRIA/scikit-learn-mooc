@@ -35,8 +35,8 @@ from sklearn.svm import SVC
 param_grid = {"C": [0.1, 1, 10], "gamma": [.01, .1]}
 model_to_tune = SVC()
 
-search = GridSearchCV(
-    estimator=model_to_tune, param_grid=param_grid, n_jobs=-1)
+search = GridSearchCV(estimator=model_to_tune, param_grid=param_grid,
+                      n_jobs=-1)
 search.fit(X, y)
 
 # %% [markdown]
@@ -117,9 +117,8 @@ for i in range(N_TRIALS):
     outer_cv = KFold(n_splits=4, shuffle=True, random_state=i)
 
     # Non_nested parameter search and scoring
-    model = GridSearchCV(
-        estimator=model_to_tune, param_grid=param_grid, cv=inner_cv,
-        n_jobs=-1)
+    model = GridSearchCV(estimator=model_to_tune, param_grid=param_grid,
+                         cv=inner_cv, n_jobs=-1)
     model.fit(X, y)
     test_score_not_nested.append(model.best_score_)
 
@@ -154,10 +153,8 @@ boxplot_property = {
 
 ax = all_scores.plot.box(**boxplot_property)
 ax.set_xlabel("Accuracy")
-_ = ax.set_title(
-    "Comparison of mean accuracy obtained on the test sets with\n"
-    "and without nested cross-validation"
-)
+_ = ax.set_title("Comparison of mean accuracy obtained on the test sets with\n"
+                 "and without nested cross-validation")
 
 # %% [markdown]
 # We observe that the model's performance with the nested cross-validation is

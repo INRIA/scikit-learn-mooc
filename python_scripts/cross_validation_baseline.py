@@ -38,12 +38,12 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import cross_validate
 
 regressor = DecisionTreeRegressor()
-result_regressor = cross_validate(
-    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=-1
-)
+result_regressor = cross_validate(regressor, X, y,
+                                  cv=cv, scoring="neg_mean_absolute_error",
+                                  n_jobs=-1)
 
-errors_regressor = pd.Series(
-    -result_regressor["test_score"], name="Regressor error")
+errors_regressor = pd.Series(-result_regressor["test_score"],
+                             name="Regressor error")
 
 # %% [markdown]
 # Then, we will evaluate our first baseline. This baseline is called a dummy
@@ -55,9 +55,9 @@ errors_regressor = pd.Series(
 from sklearn.dummy import DummyRegressor
 
 dummy = DummyRegressor()
-result_dummy = cross_validate(
-    dummy, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=-1
-)
+result_dummy = cross_validate(dummy, X, y,
+                              cv=cv, scoring="neg_mean_absolute_error",
+                              n_jobs=-1)
 errors_dummy = pd.Series(-result_dummy["test_score"], name="Dummy error")
 
 # %% [markdown]
@@ -80,10 +80,8 @@ errors_permutation = pd.Series(-permutation_score, name="Permuted error")
 # actual regressor.
 
 # %%
-final_errors = pd.concat(
-    [errors_regressor, errors_dummy, errors_permutation],
-    axis=1,
-)
+final_errors = pd.concat([errors_regressor, errors_dummy, errors_permutation],
+                         axis=1)
 
 # %%
 import matplotlib.pyplot as plt

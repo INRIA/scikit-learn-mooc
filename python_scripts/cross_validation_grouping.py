@@ -111,18 +111,14 @@ import numpy as np
 
 # defines the lower and upper bounds of sample indices
 # for each writer
-writer_boundaries = [
-    0, 130, 256, 386, 516, 646, 776, 915, 1029,
-    1157, 1287, 1415, 1545, 1667, 1797
-]
+writer_boundaries = [0, 130, 256, 386, 516, 646, 776, 915, 1029,
+                     1157, 1287, 1415, 1545, 1667, 1797]
 groups = np.zeros_like(y)
+lower_bounds = writer_boundaries[:-1]
+upper_bounds = writer_boundaries[1:]
 
-for group_id, lower_bound, upper_bound in zip(
-    count(),
-    writer_boundaries[:-1],
-    writer_boundaries[1:]
-):
-    groups[lower_bound:upper_bound] = group_id
+for group_id, lb, up in zip(count(), lower_bounds, upper_bounds):
+    groups[lb:up] = group_id
 
 # %% [markdown]
 # We can check the grouping by plotting the indices linked to writer ids.

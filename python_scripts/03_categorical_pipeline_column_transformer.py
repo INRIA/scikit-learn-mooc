@@ -40,7 +40,7 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 data = data.drop(columns="education-num")
 
 # %% [markdown]
-# # Selection based on data types
+# ## Selection based on data types
 #
 # We separate categorical and numerical variables using the `object` data types
 # as we previously saw that it only corresponds to categorical columns. We make

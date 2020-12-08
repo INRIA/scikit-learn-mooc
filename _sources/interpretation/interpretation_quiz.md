@@ -6,7 +6,8 @@ With a same dataset, feature importance might differs if:
 - a) we use two different models
 - b) we use two different train/test split with a same model
 - c) we use a same model with a different set of hyper-parameters
-- d) we use a same model with the same set of hyper-parameters but a different random_state
+- d) we use a same model with the same set of hyper-parameters but a different
+  random_state
 ```
 
 ```{admonition} Question
@@ -28,12 +29,12 @@ If two feature are the same (thus correlated)
 ```
 
 ```{admonition} Question
-RandomForest.feature_importances_
+The feature importance provided by the scikit-learn random forest:
 
 - a) has bias for categorical feature
-- b) has bias for continous (high cardinality) feature
-- c) is independant from the train/test split
-- d) is independant from the hyper-parameters
+- b) has bias for continuous (high cardinality) feature
+- c) is independent from the train/test split
+- d) is independent from the hyper-parameters
 ```
 
 ```{admonition} Question

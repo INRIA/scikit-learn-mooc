@@ -1,33 +1,35 @@
 # ✅ Quiz
 
 ```{admonition} Question
-`import pandas as pd` allows us to:
+Pandas allows us to:
 
-- a) deals with CSV files
-- b) deals with tabular data
+- a) deal with CSV files
+- b) deal with tabular data
 - c) plot basic information about tabular data
-- d) deals with scientific/mathematics functions
+- d) deal with scientific/mathematics functions
 ```
-
 
 ```{admonition} Question
-a *categorical* variable:
+When reading a CSV file with Pandas, missing values are:
 
-- a) is a variable with only two different values
-- b) is a variable with continuous numerical values
-- c) is a variable with a finit set of value
+- a) automatically detected whatever the representation of the missing value
+- b) are never detected
+- c) are detected only if you provide which sentinel value was used
+- d) are automatically detected but a sentinel value should be provided if it
+  is not recognized by Pandas
 ```
 
-TODO ideas about things to add load this dataset from url.
-- How many features, how many samples, which variables are categorical
-- is this a regression or variable
-- are the class balanced
-- plot this versus this, which statement is true when this variable increases
-  this other variable decreases
-- what would be a simple rule to classify the data
-- do you think machine learning could be useful in this context (dataset with
-  simple obvious hand-crafted rule, dataset with random target, dataset with
-  some pattern but are to tell)
-- identify some problems with the data? 
+```{admonition} Question
+How tabular data are organized?
 
-Possible variations, play with `read_csv` arguments e.g. delimiter parameter?
+- a) a column represents a sample and a row represents a feature
+- b) a column represents a feature and a row represents a sample
+```
+
+```{admonition} Question
+A categorical variable is:
+
+- a) a variable with only two different values
+- b) a variable with continuous numerical values
+- c) a variable with a finite set of value
+```

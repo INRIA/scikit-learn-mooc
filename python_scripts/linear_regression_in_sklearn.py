@@ -76,5 +76,12 @@ model_error = mean_squared_error(y, inferred_body_mass)
 print(f"The error of the optimal model is {model_error:.2f}")
 
 # %% [markdown]
+# ```{important}
+# Indeed, fitting a `LinearRegression` on the train dataset is equivalent of
+# finding the `coef_` and `intercept_` (i.e. finding the model) that minimize
+# the mean squared error on these training data.
+# ```
+
+# %% [markdown]
 # In this notebook, you saw how to train a linear regression model using
 # scikit-learn.

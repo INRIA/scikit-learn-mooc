@@ -67,11 +67,13 @@ target_column = 'class'
 adult_census[target_column].value_counts()
 
 # %% [markdown]
-# Note: classes are slightly imbalanced. Class imbalance happens often in
+# ```{note}
+# Classes are slightly imbalanced. Class imbalance happens often in
 # practice and may need special techniques for machine learning. For example in
 # a medical setting, if we are trying to predict whether patients will develop
 # a rare disease, there will be a lot more healthy patients than ill patients
 # in the dataset.
+# ```
 
 # %% [markdown]
 # The dataset contains both numerical and categorical data. Numerical values

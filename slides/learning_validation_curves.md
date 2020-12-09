@@ -2,10 +2,14 @@ class: titlepage
 
 .header[MOOC Machine learning with scikit-learn]
 
-# Learning curves and validation curves
+# Comparing train and test errors
 
-Measuring prediction errors to understand the overfitting / Underfitting
-trade-off.
+Varying complexity: validation curves
+
+Varying the sample size: learning curves
+
+Goal: understand the overfitting / Underfitting
+trade-off
 
 ???
 

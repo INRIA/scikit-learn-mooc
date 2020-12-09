@@ -340,7 +340,7 @@ Models **underfit**:
 - even the training error is large
 ]
 
-Different model families = different complexity & inductive biais
+Different model families = different complexity & inductive bias
 
 ???
 

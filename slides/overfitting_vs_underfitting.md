@@ -205,41 +205,6 @@ Underfit is more common when there is plenty of data compared to the
 complexity of the model, or in low-noise situations.
 
 ---
-# Underfit versus overfit
-
-.shift-left.pull-left[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
-
-.pull-right[<img src="../figures/polynomial_overfit_simple_legend.svg" width="110%">]
-
-.shift-up.pull-left.shift-left[.centered.reversed[Bias]]
-.shift-up.pull-right.width50[.centered.reversed[Variance]]
-
-???
-
-So we have these two opposit behaviors:
-* underfit, with systematic bias
-* and overfit, with large variance
-
-The challenge is to find the right tradeoff between the two.
-
----
-# Underfit versus overfit
-
-.pull-left.width50[<img src="../figures/target_bias.svg" width="80%">]
-.pull-right.width50.shift-left[<img src="../figures/target_variance.svg"
-				width="80%">]
-
-.shift-up.pull-left.shift-left[.centered.reversed[Bias]]
-.shift-up.pull-right.width50[.centered.reversed[Variance]]
-
-???
-
-This bias-variance tradeoff is classic in statistics. Often, adding a
-little bit of bias helps reducing the variance. For instance, as with
-throwing darts at a target, where throwing the darts less strong might
-lead to being below the target on average, but with less scatter.
-
----
 
 .center[
 # Take home messages
@@ -258,6 +223,8 @@ Models too simple for the data **underfit**:
 - they capture no noise
 - but are limited by their expressivity
 ]
+
+How to find the right trade-off?
 
 ???
 

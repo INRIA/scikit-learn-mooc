@@ -227,6 +227,7 @@ the target label y. The model predictions appear as straight lines
 separating the two cloud of points *y=-1* and *y=+1*, which correspond to
 the surface on the left.
 
+This last visualization is commonly used in machine learning.
 
 ---
 # Model complexity
@@ -257,19 +258,35 @@ If we have too many parameters with regards to the number of samples, the
 linear model can overfit: it assigns non-zero weights to associations by
 chance.
 
-The solution is to regularize the model: to foster less complex
-solutions. For this, the regularized model is slightly biased to
-choose smaller weights for almost a similar fit.
+As described in a previous lecture, the problem with overfit is that the
+model learns a decision function that is too complicated: here the
+non-zero associations to unrelated factors such as wearing red socks. As
+a consequence, the model generalizes poorly.
 
-A complexity parameter allows to control the amount of regularization. It
-is denominated \alpha. The larger the value of \alpha, the greater the
-bias and thus the smaller the coefficients.
+The solution is to regularize the model: to foster less complex
+solutions. For this purpose, a linear model can be regularized by
+slightly biasing to choose smaller weights for almost a similar fit.
+
+The `Ridge` estimator does this in scikit-learn.
+
+This model comes with a complexity parameter that controls the amount of
+regularization. This parameter is named \alpha. The larger the value of
+\alpha, the greater the bias, and thus the smaller the coefficients.
 
 ---
 # Bias-variance tradeoff in Ridge
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points.svg" width="110%">]
+
+.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Low bias, high variance]
+
+???
+
+Let us illustrate the bias-variance tradeoff of the ridge.
+
+With 2 data points, a non-biased linear model fits perfectly the data.
+
 
 ---
 # Bias-variance tradeoff in Ridge
@@ -281,24 +298,16 @@ bias and thus the smaller the coefficients.
 .pull-left.shift-left[&nbsp; &nbsp; &nbsp; Low bias, high variance]
 .pull-right[&nbsp; &nbsp; &nbsp; High bias, low variance]
 ???
-from http://scipy-lectures.org/packages/scikit-learn/index.html#bias-variance-trade-off-illustration-on-a-simple-regression-problem
 
-Left: As we can see, our linear model captures and amplifies the noise in the
-data. It displays a lot of *variance*.
+But when there is noise in the data, the non-biased linear model captures
+and amplifies this noise. As a result, it displays a lot of *variance* in
+its predictions.
 
-Right: Ridge estimator regularizes the coefficients by shrinking lightly
-them to zero.
+On the right, we have a ridge estimator with a large value of alpha,
+regularizing the coefficients by shrinking them to zero.
 
-Ridge displays much less variance. However, it systematically under-estimates
-the coefficient. It displays a *biased* behavior.
-
-This is a typical example of bias/variance tradeoff: non-regularized estimator
-are not biased, but they can display a lot of variance. Highly-regularized
-models have little variance, but high bias. This bias is not necessarily a bad
-thing: what matters is choosing the tradeoff between bias and variance that
-leads to the best prediction performance. For a specific dataset there is a
-sweet spot corresponding to the highest complexity that the data can support,
-depending on the amount of noise and of observations available.
+The ridge displays much less variance. However, it systematically
+under-estimates the coefficient. It displays a *biased* behavior.
 
 ---
 # Bias-variance tradeoff in Ridge
@@ -322,13 +331,31 @@ Large alpha
 
 .width65.shift-up-less.centered[
  ```python
- From sklearn.linear_model import LogisticRegressionCV
+ From sklearn.linear_model import RidgeCV
  ```
 ]
 
 
 ???
 
+This is a typical example of bias/variance tradeoff: non-regularized
+estimator are not biased, but they can display a lot of variance.
+Highly-regularized models have little variance, but high bias.
+
+This bias is not necessarily a bad thing: what matters is choosing the
+tradeoff between bias and variance that leads to the best prediction
+performance. For a specific dataset there is a sweet spot corresponding
+to the highest complexity that the data can support, depending on the
+amount of noise and of observations available.
+
+Given new data points, beyond our two initial measures, the sweep spot
+minimizes the error. For the specific case of the `Ridge` estimator, in
+scikit-learn learn, the best value of alpha can be automatically found
+using the `RidgeCV` object.
+
+Note that, in general, for prediction it is always better to prefer use
+`Ridge` than a `LinearRegression` object. Using at least a small amount
+of regularization is always useful.
 
 ---
 # Regularization in logistic regression
@@ -340,10 +367,29 @@ Large alpha
 .shift-up.pull-left.shift-left[&nbsp;&nbsp;Small C]
 .shift-up.pull-right[&nbsp;&nbsp;Large C]
 
+.width65.shift-up-less.centered[
+ ```python
+ From sklearn.linear_model import LogisticRegressionCV
+ ```
+]
+
 ???
-For a large value of C, the model puts more emphasis on the frontier's point.
-On the contrary, for a low value of C, the model is considering all the points.
-The choice of C depends on the dataset and should be tuned for each set.
+
+For classification, logisitic regression also comes with regularization.
+
+
+In scikit-learn, this regularization is controled by a parameter called
+*C*, which has a slightly different behavior than \alpha in the Ridge
+estimator.
+
+For a large value of C, the model puts more emphasis on the data points
+close to the frontier.
+On the contrary, for a low value of C, the model considers all the points.
+
+As with the Ridge, the tradeoff controlled by the choice of C depends on
+the dataset and should be tuned for each set. This tuning can be done in
+scikit-learn using the `LogisticRegressionCV` object.
+
 
 ---
 # Logistic regression for multiclass
@@ -354,15 +400,26 @@ There are several options:
 .shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
 .pull-right[
 * Multinomial
-* One vs One
-* One vs Rest
+* One versus One
+* One versus Rest
 ]
 ???
-Multinomial logistic regression is a natural extension of logistic regression.
-Otherwise, we still can run One vs Rest approach.
+
+So far, we have considered the case where the output **y** is binary.
+When there is more than 2 classes to choose from, more than one decision
+boundary is needed.
+
+The `LogisticRegression` estimator has strategies to deal transparently
+for such settings, known as multiclass settings.
+
+For instance, the "multinomial" is a natural extension of the logistic,
+using a function with several soft steps. There are alse One versus One
+and One versus Rest approaches that learn decisions discriminating either
+one class versus every other class, or one class versus all the other
+classes.
 
 ---
-# Linear models may not work on all data
+# Linear models are not suited to all data
 
 
 .shift-left.pull-left[<img src="../figures/lin_separable.svg" width="100%">]
@@ -372,8 +429,15 @@ Otherwise, we still can run One vs Rest approach.
 .pull-right[*Not* linearly separable]
 
 ???
-Linear models work as long as your data could be linearly separable.
-Otherwise, either we could do feature augmentation (as we will see in an other lesson), or choose a non-linear model.
+
+Linear models work well if the classes are linearly separable.
+
+But sometimes the best decision boundary to separate classes is not well
+approximated by a line.
+
+In such situations, we can either use non-linear models, or do
+transformations to the data, known as feature augmentation. We will cover
+these in other lessons.
 
 ---
 .center[
@@ -382,11 +446,27 @@ Otherwise, either we could do feature augmentation (as we will see in an other l
 
 * Good and understandable baselines for:
  - regression: linear regression + regularization = Ridge
- - classification: logistic regression + fine tune `C`
+ - classification: logistic regression
 
-* Very fast to train
+* Fast to train
 
 * Better when *nb of features* > *nb of samples*
 
 
 ???
+
+To summarize on linear models:
+
+They form good baselines that can be easily understood. A later lesson
+will cover in details the intuitive interpretations of linear-model
+coefficients.
+
+For regression, a good choice is typically to use a Ridge regression,
+which adds a simple regularization.
+
+For classification, a good choice is to use a logistic regression
+
+These models are fast to train, and hence facilitate work.
+
+In addition, they are particularly useful when the number of features is
+larger than the number of samples.

@@ -1,6 +1,10 @@
-# Main take away
+# Main take-away
 
-In this chapter, we presented the principle of feature selection. In short,
+## Wrap-up
+
+<!-- Quick wrap-up for the module -->
+
+In this module, we presented the principle of feature selection. In short,
 feature selection is not a magical tool to get marginal gains. We tackle
 the following aspects:
 
@@ -10,3 +14,7 @@ the following aspects:
   selector within your pipeline;
 - you should be aware of the limitation of a feature selector based on
   machine-learning models.
+
+## To go further
+
+<!-- Some extra links of content to go further -->

@@ -1,3 +1,4 @@
+# %%
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -12,15 +13,16 @@ def f(t):
 
 N_SAMPLES = 50
 
+
+def make_poly_data(n_samples, rng):
+    x = 2 * rng.rand(n_samples) - 1
+    y = f(x) + .4 * rng.normal(size=n_samples)
+    return x, y
+
+
 rng = np.random.RandomState(0)
-x = 2 * rng.rand(N_SAMPLES) - 1
-
-y = f(x) + .4 * rng.normal(size=N_SAMPLES)
-
-x_test = 2 * rng.rand(N_SAMPLES) - 1
-
-y_test = f(x_test) + .4 * rng.normal(size=N_SAMPLES)
-
+x, y = make_poly_data(N_SAMPLES, rng)
+x_test, y_test = make_poly_data(N_SAMPLES, rng)
 
 plt.figure()
 plt.scatter(x, y, s=20, color='k')
@@ -49,7 +51,8 @@ t = np.linspace(-1, 1, 100)
 for d in (1, 2, 5, 9):
     model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())
     model.fit(x.reshape(-1, 1), y)
-    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d,
+    plt.plot(t, model.predict(t.reshape(-1, 1)),
+             label='Fitted degree %d poly.' % d,
              linewidth=4)
 
     style_figs.no_axis()
@@ -94,7 +97,7 @@ plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
          label='Fitted model')
 
-plt.plot(t, f(t), 'k--', label='Best possible fit\n$\\approx$generative process')
+plt.plot(t, f(t), 'k--', label='Best possible model')
 style_figs.no_axis()
 plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
@@ -114,9 +117,9 @@ model.fit(x.reshape(-1, 1), y)
 plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
 plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
-         label='Fitted model\n$\\approx$best possible fit')
+         label='Fitted model')
 
-plt.plot(t, f(t), 'k--', label='Generative process')
+plt.plot(t, f(t), 'k--', label='Best possible model')
 style_figs.no_axis()
 plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
@@ -137,7 +140,7 @@ t = np.linspace(-1, 1, 100)
 for d in (1, 2, 5, 9):
     model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())
     model.fit(x.reshape(-1, 1), y)
-    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d,
+    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Fitted degree %d poly.' % d,
              linewidth=4)
 
     style_figs.no_axis()
@@ -153,13 +156,10 @@ for d in (1, 2, 5, 9):
 # Validation curves
 from sklearn import model_selection
 
-N_SAMPLES = 150
+N_SAMPLES = 80
 
 rng = np.random.RandomState(0)
-x = 2 * rng.rand(N_SAMPLES) - 1
-
-y = f(x) + .4 * rng.normal(size=N_SAMPLES)
-
+x, y = make_poly_data(N_SAMPLES, rng)
 
 param_range = np.arange(1, 15)
 
@@ -167,9 +167,9 @@ train_scores, test_scores = model_selection.validation_curve(
     model, x[::2].reshape((-1, 1)), y[::2],
     param_name='polynomialfeatures__degree',
     param_range=param_range,
-    cv=model_selection.ShuffleSplit(n_splits=20, test_size=.5,
+    cv=model_selection.ShuffleSplit(n_splits=100, test_size=.5,
                                     random_state=1),
-    scoring='r2')
+    scoring='neg_mean_absolute_error')
 
 plotted_degrees = [1, 2, 5, 9, 15]
 for i, degree in enumerate(plotted_degrees):
@@ -193,7 +193,7 @@ for i, degree in enumerate(plotted_degrees):
     for s in ('top', 'right'):
         ax.spines[s].set_visible(False)
 
-    plt.ylim(ymin=-.8, ymax=.5)
+    plt.ylim(ymin=0, ymax=1.)
     plt.xlim(0.5, 15)
     plt.legend(loc='upper right', labelspacing=1.5)
 

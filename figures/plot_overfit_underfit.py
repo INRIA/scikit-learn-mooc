@@ -316,7 +316,7 @@ for degree in (4, 16):
     plt.scatter(x, y,  color='k', s=9, alpha=.8)
 
     plt.plot(t, poly.predict(t.reshape((-1, 1))),
-            color='C3', linewidth=3, label='Polynome')
+            color='C3', linewidth=3, label='Polynomial')
     plt.plot(t, decision_tree.predict(t.reshape((-1, 1))),
             color='C0', linewidth=3, label='Decision Tree')
 

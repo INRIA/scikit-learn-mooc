@@ -8,8 +8,10 @@ Varying complexity: validation curves
 
 Varying the sample size: learning curves
 
-Goal: understand the overfitting / Underfitting
+Goal: understand the Overfitting / Underfitting
 trade-off
+
+<img src="../figures/scikit-learn-logo.svg">
 
 ???
 

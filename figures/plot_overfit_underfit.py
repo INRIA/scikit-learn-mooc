@@ -87,7 +87,89 @@ plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
            labelspacing=.4, fontsize=26)
 plt.subplots_adjust(top=1)
 
-plt.savefig('polynomial_overfit_simple.svg', facecolor='none', edgecolor='none')
+plt.savefig('polynomial_overfit_.svg', facecolor='none', edgecolor='none')
+
+# %%
+# A figure with the true model and the estimated one with resampled training
+# sets
+
+overfit_models = []
+for idx in range(10):
+    x_train, y_train = make_poly_data(30, np.random.RandomState(idx))
+    model = make_pipeline(PolynomialFeatures(degree=9), LinearRegression())
+    model.fit(x_train.reshape(-1, 1), y_train)
+    overfit_models.append(model)
+    if idx in [0, 1, 2]:
+        plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+        plt.scatter(x_train, y_train, s=20, color='k')
+        plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
+                label='$\hat{f}$')
+
+        plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+        style_figs.no_axis()
+        plt.ylim(-1.25, 2.5)
+        plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+                labelspacing=.4, fontsize=26)
+        plt.subplots_adjust(top=1)
+        plt.savefig('polynomial_overfit_resample_%d.svg' % idx,
+                    facecolor='none', edgecolor='none')
+
+
+plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+label = '$\hat{f}$'
+for model in overfit_models:
+    plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
+             alpha=0.5, label=label)
+    label = None
+plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+style_figs.no_axis()
+plt.ylim(-1.25, 2.5)
+plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+           labelspacing=.4, fontsize=26)
+plt.subplots_adjust(top=1)
+plt.savefig('polynomial_overfit_resample_all.svg',
+            facecolor='none', edgecolor='none')
+
+# %%
+# A figure with the true model and the estimated one with resampled training
+# sets
+
+underfit_models = []
+for idx in range(10):
+    x_train, y_train = make_poly_data(30, np.random.RandomState(idx))
+    model = make_pipeline(PolynomialFeatures(degree=1), LinearRegression())
+    model.fit(x_train.reshape(-1, 1), y_train)
+    underfit_models.append(model)
+    if idx in [0, 1, 2]:
+        plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+        plt.scatter(x_train, y_train, s=20, color='k')
+        plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
+                label='$\hat{f}$')
+
+        plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+        style_figs.no_axis()
+        plt.ylim(-1.25, 2.5)
+        plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+                labelspacing=.4, fontsize=26)
+        plt.subplots_adjust(top=1)
+        plt.savefig('polynomial_underfit_resample_%d.svg' % idx,
+                    facecolor='none', edgecolor='none')
+
+
+plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+label = '$\hat{f}$'
+for model in underfit_models:
+    plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
+             alpha=0.5, label=label)
+    label = None
+plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+style_figs.no_axis()
+plt.ylim(-1.25, 2.5)
+plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+           labelspacing=.4, fontsize=26)
+plt.subplots_adjust(top=1)
+plt.savefig('polynomial_underfit_resample_all.svg',
+            facecolor='none', edgecolor='none')
 
 # %%
 # A figure with the true model and the estimated one
@@ -126,7 +208,7 @@ plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
            labelspacing=.4, fontsize=16)
 plt.subplots_adjust(top=1)
 
-plt.savefig('polynomial_overfit_assymptotic.svg', facecolor='none', edgecolor='none')
+plt.savefig('polynomial_underfit_simple.svg', facecolor='none', edgecolor='none')
 
 # %%
 # Train and test set with various complexity in the polynomial degree

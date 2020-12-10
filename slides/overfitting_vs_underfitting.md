@@ -177,7 +177,7 @@ much noise.
 ---
 # Underfit: model too simple
 
-.pull-left.shift-left[<img src="../figures/polynomial_overfit_assymptotic.svg" width="110%">]
+.pull-left.shift-left[<img src="../figures/polynomial_underfit_simple.svg" width="110%">]
 
 .pull-right.width50.shift-left[Model too simple for the data:
 

@@ -26,12 +26,25 @@ x_test, y_test = make_poly_data(N_SAMPLES, rng)
 
 plt.figure()
 plt.scatter(x, y, s=20, color='k')
+t = np.linspace(-1, 1, 100)
+plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+
+style_figs.no_axis()
+plt.subplots_adjust(top=.96)
+plt.xlim(-1.1, 1.1)
+plt.ylim(-.74, 2.1)
+plt.savefig('polynomial_overfit_truth.svg', facecolor='none', edgecolor='none')
+
+# %%
+plt.figure()
+plt.scatter(x, y, s=20, color='k')
 
 style_figs.no_axis()
 plt.subplots_adjust(top=.96)
 plt.xlim(-1.1, 1.1)
 plt.ylim(-.74, 2.1)
 plt.savefig('polynomial_overfit_0.svg', facecolor='none', edgecolor='none')
+
 
 # %%
 # Our model (polynomial regression)
@@ -46,7 +59,6 @@ from sklearn.linear_model import LinearRegression
 plt.figure()
 plt.scatter(x, y, s=20, color='k')
 
-t = np.linspace(-1, 1, 100)
 
 for d in (1, 2, 5, 9):
     model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())

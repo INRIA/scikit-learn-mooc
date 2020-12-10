@@ -17,7 +17,3 @@ the training set on this trade-off**.
 
 Finally we will relate overfitting and underfitting to the concepts of
 statistical variance and bias.
-
-```{tableofcontents}ß
-
-```

@@ -5,3 +5,7 @@ scikit-learn to beginners, even without a strong technical background.
 
 ```{tableofcontents}
 ```
+
+```{contents} Table of Contents
+:depth: 3
+```

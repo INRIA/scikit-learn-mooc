@@ -259,6 +259,9 @@ Crucial to match
 
 .centered[So far: polynomials for both]
 
+*Some family names: linear models, decision trees, random forests, kernel machines,
+multi-layer perceptrons*
+
 ???
 
 The excellent performance that we just observed for degree-9 polynomials
@@ -268,6 +271,9 @@ polynomials for both of them. But in practice, given data, we seldom know
 a simple form of model in which the data is drawn. 
 
 For this reason, the choice of family of model is crucial.
+
+Note that some of the most important model families will be presented in details
+in the next modules.
 
 ---
 

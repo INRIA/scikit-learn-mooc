@@ -1,7 +1,7 @@
 # Overfitting and underfitting
 
-This chapter gives an intuitive introduction to the very **fundamental concepts** of
-overfitting and underfitting in machine learning.
+This module gives an intuitive introduction to the very **fundamental concepts**
+of overfitting and underfitting in machine learning.
 
 Machine learning models can never make perfect predictions: the test error is
 never exactly zero. This failure comes from a **fundamental trade-off** between

@@ -1,4 +1,6 @@
-# Final evaluation
+# ✅ Wrap-up quiz
+
+**This quiz requires some programming to be answered.**
 
 Open the dataset `house_prices.yml`. The column `SalePrice` contains the
 target.

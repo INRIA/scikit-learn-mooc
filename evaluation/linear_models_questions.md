@@ -94,3 +94,89 @@ _Select a single answer_
 - c) between 10 and 100
 - d) between 100 and 1000
 ```
+
+We will now work a dataset that expose a classification problem instead of a
+regression problem. Open the dataset `"adult-census.csv"`. The target column
+is `"class"`. Select only the numerical features.
+
+```{admonition} Question
+How many numerical features are present in the dataset?
+_Select a single answer_
+
+- a) 3
+- b) 4
+- c) 5
+```
+
+```{admonition} Question
+Is there any missing values in this dataset?
+_Select a single answer_
+
+- a) Yes
+- b) No
+```
+
+Use a logistic regression classifier with a 10-fold cross-validation to assess
+the performance.
+
+```{admonition} Question
+In average, how much the logistic regression is better/worse/similar to a dummy
+classifier that would predict the most frequent class?
+_Select a single answer_
+
+- a) Worse that a dummy classifier by 4%
+- b) Similar to a dummy classifier
+- c) Better that a dummy classifier by 4%
+```
+
+```{admonition} Question
+What is the most important feature seen by the logistic regression?
+_Select a single answer_
+
+- a) `"age"`
+- b) `"capital-gain"`
+- c) `"capital-loss"`
+- d) `"hours-per-week"`
+```
+
+Now, load the entire dataset, both numerical and categorical data.
+
+```{admonition} Question
+Is there any missing values in this dataset?
+_Select a single answer_
+
+- a) Yes
+- b) No
+```
+
+Create a new logistic regression model by one-hot encoding the categorical
+features.
+
+```{admonition} Question
+In average, what is the improvement of using the categorical features?
+_Select a single answer_
+
+- a) It gives similar results
+- b) It improves the performance by 5%
+- c) it improves the performance by 10%
+```
+
+```{admonition} Question
+What are the two most important features used by the logistic regressor?
+_Select a single answer_
+
+- a) `"hours-per-week"` and `"native-country_Columbia"`
+- b) `"workclass_ ?"` and `"naitive_country_ ?"`
+- c) `"capital-gain"` and `"education_Doctorate"`
+```
+
+```{admonition} Question
+hat is the effect of decreasing the `C` parameter on the coefficients?
+_Select several answers_
+
+- a) shrinking the magnitude of the weights towards zeros
+- b) increasing the magnitude of the weights
+- c) reducing the weights' variance
+- d) increasing the weights' variance
+- e) do not have any influence on the weights' variance
+```

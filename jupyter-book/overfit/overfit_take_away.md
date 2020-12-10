@@ -15,7 +15,7 @@
   trade-off between overfitting for underfitting.
 
 - For a fixed choice model family and parameters, increasing the training set
-  size will often decrease overfitting but can cause an increase overfitting.
+  size will decrease overfitting but can cause an increase in underfitting.
 
 - The most effective way to reduce overfitting is to collect more labeled data
   to increase the training set size. However this is not always easy to do in

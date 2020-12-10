@@ -1,4 +1,4 @@
-# Overfitting and underfitting
+# Module overview
 
 This module gives an intuitive introduction to the very **fundamental concepts**
 of overfitting and underfitting in machine learning.

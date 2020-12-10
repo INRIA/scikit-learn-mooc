@@ -2,24 +2,22 @@
 
 ## Wrap-up
 
-- Overfitting is caused by the limited size of the training set, the noise in
-  the data and the high flexibility of common machine learning models.
+- **Overfitting** is caused by the **limited size of the training set**, the
+  **noise** in the data and the **high flexibility** of common machine learning
+  models.
 
-- Underfitting happens when the learned prediction functions make systematic
-  errors. This can be caused by a choice of the model family and parameters that
-  lead to a lack of flexibility to capture the repeatable structure of the true
-  data generating process.
+- **Underfitting** happens when the learned prediction functions make
+  **systematic errors**. This can be caused by a choice of the model family and
+  parameters that leads to a **lack of flexibility** to capture the repeatable
+  structure of the true data generating process.
 
-- For a fixed training set, one strives to minimize the test error by adjusting
-  the choice of the model family and the model parameters to find the best
-  trade-off between overfitting for underfitting.
+- For a fixed training set, one strives to **minimize the test error** by
+  adjusting the choice of the model family and the model parameters to find the
+  **best trade-off between overfitting for underfitting**.
 
-- For a fixed choice model family and parameters, increasing the training set
-  size will decrease overfitting but can cause an increase in underfitting.
-
-- The most effective way to reduce overfitting is to collect more labeled data
-  to increase the training set size. However this is not always easy to do in
-  practice.
+- For a given choice for the model family and the parameters, **increasing the
+  training set size will decrease overfitting** but can also cause an increase
+  in underfitting.
 
 - The test error of a model that is neither overfitting nor underfitting can
   still be high if the variations of the target variable cannot be fully

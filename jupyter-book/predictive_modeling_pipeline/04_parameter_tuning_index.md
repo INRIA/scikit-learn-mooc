@@ -1,4 +1,0 @@
-# Hyper-parameter tuning
-
-```{tableofcontents}
-```

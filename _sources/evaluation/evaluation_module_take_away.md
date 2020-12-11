@@ -17,3 +17,8 @@ model and evaluate its generalization performance.
 ## To go further
 
 <!-- Some extra links of content to go further -->
+
+You can refer to the following scikit-learn examples which are related to
+the concepts approached during this module:
+
+- [Comparison of cross-validation strategies](https://scikit-learn.org/stable/auto_examples/model_selection/plot_cv_indices.html#sphx-glr-auto-examples-model-selection-plot-cv-indices-py)

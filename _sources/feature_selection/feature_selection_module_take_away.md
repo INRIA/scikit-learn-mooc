@@ -18,3 +18,8 @@ the following aspects:
 ## To go further
 
 <!-- Some extra links of content to go further -->
+
+You can refer to the following scikit-learn examples which are related to
+the concepts approached during this module:
+
+- [Recursive feature selection using cross-validation](https://scikit-learn.org/stable/auto_examples/feature_selection/plot_rfe_with_cross_validation.html#sphx-glr-auto-examples-feature-selection-plot-rfe-with-cross-validation-py)

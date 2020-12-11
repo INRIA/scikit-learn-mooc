@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hyper-parameters tuning &#8212; Scikit-learn tutorial</title>
+    <title>hyperparameters tuning &#8212; Scikit-learn tutorial</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -281,6 +281,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_validation_curve.html">
+     Overfit-generalization-underfit
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_learning_curve.html">
+     Effect of the sample size in cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="cross_validation_ex_01.html">
      📝 Exercise 01
     </a>
@@ -302,7 +312,7 @@
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
-  Fine tune your model
+  Hyperparameters tuning
  </span>
 </p>
 <ul class="nav sidenav_l1">
@@ -312,34 +322,62 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_manual.html">
-   Introduction to hyper-parameter tuning
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="parameter_tuning_ex_01.html">
-   📝 Exercise 01
+   📝 Introductory example for hyperparameters tuning
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="parameter_tuning_sol_01.html">
-   📃 Solution for Exercise 01
+   📃 Solution for introductory example for hyperparameters tuning
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_automated.html">
-   Hyper-parameter tuning in scikit-learn
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_manual_index.html">
+   Manual tuning
   </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_manual.html">
+     Set and get hyperparameters in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_02.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_02.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_ex_02.html">
-   📝 Exercise 02
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_automated_index.html">
+   Automated tuning
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_sol_02.html">
-   📃 Solution for Exercise 02
-  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_automated.html">
+     Automated hyperparameters tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_03.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_03.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../tuning/parameter_tuning_quiz.html">
@@ -404,7 +442,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../linear_models/linear_models_non_linear_index.html">
-   Linear regression with complex data
+   Modelling with a non-linear relationship data-target
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -591,7 +629,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="trees_hyperparameters.html">
-   Importance of decision tree hyper-parameters on generalization
+   Importance of decision tree hyperparameters on generalization
   </a>
  </li>
  <li class="toctree-l1">
@@ -726,7 +764,7 @@
   <ul class="current collapse-ul">
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Hyper-parameters tuning
+     hyperparameters tuning
     </a>
    </li>
    <li class="toctree-l2">
@@ -1083,8 +1121,8 @@
         
               <div>
                 
-  <div class="section" id="hyper-parameters-tuning">
-<h1>Hyper-parameters tuning<a class="headerlink" href="#hyper-parameters-tuning" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="hyperparameters-tuning">
+<h1>hyperparameters tuning<a class="headerlink" href="#hyperparameters-tuning" title="Permalink to this headline">¶</a></h1>
 <p>In the previous section, we did not discuss the parameters of random forest
 and gradient-boosting. However, there are a couple of things to keep in mind
 when setting these parameters.</p>
@@ -1166,63 +1204,63 @@ forest.</p>
       <th>8</th>
       <td>30</td>
       <td>None</td>
-      <td>0.793696</td>
+      <td>0.794903</td>
       <td>1</td>
     </tr>
     <tr>
       <th>7</th>
       <td>20</td>
       <td>None</td>
-      <td>0.788817</td>
+      <td>0.786729</td>
       <td>2</td>
     </tr>
     <tr>
       <th>6</th>
       <td>10</td>
       <td>None</td>
-      <td>0.776619</td>
+      <td>0.774917</td>
       <td>3</td>
     </tr>
     <tr>
       <th>5</th>
       <td>30</td>
       <td>5</td>
-      <td>0.664688</td>
+      <td>0.664689</td>
       <td>4</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>20</td>
-      <td>5</td>
-      <td>0.663268</td>
-      <td>5</td>
     </tr>
     <tr>
       <th>3</th>
       <td>10</td>
       <td>5</td>
-      <td>0.659854</td>
-      <td>6</td>
+      <td>0.661462</td>
+      <td>5</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>4</th>
       <td>20</td>
-      <td>3</td>
-      <td>0.562742</td>
-      <td>7</td>
+      <td>5</td>
+      <td>0.660011</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>0</th>
       <td>10</td>
       <td>3</td>
-      <td>0.560295</td>
-      <td>8</td>
+      <td>0.563038</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>2</th>
       <td>30</td>
       <td>3</td>
-      <td>0.560041</td>
+      <td>0.561611</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20</td>
+      <td>3</td>
+      <td>0.559873</td>
       <td>9</td>
     </tr>
   </tbody>
@@ -1309,7 +1347,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>5</td>
       <td>0.1</td>
-      <td>0.798203</td>
+      <td>0.798252</td>
       <td>1</td>
     </tr>
     <tr>
@@ -1317,7 +1355,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>3</td>
       <td>1</td>
-      <td>0.785416</td>
+      <td>0.784741</td>
       <td>2</td>
     </tr>
     <tr>
@@ -1325,7 +1363,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>3</td>
       <td>1</td>
-      <td>0.779804</td>
+      <td>0.779814</td>
       <td>3</td>
     </tr>
     <tr>
@@ -1333,16 +1371,8 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>5</td>
       <td>0.1</td>
-      <td>0.767507</td>
+      <td>0.766630</td>
       <td>4</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>10</td>
-      <td>5</td>
-      <td>1</td>
-      <td>0.754525</td>
-      <td>5</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1350,7 +1380,23 @@ similar to having a too large tree depth.</p>
       <td>3</td>
       <td>0.1</td>
       <td>0.754025</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>10</td>
+      <td>5</td>
+      <td>1</td>
+      <td>0.752502</td>
       <td>6</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>30</td>
+      <td>5</td>
+      <td>1</td>
+      <td>0.746888</td>
+      <td>7</td>
     </tr>
     <tr>
       <th>9</th>
@@ -1358,14 +1404,6 @@ similar to having a too large tree depth.</p>
       <td>3</td>
       <td>1</td>
       <td>0.744140</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>30</td>
-      <td>5</td>
-      <td>1</td>
-      <td>0.744097</td>
       <td>8</td>
     </tr>
     <tr>
@@ -1373,7 +1411,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>5</td>
       <td>1</td>
-      <td>0.737154</td>
+      <td>0.733778</td>
       <td>9</td>
     </tr>
     <tr>
@@ -1381,7 +1419,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>3</td>
       <td>0.1</td>
-      <td>0.706102</td>
+      <td>0.706039</td>
       <td>10</td>
     </tr>
     <tr>
@@ -1389,7 +1427,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>None</td>
       <td>0.1</td>
-      <td>0.636097</td>
+      <td>0.633749</td>
       <td>11</td>
     </tr>
     <tr>
@@ -1397,7 +1435,7 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>None</td>
       <td>0.1</td>
-      <td>0.626961</td>
+      <td>0.626712</td>
       <td>12</td>
     </tr>
     <tr>
@@ -1405,7 +1443,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>None</td>
       <td>0.1</td>
-      <td>0.623344</td>
+      <td>0.622696</td>
       <td>13</td>
     </tr>
     <tr>
@@ -1413,15 +1451,15 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>5</td>
       <td>0.1</td>
-      <td>0.597292</td>
+      <td>0.597237</td>
       <td>14</td>
     </tr>
     <tr>
-      <th>15</th>
-      <td>10</td>
+      <th>17</th>
+      <td>50</td>
       <td>None</td>
       <td>1</td>
-      <td>0.594497</td>
+      <td>0.595308</td>
       <td>15</td>
     </tr>
     <tr>
@@ -1429,15 +1467,15 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>None</td>
       <td>1</td>
-      <td>0.593072</td>
+      <td>0.590694</td>
       <td>16</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>50</td>
+      <th>15</th>
+      <td>10</td>
       <td>None</td>
       <td>1</td>
-      <td>0.592231</td>
+      <td>0.590030</td>
       <td>17</td>
     </tr>
     <tr>

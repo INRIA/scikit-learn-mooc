@@ -62,7 +62,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="📝 Exercise 01" href="cross_validation_ex_01.html" />
+    <link rel="next" title="Overfit-generalization-underfit" href="cross_validation_validation_curve.html" />
     <link rel="prev" title="The cross-validation framework" href="../overfit/cross_validation_index.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -281,6 +281,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_validation_curve.html">
+     Overfit-generalization-underfit
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_learning_curve.html">
+     Effect of the sample size in cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="cross_validation_ex_01.html">
      📝 Exercise 01
     </a>
@@ -302,7 +312,7 @@
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
-  Fine tune your model
+  Hyperparameters tuning
  </span>
 </p>
 <ul class="nav sidenav_l1">
@@ -312,34 +322,62 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_manual.html">
-   Introduction to hyper-parameter tuning
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="parameter_tuning_ex_01.html">
-   📝 Exercise 01
+   📝 Introductory example for hyperparameters tuning
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="parameter_tuning_sol_01.html">
-   📃 Solution for Exercise 01
+   📃 Solution for introductory example for hyperparameters tuning
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_automated.html">
-   Hyper-parameter tuning in scikit-learn
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_manual_index.html">
+   Manual tuning
   </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_manual.html">
+     Set and get hyperparameters in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_02.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_02.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_ex_02.html">
-   📝 Exercise 02
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_automated_index.html">
+   Automated tuning
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="parameter_tuning_sol_02.html">
-   📃 Solution for Exercise 02
-  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_automated.html">
+     Automated hyperparameters tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_03.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_03.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../tuning/parameter_tuning_quiz.html">
@@ -404,7 +442,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../linear_models/linear_models_non_linear_index.html">
-   Linear regression with complex data
+   Modelling with a non-linear relationship data-target
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -591,7 +629,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="trees_hyperparameters.html">
-   Importance of decision tree hyper-parameters on generalization
+   Importance of decision tree hyperparameters on generalization
   </a>
  </li>
  <li class="toctree-l1">
@@ -726,7 +764,7 @@
   <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="ensemble_hyperparameters.html">
-     Hyper-parameters tuning
+     hyperparameters tuning
     </a>
    </li>
    <li class="toctree-l2">
@@ -1381,7 +1419,7 @@ error on the testing set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.80 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.24 k$
 </pre></div>
 </div>
 </div>
@@ -1468,41 +1506,44 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.197076</td>
-      <td>0.003883</td>
-      <td>-46.399680</td>
+      <td>0.154118</td>
+      <td>0.003281</td>
+      <td>-46.500168</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.184945</td>
-      <td>0.003825</td>
-      <td>-46.253287</td>
+      <td>0.155205</td>
+      <td>0.003222</td>
+      <td>-45.174336</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.193606</td>
-      <td>0.003975</td>
-      <td>-47.145027</td>
+      <td>0.153986</td>
+      <td>0.003290</td>
+      <td>-46.512542</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.196870</td>
-      <td>0.003832</td>
-      <td>-45.594014</td>
+      <td>0.155763</td>
+      <td>0.003364</td>
+      <td>-45.076638</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.202214</td>
-      <td>0.003848</td>
-      <td>-46.016296</td>
+      <td>0.153327</td>
+      <td>0.003299</td>
+      <td>-47.032599</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
 <p>By convention, scikit-learn model evaluation tools always use a convention
 where “higher is better”, this explains we used
 <code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_absolute_error&quot;</span></code> (meaning “negative mean absolute error”).</p>
+</div>
 <p>Let us revert the negation to get the actual error:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1546,73 +1587,73 @@ where “higher is better”, this explains we used
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.197076</td>
-      <td>0.003883</td>
-      <td>-46.399680</td>
-      <td>46.399680</td>
+      <td>0.154118</td>
+      <td>0.003281</td>
+      <td>-46.500168</td>
+      <td>46.500168</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.184945</td>
-      <td>0.003825</td>
-      <td>-46.253287</td>
-      <td>46.253287</td>
+      <td>0.155205</td>
+      <td>0.003222</td>
+      <td>-45.174336</td>
+      <td>45.174336</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.193606</td>
-      <td>0.003975</td>
-      <td>-47.145027</td>
-      <td>47.145027</td>
+      <td>0.153986</td>
+      <td>0.003290</td>
+      <td>-46.512542</td>
+      <td>46.512542</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.196870</td>
-      <td>0.003832</td>
-      <td>-45.594014</td>
-      <td>45.594014</td>
+      <td>0.155763</td>
+      <td>0.003364</td>
+      <td>-45.076638</td>
+      <td>45.076638</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.202214</td>
-      <td>0.003848</td>
-      <td>-46.016296</td>
-      <td>46.016296</td>
+      <td>0.153327</td>
+      <td>0.003299</td>
+      <td>-47.032599</td>
+      <td>47.032599</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.199824</td>
-      <td>0.003756</td>
-      <td>-47.812108</td>
-      <td>47.812108</td>
+      <td>0.153114</td>
+      <td>0.003245</td>
+      <td>-45.968934</td>
+      <td>45.968934</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.204626</td>
-      <td>0.004014</td>
-      <td>-46.806311</td>
-      <td>46.806311</td>
+      <td>0.151639</td>
+      <td>0.003362</td>
+      <td>-44.027318</td>
+      <td>44.027318</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.196508</td>
-      <td>0.003818</td>
-      <td>-45.975909</td>
-      <td>45.975909</td>
+      <td>0.155831</td>
+      <td>0.003316</td>
+      <td>-46.582843</td>
+      <td>46.582843</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.191519</td>
-      <td>0.003721</td>
-      <td>-47.687063</td>
-      <td>47.687063</td>
+      <td>0.156008</td>
+      <td>0.003222</td>
+      <td>-45.619783</td>
+      <td>45.619783</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.197019</td>
-      <td>0.003715</td>
-      <td>-44.125651</td>
-      <td>44.125651</td>
+      <td>0.155003</td>
+      <td>0.003234</td>
+      <td>-47.600482</td>
+      <td>47.600482</td>
     </tr>
   </tbody>
 </table>
@@ -1662,7 +1703,7 @@ ranges from 43 k$ to 49 k$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 46.16 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 45.98 k$
 </pre></div>
 </div>
 </div>
@@ -1675,7 +1716,7 @@ ranges from 43 k$ to 49 k$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 0.94 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 1.09 k$
 </pre></div>
 </div>
 </div>
@@ -1731,270 +1772,6 @@ metric (Mean Absolute Error) is not ideal.</p>
 mean absolute percentage error would have been a much better choice.</p>
 <p>But in all cases, an error of 45 k$ might be too large to automatically use
 our model to tag house value without expert supervision.</p>
-<p>To better understand the performance of our model and maybe find insights on
-how to improve it we will compare the generalization error with the empirical
-error. Thus, we need to compute the error on the training set, which is
-possible using the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
-                            <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>We will select the train and test score and take the error instead.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="n">scores</span><span class="p">[[</span><span class="s2">&quot;train error&quot;</span><span class="p">,</span> <span class="s2">&quot;test error&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span>
-    <span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">,</span> <span class="s2">&quot;test_score&quot;</span><span class="p">]]</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cross_validation_train_test_41_0.png" src="../_images/cross_validation_train_test_41_0.png" />
-</div>
-</div>
-<p>By plotting the distribution of the empirical and generalization errors, we
-get information about whether our model is over-fitting, under-fitting (or
-both at the same time).</p>
-<p>Here, we observe a <strong>small empirical error</strong> (actually zero), meaning that
-the model is <strong>not under-fitting</strong>: it is flexible enough to capture any
-variations present in the training set.</p>
-<p>However the <strong>significantly larger generalization error</strong> tells us that the
-model is <strong>over-fitting</strong>: the model has memorized many variations of the
-training set that could be considered “noisy” because they do not generalize
-to help us make good prediction on the test set.</p>
-<p>Some model hyper-parameters are usually the key to go from a model that
-underfits to a model that overfits, hopefully going through a region were we
-can get a good balance between the two. We can acquire knowledge by plotting
-a curve called the validation curve. This curve applies the above experiment
-and varies the value of a hyper-parameter.</p>
-<p>For the decision tree, the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> the main parameter to control the
-trade-off between under-fitting and over-fitting.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">validation_curve</span>
-
-<span class="n">max_depth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
-<span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 434 ms, sys: 56.3 ms, total: 490 ms
-Wall time: 13 s
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now that we collected the results, we will show the validation curve by
-plotting the empirical and generalization errors (as well as their
-deviations).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-
-<span class="n">error_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Empirical error&quot;</span><span class="p">,</span> <span class="s2">&quot;Generalization error&quot;</span><span class="p">]</span>
-<span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">err</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">error_type</span><span class="p">,</span> <span class="n">errors</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">err</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                    <span class="n">err</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">err</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;std. dev. </span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">max_depth</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Maximum depth of decision tree&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Validation curve for decision tree&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cross_validation_train_test_45_0.png" src="../_images/cross_validation_train_test_45_0.png" />
-</div>
-</div>
-<p>The validation curve can be divided into three areas:</p>
-<ul class="simple">
-<li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&lt;</span> <span class="pre">10</span></code>, the decision tree underfits. The empirical error and
-therefore also the generalization error are both high. The model is too
-constrained and cannot capture much of the variability of the target
-variable.</p></li>
-<li><p>The region around <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code> corresponds to the parameter for which
-the decision tree generalizes the best. It is flexible enough to capture a
-fraction of the variability of the target that generalizes, while not
-memorizing all of the noise in the target.</p></li>
-<li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&gt;</span> <span class="pre">10</span></code>, the decision tree overfits. The empirical error
-becomes very small, while the generalization error increases. In this
-region, the models captures too much of the noisy part of the variations of
-the target and this harms its ability to generalize well to test data.</p></li>
-</ul>
-<p>Note that for <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code>, the model overfits a bit as there is a gap
-between the empirical error and the generalization error. It can also
-potentially underfit also a bit at the same time, because the empirical error
-is still far from zero (more than 30 k$), meaning that the model might
-still be too constrained to model interesting parts of the data. However the
-generalization error is minimal, and this is what really matters. This is the
-best compromise we could reach by just tuning this parameter.</p>
-<p>We were lucky that the variance of the errors was small compared to their
-respective values, and therefore the conclusions above are quite clear. This
-is not necessarily always the case.</p>
-<p>We will now focus on one factor that can affect this variance, namely, the
-size of the dataset:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20640
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let’s do an experiment and reduce the number of samples and repeat the
-previous experiment. We will create a function that define a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
-and given a regressor and the data <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> will run a cross-validation.
-The function will finally return the generalization error as a NumPy array.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_cv_analysis</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
-                                <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-                                <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now that we have a function to run each experiment, we will create an array
-defining the number of samples for which we want to run the experiments.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="c1"># to make our results reproducible</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># create a dictionary where we will store the result of each run</span>
-<span class="n">scores_sample_sizes</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;# samples&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;test error&quot;</span><span class="p">:</span> <span class="p">[]}</span>
-<span class="k">for</span> <span class="n">n_samples</span> <span class="ow">in</span> <span class="n">sample_sizes</span><span class="p">:</span>
-    <span class="c1"># select a subset of the data with a specific number of samples</span>
-    <span class="n">sample_idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">X_sampled</span><span class="p">,</span> <span class="n">y_sampled</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">sample_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">sample_idx</span><span class="p">]</span>
-    <span class="c1"># run the experiment</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="n">make_cv_analysis</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X_sampled</span><span class="p">,</span> <span class="n">y_sampled</span><span class="p">)</span>
-    <span class="c1"># store the results</span>
-    <span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;# samples&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
-    <span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;test error&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now, we collected all our results and we will create a pandas dataframe to
-easily make some plot.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores_sample_sizes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;test error&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">scores_sample_sizes</span><span class="p">[</span><span class="s2">&quot;# samples&quot;</span><span class="p">],</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">scores_sample_sizes</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Generalization errors distribution </span><span class="se">\n</span><span class="s2">&quot;</span>
-              <span class="s2">&quot;by varying the sample size&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cross_validation_train_test_55_0.png" src="../_images/cross_validation_train_test_55_0.png" />
-</div>
-</div>
-<p>For the different sample sizes, we plotted the distribution of the
-generalization error. We observe that smaller is the sample size; larger is
-the variance of the generalization errors. Thus, having a small number of
-samples might put us in a situation where it is impossible to get a reliable
-evaluation.</p>
-<p>Here, we plotted the different curve to highlight the issue of small sample
-size. However, this experiment is also used to draw the so-called <strong>learning
-curve</strong>. This curve gives some additional indication regarding the benefit of
-adding new training samples to improve a model’s performance.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">learning_curve</span>
-
-<span class="n">results</span> <span class="o">=</span> <span class="n">learning_curve</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">train_sizes</span><span class="o">=</span><span class="n">sample_sizes</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">train_size</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now, we can plot the curve curve.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-
-<span class="n">error_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Empirical error&quot;</span><span class="p">,</span> <span class="s2">&quot;Generalization error&quot;</span><span class="p">]</span>
-<span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">err</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">error_type</span><span class="p">,</span> <span class="n">errors</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_size</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">train_size</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">err</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                    <span class="n">err</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">err</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;std. dev. </span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">train_size</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples in the training set&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Learning curve for decision tree&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cross_validation_train_test_59_0.png" src="../_images/cross_validation_train_test_59_0.png" />
-</div>
-</div>
-<p>We see that the more samples we add to the training set on this learning
-curve, the lower the error becomes. With this curve, we are searching for the
-plateau for which there is no benefit to adding samples anymore or assessing
-the potential gain of adding more samples into the training set.</p>
-<p>For this dataset we notice that our decision tree model would really benefit
-from additional datapoints to reduce the amount of over-fitting and hopefully
-reduce the generalization error even further.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
@@ -2004,8 +1781,6 @@ reduce the generalization error even further.</p>
 <li><p>the meaning of the empirical and generalization errors;</p></li>
 <li><p>the overall cross-validation framework with the possibility to study
 performance variations;</p></li>
-<li><p>the effect of hyperparameter tuning using the validation curve;</p></li>
-<li><p>the effect of sample size using the learning curve.</p></li>
 </ul>
 </div>
 </div>
@@ -2039,7 +1814,7 @@ performance variations;</p></li>
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="../overfit/cross_validation_index.html" title="previous page">The cross-validation framework</a>
-    <a class='right-next' id="next-link" href="cross_validation_ex_01.html" title="next page">📝 Exercise 01</a>
+    <a class='right-next' id="next-link" href="cross_validation_validation_curve.html" title="next page">Overfit-generalization-underfit</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

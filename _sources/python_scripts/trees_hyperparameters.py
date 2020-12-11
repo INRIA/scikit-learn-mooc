@@ -1,7 +1,7 @@
 # %% [markdown]
-# # Importance of decision tree hyper-parameters on generalization
+# # Importance of decision tree hyperparameters on generalization
 #
-# In this notebook will illustrate the importance of some key hyper-parameters
+# In this notebook will illustrate the importance of some key hyperparameters
 # of the decision tree. We will illustrate it on both the classification and
 # regression probelms that we previously used.
 #
@@ -128,7 +128,7 @@ plt.subplots_adjust(wspace=0.3)
 # increasing the depth will make the tree model more expressive. However, a
 # tree that is too deep will overfit the training data, creating partitions
 # which are only be correct for "outliers". The `max_depth` is one of the
-# hyper-parameters that one should optimize via cross-validation and
+# hyperparameters that one should optimize via cross-validation and
 # grid-search.
 
 # %%

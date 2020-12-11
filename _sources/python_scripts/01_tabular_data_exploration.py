@@ -16,14 +16,14 @@
 # # First look at our dataset
 #
 # In this notebook, we will look at the necessary steps required before any
-#  machine learning takes place.
+#  machine learning takes place. It involves:
 #
-# * load the data;
-# * look at the variables in the dataset, in particular, differentiate
+# * loading the data;
+# * looking at the variables in the dataset, in particular, differentiate
 #   between numerical and categorical variables, which need different
 #   preprocessing in most machine learning workflows;
-# * visualize the distribution of the variables to gain some insights into the
-#   dataset.
+# * visualizing the distribution of the variables to gain some insights into
+#   the dataset.
 
 # %% [markdown]
 # ## Loading the adult census dataset

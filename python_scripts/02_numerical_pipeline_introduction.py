@@ -71,9 +71,8 @@ data.head()
 data.columns
 
 # %%
-print(
-    f"The dataset contains {data.shape[0]} samples and "
-    f"{data.shape[1]} features")
+print(f"The dataset contains {data.shape[0]} samples and "
+      f"{data.shape[1]} features")
 
 # %% [markdown]
 # ## Fit a model and make predictions
@@ -160,9 +159,8 @@ data_test = df_test.drop(columns=[target_name, ])
 # We can check the number of features and samples available in this new set.
 
 # %%
-print(
-    f"The testing dataset contains {data_test.shape[0]} samples and "
-    f"{data_test.shape[1]} features")
+print(f"The testing dataset contains {data_test.shape[0]} samples and "
+      f"{data_test.shape[1]} features")
 
 # %% [markdown]
 # Note that scikit-learn provides a helper function `train_test_split` which

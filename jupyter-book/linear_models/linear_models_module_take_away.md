@@ -17,3 +17,9 @@ In this module, we saw:
 ## To go further
 
 <!-- Some extra links of content to go further -->
+
+You can refer to the following scikit-learn examples which are related to
+the concepts approached during this module:
+
+- [Example of linear regression](https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols.html#sphx-glr-auto-examples-linear-model-plot-ols-py)
+- [Comparison between a linear regression and a ridge regressor](https://scikit-learn.org/stable/auto_examples/linear_model/plot_ols_ridge_variance.html#sphx-glr-auto-examples-linear-model-plot-ols-ridge-variance-py)

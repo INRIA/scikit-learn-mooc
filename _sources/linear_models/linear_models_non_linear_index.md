@@ -1,4 +1,4 @@
-# Modelling with a non-linear relationship data-target
+# Linear regression with complex data
 
 ```{tableofcontents}
 

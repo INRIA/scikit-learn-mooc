@@ -8,7 +8,7 @@ This module will give an example of a typical predictive modeling pipeline
 developed using tabular data. We will present this pipeline in a progressive
 way. First, we will make an analysis of the dataset used. Subsequently, we will
 train our first pipeline with a subset of the dataset, containing only
-numerical feature. Finally, we will extend our pipeline to use heterogeneous
+numerical feature. Finally, we will extend our pipeline to use mixed
 type of data, i.e. numerical and categorical data.
 
 ## Before getting started

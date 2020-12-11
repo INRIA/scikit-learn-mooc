@@ -4,13 +4,23 @@
 
 <!-- Give in plain English what the module is about -->
 
-This module will go thoroughly into the cross-validation framework. Besides
-presenting the general framework, we will also present simple baseline that
-should be used when evaluating a predictive pipeline. Futhermore, we will give
-more details on the cross-validation strategies to use depending on the type
-of data that you are dealing with. Finally, we will give an example of nested
-cross-validation that is necessary when one optimizes model parameters and
-evaluate the same predictive model at once.
+This module gives an intuitive introduction to the very **fundamental
+concepts** of overfitting and underfitting in machine learning.
+
+Machine learning models can never make perfect predictions: the test error is
+never exactly zero. This failure comes from a **fundamental trade-off** between
+**modeling flexibility** and the **limited size of the training dataset**.
+
+The first presentation will define those problems and characterize how and why
+they arise.
+
+Then we will present a methodology to quantify those problems by **contrasting
+the train error with the test error** for various choice of the model family,
+model parameters. More importantly, we will emphasize the **impact of the size
+of the training set on this trade-off**.
+
+Finally we will relate overfitting and underfitting to the concepts of
+statistical variance and bias.
 
 ## Before getting started
 
@@ -41,14 +51,10 @@ required libraries:
 
 The objective in the module are the following:
 
-- understand the general cross-validation framework;
-- understand the necessity of using an appropriate cross-validation strategy
-  depending on the data;
-- get the intuitions behind comparing a model with some basic models that
-  can be used as baseline;
-- understand the principle behind using nested cross-validation when the model
-  needs to be evaluated as well as optimized.
+- understand the concept of overfitting and underfitting;
+- understand the concept of generalization;
+- understand the general cross-validation framework used to evaluate a model.
 
 <!-- Give the investment in time -->
 
-The estimated time to go through this module is about 4 hours 10.
+The estimated time to go through this module is about 2 hours.

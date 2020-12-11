@@ -1,10 +1,10 @@
 # %% [markdown]
-# # hyperparameter tuning in scikit-learn
+# # Automated hyperparameters tuning in scikit-learn
 #
 # In the previous notebook, we saw that hyperparameters can affect the
 # performance of a model. In this notebook, we will show:
 #
-# * how to tune these hyperparameters;
+# * how to tune these hyperparameters with a grid-search and randomized search;
 # * how to evaluate the model performance together with hyperparameter
 #   tuning.
 
@@ -40,8 +40,8 @@ df_train, df_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
 
 # %% [markdown]
-# Then, we define the preprocessing pipeline to transform differently
-# the numerical and categorical data. We use an ordinal since we will use a
+# We will define a pipeline as seen in the first module. It will handle both
+# numerical and categorical features. We use an ordinal since we will use a
 # tree-based model as a predictor.
 
 # %%
@@ -80,7 +80,7 @@ model = Pipeline([
 model.fit(df_train, target_train)
 
 # %% [markdown]
-# ## Automated parameter tuning via grid-search
+# ## Tuning using a grid-search
 #
 # Instead of manually writing the two `for` loops, scikit-learn provides a
 # class called `GridSearchCV` which implement the exhaustive search implemented
@@ -224,7 +224,7 @@ ax.invert_yaxis()
 # training set).
 
 # %% [markdown]
-# ## hyperparameter tuning with Random Search
+# ## Tuning using a randomized-search
 #
 # With the `GridSearchCV` estimator, the parameters need to be specified
 # explicitly. We already mentioned that exploring a large number of values for
@@ -407,10 +407,7 @@ fig.show()
 # * automatically tuned the hyperparameters of a machine-learning pipeline by
 #   exhaustively searching the best combination from a defined grid;
 # * automatically tuned the hyperparameters of a machine-learning pipeline by
-#   drawing values candidates from some predefined distributions.
-#
-# ## Main take-away points
-#
+#   drawing values candidates from some predefined distributions;
 # * a grid-search is a costly exhaustive search and does scale with the number
 #   of parameters to search;
 # * a randomized-search will always run with a fixed given budget;

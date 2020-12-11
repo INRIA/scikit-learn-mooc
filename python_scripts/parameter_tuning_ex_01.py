@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Introductory example for hyperparameters tuning
+# # 📝 Introductory example for hyperparameters tuning
 #
 # In this exercise, we aim at showing the effect on changing hyperparameter
 # value of predictive pipeline. As an illustration, we will use a linear model

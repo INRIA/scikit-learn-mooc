@@ -18,3 +18,9 @@ are state-of-the-art methods.
 ## To go further
 
 <!-- Some extra links of content to go further -->
+
+You can refer to the following scikit-learn examples which are related to
+the concepts approached during this module:
+
+- [Early-stopping in gradient-boosting](https://scikit-learn.org/stable/auto_examples/ensemble/plot_gradient_boosting_early_stopping.html#sphx-glr-auto-examples-ensemble-plot-gradient-boosting-early-stopping-py)
+- [Combining predictors using stacking](https://scikit-learn.org/stable/auto_examples/ensemble/plot_stack_predictors.html#sphx-glr-auto-examples-ensemble-plot-stack-predictors-py)

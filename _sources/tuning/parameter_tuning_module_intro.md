@@ -4,12 +4,15 @@
 
 <!-- Give in plain English what the module is about -->
 
-This module will give an example of a typical predictive modeling pipeline
-developed using tabular data. We will present this pipeline in a progressive
-way. First, we will make an analysis of the dataset used. Subsquently, we will
-train our first pipeline with a subset of the dataset. Finally, we will make
-our pipeline more complex to use all available type of data (i.e. numerical and
-categorical data)
+In the previous modules, we show how to create, train, predict, and even
+evaluate a predictive model. However, we did not change the hyperparameters
+of a model.
+
+In this module, we will first show that the hyperparameters have an impact on
+the performance of the model and that default values are not necessarily the
+best option. Subsequently, we will show how to set hyperparameters in
+scikit-learn model. Finally, we will show strategies allowing to pick-up a
+combination of hyperparameters that maximizes model's performance.
 
 ## Before getting started
 
@@ -20,6 +23,7 @@ The required technical skills to carry on this module are:
 - know Python;
 - having some basic knowledge of the following libraries: NumPy, SciPy,
   Pandas, Matplotlib, and Seaborn;
+- basic understanding of predictive scikit-learn pipeline.
 
 <!-- Point to resources to learning these skills -->
 
@@ -39,10 +43,13 @@ required libraries:
 
 The objective in the module are the following:
 
-- build intuition regarding an unknown dataset;
-- identify and differentiate numerical and categorical features;
-- create an advanced predictive pipeline with scikit-learn.
+- understand what is a model hyperparameter;
+- understand how to get and set the value an hyperparameter of a scikit-learn
+  model;
+- be able to fine tune a full predictive modeling pipeline;
+- understand and visualize the combination of parameters that improves the
+  performance of a model.
 
 <!-- Give the investment in time -->
 
-The estimated time to go through this module is about 3 hours 15.
+The estimated time to go through this module is about 2 hours.

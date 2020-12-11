@@ -4,8 +4,17 @@
 
 <!-- Give in plain English what the module is about -->
 
-This modules gives an overview of the metrics to use in classification and
-regression as well as their characteristics.
+In the previous module, we presented the general cross-validation framework
+and used it to evaluate models' performance. However, this is important to
+keep in mind that some elements in the cross-validation need to be decided
+depending of the nature of the problem: (i) the cross-validation strategy and
+(ii) the evaluation metrics. Besides, it is always good to compare the models'
+performance with some baseline for which one expects a given level of
+performance.
+
+In this module, we present both aspects and give insights on when to use a
+specific cross-validation strategy and a metric. In addition, we will also
+give some insights regarding how to compare a model with some baseline.
 
 ## Before getting started
 
@@ -36,9 +45,15 @@ required libraries:
 
 The objective in the module are the following:
 
+- understand the necessity of using an appropriate cross-validation strategy
+  depending on the data;
+- get the intuitions behind comparing a model with some basic models that
+  can be used as baseline;
+- understand the principle behind using nested cross-validation when the model
+  needs to be evaluated as well as optimized;
 - understand the difference between regression and classification metrics;
 - understand the difference between metrics.
 
 <!-- Give the investment in time -->
 
-The estimated time to go through this module is about 1 hour 30.
+The estimated time to go through this module is about 4 hours.

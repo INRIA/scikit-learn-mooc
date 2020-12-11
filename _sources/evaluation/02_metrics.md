@@ -1,4 +1,4 @@
-# The evaluation metrics
+# Introduction of the evaluation metrics
 
 Machine-learning models rely on optimizing an objective function, by seeking
 its minimum or maximum. It is important to understand that this objective

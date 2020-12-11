@@ -1,7 +1,7 @@
 # ✅ Quiz
 
 ```{admonition} Question
-Hyper-parameters tuning refer to:
+hyperparameters tuning refer to:
 
 - a) only tuning parameters of a predictive model
 - b) tuning parameters from any component of a predictive model

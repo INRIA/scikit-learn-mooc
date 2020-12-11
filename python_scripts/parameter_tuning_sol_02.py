@@ -15,7 +15,7 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 02
 #
-# The goal is to find the best set of hyper-parameters which maximize the
+# The goal is to find the best set of hyperparameters which maximize the
 # performance on a training set.
 #
 # Here again with limit the size of the training set to make computation
@@ -88,7 +88,7 @@ from sklearn.linear_model import LogisticRegression
 model = make_pipeline(preprocessor, LogisticRegression())
 
 # %% [markdown]
-# Use a `RandomizedSearchCV` to find the best set of hyper-parameters by tuning
+# Use a `RandomizedSearchCV` to find the best set of hyperparameters by tuning
 # the following parameters for the `LogisticRegression` model:
 # - `C` with values ranging from 0.001 to 10. You can use a reciprocal
 #   distribution (i.e. `scipy.stats.reciprocal`);
@@ -99,7 +99,7 @@ model = make_pipeline(preprocessor, LogisticRegression())
 # by always (or not) dropping the first column when encoding the categorical
 # data.
 #
-# Notes: some combinations of the hyper-parameters proposed above are invalid.
+# Notes: some combinations of the hyperparameters proposed above are invalid.
 # You can make the parameter search accept such failures by setting
 # `error_score` to `np.nan`. The warning messages give more details on which
 # parameter combinations but the computation will proceed.

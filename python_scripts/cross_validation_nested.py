@@ -70,7 +70,7 @@ print(f"The mean score in CV is: {search.best_score_:.3f}")
 # Indeed, we can show that it will be too optimistic in practice. The good way
 # is to use a "nested" cross-validation. We will use an inner cross-validation
 # corresponding to the previous procedure shown to optimize the
-# hyper-parameters. We will also include this procedure within an outer
+# hyperparameters. We will also include this procedure within an outer
 # cross-validation, which will be used to estimate the generalization error of
 # our fine-tuned model.
 #

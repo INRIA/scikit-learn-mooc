@@ -4,7 +4,7 @@
 Why do we need two sets: a train set and a test set?
 
 - a) to train the model faster
-- b) to gain insights of how to tune the hyper-parameters
+- b) to gain insights of how to tune the hyperparameters
 - c) to validate the model on unseen data
 ```
 

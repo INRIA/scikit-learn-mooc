@@ -28,22 +28,10 @@ statistical variance and bias.
 
 The required technical skills to carry on this module are:
 
-- know Python;
-- having some basic knowledge of the following libraries: NumPy, SciPy,
-  Pandas, Matplotlib, and Seaborn;
-- basic understanding of predictive scikit-learn pipeline.
+- skills acquired during the "The Predictive Modeling Pipeline" with basic
+  usage of scikit-learn.
 
 <!-- Point to resources to learning these skills -->
-
-The following links will help you to have an introduction to the above
-required libraries:
-
-- [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html);
-- [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html);
-- [Introduction to Matplotlib](https://scipy-lectures.org/intro/matplotlib/index.html);
-- [Introduction to SciPy](https://scipy-lectures.org/intro/scipy.html);
-- [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html#min);
-- [Introduction to Seaborn](https://seaborn.pydata.org/introduction.html).
 
 ## Objectives and time schedule
 

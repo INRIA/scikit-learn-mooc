@@ -13,16 +13,16 @@
 # ---
 
 # %% [markdown]
-# # Introduction to hyper-parameter tuning
+# # Introduction to hyperparameter tuning
 #
 # The process of learning a predictive model is driven by a set of internal
 # parameters and a set of training data. These internal parameters are called
-# hyper-parameters and are specific for each family of models. In addition, a
-# specific set of hyper-parameters are optimal for a specific dataset and thus
+# hyperparameters and are specific for each family of models. In addition, a
+# specific set of hyperparameters are optimal for a specific dataset and thus
 # they need to be optimized. In this notebook we will use the words
-# "hyper-parameters" and "parameters" interchangeably.
+# "hyperparameters" and "parameters" interchangeably.
 #
-# This notebook shows the influence of changing model hyper-parameters.
+# This notebook shows the influence of changing model hyperparameters.
 
 # %% [markdown]
 # We will reload the adult census dataset and ignore some of the columns
@@ -191,6 +191,6 @@ model.get_params()['classifier__learning_rate']
 # %% [markdown]
 # In this notebook we have seen:
 #
-# - how hyper-parameters can affect the performance of a model;
+# - how hyperparameters can affect the performance of a model;
 # - how to use `get_params` and `set_params` to get the parameters of a model
 #   and set them.

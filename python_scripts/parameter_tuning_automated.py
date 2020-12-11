@@ -13,13 +13,13 @@
 # ---
 
 # %% [markdown]
-# # Hyper-parameter tuning in scikit-learn
+# # hyperparameter tuning in scikit-learn
 #
 # In the previous notebook, we saw that hyperparameters can affect the
 # performance of a model. In this notebook, we will show:
 #
-# * how to tune these hyper-parameters;
-# * how to evaluate the model performance together with hyper-parameter
+# * how to tune these hyperparameters;
+# * how to evaluate the model performance together with hyperparameter
 #   tuning.
 
 # %% [markdown]
@@ -128,7 +128,7 @@ print(
 
 # %% [markdown]
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines
-# all hyper-parameters and their associated values. The grid-search will be in
+# all hyperparameters and their associated values. The grid-search will be in
 # charge of creating all possible combinations and test them.
 #
 # The number of combinations will be equal to the product of the
@@ -238,7 +238,7 @@ ax.invert_yaxis()
 # training set).
 
 # %% [markdown]
-# ## Hyper-parameter tuning with Random Search
+# ## hyperparameter tuning with Random Search
 #
 # With the `GridSearchCV` estimator, the parameters need to be specified
 # explicitly. We already mentioned that exploring a large number of values for
@@ -327,7 +327,7 @@ cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
 # %% [markdown]
-# In practice, a randomized hyper-parameter search is usually run with a large
+# In practice, a randomized hyperparameter search is usually run with a large
 # number of iterations. In order to avoid the computation cost and still make a
 # decent analysis, we load the results obtained from a similar search with 200
 # iterations.
@@ -369,9 +369,9 @@ fig = px.parallel_coordinates(
 fig.show()
 
 # %% [markdown]
-# The parallel coordinates plot will display the values of the hyper-parameters
+# The parallel coordinates plot will display the values of the hyperparameters
 # on different columns while the performance metric is color coded. Thus, we
-# are able to quickly inspect if there is a range of hyper-parameters which is
+# are able to quickly inspect if there is a range of hyperparameters which is
 # working or not.
 #
 # ```{note}
@@ -418,9 +418,9 @@ fig.show()
 # %% [markdown]
 # In this notebook, we have:
 #
-# * automatically tuned the hyper-parameters of a machine-learning pipeline by
+# * automatically tuned the hyperparameters of a machine-learning pipeline by
 #   exhaustively searching the best combination from a defined grid;
-# * automatically tuned the hyper-parameters of a machine-learning pipeline by
+# * automatically tuned the hyperparameters of a machine-learning pipeline by
 #   drawing values candidates from some predefined distributions.
 #
 # ## Main take-away points
@@ -428,5 +428,5 @@ fig.show()
 # * a grid-search is a costly exhaustive search and does scale with the number
 #   of parameters to search;
 # * a randomized-search will always run with a fixed given budget;
-# * when assessing the performance of a model, hyper-parameters search should
+# * when assessing the performance of a model, hyperparameters search should
 #   be tuned on the training data of a predefined train test split.

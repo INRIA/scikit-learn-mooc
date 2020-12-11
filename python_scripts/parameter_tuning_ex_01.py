@@ -1,81 +1,70 @@
-# ---
-# jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.6.0
-#   kernelspec:
-#     display_name: Python 3
-#     language: python
-#     name: python3
-# ---
-
 # %% [markdown]
-# # 📝 Exercise 01
+# # Introductory example for hyperparameters tuning
 #
-# The goal is to write an exhaustive search to find the best parameters
-# combination maximizing the model performance.
+# In this exercise, we aim at showing the effect on changing hyperparameter
+# value of predictive pipeline. As an illustration, we will use a linear model
+# only on the numerical features of adult census to simplify the pipeline.
 #
-# Here we use a small subset of the Adult Census dataset to make to code
-# fast to execute. Once your code works on the small subset, try to
-# change `train_size` to a larger value (e.g. 0.8 for 80% instead of
-# 20%).
+# Let's start by loading the data.
+
+# %%
+from sklearn import set_config
+set_config(display='diagram')
 
 # %%
 import pandas as pd
 
-from sklearn.model_selection import train_test_split
-
 df = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
+numerical_columns = [
+    "age", "capital-gain", "capital-loss", "hours-per-week"]
+
 target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt"])
-
-df_train, df_test, target_train, target_test = train_test_split(
-    data, target, train_size=0.2, random_state=42)
-
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OrdinalEncoder
-
-categorical_columns = [
-    'workclass', 'education', 'marital-status', 'occupation',
-    'relationship', 'race', 'native-country', 'sex']
-
-categories = [data[column].unique()
-              for column in data[categorical_columns]]
-
-categorical_preprocessor = OrdinalEncoder(categories=categories)
-
-preprocessor = ColumnTransformer(
-    [('cat-preprocessor', categorical_preprocessor, categorical_columns)],
-    remainder='passthrough', sparse_threshold=0)
-
-# This line is currently required to import HistGradientBoostingClassifier
-from sklearn.experimental import enable_hist_gradient_boosting
-from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.pipeline import Pipeline
-
-model = Pipeline([
-    ("preprocessor", preprocessor),
-    ("classifier", HistGradientBoostingClassifier(random_state=42))
-])
+data = df[numerical_columns]
 
 # %% [markdown]
-#
-# Use the previously defined model (called `model`) and using two nested `for`
-# loops, make a search of the best combinations of the `learning_rate` and
-# `max_leaf_nodes` parameters. In this regard, you will need to train and test
-# the model by setting the parameters. The evaluation of the model should be
-# performed using `cross_val_score`. We will use the following parameters
-# search:
-# - `learning_rate` for the values 0.01, 0.1, 1 and 10. This parameter controls
-#   the ability of a new tree to correct the error of the previous sequence of
-#   trees
-# - `max_leaf_nodes` for the values 3, 10, 30. This parameter controls the
-#   depth of each tree.
+# We will first divide the data into a train and test set to evaluate
+# the model.
 
 # %%
-# Write your code here.
+from sklearn.model_selection import train_test_split
+
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=42)
+
+# %% [markdown]
+# First, define a logistic regression with a preprocessing stage to scale the
+# data.
+
+# %%
+# Write your code here!
+
+# %% [markdown]
+# Now, fit the model on the train set and compute the model's accuracy on the
+# test set.
+
+# %%
+# Write your code here!
+
+# %% [markdown]
+# We will use this model as a baseline. Now, we will check the effect of
+# changing the value of the hyperparameter `C` in logistic regression. First,
+# check what is the default value of the hyperparameter `C` of the logistic
+# regression.
+
+# %%
+# Write your code here!
+
+# %% [markdown]
+# Create a model by setting the `C` hyperparameter to `0.001` and compute the
+# performance of the model.
+
+# %%
+# Write your code here!
+
+# %% [markdown]
+# Repeat the same experiment for `C=100`
+
+# %%
+# Write your code here!

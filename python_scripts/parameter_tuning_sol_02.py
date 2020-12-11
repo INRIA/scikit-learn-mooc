@@ -13,18 +13,20 @@
 # ---
 
 # %% [markdown]
-# # 📃 Solution for Exercise 02
+# # 📃 Solution for Exercise 01
 #
-# The goal is to find the best set of hyperparameters which maximize the
-# performance on a training set.
+# The goal is to write an exhaustive search to find the best parameters
+# combination maximizing the model performance.
 #
-# Here again with limit the size of the training set to make computation
-# run faster. Feel free to increase the `train_size` value if your computer
-# is powerful enough.
+# Here we use a small subset of the Adult Census dataset to make to code
+# fast to execute. Once your code works on the small subset, try to
+# change `train_size` to a larger value (e.g. 0.8 for 80% instead of
+# 20%).
 
 # %%
-import numpy as np
 import pandas as pd
+
+from sklearn.model_selection import train_test_split
 
 df = pd.read_csv("../datasets/adult-census.csv")
 
@@ -32,161 +34,72 @@ target_name = "class"
 target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
 
-from sklearn.model_selection import train_test_split
-
 df_train, df_test, target_train, target_test = train_test_split(
     data, target, train_size=0.2, random_state=42)
 
-# %% [markdown]
-# You should:
-# * preprocess the categorical columns using a `OneHotEncoder` and use a
-#   `StandardScaler` to normalize the numerical data.
-# * use a `LogisticRegression` as a predictive model.
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OrdinalEncoder
 
-# %% [markdown]
-# Start by defining the columns and the preprocessing pipelines to be applied
-# on each columns.
-# %%
-from sklearn.compose import make_column_selector as selector
-
-categorical_columns_selector = selector(dtype_include=object)
-categorical_columns = categorical_columns_selector(data)
+categorical_columns = [
+    'workclass', 'education', 'marital-status', 'occupation',
+    'relationship', 'race', 'native-country', 'sex']
 
 categories = [data[column].unique()
               for column in data[categorical_columns]]
 
-numerical_columns_selector = selector(dtype_exclude=object)
-numerical_columns = numerical_columns_selector(data)
-
-# %%
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import StandardScaler
-
-categorical_processor = OneHotEncoder(categories=categories,
-                                      drop="if_binary")
-numerical_processor = StandardScaler()
-
-# %% [markdown]
-# Subsequently, create a `ColumnTransformer` to redirect the specific columns
-# a preprocessing pipeline.
-# %%
-
-from sklearn.compose import ColumnTransformer
+categorical_preprocessor = OrdinalEncoder(categories=categories)
 
 preprocessor = ColumnTransformer(
-    [('cat-preprocessor', categorical_processor, categorical_columns),
-     ('num-preprocessor', numerical_processor, numerical_columns)]
-)
+    [('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    remainder='passthrough', sparse_threshold=0)
+
+# This line is currently required to import HistGradientBoostingClassifier
+from sklearn.experimental import enable_hist_gradient_boosting
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.pipeline import Pipeline
+
+model = Pipeline([
+    ("preprocessor", preprocessor),
+    ("classifier", HistGradientBoostingClassifier(random_state=42))
+])
 
 # %% [markdown]
-# Finally, concatenate the preprocessing pipeline with a logistic regression.
-# %%
-
-from sklearn.pipeline import make_pipeline
-from sklearn.linear_model import LogisticRegression
-
-model = make_pipeline(preprocessor, LogisticRegression())
-
-# %% [markdown]
-# Use a `RandomizedSearchCV` to find the best set of hyperparameters by tuning
-# the following parameters for the `LogisticRegression` model:
-# - `C` with values ranging from 0.001 to 10. You can use a reciprocal
-#   distribution (i.e. `scipy.stats.reciprocal`);
-# - `solver` with possible values being `"liblinear"` and `"lbfgs"`;
-# - `penalty` with possible values being `"l2"` and `"l1"`;
 #
-# In addition, try several preprocessing strategies with the `OneHotEncoder`
-# by always (or not) dropping the first column when encoding the categorical
-# data.
-#
-# Notes: some combinations of the hyperparameters proposed above are invalid.
-# You can make the parameter search accept such failures by setting
-# `error_score` to `np.nan`. The warning messages give more details on which
-# parameter combinations but the computation will proceed.
-#
-# Once the computation has completed, print the best combination of parameters
-# stored in the `best_params_` attribute.
+# Use the previously defined model (called `model`) and using two nested `for`
+# loops, make a search of the best combinations of the `learning_rate` and
+# `max_leaf_nodes` parameters. In this regard, you will need to train and test
+# the model by setting the parameters. The evaluation of the model should be
+# performed using `cross_val_score`. We will use the following parameters
+# search:
+# - `learning_rate` for the values 0.01, 0.1, 1 and 10. This parameter controls
+#   the ability of a new tree to correct the error of the previous sequence of
+#   trees
+# - `max_leaf_nodes` for the values 3, 10, 30. This parameter controls the
+#   depth of each tree.
 
 # %%
-from sklearn.model_selection import RandomizedSearchCV
-from scipy.stats import reciprocal
+from sklearn.model_selection import cross_val_score
 
-param_distributions = {
-    "logisticregression__C": reciprocal(0.001, 10),
-    "logisticregression__solver": ["liblinear", "lbfgs"],
-    "logisticregression__penalty": ["l2", "l1"],
-    "columntransformer__cat-preprocessor__drop": [None, "first"]
-}
+learning_rate = [0.05, 0.1, 0.5, 1, 5]
+max_leaf_nodes = [3, 10, 30, 100]
 
-model_random_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions,
-    n_iter=20, error_score=np.nan, n_jobs=2, verbose=1)
-model_random_search.fit(df_train, target_train)
-model_random_search.best_params_
+best_score = 0
+best_params = {}
+for lr in learning_rate:
+    for mln in max_leaf_nodes:
+        print(f"Evaluating model with learning rate {lr:.3f}"
+              f" and max leaf nodes {mln}... ", end="")
+        model.set_params(
+            classifier__learning_rate=lr,
+            classifier__max_leaf_nodes=mln
+        )
+        scores = cross_val_score(model, df_train, target_train, cv=2)
+        mean_score = scores.mean()
+        print(f"score: {mean_score:.3f}")
+        if mean_score > best_score:
+            best_score = mean_score
+            best_params = {'learning-rate': lr, 'max leaf nodes': mln}
+            print(f"Found new best model with score {best_score:.3f}!")
 
-# %% [markdown]
-# We could use `cv_results = model_random_search.cv_results_` in the plot at
-# the end of this notebook (you are more than welcome to try!). Instead we are
-# going to load the results obtained from a similar search with many more
-# iterations (200 instead of 20).
-#
-# This way we can have a more detailed plot while being able to run this
-# notebook in a reasonably short amount of time.
-
-# %%
-# Uncomment this cell if you want to regenerate the results csv file. This
-# can take a long time to execute.
-#
-# model_random_search = RandomizedSearchCV(
-#     model, param_distributions=param_distributions,
-#     n_iter=200, error_score=np.nan, n_jobs=-1)
-# _ = model_random_search.fit(df_train, target_train)
-# cv_results =  pd.DataFrame(model_random_search.cv_results_)
-# cv_results.to_csv("../figures/randomized_search_results_logistic_regression.csv")
-
-# %%
-cv_results = pd.read_csv(
-    "../figures/randomized_search_results_logistic_regression.csv",
-    index_col=0)
-
-# %%
-column_results = [f"param_{name}"for name in param_distributions.keys()]
-column_results += ["mean_test_score", "std_test_score", "rank_test_score"]
-
-cv_results = cv_results[column_results].sort_values(
-    "mean_test_score", ascending=False)
-cv_results = (
-    cv_results
-    .rename(columns={
-        "param_logisticregression__C": "C",
-         "param_logisticregression__solver": "solver",
-         "param_logisticregression__penalty": "penalty",
-         "param_columntransformer__cat-preprocessor__drop": "drop",
-         "mean_test_score": "mean test accuracy",
-         "rank_test_score": "ranking"})
-    .astype(dtype={'C': 'float64'})
-)
-cv_results['log C'] = np.log(cv_results['C'])
-
-# %%
-cv_results["drop"] = cv_results["drop"].fillna("None")
-cv_results = cv_results.dropna("index").drop(columns=["solver"])
-encoding = {}
-for col in cv_results:
-    if cv_results[col].dtype.kind == 'O':
-        labels, uniques = pd.factorize(cv_results[col])
-        cv_results[col] = labels
-        encoding[col] = uniques
-encoding
-
-# %%
-import plotly.express as px
-
-fig = px.parallel_coordinates(
-    cv_results.drop(columns=["ranking", "std_test_score"]),
-    color="mean test accuracy",
-    dimensions=["log C", "penalty", "drop",
-                "mean test accuracy"],
-    color_continuous_scale=px.colors.diverging.Tealrose,
-)
-fig.show()
+print(f"The best accuracy obtained is {best_score:.3f}")
+print(f"The best parameters found are:\n {best_params}")

@@ -15,7 +15,3 @@ metrics used to evaluate the performance of a predictive model.
 
 Evaluation metric selection will mainly depend on the model chosen to
 solve our data science problem.
-
-```{tableofcontents}
-
-```

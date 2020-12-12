@@ -4,9 +4,9 @@ class: titlepage
 
 # Tree-based models
 
-This lesson covers decision tree and random forest. 
+This lesson covers decision trees.
 
-These are robust models for both regression and classification.
+These are models for both regression and classification.
 
 <img src="../figures/scikit-learn-logo.svg">
 
@@ -15,16 +15,15 @@ Decision tree are built as a set of rules for both classification and regression
 
 These are the building blocks for more elaborate model such as random forest and gradient boosting trees, as we will see.
 
-
 ---
+
 # Outline
 
-* What is a decision tree?
-* For classification & regression
-* Boosting and Bagging
-
+- What is a decision tree?
+- For classification & regression
 
 ---
+
 class: center, middle
 
 # What is a decision tree?
@@ -37,18 +36,23 @@ First, let us develop a bit the intuitions on what is a decision tree,
 and how it can form the basis of classification and regression models.
 
 ---
+
 # A example of a decision tree
+
 .shift-up-more.shift-left[<img src="../figures/tree_example.svg" width="100%">]
 
 ???
 A decision tree is a set of rules, combined in a hierarchical manner.
 
 In this example, if a new point have to be classified :
+
 - we will first check the age feature, if it is lower than 28.5, we shall classified it as "low income".
 - Otherwise, depending of the hours per week feature, we will classified it as low or high income.
 
 ---
+
 # Classification with a decision tree
+
 .pull-left.shift-left[<img src="../figures/tree2D_1split.svg" width="100%">]
 
 .pull-right[<img src="../figures/tree_blue_orange1.svg" width="100%">]
@@ -57,51 +61,60 @@ In this example, if a new point have to be classified :
 Each split shall maximize the "information gain". That will be define precisely in the following notebook.
 
 ---
+
 # Classification with a decision tree
+
 .pull-left.shift-left[<img src="../figures/tree2D_2split.svg" width="100%">]
 
 .pull-right[<img src="../figures/tree_blue_orange2.svg" width="100%">]
- 
+
 ???
 We can incrementally expand any leaf to refine the decision function. At each step, the leaf focuses on a smaller subregion of the space.
 
 ---
+
 # Classification with a decision tree
+
 .pull-left.shift-left[<img src="../figures/tree2D_3split.svg" width="100%">]
- 
+
 .pull-right[<img src="../figures/tree_blue_orange3.svg" width="100%">]
- 
+
 ???
-In this example, after two split, we obtain pure leaf. 
-i.e. in each leaf, there is only one class. 
-The max depth here is then egal to 2. We do not need to go deeper.
+In this example, after two split, we obtain pure leaf.
+i.e. in each leaf, there is only one class.
+The max depth here is then equal to 2. We do not need to go deeper.
 
 ---
+
 # Regression with a decision tree
+
 <img src="../figures/tree_regression1.svg" width="100%">
 
 ???
-Decision tree can also fit regression problem. 
+Decision tree can also fit regression problem.
 
 ---
+
 # Regression with a decision tree
+
 <img src="../figures/tree_regression2.svg" width="100%">
 
 ???
-It will arrange the split w.r.t. the value of *x*. 
+It will arrange the split w.r.t. the value of _x_.
 Without making any assumption on any distribution. It is a non-parametric model.
 
 ---
+
 # Regression with a decision tree
+
 <img src="../figures/tree_regression3.svg" width="100%">
 ???
 
 But it can also overfit.
 Controlling the depth here allow to control the overfit.
 
-
-
 ---
+
 # Tree: underfit / overfit tradeoff
 
 <img src="../figures/dt_underfit.svg" width="32%">
@@ -111,7 +124,7 @@ Controlling the depth here allow to control the overfit.
 .shift-up-less[
 &nbsp; &nbsp; Underfit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Overfit
-] 
+]
 
 .shift-up-less[
 &nbsp; &nbsp; Small depth &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -120,210 +133,9 @@ Controlling the depth here allow to control the overfit.
 Large depth
 ]
 
-
----
-class: center, middle
-
-# Bagging and boosting
-
-How to build powerful models with trees
-
----
-# Bagging
-
-<img src="../figures/bagging_reg_data.svg" width="50%">
-
----
-# Bagging
-
-.shift-up-less[
-    <img src="../figures/bagging_reg_grey.svg" width="120%">
-]
-.pull-left[
-* Select multiple random subsets of the data
-]
-
 ---
 
-# Bagging
-
-.shift-up-less[
-    <img src="../figures/bagging_reg_grey_fitted.svg" width="120%">
-]
-
-.pull-left[
-* Select multiple random subsets of the data
-
-* Fit one model on each
-]
-
-
----
-
-# Bagging
-
-.shift-up-less[
-    <img src="../figures/bagging_reg_grey_fitted.svg" width="120%">
-]
-
-.pull-left[
-* Select multiple random subsets of the data
-
-* Fit one model on each
-
-* Average predictions
-]
-
-
-.pull-right[
-    <img src="../figures/bagging_reg_blue.svg" width="80%">
-]
-
-???
-
-In bagging we will construct deep tree in parallel.
-
-
-Each tree will be fitted on an sub-sampling from the initial data. 
-i.e. we will only consider a random part of the data to build each model.
-
-When we have to classify a new point, we will agregate the prediction of every model by a voting scheme.
-
----
-
-
-# Bagging trees: random forests
-
-.pull-left[<img src="../figures/bagging0.svg" width="100%">]
-.pull-right[<img src="../figures/bagging.svg" width="120%">]
-
-.width65.shift-up-less.centered[
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-]
-
-???
-Here we have a classification task. Separating circle from  square. 
-
----
-# Bagging trees: random forests
-.pull-left[<img src="../figures/bagging0.svg" width="100%">]
-.pull-right[<img src="../figures/bagging_line.svg" width="120%">]
-
-.pull-right[<img src="../figures/bagging_trees.svg" width="120%">]
-
-.width65.shift-up-less.centered[
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-]
-
-???
-
-
-
----
-# Bagging trees: random forests
-.pull-left[<img src="../figures/bagging0_cross.svg" width="100%">]
-.pull-right[<img src="../figures/bagging_cross.svg" width="120%">]
-
-.pull-right[<img src="../figures/bagging_trees_predict.svg" width="120%">]
- 
-.pull-right[<img src="../figures/bagging_vote.svg" width="120%">]
-
-.width65.shift-up-less.centered[
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-]
-
-???
-
-
-
----
-# Boosting
-<img src="../figures/boosting/boosting_iter1.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter_sized1.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter_orange1.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter2.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter_sized2.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter_orange2.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter3.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter_sized3.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter_orange3.svg" width="100%">
----
-# Boosting
-<img src="../figures/boosting/boosting_iter4.svg" width="100%">
-
-???
-
----
-# Boosting
-.pull-left[<img src="../figures/boosting0.svg" width="100%">]
-
-???
-
-
----
-# Boosting
-.pull-left[<img src="../figures/boosting1.svg" width="100%">]
-.pull-right[<img src="../figures/boosting_trees1.svg" width="100%">]
-
-???
-A first shalow tree start to separate circle from square. Mistakes done by this first tree model shall be corrected by a second tree model.
-
----
-# Boosting
-.pull-left[<img src="../figures/boosting2.svg" width="100%">]
-.pull-right[<img src="../figures/boosting_trees2.svg" width="100%">]
-
-.width65.shift-up-less.centered[
-```python
-from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate = .1)
-```
-]
-
-???
-So now, the second tree refine the first tree. The final model is a weighted sum of this first two trees.
-
----
-# Boosting
-.pull-left[<img src="../figures/boosting3.svg" width="100%">]
-.pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
-
-.width65.shift-up-less.centered[
-```python
-from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate = .1)
-```
-]
-
-???
-We could continue to refining our ensemble model. At each step we focus on mistakes of the previous model.
-
----
 # Take away
 
-* `max_depth` parameter can prevent overfiting
-* `Random Forest` use bagging over decision trees
-* `boosting` fit sequentialy shallow trees
-* `bagging` fit simultaneously deep trees
+- Successive binary rule considering a single feature
+- `max_depth` controls the trade-off between underfit-overfit

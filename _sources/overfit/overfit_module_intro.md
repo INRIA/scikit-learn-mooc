@@ -28,8 +28,8 @@ statistical variance and bias.
 
 The required technical skills to carry on this module are:
 
-- skills acquired during the "The Predictive Modeling Pipeline" with basic
-  usage of scikit-learn.
+- skills acquired during the "The Predictive Modeling Pipeline" module with
+  basic usage of scikit-learn.
 
 <!-- Point to resources to learning these skills -->
 

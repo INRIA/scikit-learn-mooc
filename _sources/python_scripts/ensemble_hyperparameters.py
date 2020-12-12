@@ -1,5 +1,5 @@
 # %% [markdown]
-# # hyperparameters tuning
+# # Hyperparameters tuning
 #
 # In the previous section, we did not discuss the parameters of random forest
 # and gradient-boosting. However, there are a couple of things to keep in mind

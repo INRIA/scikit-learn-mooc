@@ -1,0 +1,1381 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🏁 Wrap-up quiz &#8212; Scikit-learn tutorial</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Module overview" href="../trees/trees_module_intro.html" />
+    <link rel="prev" title="Main take-away" href="../linear_models/linear_models_module_take_away.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn tutorial</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Machine Learning Concepts
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/slides.html">
+   📰 Introducing machine-learning concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  The predictive modeling pipeline
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/predictive_modeling_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_index.html">
+   Tabular data exploration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/01_tabular_data_exploration.html">
+     First look at our dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html">
+   Fitting a scikit-learn model on numerical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_introduction.html">
+     First model with scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_hands_on.html">
+     Working with numerical data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
+   Handling categorical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline.html">
+     Encoding of categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/03_categorical_pipeline_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/predictive_modeling_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="predictive_modeling_pipeline_questions.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Selecting the best model
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfitting_vs_under_fitting_slides.html">
+   📰 Overfitting and Underfitting
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfitting_vs_under_fitting_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/learning_validation_curves_slides.html">
+   📰 Comparing train and test errors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/learning_validation_curves_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/bias_vs_variance_slides.html">
+   📰 Bias vs Variance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/bias_vs_variance_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../overfit/cross_validation_index.html">
+   The cross-validation framework
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_train_test.html">
+     The framework and why do we need it
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_validation_curve.html">
+     Overfit-generalization-underfit
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_learning_curve.html">
+     Effect of the sample size in cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_sol_01.html">
+     📃 Solution fo Exercise 01
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Hyperparameters tuning
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/parameter_tuning_ex_01.html">
+   📝 Introductory example for hyperparameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/parameter_tuning_sol_01.html">
+   📃 Solution for introductory example for hyperparameters tuning
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_manual_index.html">
+   Manual tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_manual.html">
+     Set and get hyperparameters in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_ex_02.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_sol_02.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_automated_index.html">
+   Automated tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_automated.html">
+     Automated hyperparameters tuning in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_ex_03.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_sol_03.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/slides.html">
+   📰 Intuitions on linear models
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_regression_index.html">
+   Linear regression
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_regression_without_sklearn.html">
+     Linear regression without scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_regression_in_sklearn.html">
+     Linear regression using scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_non_linear_index.html">
+   Modelling with a non-linear relationship data-target
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_regression_non_linear_link.html">
+     Linear regression with non-linear link between data and target
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_ex_03.html">
+     📝 Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_sol_03.html">
+     📃 Solution for Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_regularization_index.html">
+   Regularization in linear model
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_regularization.html">
+     Regularization of linear regression model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_ex_04.html">
+     📝 Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_sol_04.html">
+     📃 Solution for Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_classification_index.html">
+   Linear model for classification
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/logistic_regression.html">
+     Linear model for classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_ex_05.html">
+     📝 Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/linear_models_sol_05.html">
+     📃 Solution for Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/logistic_regression_non_linear.html">
+     Beyond linear separation in classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_04.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Decision tree models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/slides.html">
+   📰 Intuitions on tree-based models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/trees_dataset.html">
+   Presentation of the datasets
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_classification_index.html">
+   Decision tree in classification
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/trees_classification.html">
+     Build a classification decision tree
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/trees_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/trees_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_regression_index.html">
+   Decision tree in regression
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/trees_regression.html">
+     Decision tree for regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/trees_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/trees_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_hyperparameters_index.html">
+   Hyperparameters of decision tree
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/trees_hyperparameters.html">
+     Importance of decision tree hyperparameters on generalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="trees_questions.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Ensemble of models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/slides.html">
+   📰 Intuitions on ensemble of tree-based models
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/ensemble_introduction.html">
+   Introductory example to ensemble models
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_bootstrap_index.html">
+   Ensemble method using bootstrapping
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_bagging.html">
+     Bagging
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_sol_01.html">
+     📃 Solution of Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_random_forest.html">
+     Random forest
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_random_forest.html#midpoint-summary">
+     Midpoint summary
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_boosting_index.html">
+   Ensemble based on boosting
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_adaboost.html">
+     Adaptive Boosting (AdaBoost)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_ex_03.html">
+     📝 Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_sol_03.html">
+     📃 Solution for Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_gradient_boosting.html">
+     Gradient-boosting decision tree (GBDT)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_ex_04.html">
+     📝 Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_sol_04.html">
+     📃 Solution for Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_hist_gradient_boosting.html">
+     Speeding-up gradient-boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_hyperparameters_index.html">
+   Hyperparameters tuning with ensemble methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_hyperparameters.html">
+     Hyperparameters tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_ex_05.html">
+     📝 Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/ensemble_sol_05.html">
+     📃 Solution for Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ensemble_questions.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Evaluating model performance
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/evaluation_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/cross_validation_baseline_index.html">
+   Comparing a model with simple baselines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_baseline.html">
+     Comparing results with baseline and chance level
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/cross_validation_choices_index.html">
+   Choice of cross-validation
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_ex_03.html">
+     📝 Introductory exercise regarding stratification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_stratification.html">
+     Stratification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_ex_04.html">
+     📝 Introductory exercise for sample grouping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_grouping.html">
+     Sample grouping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_ex_05.html">
+     📝 Introductory exercise for non i.i.d. data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/cross_validation_time.html">
+     Non i.i.d. data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/cross_validation_nested.html">
+   Nested cross-validation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/cross_validation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/02_metrics.html">
+   Introduction of the evaluation metrics
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/metrics_classification_index.html">
+   Classification metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/metrics_classification.html">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/metrics_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/metrics_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/metrics_regression_index.html">
+   Regression metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/metrics_regression.html">
+     Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/metrics_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/metrics_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/metrics_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/evaluation_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Feature selection
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/feature_selection_introduction.html">
+   Compelling advantage of using feature selection
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../feature_selection/feature_selection_limitation_index.html">
+   Caveats of feature selection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/feature_selection_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/feature_selection_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/feature_selection_limitation_model.html">
+     Limitation of selecting feature using a model
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../python_scripts/dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../interpretation/interpretation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/final_evaluation/linear_models_questions.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/INRIA/scikit-learn-mooc"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Ffinal_evaluation/linear_models_questions.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/final_evaluation/linear_models_questions.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="wrap-up-quiz">
+<h1>🏁 Wrap-up quiz<a class="headerlink" href="#wrap-up-quiz" title="Permalink to this headline">¶</a></h1>
+<p><strong>This quiz requires some programming to be answered.</strong></p>
+<p>Open the dataset <code class="docutils literal notranslate"><span class="pre">house_prices.yml</span></code>. The column <code class="docutils literal notranslate"><span class="pre">SalePrice</span></code> contains the
+target. Use only the following numerical features when creating a linear
+model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;LotFrontage&quot;</span><span class="p">,</span> <span class="s2">&quot;LotArea&quot;</span><span class="p">,</span> <span class="s2">&quot;MasVnrArea&quot;</span><span class="p">,</span> <span class="s2">&quot;BsmtFinSF1&quot;</span><span class="p">,</span> <span class="s2">&quot;BsmtFinSF2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BsmtUnfSF&quot;</span><span class="p">,</span> <span class="s2">&quot;TotalBsmtSF&quot;</span><span class="p">,</span> <span class="s2">&quot;1stFlrSF&quot;</span><span class="p">,</span> <span class="s2">&quot;2ndFlrSF&quot;</span><span class="p">,</span> <span class="s2">&quot;LowQualFinSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GrLivArea&quot;</span><span class="p">,</span> <span class="s2">&quot;BedroomAbvGr&quot;</span><span class="p">,</span> <span class="s2">&quot;KitchenAbvGr&quot;</span><span class="p">,</span> <span class="s2">&quot;TotRmsAbvGrd&quot;</span><span class="p">,</span> <span class="s2">&quot;Fireplaces&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GarageCars&quot;</span><span class="p">,</span> <span class="s2">&quot;GarageArea&quot;</span><span class="p">,</span> <span class="s2">&quot;WoodDeckSF&quot;</span><span class="p">,</span> <span class="s2">&quot;OpenPorchSF&quot;</span><span class="p">,</span> <span class="s2">&quot;EnclosedPorch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;3SsnPorch&quot;</span><span class="p">,</span> <span class="s2">&quot;ScreenPorch&quot;</span><span class="p">,</span> <span class="s2">&quot;PoolArea&quot;</span><span class="p">,</span> <span class="s2">&quot;MiscVal&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Start by fitting a linear regression. Use a 10-Fold cross-validation and pass
+the argument <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> to access to all estimators fitted for
+each fold.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>What magnitude of the extremum weight values for all features:
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) 1e4</p></li>
+<li><p>b) 1e6</p></li>
+<li><p>c) 1e18</p></li>
+</ul>
+</div>
+<p>Now, use a ridge regressor instead of a linear regression.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>What magnitude of the extremum weight values for all features?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) 1e4</p></li>
+<li><p>b) 1e6</p></li>
+<li><p>c) 1e18</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>What are the two most important features used by the ridge regressor?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) <code class="docutils literal notranslate"><span class="pre">&quot;MiscVal&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;BsmtFinSF1&quot;</span></code></p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">&quot;GarageCars&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;GrLivArea&quot;</span></code></p></li>
+<li><p>c) <code class="docutils literal notranslate"><span class="pre">&quot;TotalBsmtSF&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;GarageCars&quot;</span></code></p></li>
+</ul>
+</div>
+<p>Remove the feature <code class="docutils literal notranslate"><span class="pre">&quot;GarageArea&quot;</span></code> from the dataset and repeat the previous
+experiment.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>What is the impact on the weights of removing <code class="docutils literal notranslate"><span class="pre">&quot;GarageArea&quot;</span></code> from the dataset?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) None</p></li>
+<li><p>b) Change completely the order of the feature importance</p></li>
+<li><p>c) The variability of the most important feature reduced</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>What is the reason for observing the previous impact on the most important
+weight?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) Both features were correlated and were carrying similar information</p></li>
+<li><p>b) …</p></li>
+<li><p>c) …</p></li>
+</ul>
+</div>
+<p>Instead of using a ridge regressor, use a <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> where the goal will be to
+find the optimum l2 penalty with an internal cross-validation. You can provide
+a range of <code class="docutils literal notranslate"><span class="pre">alphas</span></code> as <code class="docutils literal notranslate"><span class="pre">np.logspace(-1,</span> <span class="pre">3,</span> <span class="pre">num=30)</span></code></p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Is there major differences regarding the most important weights?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) Yes, the weights order is completely different</p></li>
+<li><p>b) No, the weights order is very similar</p></li>
+</ul>
+</div>
+<p>Check the parameter <code class="docutils literal notranslate"><span class="pre">alpha_</span></code> of the different ridge regressor</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>In general what is the optimal l2 penalty strength?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) between 0.1 and 1</p></li>
+<li><p>b) between 1 and 10</p></li>
+<li><p>c) between 10 and 100</p></li>
+<li><p>d) between 100 and 1000</p></li>
+</ul>
+</div>
+<p>We will now work a dataset that expose a classification problem instead of a
+regression problem. Open the dataset <code class="docutils literal notranslate"><span class="pre">&quot;adult-census.csv&quot;</span></code>. The target column
+is <code class="docutils literal notranslate"><span class="pre">&quot;class&quot;</span></code>. Select only the numerical features.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>How many numerical features are present in the dataset?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) 3</p></li>
+<li><p>b) 4</p></li>
+<li><p>c) 5</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Is there any missing values in this dataset?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) Yes</p></li>
+<li><p>b) No</p></li>
+</ul>
+</div>
+<p>Use a logistic regression classifier with a 10-fold cross-validation to assess
+the performance.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>In average, how much the logistic regression is better/worse/similar to a dummy
+classifier that would predict the most frequent class?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) Worse that a dummy classifier by 4%</p></li>
+<li><p>b) Similar to a dummy classifier</p></li>
+<li><p>c) Better that a dummy classifier by 4%</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>What is the most important feature seen by the logistic regression?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code></p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code></p></li>
+<li><p>c) <code class="docutils literal notranslate"><span class="pre">&quot;capital-loss&quot;</span></code></p></li>
+<li><p>d) <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code></p></li>
+</ul>
+</div>
+<p>Now, load the entire dataset, both numerical and categorical data.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Is there any missing values in this dataset?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) Yes</p></li>
+<li><p>b) No</p></li>
+</ul>
+</div>
+<p>Create a new logistic regression model by one-hot encoding the categorical
+features.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>In average, what is the improvement of using the categorical features?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) It gives similar results</p></li>
+<li><p>b) It improves the performance by 5%</p></li>
+<li><p>c) it improves the performance by 10%</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>What are the two most important features used by the logistic regressor?
+<em>Select a single answer</em></p>
+<ul class="simple">
+<li><p>a) <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;native-country_Columbia&quot;</span></code></p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">&quot;workclass_</span> <span class="pre">?&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;naitive_country_</span> <span class="pre">?&quot;</span></code></p></li>
+<li><p>c) <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education_Doctorate&quot;</span></code></p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>hat is the effect of decreasing the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter on the coefficients?
+<em>Select several answers</em></p>
+<ul class="simple">
+<li><p>a) shrinking the magnitude of the weights towards zeros</p></li>
+<li><p>b) increasing the magnitude of the weights</p></li>
+<li><p>c) reducing the weights’ variance</p></li>
+<li><p>d) increasing the weights’ variance</p></li>
+<li><p>e) do not have any influence on the weights’ variance</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./final_evaluation"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="../linear_models/linear_models_module_take_away.html" title="previous page">Main take-away</a>
+    <a class='right-next' id="next-link" href="../trees/trees_module_intro.html" title="next page">Module overview</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

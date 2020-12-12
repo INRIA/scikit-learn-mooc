@@ -6,11 +6,10 @@
 
 This module will give an example of a typical predictive modeling pipeline
 developed using tabular data. We will present this pipeline in a progressive
-way. First, we will make an analysis of the dataset used. Then, we will train
-our first pipeline with a subset of the dataset. Subsequently, we will
-make our pipeline more complex to use all available type of data (i.e.
-numerical and categorical data). Finally, we will show how to tune the pipeline
-parameters.
+way. First, we will make an analysis of the dataset used. Subsequently, we will
+train our first pipeline with a subset of the dataset, containing only
+numerical feature. Finally, we will extend our pipeline to use mixed
+type of data, i.e. numerical and categorical data.
 
 ## Before getting started
 
@@ -42,9 +41,8 @@ The objective in the module are the following:
 
 - build intuition regarding an unknown dataset;
 - identify and differentiate numerical and categorical features;
-- create an advanced predictive pipeline with scikit-learn;
-- fine-tune the parameters of an advanced predictive pipeline.
+- create an advanced predictive pipeline with scikit-learn.
 
 <!-- Give the investment in time -->
 
-The estimated time to go through this module is about 5 hours.
+The estimated time to go through this module is about 3 hours 15.

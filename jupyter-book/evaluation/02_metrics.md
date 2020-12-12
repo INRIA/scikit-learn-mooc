@@ -1,4 +1,4 @@
-# The evaluation metrics
+# Introduction of the evaluation metrics
 
 Machine-learning models rely on optimizing an objective function, by seeking
 its minimum or maximum. It is important to understand that this objective
@@ -15,7 +15,3 @@ metrics used to evaluate the performance of a predictive model.
 
 Evaluation metric selection will mainly depend on the model chosen to
 solve our data science problem.
-
-```{tableofcontents}
-
-```

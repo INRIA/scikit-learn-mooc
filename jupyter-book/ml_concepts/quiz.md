@@ -13,6 +13,14 @@ What kind of problem is it?
 - d) a regression problem
 ```
 
++++ {"tags": ["solution"]}
+
+_solution_ a) & d) It is a supervised problem because we have some information
+about the target variable (the price). It is a regression problem because the
+target variable is continous (it is not a class)
+
++++
+
 ```{admonition} Question
 What are the features?
 
@@ -20,6 +28,12 @@ What are the features?
 - b) the localisation of the house might be a feature
 - c) the price of the house might be a feature
 ```
+
++++ {"tags": ["solution"]}
+
+_solution_ a) & b) Every kind of house description might be a feature here.
+
++++
 
 ```{admonition} Question
 What is the target variable?
@@ -29,6 +43,13 @@ What is the target variable?
 - c) the house with no price mentioned are the target
 ```
 
++++ {"tags": ["solution"]}
+
+b) The price is the amount we want to predict, thus it is our target
+variable
+
++++
+
 ```{admonition} Question
 What is a record (a sample)?
 
@@ -36,3 +57,7 @@ What is a record (a sample)?
 - b) each house price is a record
 - c) each kind of description (as the house size) is a record
 ```
+
++++ {"tags": ["solution"]}
+
+a)

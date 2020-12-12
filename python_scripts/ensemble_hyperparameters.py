@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Hyper-parameters tuning
+# # hyperparameters tuning
 #
 # In the previous section, we did not discuss the parameters of random forest
 # and gradient-boosting. However, there are a couple of things to keep in mind
@@ -100,7 +100,7 @@ cv_results = pd.DataFrame(grid_search.cv_results_)
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
-# ```{cautious}
+# ```{caution}
 # Here, we tune the `n_estimators` but be aware that using early-stopping as
 # in the previous exercise will be better.
 # ```

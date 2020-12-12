@@ -1,3 +1,4 @@
+# %%
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -12,16 +13,29 @@ def f(t):
 
 N_SAMPLES = 50
 
+
+def make_poly_data(n_samples, rng):
+    x = 2 * rng.rand(n_samples) - 1
+    y = f(x) + .4 * rng.normal(size=n_samples)
+    return x, y
+
+
 rng = np.random.RandomState(0)
-x = 2 * rng.rand(N_SAMPLES) - 1
+x, y = make_poly_data(N_SAMPLES, rng)
+x_test, y_test = make_poly_data(N_SAMPLES, rng)
 
-y = f(x) + .4 * rng.normal(size=N_SAMPLES)
+plt.figure()
+plt.scatter(x, y, s=20, color='k')
+t = np.linspace(-1, 1, 100)
+plt.plot(t, f(t), 'k--', label='$f^{\star}$')
 
-x_test = 2 * rng.rand(N_SAMPLES) - 1
+style_figs.no_axis()
+plt.subplots_adjust(top=.96)
+plt.xlim(-1.1, 1.1)
+plt.ylim(-.74, 2.1)
+plt.savefig('polynomial_overfit_truth.svg', facecolor='none', edgecolor='none')
 
-y_test = f(x_test) + .4 * rng.normal(size=N_SAMPLES)
-
-
+# %%
 plt.figure()
 plt.scatter(x, y, s=20, color='k')
 
@@ -30,6 +44,7 @@ plt.subplots_adjust(top=.96)
 plt.xlim(-1.1, 1.1)
 plt.ylim(-.74, 2.1)
 plt.savefig('polynomial_overfit_0.svg', facecolor='none', edgecolor='none')
+
 
 # %%
 # Our model (polynomial regression)
@@ -44,12 +59,12 @@ from sklearn.linear_model import LinearRegression
 plt.figure()
 plt.scatter(x, y, s=20, color='k')
 
-t = np.linspace(-1, 1, 100)
 
 for d in (1, 2, 5, 9):
     model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())
     model.fit(x.reshape(-1, 1), y)
-    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d,
+    plt.plot(t, model.predict(t.reshape(-1, 1)),
+             label='Fitted degree %d poly.' % d,
              linewidth=4)
 
     style_figs.no_axis()
@@ -84,7 +99,89 @@ plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
            labelspacing=.4, fontsize=26)
 plt.subplots_adjust(top=1)
 
-plt.savefig('polynomial_overfit_simple.svg', facecolor='none', edgecolor='none')
+plt.savefig('polynomial_overfit_.svg', facecolor='none', edgecolor='none')
+
+# %%
+# A figure with the true model and the estimated one with resampled training
+# sets
+
+overfit_models = []
+for idx in range(10):
+    x_train, y_train = make_poly_data(30, np.random.RandomState(idx))
+    model = make_pipeline(PolynomialFeatures(degree=9), LinearRegression())
+    model.fit(x_train.reshape(-1, 1), y_train)
+    overfit_models.append(model)
+    if idx in [0, 1, 2]:
+        plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+        plt.scatter(x_train, y_train, s=20, color='k')
+        plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
+                label='$\hat{f}$')
+
+        plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+        style_figs.no_axis()
+        plt.ylim(-1.25, 2.5)
+        plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+                labelspacing=.4, fontsize=26)
+        plt.subplots_adjust(top=1)
+        plt.savefig('polynomial_overfit_resample_%d.svg' % idx,
+                    facecolor='none', edgecolor='none')
+
+
+plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+label = '$\hat{f}$'
+for model in overfit_models:
+    plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
+             alpha=0.5, label=label)
+    label = None
+plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+style_figs.no_axis()
+plt.ylim(-1.25, 2.5)
+plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+           labelspacing=.4, fontsize=26)
+plt.subplots_adjust(top=1)
+plt.savefig('polynomial_overfit_resample_all.svg',
+            facecolor='none', edgecolor='none')
+
+# %%
+# A figure with the true model and the estimated one with resampled training
+# sets
+
+underfit_models = []
+for idx in range(10):
+    x_train, y_train = make_poly_data(30, np.random.RandomState(idx))
+    model = make_pipeline(PolynomialFeatures(degree=1), LinearRegression())
+    model.fit(x_train.reshape(-1, 1), y_train)
+    underfit_models.append(model)
+    if idx in [0, 1, 2]:
+        plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+        plt.scatter(x_train, y_train, s=20, color='k')
+        plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
+                label='$\hat{f}$')
+
+        plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+        style_figs.no_axis()
+        plt.ylim(-1.25, 2.5)
+        plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+                labelspacing=.4, fontsize=26)
+        plt.subplots_adjust(top=1)
+        plt.savefig('polynomial_underfit_resample_%d.svg' % idx,
+                    facecolor='none', edgecolor='none')
+
+
+plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
+label = '$\hat{f}$'
+for model in underfit_models:
+    plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
+             alpha=0.5, label=label)
+    label = None
+plt.plot(t, f(t), 'k--', label='$f^{\star}$')
+style_figs.no_axis()
+plt.ylim(-1.25, 2.5)
+plt.legend(loc='upper center', borderaxespad=0, borderpad=0,
+           labelspacing=.4, fontsize=26)
+plt.subplots_adjust(top=1)
+plt.savefig('polynomial_underfit_resample_all.svg',
+            facecolor='none', edgecolor='none')
 
 # %%
 # A figure with the true model and the estimated one
@@ -94,7 +191,7 @@ plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C3',
          label='Fitted model')
 
-plt.plot(t, f(t), 'k--', label='Best possible fit\n$\\approx$generative process')
+plt.plot(t, f(t), 'k--', label='Best possible model')
 style_figs.no_axis()
 plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
@@ -114,16 +211,16 @@ model.fit(x.reshape(-1, 1), y)
 plt.figure(figsize=[.5 * 6.4, .5 * 4.9])
 plt.scatter(x, y, s=20, color='k')
 plt.plot(t, model.predict(t.reshape(-1, 1)), color='C0',
-         label='Fitted model\n$\\approx$best possible fit')
+         label='Fitted model')
 
-plt.plot(t, f(t), 'k--', label='Generative process')
+plt.plot(t, f(t), 'k--', label='Best possible model')
 style_figs.no_axis()
 plt.ylim(-1.25, 2.5)
 plt.legend(loc='upper right', borderaxespad=0, borderpad=0,
            labelspacing=.4, fontsize=16)
 plt.subplots_adjust(top=1)
 
-plt.savefig('polynomial_overfit_assymptotic.svg', facecolor='none', edgecolor='none')
+plt.savefig('polynomial_underfit_simple.svg', facecolor='none', edgecolor='none')
 
 # %%
 # Train and test set with various complexity in the polynomial degree
@@ -137,7 +234,7 @@ t = np.linspace(-1, 1, 100)
 for d in (1, 2, 5, 9):
     model = make_pipeline(PolynomialFeatures(degree=d), LinearRegression())
     model.fit(x.reshape(-1, 1), y)
-    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Degree %d' % d,
+    plt.plot(t, model.predict(t.reshape(-1, 1)), label='Fitted degree %d poly.' % d,
              linewidth=4)
 
     style_figs.no_axis()
@@ -153,13 +250,10 @@ for d in (1, 2, 5, 9):
 # Validation curves
 from sklearn import model_selection
 
-N_SAMPLES = 150
+N_SAMPLES = 80
 
 rng = np.random.RandomState(0)
-x = 2 * rng.rand(N_SAMPLES) - 1
-
-y = f(x) + .4 * rng.normal(size=N_SAMPLES)
-
+x, y = make_poly_data(N_SAMPLES, rng)
 
 param_range = np.arange(1, 15)
 
@@ -167,9 +261,9 @@ train_scores, test_scores = model_selection.validation_curve(
     model, x[::2].reshape((-1, 1)), y[::2],
     param_name='polynomialfeatures__degree',
     param_range=param_range,
-    cv=model_selection.ShuffleSplit(n_splits=20, test_size=.5,
+    cv=model_selection.ShuffleSplit(n_splits=100, test_size=.5,
                                     random_state=1),
-    scoring='r2')
+    scoring='neg_mean_absolute_error')
 
 plotted_degrees = [1, 2, 5, 9, 15]
 for i, degree in enumerate(plotted_degrees):
@@ -193,7 +287,7 @@ for i, degree in enumerate(plotted_degrees):
     for s in ('top', 'right'):
         ax.spines[s].set_visible(False)
 
-    plt.ylim(ymin=-.8, ymax=.5)
+    plt.ylim(ymin=0, ymax=1.)
     plt.xlim(0.5, 15)
     plt.legend(loc='upper right', labelspacing=1.5)
 
@@ -316,7 +410,7 @@ for degree in (4, 16):
     plt.scatter(x, y,  color='k', s=9, alpha=.8)
 
     plt.plot(t, poly.predict(t.reshape((-1, 1))),
-            color='C3', linewidth=3, label='Polynome')
+            color='C3', linewidth=3, label='Polynomial')
     plt.plot(t, decision_tree.predict(t.reshape((-1, 1))),
             color='C0', linewidth=3, label='Decision Tree')
 

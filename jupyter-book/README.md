@@ -21,3 +21,10 @@ cd _build/html/index.html && python -m http.server
 
 and then open a browser at `localhost:8000`. A few things will not work, e.g.
 slides, if you open the HTML files in a web browser directly.
+
+To generate the quizzes without solution from our private repo:
+```sh
+cd jupyter-book
+
+python convert_exercises.py <private-repo-jupyter-book-folder> .
+```

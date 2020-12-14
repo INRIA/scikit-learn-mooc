@@ -3,10 +3,12 @@
 ```{admonition} Question
 Regularization refers to:
 
-- a) minimizing the effect of big outliers in a dataset
-- b) constraining in some way the weights of the linear model
-- c) only consider small batch of samples when fitting a model
+- a) constraining the intercept of the linear model to be zero
+- b) shrinking the weights of the linear model towards zero
+- c) use a subset of the available data when fitting a linear model
 ```
+
++++
 
 ```{admonition} Question
 A ridge model is:
@@ -17,28 +19,35 @@ A ridge model is:
 - d) a non linear model
 ```
 
++++
+
 ```{admonition} Question
-The parameter alpha in ridge is:
+The parameter `alpha` in ridge is:
 
 - a) learnt during the fit on the train set
-- b) choose by cross validation on the train set
-- c) choose by cross validation on the test set
-- d) could be choose by hand a priori
+- b) can be chosen by cross-validation on the train set
+- c) can be chosen by cross-validation on the test set
+- d) can be chosen by hand a priori
 ```
 
++++
+
 ```{admonition} Question
-Scaling a dataset:
+Scaling the data before fitting a model:
 
 - a) is necessary when using a regularized model
 - b) is always necessary
-- c) is speeding-up fitting
+- c) may speed-up fitting
 - d) has no impact on the regularization parameter
 ```
+
++++
 
 ```{admonition} Question
 The effect of an l2-regularization is to:
 
 - a) shrink all weights towards zero
 - b) make all weights equal
-- c) put to zero a subset of the weights
+- c) set a subset of the weights to exactly zero
+- d) constrain all the weights to be positive
 ```

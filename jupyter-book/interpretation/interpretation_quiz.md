@@ -10,6 +10,8 @@ With a same dataset, feature importance might differs if:
   random_state
 ```
 
++++
+
 ```{admonition} Question
 In linear model, the feature importance:
 
@@ -18,6 +20,8 @@ In linear model, the feature importance:
 - c) need a regularization to infer the importance
 - d) is a built-in attribute
 ```
+
++++
 
 ```{admonition} Question
 If two feature are the same (thus correlated)
@@ -28,6 +32,8 @@ If two feature are the same (thus correlated)
 - d) it depends
 ```
 
++++
+
 ```{admonition} Question
 The feature importance provided by the scikit-learn random forest:
 
@@ -36,6 +42,8 @@ The feature importance provided by the scikit-learn random forest:
 - c) is independent from the train/test split
 - d) is independent from the hyper-parameters
 ```
+
++++
 
 ```{admonition} Question
 To evaluate the feature importance for a specific model, one could:

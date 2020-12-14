@@ -8,6 +8,8 @@ What is the main advantage of using feature selection?
 - c) remove noisy features
 ```
 
++++
+
 ```{admonition} Question
 When selecting feature, the decision should be made using:
 

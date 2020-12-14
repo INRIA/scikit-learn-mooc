@@ -8,6 +8,8 @@ What the benefit of using cross-validation?
 - c) Give information regarding under- or over-fitting of a model
 ```
 
++++
+
 ```{admonition} Question
 Does a dummy classifier or regressor provides chance level performance?
 
@@ -15,16 +17,20 @@ Does a dummy classifier or regressor provides chance level performance?
 - b) No
 ```
 
++++
+
 ```{admonition} Question
 Given a dataset containing records from subjects from 10 different hospitals,
 we would like to predict if a subject has a disease or not. Which
-cross-validation strategy we should not use?
+cross-validation strategy we should **not** use?
 
 - a) Stratified k-fold cross-validation
 - b) Leave-one-out cross-validation
 - c) Group stratified k-fold cross-validation
 - d) Group k-fold
 ```
+
++++
 
 ```{admonition} Question
 How to evaluate and fine-tune the parameters' model jointly?

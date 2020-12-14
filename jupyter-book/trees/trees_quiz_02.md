@@ -9,6 +9,8 @@ a node corresponds to:
 - c) the most frequent value of the training samples at this node
 ```
 
++++
+
 ```{admonition} Question
 Decision trees are capable of:
 
@@ -17,8 +19,10 @@ Decision trees are capable of:
 - c) only extrapolating
 ```
 
++++
+
 ```{admonition} Question
-The decision function of a tree corresponds to:
+The decision function of a tree regressor corresponds to:
 
 - a) a piecewise-linear function
 - b) a piecewise-constant function

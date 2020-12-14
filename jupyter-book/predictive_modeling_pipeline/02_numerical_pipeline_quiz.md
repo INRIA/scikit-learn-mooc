@@ -8,6 +8,8 @@ Why do we need two sets: a train set and a test set?
 - c) to validate the model on unseen data
 ```
 
++++
+
 ```{admonition} Question
 What is a numerical feature?
 
@@ -16,6 +18,8 @@ What is a numerical feature?
 - b) a column containing only numbers
 - c) a column containing only numbers that are continuous
 ```
+
++++
 
 ```{admonition} Question
 A scikit-learn model can be evaluated by:
@@ -26,6 +30,8 @@ A scikit-learn model can be evaluated by:
 - c) calling `cross_validate` by providing the model and the data
 ```
 
++++
+
 ```{admonition} Question
 When calling `cross_validate`, should you give at least:
 
@@ -33,6 +39,8 @@ When calling `cross_validate`, should you give at least:
 - b) a scikit-learn model and the testing data and target
 - c) a scikit-learn model and the full dataset
 ```
+
++++
 
 ```{admonition} Question
 Scaling the data before fitting a linear model allows us to:
@@ -42,6 +50,8 @@ Scaling the data before fitting a linear model allows us to:
 - c) none of the above
 ```
 
++++
+
 ```{admonition} Question
 Cross-validation allows us to:
 
@@ -50,6 +60,8 @@ Cross-validation allows us to:
 - c) compute the error/score variability
 - d) avoid over-fitting
 ```
+
++++
 
 ```{admonition} Question
 `make_pipeline` (as well as `Pipeline`) is used for:

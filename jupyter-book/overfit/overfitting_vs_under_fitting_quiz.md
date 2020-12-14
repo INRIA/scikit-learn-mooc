@@ -11,6 +11,8 @@ A model that is overfitting:
 - f) is fast to train
 ```
 
++++
+
 ```{admonition} Question
 A model that is underfitting:
 
@@ -21,6 +23,8 @@ A model that is underfitting:
 - e) cannot find the repeatable structure of the training set
 - f) is fast to train
 ```
+
++++
 
 ```{admonition} Question
 If one adds noise to a given dataset (both train and test):

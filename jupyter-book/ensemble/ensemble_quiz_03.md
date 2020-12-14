@@ -9,19 +9,22 @@ Gradient boosting are using:
 - d) using all features
 ```
 
++++
+
 ```{admonition} Question
-Which of the hyperparameter(s) is not existing in random forest while need to
-be tuned in gradient boosting:
+Which of the hyperparameter(s) do not exist in random forest but exists in gradient boosting:
 
 - a) number of estimators
 - b) maximum depth
-- c) learning-rate
+- c) learning rate
 ```
 
++++
+
 ```{admonition} Question
-Which of the following option are correct regarding benefits of ensemble model?
+Which of the following option are correct about the benefits of ensemble models?
 
 - a) Better performance
-- b) Generalized models
+- b) Reduced sensitivity to hyper-parameter tuning of individual predictors
 - c) Better interpretability
 ```

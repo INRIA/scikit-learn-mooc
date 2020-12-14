@@ -8,6 +8,8 @@ What is a categorical feature?
 - c) categorical feature can contain both numerical and non-numerical values
 ```
 
++++
+
 ```{admonition} Question
 Ordinal categories correspond to:
 
@@ -15,6 +17,8 @@ Ordinal categories correspond to:
 - b) categorical variable with meaningful order
 - c) categorical variable with only number
 ```
+
++++
 
 ```{admonition} Question
 One-hot encoding will:
@@ -24,6 +28,8 @@ One-hot encoding will:
 - c) create one additional column for each possible categories
 - d) transform string variable onto numerical representation
 ```
+
++++
 
 ```{admonition} Question
 Why one should drop one of the column when encoding a binary categorical

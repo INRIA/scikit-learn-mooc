@@ -6,18 +6,21 @@ non-linear link with the target?
 
 - a) yes
 - b) no
-- c) you never know
+- c) it depends on the non-linear link between the data and the target
 ```
+
++++
 
 ```{admonition} Question
-Fitting a linear regression where `X` has `n_features` columns, what is the
-respective shape of `coef_` and `intercept_`?
+Fitting a linear regression where `X` has `n_features` columns and the target is binary, what is the
+respective type of `coef_` and `intercept_`?
 
-- a) None, it is not possible to fit a linear regression in dimension higher
-  than 2
-- b) array of shape (`n_features`,) and a float
-- c) array of shape (`n_features`,) and an array of shape (1,)
+- a) it is not possible to fit a linear regression in dimension higher than 2
+- b) array of shape (1, `n_features`) and a float
+- c) array of shape (1, `n_features`) and an array of shape (1,)
 ```
+
++++
 
 ```{admonition} Question
 Is it possible to get a perfect fit with a linear model on a dataset where the
@@ -25,5 +28,5 @@ data have a non-linear link with the target?
 
 - a) yes
 - b) no
-- c) you never know
+- c) it depends on the non-linear link between the data and the target
 ```

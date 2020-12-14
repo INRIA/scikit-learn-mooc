@@ -9,6 +9,8 @@ Pandas allows us to:
 - d) deal with scientific/mathematics functions
 ```
 
++++
+
 ```{admonition} Question
 When reading a CSV file with Pandas, missing values are:
 
@@ -19,6 +21,8 @@ When reading a CSV file with Pandas, missing values are:
   is not recognized by Pandas
 ```
 
++++
+
 ```{admonition} Question
 How tabular data are organized?
 
@@ -26,10 +30,12 @@ How tabular data are organized?
 - b) a column represents a feature and a row represents a sample
 ```
 
++++
+
 ```{admonition} Question
 A categorical variable is:
 
 - a) a variable with only two different values
 - b) a variable with continuous numerical values
-- c) a variable with a finite set of value
+- c) a variable with a finite set of values
 ```

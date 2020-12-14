@@ -1,21 +1,25 @@
 # ✅ Quiz
 
 ```{admonition} Question
-By default, a bagging predictor by drawing:
+By default, a bagging predictor draws:
 
-- a) a bootstrap over samples
-- b) a bootstrap over features
-- c) subsample without replacement over samples
-- c) subsample without replacement over features
+- a) subsamples with replacement over samples
+- b) subsamples with replacement over features
+- c) subsamples without replacement over samples
+- c) subsamples without replacement over features
 ```
 
++++
+
 ```{admonition} Question
-In a bagging predictor, the parameter `base_estimator` is:
+In a bagging predictor (TODO put scikit-learn class here or rephrase without the parameter name), the parameter `base_estimator` is:
 
 - a) any predictor
 - b) a decision tree predictor
 - c) a linear model predictor
 ```
+
++++
 
 ```{admonition} Question
 What is the difference between a bagging predictor and a random forest:

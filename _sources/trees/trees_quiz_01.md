@@ -8,18 +8,22 @@ For a decision tree built in scikit-learn, a split:
 - c) will create multiple separations, one for each class
 ```
 
-```{admonition} Question
-Trees are built:
++++
 
-- a) incrementally by splitting data over and over
+```{admonition} Question
+Trees are built incrementally:
+
+- a) by splitting data over and over
 - b) by refining the rules of each nodes
-- c) by refining the prediction of each leaf
+- c) by refining the rules of each leaf
 ```
+
++++
 
 ```{admonition} Question
 A decision tree split is built:
 
 - a) using a random threshold
-- b) a threshold that minimizes an error
-- c) ...
+- b) using the median value of a single feature as a threshold
+- c) using a threshold that minimizes an error
 ```

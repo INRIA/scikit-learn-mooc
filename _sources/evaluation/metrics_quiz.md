@@ -8,6 +8,8 @@ What is the default score in scikit-learn when using a classifier?
 - c) accuracy
 ```
 
++++
+
 ```{admonition} Question
 What is the default score in scikit-learn when using a regressor?
 
@@ -15,6 +17,8 @@ What is the default score in scikit-learn when using a regressor?
 - b) mean absolute error
 - c) median absolute error
 ```
+
++++
 
 ```{admonition} Question
 Which classifier's method should you call to get the predictions required
@@ -24,6 +28,8 @@ by the function `precision_recall_curve`?
 - b) `decision_function(X)`
 - c) `predict_proba(X)`
 ```
+
++++
 
 ```{admonition} Question
 When errors are used in the function `cross_validate` in scikit-learn, one

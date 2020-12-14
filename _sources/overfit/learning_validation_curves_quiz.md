@@ -9,6 +9,8 @@ A model is overfitting when:
 - d) both train and test errors are low
 ```
 
++++
+
 ```{admonition} Question
 Assuming that we have a data with little noise, a model is underfitting when:
 
@@ -17,6 +19,8 @@ Assuming that we have a data with little noise, a model is underfitting when:
 - c) train error is high but the test error is low
 - d) both train and test errors are low
 ```
+
++++
 
 ```{admonition} Question
 For a fixed training set, if we change a model parameter to give the model more
@@ -28,6 +32,8 @@ flexibility, are we more likely to observe:
 - d) a decrease in the train error
 ```
 
++++
+
 ```{admonition} Question
 For a fixed choice of model parameters, if we increase the number of labeled
 observations in the training set, are we more likely to observe:
@@ -38,6 +44,8 @@ observations in the training set, are we more likely to observe:
 - d) a decrease in the train error
 ```
 
++++
+
 ```{admonition} Question
 Polynomial models with a high degree parameter:
 
@@ -46,6 +54,8 @@ Polynomial models with a high degree parameter:
 - c) get lower training error than lower degree polynomial models
 - d) are more likely to overfit than lower degree polynomial models
 ```
+
++++
 
 ```{admonition} Question
 One can always reach zero test error by:

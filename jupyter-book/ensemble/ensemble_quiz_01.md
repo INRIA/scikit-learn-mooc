@@ -12,7 +12,8 @@ By default, a bagging predictor draws:
 +++
 
 ```{admonition} Question
-In a bagging predictor (TODO put scikit-learn class here or rephrase without the parameter name), the parameter `base_estimator` is:
+In a bagging predictor (TODO put scikit-learn class here or rephrase without
+the parameter name), the parameter `base_estimator` is:
 
 - a) any predictor
 - b) a decision tree predictor

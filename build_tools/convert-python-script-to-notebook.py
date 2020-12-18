@@ -1,3 +1,22 @@
+"""
+This scripts aim to create notebooks from python files with some limited
+support for MyST-specific markdown.
+
+This script converts a python script following jupytext syntax with some
+MyST-specific markdown to a notebook where the MyST-specific bits have been
+replaced by their rendered HTML.
+
+In principle, jupytext is enough to convert a pyton script (.py file) to a
+notebook (.ipynb file). The thing is the markdown renderer inside the Jupyter
+notebook interface (or JupyterLab) does not support MyST at the time of writing
+(December 2020) so some of the MyST-specific bits rendering is not great, e.g.
+admonitions.
+
+This script is taking the option 1. "Find ways to inject raw HTML into
+generated notebooks" in:
+https://github.com/executablebooks/MyST-NB/issues/148#issuecomment-632407608
+"""
+
 import sys
 
 from docutils.core import publish_from_doctree
@@ -120,10 +139,6 @@ def replace_admonition_in_nb(nb):
 def replace_admonition_in_filename(input_filename, output_filename):
     """Converts .py file to .ipynb file where admonitions have been replaced by
     their generated HTML.
-
-    Context: MyST syntax is not supported inside a Jupyter notebook. This is a
-    hacky way to keep using MyST admonitions for our JupyterBook and have
-    acceptable admonition HTML in the Jupyter notebook interface.
     """
     nb = jupytext.read(input_filename)
 

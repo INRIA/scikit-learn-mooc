@@ -95,11 +95,9 @@ To update all the notebooks:
 $ make
 ```
 
-In some cases you
-may need to use a `jupytext` command directly rather than using the provided
-`Makefile`. For instance, to create a notebook from a Python script:
+If you want to generate a single notebook, you can do something like this:
 ```
-$ jupytext --to ipynb python_scripts/your_python_script.py --output notebooks/your_notebook.ipynb
+$ make notebooks/02_numerical_pipeline_scaling.ipynb
 ```
 
 ## Direct binder links to OVH, GESIS and GKE to trigger and cache builds

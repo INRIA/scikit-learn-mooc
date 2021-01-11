@@ -8,6 +8,12 @@ A statistical view of Underfitting and Overfitting.
 
 <img src="../figures/scikit-learn-logo.svg">
 
+
+???
+
+In this lecture, we will discuss the bias-variance tradeoff, which is
+useful to give a statistical view on underfitting and overfitting.
+
 ---
 # Resampling the training set
 

@@ -1,8 +1,8 @@
 # %% [markdown]
-# # Compelling advantage of using feature selection
+# # Benefits of using feature selection
 #
-# In this notebook, we aim at introducing the main benefit that one should
-# search when using feature selection.
+# In this notebook, we aim at introducing the main benefits that can be
+# gained when using feature selection.
 #
 # Indeed, the principal advantage of selecting features within a machine
 # learning pipeline is to reduce the time to train this pipeline and its time

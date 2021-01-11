@@ -1,7 +1,9 @@
 # Intro
 
-**Welcome. The goal of this course is to teach machine learning with
-scikit-learn to beginners, even without a strong technical background.**
+<div class="alert alert-primary">
+**Welcome.** The goal of this course is to teach machine learning with
+scikit-learn to beginners, even without a strong technical background.
+</div>
 
 
 Predictive modeling brings value to a vast variety of data, in business

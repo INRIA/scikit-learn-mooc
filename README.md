@@ -1,8 +1,31 @@
-# scikit-learn tutorial
+# scikit-learn course
 
-All notebook material: https://github.com/INRIA/scikit-learn-mooc/
+Browse the course online: https://inria.github.io/scikit-learn-mooc
 
-## Follow the tutorial online
+## Course description
+
+Predictive modeling is brings value to a vast variety of data, in
+business intelligence, health, industrial processes... It is a pillar of
+modern data science. In this field, scikit-learn is a central tool: it is
+easily accessible and yet powerful, and it dovetails in a wider ecosystem
+of data-science tools based on the Python programming language.
+
+This course is an in-depth introduction to predictive modeling with
+scikit-learn. Step-by-step and didactic lessons will give you the
+fundamental tools and approaches of machine learning, and is as such a
+stepping stone to more advanced challenges in artificial intelligence,
+text mining, or data science.
+
+The course covers the software tools to build and evaluate predictive
+pipelines, as well as the related concepts and statistical intuitions. It
+is more than a cookbook: it will teach you to understand and be critical
+about each step, from choosing models to interpreting them.
+
+The course is accessible without a strong technical background, as it
+only requires knowledge of basic Python programming.
+
+
+## Follow the course online
 
 A few different ways are available:
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
@@ -10,11 +33,11 @@ A few different ways are available:
 - Browse [website](https://inria.github.io/scikit-learn-mooc) generated with
   [Jupyter Book](https://jupyterbook.org/)
 
-## Running the tutorial locally
+## Running the notebooks locally
 
 ### Dependencies
 
-The tutorials will require the following packages:
+The notebooks will require the following packages:
 
 * python>=3.6
 * jupyter
@@ -27,6 +50,9 @@ The tutorials will require the following packages:
 
 ### Local install
 
+Materials: https://github.com/INRIA/scikit-learn-mooc/
+
+
 We provide both `requirements.txt` and `environment.yml` to install packages.
 
 You can install the packages using `pip`:
@@ -35,7 +61,7 @@ You can install the packages using `pip`:
 $ pip install -r requirements.txt
 ```
 
-Alternatively, you can create an `scikit-learn-tutorial` conda environment
+Alternatively, you can create an `scikit-learn-course` conda environment
 by executing:
 
 ```
@@ -45,7 +71,7 @@ $ conda env create -f environment.yml
 then activate the environment with:
 
 ```
-$ conda activate scikit-learn-tutorial
+$ conda activate scikit-learn-course
 ```
 
 You can also update your current environment, instead of creating a new

@@ -25,6 +25,8 @@ about each step, from choosing models to interpreting them.
 The course is accessible without a strong technical background, as it
 only requires knowledge of basic Python programming.
 
+<hr/>
+
 
 ```{tableofcontents}
 ```

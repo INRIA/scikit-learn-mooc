@@ -4,25 +4,8 @@ Browse the course online: https://inria.github.io/scikit-learn-mooc
 
 ## Course description
 
-Predictive modeling is brings value to a vast variety of data, in
-business intelligence, health, industrial processes... It is a pillar of
-modern data science. In this field, scikit-learn is a central tool: it is
-easily accessible and yet powerful, and it dovetails in a wider ecosystem
-of data-science tools based on the Python programming language.
-
-This course is an in-depth introduction to predictive modeling with
-scikit-learn. Step-by-step and didactic lessons will give you the
-fundamental tools and approaches of machine learning, and is as such a
-stepping stone to more advanced challenges in artificial intelligence,
-text mining, or data science.
-
-The course covers the software tools to build and evaluate predictive
-pipelines, as well as the related concepts and statistical intuitions. It
-is more than a cookbook: it will teach you to understand and be critical
-about each step, from choosing models to interpreting them.
-
-The course is accessible without a strong technical background, as it
-only requires knowledge of basic Python programming.
+The course description can be found here:
+https://inria.github.io/scikit-learn-mooc/index.html
 
 
 ## Follow the course online

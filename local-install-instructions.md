@@ -35,14 +35,32 @@ conda activate scikit-learn-course
 python check_env.py
 ```
 
+Make sure that there is no `FAIL` in the output when running the `check_env.py`
+script, i.e. that its output looks similar to this:
+
+```
+Using python in /home/lesteve/miniconda3/envs/scikit-learn-course
+3.9.1 | packaged by conda-forge | (default, Jan 10 2021, 02:55:42)
+[GCC 9.3.0]
+
+[ OK ] numpy version 1.19.5
+[ OK ] scipy version 1.6.0
+[ OK ] matplotlib version 3.3.3
+[ OK ] sklearn version 0.24.0
+[ OK ] pandas version 1.2.0
+[ OK ] seaborn version 0.11.1
+[ OK ] notebook version 6.2.0
+[ OK ] plotly version 4.14.3
+```
+
 ## Run Jupyter notebooks locally
 
 ```sh
 # Activate your conda environment
 conda activate scikit-learn-course
-jupyter notebook notebooks/index.md
+jupyter notebook index.md
 ```
 
-`notebooks/index.md` is an index file helping to navigate the notebooks.
+`index.md` is an index file helping to navigate the notebooks.
 All the Jupyter notebooks are located in the `notebooks` folder.
 

@@ -67,7 +67,7 @@ ax.plot(X_test, y_pred_tree, linewidth=4, label="Decision tree regression")
 _ = plt.legend()
 
 # %% [markdown]
-# The predictions that we got where within the range of feature values seen
+# The predictions that we got were within the range of feature values seen
 # during training. In some sense, we observe the capabilities of our model to
 # interpolate.
 #
@@ -83,7 +83,7 @@ X_test = pd.DataFrame(np.arange(X_train[data_columns[0]].min() - offset,
                       columns=data_columns)
 
 # %% [markdown]
-# Finally, make predictions with both model on this new testing set. Repeat
+# Finally, make predictions with both models on this new testing set. Repeat
 # the plotting of the previous exercise.
 
 # %%
@@ -110,5 +110,5 @@ _ = plt.legend()
 # they cannot extrapolate. For flipper lengths below the minimum, the mass of
 # the penguin in the training data with the shortest flipper length will always
 # be predicted. Similarly, for flipper lengths above the maximum, the mass of
-# the penguin in the training data with the longest flipper will always
+# the penguin in the training data with the longest flipper will always be
 # predicted.

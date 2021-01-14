@@ -19,7 +19,7 @@ target_column = "Body Mass (g)"
 
 X_train, y_train = data[data_columns], data[target_column]
 
-# %% [markdow]
+# %% [markdown]
 # First, create two models, a linear regression model and a decision tree
 # regression model, and fit them on the training data. Limit the depth at
 # 3 levels for the decision tree.

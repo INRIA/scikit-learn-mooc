@@ -4,8 +4,7 @@
 
 <!-- Quick wrap-up for the module -->
 
-In this module, we presented decision tree in details. We saw that decision
-trees:
+In this module, we presented decision trees in details. We saw that they:
 
 - are used in regression and classification problems;
 - are non-parametric models;

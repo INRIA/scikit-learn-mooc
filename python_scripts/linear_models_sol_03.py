@@ -2,8 +2,8 @@
 # # 📃 Solution for Exercise 03
 #
 # In all previous notebooks, we only used a single feature in `X`. But we have
-# already shown that we could add new feature to make the model more expressive
-# by deriving new features, based on the original feature.
+# already shown that we could add new features to make the model more
+# expressive by deriving new features, based on the original feature.
 #
 # The aim of this notebook is to train a linear regression algorithm on a
 # dataset more than a single feature.

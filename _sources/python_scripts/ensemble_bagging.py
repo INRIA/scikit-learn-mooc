@@ -127,7 +127,7 @@ print(
 # samples.
 #
 # So, we are able to generate many datasets, all slightly different. Now, we
-# can fit a decision tree to each of these datasets and each decision
+# can fit a decision tree for each of these datasets and each decision
 # tree shall be slightly different as well.
 
 # %%

@@ -49,8 +49,6 @@
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -1145,7 +1143,7 @@ goal in this dataset is to predict the median house value in some district
 in California based on demographic and geographic data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -1155,7 +1153,7 @@ in California based on demographic and geographic data.</p>
 <p>Then, we will divide the dataset into a traning and a testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -1166,18 +1164,12 @@ in California based on demographic and geographic data.</p>
 <p>We will train a decision tree regressor and check its performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
 <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score of the default tree:</span><span class="se">\n</span><span class="s2">&quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score of the default tree:
-0.577
 </pre></div>
 </div>
 </div>
@@ -1196,7 +1188,7 @@ to have an underfitted or overfitted model.</p>
 earlier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
@@ -1216,7 +1208,7 @@ earlier.</p>
 the tuning of the parameters and investigate the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
 <span class="n">interesting_columns</span> <span class="o">=</span> <span class="p">[</span>
@@ -1233,137 +1225,6 @@ the tuning of the parameters and investigate the results.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>param_max_depth</th>
-      <th>param_min_samples_split</th>
-      <th>param_min_samples_leaf</th>
-      <th>mean_test_score</th>
-      <th>rank_test_score</th>
-      <th>mean_fit_time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>63</th>
-      <td>None</td>
-      <td>50</td>
-      <td>1</td>
-      <td>0.669832</td>
-      <td>1</td>
-      <td>0.045789</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>None</td>
-      <td>30</td>
-      <td>1</td>
-      <td>0.657056</td>
-      <td>2</td>
-      <td>0.050592</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>None</td>
-      <td>50</td>
-      <td>0.01</td>
-      <td>0.654699</td>
-      <td>3</td>
-      <td>0.031965</td>
-    </tr>
-    <tr>
-      <th>50</th>
-      <td>None</td>
-      <td>30</td>
-      <td>0.01</td>
-      <td>0.654699</td>
-      <td>3</td>
-      <td>0.031929</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>None</td>
-      <td>10</td>
-      <td>0.01</td>
-      <td>0.654699</td>
-      <td>3</td>
-      <td>0.032020</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>5</td>
-      <td>2</td>
-      <td>0.10</td>
-      <td>0.495641</td>
-      <td>49</td>
-      <td>0.017042</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>3</td>
-      <td>30</td>
-      <td>0.10</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014703</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>3</td>
-      <td>2</td>
-      <td>0.10</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014593</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>3</td>
-      <td>10</td>
-      <td>0.10</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014586</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>3</td>
-      <td>50</td>
-      <td>0.10</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014726</td>
-    </tr>
-  </tbody>
-</table>
-<p>64 rows × 6 columns</p>
-</div></div></div>
 </div>
 <p>From theses results, we can see that the best parameters is the combination
 where the depth of the tree is not limited and the minimum number of samples
@@ -1375,16 +1236,10 @@ these different models. In addition, we can check the performance of the
 optimal decision tree on the left-out testing data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_fitting_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_fit_time&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cv</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_fitting_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_fit_time&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cv</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required training time of the GridSearchCV: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best R2 score of a single tree: </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 4.62 seconds
-Best R2 score of a single tree: 0.670
 </pre></div>
 </div>
 </div>
@@ -1404,7 +1259,7 @@ the performance on the left-out testing data. It is important to note that
 we are not going to tune any parameter of the decision tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
 
 <span class="n">base_estimator</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1417,12 +1272,6 @@ we are not going to tune any parameter of the decision tree.</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed fitting time: </span><span class="si">{</span><span class="n">elapsed_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score: </span><span class="si">{</span><span class="n">bagging_regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 3.00 seconds
-R2 score: 0.788
 </pre></div>
 </div>
 </div>

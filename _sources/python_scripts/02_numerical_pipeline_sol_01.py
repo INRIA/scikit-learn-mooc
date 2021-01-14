@@ -63,7 +63,7 @@ data_numeric_train, data_numeric_test, target_train, target_test = \
     train_test_split(data_numeric, target, random_state=0)
 
 # %% [markdown]
-# We will first create as dummy classifier which will always predict the
+# We will first create a dummy classifier which will always predict the
 # high revenue class class, i.e. `" >50K"`, and check the performance.
 
 # %%
@@ -90,8 +90,8 @@ score = low_revenue_clf.score(data_numeric_test, target_test)
 print(f"Accuracy of a model predicting only low revenue: {score:.3f}")
 
 # %% [markdown]
-# We observe that this model as an accuracy higher than 0.5. This due to the
-# fact that we have 3/4 of the target belonging to low-revenue class.
+# We observe that this model has an accuracy higher than 0.5. This is due to
+# the fact that we have 3/4 of the target belonging to low-revenue class.
 
 # %% [markdown]
 # Therefore, any predictive model giving results below this dummy classifier

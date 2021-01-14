@@ -1,10 +1,10 @@
 # %% [markdown]
 # # Presentation of the datasets
 #
-# Before to present tree-based models, we will make a quick presentation of the
+# Before we present tree-based models, we will make a quick presentation of the
 # [Palmer penguins dataset](https://allisonhorst.github.io/palmerpenguins/)
 # dataset. We will use this dataset for both classification and regression
-# problems by selecting a subset of the feature to make our explanations
+# problems by selecting a subset of the features to make our explanations
 # intuitive.
 #
 # ## Classification dataset
@@ -21,8 +21,8 @@
 # This problem is a classification problem since the target is categorical.
 # We will limit our input data to a subset of the original features
 # to simplify our explanations when presenting the decision tree algorithm.
-# Indeed, we will use feature based on penguins' culmen measurement. You can
-# learn more about the penguins' culmen with illustration below:
+# Indeed, we will use features based on penguins' culmen measurement. You can
+# learn more about the penguins' culmen with the illustration below:
 #
 # ![Image of culmen](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/culmen_depth.png)
 #
@@ -72,7 +72,7 @@ plt.subplots_adjust(wspace=0.4)
 #
 # ## Regression dataset
 #
-# In regression setting, the target is a continuous variable instead of
+# In a regression setting, the target is a continuous variable instead of
 # categories. Here, we use two features of the dataset to make such a problem:
 # the flipper length will be used as data and the body mass will be the target.
 # In short, we want to predict the body mass using the flipper length.

@@ -56,8 +56,8 @@ numerical_columns = numerical_columns_selector(data)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
-# Besides, we will list before hand the categories for each categorical column
-# to avoid issue with rare categories when evaluating the model during the
+# Besides, we will list beforehand the categories for each categorical column
+# to avoid issues with rare categories when evaluating the model during the
 # cross-validation.
 
 # %%
@@ -116,7 +116,7 @@ from sklearn.pipeline import make_pipeline
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=500))
 
 # %% [markdown]
-# Starting from `scikit-learn` 0.23, the notebooks can display an interactive
+# Starting from `scikit-learn 0.23`, the notebooks can display an interactive
 # view of the pipelines.
 
 # %%
@@ -134,7 +134,7 @@ model
 # - the `score` method is used to predict on the test data and compare the
 #   predictions to the expected test labels to compute the accuracy.
 #
-# Let's start by splitting our data into a train and test sets.
+# Let's start by splitting our data into train and test sets.
 
 # %%
 from sklearn.model_selection import train_test_split

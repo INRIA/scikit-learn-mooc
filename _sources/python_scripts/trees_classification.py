@@ -86,7 +86,7 @@ _ = plot_decision_function(linear_model, range_features, ax=ax)
 
 # %% [markdown]
 # We see that the lines are a combination of the input features since they are
-# not perpendicular a specific axis. Indeed, this is due the model
+# not perpendicular a specific axis. Indeed, this is due to the model
 # parametrization that we saw in the previous notebook, controlled by the
 # model's weights and intercept.
 #
@@ -100,7 +100,7 @@ print(f"Accuracy of the {model_name}: {test_score:.2f}")
 
 # %% [markdown]
 # Unlike linear models, decision trees are non-parametric models: they are not
-# control by a mathematical decision function and do not have weights or
+# controlled by a mathematical decision function and do not have weights or
 # intercept to be optimized.
 #
 # Indeed, decision trees are based partition will partition the space by
@@ -162,7 +162,7 @@ tree.predict([[0, 15]])
 tree.predict([[0, 17]])
 
 # %% [markdown]
-# In this case, the tree predict the Adelie specie.
+# In this case, the tree predicts the Adelie specie.
 #
 # Thus, we can conclude that a decision tree classifier will predict the most
 # represented class within a partition.

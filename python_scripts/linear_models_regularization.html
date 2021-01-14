@@ -1159,9 +1159,9 @@
                 
   <div class="section" id="regularization-of-linear-regression-model">
 <h1>Regularization of linear regression model<a class="headerlink" href="#regularization-of-linear-regression-model" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will see the limitation of linear regression model and
+<p>In this notebook, we will see the limitations of linear regression models and
 the advantage of using regularized models instead. Besides, we will also
-present the preprocessing required when dealing with regularized model,
+present the preprocessing required when dealing with regularized models,
 furthermore when the regularization parameter needs to be fine tuned.</p>
 <p>We will start by highlighting the over-fitting issue that can arise with
 a simple linear regression model.</p>
@@ -1190,13 +1190,13 @@ the performance of our model.</p>
 </div>
 </div>
 </div>
-<p>In one of the previous notebook, we show that linear model could be used
-even in setting where <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not linearly linked. We showed that one
-can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create new feature encoding
-non-linear interactions between features. Here, we will use this transformer
-to augment the feature space. Subsequently, we train a linear regresion
-model. We will use the out-of-sample test set to evaluate the generalization
-capabilities of our model.</p>
+<p>In one of the previous notebook, we showed that linear models could be used
+even in settings where <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not linearly linked. We showed that one
+can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create additional features
+encoding non-linear interactions between features. Here, we will use this
+transformer to augment the feature space. Subsequently, we train a linear
+regression model. We will use the out-of-sample test set to evaluate the
+generalization capabilities of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
@@ -1215,7 +1215,7 @@ capabilities of our model.</p>
 </div>
 </div>
 <p>We see that we obtain an <span class="math notranslate nohighlight">\(R^2\)</span> score below zero. It means that our model is
-far worth than predicting the mean of <code class="docutils literal notranslate"><span class="pre">y_train</span></code>. This is issue is due to
+far worth than predicting the mean of <code class="docutils literal notranslate"><span class="pre">y_train</span></code>. This issue is due to
 overfitting. We can compute the score on the training set to confirm this
 intuition.</p>
 <div class="cell docutils container">
@@ -1253,7 +1253,7 @@ confirmation.</p>
 <p>We can force the linear regression model to consider all features in a more
 homogeneous manner. In fact, we could force large positive or negative weight
 to shrink toward zero. This is known as regularization. We will use a ridge
-model which enforce such behaviour.</p>
+model which enforces such behaviour.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
@@ -1283,7 +1283,7 @@ model which enforce such behaviour.</p>
 </div>
 </div>
 </div>
-<p>We see that the training and testing score are much closer, indicating that
+<p>We see that the training and testing scores are much closer, indicating that
 our model is less overfitting. We can compare the values of the weights of
 ridge with the un-regularized linear regression.</p>
 <div class="cell docutils container">
@@ -1316,8 +1316,9 @@ parameter.</p>
 <div class="section" id="you-shall-scale-your-data">
 <h2>You shall scale your data<a class="headerlink" href="#you-shall-scale-your-data" title="Permalink to this headline">¶</a></h2>
 <p>Regularization will add constraints on weights of the model. We saw in the
-previous example that a ridge model will enforce that all weights to have a
-similar magnitude. Indeed, larger is alpha, larger will be this enforcement.</p>
+previous example that a ridge model will enforce that all weights have a
+similar magnitude. Indeed, the larger alpha is, the larger this
+enforcement will be.</p>
 <p>This procedure should make us think about feature rescaling. Let’s think
 about the case where features have an identical data dispersion, if two
 features are found equally important by the model, they will be affected
@@ -1326,10 +1327,10 @@ weights close in term of norm.</p>
 different data dispersion (e.g. age of person in year and it annual revenue
 in $). If two features are as important, our model will boost the weight of
 feature with small dispersion and reduce the weight of the feature with high
-dispersion. We recall that regularization force weights to be closer.</p>
+dispersion. We recall that regularization forces weights to be closer.</p>
 <p>Therefore, we get an intuition that if we want to use regularization, dealing
 with rescaled data would make it easier to find an optimal regularization
-parameter and thus an adequate model. As a side note, some solver based on
+parameter and thus an adequate model. As a side note, some solvers based on
 gradient computation are expecting such rescaled data. Unscaled data will be
 detrimental when computing the optimal weights. Therefore, when working with
 a linear model and numerical data, this is in general a good practice to
@@ -1353,7 +1354,7 @@ standard deviation of 1.</p>
 <p>This scikit-learn estimator is known as a transformer: it computes some
 statistics (i.e the mean and the standard deviation) and stores them as
 attributes (<code class="docutils literal notranslate"><span class="pre">scaler.mean_</span></code>, <code class="docutils literal notranslate"><span class="pre">scaler.scale_</span></code>) when calling <code class="docutils literal notranslate"><span class="pre">fit</span></code>. Using these
-statistics, it transform the data when <code class="docutils literal notranslate"><span class="pre">transform</span></code> is called. Therefore, it
+statistics, it transforms the data when <code class="docutils literal notranslate"><span class="pre">transform</span></code> is called. Therefore, it
 is important to note that <code class="docutils literal notranslate"><span class="pre">fit</span></code> should only be called on the training data,
 similar to classifiers and regressors.</p>
 <div class="cell docutils container">
@@ -1414,7 +1415,7 @@ simplifies the manual handling.</p>
 <p>When creating the model, keeping the same <code class="docutils literal notranslate"><span class="pre">alpha</span></code> does not give good results.
 It depends on the data provided. Therefore, it needs to be tuned for each
 dataset.</p>
-<p>In the next section, we will present the steps to tune the parameters.</p>
+<p>In the next section, we will present the steps to tune this parameter.</p>
 </div>
 <div class="section" id="fine-tuning-the-regularization-parameter">
 <h2>Fine tuning the regularization parameter<a class="headerlink" href="#fine-tuning-the-regularization-parameter" title="Permalink to this headline">¶</a></h2>
@@ -1422,7 +1423,7 @@ dataset.</p>
 The default parameter will not lead to the optimal model. Therefore, we need
 to tune the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter.</p>
 <p>Tuning model hyperparameter should be done with care. Indeed, we want to find
-an optimal parameter that maximize some metrics. Thus, it requires a training
+an optimal parameter that maximizes some metrics. Thus, it requires a training
 and testing sets. However, this testing set should be different from the
 out-of-sample testing set that we used to evaluate our model. If we use
 the same test, we are using an <code class="docutils literal notranslate"><span class="pre">alpha</span></code> which was optimized for this testing

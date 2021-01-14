@@ -63,7 +63,7 @@ data.dtypes
 # `object` data type. The reason is that categories are represented with
 # string.
 #
-# Sometimes, categorical columns could also be encoded with integer. In this
+# Sometimes, categorical columns could also be encoded with integers. In this
 # case, looking at the data type will not be enough. In the exploration and in
 # the previous notebook, we saw that the column `"education-num"` is such a
 # column.
@@ -140,7 +140,7 @@ _ = ax.set_title("Ordinal encoding of 'education' column")
 
 # %% [markdown]
 # We see that each category in `"education"` has been replaced by a numeric
-# values. Now, we can check the encoding applied on all categorical features.
+# value. Now, we can check the encoding applied on all categorical features.
 
 # %%
 data_encoded = encoder.fit_transform(data_categorical)
@@ -183,7 +183,7 @@ print(
 # ```{important}
 # Note however that the impact of violating this ordering assumption is really
 # dependent on the downstream models (for instance linear models are much more
-# sensitive than models built from a ensemble of decision trees).
+# sensitive than models built from an ensemble of decision trees).
 # ```
 #
 # ## Encoding nominal categories (without assuming any order)

@@ -82,7 +82,7 @@ data.head()
 
 # %% [markdown]
 # We see that `object` data type corresponds to columns containing strings. As
-# we saw in the exploration section, these columns contains categories and we
+# we saw in the exploration section, these columns contain categories and we
 # will see later how to handle those. We can select the columns containing
 # integers and check their content.
 

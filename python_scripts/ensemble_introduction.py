@@ -89,7 +89,7 @@ cv_results
 # where the depth of the tree is not limited and the minimum number of samples
 # to create a leaf is also equal to 1 (the default values) and the
 # minimum number of samples to make a split of 50 (much higher than the default
-# value.
+# value).
 #
 # It is interesting to look at the total amount of time it took to fit all
 # these different models. In addition, we can check the performance of the

@@ -6,7 +6,7 @@
 # and testing sets. Let's first look at the limitation of using a dataset
 # without keeping any samples out.
 #
-# To illustrate the different concepts, we will use the california housing
+# To illustrate the different concepts, we will use the California housing
 # dataset.
 
 # %%
@@ -17,7 +17,7 @@ X, y = housing.data, housing.target
 
 # %% [markdown]
 # We recall that in this dataset, the aim is to predict the median value of
-# houses in an area in California. The feature collected are based on general
+# houses in an area in California. The features collected are based on general
 # real-estate and geographical information.
 
 # %%
@@ -55,7 +55,7 @@ from sklearn.metrics import mean_absolute_error
 
 y_pred = regressor.predict(X)
 score = mean_absolute_error(y_pred, y)
-print(f"In average, our regressor make an error of {score:.2f} k$")
+print(f"On average, our regressor makes an error of {score:.2f} k$")
 
 # %% [markdown]
 # We get perfect prediction with no error. It is too optimistic and almost
@@ -93,7 +93,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 regressor.fit(X_train, y_train)
 
 # %% [markdown]
-# Finally, we can estimate the different type of errors. Let's start by
+# Finally, we can estimate the different types of errors. Let's start by
 # computing the empirical error.
 
 # %%
@@ -230,7 +230,7 @@ print(f"The standard deviation of the generalization error is: "
 # data, we would expect its true generalization error to fall close to that
 # region.
 #
-# While this information is interesting in it-self, this should be contrasted
+# While this information is interesting in itself, it should be contrasted
 # to the scale of the natural variability of the target `y` in our dataset.
 #
 # Let us plot the distribution of the target variable:

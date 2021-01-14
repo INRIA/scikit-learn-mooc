@@ -121,7 +121,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 #
 # ## Model fitting with preprocessing
 #
-# A range of preprocessing algorithms in scikit-learn allows us to transform
+# A range of preprocessing algorithms in scikit-learn allow us to transform
 # the input data before training a model. In our case, we will standardize the
 # data and then train a new logistic regression model on that new version of
 # the dataset.
@@ -191,14 +191,14 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 
 # %% [markdown]
 # We can see that the training time and the number of iterations is much
-# shorter while the predictive performance (accuracy) slightly improve.
+# shorter while the predictive performance (accuracy) slightly improved.
 #
 # ## Model evaluation using cross-validation
 #
-# In the previous example, we split the original data into a training set and a
-# testing set. This strategy has several issues: in the setting where the
-# amount of data is limited, the subset of data used to train or test will be
-# small; and the splitting was done in a random manner and we have no
+# In the previous example, we split the original data into a training set
+# and a testing set. This strategy has several issues: in the setting where
+# the amount of data is limited, the subset of data used to train or test will
+# be small; and the splitting was done in a random manner and we have no
 # information regarding the confidence of the results obtained.
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating

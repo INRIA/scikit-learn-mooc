@@ -19,9 +19,9 @@
 import pandas as pd
 
 data = pd.read_csv("../datasets/penguins_regression.csv")
-feature_names = "Flipper Length (mm)"
+feature_name = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-X, y = data[[feature_names]], data[target_name]
+X, y = data[[feature_name]], data[target_name]
 
 # %% [markdown]
 # ### Model definition
@@ -57,13 +57,13 @@ weights = [-40, 45, 90]
 intercepts = [15000, -5000, -14000]
 
 _, ax = plt.subplots()
-sns.scatterplot(data=data, x=feature_names, y=target_name, ax=ax)
+sns.scatterplot(data=data, x=feature_name, y=target_name, ax=ax)
 
 for weight, intercept in zip(weights, intercepts):
     predicted_body_mass = linear_model_flipper_mass(
         flipper_length_range, weight, intercept)
 
-    label = ("{0:.2f} (g / mm) * flipper length + {1:.2f} (g)")
+    label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
     ax.plot(flipper_length_range, predicted_body_mass,
             label=label.format(weight, intercept),
             linewidth=4)

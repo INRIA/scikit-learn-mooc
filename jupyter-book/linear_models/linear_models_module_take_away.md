@@ -4,9 +4,9 @@
 
 <!-- Quick wrap-up for the module -->
 
-In this module, we saw:
+In this module, we saw that:
 
-- a linear model as a specific parametrization defined by some weights and an
+- a linear model has a specific parametrization defined by some weights and an
   intercept;
 - linear models require to scale the data before to be trained;
 - regularization allows to fight over-fitting;

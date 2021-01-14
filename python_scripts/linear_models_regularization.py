@@ -1,9 +1,9 @@
 # %% [markdown]
 # # Regularization of linear regression model
 #
-# In this notebook, we will see the limitation of linear regression model and
+# In this notebook, we will see the limitations of linear regression models and
 # the advantage of using regularized models instead. Besides, we will also
-# present the preprocessing required when dealing with regularized model,
+# present the preprocessing required when dealing with regularized models,
 # furthermore when the regularization parameter needs to be fine tuned.
 #
 # We will start by highlighting the over-fitting issue that can arise with
@@ -30,13 +30,13 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, random_state=0, test_size=0.5)
 
 # %% [markdown]
-# In one of the previous notebook, we show that linear model could be used
-# even in setting where `X` and `y` are not linearly linked. We showed that one
-# can use the `PolynomialFeatures` transformer to create new feature encoding
-# non-linear interactions between features. Here, we will use this transformer
-# to augment the feature space. Subsequently, we train a linear regresion
-# model. We will use the out-of-sample test set to evaluate the generalization
-# capabilities of our model.
+# In one of the previous notebook, we showed that linear models could be used
+# even in settings where `X` and `y` are not linearly linked. We showed that one
+# can use the `PolynomialFeatures` transformer to create additional features
+# encoding non-linear interactions between features. Here, we will use this
+# transformer to augment the feature space. Subsequently, we train a linear
+# regression model. We will use the out-of-sample test set to evaluate the
+# generalization capabilities of our model.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -53,7 +53,7 @@ print(f"R2 score of linear regresion model on the test set:\n"
 
 # %% [markdown]
 # We see that we obtain an $R^2$ score below zero. It means that our model is
-# far worth than predicting the mean of `y_train`. This is issue is due to
+# far worth than predicting the mean of `y_train`. This issue is due to
 # overfitting. We can compute the score on the training set to confirm this
 # intuition.
 
@@ -88,7 +88,7 @@ _ = weights_linear_regression.plot(kind="barh", ax=ax)
 # We can force the linear regression model to consider all features in a more
 # homogeneous manner. In fact, we could force large positive or negative weight
 # to shrink toward zero. This is known as regularization. We will use a ridge
-# model which enforce such behaviour.
+# model which enforces such behaviour.
 
 # %%
 from sklearn.linear_model import Ridge
@@ -108,7 +108,7 @@ print(f"R2 score of ridge model on the test set:\n"
       f"{test_score:.3f}")
 
 # %% [markdown]
-# We see that the training and testing score are much closer, indicating that
+# We see that the training and testing scores are much closer, indicating that
 # our model is less overfitting. We can compare the values of the weights of
 # ridge with the un-regularized linear regression.
 
@@ -136,8 +136,9 @@ weights.plot(kind="barh", ax=ax)
 # ## You shall scale your data
 #
 # Regularization will add constraints on weights of the model. We saw in the
-# previous example that a ridge model will enforce that all weights to have a
-# similar magnitude. Indeed, larger is alpha, larger will be this enforcement.
+# previous example that a ridge model will enforce that all weights have a
+# similar magnitude. Indeed, the larger alpha is, the larger this
+# enforcement will be.
 #
 # This procedure should make us think about feature rescaling. Let's think
 # about the case where features have an identical data dispersion, if two
@@ -148,11 +149,11 @@ weights.plot(kind="barh", ax=ax)
 # different data dispersion (e.g. age of person in year and it annual revenue
 # in $). If two features are as important, our model will boost the weight of
 # feature with small dispersion and reduce the weight of the feature with high
-# dispersion. We recall that regularization force weights to be closer.
+# dispersion. We recall that regularization forces weights to be closer.
 #
 # Therefore, we get an intuition that if we want to use regularization, dealing
 # with rescaled data would make it easier to find an optimal regularization
-# parameter and thus an adequate model. As a side note, some solver based on
+# parameter and thus an adequate model. As a side note, some solvers based on
 # gradient computation are expecting such rescaled data. Unscaled data will be
 # detrimental when computing the optimal weights. Therefore, when working with
 # a linear model and numerical data, this is in general a good practice to
@@ -175,7 +176,7 @@ X_test_scaled = scaler.transform(X_test)
 # This scikit-learn estimator is known as a transformer: it computes some
 # statistics (i.e the mean and the standard deviation) and stores them as
 # attributes (`scaler.mean_`, `scaler.scale_`) when calling `fit`. Using these
-# statistics, it transform the data when `transform` is called. Therefore, it
+# statistics, it transforms the data when `transform` is called. Therefore, it
 # is important to note that `fit` should only be called on the training data,
 # similar to classifiers and regressors.
 
@@ -237,7 +238,7 @@ print(f"R2 score of ridge model on the test set:\n"
 # It depends on the data provided. Therefore, it needs to be tuned for each
 # dataset.
 #
-# In the next section, we will present the steps to tune the parameters.
+# In the next section, we will present the steps to tune this parameter.
 #
 # ## Fine tuning the regularization parameter
 #
@@ -246,7 +247,7 @@ print(f"R2 score of ridge model on the test set:\n"
 # to tune the `alpha` parameter.
 #
 # Tuning model hyperparameter should be done with care. Indeed, we want to find
-# an optimal parameter that maximize some metrics. Thus, it requires a training
+# an optimal parameter that maximizes some metrics. Thus, it requires a training
 # and testing sets. However, this testing set should be different from the
 # out-of-sample testing set that we used to evaluate our model. If we use
 # the same test, we are using an `alpha` which was optimized for this testing

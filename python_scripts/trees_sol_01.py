@@ -1,15 +1,15 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 01
 #
-# In the previous notebook, we show how a tree with a depth of 1 level was
+# In the previous notebook, we showed how a tree with a depth of 1 level was
 # working. The aim of this exercise is to repeat part of the previous
 # experiment for a depth with 2 levels to show how the process of partitioning
 # is repeated over time.
 #
-# Before to start, we will load:
+# Before to start, we will:
 #
 # * load the dataset;
-# * split the into training and testing dataset;
+# * split the dataset into training and testing dataset;
 # * define the function to show the classification decision function.
 
 # %%
@@ -24,10 +24,12 @@ from sklearn.model_selection import train_test_split
 
 X, y = data[culmen_columns], data[target_column]
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0)
+    X, y, random_state=0
+)
 range_features = {
     feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X.columns}
+    for feature_name in X.columns
+}
 
 # %%
 import numpy as np

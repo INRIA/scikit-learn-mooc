@@ -108,7 +108,7 @@ _ = plt.title("Generalization errors distribution \n"
 #
 # ## Learning curve
 #
-# Here, we plotted the different curve to highlight the issue of small sample
+# Here, we plotted the different curves to highlight the issue of small sample
 # size. However, this experiment is also used to draw the so-called **learning
 # curve**. This curve gives some additional indication regarding the benefit of
 # adding new training samples to improve a model's performance.

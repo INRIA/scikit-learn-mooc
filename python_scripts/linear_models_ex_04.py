@@ -11,7 +11,7 @@
 #
 # First, we will:
 #
-# * load the california housing dataset;
+# * load the California housing dataset;
 # * split the data into a training and testing set;
 # * create a machine learning pipeline composed of a standard scaler to
 #   normalize the data, and a ridge regression as a linear model.

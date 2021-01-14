@@ -23,7 +23,7 @@
 # - What would be the score of a model that always predicts `' <= 50K'`?
 # - Is 81% or 82% accuracy a good score for this problem?
 #
-# Use a `sklearn.dummy.DummyClassifier` and do a train-test split to evaluate
+# Use a `DummyClassifier` and do a train-test split to evaluate
 # its accuracy on the test set. This
 # [link](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
 # shows a few examples of how to evaluate the performance of these baseline

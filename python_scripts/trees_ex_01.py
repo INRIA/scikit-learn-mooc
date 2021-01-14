@@ -1,15 +1,15 @@
 # %% [markdown]
 # # 📝 Exercise 01
 #
-# In the previous notebook, we show how a tree with a depth of 1 level was
+# In the previous notebook, we showed how a tree with a depth of 1 level was
 # working. The aim of this exercise is to repeat part of the previous
 # experiment for a depth with 2 levels to show how the process of partitioning
 # is repeated over time.
 #
-# Before to start, we will load:
+# Before to start, we will:
 #
 # * load the dataset;
-# * split the into training and testing dataset;
+# * split the dataset into training and testing dataset;
 # * define the function to show the classification decision function.
 
 # %%

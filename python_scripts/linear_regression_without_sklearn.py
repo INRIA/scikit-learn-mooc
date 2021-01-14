@@ -34,7 +34,7 @@ _ = sns.scatterplot(data=data, x=feature_names, y=target_name)
 # flipper length. The longer the flipper, the heavier the penguin.
 #
 # Thus, we could come up with a simple formula, where given a flipper length
-# we could compute the body mass of a penguin using a linear relationship of
+# we could compute the body mass of a penguin using a linear relationship
 # of the form `y = a * x + b` where `a` and `b` are the 2 parameters of our
 # model.
 
@@ -78,7 +78,7 @@ _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
 # `flipper_length` in order to make the inference. When this coefficient is
 # positive, it means that penguins with longer flipper lengths will have larger
 # body masses. If the coefficient is negative, it means that penguins with
-# shorter flipper flipper lengths have larger body masses. Graphically, this
+# shorter flipper lengths have larger body masses. Graphically, this
 # coefficient is represented by the slope of the curve in the plot. Below we
 # show what the curve would look like when the `weight_flipper_length`
 # coefficient is negative.

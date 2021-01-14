@@ -89,7 +89,7 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # the linear model to make bad assumptions on the relative ordering of
 # categories.
 #
-# This prevent the model to learning anything predictive enough and the
+# This prevents the model from learning anything predictive enough and the
 # cross-validated score is even lower that the baseline we obtained by ignoring
 # the input data and just always predict the most frequent class:
 

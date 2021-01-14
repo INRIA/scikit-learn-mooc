@@ -127,7 +127,7 @@ plt.subplots_adjust(wspace=0.3)
 # For both classification and regression setting, we can observe that
 # increasing the depth will make the tree model more expressive. However, a
 # tree that is too deep will overfit the training data, creating partitions
-# which are only be correct for "outliers". The `max_depth` is one of the
+# which are only correct for "outliers". The `max_depth` is one of the
 # hyperparameters that one should optimize via cross-validation and
 # grid-search.
 

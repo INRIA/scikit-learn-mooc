@@ -30,7 +30,7 @@
 # <http://www.openml.org/d/1590>.
 #
 # Numerical data is the most natural type of data used in machine learning and
-# can (almost) directly be fed into predictive models. We will load a the
+# can (almost) directly be fed into predictive models. We will load a
 # subset of the original data with only the numerical columns.
 
 # %%
@@ -169,7 +169,7 @@ print(f"The testing dataset contains {data_test.shape[0]} samples and "
 #
 # Instead of computing the prediction and computing manually the average
 # success rate, we can use the method `score`. When dealing with classifiers
-# this method return this performance metric.
+# this method returns their performance metric.
 
 # %%
 accuracy = model.score(data_test, target_test)
@@ -188,10 +188,10 @@ print(f"The test accuracy using a {model_name} is "
 # back more into details regarding how predictive models should be evaluated.
 
 # %% [markdown]
-# In this notebook we have:
+# In this notebook we:
 #
-# * fit a **k-nearest neighbors** model on training dataset;
+# * fitted a **k-nearest neighbors** model on a training dataset;
 # * evaluated its performance on the testing data;
-# * presented the scikit-learn API `.fit(X, y)` (to train a model),
+# * introduced the scikit-learn API `.fit(X, y)` (to train a model),
 #   `.predict(X)` (to make predictions) and `.score(X, y)`
 #   (to evaluate a model).

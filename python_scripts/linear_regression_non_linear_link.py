@@ -83,7 +83,7 @@ print(f"weight: {linear_regression.coef_[0]:.2f}, "
 # the non-linear relationship between `x` and `y` since linear models assume
 # the relationship between `x` and `y` to be linear.
 #
-# Indeed, there is 3 possibilities to alleviate this issue:
+# Indeed, there are 3 possibilities to alleviate this issue:
 #
 # 1. choose a model that natively can deal with non-linearity,
 # 2. "augment" features by including expert knowledge which can be used by
@@ -128,7 +128,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # %% [markdown]
 # We can see that even with a linear model, we can overcome the linearity
 # limitation of the model by adding the non-linear component into the design of
-# additional features. Here, we created new feature by knowing the way the
+# additional features. Here, we created new features by knowing the way the
 # target was generated. In practice, this is usually not the case.
 #
 # Instead, one is usually creating interaction between features (e.g. $x_1
@@ -181,7 +181,7 @@ ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# The algorithm can be modified such that it can use non-linear kernel. Then,
+# The algorithm can be modified so that it can use non-linear kernel. Then,
 # it will compute interaction between samples using this non-linear
 # interaction.
 

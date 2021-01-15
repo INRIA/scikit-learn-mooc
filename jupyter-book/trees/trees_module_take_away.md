@@ -6,7 +6,7 @@
 
 In this module, we presented decision trees in details. We saw that they:
 
-- are used in regression and classification problems;
+- are suited for both regression and classification problems;
 - are non-parametric models;
 - are not able to extrapolate;
 - are sensible to hyperparameter tuning.

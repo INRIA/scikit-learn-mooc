@@ -49,6 +49,8 @@
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -1148,7 +1150,7 @@ from the past.</p>
 <p>We will create a function to generate such data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
@@ -1175,15 +1177,73 @@ to the quotes of three different companies for instance. We will plot
 the stock values</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stocks</span> <span class="o">=</span> <span class="n">generate_random_stock_market</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stocks</span> <span class="o">=</span> <span class="n">generate_random_stock_market</span><span class="p">()</span>
 <span class="n">stocks</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Stock 0</th>
+      <th>Stock 1</th>
+      <th>Stock 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2010-01-01</th>
+      <td>145.122795</td>
+      <td>121.931662</td>
+      <td>190.469167</td>
+    </tr>
+    <tr>
+      <th>2010-01-02</th>
+      <td>145.425600</td>
+      <td>120.771145</td>
+      <td>190.261145</td>
+    </tr>
+    <tr>
+      <th>2010-01-03</th>
+      <td>145.496459</td>
+      <td>122.281423</td>
+      <td>191.566923</td>
+    </tr>
+    <tr>
+      <th>2010-01-04</th>
+      <td>145.569501</td>
+      <td>122.174231</td>
+      <td>191.399200</td>
+    </tr>
+    <tr>
+      <th>2010-01-05</th>
+      <td>144.147175</td>
+      <td>123.107346</td>
+      <td>189.082024</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
 
@@ -1192,6 +1252,9 @@ the stock values</p>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Stock values over time&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_ex_05_4_0.png" src="../_images/cross_validation_ex_05_4_0.png" />
 </div>
 </div>
 <p>Because the stocks are generated randomly, there is no possibility for a
@@ -1203,7 +1266,7 @@ the data such that the <code class="docutils literal notranslate"><span class="p
 the <code class="docutils literal notranslate"><span class="pre">Stock</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">Stock</span> <span class="pre">2</span></code> are stocks used to build our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1212,7 +1275,7 @@ the <code class="docutils literal notranslate"><span class="pre">Stock</span> <s
 <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1221,7 +1284,7 @@ the <code class="docutils literal notranslate"><span class="pre">Stock</span> <s
 Use a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1231,7 +1294,7 @@ to compute the <span class="math notranslate nohighlight">\(R^2\)</span> score f
 and standard deviation of the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>

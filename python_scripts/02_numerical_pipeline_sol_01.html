@@ -49,6 +49,8 @@
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -1167,7 +1169,7 @@ shows a few examples of how to evaluate the performance of these baseline
 models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1178,7 +1180,7 @@ models.</p>
 used to train our predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
 </pre></div>
@@ -1189,7 +1191,7 @@ used to train our predictive model.</p>
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
 
 <span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
@@ -1200,7 +1202,7 @@ notebook.</p>
 <p>Next, let’s split the data and target into a train and test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> \
     <span class="n">train_test_split</span><span class="p">(</span><span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1212,7 +1214,7 @@ notebook.</p>
 high revenue class class, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&gt;50K&quot;</span></code>, and check the performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
 <span class="n">class_to_predict</span> <span class="o">=</span> <span class="s2">&quot; &gt;50K&quot;</span>
 <span class="n">high_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
@@ -1223,18 +1225,28 @@ high revenue class class, i.e. <code class="docutils literal notranslate"><span 
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of a model predicting only high revenue: 0.241
+</pre></div>
+</div>
+</div>
 </div>
 <p>We clearly see that the score is below 0.5 which might be surprising at
 first. We will now check the performance of a model which always predict the
 low revenue class, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&lt;=50K&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">class_to_predict</span> <span class="o">=</span> <span class="s2">&quot; &lt;=50K&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">class_to_predict</span> <span class="o">=</span> <span class="s2">&quot; &lt;=50K&quot;</span>
 <span class="n">low_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
                                   <span class="n">constant</span><span class="o">=</span><span class="n">class_to_predict</span><span class="p">)</span>
 <span class="n">low_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">low_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting only low revenue: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of a model predicting only low revenue: 0.759
 </pre></div>
 </div>
 </div>
@@ -1245,14 +1257,26 @@ the fact that we have 3/4 of the target belonging to low-revenue class.</p>
 will not be helpful.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> &lt;=50K    37155
+ &gt;50K     11687
+Name: class, dtype: int64
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target</span> <span class="o">==</span> <span class="s2">&quot; &lt;=50K&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target</span> <span class="o">==</span> <span class="s2">&quot; &lt;=50K&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7607182343065395
 </pre></div>
 </div>
 </div>
@@ -1261,10 +1285,15 @@ will not be helpful.</p>
 class that appears the most in the training target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">most_freq_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">most_freq_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
 <span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting the most frequent class: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of a model predicting the most frequent class: 0.759
 </pre></div>
 </div>
 </div>

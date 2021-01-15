@@ -49,6 +49,8 @@
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -1141,7 +1143,7 @@ regressor and evaluate the gain obtained.</p>
 a testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1156,7 +1158,7 @@ parameter as a <code class="docutils literal notranslate"><span class="pre">base
 performance on the testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
 
 <span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
@@ -1168,6 +1170,12 @@ performance on the testing set.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score of a bagging regressor:
+0.76
+</pre></div>
+</div>
+</div>
 </div>
 <p>Now, create a <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> instance using the previous model and
 tune the important parameters of the bagging regressor. You can list the
@@ -1175,15 +1183,42 @@ parameters using <code class="docutils literal notranslate"><span class="pre">ge
 are able to find a set of parameters which improve the default regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">bagging</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">bagging</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>base_estimator__ccp_alpha
+base_estimator__criterion
+base_estimator__max_depth
+base_estimator__max_features
+base_estimator__max_leaf_nodes
+base_estimator__min_impurity_decrease
+base_estimator__min_impurity_split
+base_estimator__min_samples_leaf
+base_estimator__min_samples_split
+base_estimator__min_weight_fraction_leaf
+base_estimator__random_state
+base_estimator__splitter
+base_estimator
+bootstrap
+bootstrap_features
+max_features
+max_samples
+n_estimators
+n_jobs
+oob_score
+random_state
+verbose
+warm_start
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
@@ -1200,7 +1235,7 @@ are able to find a set of parameters which improve the default regressor.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
@@ -1210,12 +1245,250 @@ are able to find a set of parameters which improve the default regressor.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>param_n_estimators</th>
+      <th>param_max_samples</th>
+      <th>param_max_features</th>
+      <th>param_base_estimator__max_depth</th>
+      <th>mean_test_score</th>
+      <th>std_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>19</th>
+      <td>16</td>
+      <td>0.8</td>
+      <td>0.8</td>
+      <td>9</td>
+      <td>0.766016</td>
+      <td>0.024060</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>21</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>9</td>
+      <td>0.756603</td>
+      <td>0.019787</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>22</td>
+      <td>1.0</td>
+      <td>0.8</td>
+      <td>8</td>
+      <td>0.750551</td>
+      <td>0.015851</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>15</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>8</td>
+      <td>0.742413</td>
+      <td>0.017423</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>14</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>8</td>
+      <td>0.738098</td>
+      <td>0.019650</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>14</td>
+      <td>1.0</td>
+      <td>0.8</td>
+      <td>7</td>
+      <td>0.733386</td>
+      <td>0.015914</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>25</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>9</td>
+      <td>0.713372</td>
+      <td>0.014513</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>13</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>9</td>
+      <td>0.698971</td>
+      <td>0.018609</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>18</td>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>7</td>
+      <td>0.687748</td>
+      <td>0.012252</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11</td>
+      <td>1.0</td>
+      <td>0.8</td>
+      <td>5</td>
+      <td>0.666433</td>
+      <td>0.020842</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>13</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>6</td>
+      <td>0.660367</td>
+      <td>0.014330</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>4</td>
+      <td>0.633974</td>
+      <td>0.016583</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>22</td>
+      <td>0.8</td>
+      <td>0.8</td>
+      <td>4</td>
+      <td>0.632281</td>
+      <td>0.018500</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>19</td>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>5</td>
+      <td>0.631255</td>
+      <td>0.028524</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>5</td>
+      <td>0.630745</td>
+      <td>0.020027</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>29</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>5</td>
+      <td>0.625005</td>
+      <td>0.030525</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>10</td>
+      <td>0.8</td>
+      <td>0.5</td>
+      <td>5</td>
+      <td>0.609554</td>
+      <td>0.022771</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>26</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>0.563500</td>
+      <td>0.022610</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>16</td>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>3</td>
+      <td>0.532575</td>
+      <td>0.018278</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>23</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>3</td>
+      <td>0.518143</td>
+      <td>0.050004</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basic R2 score of a bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic R2 score of a bagging regressor:
+0.76
 </pre></div>
 </div>
 </div>

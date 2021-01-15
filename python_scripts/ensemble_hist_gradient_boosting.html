@@ -49,6 +49,8 @@
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -1158,7 +1160,7 @@ this issue.</p>
 from scikit-learn. First, we will load the california housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1170,7 +1172,7 @@ from scikit-learn. First, we will load the california housing dataset.</p>
 <p>We will make a quick benchmark of the original gradient boosting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
 
 <span class="n">gradient_boosting</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -1190,6 +1192,14 @@ from scikit-learn. First, we will load the california housing dataset.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient boosting decision tree
+R2 score: 0.804
+Fit time: 6.38 s
+Score time: 0.01609 s
+</pre></div>
+</div>
+</div>
 </div>
 <p>We recall that a way to accelerate the gradient boosting is to reduce the
 number of split considered within the tree building. One way is to bin the
@@ -1199,13 +1209,34 @@ this preprocessing with the gradient boosting.</p>
 <p>We can first demonstrate the transformation done by the <code class="docutils literal notranslate"><span class="pre">KBinsDiscretizer</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">KBinsDiscretizer</span>
 
 <span class="n">discretizer</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span>
     <span class="n">n_bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;ordinal&quot;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">)</span>
 <span class="n">X_trans</span> <span class="o">=</span> <span class="n">discretizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
 <span class="n">X_trans</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[243.,  17., 246., ..., 168., 184.,   6.],
+       [225.,  16., 217., ...,  40.,  15., 210.],
+       [107.,  17., 125., ..., 151.,  96., 147.],
+       ...,
+       [106.,  30.,  18., ...,   8., 110.,  55.],
+       [219.,  33.,  70., ...,  40.,  25., 180.],
+       [  7.,  13.,  31., ..., 205.,  11., 233.]])
 </pre></div>
 </div>
 </div>
@@ -1221,7 +1252,12 @@ This integer represents the bin index when the distribution by quantile is
 performed. We can check the number of bins per feature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">col</span><span class="p">))</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X_trans</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">col</span><span class="p">))</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X_trans</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[256, 50, 256, 254, 256, 256, 210, 235]
 </pre></div>
 </div>
 </div>
@@ -1231,7 +1267,7 @@ features. Now, we will use this transformer to discretize data before to
 train the gradient boosting regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
 <span class="n">gradient_boosting</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">discretizer</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">))</span>
@@ -1251,6 +1287,24 @@ train the gradient boosting regressor.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+/opt/hostedtoolcache/Python/3.7.9/x64/lib/python3.7/site-packages/sklearn/preprocessing/_discretization.py:222: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+  &#39;decreasing the number of bins.&#39; % jj)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KBinsDiscritizer + Gradient boosting decision tree
+R2 score: 0.805
+Fit time: 3.96 s
+Score time: 0.01923 s
+</pre></div>
+</div>
+</div>
 </div>
 <p>Here, we observe that the fit time have been drastically reduce but that the
 performance of the model are the identical. Scikit-learn provides a specific
@@ -1264,7 +1318,7 @@ gradient boosting when the dataset has 10,000+ samples.</p>
 computation time with the earlier experiment in the previous section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 <span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingRegressor</span>
 
@@ -1284,6 +1338,14 @@ computation time with the earlier experiment in the previous section.</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score: </span><span class="si">{</span><span class="n">score_histogram_gradient_boosting</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fit time: </span><span class="si">{</span><span class="n">fit_time_histogram_gradient_boosting</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Score time: </span><span class="si">{</span><span class="n">score_time_histogram_gradient_boosting</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2"> s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Historgram gradient boosting decision tree
+R2 score: 0.845
+Fit time: 0.78 s
+Score time: 0.07855 s
 </pre></div>
 </div>
 </div>

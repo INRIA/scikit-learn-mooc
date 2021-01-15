@@ -15,7 +15,7 @@ from sklearn.datasets import fetch_california_housing
 X, y = fetch_california_housing(as_frame=True, return_X_y=True)
 
 # %% [markdown]
-# Then, we will divide the dataset into a traning and a testing set.
+# As usual, we divide our dataset into training and a testing sets.
 
 # %%
 from sklearn.model_selection import train_test_split

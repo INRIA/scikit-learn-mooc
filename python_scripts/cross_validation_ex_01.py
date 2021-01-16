@@ -26,18 +26,20 @@ X, y = data.drop(columns="Class"), data["Class"]
 # Write your code here.
 
 # %% [markdown]
-# Evaluate the performance of the previous model by cross-validation with a
+# Evaluate the performance of your model by cross-validation with a
 # `ShuffleSplit` scheme.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# The parameter gamma is one of the parameter controlling under-/over-fitting
-# in support vector machine with an RBF kernel. Compute the validation curve
-# to evaluate the effect of the parameter gamma. You can make vary the value
-# of the parameter gamma between `10e-3` and `10e2` by generating samples on
-# log scale.
+# The parameter `gamma` is one of the parameter controlling under/over-fitting
+# in support vector machine with an RBF kernel.
+# \
+# Compute the validation curve to evaluate the effect of the parameter `gamma`.
+# \
+# You can vary its value between `10e-3` and `10e2` by generating samples on a
+# logarithmic scale.
 
 # %%
 # Write your code here.
@@ -49,10 +51,12 @@ X, y = data.drop(columns="Class"), data["Class"]
 # Write your code here.
 
 # %% [markdown]
-# Now, you can make an analysis to check if adding new samples to the dataset
-# could help our model to better generalize. Compute the learning curve by
-# computing the train and test score for different training dataset size.
-# Plot the train and test score in respect with the number of samples.
+# Now, you can perform an analysis to check whether adding new samples to the
+# dataset could help our model to better generalize.
+# \
+# Compute the learning curve by computing the train and test scores for
+# different training dataset size.
+# Plot the train and test scores with respect to the number of samples.
 
 # %%
 # Write your code here.

@@ -124,14 +124,14 @@ data["age"].describe()
 
 # %%
 distribution = data["education-num"].value_counts().sort_index()
-distribution
+print(distribution)
 
 # %%
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 plt.figure(figsize=(12, 7))
 plt.bar(distribution.index, distribution)
-plt.title(f"Distribution of {column_name!r}")
+plt.title(f"Distribution of 'education-num'")
 plt.xlabel("Category")
 plt.ylabel("Occurrences")
 plt.show()

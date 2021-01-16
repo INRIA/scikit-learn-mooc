@@ -16,10 +16,10 @@
 # %% [markdown]
 # # Using numerical and categorical variables together
 #
-# In this notebook, we will present typical ways to deal with **categorical
-# variables**, namely **ordinal encoding** and **one-hot encoding**.
+# In this notebook, we will present typical ways of dealing with
+# both numerical and categorical variables together.
 #
-# We will load the entire adult census dataset.
+# We will first load the entire adult census dataset.
 
 # %%
 import pandas as pd
@@ -32,9 +32,9 @@ target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 # %% [markdown]
-# We recall that `"education-num"` and `"education"` columns contains the same
-# information. In the previous notebook, we drop `"education-num"` and only
-# use the latter column. We will do the same processing here.
+# We recall that both "education-num" and "education" contain the same
+# information. In the previous notebook, we dropped "education-num" and
+# used "education" instead ; we will do the same processing here.
 
 # %%
 data = data.drop(columns="education-num")
@@ -42,9 +42,10 @@ data = data.drop(columns="education-num")
 # %% [markdown]
 # ## Selection based on data types
 #
-# We separate categorical and numerical variables using the `object` data types
-# as we previously saw that it only corresponds to categorical columns. We make
-# use of the `make_column_selector` to select the corresponding columns.
+# We will separate categorical and numerical variables using their data
+# types to identify them, as we saw previously that `object` corresponds
+# to categorical columns (strings). We make use of `make_column_selector`
+# helper to select the corresponding columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -56,16 +57,15 @@ numerical_columns = numerical_columns_selector(data)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
-# Besides, we will list beforehand the categories for each categorical column
-# to avoid issues with rare categories when evaluating the model during the
-# cross-validation.
+# Besides, we will list the categories for each categorical column beforehand
+# to avoid issues with rare categories when evaluating the model.
 
 # %%
 categories = [data[column].unique()
               for column in categorical_columns]
 
 # %% [markdown]
-# ## Dispatch some columns to a specific processor
+# ## Dispatch columns to a specific processor
 #
 # In the previous sections, we saw that we need to treat data differently
 # depending on their nature (i.e. numerical or categorical).
@@ -82,10 +82,10 @@ categories = [data[column].unique()
 #   information will be correlated;
 # * **numerical scaling** numerical features which will be standardized.
 #
-# We can now create our `ColumnTransfomer` by specifying a list of triplet
-# (preprocessor name, transformer, columns). First, let's start by creating
-# a transformer for the numerical and categorical part as we did in the
-# previous notebooks.
+# We can now create our `ColumnTransfomer` by specifying three values:
+# the preprocessor name, the transformer, and the columns.
+# \
+# First, let's create the preprocessors for the numerical and categorical parts.
 
 # %%
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -95,8 +95,8 @@ categorical_preprocessor = OneHotEncoder(categories=categories,
 numerical_preprocessor = StandardScaler()
 
 # %% [markdown]
-# Now, we can associate each of these preprocessors with their respective
-# columns.
+# Now, we can create the transformer and associate each of these
+# preprocessors with their respective columns.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -149,10 +149,10 @@ data_train, data_test, target_train, target_test = train_test_split(
 _ = model.fit(data_train, target_train)
 
 # %% [markdown]
-# Then, we can use the raw dataset directly to the pipeline. Indeed, we don't
-# need to make any processing. All the preprocessing will be handle when
-# calling `predict`. We will give an example by predicting on the five first
-# sample from the test set.
+# Then, we can send the raw dataset straight to the pipeline ;
+# indeed, we don't need to make any processing as it will be handled when
+# calling `predict`. Let's demonstrate that by predicting on the first five
+# samples from the test set.
 
 # %%
 data_test.head()
@@ -192,7 +192,7 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # %% [markdown]
 # ## Fitting a more powerful model
 #
-# **Linear models** are very nice because they are usually very cheap to train,
+# **Linear models** are nice because they are usually cheap to train,
 # **small** to deploy, **fast** to predict and give a **good baseline**.
 #
 # However, it is often useful to check whether more complex models such as an
@@ -220,7 +220,7 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
 # %% [markdown]
-# Now that we created our model, we can check the performance of the model.
+# Now that we created our model, we can check its performance.
 
 # %%
 # %%time
@@ -239,7 +239,7 @@ model.score(data_test, target_test)
 # datascience practitioners who work with tabular data.
 
 # %% [markdown]
-# In this notebook we have:
+# In this notebook we:
 #
 # * used a `ColumnTransformer` to apply different preprocessing for
 #   categorical and numerical variables;

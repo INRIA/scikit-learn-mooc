@@ -2,13 +2,13 @@
 # # Overfit-generalization-underfit
 #
 # In the previous notebook, we presented the general cross-validation framework
-# and it helps at quantifying the empirical and generalization errors as well
+# and how it helps us quantify the empirical and generalization errors as well
 # as their fluctuations.
 #
 # In this notebook, we will put these two errors into perspective and show how
 # they can help us know if our model generalizes, overfit, or underfit.
 #
-# Let's first load the data and create the identical model as in the previous
+# Let's first load the data and create the same model as in the previous
 # notebook.
 
 # %%
@@ -76,8 +76,8 @@ _ = plt.xlabel("Mean absolute error (k$)")
 # a curve called the validation curve. This curve applies the above experiment
 # and varies the value of a hyperparameter.
 #
-# For the decision tree, the `max_depth` the main parameter to control the
-# trade-off between under-fitting and over-fitting.
+# For the decision tree, the `max_depth` parameter is used to control the
+# tradeoff between under-fitting and over-fitting.
 
 # %%
 # %%time
@@ -117,7 +117,7 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 # The validation curve can be divided into three areas:
 #
 # - For `max_depth < 10`, the decision tree underfits. The empirical error and
-#   therefore also the generalization error are both high. The model is too
+#   therefore the generalization error are both high. The model is too
 #   constrained and cannot capture much of the variability of the target
 #   variable.
 #
@@ -129,7 +129,7 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 # - For `max_depth > 10`, the decision tree overfits. The empirical error
 #   becomes very small, while the generalization error increases. In this
 #   region, the models captures too much of the noisy part of the variations of
-#   the target and this harms its ability to generalize well to test data.
+#   the target and this harms its ability to generalize to test data.
 #
 # Note that for `max_depth = 10`, the model overfits a bit as there is a gap
 # between the empirical error and the generalization error. It can also
@@ -147,6 +147,6 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 #
 # In this notebook, we saw:
 #
-# * how to identify if a model is generalizing, overfitting, or underfitting;
-# * how to check influence of an hyperparameter on the trade-off
+# * how to identify whether a model is generalizing, overfitting, or underfitting;
+# * how to check influence of an hyperparameter on the tradeoff
 #   underfit/overfit.

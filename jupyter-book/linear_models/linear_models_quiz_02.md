@@ -1,7 +1,7 @@
 # ✅ Quiz
 
 ```{admonition} Question
-Is it possible to fit a linear model on a dataset where the data have a
+Is it possible to fit a linear model on a dataset where the data has a
 non-linear link with the target?
 
 - a) yes

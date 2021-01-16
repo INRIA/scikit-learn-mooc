@@ -3,8 +3,8 @@
 ```{admonition} Question
 Pandas allows us to:
 
-- a) deal with CSV files
-- b) deal with tabular data
+- a) load data from CSV files
+- b) manipulate tabular data
 - c) plot basic information about tabular data
 - d) deal with scientific/mathematics functions
 ```
@@ -24,7 +24,7 @@ When reading a CSV file with Pandas, missing values are:
 +++
 
 ```{admonition} Question
-How tabular data are organized?
+How are tabular data organized?
 
 - a) a column represents a sample and a row represents a feature
 - b) a column represents a feature and a row represents a sample
@@ -35,7 +35,7 @@ How tabular data are organized?
 ```{admonition} Question
 A categorical variable is:
 
-- a) a variable with only two different values
-- b) a variable with continuous numerical values
-- c) a variable with a finite set of values
+- a) a variable with only two different values (e.g. true of false)
+- b) a variable with continuous numerical values (e.g. price or temperature)
+- c) a variable with a finite set of possible values (e.g. "red", "blue" or "green")
 ```

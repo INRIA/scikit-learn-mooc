@@ -49,11 +49,11 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 #
 # The data are stored in a pandas dataframe.
 #
-# Pandas is a Python library to manipulate tables, a bit like Excel but
-# programming: <https://pandas.pydata.org/>
+# Pandas is a Python library used for manipulating tables
+# (which can be seen as Excel sheets): <https://pandas.pydata.org/>
 
 # %%
-adult_census.head()  # Look at the first few lines of our dataframe
+adult_census.head()  # Print the first few lines of our dataframe
 
 # %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which
@@ -68,11 +68,14 @@ adult_census[target_column].value_counts()
 
 # %% [markdown]
 # ```{note}
-# Classes are slightly imbalanced. Class imbalance happens often in
-# practice and may need special techniques for machine learning. For example in
-# a medical setting, if we are trying to predict whether patients will develop
-# a rare disease, there will be a lot more healthy patients than ill patients
-# in the dataset.
+# Classes are slightly imbalanced,
+# meaning there are more instances of one or more classes compared to others.
+# Class imbalance happens often in practice and may need special techniques
+# for machine learning.
+# \
+# For example in a medical setting, if we are trying to predict whether patients
+# will develop a rare disease, there will be a lot more healthy patients than ill
+# patients in the dataset.
 # ```
 
 # %% [markdown]
@@ -112,7 +115,7 @@ print(f"The dataset contains {adult_census.shape[0]} samples and "
 #
 # * maybe the task you are trying to achieve can be solved without machine
 #   learning;
-# * you need to check that the information you need for your task is indeed
+# * you need to check that the information you need for your task is actually
 #   present in the dataset;
 # * inspecting the data is a good way to find peculiarities. These can
 #   arise during data collection (for example, malfunctioning sensor or missing

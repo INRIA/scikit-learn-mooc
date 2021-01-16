@@ -127,8 +127,8 @@ print(
 # samples.
 #
 # So, we are able to generate many datasets, all slightly different. Now, we
-# can fit a decision tree for each of these datasets and each decision
-# tree shall be slightly different as well.
+# can fit a decision tree for each of these datasets and they all
+# shall be slightly different as well.
 
 # %%
 _, axs = plt.subplots(ncols=n_bootstrap, figsize=(16, 4),
@@ -167,7 +167,7 @@ _ = plt.legend()
 # ## Aggregating
 #
 # Once our trees are fitted and we are able to get predictions for each of
-# them, we also need to combine them. In regression, the most straightforward
+# them, we need to combine them. In regression, the most straightforward
 # approach is to average the different predictions from all learners. We can
 # plot the averaged predictions from the previous example.
 

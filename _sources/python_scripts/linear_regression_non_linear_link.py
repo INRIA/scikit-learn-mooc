@@ -83,7 +83,7 @@ print(f"weight: {linear_regression.coef_[0]:.2f}, "
 # the non-linear relationship between `x` and `y` since linear models assume
 # the relationship between `x` and `y` to be linear.
 #
-# Indeed, there are 3 possibilities to alleviate this issue:
+# Indeed, there are 3 possibilities to solve this issue:
 #
 # 1. choose a model that natively can deal with non-linearity,
 # 2. "augment" features by including expert knowledge which can be used by
@@ -106,10 +106,10 @@ ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# In this case, the model can handle non-linearity. Instead of having a model
+# Instead of having a model
 # which can natively deal with non-linearity, we could also modify our data: we
 # could create new features, derived from the original features, using some
-# expert knowledge. For instance, here we know that we have a cubic and squared
+# expert knowledge. In this example, we know that we have a cubic and squared
 # relationship between `x` and `y` (because we generated the data). Indeed,
 # we could create two new features (`x^2` and `x^3`) using this information.
 

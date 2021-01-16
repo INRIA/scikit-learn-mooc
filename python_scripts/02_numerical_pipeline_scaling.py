@@ -23,13 +23,12 @@
 # * an example of preprocessing, namely the **scaling numerical variables**;
 # * using a scikit-learn **pipeline** to chain preprocessing and model
 #   training;
-# * assessed the performance of our model via **cross-validation** instead of
+# * assessing the performance of our model via **cross-validation** instead of
 #   a single train-test split.
 #
 # ## Data preparation
 #
-# Let's charge the full adult census dataset and split the target from the
-# actual data used for modeling.
+# First, let's charge the full adult census dataset.
 
 # %%
 import pandas as pd
@@ -37,8 +36,8 @@ import pandas as pd
 df = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We will first split our dataset to have the target separated from the data
-# used to train our predictive model.
+# We will now drop the target from the data we will use to train our
+# predictive model.
 
 # %%
 target_name = "class"
@@ -46,7 +45,7 @@ target = df[target_name]
 data = df.drop(columns=target_name)
 
 # %% [markdown]
-# We start by selecting only the numerical columns as seen in the previous
+# Then, we select only the numerical columns, as seen in the previous
 # notebook.
 
 # %%
@@ -126,29 +125,27 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # data and then train a new logistic regression model on that new version of
 # the dataset.
 #
-# Let's start by checking some feature statistics or the training data.
+# Let's start by printing some statistics about the training data.
 
 # %%
 data_train.describe()
 
 # %% [markdown]
-# We see that features in the dataset have very different range. Indeed, having
-# normalized feature is important. Indeed, some algorithms make assumptions
-# regarding feature distributions and having normalized feature is usually one
-# of them.
+# We see that the dataset's features span across different ranges.
+# However, we want to have normalized features because some algorithms make
+# assumptions regarding their distribution, and being normalized is usually
+# one of them.
 #
 # ```{tip}
 # Some of the reasons for scaling features are:
 #
-# * predictor using Euclidean distance (e.g k-nearest  neighbors) should have
-#   normalized feature such that each feature contribute equally distance
-#   computation;
-# * predictor internally using gradient-descent based algorithms
-#   (e.g. logistic regression) to find optimal parameters work better
-#   and faster simplify choice of parameters as learning-rate;
-# * predictor using regularization (e.g. logistic regression) require
-#   normalized features such that the penalty is properly applied to the
-#   weights.
+# * predictors using Euclidian distance (e.g k-nearest-neighbors) should have
+#   normalized features so that each one contributes equally to the distance
+#   computation.
+# * predictors using gradient-descent based algorithms (e.g logistic regression)
+#   to find optimal parameters work better and faster.
+# * predictors using regularization (e.g logistic regression) require normalized
+#   features to properly apply the weights.
 # ```
 #
 # We show how to apply such normalization using a scikit-learn transformer
@@ -171,7 +168,7 @@ data_train_scaled.describe()
 # We can easily combine these sequential operations with a scikit-learn
 # `Pipeline`, which chains together operations and can be used like any other
 # classifier or regressor. The helper function `make_pipeline` will create a
-# `Pipeline` by giving as arguments the successive transformations to perform
+# `Pipeline` ; it takes as arguments the successive transformations to perform,
 # followed by the classifier or regressor model.
 
 # %%
@@ -196,12 +193,16 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # ## Model evaluation using cross-validation
 #
 # In the previous example, we split the original data into a training set
-# and a testing set. This strategy has several issues: in the setting where
-# the amount of data is limited, the subset of data used to train or test will
-# be small; and the splitting was done in a random manner and we have no
+# and a testing set.
+# \
+# This strategy has several issues: in the setting where the amount of data
+# is limited, the subset used to train or test will be small.
+# Moreover, if the splitting was done in a random manner, we do not have
 # information regarding the confidence of the results obtained.
 #
-# Instead, we can use cross-validation. Cross-validation consists of repeating
+# Instead, we can use cross-validation.
+# \
+# Cross-validation consists of repeating
 # this random splitting into training and testing sets and aggregating the
 # model performance. By repeating the experiment, one can get an estimate of
 # the variability of the model performance.

@@ -15,8 +15,9 @@
 # %% [markdown]
 # # Encoding of categorical variables
 #
-# In this notebook, we will present typical ways to deal with **categorical
-# variables**, namely **ordinal encoding** and **one-hot encoding**.
+# In this notebook, we will present typical ways of dealing with
+# **categorical variables**, namely **ordinal encoding** and
+# **one-hot encoding**.
 
 # %% [markdown]
 # Let's first load the entire adult dataset containing both numerical and
@@ -36,7 +37,7 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 #
 # ## Identify categorical variables
 #
-# As we have seen in the previous section, a numerical variable is a continuous
+# As we saw in the previous section, a numerical variable is a
 # quantity represented by a real or integer number. These variables can be
 # naturally handled by machine learning algorithms that are typically composed
 # of a sequence of arithmetic instructions such as additions and
@@ -52,38 +53,37 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 data["native-country"].value_counts().sort_index()
 
 # %% [markdown]
-# One might question how could we easily recognize categorical columns. One
-# useful tip is to look at the data type of each column.
+# Now the question is: how can we easily recognize categorical columns
+# among the dataset ? Part of the answer lies in the columns' data type:
 
 # %%
 data.dtypes
 
 # %% [markdown]
-# If we look at the "native-country" column data type, we observe it is of
-# `object` data type. The reason is that categories are represented with
-# string.
+# If we look at the "native-country" column,
+# we observe its data type is `object`.
 #
-# Sometimes, categorical columns could also be encoded with integers. In this
-# case, looking at the data type will not be enough. In the exploration and in
-# the previous notebook, we saw that the column `"education-num"` is such a
-# column.
+# Sometimes, categorical columns could also be encoded with integers. In such
+# case, looking at the data type will not be enough. In a previous notebook,
+# we saw it is the case with the column `"education-num"`.
 
 # %%
 data["education-num"].value_counts()
 
 # %% [markdown]
-# When considering categorical columns, we should include this columns.
-# However, we also saw that `"education-num"` and `"education"` columns
-# represent exactly the same information. Therefore, we can use one of the two
-# columns. So, we can make the choice to consider only `object` dtype columns.
+# When considering categorical columns, we should include these columns.
+# However, we saw earlier that `"education-num"` and `"education"` represent
+# the exact same information. Therefore, we can get rid of one of the two.
+# \
+# Because in this notebook we want to work with categorical data,
+# we will use `"education"`, which is of `object` dtype.
 #
 # ## Select features based on their data type
 #
-# In the previous notebook, we manually defined the numerical columns. We could
-# to the same here. However, since that we can select columns based on a
-# specific dtypes, we can use a scikit-learn helper allowing to select the
-# column based on their data types. It is called `make_column_selector`. We
-# will illustrate how to use this helper.
+# In the previous notebook, we manually defined the numerical columns.
+# We could do the same here by using the scikit-learn helper function
+# `make_column_selector`, which allows us to select columns based on
+# their data type. We will illustrate how to use this helper.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -93,9 +93,10 @@ categorical_columns = categorical_columns_selector(data)
 categorical_columns
 
 # %% [markdown]
-# We can create the selector by passing the data type to include or exclude.
-# Once the selector created, we can pass the input dataset and the name of
-# the selected columns will be returned.
+# Here, we created the selector by passing the dtype to include ;
+# we then passed the input dataset to the selector object,
+# which returned a list of column names.
+# We can now filter out the unwanted columns:
 
 # %%
 data_categorical = data[categorical_columns]
@@ -156,22 +157,24 @@ print(
 # the encoding is the same.
 #
 # ```{tip}
-# This encoding was used by the persons who published the dataset to transform
-# the `"education"` feature into the `"education-num"` feature for instance.
+# This encoding was used by the dataset's publishers on the `"education"`
+# feature, which gave the feature `"education-num"`
 # ```
 #
-# However, one has to be careful when using this encoding strategy. Using this
-# integer representation can lead the downstream models to make the assumption
-# that the categories are ordered: 0 is smaller than 1 which is smaller than 2,
-# etc.
+# However, be careful when applying this encoding strategy:
+# using this integer representation can lead downstream models
+# to assume that the values are ordered (0 < 1 < 2 < 3... for instance).
 #
 # By default, `OrdinalEncoder` uses a lexicographical strategy to map string
-# category labels to integers. This strategy is completely arbitrary and often
-# be meaningless. For instance suppose the dataset has a categorical variable
-# named "size" with categories such as "S", "M", "L", "XL". We would like the
+# category labels to integers. This strategy is arbitrary and often meaningless.
+# \
+# For instance suppose the dataset has a categorical variable
+# named `"size"` with categories such as "S", "M", "L", "XL". We would like the
 # integer representation to respect the meaning of the sizes by mapping them to
-# increasing integers such as 0, 1, 2, 3. However lexicographical strategy used
-# by default would map the labels "S", "M", "L", "XL" to 2, 1, 0, 3.
+# increasing integers such as 0, 1, 2, 3.
+# \
+# However, the lexicographical strategy used by default would map the labels
+# “S”, “M”, “L”, “XL” to 2, 1, 0, 3. (following the alphabetical order).
 #
 # The `OrdinalEncoder` class accepts a `categories` constructor argument to
 # pass in the correct ordering explicitly.
@@ -222,9 +225,8 @@ ax.set_ylabel("Sample index")
 _ = ax.set_title("Ordinal encoding of 'education' column")
 
 # %% [markdown]
-# So we observed that each category in education becomes a column and the
-# data resulting from the encoding is indicating whether or not the sample
-# belong to this category.
+# As we can see, each category (unique value) became a column ;
+# the encoding returned, for each sample, a 1 to specify which category it belongs to.
 #
 # Let's apply this encoding on the full dataset.
 
@@ -264,7 +266,7 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # and check the performance of this machine learning pipeline using
 # cross-validation.
 #
-# Before to create the pipeline, we have to linger on the `native-country`.
+# Before we create the pipeline, we have to linger on the `native-country`.
 # Let's recall some statistics regarding this column.
 
 # %%
@@ -272,17 +274,18 @@ data["native-country"].value_counts()
 
 # %% [markdown]
 # We see that the `Holand-Netherlands` category is occuring rarely. This will
-# be a problem during cross-validation: if the sample is in the test set then
-# the classifier would not have seen the category during training and will not
-# be able to encode it.
+# be a problem during cross-validation: if the sample ends up in the test set
+# during splitting then the classifier would not have seen the category during
+# training and will not be able to encode it.
 #
 # In scikit-learn, there is two solutions to bypass this issue:
 #
-# * list all the possible categories and provide it to the `categories`;
+# * list all the possible categories and provide it to the encoder via the
+# keyword argument `categories`;
 # * set the parameter `handle_unknown="ignore"`.
 #
-# Here, we will use the former strategy because we are going to use it as well
-# for the ordinal encoder later on.
+# Here, we will use the former strategy because we are also going to use it for
+# the ordinal encoder later on.
 
 # %%
 categories = [data_categorical[column].unique()
@@ -312,9 +315,9 @@ scores
 print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# As you can see, this representation of the categorical variables of the data
-# is slightly more predictive of the revenue than the numerical variables that
-# we used previously.
+# As you can see, this representation of the categorical variables is
+# slightly more predictive of the revenue than the numerical variables
+# that we used previously.
 
 # %% [markdown]
 #

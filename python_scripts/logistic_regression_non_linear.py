@@ -1,11 +1,13 @@
 # %% [markdown]
 # # Beyond linear separation in classification
 #
-# As we saw in regression, the linear classification model expects the data
-# to be linearly separable. When this assumption does not hold, the model
-# is not expressive enough to properly fit the data. One needs to apply the
-# same tricks as in regression: feature augmentation (potentially using
-# expert-knowledge) or using a kernel based method.
+# As we saw in the regression section, the linear classification model
+# expects the data to be linearly separable. When this assumption does not
+# hold, the model is not expressive enough to properly fit the data.
+# \
+# Therefore, we need to apply the same tricks as in regression: feature
+# augmentation (potentially using expert-knowledge) or using a
+# kernel-based method.
 #
 # We will provide examples where we will use a kernel support vector machine
 # to perform classification on some toy-datasets where it is impossible to

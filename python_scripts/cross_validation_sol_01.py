@@ -30,7 +30,7 @@ from sklearn.svm import SVC
 model = make_pipeline(StandardScaler(), SVC())
 
 # %% [markdown]
-# Evaluate the performance of the previous model by cross-validation with a
+# Evaluate the performance of your model by cross-validation with a
 # `ShuffleSplit` scheme.
 
 # %%
@@ -49,11 +49,13 @@ print(
 )
 
 # %% [markdown]
-# The parameter gamma is one of the parameter controlling under-/over-fitting
-# in support vector machine with an RBF kernel. Compute the validation curve
-# to evaluate the effect of the parameter gamma. You can make vary the value
-# of the parameter gamma between `10e-3` and `10e2` by generating samples on
-# log scale.
+# The parameter `gamma` is one of the parameter controlling under/over-fitting
+# in support vector machine with an RBF kernel.
+# \
+# Compute the validation curve to evaluate the effect of the parameter `gamma`.
+# \
+# You can vary its value between `10e-3` and `10e2` by generating samples on a
+# logarithmic scale.
 
 # %%
 import numpy as np
@@ -94,14 +96,18 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 
 # %% [markdown]
 # Looking at the curve, we can clearly identify the over-fitting regime of
-# the SVC classifier: when `gamma > 1`. The best setting is around `gamma = 1`
-# while for `gamma < 1`, it is not very clear that the classifier is
-# under-fitting but the generalization score is worse than for `gamma = 1`.
+# the SVC classifier when `gamma > 1`.
+# \
+# The best setting is around `gamma = 1` while for `gamma < 1`,
+# it is not very clear if the classifier is under-fitting but the
+# generalization score is worse than for `gamma = 1`.
 #
-# Now, you can make an analysis to check if adding new samples to the dataset
-# could help our model to better generalize. Compute the learning curve by
-# computing the train and test score for different training dataset size.
-# Plot the train and test score in respect with the number of samples.
+# Now, you can perform an analysis to check whether adding new samples to the
+# dataset could help our model to better generalize.
+# \
+# Compute the learning curve by computing the train and test scores for
+# different training dataset size.
+# Plot the train and test scores with respect to the number of samples.
 
 # %%
 from sklearn.model_selection import learning_curve

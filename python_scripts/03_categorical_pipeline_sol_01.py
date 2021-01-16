@@ -90,8 +90,8 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # categories.
 #
 # This prevents the model from learning anything predictive enough and the
-# cross-validated score is even lower that the baseline we obtained by ignoring
-# the input data and just always predict the most frequent class:
+# cross-validated score is even lower than the baseline we obtained by ignoring
+# the input data and just constantly predicting the most frequent class:
 
 # %%
 from sklearn.dummy import DummyClassifier

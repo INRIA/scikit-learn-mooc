@@ -64,7 +64,7 @@ data.head()
 
 # %% [markdown]
 # We can now linger on the variables, also denominated features, that we will
-# use to build our predictive model. In addition, we can as well check how many
+# use to build our predictive model. In addition, we can also check how many
 # samples are available in our dataset.
 
 # %%
@@ -94,8 +94,8 @@ model = KNeighborsClassifier()
 model.fit(data, target)
 
 # %% [markdown]
-# Let's use our model to make some predictions using the same dataset. In a
-# sake of simplicity, we will look at the five first predicted targets.
+# Let's use our model to make some predictions using the same dataset. For
+# the sake of simplicity, we will look at the five first predicted targets.
 
 # %%
 target_predicted = model.predict(data)
@@ -131,15 +131,18 @@ print(f"Number of correct prediction: "
 #
 # ## Train-test data split
 #
-# When building a machine learning model, it is important evaluate the trained
-# model on data that was not used to fit the model, as generalization is more
-# than memorization. It is harder to conclude on instances never seen than on
-# those already seen.
+# When building a machine learning model, it is important to evaluate the
+# trained model on data that was not used to fit it, as generalization is
+# more than memorization (meaning we want a rule that generalizes to new data,
+# without comparing to data we memorized).
+# \
+# It is harder to conclude on never-seen instances than on already seen ones.
 #
 # Correct evaluation is easily done by leaving out a subset of the data when
-# training the model and using it after for model evaluation. The data used to
-# fit a model is called training data while the one used to assess a model is
-# called testing data.
+# training the model and using it after for model evaluation.
+# \
+# The data used to fit a model is called training data while the one used
+# to assess a model is called testing data.
 #
 # We can load more data, which was actually left-out from the original data
 # set.
@@ -167,7 +170,7 @@ print(f"The testing dataset contains {data_test.shape[0]} samples and "
 # can be used to split the dataset into a training and a testing set. It will
 # also ensure that the data are shuffled randomly before splitting the data.
 #
-# Instead of computing the prediction and computing manually the average
+# Instead of computing the prediction and manually computing the average
 # success rate, we can use the method `score`. When dealing with classifiers
 # this method returns their performance metric.
 

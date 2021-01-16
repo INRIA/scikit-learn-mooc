@@ -15,7 +15,7 @@ Ordinal categories correspond to:
 
 - a) categorical variable with few categories
 - b) categorical variable with meaningful order
-- c) categorical variable with only number
+- c) categorical variable with only numbers
 ```
 
 +++
@@ -23,10 +23,10 @@ Ordinal categories correspond to:
 ```{admonition} Question
 One-hot encoding will:
 
-- a) transform a categorical variable onto a numerical variable
-- b) transform a numerical variable onto a categorical variable
+- a) transform a categorical variable into a numerical variable
+- b) transform a numerical variable into a categorical variable
 - c) create one additional column for each possible categories
-- d) transform string variable onto numerical representation
+- d) transform string variable into numerical representation
 ```
 
 +++

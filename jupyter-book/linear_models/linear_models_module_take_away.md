@@ -8,9 +8,9 @@ In this module, we saw that:
 
 - a linear model has a specific parametrization defined by some weights and an
   intercept;
-- linear models require to scale the data before to be trained;
-- regularization allows to fight over-fitting;
-- the regularization parameter needs to be fine tuned for each application;
+- linear models require data scaling before being trained;
+- regularization can be used to fight over-fitting;
+- the regularization parameter needs to be fine-tuned for each application;
 - linear models can be used with data presenting non-linear links but require
   extra work such as the use of data augmentation or kernel trick.
 

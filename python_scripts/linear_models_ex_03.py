@@ -11,7 +11,7 @@
 # We will load a dataset about house prices in California.
 # The dataset consists of 8 features regarding the demography and geography of
 # districts in California and the aim is to predict the median house price of
-# each district. We will use all 8 features to predict the target, median
+# each district. We will use all 8 features to predict the target, the median
 # house price.
 
 # %%
@@ -25,7 +25,7 @@ X.head()
 # You will need to:
 # * split the dataset into a training and testing set;
 # * train a linear regression model on the training set;
-# * compute the mean absolute error in k$;
+# * compute the mean absolute error in thousands of dollars (k$);
 # * show the values of the coefficients for each feature.
 
 # %%

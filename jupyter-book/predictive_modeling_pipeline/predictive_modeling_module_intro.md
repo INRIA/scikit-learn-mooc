@@ -5,11 +5,17 @@
 <!-- Give in plain English what the module is about -->
 
 This module will give an example of a typical predictive modeling pipeline
-developed using tabular data. We will present this pipeline in a progressive
-way. First, we will make an analysis of the dataset used. Subsequently, we will
-train our first pipeline with a subset of the dataset, containing only
-numerical features. Finally, we will extend our pipeline to use mixed
-types of data, i.e. numerical and categorical data.
+developed using tabular data.
+\
+Note: Data is called tabular when it has a named column.
+\
+We will present this pipeline in a progressive way.
+First, we will make an analysis of the dataset used.
+Subsequently, we will train our first pipeline with a subset of the dataset,
+containing only numerical features.
+\
+Finally, we will extend our pipeline to use mixed types of data, i.e. 
+numerical and categorical data.
 
 ## Before getting started
 
@@ -17,14 +23,13 @@ types of data, i.e. numerical and categorical data.
 
 The required technical skills to carry on this module are:
 
-- know Python;
+- knowledge of the Python programming language;
 - having some basic knowledge of the following libraries: NumPy, SciPy,
   Pandas, Matplotlib, and Seaborn;
 
 <!-- Point to resources to learning these skills -->
 
-The following links will help you to have an introduction to the above
-required libraries:
+The following resources can give you an introduction to these libraries:
 
 - [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html);
 - [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html);

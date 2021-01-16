@@ -65,10 +65,10 @@ plt.subplots_adjust(wspace=0.4)
 # We can first check the feature distributions by looking at the diagonal plots
 # of the pairplot. We can build the following intuitions:
 #
-# * The Adelie species is separable from the Gentoo and Chinstrap species using
-#   the culmen length;
-# * The Gentoo species is separable from the Adelie and Chinstrap species using
-#   the culmen depth.
+# * The Adelie species can be differentiated from the Gentoo and Chinstrap species
+#   depending on the culmen length;
+# * The Gentoo species can be differentiated from the Adelie and Chinstrap species
+#   depending on the culmen depth.
 #
 # ## Regression dataset
 #

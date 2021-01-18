@@ -48,24 +48,25 @@ df_train, df_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Start by defining the columns and the preprocessing pipelines to be applied
 # on each columns.
-
 # %%
+
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
 # %% [markdown]
 # Subsequently, create a `ColumnTransformer` to redirect the specific columns
 # a preprocessing pipeline.
-
 # %%
+
 from sklearn.compose import ColumnTransformer
 
 # %% [markdown]
 # Finally, concatenate the preprocessing pipeline with a logistic regression.
-
 # %%
+
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
+
 
 # %% [markdown]
 # Make your random search

@@ -33,36 +33,7 @@ The notebooks will require the following packages:
 
 ### Local install
 
-Materials: https://github.com/INRIA/scikit-learn-mooc/
-
-
-We provide both `requirements.txt` and `environment.yml` to install packages.
-
-You can install the packages using `pip`:
-
-```
-$ pip install -r requirements.txt
-```
-
-Alternatively, you can create an `scikit-learn-course` conda environment
-by executing:
-
-```
-$ conda env create -f environment.yml
-```
-
-then activate the environment with:
-
-```
-$ conda activate scikit-learn-course
-```
-
-You can also update your current environment, instead of creating a new
-environment, using:
-
-```
-$ conda env update --prefix ./env --file environment.yml  --prune
-```
+see instructions [here](./local-install-instructions.md)
 
 ## Contributing
 

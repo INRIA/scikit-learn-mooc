@@ -28,7 +28,7 @@ df = pd.read_csv("../datasets/adult-census.csv")
 df.head()
 
 # %% [markdown]
-# The next step is to separate the target from the data. We will replacate the
+# The next step is to separate the target from the data. We will replicate the
 # same step than in the previous notebook.
 
 # %%

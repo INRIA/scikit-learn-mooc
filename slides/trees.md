@@ -11,9 +11,11 @@ These are models for both regression and classification.
 <img src="../figures/scikit-learn-logo.svg">
 
 ???
-Decision tree are built as a set of rules for both classification and regression problems.
+Decision tree are built as a set of rules for both 
+classification and regression problems.
 
-These are the building blocks for more elaborate model such as random forest and gradient boosting trees, as we will see.
+These are the building blocks for more elaborate models such 
+as *random forest* and *gradient boosting trees*, as we will see.
 
 ---
 
@@ -28,7 +30,7 @@ class: center, middle
 
 # What is a decision tree?
 
-And how does it build classification and regression models
+How does it build classification and regression models ?
 
 ???
 
@@ -44,10 +46,10 @@ and how it can form the basis of classification and regression models.
 ???
 A decision tree is a set of rules, combined in a hierarchical manner.
 
-In this example, if a new point have to be classified :
+In this example, if a new point has to be classified :
 
-- we will first check the age feature, if it is lower than 28.5, we shall classified it as "low income".
-- Otherwise, depending of the hours per week feature, we will classified it as low or high income.
+- we will first check the age feature, if it is lower than 28.5, we shall classify it as "low income".
+- Otherwise, depending on the hours per week feature, we will classify it as low or high income.
 
 ---
 
@@ -58,7 +60,8 @@ In this example, if a new point have to be classified :
 .pull-right[<img src="../figures/tree_blue_orange1.svg" width="100%">]
 
 ???
-Each split shall maximize the "information gain". That will be define precisely in the following notebook.
+Each split shall maximize the "information gain". 
+That will be defined precisely in the following notebook.
 
 ---
 
@@ -69,7 +72,8 @@ Each split shall maximize the "information gain". That will be define precisely 
 .pull-right[<img src="../figures/tree_blue_orange2.svg" width="100%">]
 
 ???
-We can incrementally expand any leaf to refine the decision function. At each step, the leaf focuses on a smaller subregion of the space.
+We can incrementally expand any leaf to refine the decision function. 
+At each step, the leaf focuses on a smaller subregion of the space.
 
 ---
 
@@ -80,9 +84,9 @@ We can incrementally expand any leaf to refine the decision function. At each st
 .pull-right[<img src="../figures/tree_blue_orange3.svg" width="100%">]
 
 ???
-In this example, after two split, we obtain pure leaf.
+In this example, after two splits, we obtain pure leaves.
 i.e. in each leaf, there is only one class.
-The max depth here is then equal to 2. We do not need to go deeper.
+The max depth here is equal to 2. We do not need to go deeper.
 
 ---
 
@@ -91,7 +95,7 @@ The max depth here is then equal to 2. We do not need to go deeper.
 <img src="../figures/tree_regression1.svg" width="100%">
 
 ???
-Decision tree can also fit regression problem.
+Decision trees can also fit regression problems.
 
 ---
 
@@ -101,7 +105,8 @@ Decision tree can also fit regression problem.
 
 ???
 It will arrange the split w.r.t. the value of _x_.
-Without making any assumption on any distribution. It is a non-parametric model.
+Without making any assumption on any distribution.
+It is a non-parametric model.
 
 ---
 
@@ -110,8 +115,8 @@ Without making any assumption on any distribution. It is a non-parametric model.
 <img src="../figures/tree_regression3.svg" width="100%">
 ???
 
-But it can also overfit.
-Controlling the depth here allow to control the overfit.
+However, it can also overfit.
+Controlling the depth here allows to control the overfitting.
 
 ---
 
@@ -137,5 +142,5 @@ Large depth
 
 # Take away
 
-- Successive binary rule considering a single feature
-- `max_depth` controls the trade-off between underfit-overfit
+- Successive binary rule considering a single feature;
+- `max_depth` controls the trade-off between underfitting and overfitting.

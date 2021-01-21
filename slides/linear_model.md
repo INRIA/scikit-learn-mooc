@@ -44,7 +44,7 @@ settings.
 ???
 
 Let us consider a variant of the adult census data that we saw
-previously: instead of having 2 categories, ``< $50k`` and ``>= $50k``, the
+previously: instead of having 2 categories, *< $50k* and *>= $50k*, the
 target "Salary" contains the exact value of the salary for each person.
 Thus, the target is continuous, so we are dealing with a regression problem
 instead of a classification problem.

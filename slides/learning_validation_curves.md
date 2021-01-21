@@ -8,14 +8,14 @@ Varying complexity: validation curves
 
 Varying the sample size: learning curves
 
-Goal: understand the Overfitting / Underfitting
+Goal: understand the overfitting / underfitting
 trade-off
 
 <img src="../figures/scikit-learn-logo.svg">
 
 ???
 
-So, now that we understand that there is tradeoff between underfitting and
+So, now that we understand that there is a tradeoff between underfitting and
 overfitting, the question is: from a practical standpoint, how do we know on
 which side of the balance our model is sitting?
 
@@ -27,16 +27,16 @@ which side of the balance our model is sitting?
 .width50.pull-right[
 Measure:
 
-* errors on test data (generalization)
+- errors on test data (generalization)
 
-* errors on the train data
+- errors on the train data
 ]
 
 ???
 
 To probe the tradeoff between underfit and overfit, our central
 tool will be to measure both the generalization error, on unseen
-test data, and the error on the data used to train the model
+test data, and the error on the data used to train the model.
 
 
 ---
@@ -49,7 +49,7 @@ test data, and the error on the data used to train the model
 
 ???
 
-We can look at these errors while varying model complexity.
+We can look at these errors while varying the model complexity.
 
 If we start with a very simple model, the training error is similar to
 the testing error: the model does not have enough capacity to capture
@@ -92,8 +92,8 @@ data is larger.
 
 ???
 
-As we keep increasing model complexity, the train error keeps going down,
-but the test increases sharply. The model is overfitting.
+As we keep increasing the model complexity, the training error keeps going down,
+while the test increases sharply. The model is overfitting.
 
 ---
 
@@ -145,8 +145,8 @@ learning curve.
 ???
 
 If we fit a polynomial of degree 9 on a small dataset, we will not have
-enough data and we will be in an overfit situation. As a result the train
-error will be low, but the test error will be high.
+enough data and we will be in an overfitting situation. 
+As a result the train error will be low, and the test error high.
 
 ---
 
@@ -162,7 +162,7 @@ error will be low, but the test error will be high.
 ???
 
 As we increase the sample size, the test error decreases while
-the train error increases: the models are less overfitting.
+the train error increases: the model is overfitting less.
 
 ---
 
@@ -179,8 +179,8 @@ the train error increases: the models are less overfitting.
 
 ???
 
-With enough data, the train and test errors converge: the model is no
-longer overfit.
+With enough data, the train and test errors converge: the model no
+longer overfits.
 
 ---
 
@@ -198,7 +198,7 @@ longer overfit.
 ???
 
 After a while, we reach diminishing returns: the test and the train error
-are no longer changing: more data does not bring any benefits.
+are no longer changing: adding more data does not bring any benefit.
 
 --
 
@@ -236,9 +236,9 @@ it is useful to try more complex models.
 However, in the specific case of our example, the data-generating process
 in a degree-9 polynomial. As a result, more complex models will not
 improve the prediction: the present model has already captured all the
-non-random link between X and y.
+non-random link between *X* and *y*.
 
-The corresponding prediction is imperfect. Yet, we cannot do better: the
+The corresponding prediction is imperfect, yet, we cannot do better: the
 prediction is limited by the intrinsic randomness of the link between X
 and y.
 
@@ -268,9 +268,9 @@ multi-layer perceptrons*
 
 The excellent performance that we just observed for degree-9 polynomials
 when there is plenty of data comes from the perfect match between the
-statistical model used to analyse the data and the data-generating process. So far, we have used
-polynomials for both of them. But in practice, given data, we seldom know
-a simple form of model in which the data is drawn. 
+statistical model used to analyze the data and the data-generating process. 
+So far, we have used polynomials for both of them, however in practice, 
+given some data, we seldom know a simple form of model in which the data is drawn. 
 
 For this reason, the choice of family of model is crucial.
 
@@ -292,8 +292,8 @@ in the next modules.
 
 ???
 
-Different model families come with different form of bias, which we call
-inductive bias, and of complexity.
+Different model families come with different forms  of complexity and bias 
+(which we call inductive bias).
 
 For instance, polynomial regressions tend to be smooth, and their
 complexity is controlled by the degree of the polynomials used to fit the
@@ -321,10 +321,10 @@ complexity is controlled by the number of constant regions that they fit.
 Varying model complexity for these different families of model explores
 different underfit and overfit behavior.
 
-In general forcing a model towards a simpler fit is called
+In general, forcing a model towards a simpler fit is called
 "regularization". In scikit-learn, and in machine learning in general,
 almost every model comes with a specific regularization strategy. Part of
-machine-learning practice is about understanding the inductive biases and
+machine-learning practice is to understand the inductive biases and
 the regularization strategy to choose the right model. We will cover this
 later, as we explore various models.
 
@@ -354,9 +354,9 @@ Different model families = different complexity & inductive bias
 
 Let me conclude this lesson by recapitulating the take home messages.
 
-When the models are too complex for the data at hand, they overfit. This
-means that they explain too well the data that they have seen as they
-capture noise, and thus do not generalize to new data.
+When the models are too complex for the data at hand, they overfit. 
+This means that they explain the data that they have seen too well as 
+they capture noise, and thus do not generalize to new data.
 
 On the opposite, when models are too simple for the data at hand, they
 underfit. This means that they capture no noise, but their ability to

@@ -124,7 +124,7 @@ data["education-num"].value_counts().sort_index()
 # Therefore, we should ignore such type of columns because they would require
 # a specific processing which is different from the continuous variable.
 #
-# Finally, we can mention that we will ignore the `"fnwgt"` column because it
+# Finally, we can mention that we will ignore the `"fnlwgt"` column because it
 # corresponds to an hand-crafted variable and we make the choice to only work
 # with variable which has been collected. In the next notebook, we will
 # regularly ignore this variable as well.

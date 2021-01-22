@@ -40,7 +40,10 @@ model = Pipeline(steps=[
 ])
 model.fit(data_train, target_train)
 
-# %% [markdow]
+# %%
+model.score(data_test, target_test)
+
+# %% [markdown]
 # We created a model with default `C` value that is equal to 1. We saw in the
 # previous exercise that we will be interested to set the value of an
 # hyperparameter. One possibility is to set the parameter when we create the

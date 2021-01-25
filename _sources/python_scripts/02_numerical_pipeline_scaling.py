@@ -132,28 +132,39 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 data_train.describe()
 
 # %% [markdown]
-# We see that features in the dataset have very different range. Indeed, having
-# normalized feature is important. Indeed, some algorithms make assumptions
-# regarding feature distributions and having normalized feature is usually one
-# of them.
+#
+# We see that the features of this dataset have very different ranges of values.
+# This can be a problem for some machine learning algorithms such as k-nearest
+# neighbors and logistic regression. Those algorithms work better if the
+# numerical features are preprocessed to use similar scales.
 #
 # ```{tip}
-# Some of the reasons for scaling features are:
+# Here are some reasons for scaling features:
 #
-# * predictor using Euclidean distance (e.g k-nearest  neighbors) should have
-#   normalized feature such that each feature contribute equally distance
-#   computation;
-# * predictor internally using gradient-descent based algorithms
-#   (e.g. logistic regression) to find optimal parameters work better
-#   and faster simplify choice of parameters as learning-rate;
-# * predictor using regularization (e.g. logistic regression) require
-#   normalized features such that the penalty is properly applied to the
-#   weights.
+# * Models that relie on the distance between a pair of samples (e.g k-nearest
+#   neighbors) should be trained on normalized features to make each feature
+#   contribute approximately equally to the distance computations.
+#
+# * Many models such as logistic regression use a numerical solver (based on
+#   gradient descent) to find their optimal parameters. This solver converges
+#   faster when the features are scaled.
+#
+# * Logistic regression uses a strategy called "regularization" to better behave
+#   on datasets with many features or correlated features and comparatively
+#   fewer samples. Regularization assumes that features have similar scales.
+#
+# The use of regularization for linear models will be explained in a dedicated
+# notebook, later in the MOOC.
 # ```
+#
+# Whether or not a machine learning model requires scaling the features depends
+# on the model family. Linear models such as logistic regression generally
+# benefit from scaling the features while other models such as decision trees do
+# not need such preprocessing.
 #
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer intend to transform feature such
-# that they will all have a zero mean and a unit standard deviation.
+# that each of them will all have a mean value and a unit standard deviation.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -168,10 +179,11 @@ data_train_scaled = pd.DataFrame(data_train_scaled,
 data_train_scaled.describe()
 
 # %% [markdown]
-# We can easily combine these sequential operations with a scikit-learn
-# `Pipeline`, which chains together operations and can be used like any other
-# classifier or regressor. The helper function `make_pipeline` will create a
-# `Pipeline` by giving as arguments the successive transformations to perform
+#
+# We can easily combine one or more transformers and the final classifier with a
+# scikit-learn `Pipeline`. The resulting object used like any other classifier
+# or regressor. The helper function `make_pipeline` will create a `Pipeline`
+# instance by giving as arguments the successive transformations to perform
 # followed by the classifier or regressor model.
 
 # %%

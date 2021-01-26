@@ -1,33 +1,25 @@
 # ✅ Quiz
 
 ```{admonition} Question
-Pandas allows us to:
+The pandas library allows us to:
 
 - a) load data from CSV files
-- b) manipulate tabular data
+- b) filter and transform tabular data
 - c) plot basic information about tabular data
-- d) deal with scientific/mathematics functions
+- d) compute summary statistics of tabular data
+- e) perform numerical optimization
+- f) fit machine learning models
 ```
 
 +++
 
 ```{admonition} Question
-When reading a CSV file with Pandas, missing values are:
-
-- a) automatically detected whatever the representation of the missing value
-- b) are never detected
-- c) are detected only if you provide which sentinel value was used
-- d) are automatically detected but a sentinel value should be provided if it
-  is not recognized by Pandas
-```
-
-+++
-
-```{admonition} Question
-How are tabular data organized?
+How is organized a tabular dataset ?
 
 - a) a column represents a sample and a row represents a feature
 - b) a column represents a feature and a row represents a sample
+- c) the target variable is represented by a row
+- d) the target variable is represented by a column
 ```
 
 +++
@@ -35,7 +27,7 @@ How are tabular data organized?
 ```{admonition} Question
 A categorical variable is:
 
-- a) a variable with only two different values (e.g. true of false)
-- b) a variable with continuous numerical values (e.g. price or temperature)
-- c) a variable with a finite set of possible values (e.g. "red", "blue" or "green")
+- a) a variable with only two different possible values
+- b) a variable with continuous numerical values
+- c) a variable with a finite set of possible values
 ```

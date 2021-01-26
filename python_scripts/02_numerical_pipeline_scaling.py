@@ -141,7 +141,7 @@ data_train.describe()
 # ```{tip}
 # Here are some reasons for scaling features:
 #
-# * Models that relie on the distance between a pair of samples (e.g k-nearest
+# * Models that rely on the distance between a pair of samples (e.g k-nearest
 #   neighbors) should be trained on normalized features to make each feature
 #   contribute approximately equally to the distance computations.
 #

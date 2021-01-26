@@ -223,13 +223,13 @@
   </i>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="predictive_modeling_module_take_away.html">
-   Main take-away
+  <a class="reference internal" href="wrap_up_quiz.html">
+   🏁 Wrap-up quiz
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../final_evaluation/predictive_modeling_pipeline_questions.html">
-   🏁 Wrap-up quiz
+  <a class="reference internal" href="predictive_modeling_module_take_away.html">
+   Main take-away
   </a>
  </li>
 </ul>
@@ -1147,46 +1147,41 @@
 <p>Why do we need two sets: a train set and a test set?</p>
 <ul class="simple">
 <li><p>a) to train the model faster</p></li>
-<li><p>b) to gain insights of how to tune the hyper-parameters</p></li>
-<li><p>c) to validate the model on unseen data</p></li>
+<li><p>b) to validate the model on unseen data</p></li>
+<li><p>d) to improve the accuracy of the model</p></li>
 </ul>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What is a numerical feature?</p>
+<p>The generalization performance of a scikit-learn model can be evaluated by:</p>
 <ul class="simple">
-<li><p>a) a column containing values that can be used by a scikit-learn predictive
-model</p></li>
-<li><p>b) a column containing only numbers</p></li>
-<li><p>c) a column containing only numbers that are continuous</p></li>
+<li><p>a) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model on the training set, <code class="docutils literal notranslate"><span class="pre">predict</span></code> on the test set to get the predictions, and compute the score by passing the predictions and the true target values to some metric function</p></li>
+<li><p>b) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model on the training set, <code class="docutils literal notranslate"><span class="pre">score</span></code> to compute the score on the test set</p></li>
+<li><p>c) calling <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> by passing the model and the data</p></li>
 </ul>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>A scikit-learn model can be evaluated by:</p>
+<p>When calling <code class="docutils literal notranslate"><span class="pre">cross_val_score(estimator,</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">cv=5)</span></code>, the following happens:</p>
 <ul class="simple">
-<li><p>a) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model, <code class="docutils literal notranslate"><span class="pre">predict</span></code> to get the predictions, and
-compute the score using the predictions, the true values, and a metric</p></li>
-<li><p>b) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model, <code class="docutils literal notranslate"><span class="pre">score</span></code> to get the score</p></li>
-<li><p>c) calling <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> by providing the model and the data</p></li>
+<li><p>a) X and y are internally split five times with non-overlapping test sets</p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">estimator.fit</span></code> is called 5 times on the full X and y</p></li>
+<li><p>c) <code class="docutils literal notranslate"><span class="pre">estimator.fit</span></code> is called 5 times, each time on a different training set</p></li>
+<li><p>d) 5 scores, computed on the 5 train sets, are returned</p></li>
+<li><p>e) 5 scores, computed on the 5 test sets, are returned</p></li>
+<li><p>f) the average of 5 scores is returned</p></li>
+<li><p>g) the 5 trained estimators are returned</p></li>
 </ul>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>When calling <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>, should you give at least:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> transformer:</p>
 <ul class="simple">
-<li><p>a) a scikit-learn model and the training data and target</p></li>
-<li><p>b) a scikit-learn model and the testing data and target</p></li>
-<li><p>c) a scikit-learn model and the full dataset</p></li>
-</ul>
-</div>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Scaling the data before fitting a linear model allows us to:</p>
-<ul class="simple">
-<li><p>a) train the model faster</p></li>
-<li><p>b) achieve better performance</p></li>
-<li><p>c) none of the above</p></li>
+<li><p>a) transform the features so that they have similar ranges</p></li>
+<li><p>b) transform the features to lie in the [0.0, 1.0] range</p></li>
+<li><p>c) transform positive-only features into negative or positive values</p></li>
+<li><p>d) can help logistic regression converge faster (fewer iterations)</p></li>
+<li><p>e) deal with the problem of missing values</p></li>
 </ul>
 </div>
 <div class="admonition-question admonition">
@@ -1194,9 +1189,9 @@ compute the score using the predictions, the true values, and a metric</p></li>
 <p>Cross-validation allows us to:</p>
 <ul class="simple">
 <li><p>a) train the model faster</p></li>
-<li><p>b) have better performance</p></li>
-<li><p>c) compute the error/score variability</p></li>
-<li><p>d) avoid over-fitting</p></li>
+<li><p>b) measure the generalization performance of the model</p></li>
+<li><p>c) reach better generalization performance</p></li>
+<li><p>d) estimate the variability of the generalization score</p></li>
 </ul>
 </div>
 <div class="admonition-question admonition">

@@ -194,14 +194,12 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 #
 # In the previous example, we split the original data into a training set
 # and a testing set.
-# \
 # This strategy has several issues: in the setting where the amount of data
 # is limited, the subset used to train or test will be small.
 # Moreover, if the splitting was done in a random manner, we do not have
 # information regarding the confidence of the results obtained.
 #
 # Instead, we can use cross-validation.
-# \
 # Cross-validation consists of repeating
 # this random splitting into training and testing sets and aggregating the
 # model performance. By repeating the experiment, one can get an estimate of

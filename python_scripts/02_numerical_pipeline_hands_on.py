@@ -211,7 +211,6 @@ print(f"Accuracy of logistic regression: {accuracy:.3f}")
 # %% [markdown]
 # Now the real question is: is this performance relevant of a good predictive
 # model?
-# \
 # Find out by solving the next exercise !.
 #
 # In this notebook, we learned:

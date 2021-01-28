@@ -117,7 +117,7 @@ data["age"].describe()
 # We will come back later on this type of data and how to handle them.
 # Here, we are only interested in recognizing them.
 #
-# Let’s take for example “education-num”.
+# Let's take for example "education-num".
 # We can assert that each value, which is a number, represents an education
 # level. Therefore, there is only a specific amount of values each sample can
 # take. Let’s print out the distribution to get an intuition of the data:

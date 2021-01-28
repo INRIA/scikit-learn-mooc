@@ -31,7 +31,7 @@ df.head()
 
 # %% [markdown]
 # The next step separates the target from the data.
-# We performed this same procedure in the previous notebook.
+# We performed the same procedure in the previous notebook.
 
 # %%
 data, target = df.drop(columns="class"), df["class"]
@@ -117,7 +117,7 @@ data["age"].describe()
 # We will come back later on this type of data and how to handle them.
 # Here, we are only interested in recognizing them.
 #
-# Let’s take for example “education-num”.
+# Let's take for example "education-num".
 # We can assert that each value, which is a number, represents an education
 # level. Therefore, there is only a specific amount of values each sample can
 # take. Let’s print out the distribution to get an intuition of the data:
@@ -160,12 +160,12 @@ data_numeric = data[numerical_columns]
 #
 # In the previous notebook, we loaded two separate datasets: a training
 # one and a testing one. However, as mentioned earlier, having separate
-# datasets like that is unusual ; most of the time, we will need to
+# datasets like that are unusual; most of the time, we will need to
 # create them from a single dataset we have.
 # \
 # We also mentioned that scikit-learn provides the helper function
-# `sklearn.model_selection.train_test_split` which can be used to
-# automatically make the split.
+# `sklearn.model_selection.train_test_split` which is used to
+# automatically split the data.
 
 # %%
 from sklearn.model_selection import train_test_split

@@ -20,20 +20,16 @@ numerical and categorical data.
 
 The required technical skills to carry on this module are:
 
-- knowledge of the Python programming language;
-- having some basic knowledge of the following libraries: NumPy, SciPy,
-  Pandas, Matplotlib, and Seaborn;
+- basic knowledge of Python programming
+- basic knowledge of NumPy and Pandas libraries
 
 <!-- Point to resources to learning these skills -->
 
-The following resources can give you an introduction to these libraries:
+Here are a few good reference links about these requirements:
 
-- [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html);
-- [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html);
-- [Introduction to Matplotlib](https://scipy-lectures.org/intro/matplotlib/index.html);
-- [Introduction to SciPy](https://scipy-lectures.org/intro/scipy.html);
-- [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html#min);
-- [Introduction to Seaborn](https://seaborn.pydata.org/introduction.html).
+- [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html)
+- [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html)
+- [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
 
 ## Objectives and time schedule
 
@@ -47,4 +43,4 @@ The objective in the module are the following:
 
 <!-- Give the investment in time -->
 
-The estimated time to go through this module is about 3 hours 15.
+The estimated time to go through this module is about 4 hours

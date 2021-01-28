@@ -149,9 +149,8 @@ data_numeric = data[numerical_columns]
 #
 # In the previous notebook, we loaded two separate datasets: a training
 # one and a testing one. However, as mentioned earlier, having separate
-# datasets like that are unusual; most of the time, we will need to
-# create them from a single dataset we have.
-# \
+# datasets like that is unusual: most of the time, we have a single one,
+# which we will subdivide.
 # We also mentioned that scikit-learn provides the helper function
 # `sklearn.model_selection.train_test_split` which is used to
 # automatically split the data.
@@ -170,7 +169,6 @@ data_train, data_test, target_train, target_test = train_test_split(
 #
 # In the previous notebook, we used a k-nearest neighbors predictor. While this
 # model is really intuitive to understand, it is not widely used.
-# \
 # Here, we will make a predictive model belonging to the linear models family.
 #
 # ```{note}

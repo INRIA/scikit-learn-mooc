@@ -164,8 +164,8 @@ data_numeric = data[numerical_columns]
 # create them from a single dataset we have.
 # \
 # We also mentioned that scikit-learn provides the helper function
-# `sklearn.model_selection.train_test_split` which can be used to
-# automatically make the split.
+# `sklearn.model_selection.train_test_split` which is used to
+# automatically split the data.
 
 # %%
 from sklearn.model_selection import train_test_split

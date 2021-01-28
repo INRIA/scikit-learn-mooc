@@ -160,7 +160,7 @@ data_numeric = data[numerical_columns]
 #
 # In the previous notebook, we loaded two separate datasets: a training
 # one and a testing one. However, as mentioned earlier, having separate
-# datasets like that is unusual ; most of the time, we will need to
+# datasets like that are unusual; most of the time, we will need to
 # create them from a single dataset we have.
 # \
 # We also mentioned that scikit-learn provides the helper function

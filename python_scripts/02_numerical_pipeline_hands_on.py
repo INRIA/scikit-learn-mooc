@@ -123,18 +123,7 @@ data["age"].describe()
 # take. Let’s print out the distribution to get an intuition of the data:
 
 # %%
-distribution = data["education-num"].value_counts().sort_index()
-print(distribution)
-
-# %%
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(12, 7))
-plt.bar(distribution.index, distribution)
-plt.title(f"Distribution of 'education-num'")
-plt.xlabel("Category")
-plt.ylabel("Occurrences")
-plt.show()
+data["education-num"].value_counts().sort_index()
 
 # %% [markdown]
 # We can observe that the distribution is very unequal between categories.

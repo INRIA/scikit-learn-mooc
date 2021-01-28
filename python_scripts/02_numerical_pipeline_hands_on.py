@@ -31,7 +31,7 @@ df.head()
 
 # %% [markdown]
 # The next step separates the target from the data.
-# We performed this same procedure in the previous notebook.
+# We performed the same procedure in the previous notebook.
 
 # %%
 data, target = df.drop(columns="class"), df["class"]

@@ -14,10 +14,10 @@
 
 # %%
 import numpy as np
-# fix the seed for reproduction
+# Set the seed for reproduction
 rng = np.random.RandomState(0)
 
-# generate data
+# Generate data
 n_sample = 100
 x_max, x_min = 1.4, -1.4
 len_x = (x_max - x_min)

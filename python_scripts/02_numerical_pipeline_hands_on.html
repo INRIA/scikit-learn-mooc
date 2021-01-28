@@ -1136,16 +1136,18 @@
                 
   <div class="section" id="working-with-numerical-data">
 <h1>Working with numerical data<a class="headerlink" href="#working-with-numerical-data" title="Permalink to this headline">¶</a></h1>
-<p>In the previous notebook, we trained a k-nearest neighbors on some data.
-However, we oversimplify the procedure by loading a dataset that only
-contained numerical data. Besides, we used datasets which were already
-split into train-test sets.</p>
+<p>In the previous notebook, we trained a k-nearest neighbors model on
+some data.
+<br />
+However, we oversimplified the procedure by loading a dataset that
+contained exclusively numerical data.
+Besides, we used datasets which were already split into train-test sets.</p>
 <p>In this notebook, we aim at:</p>
 <ul class="simple">
 <li><p>identifying numerical data in a heterogeneous dataset;</p></li>
-<li><p>select the subset of columns corresponding to numerical data;</p></li>
-<li><p>use scikit-learn helper to separate data into train-test sets;</p></li>
-<li><p>train and evaluate a more complex scikit-learn model.</p></li>
+<li><p>selecting the subset of columns corresponding to numerical data;</p></li>
+<li><p>using a scikit-learn helper to separate data into train-test sets;</p></li>
+<li><p>training and evaluating a more complex scikit-learn model.</p></li>
 </ul>
 <p>We will start by loading the adult census dataset used during the data
 exploration.</p>
@@ -1293,8 +1295,8 @@ a dataframe.</p>
 </table>
 </div></div></div>
 </div>
-<p>The next step is to separate the target from the data. We will replicate the
-same step than in the previous notebook.</p>
+<p>The next step separates the target from the data.
+We performed the same procedure in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
@@ -1456,15 +1458,16 @@ Name: class, Length: 48842, dtype: object
 </div>
 </div>
 </div>
-<p>At this stage, we can focus on the data that we want to use to train or
-future predictive model.</p>
+<p>At this point, we can focus on the data we want to use to train our
+predictive model.</p>
 </div>
 <div class="section" id="identify-numerical-data">
 <h2>Identify numerical data<a class="headerlink" href="#identify-numerical-data" title="Permalink to this headline">¶</a></h2>
-<p>Numerical data are represented with numbers. They are linked to data that is
-measurable such as age or the number of hours a person works per week.</p>
-<p>Predictive models are designed to work with numerical data natively and it
-is a type of data that require a small amount of work to get started.</p>
+<p>Numerical data are represented with numbers. They are linked to measurable
+(quantitative) data, such as age or the number of hours a person works a week.</p>
+<p>Predictive models are natively designed to work with numerical data.
+Moreover, numerical data usually requires very little work before getting
+started with training.</p>
 <p>The first task here will be to identify numerical data in our dataset.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
@@ -1499,8 +1502,8 @@ dtype: object
 </div>
 </div>
 </div>
-<p>We observe two types data type. We can make sure by checking the unique data
-types.</p>
+<p>We seem to have only two data types.
+We can make sure by checking the unique data types.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -1513,9 +1516,9 @@ types.</p>
 </div>
 </div>
 </div>
-<p>Thus, we see two types of data types: integer and object. We can look at
-the first few lines of the dataframe to understand the meaning of the
-<code class="docutils literal notranslate"><span class="pre">object</span></code> data types.</p>
+<p>Precisely ! The only two types in the dataset are integer and object.
+We can look at the first few lines of the dataframe to understand the
+meaning of the <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1647,7 +1650,7 @@ the first few lines of the dataframe to understand the meaning of the
 </table>
 </div></div></div>
 </div>
-<p>We see that <code class="docutils literal notranslate"><span class="pre">object</span></code> data type corresponds to columns containing strings. As
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">object</span></code> data type corresponds to columns containing strings. As
 we saw in the exploration section, these columns contain categories and we
 will see later how to handle those. We can select the columns containing
 integers and check their content.</p>
@@ -1737,12 +1740,13 @@ integers and check their content.</p>
 </table>
 </div></div></div>
 </div>
-<p>Now that we limited the dataset to numerical columns only, we can check
-closely what these numbers represent. Discarding <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> aside for the
-moment, we can identify two types of usage.</p>
-<p>The former is related to a measurement such as age. The data are continuous
-meaning that they can take any value in a range. We can give the range for
-age column as an example,</p>
+<p>Now that we limited the dataset to numerical columns only,
+we can analyse these numbers to figure out what they represent.
+Discarding <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> for the moment, we can identify two types of usage.</p>
+<p>The first column, <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code>, is self-explanatory.
+We can note that the values are continuous, meaning they can take up any
+number in a given range.
+Let’s find out what this range is:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1763,15 +1767,16 @@ Name: age, dtype: float64
 </div>
 </div>
 </div>
-<p>The age varies between 17 years and 90 years and can take any value in this
-range.</p>
-<p>The latter is related categorical data. These data are discrete, in contrast
-with continuous. It means that the variable can take only certain values
-which are known as categories. We will come back later on this type of data
-and how to handle them. Here, we are only interested to recognize them.</p>
-<p>Here, the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> gives an example. The number encode the
-education level which can only correspond to specific values. We can quickly
-check the number of occurrence of each category to get convinced.</p>
+<p>We can see the age varies between 17 and 90 years.</p>
+<p>The next columns contain related categorical data.
+These are discrete ; in contrast with continuous, they can only take a
+value from a finite set, which we call categories.
+We will come back later on this type of data and how to handle them.
+Here, we are only interested in recognizing them.</p>
+<p>Let’s take for example “education-num”.
+We can assert that each value, which is a number, represents an education
+level. Therefore, there is only a specific amount of values each sample can
+take. Let’s print out the distribution to get an intuition of the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
@@ -1800,12 +1805,13 @@ Name: education-num, dtype: int64
 </div>
 </div>
 </div>
-<p>Therefore, we should ignore such type of columns because they would require
-a specific processing which is different from the continuous variable.</p>
-<p>Finally, we can mention that we will ignore the <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> column because it
-corresponds to an hand-crafted variable and we make the choice to only work
-with variable which has been collected. In the next notebook, we will
-regularly ignore this variable as well.</p>
+<p>We can observe that the distribution is very unequal between categories.
+Such columns would require a specific processing which is different from
+continuous values, so we will ignore them for now.</p>
+<p>Finally, because we want to stick to collected data only, we will ignore
+the column <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> as it is an hand-crafted feature.
+with variable which has been collected.
+In the next notebooks, we will regularly ignore this variable as well.</p>
 <p>Now, we can select the subset of numerical columns and store them inside a
 new dataframe.</p>
 <div class="cell docutils container">
@@ -1821,10 +1827,13 @@ new dataframe.</p>
 </div>
 <div class="section" id="train-test-split-the-dataset">
 <h2>Train-test split the dataset<a class="headerlink" href="#train-test-split-the-dataset" title="Permalink to this headline">¶</a></h2>
-<p>In the previous notebook, we loaded separately two datasets: a training and a
-testing dataset. We mentioned that scikit-learn provides an helper function
-<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.train_test_split</span></code> allowing to do this split.
-Here, we will use this tool instead of loading some new data.</p>
+<p>In the previous notebook, we loaded two separate datasets: a training
+one and a testing one. However, as mentioned earlier, having separate
+datasets like that is unusual: most of the time, we have a single one,
+which we will subdivide.
+We also mentioned that scikit-learn provides the helper function
+<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.train_test_split</span></code> which is used to
+automatically split the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -1841,8 +1850,8 @@ Here, we will use this tool instead of loading some new data.</p>
 use some random process (i.e. data shuffling).</p>
 </div>
 <p>In the previous notebook, we used a k-nearest neighbors predictor. While this
-model is really intuitive to understand, it is not widely used. Here, we will
-a predictive model belonging to the linear model families.</p>
+model is really intuitive to understand, it is not widely used.
+Here, we will make a predictive model belonging to the linear models family.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In short, these models find a set of weights to combine each column in the
@@ -1850,7 +1859,8 @@ data matrix to predict the target. For instance, the model can come up with
 rules such as <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">*</span> <span class="pre">age</span> <span class="pre">+</span> <span class="pre">3.3</span> <span class="pre">*</span> <span class="pre">education-num</span> <span class="pre">-</span> <span class="pre">15.1</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> means that
 <code class="docutils literal notranslate"><span class="pre">high-income</span></code> is predicted.</p>
 </div>
-<p>Thus, we will use a logistic regression classifier and train it.</p>
+<p>Thus, as we are trying to predict a qualitative property,
+we will use a logistic regression classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -1871,19 +1881,20 @@ left out until now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of logistic regresssion: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of logistic regression: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of logistic regresssion: 0.807
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of logistic regression: 0.807
 </pre></div>
 </div>
 </div>
 </div>
 <p>Now the real question is: is this performance relevant of a good predictive
-model? You will answer to this question by solving the next exercise.</p>
-<p>In this notebook, we have learnt to:</p>
+model?
+Find out by solving the next exercise !.</p>
+<p>In this notebook, we learned:</p>
 <ul class="simple">
 <li><p>identify numerical data in a heterogeneous dataset;</p></li>
 <li><p>select the subset of columns corresponding to numerical data;</p></li>

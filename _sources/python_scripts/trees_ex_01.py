@@ -72,8 +72,8 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # Write your code here.
 
 # %% [markdown]
-# Did we make use of the feature "Culmen Length"? To get a confirmation, you
-# plot the tree using the function `sklearn.tree.plot_tree`.
+# Did we make use of the feature "Culmen Length"?
+# Plot the tree using the function `sklearn.tree.plot_tree` to find out !
 
 # %%
 # Write your code here.

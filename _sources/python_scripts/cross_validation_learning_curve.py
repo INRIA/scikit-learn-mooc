@@ -4,13 +4,13 @@
 # In the previous notebook, we presented the general cross-validation framework
 # and how to assess if a predictive model is underfiting, overfitting or
 # generalizing.
+# Besides these aspects, it is also important to understand how the
+# different errors are influenced by the number of samples available.
 #
-# Besides these aspects, it is also important to understand the influence
-# of the number of samples available on the different errors. In this notebook,
-# we will show this aspect by looking a the variability of the different
-# errors.
+# In this notebook, we will show this aspect by looking a the
+# variability of the different errors.
 #
-# Let's first load the data and create the identical model as in the previous
+# Let's first load the data and create the same model as in the previous
 # notebook.
 
 # %%
@@ -28,8 +28,8 @@ regressor = DecisionTreeRegressor()
 #
 # ## Ability of a model to learn depending of the sample size
 #
-# We recall that the size of the dataset is given as the number of row in `X`
-# or the length of the vector `y`.
+# We recall that the size of the dataset is given by the number
+# of rows in `X` / the length of the vector `y`.
 
 # %%
 y.size
@@ -101,10 +101,10 @@ _ = plt.title("Generalization errors distribution \n"
 
 # %% [markdown]
 # For the different sample sizes, we plotted the distribution of the
-# generalization error. We observe that smaller is the sample size; larger is
-# the variance of the generalization errors. Thus, having a small number of
-# samples might put us in a situation where it is impossible to get a reliable
-# evaluation.
+# generalization error. We observe that the smaller the sample is,
+# the larger the variance of the generalization errors is.
+# Thus, having a small number of samples might put us in a situation
+# where it is impossible to get a reliable evaluation.
 #
 # ## Learning curve
 #
@@ -160,7 +160,7 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 #
 # In the notebook, we learnt:
 #
-# * the influence of the number of samples in a dataset, specifically on the
+# * the influence of the number of samples in a dataset, especially on the
 #   variability of the errors reported when running the cross-validation;
 # * about the learning curve that is a visual representation of the capacity
 #   of a model to improve by adding new samples.

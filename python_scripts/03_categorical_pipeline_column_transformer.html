@@ -1131,8 +1131,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#dispatch-some-columns-to-a-specific-processor">
-   Dispatch some columns to a specific processor
+  <a class="reference internal nav-link" href="#dispatch-columns-to-a-specific-processor">
+   Dispatch columns to a specific processor
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1158,9 +1158,9 @@
                 
   <div class="section" id="using-numerical-and-categorical-variables-together">
 <h1>Using numerical and categorical variables together<a class="headerlink" href="#using-numerical-and-categorical-variables-together" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will present typical ways to deal with <strong>categorical
-variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot encoding</strong>.</p>
-<p>We will load the entire adult census dataset.</p>
+<p>In this notebook, we will present typical ways of dealing with
+both numerical and categorical variables together.</p>
+<p>We will first load the entire adult census dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1175,9 +1175,9 @@ variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot
 </div>
 </div>
 </div>
-<p>We recall that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> columns contains the same
-information. In the previous notebook, we drop <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and only
-use the latter column. We will do the same processing here.</p>
+<p>We recall that both “education-num” and “education” contain the same
+information. In the previous notebook, we dropped “education-num” and
+used “education” instead ; we will do the same processing here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;education-num&quot;</span><span class="p">)</span>
@@ -1187,9 +1187,10 @@ use the latter column. We will do the same processing here.</p>
 </div>
 <div class="section" id="selection-based-on-data-types">
 <h2>Selection based on data types<a class="headerlink" href="#selection-based-on-data-types" title="Permalink to this headline">¶</a></h2>
-<p>We separate categorical and numerical variables using the <code class="docutils literal notranslate"><span class="pre">object</span></code> data types
-as we previously saw that it only corresponds to categorical columns. We make
-use of the <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code> to select the corresponding columns.</p>
+<p>We will separate categorical and numerical variables using their data
+types to identify them, as we saw previously that <code class="docutils literal notranslate"><span class="pre">object</span></code> corresponds
+to categorical columns (strings). We make use of <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>
+helper to select the corresponding columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -1203,9 +1204,8 @@ use of the <code class="docutils literal notranslate"><span class="pre">make_col
 </div>
 </div>
 </div>
-<p>Besides, we will list beforehand the categories for each categorical column
-to avoid issues with rare categories when evaluating the model during the
-cross-validation.</p>
+<p>Besides, we will list the categories for each categorical column beforehand
+to avoid issues with rare categories when evaluating the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -1215,8 +1215,8 @@ cross-validation.</p>
 </div>
 </div>
 </div>
-<div class="section" id="dispatch-some-columns-to-a-specific-processor">
-<h2>Dispatch some columns to a specific processor<a class="headerlink" href="#dispatch-some-columns-to-a-specific-processor" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dispatch-columns-to-a-specific-processor">
+<h2>Dispatch columns to a specific processor<a class="headerlink" href="#dispatch-columns-to-a-specific-processor" title="Permalink to this headline">¶</a></h2>
 <p>In the previous sections, we saw that we need to treat data differently
 depending on their nature (i.e. numerical or categorical).</p>
 <p>Scikit-learn provides a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> class which will send specific
@@ -1230,10 +1230,9 @@ will use the option <code class="docutils literal notranslate"><span class="pre"
 information will be correlated;</p></li>
 <li><p><strong>numerical scaling</strong> numerical features which will be standardized.</p></li>
 </ul>
-<p>We can now create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying a list of triplet
-(preprocessor name, transformer, columns). First, let’s start by creating
-a transformer for the numerical and categorical part as we did in the
-previous notebooks.</p>
+<p>We can now create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying three values:
+the preprocessor name, the transformer, and the columns.
+First, let’s create the preprocessors for the numerical and categorical parts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
@@ -1245,8 +1244,8 @@ previous notebooks.</p>
 </div>
 </div>
 </div>
-<p>Now, we can associate each of these preprocessors with their respective
-columns.</p>
+<p>Now, we can create the transformer and associate each of these
+preprocessors with their respective columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -1281,7 +1280,7 @@ view of the pipelines.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1cce78a4-e2b7-4716-b669-e48da54fbd6d" type="checkbox" ><label class="sk-toggleable__label" for="1cce78a4-e2b7-4716-b669-e48da54fbd6d">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('columntransformer',
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a37c4e04-479b-4d07-8059-e7244c78e4a7" type="checkbox" ><label class="sk-toggleable__label" for="a37c4e04-479b-4d07-8059-e7244c78e4a7">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('columntransformer',
                  ColumnTransformer(transformers=[('one-hot-encoder',
                                                   OneHotEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
        ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
@@ -1302,7 +1301,7 @@ view of the pipelines.</p>
                                                   ['age', 'capital-gain',
                                                    'capital-loss',
                                                    'hours-per-week'])])),
-                ('logisticregression', LogisticRegression(max_iter=500))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="af67e2d8-7c0d-4a83-920d-62829bb873cf" type="checkbox" ><label class="sk-toggleable__label" for="af67e2d8-7c0d-4a83-920d-62829bb873cf">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('one-hot-encoder',
+                ('logisticregression', LogisticRegression(max_iter=500))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ee2b7f5d-f9ef-4f43-a95f-cae397b0324a" type="checkbox" ><label class="sk-toggleable__label" for="ee2b7f5d-f9ef-4f43-a95f-cae397b0324a">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('one-hot-encoder',
                                  OneHotEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
        ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
        ' Never-worked'], dtype=object),
@@ -1319,7 +1318,7 @@ view of the pipelines.</p>
                                   'native-country']),
                                 ('standard-scaler', StandardScaler(),
                                  ['age', 'capital-gain', 'capital-loss',
-                                  'hours-per-week'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="db1825fb-8f30-4f63-a869-bf1da762a3cb" type="checkbox" ><label class="sk-toggleable__label" for="db1825fb-8f30-4f63-a869-bf1da762a3cb">one-hot-encoder</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="37c085bd-b999-452c-9da9-d9a272ab2763" type="checkbox" ><label class="sk-toggleable__label" for="37c085bd-b999-452c-9da9-d9a272ab2763">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
+                                  'hours-per-week'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="056fea3f-1c34-4858-97aa-a08c47514354" type="checkbox" ><label class="sk-toggleable__label" for="056fea3f-1c34-4858-97aa-a08c47514354">one-hot-encoder</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a0711c37-9a56-439f-a632-bc64eeb10054" type="checkbox" ><label class="sk-toggleable__label" for="a0711c37-9a56-439f-a632-bc64eeb10054">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(categories=[array([' Private', ' Local-gov', ' ?', ' Self-emp-not-inc',
        ' Federal-gov', ' State-gov', ' Self-emp-inc', ' Without-pay',
        ' Never-worked'], dtype=object),
                           array([' 11th', ' HS-grad', ' Assoc-acdm', ' Some-college', ' 10th',
@@ -1334,7 +1333,7 @@ view of the pipelines.</p>
        ' Hong', ' Greece', ' Trinadad&Tobago',
        ' Outlying-US(Guam-USVI-etc)', ' France', ' Holand-Netherlands'],
       dtype=object)],
-              drop='if_binary')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="0d720aed-8502-4e44-bb51-dbce67b9c9a1" type="checkbox" ><label class="sk-toggleable__label" for="0d720aed-8502-4e44-bb51-dbce67b9c9a1">standard-scaler</label><div class="sk-toggleable__content"><pre>['age', 'capital-gain', 'capital-loss', 'hours-per-week']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="5eea3092-65ef-4a0a-8198-5af80d64c5ce" type="checkbox" ><label class="sk-toggleable__label" for="5eea3092-65ef-4a0a-8198-5af80d64c5ce">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d03ade19-bd28-455d-9c7f-d69048ddab92" type="checkbox" ><label class="sk-toggleable__label" for="d03ade19-bd28-455d-9c7f-d69048ddab92">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=500)</pre></div></div></div></div></div></div></div></div></div>
+              drop='if_binary')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="99abf0c4-a88b-44bf-b3eb-2fae8b5abe6f" type="checkbox" ><label class="sk-toggleable__label" for="99abf0c4-a88b-44bf-b3eb-2fae8b5abe6f">standard-scaler</label><div class="sk-toggleable__content"><pre>['age', 'capital-gain', 'capital-loss', 'hours-per-week']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3ca14af6-c38c-4780-949c-aed203d071c4" type="checkbox" ><label class="sk-toggleable__label" for="3ca14af6-c38c-4780-949c-aed203d071c4">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="292d6bc6-c279-49f4-8606-67eb23863554" type="checkbox" ><label class="sk-toggleable__label" for="292d6bc6-c279-49f4-8606-67eb23863554">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=500)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>The final model is more complex than the previous models but still follows
 the same API:</p>
@@ -1364,10 +1363,10 @@ predictions to the expected test labels to compute the accuracy.</p></li>
 </div>
 </div>
 </div>
-<p>Then, we can use the raw dataset directly to the pipeline. Indeed, we don’t
-need to make any processing. All the preprocessing will be handle when
-calling <code class="docutils literal notranslate"><span class="pre">predict</span></code>. We will give an example by predicting on the five first
-sample from the test set.</p>
+<p>Then, we can send the raw dataset straight to the pipeline ;
+indeed, we don’t need to make any processing as it will be handled when
+calling <code class="docutils literal notranslate"><span class="pre">predict</span></code>. Let’s demonstrate that by predicting on the first five
+samples from the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1567,7 +1566,7 @@ used numerical and categorical variables in isolation.</p>
 </div>
 <div class="section" id="fitting-a-more-powerful-model">
 <h2>Fitting a more powerful model<a class="headerlink" href="#fitting-a-more-powerful-model" title="Permalink to this headline">¶</a></h2>
-<p><strong>Linear models</strong> are very nice because they are usually very cheap to train,
+<p><strong>Linear models</strong> are nice because they are usually cheap to train,
 <strong>small</strong> to deploy, <strong>fast</strong> to predict and give a <strong>good baseline</strong>.</p>
 <p>However, it is often useful to check whether more complex models such as an
 ensemble of decision trees can lead to higher predictive performance.</p>
@@ -1595,7 +1594,7 @@ as follows:</p>
 </div>
 </div>
 </div>
-<p>Now that we created our model, we can check the performance of the model.</p>
+<p>Now that we created our model, we can check its performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
@@ -1604,8 +1603,8 @@ as follows:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 991 ms, sys: 15.9 ms, total: 1.01 s
-Wall time: 1.01 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.18 s, sys: 15.9 ms, total: 1.19 s
+Wall time: 1.19 s
 </pre></div>
 </div>
 </div>
@@ -1617,7 +1616,7 @@ Wall time: 1.01 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8801899926295963
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8789615920072066
 </pre></div>
 </div>
 </div>
@@ -1628,7 +1627,7 @@ large number of samples and limited number of informative features (e.g. less
 than 1000) with a mix of numerical and categorical variables.</p>
 <p>This explains why Gradient Boosted Machines are very popular among
 datascience practitioners who work with tabular data.</p>
-<p>In this notebook we have:</p>
+<p>In this notebook we:</p>
 <ul class="simple">
 <li><p>used a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to apply different preprocessing for
 categorical and numerical variables;</p></li>

@@ -1145,7 +1145,7 @@ use a support vector machine with an RBF kernel</p>
 </div>
 </div>
 </div>
-<p>Evaluate the performance of the previous model by cross-validation with a
+<p>Evaluate the performance of your model by cross-validation with a
 <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> scheme.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1185,62 +1185,62 @@ use a support vector machine with an RBF kernel</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.042768</td>
-      <td>0.003565</td>
+      <td>0.045620</td>
+      <td>0.004098</td>
       <td>0.680000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.047817</td>
-      <td>0.003210</td>
+      <td>0.043790</td>
+      <td>0.004009</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.019987</td>
-      <td>0.002759</td>
+      <td>0.023959</td>
+      <td>0.004866</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.022124</td>
-      <td>0.003609</td>
+      <td>0.024812</td>
+      <td>0.004028</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.023539</td>
-      <td>0.003682</td>
+      <td>0.024664</td>
+      <td>0.003923</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.025080</td>
-      <td>0.003325</td>
+      <td>0.024356</td>
+      <td>0.003814</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.020866</td>
-      <td>0.003353</td>
+      <td>0.023213</td>
+      <td>0.003853</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.021061</td>
-      <td>0.003569</td>
+      <td>0.021965</td>
+      <td>0.003779</td>
       <td>0.826667</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.021230</td>
-      <td>0.003531</td>
+      <td>0.022978</td>
+      <td>0.003911</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.021692</td>
-      <td>0.003326</td>
+      <td>0.022846</td>
+      <td>0.003957</td>
       <td>0.733333</td>
     </tr>
   </tbody>
@@ -1264,11 +1264,11 @@ use a support vector machine with an RBF kernel</p>
 </div>
 </div>
 </div>
-<p>The parameter gamma is one of the parameter controlling under-/over-fitting
-in support vector machine with an RBF kernel. Compute the validation curve
-to evaluate the effect of the parameter gamma. You can make vary the value
-of the parameter gamma between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on
-log scale.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameter controlling under/over-fitting
+in support vector machine with an RBF kernel.
+Compute the validation curve to evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
+You can vary its value between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a
+logarithmic scale.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1316,13 +1316,15 @@ log scale.</p>
 </div>
 </div>
 <p>Looking at the curve, we can clearly identify the over-fitting regime of
-the SVC classifier: when <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>. The best setting is around <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code>
-while for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>, it is not very clear that the classifier is
-under-fitting but the generalization score is worse than for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
-<p>Now, you can make an analysis to check if adding new samples to the dataset
-could help our model to better generalize. Compute the learning curve by
-computing the train and test score for different training dataset size.
-Plot the train and test score in respect with the number of samples.</p>
+the SVC classifier when <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>.
+The best setting is around <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code> while for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>,
+it is not very clear if the classifier is under-fitting but the
+generalization score is worse than for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p>Now, you can perform an analysis to check whether adding new samples to the
+dataset could help our model to better generalize.
+Compute the learning curve by computing the train and test scores for
+different training dataset size.
+Plot the train and test scores with respect to the number of samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">learning_curve</span>

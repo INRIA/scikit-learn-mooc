@@ -1,11 +1,10 @@
 # %% [markdown]
 # # Importance of decision tree hyperparameters on generalization
 #
-# In this notebook will illustrate the importance of some key hyperparameters
-# of the decision tree. We will illustrate it on both the classification and
-# regression probelms that we previously used.
-#
-# ## Load the classification and regression datasets
+# In this notebook, we will illustrate the importance of some
+# key hyperparameters on the decision tree ;
+# we will demonstrate their effects on the
+# classification and regression problems we saw previously.
 #
 # First, we will load the classification and regression datasets.
 

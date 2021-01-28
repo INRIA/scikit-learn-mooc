@@ -1163,8 +1163,9 @@
                 
   <div class="section" id="encoding-of-categorical-variables">
 <h1>Encoding of categorical variables<a class="headerlink" href="#encoding-of-categorical-variables" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will present typical ways to deal with <strong>categorical
-variables</strong>, namely <strong>ordinal encoding</strong> and <strong>one-hot encoding</strong>.</p>
+<p>In this notebook, we will present typical ways of dealing with
+<strong>categorical variables</strong>, namely <strong>ordinal encoding</strong> and
+<strong>one-hot encoding</strong>.</p>
 <p>Let’s first load the entire adult dataset containing both numerical and
 categorical data.</p>
 <div class="cell docutils container">
@@ -1183,7 +1184,7 @@ categorical data.</p>
 </div>
 <div class="section" id="identify-categorical-variables">
 <h2>Identify categorical variables<a class="headerlink" href="#identify-categorical-variables" title="Permalink to this headline">¶</a></h2>
-<p>As we have seen in the previous section, a numerical variable is a continuous
+<p>As we saw in the previous section, a numerical variable is a
 quantity represented by a real or integer number. These variables can be
 naturally handled by machine learning algorithms that are typically composed
 of a sequence of arithmetic instructions such as additions and
@@ -1247,8 +1248,8 @@ Name: native-country, dtype: int64
 </div>
 </div>
 </div>
-<p>One might question how could we easily recognize categorical columns. One
-useful tip is to look at the data type of each column.</p>
+<p>Now the question is: how can we easily recognize categorical columns
+among the dataset ? Part of the answer lies in the columns’ data type:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
@@ -1274,13 +1275,11 @@ dtype: object
 </div>
 </div>
 </div>
-<p>If we look at the “native-country” column data type, we observe it is of
-<code class="docutils literal notranslate"><span class="pre">object</span></code> data type. The reason is that categories are represented with
-string.</p>
-<p>Sometimes, categorical columns could also be encoded with integers. In this
-case, looking at the data type will not be enough. In the exploration and in
-the previous notebook, we saw that the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> is such a
-column.</p>
+<p>If we look at the “native-country” column,
+we observe its data type is <code class="docutils literal notranslate"><span class="pre">object</span></code>, meaning it contains string values.</p>
+<p>Sometimes, categorical columns could also be encoded with integers. In such
+case, looking at the data type will not be enough. In a previous notebook,
+we saw it is the case with the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -1309,18 +1308,18 @@ Name: education-num, dtype: int64
 </div>
 </div>
 </div>
-<p>When considering categorical columns, we should include this columns.
-However, we also saw that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> columns
-represent exactly the same information. Therefore, we can use one of the two
-columns. So, we can make the choice to consider only <code class="docutils literal notranslate"><span class="pre">object</span></code> dtype columns.</p>
+<p>When considering categorical columns, we should include these columns.
+However, we saw earlier that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> represent
+the exact same information. Therefore, we can get rid of one of the two.
+Because in this notebook we want to work with categorical data,
+we will use <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>, which is of <code class="docutils literal notranslate"><span class="pre">object</span></code> dtype.</p>
 </div>
 <div class="section" id="select-features-based-on-their-data-type">
 <h2>Select features based on their data type<a class="headerlink" href="#select-features-based-on-their-data-type" title="Permalink to this headline">¶</a></h2>
-<p>In the previous notebook, we manually defined the numerical columns. We could
-to the same here. However, since that we can select columns based on a
-specific dtypes, we can use a scikit-learn helper allowing to select the
-column based on their data types. It is called <code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>. We
-will illustrate how to use this helper.</p>
+<p>In the previous notebook, we manually defined the numerical columns.
+We could do the same here by using the scikit-learn helper function
+<code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>, which allows us to select columns based on
+their data type. We will illustrate how to use this helper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -1344,9 +1343,10 @@ will illustrate how to use this helper.</p>
 </div>
 </div>
 </div>
-<p>We can create the selector by passing the data type to include or exclude.
-Once the selector created, we can pass the input dataset and the name of
-the selected columns will be returned.</p>
+<p>Here, we created the selector by passing the dtype to include ;
+we then passed the input dataset to the selector object,
+which returned a list of column names.
+We can now filter out the unwanted columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_categorical</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">categorical_columns</span><span class="p">]</span>
@@ -1532,20 +1532,20 @@ independently. We can also note that the number of features before and after
 the encoding is the same.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>This encoding was used by the persons who published the dataset to transform
-the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> feature into the <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> feature for instance.</p>
+<p>This encoding was used by the dataset’s publishers on the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>
+feature, which gave the feature <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code></p>
 </div>
-<p>However, one has to be careful when using this encoding strategy. Using this
-integer representation can lead the downstream models to make the assumption
-that the categories are ordered: 0 is smaller than 1 which is smaller than 2,
-etc.</p>
+<p>However, be careful when applying this encoding strategy:
+using this integer representation can lead downstream models
+to assume that the values are ordered (0 &lt; 1 &lt; 2 &lt; 3… for instance).</p>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> uses a lexicographical strategy to map string
-category labels to integers. This strategy is completely arbitrary and often
-be meaningless. For instance suppose the dataset has a categorical variable
-named “size” with categories such as “S”, “M”, “L”, “XL”. We would like the
+category labels to integers. This strategy is arbitrary and often meaningless.
+For instance suppose the dataset has a categorical variable
+named <code class="docutils literal notranslate"><span class="pre">&quot;size&quot;</span></code> with categories such as “S”, “M”, “L”, “XL”. We would like the
 integer representation to respect the meaning of the sizes by mapping them to
-increasing integers such as 0, 1, 2, 3. However lexicographical strategy used
-by default would map the labels “S”, “M”, “L”, “XL” to 2, 1, 0, 3.</p>
+increasing integers such as 0, 1, 2, 3.
+However, the lexicographical strategy used by default would map the labels
+“S”, “M”, “L”, “XL” to 2, 1, 0, 3. (following the alphabetical order).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a <code class="docutils literal notranslate"><span class="pre">categories</span></code> constructor argument to
 pass in the correct ordering explicitly.</p>
 <p>If a categorical variable does not carry any meaningful order information
@@ -1600,9 +1600,8 @@ inspect results for didactic purposes.</p>
 <img alt="../_images/03_categorical_pipeline_25_0.png" src="../_images/03_categorical_pipeline_25_0.png" />
 </div>
 </div>
-<p>So we observed that each category in education becomes a column and the
-data resulting from the encoding is indicating whether or not the sample
-belong to this category.</p>
+<p>As we can see, each category (unique value) became a column ;
+the encoding returned, for each sample, a 1 to specify which category it belongs to.</p>
 <p>Let’s apply this encoding on the full dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1953,7 +1952,7 @@ in the original data because some variables such as <code class="docutils litera
 did with numerical data: let’s train a linear classifier on the encoded data
 and check the performance of this machine learning pipeline using
 cross-validation.</p>
-<p>Before to create the pipeline, we have to linger on the <code class="docutils literal notranslate"><span class="pre">native-country</span></code>.
+<p>Before we create the pipeline, we have to linger on the <code class="docutils literal notranslate"><span class="pre">native-country</span></code>.
 Let’s recall some statistics regarding this column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1987,8 +1986,8 @@ Let’s recall some statistics regarding this column.</p>
  Portugal                         67
  Taiwan                           65
  Iran                             59
- Greece                           49
  Nicaragua                        49
+ Greece                           49
  Peru                             46
  Ecuador                          45
  France                           38
@@ -2010,16 +2009,17 @@ Name: native-country, dtype: int64
 </div>
 </div>
 <p>We see that the <code class="docutils literal notranslate"><span class="pre">Holand-Netherlands</span></code> category is occuring rarely. This will
-be a problem during cross-validation: if the sample is in the test set then
-the classifier would not have seen the category during training and will not
-be able to encode it.</p>
+be a problem during cross-validation: if the sample ends up in the test set
+during splitting then the classifier would not have seen the category during
+training and will not be able to encode it.</p>
 <p>In scikit-learn, there is two solutions to bypass this issue:</p>
 <ul class="simple">
-<li><p>list all the possible categories and provide it to the <code class="docutils literal notranslate"><span class="pre">categories</span></code>;</p></li>
+<li><p>list all the possible categories and provide it to the encoder via the
+keyword argument <code class="docutils literal notranslate"><span class="pre">categories</span></code>;</p></li>
 <li><p>set the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code>.</p></li>
 </ul>
-<p>Here, we will use the former strategy because we are going to use it as well
-for the ordinal encoder later on.</p>
+<p>Here, we will use the former strategy because we are also going to use it for
+the ordinal encoder later on.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_categorical</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -2069,9 +2069,9 @@ columns.</p>
 </div>
 </div>
 </div>
-<p>As you can see, this representation of the categorical variables of the data
-is slightly more predictive of the revenue than the numerical variables that
-we used previously.</p>
+<p>As you can see, this representation of the categorical variables is
+slightly more predictive of the revenue than the numerical variables
+that we used previously.</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
 <li><p>seen two common strategies for encoding categorical features : <strong>ordinal

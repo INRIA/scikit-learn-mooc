@@ -1165,13 +1165,12 @@ datasets, with only numerical features.</p>
 <li><p>an example of preprocessing, namely the <strong>scaling numerical variables</strong>;</p></li>
 <li><p>using a scikit-learn <strong>pipeline</strong> to chain preprocessing and model
 training;</p></li>
-<li><p>assessed the performance of our model via <strong>cross-validation</strong> instead of
+<li><p>assessing the performance of our model via <strong>cross-validation</strong> instead of
 a single train-test split.</p></li>
 </ul>
 <div class="section" id="data-preparation">
 <h2>Data preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">¶</a></h2>
-<p>Let’s charge the full adult census dataset and split the target from the
-actual data used for modeling.</p>
+<p>First, let’s charge the full adult census dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1181,8 +1180,8 @@ actual data used for modeling.</p>
 </div>
 </div>
 </div>
-<p>We will first split our dataset to have the target separated from the data
-used to train our predictive model.</p>
+<p>We will now drop the target from the data we will use to train our
+predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
@@ -1192,7 +1191,7 @@ used to train our predictive model.</p>
 </div>
 </div>
 </div>
-<p>We start by selecting only the numerical columns as seen in the previous
+<p>Then, we select only the numerical columns, as seen in the previous
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1245,7 +1244,7 @@ to train the model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.293 seconds in 59 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.333 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
@@ -1288,7 +1287,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.258 seconds in 50 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.282 seconds in 50 iterations
 </pre></div>
 </div>
 </div>
@@ -1310,7 +1309,7 @@ optimal model;</p></li>
 the input data before training a model. In our case, we will standardize the
 data and then train a new logistic regression model on that new version of
 the dataset.</p>
-<p>Let’s start by checking some feature statistics or the training data.</p>
+<p>Let’s start by printing some statistics about the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1403,10 +1402,10 @@ the dataset.</p>
 </table>
 </div></div></div>
 </div>
-<p>We see that the features of this dataset have very different ranges of values.
-This can be a problem for some machine learning algorithms such as k-nearest
-neighbors and logistic regression. Those algorithms work better if the
-numerical features are preprocessed to use similar scales.</p>
+<p>We see that the dataset’s features span across different ranges.
+However, we want to have normalized features because some algorithms make
+assumptions regarding their distribution, and being normalized is usually
+one of them.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Here are some reasons for scaling features:</p>
@@ -1417,12 +1416,14 @@ contribute approximately equally to the distance computations.</p></li>
 <li><p>Many models such as logistic regression use a numerical solver (based on
 gradient descent) to find their optimal parameters. This solver converges
 faster when the features are scaled.</p></li>
-<li><p>Logistic regression uses a strategy called “regularization” to better behave
-on datasets with many features or correlated features and comparatively
-fewer samples. Regularization assumes that features have similar scales.</p></li>
+<li><p>predictors using Euclidean distance (e.g k-nearest-neighbors) should have
+normalized features so that each one contributes equally to the distance
+computation;</p></li>
+<li><p>predictors using gradient-descent based algorithms (e.g logistic regression)
+to find optimal parameters work better and faster;</p></li>
+<li><p>predictors using regularization (e.g logistic regression) require normalized
+features to properly apply the weights.</p></li>
 </ul>
-<p>The use of regularization for linear models will be explained in a dedicated
-notebook, later in the MOOC.</p>
 </div>
 <p>Whether or not a machine learning model requires scaling the features depends
 on the model family. Linear models such as logistic regression generally
@@ -1547,10 +1548,10 @@ that each of them will all have a mean value and a unit standard deviation.</p>
 </table>
 </div></div></div>
 </div>
-<p>We can easily combine one or more transformers and the final classifier with a
-scikit-learn <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>. The resulting object used like any other classifier
-or regressor. The helper function <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> will create a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>
-instance by giving as arguments the successive transformations to perform
+<p>We can easily combine these sequential operations with a scikit-learn
+<code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, which chains together operations and can be used like any other
+classifier or regressor. The helper function <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> will create a
+<code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>: it takes as arguments the successive transformations to perform,
 followed by the classifier or regressor model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1575,7 +1576,7 @@ followed by the classifier or regressor model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.112 seconds in [12] iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.115 seconds in [12] iterations
 </pre></div>
 </div>
 </div>
@@ -1586,11 +1587,13 @@ shorter while the predictive performance (accuracy) slightly improved.</p>
 <div class="section" id="model-evaluation-using-cross-validation">
 <h2>Model evaluation using cross-validation<a class="headerlink" href="#model-evaluation-using-cross-validation" title="Permalink to this headline">¶</a></h2>
 <p>In the previous example, we split the original data into a training set
-and a testing set. This strategy has several issues: in the setting where
-the amount of data is limited, the subset of data used to train or test will
-be small; and the splitting was done in a random manner and we have no
+and a testing set.
+This strategy has several issues: in the setting where the amount of data
+is limited, the subset used to train or test will be small.
+Moreover, if the splitting was done in a random manner, we do not have
 information regarding the confidence of the results obtained.</p>
-<p>Instead, we can use cross-validation. Cross-validation consists of repeating
+<p>Instead, we can use cross-validation.
+Cross-validation consists of repeating
 this random splitting into training and testing sets and aggregating the
 model performance. By repeating the experiment, one can get an estimate of
 the variability of the model performance.</p>
@@ -1609,8 +1612,8 @@ defines the splitting strategy.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.1 s, sys: 372 ms, total: 1.47 s
-Wall time: 768 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.18 s, sys: 316 ms, total: 1.5 s
+Wall time: 784 ms
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])

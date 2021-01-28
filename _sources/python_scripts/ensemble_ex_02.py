@@ -24,14 +24,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 # Write your code here.
 
 # %% [markdown]
-# The forest that you created contains three trees that can be accessed with
-# the attribute `estimators_`. You will have to:
+# The next steps of this exercise are to:
 #
-# - create a new dataset containing flipper length between 170 mm and 230 mm;
+# - create a new dataset containing the penguins with a flipper length
+#   between 170 mm and 230 mm;
 # - plot the training data using a scatter plot;
 # - plot the decision of each individual tree by predicting on the newly
 #   created dataset;
 # - plot the decision of the random forest using this newly created dataset.
+
+# ```{tip}
+# The trees contained in the forest that you created can be accessed
+# with the attribute `estimators_`.
+# ```
 
 # %%
 # Write your code here.

@@ -80,8 +80,8 @@ sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
-# Did we make use of the feature "Culmen Length"? To get a confirmation, you
-# plot the tree using the function `sklearn.tree.plot_tree`.
+# Did we make use of the feature "Culmen Length"?
+# Plot the tree using the function `sklearn.tree.plot_tree` to find out !
 
 # %%
 from sklearn.tree import plot_tree
@@ -91,7 +91,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
               class_names=tree.classes_, impurity=False, ax=ax)
 
 # %% [markdown]
-# We can see that the second tree level have used the "Culmen Length" to make
+# We can see that the second tree level used the "Culmen Length" to make
 # two new decisions. Qualitatively, we saw that such a simple tree was enough
 # to classify the penguins' species.
 #

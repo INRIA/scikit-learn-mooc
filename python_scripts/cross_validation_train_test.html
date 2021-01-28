@@ -1137,7 +1137,7 @@
   <div class="section" id="the-framework-and-why-do-we-need-it">
 <h1>The framework and why do we need it<a class="headerlink" href="#the-framework-and-why-do-we-need-it" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we present the general cross-validation framework. Before
-to go into details, we will linger on the reasons for always having training
+we dive in, let’s linger on the reasons for always having training
 and testing sets. Let’s first look at the limitation of using a dataset
 without keeping any samples out.</p>
 <p>To illustrate the different concepts, we will use the California housing
@@ -1301,7 +1301,8 @@ It can be downloaded/loaded using the
 </table>
 </div></div></div>
 </div>
-<p>To simplify future visualization, we transform the target in k$.</p>
+<p>To simplify future visualization, let’s transform the prices from the
+dollar (<span class="math notranslate nohighlight">\() range to the thousand dollars (k\)</span>) range.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">*=</span> <span class="mi">100</span>
@@ -1322,8 +1323,9 @@ Name: MedHouseVal, dtype: float64
 </div>
 <div class="section" id="empirical-error-vs-generalization-error">
 <h2>Empirical error vs generalization error<a class="headerlink" href="#empirical-error-vs-generalization-error" title="Permalink to this headline">¶</a></h2>
-<p>As mentioned previously, we start by fitting a decision tree regressor on the
-entire dataset.</p>
+<p>As we are trying to predict prices, a quantitative feature, this is a
+regression problem. Therefore, we will fit a decision tree regressor
+on the entire dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
@@ -1339,7 +1341,7 @@ entire dataset.</p>
 </div>
 </div>
 </div>
-<p>After training the regressor, we would like to know the regressor’s potential
+<p>After training the regressor, we would like to know its potential
 performance once deployed in production. For this purpose, we use the mean
 absolute error, which gives us an error in the native unit, i.e. k$.</p>
 <div class="cell docutils container">
@@ -1363,7 +1365,7 @@ always revealing a methodological problem when doing machine learning.</p>
 <p>Indeed, we trained and predicted on the same dataset. Since our decision tree
 was fully grown, every sample in the dataset is stored in a leaf node.
 Therefore, our decision tree fully memorized the dataset given during <code class="docutils literal notranslate"><span class="pre">fit</span></code>
-and make no single error when predicting on the same data.</p>
+and therefore made no error when predicting.</p>
 <p>This error computed above is called the <strong>empirical error</strong> or <strong>training
 error</strong>.</p>
 <p>We trained a predictive model to minimize the empirical error but our aim is
@@ -1386,7 +1388,7 @@ to minimize the error on data that has not been seen during training.</p>
 </div>
 </div>
 </div>
-<p>Now, we train our model only on the training set.</p>
+<p>Then, let’s train our model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
@@ -1415,9 +1417,9 @@ computing the empirical error.</p>
 </div>
 </div>
 </div>
-<p>We observe the same phenomena than in the previous experiment. Our model
-memorized the training set. However, we can now compute the generalization
-error on the testing set.</p>
+<p>We observe the same phenomena as in the previous experiment:
+our model memorized the training set.
+However, we can now compute the generalization error on the testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
@@ -1427,21 +1429,20 @@ error on the testing set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.53 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.51 k$
 </pre></div>
 </div>
 </div>
 </div>
-<p>The generalization error is not minimum and equal to zero. Indeed, this
-error is closer to the performance of our model if it was deployed in
-production.</p>
+<p>This generalization error is actually about what we would expect from
+our model if it was used in a production environment.</p>
 </div>
 <div class="section" id="stability-of-the-cross-validation-estimates">
 <h2>Stability of the cross-validation estimates<a class="headerlink" href="#stability-of-the-cross-validation-estimates" title="Permalink to this headline">¶</a></h2>
 <p>When doing a single train-test split we don’t give any indication
 regarding the robustness of the evaluation of our predictive model: in
 particular, if the test set is small, this estimate of the generalization
-error can be unstable and do not reflect the “true error rate” we would have
+error can be unstable and wouldn’t reflect the “true error rate” we would have
 observed with the same model on an unlimited amount of test data.</p>
 <p>For instance, we could have been lucky when we did our random split of our
 limited dataset and isolated some of the easiest cases to predict in the
@@ -1454,7 +1455,7 @@ model performance</strong>.</p>
 <p>There are different cross-validation strategies, for now we are going to
 focus on one called “shuffle-split”. At each iteration of this strategy we:</p>
 <ul class="simple">
-<li><p>shuffle the order of the samples of a copy of the full data at random;</p></li>
+<li><p>randomly shuffle the order of the samples of a copy of the full dataset;</p></li>
 <li><p>split the shuffled dataset into a train and a test set;</p></li>
 <li><p>train a new model on the train set;</p></li>
 <li><p>evaluate the generalization error on the test set.</p></li>
@@ -1514,33 +1515,33 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.193079</td>
-      <td>0.003744</td>
-      <td>-46.763126</td>
+      <td>0.185015</td>
+      <td>0.003716</td>
+      <td>-45.221506</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.190050</td>
-      <td>0.003378</td>
-      <td>-45.422840</td>
+      <td>0.186359</td>
+      <td>0.004077</td>
+      <td>-45.126811</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.189147</td>
-      <td>0.003212</td>
-      <td>-46.213537</td>
+      <td>0.184528</td>
+      <td>0.004176</td>
+      <td>-46.084127</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.193825</td>
-      <td>0.003695</td>
-      <td>-46.502373</td>
+      <td>0.183650</td>
+      <td>0.004810</td>
+      <td>-45.872497</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.184373</td>
-      <td>0.003461</td>
-      <td>-43.980174</td>
+      <td>0.184281</td>
+      <td>0.003793</td>
+      <td>-45.609586</td>
     </tr>
   </tbody>
 </table>
@@ -1595,73 +1596,73 @@ where “higher is better”, this explains we used
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.193079</td>
-      <td>0.003744</td>
-      <td>-46.763126</td>
-      <td>46.763126</td>
+      <td>0.185015</td>
+      <td>0.003716</td>
+      <td>-45.221506</td>
+      <td>45.221506</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.190050</td>
-      <td>0.003378</td>
-      <td>-45.422840</td>
-      <td>45.422840</td>
+      <td>0.186359</td>
+      <td>0.004077</td>
+      <td>-45.126811</td>
+      <td>45.126811</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.189147</td>
-      <td>0.003212</td>
-      <td>-46.213537</td>
-      <td>46.213537</td>
+      <td>0.184528</td>
+      <td>0.004176</td>
+      <td>-46.084127</td>
+      <td>46.084127</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.193825</td>
-      <td>0.003695</td>
-      <td>-46.502373</td>
-      <td>46.502373</td>
+      <td>0.183650</td>
+      <td>0.004810</td>
+      <td>-45.872497</td>
+      <td>45.872497</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.184373</td>
-      <td>0.003461</td>
-      <td>-43.980174</td>
-      <td>43.980174</td>
+      <td>0.184281</td>
+      <td>0.003793</td>
+      <td>-45.609586</td>
+      <td>45.609586</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.189370</td>
-      <td>0.003152</td>
-      <td>-45.010141</td>
-      <td>45.010141</td>
+      <td>0.181094</td>
+      <td>0.004004</td>
+      <td>-47.464968</td>
+      <td>47.464968</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.182125</td>
-      <td>0.003239</td>
-      <td>-46.715745</td>
-      <td>46.715745</td>
+      <td>0.185029</td>
+      <td>0.003993</td>
+      <td>-45.849871</td>
+      <td>45.849871</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.186843</td>
-      <td>0.003314</td>
-      <td>-47.151351</td>
-      <td>47.151351</td>
+      <td>0.182699</td>
+      <td>0.003594</td>
+      <td>-43.095023</td>
+      <td>43.095023</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.186201</td>
-      <td>0.003328</td>
-      <td>-47.486764</td>
-      <td>47.486764</td>
+      <td>0.184622</td>
+      <td>0.003971</td>
+      <td>-46.514912</td>
+      <td>46.514912</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.195136</td>
-      <td>0.003459</td>
-      <td>-44.551639</td>
-      <td>44.551639</td>
+      <td>0.188164</td>
+      <td>0.003851</td>
+      <td>-45.393813</td>
+      <td>45.393813</td>
     </tr>
   </tbody>
 </table>
@@ -1690,7 +1691,7 @@ an estimate of its variability.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>  <span class="c1"># Set Seaborn&#39;s plotting style to &quot;talk&quot; mode.</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_error&quot;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
@@ -1711,7 +1712,7 @@ ranges from 43 k$ to 49 k$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 46.03 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 46.07 k$
 </pre></div>
 </div>
 </div>
@@ -1724,7 +1725,7 @@ ranges from 43 k$ to 49 k$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 1.07 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 1.01 k$
 </pre></div>
 </div>
 </div>

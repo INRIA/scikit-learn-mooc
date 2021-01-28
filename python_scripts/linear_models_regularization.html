@@ -1114,8 +1114,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#you-shall-scale-your-data">
-   You shall scale your data
+  <a class="reference internal nav-link" href="#scale-your-data">
+   Scale your data!
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1137,14 +1137,16 @@
   <div class="section" id="regularization-of-linear-regression-model">
 <h1>Regularization of linear regression model<a class="headerlink" href="#regularization-of-linear-regression-model" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we will see the limitations of linear regression models and
-the advantage of using regularized models instead. Besides, we will also
-present the preprocessing required when dealing with regularized models,
-furthermore when the regularization parameter needs to be fine tuned.</p>
+the advantage of using regularized models instead.
+<br />
+Besides, we will also present the preprocessing required when dealing
+with regularized models, furthermore when the regularization parameter
+needs to be fine-tuned.</p>
 <p>We will start by highlighting the over-fitting issue that can arise with
 a simple linear regression model.</p>
 <div class="section" id="effect-of-regularization">
 <h2>Effect of regularization<a class="headerlink" href="#effect-of-regularization" title="Permalink to this headline">¶</a></h2>
-<p>We will first load the california housing dataset.</p>
+<p>We will first load the California housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -1256,11 +1258,14 @@ the performance of our model.</p>
 </div>
 </div>
 <p>In one of the previous notebook, we showed that linear models could be used
-even in settings where <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not linearly linked. We showed that one
-can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create additional features
-encoding non-linear interactions between features. Here, we will use this
-transformer to augment the feature space. Subsequently, we train a linear
-regression model. We will use the out-of-sample test set to evaluate the
+even in settings where <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not linearly linked.
+<br />
+We showed that one can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create
+additional features encoding non-linear interactions between features.
+<br />
+Here, we will use this transformer to augment the feature space.
+Subsequently, we will train a linear regression model.
+We will use the out-of-sample test set to evaluate the
 generalization capabilities of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1285,10 +1290,11 @@ generalization capabilities of our model.</p>
 </div>
 </div>
 </div>
-<p>We see that we obtain an <span class="math notranslate nohighlight">\(R^2\)</span> score below zero. It means that our model is
-far worth than predicting the mean of <code class="docutils literal notranslate"><span class="pre">y_train</span></code>. This issue is due to
-overfitting. We can compute the score on the training set to confirm this
-intuition.</p>
+<p>We see that we obtain an <span class="math notranslate nohighlight">\(R^2\)</span> score below zero.
+<br />
+It means that our model is far worth than predicting the mean of <code class="docutils literal notranslate"><span class="pre">y_train</span></code>.
+This issue is due to overfitting.
+We can compute the score on the training set to confirm this intuition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_score</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
@@ -1415,39 +1421,46 @@ ridge with the un-regularized linear regression.</p>
 <img alt="../_images/linear_models_regularization_16_1.png" src="../_images/linear_models_regularization_16_1.png" />
 </div>
 </div>
-<p>We see that the magnitude of the weights are shrinked towards zero in
+<p>We see that the magnitude of the weights are shrunk towards zero in
 comparison with the linear regression model.</p>
 <p>However, in this example, we omitted two important aspects: (i) the need to
 scale the data and (ii) the need to search for the best regularization
 parameter.</p>
 </div>
-<div class="section" id="you-shall-scale-your-data">
-<h2>You shall scale your data<a class="headerlink" href="#you-shall-scale-your-data" title="Permalink to this headline">¶</a></h2>
-<p>Regularization will add constraints on weights of the model. We saw in the
-previous example that a ridge model will enforce that all weights have a
-similar magnitude. Indeed, the larger alpha is, the larger this
-enforcement will be.</p>
-<p>This procedure should make us think about feature rescaling. Let’s think
-about the case where features have an identical data dispersion, if two
-features are found equally important by the model, they will be affected
-weights close in term of norm.</p>
-<p>Now, let’s think about the scenario but where features will have completely
-different data dispersion (e.g. age of person in year and it annual revenue
-in $). If two features are as important, our model will boost the weight of
-feature with small dispersion and reduce the weight of the feature with high
-dispersion. We recall that regularization forces weights to be closer.</p>
+<div class="section" id="scale-your-data">
+<h2>Scale your data!<a class="headerlink" href="#scale-your-data" title="Permalink to this headline">¶</a></h2>
+<p>Regularization will add constraints on weights of the model.
+We saw in the previous example that a ridge model will enforce
+that all weights have a similar magnitude.
+<br />
+Indeed, the larger alpha is, the larger this enforcement will be.</p>
+<p>This procedure should make us think about feature rescaling.
+Let’s consider the case where features have an identical data dispersion:
+if two features are found equally important by the model, they will be
+affected close weights in term of norm.</p>
+<p>Now, let’s consider the scenario where features have completely different
+data dispersion (e.g. age in years and annual revenue in dollars).
+If two features are as important, our model will boost the weights of
+features with small dispersion and reduce the weights of features with
+high dispersion.
+<br />
+We recall that regularization forces weights to be closer.</p>
 <p>Therefore, we get an intuition that if we want to use regularization, dealing
 with rescaled data would make it easier to find an optimal regularization
-parameter and thus an adequate model. As a side note, some solvers based on
-gradient computation are expecting such rescaled data. Unscaled data will be
-detrimental when computing the optimal weights. Therefore, when working with
-a linear model and numerical data, this is in general a good practice to
-scale the data.</p>
+parameter and thus an adequate model.
+<br />
+As a side note, some solvers based on gradient # computation are expecting
+such rescaled data.
+Unscaled data will be detrimental when computing the optimal weights.
+<br />
+Therefore, when working with a linear model and numerical data,
+it is generally good practice to scale the data.</p>
 <p>In the remaining of this section, we will present the basics on how to
-incorporate a scaler within your machine learning pipeline. Scikit-learn
-provides several tools to preprocess the data. The <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>
-transforms the data such that each feature will have a mean of zero and a
-standard deviation of 1.</p>
+incorporate a scaler within your machine learning pipeline.
+<br />
+Scikit-learn provides several tools to preprocess the data, such as
+the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which transforms the data in order for each feature
+to have a mean of zero and a standard deviation of 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
@@ -1462,7 +1475,7 @@ standard deviation of 1.</p>
 <p>This scikit-learn estimator is known as a transformer: it computes some
 statistics (i.e the mean and the standard deviation) and stores them as
 attributes (<code class="docutils literal notranslate"><span class="pre">scaler.mean_</span></code>, <code class="docutils literal notranslate"><span class="pre">scaler.scale_</span></code>) when calling <code class="docutils literal notranslate"><span class="pre">fit</span></code>. Using these
-statistics, it transforms the data when <code class="docutils literal notranslate"><span class="pre">transform</span></code> is called. Therefore, it
+stats, it transforms the data when <code class="docutils literal notranslate"><span class="pre">transform</span></code> is called. Therefore, it
 is important to note that <code class="docutils literal notranslate"><span class="pre">fit</span></code> should only be called on the training data,
 similar to classifiers and regressors.</p>
 <div class="cell docutils container">
@@ -1515,12 +1528,13 @@ transformer(s) then predict with the regressor from the transformed data)</p>
 manage the calls to <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">transform</span></code> for you, avoiding any problems with
 data leakage (when knowledge of the test data was inadvertently included in
 training a model, as when fitting a transformer on the test data).</p>
-<p>We already use such <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> to create the polynomial features before to
-train the model.</p>
-<p>We will can create a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> by using <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> and giving as
+<p>We already used <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> to create the polynomial features before training
+the model.
+<br />
+We will can create a new one by using <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> and giving as
 arguments the transformation(s) to be performed (in order) and the regressor
 model.</p>
-<p>Here, we can integrate the scaling phase before to train our model:</p>
+<p>Here, we can implement the scaling process before training our model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span>
@@ -1540,8 +1554,7 @@ model.</p>
 </div>
 </div>
 </div>
-<p>In the previous example, we see the benefit of using a pipeline. It
-simplifies the manual handling.</p>
+<p>As we can see in this example, using a pipeline simplifies the manual handling.</p>
 <p>When creating the model, keeping the same <code class="docutils literal notranslate"><span class="pre">alpha</span></code> does not give good results.
 It depends on the data provided. Therefore, it needs to be tuned for each
 dataset.</p>
@@ -1552,15 +1565,17 @@ dataset.</p>
 <p>As mentioned, the regularization parameter needs to be tuned on each dataset.
 The default parameter will not lead to the optimal model. Therefore, we need
 to tune the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter.</p>
-<p>Tuning model hyperparameter should be done with care. Indeed, we want to find
-an optimal parameter that maximizes some metrics. Thus, it requires a training
-and testing sets. However, this testing set should be different from the
-out-of-sample testing set that we used to evaluate our model. If we use
-the same test, we are using an <code class="docutils literal notranslate"><span class="pre">alpha</span></code> which was optimized for this testing
-set and it breaks the out-of-sample rule.</p>
+<p>Model hyperparameters tuning should be done with care. Indeed, we want to find
+an optimal parameter that maximizes some metrics.
+Thus, it requires both a training set and testing set.
+<br />
+However, this testing set should be different from the out-of-sample testing set
+that we used to evaluate our model:
+if we use the same one, we are using an <code class="docutils literal notranslate"><span class="pre">alpha</span></code> which was optimized for
+this testing set and it breaks the out-of-sample rule.</p>
 <p>Therefore, we can split our previous training set into two subsets: a
-new training set and a validation set allowing to later pick the optimal
-alpha.</p>
+new training set and a validation set which we will use later to pick
+the optimal value for <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_sub_train</span><span class="p">,</span> <span class="n">X_valid</span><span class="p">,</span> <span class="n">y_sub_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
@@ -1596,9 +1611,8 @@ alpha.</p>
 <img alt="../_images/linear_models_regularization_28_0.png" src="../_images/linear_models_regularization_28_0.png" />
 </div>
 </div>
-<p>We see that, just like adding salt in cooking, adding regularization in our
-model could improve its error on the validation set. But too much
-regularization, like too much salt, decreases its performance.</p>
+<p>As we can see, regularization is just like salt in cooking:
+one must balance its amount to get the best performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_alpha</span> <span class="o">=</span> <span class="n">alphas</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">list_ridge_scores</span><span class="p">)]</span>
@@ -1612,8 +1626,8 @@ regularization, like too much salt, decreases its performance.</p>
 </div>
 </div>
 </div>
-<p>We can retrain a ridge model on the full training set and set the alpha and
-check the score on the left out dataset.</p>
+<p>Finally, we can re-train a Ridge model on the full dataset,
+with the best value for alpha we found earlier, and check the score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span>
@@ -1636,8 +1650,8 @@ check the score on the left out dataset.</p>
 <p>In the next exercise, you will use a scikit-learn estimator which allows to
 make some parameters tuning instead of programming yourself a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop by
 hand.</p>
-<p>As a conclusion, you learnt in this notebook about the concept of
-regularization and the importance of preprocessing and parameter tuning.</p>
+<p>In this notebook, you learned about the concept of regularization and
+the importance of preprocessing and parameter tuning.</p>
 </div>
 </div>
 

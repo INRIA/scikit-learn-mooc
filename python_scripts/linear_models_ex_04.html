@@ -1112,16 +1112,18 @@
                 
   <div class="section" id="exercise-04">
 <h1>📝 Exercise 04<a class="headerlink" href="#exercise-04" title="Permalink to this headline">¶</a></h1>
-<p>In the previous notebook, we illustrated how a regularization parameter of
-ridge model need to be optimized by hand. However, this way of optimizing
-hyperparameters is not effective: only a single split was used while
-cross-validation could be used.</p>
+<p>In the previous notebook, we illustrated how the regularization
+parameter of the Ridge model needs to be optimized by hand.
+<br />
+However, this way of optimizing hyperparameters is not effective:
+we did a single split, while cross-validation would be
+much more effective.</p>
 <p>This exercise will make you implement the same search but using the class
 <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>.</p>
 <p>First, we will:</p>
 <ul class="simple">
 <li><p>load the California housing dataset;</p></li>
-<li><p>split the data into a training and testing set;</p></li>
+<li><p>split the data into training and testing sets;</p></li>
 <li><p>create a machine learning pipeline composed of a standard scaler to
 normalize the data, and a ridge regression as a linear model.</p></li>
 </ul>
@@ -1237,7 +1239,7 @@ normalize the data, and a ridge regression as a linear model.</p></li>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
 
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Ridge</span><span class="p">())</span>
@@ -1246,8 +1248,8 @@ normalize the data, and a ridge regression as a linear model.</p></li>
 </div>
 </div>
 <p>Now the exercise is to use a <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator to optimize the
-parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> of the ridge regressor. We redefine all the regularization
-parameter candidates that we saw in the previous notebook.</p>
+parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> of the ridge regressor. Let’s redefine the
+regularization parameter candidates like we did in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1261,7 +1263,7 @@ parameter candidates that we saw in the previous notebook.</p>
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">here</a>
 to check how to use this estimator.
 First, train the grid-search using the previous machine learning pipeline and
-check what is the value of the best parameters found.</p>
+print the value of the best parameter found.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1269,7 +1271,7 @@ check what is the value of the best parameters found.</p>
 </div>
 </div>
 </div>
-<p>Once that you found the best parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, use the grid-search estimator
+<p>Once you found the best parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, use the grid-search estimator
 that you created to predict and estimate the <span class="math notranslate nohighlight">\(R^2\)</span> score of this model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1281,11 +1283,14 @@ that you created to predict and estimate the <span class="math notranslate nohig
 <p>It is also interesting to know that several regressors and classifiers
 in scikit-learn are optimized to make this parameter tuning. They usually
 finish with the term “CV” for “Cross Validation” (e.g. <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code>).
+<br />
 They are more efficient than using <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> and you should use them
 instead.</p>
-<p>Repeat the previous exercise but using <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> estimator instead of a
-grid-search. Refer to the documentation of <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> to have more information
-on how to use it.</p>
+<p>Repeat the previous exercise using the <code class="docutils literal notranslate"><span class="pre">RidgeVC</span></code> estimator
+instead of a grid-search.
+<br />
+Refer to the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html">documentation</a>
+of <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> for more information on how to use it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>

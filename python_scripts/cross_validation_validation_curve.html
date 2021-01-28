@@ -1137,11 +1137,11 @@
   <div class="section" id="overfit-generalization-underfit">
 <h1>Overfit-generalization-underfit<a class="headerlink" href="#overfit-generalization-underfit" title="Permalink to this headline">¶</a></h1>
 <p>In the previous notebook, we presented the general cross-validation framework
-and it helps at quantifying the empirical and generalization errors as well
+and how it helps us quantify the empirical and generalization errors as well
 as their fluctuations.</p>
 <p>In this notebook, we will put these two errors into perspective and show how
 they can help us know if our model generalizes, overfit, or underfit.</p>
-<p>Let’s first load the data and create the identical model as in the previous
+<p>Let’s first load the data and create the same model as in the previous
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1219,8 +1219,8 @@ underfits to a model that overfits, hopefully going through a region were we
 can get a good balance between the two. We can acquire knowledge by plotting
 a curve called the validation curve. This curve applies the above experiment
 and varies the value of a hyperparameter.</p>
-<p>For the decision tree, the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> the main parameter to control the
-trade-off between under-fitting and over-fitting.</p>
+<p>For the decision tree, the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter is used to control the
+tradeoff between under-fitting and over-fitting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
@@ -1235,8 +1235,8 @@ trade-off between under-fitting and over-fitting.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 455 ms, sys: 38.4 ms, total: 493 ms
-Wall time: 12.1 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 492 ms, sys: 26.4 ms, total: 519 ms
+Wall time: 12.2 s
 </pre></div>
 </div>
 </div>
@@ -1273,7 +1273,7 @@ deviations).</p>
 <p>The validation curve can be divided into three areas:</p>
 <ul class="simple">
 <li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&lt;</span> <span class="pre">10</span></code>, the decision tree underfits. The empirical error and
-therefore also the generalization error are both high. The model is too
+therefore the generalization error are both high. The model is too
 constrained and cannot capture much of the variability of the target
 variable.</p></li>
 <li><p>The region around <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code> corresponds to the parameter for which
@@ -1283,7 +1283,7 @@ memorizing all of the noise in the target.</p></li>
 <li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&gt;</span> <span class="pre">10</span></code>, the decision tree overfits. The empirical error
 becomes very small, while the generalization error increases. In this
 region, the models captures too much of the noisy part of the variations of
-the target and this harms its ability to generalize well to test data.</p></li>
+the target and this harms its ability to generalize to test data.</p></li>
 </ul>
 <p>Note that for <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code>, the model overfits a bit as there is a gap
 between the empirical error and the generalization error. It can also
@@ -1300,8 +1300,8 @@ is not necessarily always the case.</p>
 <h2>Summary:<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
 <p>In this notebook, we saw:</p>
 <ul class="simple">
-<li><p>how to identify if a model is generalizing, overfitting, or underfitting;</p></li>
-<li><p>how to check influence of an hyperparameter on the trade-off
+<li><p>how to identify whether a model is generalizing, overfitting, or underfitting;</p></li>
+<li><p>how to check influence of an hyperparameter on the tradeoff
 underfit/overfit.</p></li>
 </ul>
 </div>

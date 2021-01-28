@@ -1138,16 +1138,16 @@
                 
   <div class="section" id="random-forest">
 <h1>Random forest<a class="headerlink" href="#random-forest" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will present random forest models and show the
-differences with a bagging classifiers.</p>
-<p>A random forest, a popular model in machine learning, is a modification of
-the bagging algorithm. In bagging, any classifier or regressor can be used.
-In a random forest, the base classifier or regressor must be a decision tree.
+<p>In this notebook, we will present the random forest models and
+show the differences with the bagging classifiers.</p>
+<p>Random forests are a popular model in machine learning. They are a modification
+of the bagging algorithm. In bagging, any classifier or regressor can be used.
+In random forests, the base classifier or regressor must be a decision tree.
 In our previous example, we used a decision tree but we could have used a
 linear model as the regressor for our bagging algorithm.</p>
-<p>In addition, random forest is different from bagging when used with
+<p>In addition, random forests are different from bagging when used with
 classifiers: when searching for the best split, only a subset of the original
-features are used. By default, this subset of feature is equal to the square
+features are used. By default, this subset of features is equal to the square
 root of the total number of features. In regression, the total number of
 available features will be used.</p>
 <p>We will illustrate the usage of a random forest and compare it with the
@@ -1191,13 +1191,13 @@ bagging regressor on the “California housing” dataset.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of random forest: 0.790
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.792
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Performance of bagging: 0.791
 </pre></div>
 </div>
 </div>
 </div>
 <p>Notice that we don’t need to provide a <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> parameter to
-<code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code>, it is always a tree classifier. Also note that the
+<code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code>: it is always a tree classifier. Also note that the
 scores are almost identical. This is because our problem is a regression
 problem and therefore, the number of features used in random forest and
 bagging is the same.</p>
@@ -1206,12 +1206,12 @@ with the parameter <code class="docutils literal notranslate"><span class="pre">
 it to have the same behaviour as the random forest classifier.</p>
 <div class="section" id="classifiers-details">
 <h2>Classifiers details<a class="headerlink" href="#classifiers-details" title="Permalink to this headline">¶</a></h2>
-<p>Up to now, we have only focused on regression problems. There is a little
-difference between regression and classification.</p>
-<p>First, the <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> should be chosen in line with the problem that
-is solved: use a classifier with a classification problem and a regressor
-with a regression problem.</p>
-<p>Then, the aggregation method is different in regression and classification:</p>
+<p>Until now, we have focused on regression problems. There are some
+differences between regression and classification.</p>
+<p>First, the <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> should be chosen depending on the problem that
+needs to be solved: use a classifier for a classification problem and a
+regressor for a regression problem.</p>
+<p>Secondly, the aggregation method is different:</p>
 <ul class="simple">
 <li><p>in regression, the average prediction is computed. For instance, if
 three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33;</p></li>

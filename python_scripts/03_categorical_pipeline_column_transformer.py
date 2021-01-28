@@ -84,7 +84,6 @@ categories = [data[column].unique()
 #
 # We can now create our `ColumnTransfomer` by specifying three values:
 # the preprocessor name, the transformer, and the columns.
-# \
 # First, let's create the preprocessors for the numerical and categorical parts.
 
 # %%

@@ -1,18 +1,18 @@
 # %% [markdown]
 # # Random forest
 #
-# In this notebook, we will present random forest models and show the
-# differences with a bagging classifiers.
+# In this notebook, we will present the random forest models and
+# show the differences with the bagging classifiers.
 #
-# A random forest, a popular model in machine learning, is a modification of
-# the bagging algorithm. In bagging, any classifier or regressor can be used.
-# In a random forest, the base classifier or regressor must be a decision tree.
+# Random forests are a popular model in machine learning. They are a modification
+# of the bagging algorithm. In bagging, any classifier or regressor can be used.
+# In random forests, the base classifier or regressor must be a decision tree.
 # In our previous example, we used a decision tree but we could have used a
 # linear model as the regressor for our bagging algorithm.
 #
-# In addition, random forest is different from bagging when used with
+# In addition, random forests are different from bagging when used with
 # classifiers: when searching for the best split, only a subset of the original
-# features are used. By default, this subset of feature is equal to the square
+# features are used. By default, this subset of features is equal to the square
 # root of the total number of features. In regression, the total number of
 # available features will be used.
 #
@@ -49,7 +49,7 @@ print(f"Performance of bagging: "
 
 # %% [markdown]
 # Notice that we don't need to provide a `base_estimator` parameter to
-# `RandomForestRegressor`, it is always a tree classifier. Also note that the
+# `RandomForestRegressor`: it is always a tree classifier. Also note that the
 # scores are almost identical. This is because our problem is a regression
 # problem and therefore, the number of features used in random forest and
 # bagging is the same.
@@ -60,14 +60,14 @@ print(f"Performance of bagging: "
 #
 # ## Classifiers details
 #
-# Up to now, we have only focused on regression problems. There is a little
-# difference between regression and classification.
+# Until now, we have focused on regression problems. There are some
+# differences between regression and classification.
 #
-# First, the `base_estimator` should be chosen in line with the problem that
-# is solved: use a classifier with a classification problem and a regressor
-# with a regression problem.
+# First, the `base_estimator` should be chosen depending on the problem that
+# needs to be solved: use a classifier for a classification problem and a
+# regressor for a regression problem.
 #
-# Then, the aggregation method is different in regression and classification:
+# Secondly, the aggregation method is different:
 #
 # - in regression, the average prediction is computed. For instance, if
 #   three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33;

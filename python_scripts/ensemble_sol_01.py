@@ -1,10 +1,10 @@
 # %% [markdown]
 # # 📃 Solution of Exercise 01
 #
-# The aim in this notebook is to investigate if we can fine-tune a bagging
+# The aim of this notebook is to investigate if we can fine-tune a bagging
 # regressor and evaluate the gain obtained.
 #
-# We will load the california housing dataset and split it into a training and
+# We will load the California housing dataset and split it into a training and
 # a testing set.
 
 # %%
@@ -17,7 +17,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # %% [markdown]
 # Create a `BaggingRegressor` providing a `DecisionTreeRegressor` with default
-# parameter as a `base_estimator`. Train the regressor and evaluate the
+# parameters as a `base_estimator`. Train the regressor and evaluate the
 # performance on the testing set.
 
 # %%
@@ -34,8 +34,9 @@ print(f"Basic R2 score of a bagging regressor:\n"
 # %% [markdown]
 # Now, create a `RandomizedSearchCV` instance using the previous model and
 # tune the important parameters of the bagging regressor. You can list the
-# parameters using `get_params`. Find the best parameters and check if you
-# are able to find a set of parameters which improve the default regressor.
+# parameters using the `get_params` method. Find the best parameters and
+# check if you are able to find a set of parameters that improve the
+# default regressor.
 
 # %%
 for param in bagging.get_params().keys():
@@ -69,5 +70,7 @@ print(f"Basic R2 score of a bagging regressor:\n"
       f"{test_score:.2f}")
 
 # %% [markdown]
-# We see that the bagging regressor provides a predictor in which fine tuning
+# We see that the predictor provided by the bagging regressor does not
+# need much fine-tuning compared to a single decision tree.
+# We see that the bagging regressor provides a predictor for which fine tuning
 # is not as important as in the case of fitting a single decision tree.

@@ -3,7 +3,6 @@
 #
 # In the previous notebook, we illustrated how the regularization
 # parameter of the Ridge model needs to be optimized by hand.
-# \
 # However, this way of optimizing hyperparameters is not effective:
 # we did a single split, while cross-validation would be
 # much more effective.
@@ -87,13 +86,11 @@ print(
 # It is also interesting to know that several regressors and classifiers
 # in scikit-learn are optimized to make this parameter tuning. They usually
 # finish with the term "CV" for "Cross Validation" (e.g. `RidgeCV`).
-# \
 # They are more efficient than using `GridSearchCV` and you should use them
 # instead.
 #
 # Repeat the previous exercise using the `RidgeVC` estimator
 # instead of a grid-search.
-# \
 # Refer to the [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html)
 # of `RidgeCV` for more information on how to use it.
 

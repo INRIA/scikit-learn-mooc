@@ -5,12 +5,10 @@
 <!-- Give in plain English what the module is about -->
 
 In this module, will go further into details regarding models that use 
-linear parametrization.
-\
+linear parametrization.  
 We will see how to use this family of models for both classification and
 regression problems. Besides, we will explain how to fight over-fitting using
-regularization. 
-\
+regularization.  
 Finally, we will show how linear models can be used with
 data presenting non-linearity.
 
@@ -32,7 +30,7 @@ The required technical skills to carry on this module are:
 
 <!-- Give the learning objectives -->
 
-This module's objectives are for you to:
+In this module, your objectives are to:
 
 - understand the linear models parametrization;
 - understand the implication of linear models in both 

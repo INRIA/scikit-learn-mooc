@@ -51,9 +51,7 @@ print(
 # %% [markdown]
 # The parameter `gamma` is one of the parameter controlling under/over-fitting
 # in support vector machine with an RBF kernel.
-# \
 # Compute the validation curve to evaluate the effect of the parameter `gamma`.
-# \
 # You can vary its value between `10e-3` and `10e2` by generating samples on a
 # logarithmic scale.
 
@@ -97,14 +95,12 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 # %% [markdown]
 # Looking at the curve, we can clearly identify the over-fitting regime of
 # the SVC classifier when `gamma > 1`.
-# \
 # The best setting is around `gamma = 1` while for `gamma < 1`,
 # it is not very clear if the classifier is under-fitting but the
 # generalization score is worse than for `gamma = 1`.
 #
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize.
-# \
 # Compute the learning curve by computing the train and test scores for
 # different training dataset size.
 # Plot the train and test scores with respect to the number of samples.

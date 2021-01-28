@@ -135,12 +135,10 @@ print(f"Number of correct prediction: "
 # trained model on data that was not used to fit it, as generalization is
 # more than memorization (meaning we want a rule that generalizes to new data,
 # without comparing to data we memorized).
-# \
 # It is harder to conclude on never-seen instances than on already seen ones.
 #
 # Correct evaluation is easily done by leaving out a subset of the data when
 # training the model and using it after for model evaluation.
-# \
 # The data used to fit a model is called training data while the one used
 # to assess a model is called testing data.
 #

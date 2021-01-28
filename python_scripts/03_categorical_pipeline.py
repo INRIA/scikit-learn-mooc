@@ -61,7 +61,7 @@ data.dtypes
 
 # %% [markdown]
 # If we look at the "native-country" column,
-# we observe its data type is `object`.
+# we observe its data type is `object`, meaning it contains string values.
 #
 # Sometimes, categorical columns could also be encoded with integers. In such
 # case, looking at the data type will not be enough. In a previous notebook,
@@ -74,7 +74,6 @@ data["education-num"].value_counts()
 # When considering categorical columns, we should include these columns.
 # However, we saw earlier that `"education-num"` and `"education"` represent
 # the exact same information. Therefore, we can get rid of one of the two.
-# \
 # Because in this notebook we want to work with categorical data,
 # we will use `"education"`, which is of `object` dtype.
 #
@@ -167,12 +166,10 @@ print(
 #
 # By default, `OrdinalEncoder` uses a lexicographical strategy to map string
 # category labels to integers. This strategy is arbitrary and often meaningless.
-# \
 # For instance suppose the dataset has a categorical variable
 # named `"size"` with categories such as "S", "M", "L", "XL". We would like the
 # integer representation to respect the meaning of the sizes by mapping them to
 # increasing integers such as 0, 1, 2, 3.
-# \
 # However, the lexicographical strategy used by default would map the labels
 # “S”, “M”, “L”, “XL” to 2, 1, 0, 3. (following the alphabetical order).
 #

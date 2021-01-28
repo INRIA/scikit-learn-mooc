@@ -72,7 +72,6 @@ adult_census[target_column].value_counts()
 # meaning there are more instances of one or more classes compared to others.
 # Class imbalance happens often in practice and may need special techniques
 # for machine learning.
-# \
 # For example in a medical setting, if we are trying to predict whether patients
 # will develop a rare disease, there will be a lot more healthy patients than ill
 # patients in the dataset.

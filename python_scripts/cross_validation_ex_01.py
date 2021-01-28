@@ -35,9 +35,7 @@ X, y = data.drop(columns="Class"), data["Class"]
 # %% [markdown]
 # The parameter `gamma` is one of the parameter controlling under/over-fitting
 # in support vector machine with an RBF kernel.
-# \
 # Compute the validation curve to evaluate the effect of the parameter `gamma`.
-# \
 # You can vary its value between `10e-3` and `10e2` by generating samples on a
 # logarithmic scale.
 
@@ -53,7 +51,6 @@ X, y = data.drop(columns="Class"), data["Class"]
 # %% [markdown]
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize.
-# \
 # Compute the learning curve by computing the train and test scores for
 # different training dataset size.
 # Plot the train and test scores with respect to the number of samples.

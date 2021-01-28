@@ -19,7 +19,7 @@ What kind of problem is it?
 What are the features?
 
 - a) the number of rooms might be a feature
-- b) the localisation of the house might be a feature
+- b) the post code of the house might be a feature
 - c) the price of the house might be a feature
 ```
 

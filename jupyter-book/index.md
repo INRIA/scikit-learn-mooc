@@ -1,5 +1,7 @@
 # Intro
 
+## Course presentation
+
 ```{admonition} Welcome!
 The goal of this course is to teach machine learning with scikit-learn to
 beginners, even without a strong technical background.
@@ -22,11 +24,16 @@ pipelines, as well as the related concepts and statistical intuitions. It
 is more than a cookbook: it will teach you to understand and be critical
 about each step, from choosing models to interpreting them.
 
-The course is accessible without a strong technical background, as it
-only requires knowledge of basic Python programming.
+## Prerequisites
 
-<hr/>
+The course is accessible without a strong technical background. The
+requirements for this course are:
 
+- basic knowledge of Python programming
+- basic knowledge of the NumPy and Pandas libraries
 
-```{tableofcontents}
-```
+Here are a few good reference links about these requirements:
+
+- [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html)
+- [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html)
+- [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)

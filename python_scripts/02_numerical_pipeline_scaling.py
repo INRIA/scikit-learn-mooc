@@ -137,7 +137,15 @@ data_train.describe()
 # one of them.
 #
 # ```{tip}
-# Some of the reasons for scaling features are:
+# Here are some reasons for scaling features:
+#
+# * Models that rely on the distance between a pair of samples (e.g k-nearest
+#   neighbors) should be trained on normalized features to make each feature
+#   contribute approximately equally to the distance computations.
+#
+# * Many models such as logistic regression use a numerical solver (based on
+#   gradient descent) to find their optimal parameters. This solver converges
+#   faster when the features are scaled.
 #
 # * predictors using Euclidian distance (e.g k-nearest-neighbors) should have
 #   normalized features so that each one contributes equally to the distance
@@ -148,9 +156,14 @@ data_train.describe()
 #   features to properly apply the weights.
 # ```
 #
+# Whether or not a machine learning model requires scaling the features depends
+# on the model family. Linear models such as logistic regression generally
+# benefit from scaling the features while other models such as decision trees do
+# not need such preprocessing.
+#
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer intend to transform feature such
-# that they will all have a zero mean and a unit standard deviation.
+# that each of them will all have a mean value and a unit standard deviation.
 
 # %%
 from sklearn.preprocessing import StandardScaler

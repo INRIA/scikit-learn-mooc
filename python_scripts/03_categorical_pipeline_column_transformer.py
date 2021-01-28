@@ -11,7 +11,6 @@
 #     language: python
 #     name: python3
 # ---
-# %%
 
 # %% [markdown]
 # # Using numerical and categorical variables together

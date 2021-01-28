@@ -9,9 +9,6 @@ conda create -n testenv --yes pip python=3.7
 conda activate testenv
 pip install -r requirements.txt
 pip install jupyter-book
-# nbformat 5.1 adds random id which creates problems with jupyter-cache
-# https://github.com/mwouts/jupytext/issues/715
-pip install nbformat==5.0.8
 
 cd jupyter-book
 make 2>&1 | tee build.log

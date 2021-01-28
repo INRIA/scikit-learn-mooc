@@ -4,50 +4,44 @@
 Why do we need two sets: a train set and a test set?
 
 - a) to train the model faster
-- b) to gain insights of how to tune the hyper-parameters
-- c) to validate the model on unseen data
+- b) to validate the model on unseen data
+- d) to improve the accuracy of the model
 ```
 
 +++
 
 ```{admonition} Question
-What is a numerical feature?
+The generalization performance of a scikit-learn model can be evaluated by:
 
-- a) a column containing values that can be used by a scikit-learn predictive
-  model
-- b) a column containing only numbers
-- c) a column containing only numbers that are continuous
+- a) calling `fit` to train the model on the training set, `predict` on the test set to get the predictions, and compute the score by passing the predictions and the true target values to some metric function
+- b) calling `fit` to train the model on the training set, `score` to compute the score on the test set
+- c) calling `cross_val_score` by passing the model and the data
 ```
 
 +++
 
 ```{admonition} Question
-A scikit-learn model can be evaluated by:
+When calling `cross_val_score(estimator, X, y, cv=5)`, the following happens:
 
-- a) calling `fit` to train the model, `predict` to get the predictions, and
-  compute the score using the predictions, the true values, and a metric
-- b) calling `fit` to train the model, `score` to get the score
-- c) calling `cross_validate` by providing the model and the data
+- a) X and y are internally split five times with non-overlapping test sets
+- b) `estimator.fit` is called 5 times on the full X and y
+- c) `estimator.fit` is called 5 times, each time on a different training set
+- d) 5 scores, computed on the 5 train sets, are returned
+- e) 5 scores, computed on the 5 test sets, are returned
+- f) the average of 5 scores is returned
+- g) the 5 trained estimators are returned
 ```
 
 +++
 
 ```{admonition} Question
-When calling `cross_validate`, should you give at least:
+The `StandardScaler` transformer:
 
-- a) a scikit-learn model and the training data and target
-- b) a scikit-learn model and the testing data and target
-- c) a scikit-learn model and the full dataset
-```
-
-+++
-
-```{admonition} Question
-Scaling the data before fitting a linear model allows us to:
-
-- a) train the model faster
-- b) achieve better performance
-- c) none of the above
+- a) transform the features so that they have similar ranges
+- b) transform the features to lie in the [0.0, 1.0] range
+- c) transform positive-only features into negative or positive values
+- d) can help logistic regression converge faster (fewer iterations)
+- e) deal with the problem of missing values
 ```
 
 +++
@@ -56,9 +50,9 @@ Scaling the data before fitting a linear model allows us to:
 Cross-validation allows us to:
 
 - a) train the model faster
-- b) have better performance
-- c) compute the error/score variability
-- d) avoid over-fitting
+- b) measure the generalization performance of the model
+- c) reach better generalization performance
+- d) estimate the variability of the generalization score
 ```
 
 +++

@@ -1,6 +1,6 @@
 # Intro
 
-## Course description
+## Course presentation
 
 ```{admonition} Welcome!
 The goal of this course is to teach machine learning with scikit-learn to

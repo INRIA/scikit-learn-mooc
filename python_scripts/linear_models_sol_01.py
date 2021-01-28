@@ -1,17 +1,17 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 01
 #
-# The aim of this exercise is three-fold:
+# The aim of this exercise is two-fold:
 #
 # * understand the parametrization of a linear model;
-# * quantify the goodness of fit of a set of such model.
+# * quantify the fitting accuracy of a set of such models.
 #
 # We will reuse part of the code of the course to:
 #
 # * load data;
 # * create the function representing a linear model.
 #
-# ## Prerequisite
+# ## Prerequisites
 #
 # ### Data loading
 

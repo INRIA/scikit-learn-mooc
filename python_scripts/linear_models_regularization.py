@@ -2,16 +2,18 @@
 # # Regularization of linear regression model
 #
 # In this notebook, we will see the limitations of linear regression models and
-# the advantage of using regularized models instead. Besides, we will also
-# present the preprocessing required when dealing with regularized models,
-# furthermore when the regularization parameter needs to be fine tuned.
+# the advantage of using regularized models instead.
+# \
+# Besides, we will also present the preprocessing required when dealing
+# with regularized models, furthermore when the regularization parameter
+# needs to be fine-tuned.
 #
 # We will start by highlighting the over-fitting issue that can arise with
 # a simple linear regression model.
 #
 # ## Effect of regularization
 #
-# We will first load the california housing dataset.
+# We will first load the California housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -31,11 +33,14 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # %% [markdown]
 # In one of the previous notebook, we showed that linear models could be used
-# even in settings where `X` and `y` are not linearly linked. We showed that one
-# can use the `PolynomialFeatures` transformer to create additional features
-# encoding non-linear interactions between features. Here, we will use this
-# transformer to augment the feature space. Subsequently, we train a linear
-# regression model. We will use the out-of-sample test set to evaluate the
+# even in settings where `X` and `y` are not linearly linked.
+# \
+# We showed that one can use the `PolynomialFeatures` transformer to create
+# additional features encoding non-linear interactions between features.
+# \
+# Here, we will use this transformer to augment the feature space.
+# Subsequently, we will train a linear regression model.
+# We will use the out-of-sample test set to evaluate the
 # generalization capabilities of our model.
 
 # %%
@@ -52,10 +57,11 @@ print(f"R2 score of linear regresion model on the test set:\n"
       f"{test_score:.3f}")
 
 # %% [markdown]
-# We see that we obtain an $R^2$ score below zero. It means that our model is
-# far worth than predicting the mean of `y_train`. This issue is due to
-# overfitting. We can compute the score on the training set to confirm this
-# intuition.
+# We see that we obtain an $R^2$ score below zero.
+# \
+# It means that our model is far worth than predicting the mean of `y_train`.
+# This issue is due to overfitting.
+# We can compute the score on the training set to confirm this intuition.
 
 # %%
 train_score = linear_regression.score(X_train, y_train)
@@ -126,44 +132,51 @@ _, ax = plt.subplots(figsize=(6, 16))
 weights.plot(kind="barh", ax=ax)
 
 # %% [markdown]
-# We see that the magnitude of the weights are shrinked towards zero in
+# We see that the magnitude of the weights are shrunk towards zero in
 # comparison with the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization
 # parameter.
 #
-# ## You shall scale your data
+# ## Scale your data!
 #
-# Regularization will add constraints on weights of the model. We saw in the
-# previous example that a ridge model will enforce that all weights have a
-# similar magnitude. Indeed, the larger alpha is, the larger this
-# enforcement will be.
+# Regularization will add constraints on weights of the model.
+# We saw in the previous example that a ridge model will enforce
+# that all weights have a similar magnitude.
+# \
+# Indeed, the larger alpha is, the larger this enforcement will be.
 #
-# This procedure should make us think about feature rescaling. Let's think
-# about the case where features have an identical data dispersion, if two
-# features are found equally important by the model, they will be affected
-# weights close in term of norm.
+# This procedure should make us think about feature rescaling.
+# Let's consider the case where features have an identical data dispersion:
+# if two features are found equally important by the model, they will be
+# affected close weights in term of norm.
 #
-# Now, let's think about the scenario but where features will have completely
-# different data dispersion (e.g. age of person in year and it annual revenue
-# in $). If two features are as important, our model will boost the weight of
-# feature with small dispersion and reduce the weight of the feature with high
-# dispersion. We recall that regularization forces weights to be closer.
+# Now, let's consider the scenario where features have completely different
+# data dispersion (e.g. age in years and annual revenue in dollars).
+# If two features are as important, our model will boost the weights of
+# features with small dispersion and reduce the weights of features with
+# high dispersion.
+# \
+# We recall that regularization forces weights to be closer.
 #
 # Therefore, we get an intuition that if we want to use regularization, dealing
 # with rescaled data would make it easier to find an optimal regularization
-# parameter and thus an adequate model. As a side note, some solvers based on
-# gradient computation are expecting such rescaled data. Unscaled data will be
-# detrimental when computing the optimal weights. Therefore, when working with
-# a linear model and numerical data, this is in general a good practice to
-# scale the data.
+# parameter and thus an adequate model.
+# \
+# As a side note, some solvers based on gradient # computation are expecting
+# such rescaled data.
+# Unscaled data will be detrimental when computing the optimal weights.
+# \
+# Therefore, when working with a linear model and numerical data,
+# it is generally good practice to scale the data.
 #
 # In the remaining of this section, we will present the basics on how to
-# incorporate a scaler within your machine learning pipeline. Scikit-learn
-# provides several tools to preprocess the data. The `StandardScaler`
-# transforms the data such that each feature will have a mean of zero and a
-# standard deviation of 1.
+# incorporate a scaler within your machine learning pipeline.
+# \
+# Scikit-learn provides several tools to preprocess the data, such as
+# the `StandardScaler`, which transforms the data in order for each feature
+# to have a mean of zero and a standard deviation of 1.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -176,7 +189,7 @@ X_test_scaled = scaler.transform(X_test)
 # This scikit-learn estimator is known as a transformer: it computes some
 # statistics (i.e the mean and the standard deviation) and stores them as
 # attributes (`scaler.mean_`, `scaler.scale_`) when calling `fit`. Using these
-# statistics, it transforms the data when `transform` is called. Therefore, it
+# stats, it transforms the data when `transform` is called. Therefore, it
 # is important to note that `fit` should only be called on the training data,
 # similar to classifiers and regressors.
 
@@ -212,14 +225,14 @@ print(f"R2 score of ridge model on the test set:\n"
 # data leakage (when knowledge of the test data was inadvertently included in
 # training a model, as when fitting a transformer on the test data).
 #
-# We already use such `Pipeline` to create the polynomial features before to
-# train the model.
-#
-# We will can create a `Pipeline` by using `make_pipeline` and giving as
+# We already used `Pipeline` to create the polynomial features before training
+# the model.
+# \
+# We will can create a new one by using `make_pipeline` and giving as
 # arguments the transformation(s) to be performed (in order) and the regressor
 # model.
 #
-# Here, we can integrate the scaling phase before to train our model:
+# Here, we can implement the scaling process before training our model:
 
 # %%
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
@@ -231,8 +244,7 @@ print(f"R2 score of ridge model on the test set:\n"
       f"{test_score:.3f}")
 
 # %% [markdown]
-# In the previous example, we see the benefit of using a pipeline. It
-# simplifies the manual handling.
+# As we can see in this example, using a pipeline simplifies the manual handling.
 #
 # When creating the model, keeping the same `alpha` does not give good results.
 # It depends on the data provided. Therefore, it needs to be tuned for each
@@ -246,16 +258,18 @@ print(f"R2 score of ridge model on the test set:\n"
 # The default parameter will not lead to the optimal model. Therefore, we need
 # to tune the `alpha` parameter.
 #
-# Tuning model hyperparameter should be done with care. Indeed, we want to find
-# an optimal parameter that maximizes some metrics. Thus, it requires a training
-# and testing sets. However, this testing set should be different from the
-# out-of-sample testing set that we used to evaluate our model. If we use
-# the same test, we are using an `alpha` which was optimized for this testing
-# set and it breaks the out-of-sample rule.
+# Model hyperparameters tuning should be done with care. Indeed, we want to find
+# an optimal parameter that maximizes some metrics.
+# Thus, it requires both a training set and testing set.
+# \
+# However, this testing set should be different from the out-of-sample testing set
+# that we used to evaluate our model:
+# if we use the same one, we are using an `alpha` which was optimized for
+# this testing set and it breaks the out-of-sample rule.
 #
 # Therefore, we can split our previous training set into two subsets: a
-# new training set and a validation set allowing to later pick the optimal
-# alpha.
+# new training set and a validation set which we will use later to pick
+# the optimal value for `alpha`.
 
 # %%
 X_sub_train, X_valid, y_sub_train, y_valid = train_test_split(
@@ -278,17 +292,16 @@ plt.ylabel('R2 score (higher is better)')
 _ = plt.legend()
 
 # %% [markdown]
-# We see that, just like adding salt in cooking, adding regularization in our
-# model could improve its error on the validation set. But too much
-# regularization, like too much salt, decreases its performance.
+# As we can see, regularization is just like salt in cooking:
+# one must balance its amount to get the best performance.
 
 # %%
 best_alpha = alphas[np.argmax(list_ridge_scores)]
 best_alpha
 
 # %% [markdown]
-# We can retrain a ridge model on the full training set and set the alpha and
-# check the score on the left out dataset.
+# Finally, we can re-train a Ridge model on the full dataset,
+# with the best value for alpha we found earlier, and check the score.
 
 # %%
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
@@ -304,5 +317,5 @@ print(f"R2 score of ridge model on the test set:\n"
 # make some parameters tuning instead of programming yourself a `for` loop by
 # hand.
 #
-# As a conclusion, you learnt in this notebook about the concept of
-# regularization and the importance of preprocessing and parameter tuning.
+# In this notebook, you learned about the concept of regularization and
+# the importance of preprocessing and parameter tuning.

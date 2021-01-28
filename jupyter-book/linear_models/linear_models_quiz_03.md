@@ -5,7 +5,7 @@ Regularization refers to:
 
 - a) constraining the intercept of the linear model to be zero
 - b) shrinking the weights of the linear model towards zero
-- c) use a subset of the available data when fitting a linear model
+- c) using a subset of the available data when fitting a linear model
 ```
 
 +++

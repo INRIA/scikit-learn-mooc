@@ -198,7 +198,7 @@ print(f"Error of each classifier: {adaboost.estimator_errors_}")
 # indeed makes sense when we look at the errors of each classifier. The first
 # classifier also has the highest classification performance.
 #
-# While AdaBoost is a nice algorithm to demonsrate the internal machinery of
+# While AdaBoost is a nice algorithm to demonstrate the internal machinery of
 # boosting algorithms, it is not the most efficient machine-learning algorithm.
 # The most efficient algorithm based on boosting is the gradient-boosting
 # decision tree (GBDT) algorithm which we will discuss after a short exercise.

@@ -12,9 +12,11 @@ These are robust models for both regression and classification.
 <img src="../figures/scikit-learn-logo.svg">
 
 ???
-Decision tree are built as a set of rules for both classification and regression problems.
+Decision trees are built as a set of rules for both 
+classification and regression problems.
 
-These are the building blocks for more elaborate model such as random forest and gradient boosting trees, as we will see.
+These are the building blocks for more elaborate model such 
+as *random forest* and *gradient boosting trees*, as we will see.
 
 ---
 
@@ -79,9 +81,9 @@ These are the building blocks for more elaborate model such as random forest and
 
 ???
 
-In bagging we will construct deep tree in parallel.
+In bagging, we will construct deep trees in parallel.
 
-Each tree will be fitted on an sub-sampling from the initial data.
+Each tree will be fitted on a sub-sampling from the initial data.
 i.e. we will only consider a random part of the data to build each model.
 
 When we have to classify a new point, we will aggregate the prediction of every model by a voting scheme.
@@ -102,7 +104,7 @@ from sklearn.ensemble import RandomForestClassifier
 ]
 
 ???
-Here we have a classification task. Separating circle from square.
+Here we have a classification task: separating circles from squares.
 
 ---
 
@@ -204,7 +206,9 @@ from sklearn.ensemble import RandomForestClassifier
 .pull-right[<img src="../figures/boosting_trees1.svg" width="100%">]
 
 ???
-A first shallow tree start to separate circle from square. Mistakes done by this first tree model shall be corrected by a second tree model.
+A first shallow tree starts to separate circles from squares. 
+Mistakes done by this first tree model shall be corrected 
+by a second tree model.
 
 ---
 
@@ -223,7 +227,8 @@ clf = HistGradientBoostingClassifier(learning_rate = .1)
 ]
 
 ???
-So now, the second tree refine the first tree. The final model is a weighted sum of this first two trees.
+So now, the second tree refines the first tree. 
+The final model is a weighted sum of these two trees.
 
 ---
 
@@ -242,11 +247,12 @@ clf = HistGradientBoostingClassifier(learning_rate = .1)
 ]
 
 ???
-We could continue to refining our ensemble model. At each step we focus on mistakes of the previous model.
+We could continue to refining our ensemble model. 
+At each step we focus on mistakes of the previous model.
 
 ---
 
 # Take away
 
-- `boosting` fit sequentially shallow trees
-- `bagging` fit simultaneously deep trees
+- `boosting` fits sequentially shallow trees
+- `bagging` fits simultaneously deep trees

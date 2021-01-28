@@ -69,10 +69,10 @@ ax.plot(X_test[::3], y_pred[::3], label="Test predictions",
 _ = plt.legend()
 
 # %% [markdown]
-# Contrary to linear models, decision trees are non-parametric models, so they
-# do not make assumptions about the way data are distributed. This will affect
-# the prediction scheme. Repeating the above experiment will highlight the
-# differences.
+# Contrary to linear models, decision trees are non-parametric models:
+# they do not make assumptions about the way data is distributed.
+# This will affect the prediction scheme. Repeating the above experiment
+# will highlight the differences.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -88,9 +88,9 @@ ax.plot(X_test, y_pred, linewidth=4, label="Decision tree")
 _ = plt.legend()
 
 # %% [markdown]
-# We see that the decision tree model does not have a priori distribution for
-# the data and we do not end-up with a straight line to regress flipper length
-# and body mass.
+# We see that the decision tree model does not have an *a priori* distribution
+# for the data and we do not end-up with a straight line to regress flipper
+# length and body mass.
 #
 # Instead, we observe that the predictions of the tree are piecewise constant.
 # Indeed, our feature space was split into two partitions. We can check the
@@ -108,9 +108,9 @@ _ = plot_tree(tree, feature_names=data_columns, ax=ax)
 # These values corresponds to the mean values of the training samples in each
 # partition.
 #
-# In classification, we saw that increasing the depth of the tree allowed to
-# get more complex decision boundary. We can check the effect of increasing the
-# depth for decision tree in a regression setting.
+# In classification, we saw that increasing the depth of the tree allowed us to
+# get more complex decision boundaries.
+# We can check the effect of increasing the depth in a regression setting:
 
 # %%
 tree = DecisionTreeRegressor(max_depth=3)
@@ -127,5 +127,5 @@ _ = plt.legend()
 # Increasing the depth of the tree will increase the number of partition and
 # thus the number of constant values that the tree is capable of predicting.
 #
-# In this notebook, we highlighted the between decision tree in classification
-# and in regression.
+# In this notebook, we highlighted the differences in behavior of a decision
+# tree used in a classification problem in contrast to a regression problem.

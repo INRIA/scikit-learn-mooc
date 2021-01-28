@@ -23,13 +23,12 @@
 # * an example of preprocessing, namely the **scaling numerical variables**;
 # * using a scikit-learn **pipeline** to chain preprocessing and model
 #   training;
-# * assessed the performance of our model via **cross-validation** instead of
+# * assessing the performance of our model via **cross-validation** instead of
 #   a single train-test split.
 #
 # ## Data preparation
 #
-# Let's charge the full adult census dataset and split the target from the
-# actual data used for modeling.
+# First, let's charge the full adult census dataset.
 
 # %%
 import pandas as pd
@@ -37,8 +36,8 @@ import pandas as pd
 df = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We will first split our dataset to have the target separated from the data
-# used to train our predictive model.
+# We will now drop the target from the data we will use to train our
+# predictive model.
 
 # %%
 target_name = "class"
@@ -46,7 +45,7 @@ target = df[target_name]
 data = df.drop(columns=target_name)
 
 # %% [markdown]
-# We start by selecting only the numerical columns as seen in the previous
+# Then, we select only the numerical columns, as seen in the previous
 # notebook.
 
 # %%
@@ -126,17 +125,16 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # data and then train a new logistic regression model on that new version of
 # the dataset.
 #
-# Let's start by checking some feature statistics or the training data.
+# Let's start by printing some statistics about the training data.
 
 # %%
 data_train.describe()
 
 # %% [markdown]
-#
-# We see that the features of this dataset have very different ranges of values.
-# This can be a problem for some machine learning algorithms such as k-nearest
-# neighbors and logistic regression. Those algorithms work better if the
-# numerical features are preprocessed to use similar scales.
+# We see that the dataset's features span across different ranges.
+# However, we want to have normalized features because some algorithms make
+# assumptions regarding their distribution, and being normalized is usually
+# one of them.
 #
 # ```{tip}
 # Here are some reasons for scaling features:
@@ -149,12 +147,13 @@ data_train.describe()
 #   gradient descent) to find their optimal parameters. This solver converges
 #   faster when the features are scaled.
 #
-# * Logistic regression uses a strategy called "regularization" to better behave
-#   on datasets with many features or correlated features and comparatively
-#   fewer samples. Regularization assumes that features have similar scales.
-#
-# The use of regularization for linear models will be explained in a dedicated
-# notebook, later in the MOOC.
+# * predictors using Euclidean distance (e.g k-nearest-neighbors) should have
+#   normalized features so that each one contributes equally to the distance
+#   computation;
+# * predictors using gradient-descent based algorithms (e.g logistic regression)
+#   to find optimal parameters work better and faster;
+# * predictors using regularization (e.g logistic regression) require normalized
+#   features to properly apply the weights.
 # ```
 #
 # Whether or not a machine learning model requires scaling the features depends
@@ -179,11 +178,10 @@ data_train_scaled = pd.DataFrame(data_train_scaled,
 data_train_scaled.describe()
 
 # %% [markdown]
-#
-# We can easily combine one or more transformers and the final classifier with a
-# scikit-learn `Pipeline`. The resulting object used like any other classifier
-# or regressor. The helper function `make_pipeline` will create a `Pipeline`
-# instance by giving as arguments the successive transformations to perform
+# We can easily combine these sequential operations with a scikit-learn
+# `Pipeline`, which chains together operations and can be used like any other
+# classifier or regressor. The helper function `make_pipeline` will create a
+# `Pipeline`: it takes as arguments the successive transformations to perform,
 # followed by the classifier or regressor model.
 
 # %%
@@ -208,12 +206,14 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # ## Model evaluation using cross-validation
 #
 # In the previous example, we split the original data into a training set
-# and a testing set. This strategy has several issues: in the setting where
-# the amount of data is limited, the subset of data used to train or test will
-# be small; and the splitting was done in a random manner and we have no
+# and a testing set.
+# This strategy has several issues: in the setting where the amount of data
+# is limited, the subset used to train or test will be small.
+# Moreover, if the splitting was done in a random manner, we do not have
 # information regarding the confidence of the results obtained.
 #
-# Instead, we can use cross-validation. Cross-validation consists of repeating
+# Instead, we can use cross-validation.
+# Cross-validation consists of repeating
 # this random splitting into training and testing sets and aggregating the
 # model performance. By repeating the experiment, one can get an estimate of
 # the variability of the model performance.

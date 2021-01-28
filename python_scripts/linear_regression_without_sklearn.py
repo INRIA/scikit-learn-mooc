@@ -1,8 +1,9 @@
 # %% [markdown]
 # # Linear regression without scikit-learn
 #
-# In this notebook, we introduce linear regression. Before to present class
-# available in scikit-learn, we present some insights with a simple example.
+# In this notebook, we introduce linear regression.
+# Before presenting the available scikit-learn classes,
+# we will provide some insights with a simple example.
 # We will use a dataset that contains information about penguins.
 
 # %%
@@ -12,7 +13,7 @@ data = pd.read_csv("../datasets/penguins_regression.csv")
 data.head()
 
 # %% [markdown]
-# This dataset contains measurements taken of penguins. We will formulate the
+# This dataset contains measurements taken on penguins. We will formulate the
 # following problem: using the flipper length of a penguin, we would like
 # to infer its mass.
 
@@ -30,7 +31,7 @@ _ = sns.scatterplot(data=data, x=feature_names, y=target_name)
 # In this problem, penguin mass is our target. It is a continuous
 # variable that roughly varies between 2700 g and 6300 g. Thus, this is a
 # regression problem (in contrast to classification). We also see that there is
-# almost a linear relationship between the body mass of the penguin and the
+# almost a linear relationship between the body mass of the penguin and its
 # flipper length. The longer the flipper, the heavier the penguin.
 #
 # Thus, we could come up with a simple formula, where given a flipper length

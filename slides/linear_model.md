@@ -15,8 +15,8 @@ These are basic models, easy to understand and fast to train.
 Linear models are easy to understand and fast to train.
 They are typically good baselines.
 
-We will cover intuitions on how they work, in particular in a machine
-learning settings.
+We will cover intuitions on how they work in a machine learning 
+settings.
 
 
 ---
@@ -44,9 +44,9 @@ learning settings.
 ???
 
 Let us consider a variant of the adult census data that we saw
-previously: instead of having 2 categories, < $50k and >= $50k, the
-target "Salaray" contains the exact value of the salary for each person.
-Thus, the target is continuous and we deal with a regression problem
+previously: instead of having 2 categories, *< $50k* and *>= $50k*, the
+target "Salary" contains the exact value of the salary for each person.
+Thus, the target is continuous, so we are dealing with a regression problem
 instead of a classification problem.
 
 The linear model assumes that the salary can be explained as a linear
@@ -64,7 +64,7 @@ given some observation **X**
 
 ???
 
-For illustration purpose, let us consider 1-dimensional observations:
+For illustration purpose, let's consider a 1-dimensional observations:
 explaining the salary as a function of a single feature, for instance the
 education level (the number of years of study).
 
@@ -77,9 +77,9 @@ The blue curve shows the predictions for any possible **x**
 .shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
 
 ```python
-  from sklearn.linear_model import LinearRegression
-  linear_regression = LinearRegression()
-  linear_regression.fit(x, y)
+from sklearn.linear_model import LinearRegression
+linear_regression = LinearRegression()
+linear_regression.fit(x, y)
 ```
 
 ???
@@ -87,8 +87,8 @@ The blue curve shows the predictions for any possible **x**
 We learn a linear function to predict *y*. Here, the salary is expressed
 as a constant multiplied by the number of years of study.
 
-Learning this function consists in finding the straight line as close as
-possible as all the data points. 
+Learning this function consists in finding the straight line which is
+as close as possible as all the data points. 
 
 The corresponding model can then be used to make predictions for any
 possible **x**, as displayed by the blue line.
@@ -103,20 +103,20 @@ data points
 
 
 ```python
-  from sklearn.linear_model import LinearRegression
-  linear_regression = LinearRegression()
-  linear_regression.fit(x, y)
+from sklearn.linear_model import LinearRegression
+linear_regression = LinearRegression()
+linear_regression.fit(x, y)
 
-  y_pred = linear_regression.predict(X)
+y_pred = linear_regression.predict(X)
 ```
 
 ???
 
 The slope of the line is chosen to minimize the distance between the
-prediction and the data points. This distance constitues an error
+prediction and the data points. This distance constitutes an error
 for each sample shown as the red bar on the figure.
 
-The best fit is the blue line which minimizes the sum of (the square of)
+The best fit is the blue line which minimizes the sum of the square of
 those red lines.
 
 Fortunately, scikit-learn has an estimator, the `LinearRegression`
@@ -136,36 +136,36 @@ dimensions. However, the idea is the same: a linear model tries to
 minimize the error between the predictions and the data points.
 The predictions now form a plane.
 
-Often, the data have many features, and thus many dimensions. It is not
-possible any longer to visualize the fitting with a simple figure.
+Often, the data have many features, and thus many dimensions. It is no
+longer possible to visualize the fitting with a simple figure.
 
 ---
 # For classification: logistic regression
 
-For **classification**, we use a logistic regression model  
-**y** is binary,
-either +1 or -1
+For **classification**, we use a logistic regression model
+
+**y** is binary, either +1 or -1
 
 .shift-left.pull-left[<img src="../figures/categorical.svg" width="100%">]
 
 
  ```python
- From sklearn.linear_model import LogisticRegression
- log_reg = LogisticRegression()
+from sklearn.linear_model import LogisticRegression
+log_reg = LogisticRegression()
  ```
 
 ???
 FIXME title might appear in two lines on some browser.
 
-In our `adult_census` dataset, we do not have continuous value for salary but
-only whether the salary is higher than $50K or not. This problem is, therefore,
+In our `adult_census` dataset, we do not have continuous values for salary but
+only whether the salary is higher than $50K. This problem is, therefore,
 a classification problem.
 
 The prediction target, **y**, is binary. It can be represented by either
-+1 or -1. However, a straight line is not well suited to try to explain
++1 or -1. However, a straight line is not suited to try to explain
 such binary target.
 
-Hence, dedicated linear model for classification are needed. *Logistic
+Hence, dedicated linear models for classification are needed. *Logistic
 regression* is such a model: it is intended for **classification** and
 not regression as the name would wrongly suggest.
 
@@ -180,17 +180,17 @@ the data
 
 
  ```python
- From sklearn.linear_model import LogisticRegression
- log_reg = LogisticRegression()
- log_reg.fit(X, y)
+from sklearn.linear_model import LogisticRegression
+log_reg = LogisticRegression()
+log_reg.fit(X, y)
  ```
 
 
 ???
 
 With logistic regression, the output is modelled using a form of soft
-step function, adjusted to the data. This function is called a logisitic
-function. Using a soft, graduate, shift between *y = -1* and *y = +1* is
+step function, adjusted to the data. This function is called a logistic
+function. Using a soft, graduate shift between *y = -1* and *y = +1* is
 useful to capture the grey zone, where the value of *x* does not
 completely tell us whether the target value is -1 or +1.
 
@@ -213,7 +213,7 @@ In scikit-learn, this is done with the `LogisticRegression` object.
 If the data has two features, it is convenient to represent it
 differently.
 
-Here X has two dimension x1 and x2.
+Here, *X* has two dimension *x1* and *x2*.
 
 The figure on the left shows a representation similar to before: the
 features now appear as two dimensions, and the target to predict is in
@@ -221,9 +221,9 @@ the third dimension. The soft step defining the prediction is now a
 surface.
 
 A more synthetic visualization is visible on the figure on the right: the
-two axes correspond to x1, x2. The data points are represented as dots,
+two axes correspond to *x1* and *x2*. The data points are represented as dots,
 with the two different colors corresponding to two different values of
-the target label y. The model predictions appear as straight lines
+the target label y. The model predictions appear as straight lines,
 separating the two cloud of points *y=-1* and *y=+1*, which correspond to
 the surface on the left.
 
@@ -242,19 +242,19 @@ This last visualization is commonly used in machine learning.
 .small[]
 
 **Regularization** is needed to control model complexity.
-The most comon way is to push coefficients toward
+The most common way is to push the coefficients toward
 small values. Such model is called *Ridge*.
 
 .pull-left[
  ```python
- From sklearn.linear_model import Ridge
- ridge = Ridge(alpha=1)
+from sklearn.linear_model import Ridge
+ridge = Ridge(alpha=1)
  ```
 ]
 
 ???
 
-If we have too many parameters with regards to the number of samples, the
+If we have too many parameters in regard to the number of samples, the
 linear model can overfit: it assigns non-zero weights to associations by
 chance.
 
@@ -270,8 +270,8 @@ slightly biasing to choose smaller weights for almost a similar fit.
 The `Ridge` estimator does this in scikit-learn.
 
 This model comes with a complexity parameter that controls the amount of
-regularization. This parameter is named \alpha. The larger the value of
-\alpha, the greater the bias, and thus the smaller the coefficients.
+regularization. This parameter is named *alpha*. The larger the value of
+*alpha*, the greater the bias, and thus the smaller the coefficients.
 
 ---
 # Bias-variance tradeoff in Ridge
@@ -283,7 +283,7 @@ regularization. This parameter is named \alpha. The larger the value of
 
 ???
 
-Let us illustrate the bias-variance tradeoff of the ridge.
+Let's illustrate the ridge's bias-variance tradeoff.
 
 With 2 data points, a non-biased linear model fits perfectly the data.
 
@@ -299,15 +299,15 @@ With 2 data points, a non-biased linear model fits perfectly the data.
 .pull-right[&nbsp; &nbsp; &nbsp; High bias, low variance]
 ???
 
-But when there is noise in the data, the non-biased linear model captures
-and amplifies this noise. As a result, it displays a lot of *variance* in
-its predictions.
+When there is noise in the data, the non-biased linear model captures
+and amplifies this noise. As a result, it displays a lot of *variance* 
+in its predictions.
 
-On the right, we have a ridge estimator with a large value of alpha,
+On the right, we have a ridge estimator with a large value of *alpha*,
 regularizing the coefficients by shrinking them to zero.
 
 The ridge displays much less variance. However, it systematically
-under-estimates the coefficient. It displays a *biased* behavior.
+under-estimates the coefficient. It displays a **biased** behavior.
 
 ---
 # Bias-variance tradeoff in Ridge
@@ -331,7 +331,7 @@ Large alpha
 
 .width65.shift-up-less.centered[
  ```python
- From sklearn.linear_model import RidgeCV
+from sklearn.linear_model import RidgeCV
  ```
 ]
 
@@ -346,15 +346,15 @@ This bias is not necessarily a bad thing: what matters is choosing the
 tradeoff between bias and variance that leads to the best prediction
 performance. For a specific dataset there is a sweet spot corresponding
 to the highest complexity that the data can support, depending on the
-amount of noise and of observations available.
+amount of noise and observations available.
 
 Given new data points, beyond our two initial measures, the sweep spot
 minimizes the error. For the specific case of the `Ridge` estimator, in
-scikit-learn learn, the best value of alpha can be automatically found
+scikit-learn, the best value of *alpha* can be automatically found
 using the `RidgeCV` object.
 
-Note that, in general, for prediction it is always better to prefer use
-`Ridge` than a `LinearRegression` object. Using at least a small amount
+Note that, in general, for prediction, it is always better to prefer
+`Ridge` over a `LinearRegression` object. Using at least a small amount
 of regularization is always useful.
 
 ---
@@ -369,24 +369,24 @@ of regularization is always useful.
 
 .width65.shift-up-less.centered[
  ```python
- From sklearn.linear_model import LogisticRegressionCV
+from sklearn.linear_model import LogisticRegressionCV
  ```
 ]
 
 ???
 
-For classification, logisitic regression also comes with regularization.
+For classification, logistic regression also comes with regularization.
 
 
-In scikit-learn, this regularization is controled by a parameter called
-*C*, which has a slightly different behavior than \alpha in the Ridge
+In scikit-learn, this regularization is controlled by a parameter called
+*C*, which has a slightly different behavior than *alpha* in the Ridge
 estimator.
 
-For a large value of C, the model puts more emphasis on the data points
+For a large value of *C*, the model puts more emphasis on the data points
 close to the frontier.
-On the contrary, for a low value of C, the model considers all the points.
+On the contrary, for a low value of *C*, the model considers all the points.
 
-As with the Ridge, the tradeoff controlled by the choice of C depends on
+As with Ridge, the tradeoff controlled by the choice of *C* depends on
 the dataset and should be tuned for each set. This tuning can be done in
 scikit-learn using the `LogisticRegressionCV` object.
 
@@ -410,13 +410,13 @@ When there is more than 2 classes to choose from, more than one decision
 boundary is needed.
 
 The `LogisticRegression` estimator has strategies to deal transparently
-for such settings, known as multiclass settings.
+with such settings, known as multiclass settings.
 
 For instance, the "multinomial" is a natural extension of the logistic,
-using a function with several soft steps. There are alse One versus One
-and One versus Rest approaches that learn decisions discriminating either
-one class versus every other class, or one class versus all the other
-classes.
+using a function with several soft steps. There are also **One versus One**
+and **One versus Rest** approaches that learn decisions discriminating 
+either one class versus every individual class, or one class versus all the 
+other classes.
 
 ---
 # Linear models are not suited to all data
@@ -432,12 +432,12 @@ classes.
 
 Linear models work well if the classes are linearly separable.
 
-But sometimes the best decision boundary to separate classes is not well
-approximated by a line.
+However, sometimes, the best decision boundary to separate classes is not 
+well approximated by a line.
 
-In such situations, we can either use non-linear models, or do
-transformations to the data, known as feature augmentation. We will cover
-these in other lessons.
+In such a situation, we can either use non-linear models, or perform
+transformations on the data, known as feature augmentation. We will 
+cover these in other lessons.
 
 ---
 .center[

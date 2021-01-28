@@ -2,14 +2,14 @@
 # # Linear regression using scikit-learn
 #
 # In the previous notebook, we presented the parametrization of a linear model.
-# During the exercise, you saw that varying parameters will give different
+# During the exercise, you saw that varying parameters will give different models
 # that will fit better or worse the data. To evaluate quantitatively this
 # goodness of fit, you implemented a so-called metric.
 #
-# When doing machine-learning, you are interested to select the model which
-# will minimize the error on the data available. From the previous exercise,
-# we could implement a brute-force approach, varying the weights and intercept
-# and select the model with the lowest error.
+# When doing machine learning, you are interested in selecting the model which
+# will minimize the error on the data available the most.
+# From the previous exercise, we could implement a brute-force approach,
+# varying the weights and intercept and select the model with the lowest error.
 #
 # Hopefully, this problem of finding the best parameters values (i.e. that
 # result in the lowest error) can be solved without the need to check every

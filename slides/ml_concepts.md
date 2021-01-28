@@ -17,15 +17,15 @@ class: titlepage
 # What is machine learning?
 
 A first, introductory lesson, focusing on general concepts rather than
-coding or maths.
+coding or maths
 
 <img src="../figures/scikit-learn-logo.svg">
 
 ???
 
-In this lesson, we will discover what is machine learning and its
-general underlying concepts. This lesson is an introduction and focuses
-on general concepts, rather than coding or maths.
+In this lesson, we will discover what machine learning is, and its
+general underlying concepts. This lesson is an introduction and 
+focuses on general concepts, rather than coding or maths.
 
 ---
 # What is machine learning?
@@ -49,7 +49,7 @@ Some examples of machine learning
 
 ???
 
-First of all, I would like to discuss : Why and when would we use machine learning?
+First, I would like to discuss : Why and when would we use machine learning?
 
 Let me start with a couple examples.
 
@@ -62,7 +62,7 @@ Let me start with a couple examples.
 
 ???
 
-*Pick up a iris*,
+*Pick up an iris*,
 
 Consider flowers, for instance. I am not very good at recognizing them.
 This is an iris. But what type?
@@ -81,12 +81,12 @@ There are three classic types of iris,
 
 > Setosa - Versicolor - Virginica
 
-Maybe I can use machine learning to build mathematical rules to set them
-apart?
+Maybe I can use machine learning to build rules to set them apart?
 
-For this, I will describe the irises with numbers. I can measure the
-dimensions of their sepal and petal. *Pick up a ruler, and pretend to
-measure*
+For this, I will describe the irises with some of their physical 
+characteristics, such as their petal and sepal length and width. 
+I can measure the dimensions of their sepal and petal. 
+*Pick up a ruler, and pretend to measure*
 
 --
 
@@ -99,9 +99,9 @@ measure*
 
 ???
 
-Now I have a set of numbers describing irises. Can I build decision rules
-from these numbers? Maybe. See, for instance, it seems that setosa irises have a
-very small petal.
+I now have a set of numerical characteristics describing irises. 
+Can I build decision rules from these numbers? Maybe. See, for instance, 
+it seems that setosa irises have a very small petal.
 
 ---
 
@@ -112,7 +112,7 @@ very small petal.
 
 ???
 
-Let us consider a problem closer to a business case; that of estimating
+Let us consider a problem closer to a business case ; that of estimating
 the income of someone.
 
 --
@@ -134,7 +134,9 @@ US Census data:
 
 For this, we can use data from the US census.
 
-As you see, it gives is fairly diverse information about individuals : *age, workclass, education, marital-statut, occupation, relationship, and more information*, as well as whether they earn more or less than 50 thousand dollars a year.
+As you see, it gives fairly diverse information about individuals : 
+*age, work class, education, marital status, occupation, relationship, and more information*, 
+as well as whether they earn more or less than 50 thousand dollars a year.
 We can use machine learning to build rules that will predict this income
 information from the rest of the demographic information.
 
@@ -153,8 +155,8 @@ Expert knowledge: setosa irises have small petals
 ???
 
 So, machine learning is about engineering decision rules from the data.
-But experts can also engineer decision rules from their knowledge of the
-problem. For instance, flower experts know that setosa irises have small petals.
+Experts can also engineer decision rules from their knowledge of the problem. 
+For instance, flower experts know that setosa irises have small petals.
 
 --
 
@@ -191,11 +193,12 @@ distribution of the sepal and petal measurements for the different iris
 species, we can see that petal length and width single out well setosa.
 
 
-*But how can we deal with more complex, more numerous data? *
+*But how can we deal with more complex, more numerous data?*
 
 
-**The benefit of machine-learning is that it automates the creation of rules from the data, including their details, such here as where exactly
-to set the threshold on the petal length.**
+**The benefit of machine-learning is that it automates the creation of rules 
+from the data, including their details, such as to where exactly to set the 
+threshold on the petal length, as we saw in this example.**
 
 
 *In concrete terms, machine learning builds the prediction rules from the data.* 
@@ -225,8 +228,8 @@ Concluding on new instances
 ???
 
 In machine learning, we want to conclude on new instances. In the 
-example on the census, I want to be able to predict the income of new
-individuals, with a combination of jobs and demographics that I have
+example on the census, we want to be able to predict the income of new
+individuals, with a combination of jobs and demographics that we have
 never seen.
 
 --
@@ -249,8 +252,8 @@ Many sources of variability:
 
 ???
 
-The challenge is that there are many ways an individual can
-vary, even within the limited description given by our data.
+The challenge is that there are many ways an individual can vary, 
+even within the limited description given by our data.
 
 --
 
@@ -260,9 +263,9 @@ vary, even within the limited description given by our data.
 ???
 
 An additional difficulty is the noise in the data. By noise, we mean the
-aspects that cannot by explained solely from the data. For instance,
-an individual's income may have been influenced by the mood of his manager 
-during his annual review, which is not in our database.
+aspects that cannot be explained solely from the data. For instance,
+an individual's income may have been influenced by the mood of his 
+manager during his annual review, which is not in our database.
 
 ---
 # Memorizing
@@ -277,8 +280,8 @@ during his annual review, which is not in our database.
 
 One possibility for prediction is to memorize the whole available data.
 
-Given the problem of predicting income, we can store all known
-individuals, the census. Then, given a new individual, we predict the
+Given the problem of predicting income, we can store all the information
+from the census. Then, given a new individual, we predict the
 income of its closest match in our database.
 
 This strategy is known is machine learning as a "nearest neighbor"
@@ -286,13 +289,13 @@ predictor.
 
 --
 
-Trying out this strategy on the data we have, the census, *what error
-rate do we expect?*
+Trying out this strategy on individuals picked from the data we have
+(the census) **what error rate do we expect?**
 
 ???
 
-If we try this strategy on the data we have, the census, what error rate
-do we expect?
+If we tried this on individuals from the data we have, 
+what error rate do we expect?
 
 --
 
@@ -301,7 +304,7 @@ do we expect?
 
 ???
 
-Every individual for which we are asking a prediction is in our database.
+Every individual for which we are asking a prediction has been memorized.
 Thus, its closest match will be itself, and as a consequence, we will
 have zero prediction error.
 
@@ -311,8 +314,8 @@ have zero prediction error.
 
 ???
 
-However, if we try our strategy on unseen data, it will not be able to
-find exact matches. Hence, it is likely to make some errors.
+However, if we try this strategy on unseen data, it will not be able to
+find exact matches. Hence, it will make some errors.
 
 ---
 
@@ -348,7 +351,7 @@ model, known as the train data.
 They are different because there might be different noise, but also
 because there might be individuals with new configuration of features
 that we have not observed: different combinations of occupation, age, or
-marital status.
+marital status for instance.
 
 ---
 
@@ -371,14 +374,13 @@ class: center, middle
 
 ???
 
-To go further, it is useful to define a bit the concepts of machine
-learning
+To go further, it is useful to define some machine learning concepts.
 
 ---
 
 # The data matrix
 
-We deal with a table of data:
+We deal with a table of data (figuratively, an Excel sheet):
 
 * Rows are different observations, or **samples**
 * Columns are different descriptors, or **features**
@@ -394,8 +396,8 @@ We deal with a table of data:
 
 ???
 
-All the data that we will consider will be in what we call a "data
-matrix". It can be seen as describing our problem in a 2D table: 
+All the data that we will consider will be in what we call a *data
+matrix*. It can be seen as describing our problem in a 2D table: 
 
 * the different rows of this table are different observations, for
   instance different irises. We call these "samples"
@@ -418,18 +420,19 @@ The goal is to **predict** *y*
 
 ???
 
-In supervised machine learning, 
-the data that we have are annotated. In other words, they are associated with a label or a target class.
-For Irises, each data point is associated with a type of Iris: our target class.
-The purpose of supervised learning is to predict this target (here the type of iris) on new data without annotation: entering only petal and sepal dimensions.
+In supervised machine learning, the data that we have are annotated. 
+In other words, they are associated with a label or a target class.
+For irises, each data point is associated with a type of iris: our target class.
+The purpose of supervised learning is to predict this target (here the type of iris) 
+on new data without annotation (entering only petal and sepal dimensions).
 
 In mathematical terms, for supervised machine learning, we are given 
 
 * a data matrix, that we shall denote *X*, with *n* observations
 
-* and a **target** *y*, which gives a characteristic for each observation
+* a **target** *y*, which gives a characteristic for each observation
 
-The goal of supervised learning is to predict y from *X*.
+The goal of supervised learning is to predict *y* from *X*.
 
 ---
 
@@ -439,7 +442,7 @@ The goal of supervised learning is to predict y from *X*.
 * A data matrix *X* with *n* observations
 
 
-The goal is to extract from *X* structure that generalizes.
+The goal is to extract from *X* a structure that generalizes.
 
 <img src="../figures/unsupervised.png" width="40%" style="float: left">
 
@@ -447,17 +450,19 @@ Very wide variety of different problems.
 
 ???
 
-In unsupervised learning, we are given the data matrix *X*, but we have
-no available target. 
+In unsupervised learning, we are given the data matrix *X*, 
+but we have no available target. 
 
 The goal is then to extract some form of structure from *X* that
-generalize to new data.
+generalizes to new data.
 
-If we take the example of Irises, in unsupervised learning, the input data would not include the type of Iris because the data is not annotated. 
-The goal could therefore be to find similarities and structures within the data, or to group together observations that share common characteristics. 
+If we take the example of irises, in unsupervised learning, the input 
+data would not include the type of iris because the data is not annotated. 
+The goal could therefore be to find similarities and structures within 
+the data, or to group together observations that share common characteristics. 
 
-Unsupervised learning covers a very wide variety of different problems. We
-will not cover them for now.
+Unsupervised learning covers a very wide variety of different problems. 
+Though we will not cover them for now.
 
 ---
 
@@ -465,27 +470,30 @@ will not cover them for now.
 
 Supervised learning: predicting a target *y*
 
-* **Classification**: *y* is discrete, made of different classes
+* **Classification**: *y* is discrete (qualitative), made of different classes
 
-  *eg* irises: Setosa, Versicolor, Virginica
+  *eg* types of irises: Setosa, Versicolor, Virginica
 
-* **Regression**: *y* is continuous, a numerical quantity
+* **Regression**: *y* is continuous (quantitative), a numerical quantity
 
   *eg* wage prediction
 
 ???
 
-Going back to supervised learning, we have to predict a target *y*. This
-target is a property of our data.
+Going back to supervised learning, we have to predict a target *y*. 
+This target is a property of our data.
 
-It may be discrete, describing different classes of the data. For
-instance with irises, we are trying to predict the type of iris. In such
-a situation, we say that it is a classification task.
+It may be discrete, describing different classes of the data. 
+For instance with irises, we are trying to predict the type of iris. 
+In such a situation, we say that it is a classification task.
 
 It may be continuous, describing a numerical property of our observation.
 For instance, when trying to predict from the census who is rich, it
-would be interesting to predict the income, in dollars. In such a
-sitation, we say that it is a regression task.
+would be interesting to predict the income, in dollars. 
+In such a situation, we say that it is a regression task.
+
+In other words, use regression for quantitative properties,
+and classification for qualitative properties.
 
 ---
 
@@ -493,12 +501,12 @@ sitation, we say that it is a regression task.
 # Take home messages
 ]
 
-* Machine learning is about extracting from *data* rules that *generalize*
+* Machine learning is about extracting from *data* rules that *generalizes*
   to new observations
 
 * We work with:
 
-  - a data matrix *X* *n_samples* x *n_features*
+  - a data matrix *X* *n_samples* * *n_features*
   - a target *y* of length *n_samples*, made of numbers for *regression*
     and of discrete classes for *classification*
 
@@ -507,7 +515,7 @@ sitation, we say that it is a regression task.
 ???
 
 To summarize, machine learning is about extracting from data rules that
-generalize to new observations.
+generalizes to new observations.
 
 In practice, we will work with a data matrix, that we will call *X*, with
 *n_samples* rows times *n_features* columns. For supervised learning,

@@ -17,7 +17,7 @@ useful to give a statistical view on underfitting and overfitting.
 ---
 # Resampling the training set
 
-- Limited amount of training data
+- A limited amount of training data
 
 - Training set is a small random subset of all possible observations
 
@@ -33,7 +33,7 @@ labeling all the possible observations would be too costly.
 
 What if we used a different training set?
 
-- How different would be the resulting learned prediction functions?
+- How different would the resulting learned prediction functions be?
 
 - What would be their average test error?
 
@@ -46,14 +46,14 @@ What if we used a different training set?
 				class="shift-up" width="90%">]
 
 ???
-Let's illustrate the concept of biais using the analogy of shooting arrows on a
+Let's illustrate the concept of bias using the analogy of shooting arrows on a
 target.
 
-A cross on the target represents the model obtained by applying the learning
-algorithm to a random training set with a given finite size.
+A cross on the target represents the result a model obtained by applying
+the learning algorithm to a random training set with a given finite size.
 
 The perfect model would be located at the center of the target. The distance to
-the target represent the test error (computed with an infinite test data).
+the target represents the test error (computed with an infinite test data).
 
 ---
 # Overfit: variance
@@ -65,10 +65,10 @@ the target represent the test error (computed with an infinite test data).
 
 ???
 If we were to train our high flexibility degree 9 polynomial model on an
-alternative sample for the training set, we could get a very different
+alternative sample of the training set, we could get a very different
 prediction function.
 
-On the target, that would be represented like an arrow in a completely
+On the target, that would be represented an arrow in a completely
 different location.
 
 
@@ -92,17 +92,17 @@ Another resample, another very different prediction function.
 				class="shift-up" width="90%">]
 
 ???
-If we consider all the possibles models trained on resampled training sets we
+If we consider all the possible models trained on resampled training sets we
 can see the overfitting behavior.
 
-The problem of overfit is one of variance: on average, the predictions are not
-necessarily off, but each tends to fall far from the target. This can be seen by
+The overfitting problem is one of variance: on average, the predictions are not
+necessarily off, but each tend to fall far from the target. This can be seen by
 their large spread around the best possible prediction. A useful mental picture
 is that of the spread of arrows on a target.
 
 For our machine learning example, this situation corresponds to a high
 complexity model class that is affected by how the noise in the data generating
-process makes the observations vary from one small training set to an other.
+process makes the observations vary from one small training set to another.
 
 ---
 # Underfit: bias
@@ -113,7 +113,8 @@ process makes the observations vary from one small training set to an other.
 				class="shift-up" width="90%">]
 
 ???
-Let's now consider an underfitting model: polynomial of degree 1 (which is just linear prediction function).
+Let's now consider an underfitting model: polynomial of degree 1 (which is just
+a linear prediction function).
 
 Since the true generative process is non-linear, our fitted prediction function
 is bound to make prediction errors for some regions of the input space.
@@ -139,7 +140,7 @@ function stays very similar: the slope moves a bit.
 				class="shift-up" width="90%">]
 
 ???
-Even more importantly, for a give region of the input space, the underfitting
+Even more importantly, for a given region of the input space, the underfitting
 models tend to make similar kinds of prediction errors.
 
 ---
@@ -152,13 +153,13 @@ models tend to make similar kinds of prediction errors.
 
 ???
 Underfitting leads to systematic biases: the predictions cannot be on target on
-average, because the model that we use to predict is systematically off the
+average, because the model that we used to predict is systematically off the
 data-generating process.
 
-On the figure of the left, if we choose a linear model but the generated data
-comes from a non-linear generative process, whatever the choice of the training
-set, our trained model will tend to make systematic under prediction on the
-edges of the domain and over-prediction in the middle of the domain.
+On the figure on the left, if we choose a linear model with generated data
+coming from a non-linear generative process, whatever the choice of the training
+set, our trained model will tend to make systematic under-predictions on the
+edges of the domain and over-predictions in the middle of the domain.
 
 ---
 # Underfit versus overfit
@@ -174,7 +175,7 @@ edges of the domain and over-prediction in the middle of the domain.
 
 This bias-variance tradeoff is classic in statistics. Often, adding a
 little bit of bias helps reducing the variance. For instance, as with
-throwing darts at a target, where throwing the darts less strong might
+throwing darts at a target, throwing the darts less strong might
 lead to being below the target on average, but with less scatter.
 
 ---

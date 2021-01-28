@@ -2,7 +2,7 @@
 # # The framework and why do we need it
 #
 # In this notebook, we present the general cross-validation framework. Before
-# to go into details, we will linger on the reasons for always having training
+# we dive in, let's linger on the reasons for always having training
 # and testing sets. Let's first look at the limitation of using a dataset
 # without keeping any samples out.
 #
@@ -27,7 +27,8 @@ print(housing.DESCR)
 X.head()
 
 # %% [markdown]
-# To simplify future visualization, we transform the target in k\$.
+# To simplify future visualization, let's transform the prices from the
+# dollar ($) range to the thousand dollars (k$) range.
 
 # %%
 y *= 100
@@ -36,8 +37,9 @@ y.head()
 # %% [markdown]
 # ## Empirical error vs generalization error
 #
-# As mentioned previously, we start by fitting a decision tree regressor on the
-# entire dataset.
+# As we are trying to predict prices, a quantitative feature, this is a
+# regression problem. Therefore, we will fit a decision tree regressor
+# on the entire dataset.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -46,7 +48,7 @@ regressor = DecisionTreeRegressor()
 regressor.fit(X, y)
 
 # %% [markdown]
-# After training the regressor, we would like to know the regressor's potential
+# After training the regressor, we would like to know its potential
 # performance once deployed in production. For this purpose, we use the mean
 # absolute error, which gives us an error in the native unit, i.e. k\$.
 
@@ -64,7 +66,7 @@ print(f"On average, our regressor makes an error of {score:.2f} k$")
 # Indeed, we trained and predicted on the same dataset. Since our decision tree
 # was fully grown, every sample in the dataset is stored in a leaf node.
 # Therefore, our decision tree fully memorized the dataset given during `fit`
-# and make no single error when predicting on the same data.
+# and therefore made no error when predicting.
 #
 # This error computed above is called the **empirical error** or **training
 # error**.
@@ -87,7 +89,7 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
 # %% [markdown]
-# Now, we train our model only on the training set.
+# Then, let's train our model
 
 # %%
 regressor.fit(X_train, y_train)
@@ -102,9 +104,9 @@ score = mean_absolute_error(y_pred, y_train)
 print(f"The empirical error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# We observe the same phenomena than in the previous experiment. Our model
-# memorized the training set. However, we can now compute the generalization
-# error on the testing set.
+# We observe the same phenomena as in the previous experiment:
+# our model memorized the training set.
+# However, we can now compute the generalization error on the testing set.
 
 # %%
 y_pred = regressor.predict(X_test)
@@ -112,9 +114,8 @@ score = mean_absolute_error(y_pred, y_test)
 print(f"The generalization error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# The generalization error is not minimum and equal to zero. Indeed, this
-# error is closer to the performance of our model if it was deployed in
-# production.
+# This generalization error is actually about what we would expect from
+# our model if it was used in a production environment.
 
 # %% [markdown]
 # ## Stability of the cross-validation estimates
@@ -122,7 +123,7 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # When doing a single train-test split we don't give any indication
 # regarding the robustness of the evaluation of our predictive model: in
 # particular, if the test set is small, this estimate of the generalization
-# error can be unstable and do not reflect the "true error rate" we would have
+# error can be unstable and wouldn't reflect the "true error rate" we would have
 # observed with the same model on an unlimited amount of test data.
 #
 # For instance, we could have been lucky when we did our random split of our
@@ -138,7 +139,7 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # There are different cross-validation strategies, for now we are going to
 # focus on one called "shuffle-split". At each iteration of this strategy we:
 #
-# - shuffle the order of the samples of a copy of the full data at random;
+# - randomly shuffle the order of the samples of a copy of the full dataset;
 # - split the shuffled dataset into a train and a test set;
 # - train a new model on the train set;
 # - evaluate the generalization error on the test set.
@@ -203,7 +204,7 @@ len(cv_results)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.set_context("talk")
+sns.set_context("talk")  # Set Seaborn's plotting style to "talk" mode.
 
 sns.displot(cv_results["test_error"], kde=True, bins=10)
 _ = plt.xlabel("Mean absolute error (k$)")

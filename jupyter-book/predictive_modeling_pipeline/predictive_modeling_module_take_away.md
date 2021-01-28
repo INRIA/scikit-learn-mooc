@@ -4,7 +4,7 @@
 
 <!-- Quick wrap-up for the module -->
 
-In this module, you have learnt:
+In this module, you learned:
 
 - to create a scikit-learn predictive model;
 - about the scikit-learn API to train and test a predictive model;

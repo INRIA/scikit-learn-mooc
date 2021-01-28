@@ -90,7 +90,7 @@ _ = plot_decision_function(linear_model, range_features, ax=ax)
 # parametrization that we saw in the previous notebook, controlled by the
 # model's weights and intercept.
 #
-# Besides, it seems that the linear model would be a good candidate model for
+# Besides, it seems that the linear model would be a good candidate for
 # such problem as it gives good accuracy.
 
 # %%
@@ -103,10 +103,9 @@ print(f"Accuracy of the {model_name}: {test_score:.2f}")
 # controlled by a mathematical decision function and do not have weights or
 # intercept to be optimized.
 #
-# Indeed, decision trees are based partition will partition the space by
-# considering a single feature at a time. Let's illustrate this behaviour by
-# having a decision tree that only makes a single split to partition the
-# feature space.
+# Indeed, decision trees will partition the space by considering a single
+# feature at a time. Let's illustrate this behaviour by having a decision
+# tree make a single split to partition the feature space.
 
 # %%
 from sklearn.tree import DecisionTreeClassifier
@@ -123,7 +122,7 @@ _ = plot_decision_function(tree, range_features, ax=ax)
 # The partitions found by the algorithm separates the data along the axis
 # "Culmen Length", discarding the feature "Culmen Depth". Thus, it highlights
 # that a decision tree does not use a combination of feature when making a
-# split. We can look more in depth the tree structure.
+# split. We can look more in depth at the tree structure.
 
 # %%
 from sklearn.tree import plot_tree
@@ -134,19 +133,20 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 
 # %% [markdown]
 # We see that the split was done the culmen length feature. The original
-# dataset was subdivided into 2 sets depending if the culmen depth was
-# inferior or superior to 16.45 mm.
+# dataset was subdivided into 2 sets based on the culmen length
+# (inferior or superior to 16.45 mm).
 #
-# This partition of the dataset is the one that minimize the class diversities
-# in each sub-partitions. This measure is also known as called **criterion**
-# and is a parameter that can be set in trees.
+# This partition of the dataset minimizes the class diversities in each
+# sub-partitions. This measure is also known as a **criterion**,
+# and is a settable parameter.
 #
-# If we look closely at the partition, the sample superior to 16.45 belong
-# mainly to the Adelie class. Looking at the tree structure, we indeed observe
-# 103 Adelie samples. We also count 52 Chinstrap samples and 6 Gentoo samples.
+# If we look more closely at the partition, we see that the sample superior
+# to 16.45 belongs mainly to the Adelie class. Looking at the values,
+# we indeed observe 103 Adelie individuals in this space. 
+# We also count 52 Chinstrap samples and 6 Gentoo samples.
 # We can make similar interpretation for the partition defined by a threshold
 # inferior to 16.45mm. In this case, the most represented class is the Gentoo
-# specie.
+# species.
 #
 # Let's see how our tree would work as a predictor. Let's start to see the
 # class predicted when the culmen length is inferior to the threshold.
@@ -168,8 +168,8 @@ tree.predict([[0, 17]])
 # represented class within a partition.
 #
 # Since that during the training, we have a count of samples in each partition,
-# we can also compute a probability to belong to a certain class within this
-# partition.
+# we can also compute the probability of belonging to a specific class within
+# this partition.
 
 # %%
 y_proba = pd.Series(tree.predict_proba([[0, 17]])[0],

@@ -5,11 +5,14 @@
 <!-- Give in plain English what the module is about -->
 
 This module will give an example of a typical predictive modeling pipeline
-developed using tabular data. We will present this pipeline in a progressive
-way. First, we will make an analysis of the dataset used. Subsequently, we will
-train our first pipeline with a subset of the dataset, containing only
-numerical features. Finally, we will extend our pipeline to use mixed
-types of data, i.e. numerical and categorical data.
+developed using tabular data.  
+Note: Data is called tabular when it has a named column.  
+We will present this pipeline in a progressive way.
+First, we will make an analysis of the dataset used.
+Subsequently, we will train our first pipeline with a subset of the dataset,
+containing only numerical features.  
+Finally, we will extend our pipeline to use mixed types of data, i.e. 
+numerical and categorical data.
 
 ## Before getting started
 

@@ -147,11 +147,11 @@ data_train.describe()
 #   gradient descent) to find their optimal parameters. This solver converges
 #   faster when the features are scaled.
 #
-# * predictors using Euclidian distance (e.g k-nearest-neighbors) should have
+# * predictors using Euclidean distance (e.g k-nearest-neighbors) should have
 #   normalized features so that each one contributes equally to the distance
-#   computation.
+#   computation;
 # * predictors using gradient-descent based algorithms (e.g logistic regression)
-#   to find optimal parameters work better and faster.
+#   to find optimal parameters work better and faster;
 # * predictors using regularization (e.g logistic regression) require normalized
 #   features to properly apply the weights.
 # ```

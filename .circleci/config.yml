@@ -24,10 +24,13 @@ jobs:
       - run:
           command: ./build_tools/circle/build_jupyter_book.sh
           no_output_timeout: 30m
-
+      - run:
+          command: ls jupyter-book/_build/.jupyter_cache
+      - run:
+          command: du -sh jupyter-book/_build/.jupyter_cache
       - save_cache:
           paths:
-            - ./jupyter-book/_build/.jupyter-cache
+            - jupyter-book/_build/.jupyter_cache
           key: v1-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
       - store_artifacts:
           path: jupyter-book/_build/html

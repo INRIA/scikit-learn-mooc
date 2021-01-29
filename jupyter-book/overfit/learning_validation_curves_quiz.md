@@ -27,7 +27,7 @@ For a fixed training set, if we change a model parameter to give the model more
 flexibility, are we more likely to observe:
 
 - a) a wider difference between train and test errors
-- b) a reduction of the difference between train and test errors
+- b) a reduction in the difference between train and test errors
 - c) an increase in the train error
 - d) a decrease in the train error
 ```
@@ -39,7 +39,7 @@ For a fixed choice of model parameters, if we increase the number of labeled
 observations in the training set, are we more likely to observe:
 
 - a) a wider difference between train and test errors
-- b) a reduction of the difference between train and test errors
+- b) a reduction in the difference between train and test errors
 - c) an increase in the train error
 - d) a decrease in the train error
 ```

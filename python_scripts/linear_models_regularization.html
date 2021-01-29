@@ -1167,9 +1167,8 @@
   <div class="section" id="regularization-of-linear-regression-model">
 <h1>Regularization of linear regression model<a class="headerlink" href="#regularization-of-linear-regression-model" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we will see the limitations of linear regression models and
-the advantage of using regularized models instead.
-<br />
-Besides, we will also present the preprocessing required when dealing
+the advantage of using regularized models instead.</p>
+<p>Besides, we will also present the preprocessing required when dealing
 with regularized models, furthermore when the regularization parameter
 needs to be fine-tuned.</p>
 <p>We will start by highlighting the over-fitting issue that can arise with
@@ -1288,12 +1287,10 @@ the performance of our model.</p>
 </div>
 </div>
 <p>In one of the previous notebook, we showed that linear models could be used
-even in settings where <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not linearly linked.
-<br />
-We showed that one can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create
-additional features encoding non-linear interactions between features.
-<br />
-Here, we will use this transformer to augment the feature space.
+even in settings where <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are not linearly linked.</p>
+<p>We showed that one can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create
+additional features encoding non-linear interactions between features.</p>
+<p>Here, we will use this transformer to augment the feature space.
 Subsequently, we will train a linear regression model.
 We will use the out-of-sample test set to evaluate the
 generalization capabilities of our model.</p>
@@ -1320,9 +1317,8 @@ generalization capabilities of our model.</p>
 </div>
 </div>
 </div>
-<p>We see that we obtain an <span class="math notranslate nohighlight">\(R^2\)</span> score below zero.
-<br />
-It means that our model is far worth than predicting the mean of <code class="docutils literal notranslate"><span class="pre">y_train</span></code>.
+<p>We see that we obtain an <span class="math notranslate nohighlight">\(R^2\)</span> score below zero.</p>
+<p>It means that our model is far worth than predicting the mean of <code class="docutils literal notranslate"><span class="pre">y_train</span></code>.
 This issue is due to overfitting.
 We can compute the score on the training set to confirm this intuition.</p>
 <div class="cell docutils container">
@@ -1461,9 +1457,8 @@ parameter.</p>
 <h2>Scale your data!<a class="headerlink" href="#scale-your-data" title="Permalink to this headline">¶</a></h2>
 <p>Regularization will add constraints on weights of the model.
 We saw in the previous example that a ridge model will enforce
-that all weights have a similar magnitude.
-<br />
-Indeed, the larger alpha is, the larger this enforcement will be.</p>
+that all weights have a similar magnitude.</p>
+<p>Indeed, the larger alpha is, the larger this enforcement will be.</p>
 <p>This procedure should make us think about feature rescaling.
 Let’s consider the case where features have an identical data dispersion:
 if two features are found equally important by the model, they will be
@@ -1472,23 +1467,19 @@ affected close weights in term of norm.</p>
 data dispersion (e.g. age in years and annual revenue in dollars).
 If two features are as important, our model will boost the weights of
 features with small dispersion and reduce the weights of features with
-high dispersion.
-<br />
-We recall that regularization forces weights to be closer.</p>
+high dispersion.</p>
+<p>We recall that regularization forces weights to be closer.</p>
 <p>Therefore, we get an intuition that if we want to use regularization, dealing
 with rescaled data would make it easier to find an optimal regularization
-parameter and thus an adequate model.
-<br />
-As a side note, some solvers based on gradient # computation are expecting
+parameter and thus an adequate model.</p>
+<p>As a side note, some solvers based on gradient # computation are expecting
 such rescaled data.
-Unscaled data will be detrimental when computing the optimal weights.
-<br />
-Therefore, when working with a linear model and numerical data,
+Unscaled data will be detrimental when computing the optimal weights.</p>
+<p>Therefore, when working with a linear model and numerical data,
 it is generally good practice to scale the data.</p>
 <p>In the remaining of this section, we will present the basics on how to
-incorporate a scaler within your machine learning pipeline.
-<br />
-Scikit-learn provides several tools to preprocess the data, such as
+incorporate a scaler within your machine learning pipeline.</p>
+<p>Scikit-learn provides several tools to preprocess the data, such as
 the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which transforms the data in order for each feature
 to have a mean of zero and a standard deviation of 1.</p>
 <div class="cell docutils container">
@@ -1559,9 +1550,8 @@ manage the calls to <code class="docutils literal notranslate"><span class="pre"
 data leakage (when knowledge of the test data was inadvertently included in
 training a model, as when fitting a transformer on the test data).</p>
 <p>We already used <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> to create the polynomial features before training
-the model.
-<br />
-We will can create a new one by using <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> and giving as
+the model.</p>
+<p>We will can create a new one by using <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> and giving as
 arguments the transformation(s) to be performed (in order) and the regressor
 model.</p>
 <p>Here, we can implement the scaling process before training our model:</p>
@@ -1597,9 +1587,8 @@ The default parameter will not lead to the optimal model. Therefore, we need
 to tune the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter.</p>
 <p>Model hyperparameters tuning should be done with care. Indeed, we want to find
 an optimal parameter that maximizes some metrics.
-Thus, it requires both a training set and testing set.
-<br />
-However, this testing set should be different from the out-of-sample testing set
+Thus, it requires both a training set and testing set.</p>
+<p>However, this testing set should be different from the out-of-sample testing set
 that we used to evaluate our model:
 if we use the same one, we are using an <code class="docutils literal notranslate"><span class="pre">alpha</span></code> which was optimized for
 this testing set and it breaks the out-of-sample rule.</p>

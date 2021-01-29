@@ -7,6 +7,11 @@
     }
   }
 
+  function contentOnly() {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('content_only') !== null
+  }
+
   function displayContentOnly() {
     document.querySelector('#site-navigation').remove();
     document.querySelector('.topbar').remove();
@@ -16,7 +21,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    if (inIframe()) {
+    if (inIframe() || contentOnly()) {
       displayContentOnly();
     }
   });

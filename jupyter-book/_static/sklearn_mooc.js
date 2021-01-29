@@ -7,6 +7,11 @@
     }
   }
 
+  function contentOnly() {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('content_only') !== null
+  }
+
   function displayContentOnly() {
     document.querySelector('#site-navigation').remove();
     document.querySelector('.topbar').remove();
@@ -15,7 +20,9 @@
     document.querySelector('#main-content').querySelector('.col-md-9').className = 'col-12';
   }
 
-  if (inIframe()) {
-    displayContentOnly();
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    if (inIframe() || contentOnly()) {
+      displayContentOnly();
+    }
+  });
 }());

@@ -3,7 +3,7 @@
 #
 # In the previous notebook, we trained a k-nearest neighbors model on
 # some data.
-# \
+#
 # However, we oversimplified the procedure by loading a dataset that
 # contained exclusively numerical data.
 # Besides, we used datasets which were already split into train-test sets.

@@ -15,7 +15,9 @@
     document.querySelector('#main-content').querySelector('.col-md-9').className = 'col-12';
   }
 
-  if (inIframe()) {
-    displayContentOnly();
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    if (inIframe()) {
+      displayContentOnly();
+    }
+  });
 }());

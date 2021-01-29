@@ -58,7 +58,7 @@ Cross-validation allows us to:
 +++
 
 ```{admonition} Question
-`Pipeline`s are used to:
+`make_pipeline` (as well as `Pipeline`) is used for:
 
 - a) run cross-validation
 - b) combine one or several transformers and a predictor

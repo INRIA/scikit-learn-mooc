@@ -18,9 +18,9 @@ jobs:
       - run: cat /tmp/checksum.txt
       - restore_cache:
           keys:
-            - v1-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
-            - v1-{{ .Branch }}
-            - v1-master
+            - v2-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
+            - v2-{{ .Branch }}
+            - v2-master
       - run:
           command: ./build_tools/circle/build_jupyter_book.sh
           no_output_timeout: 30m
@@ -31,7 +31,7 @@ jobs:
       - save_cache:
           paths:
             - jupyter-book/_build/.jupyter_cache
-          key: v1-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
+          key: v2-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
       - store_artifacts:
           path: jupyter-book/_build/html
           destination: jupyter-book

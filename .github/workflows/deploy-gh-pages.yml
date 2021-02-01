@@ -38,7 +38,7 @@ jobs:
         restore-keys: |
           v1-${{ github.ref }}-${{ hashFiles('python_scripts/**/*.py') }}
           v1-${{ github.ref }}
-          v1-master
+          v1-refs/heads/master
 
     - name: Build the book
       run: |
@@ -50,7 +50,7 @@ jobs:
         cp -r jupyter-book/_build/html gh-pages
 
     - name: GitHub Pages action
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/head/master' }}
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       uses: peaceiris/actions-gh-pages@v3.6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

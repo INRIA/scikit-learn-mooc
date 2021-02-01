@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+    - test-ci*
 
 jobs:
   deploy-gh-pages:
@@ -26,16 +27,30 @@ jobs:
       run: |
         pip install -r requirements.txt
         pip install jupyter-book
+
+    - name: Cache jupyter-cache folder
+      uses: actions/cache@v2
+      env:
+        cache-name: jupyter-cache
+      with:
+        path: jupyter-book/_build/.jupyter_cache
+        key: v1-${{ github.ref }}-${{ hashFiles('python_scripts/**/*.py') }}
+        restore-keys: |
+          v1-${{ github.ref }}-${{ hashFiles('python_scripts/**/*.py') }}
+          v1-${{ github.ref }}
+          v1-master
+
     - name: Build the book
       run: |
         cd jupyter-book
         make
 
-    - name: Create folder for gh-pages 
+    - name: Create folder for gh-pages
       run: |
         cp -r jupyter-book/_build/html gh-pages
 
     - name: GitHub Pages action
+      if: ${{ github.event_name == 'push' && github.ref == 'master' }}
       uses: peaceiris/actions-gh-pages@v3.6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

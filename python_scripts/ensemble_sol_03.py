@@ -1,11 +1,11 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 03
 #
-# This exercise aims at studying if AdaBoost is a model that is able to
-# over-fit. We will make a grid-search and check the scores by varying the
+# This exercise aims at verifying if AdaBoost can over-fit.
+# We will make a grid-search and check the scores by varying the
 # number of estimators.
 #
-# We first load the california housing dataset and split it into a training
+# We will first load the California housing dataset and split it into a training
 # and a testing set.
 
 # %%
@@ -18,10 +18,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# Create an `AbaBoostRegressor`. Using the function
+# Then, create an `AbaBoostRegressor`. Use the function
 # `sklearn.model_selection.validation_curve` to get training and test scores
-# by varying the value the number of estimators. *Hint: vary the number of
-# estimators between 1 and 60.*
+# by varying the number of estimators.
+# *Hint: vary the number of estimators between 1 and 60.*
 
 # %%
 import numpy as np
@@ -35,7 +35,7 @@ train_scores, test_scores = validation_curve(
     param_range=param_range, n_jobs=-1)
 
 # %% [markdown]
-# Plot both the mean training and test scores. You can as well plot the
+# Plot both the mean training and test scores. You can also plot the
 # standard deviation of the scores.
 
 # %%
@@ -68,7 +68,7 @@ _ = plt.title("Validation curve for AdaBoost regressor")
 # %% [markdown]
 # Plotting the validation curve, we can see that AdaBoost is not immune against
 # overfitting. Indeed, there is an optimal number of estimators to be found.
-# Adding to much estimators are detrimental for the performance of the model.
+# Adding too much estimators is detrimental for the performance of the model.
 
 # %% [markdown]
 # Repeat the experiment using a random forest instead of an AdaBoost regressor.

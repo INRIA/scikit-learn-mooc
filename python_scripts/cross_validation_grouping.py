@@ -1,6 +1,6 @@
 # %% [markdown]
 # # Sample grouping
-# We are going to linger into the concept of samples group. As in the previous
+# We are going to linger into the concept of sample groups. As in the previous
 # section, we will give an example to highlight some surprising results. This
 # time, we will use the handwritten digits dataset.
 
@@ -11,8 +11,8 @@ digits = load_digits()
 X, y = digits.data, digits.target
 
 # %% [markdown]
-# We will use the same model than in the exercise: a logistic regression
-# classifier with scaled data.
+# We will recreate the same model used in the previous exercise:
+# a logistic regression classifier with scaled data.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -46,7 +46,7 @@ print(f"The average accuracy is "
       f"{test_score_with_shuffling.std():.3f}")
 
 # %% [markdown]
-# We observe that shuffling the data allows to improving the mean accuracy.
+# We observe that shuffling the data improves the mean accuracy.
 # We could go a little further and plot the distribution of the generalization
 # score. We can first concatenate the test scores.
 
@@ -73,7 +73,7 @@ _ = plt.xlabel("Accuracy score")
 # %% [markdown]
 # The cross-validation generalization error that uses the shuffling has less
 # variance than the one that does not impose any shuffling. It means that some
-# specific fold leads to a low score in the unshuffle case.
+# specific fold leads to a low score in this case.
 
 # %%
 print(test_score_no_shuffling)

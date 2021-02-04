@@ -1,11 +1,11 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 02
 #
-# This notebook aims at building baselines classifier with which we can compare
-# our predictive model. Besides, we will check the differences with the
-# baselines that we saw in regression.
+# This notebook aims at building baseline classifiers, which we'll use tp
+# compare our predictive model. Besides, we will check the differences with
+# the baselines that we saw in regression.
 #
-# We will use the adult census dataset but only the numerical features.
+# We will use the adult census dataset, using only the numerical features.
 
 # %%
 import pandas as pd
@@ -82,7 +82,7 @@ final_test_scores = pd.concat(
 )
 
 # %% [markdown]
-# And finally we plot the distributions of the test scores.
+# Next, plot the distributions of the test scores.
 
 # %%
 import matplotlib.pyplot as plt
@@ -94,7 +94,7 @@ _ = plt.xlabel("Accuracy (%)")
 
 # %% [markdown]
 # We observe that the dummy classifier with the strategy `most_frequent` is
-# equivalent to use the permutation score. We also can conclude that our model
+# equivalent to the permutation score. We can also conclude that our model
 # is better than the other baseline.
 
 # %% [markdown]
@@ -126,5 +126,5 @@ _ = plt.xlabel("Accuracy (%)")
 # with the `most_frequent` strategy. Since the classes are imbalanced,
 # predicting the most frequent involves that we will be right for the
 # proportion of this class (~75% of the samples). However, by using the
-# `stratified` strategy, wrong preditions will be made even for the most
+# `stratified` strategy, wrong predictions will be made even for the most
 # frequent class, hence we obtain a lower accuracy.

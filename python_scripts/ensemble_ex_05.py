@@ -6,7 +6,7 @@
 # a cross-validation framework in order to inspect internal parameters found
 # via grid-search.
 #
-# As a long-time tradition, we will use the California housing dataset.
+# We will use the California housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing

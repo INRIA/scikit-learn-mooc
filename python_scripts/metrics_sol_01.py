@@ -3,7 +3,7 @@
 #
 # We presented different classification metrics in the previous notebook.
 # However, we did not use it with a cross-validation. This exercise aims at
-# practising and implementing cross-validation.
+# practicing and implementing cross-validation.
 #
 # We will reuse the blood transfusion dataset.
 

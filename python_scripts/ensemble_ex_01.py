@@ -1,10 +1,10 @@
 # %% [markdown]
 # # 📝 Exercise 01
 #
-# The aim in this notebook is to investigate if we can fine-tune a bagging
+# The aim of this notebook is to investigate if we can fine-tune a bagging
 # regressor and evaluate the gain obtained.
 #
-# We will load the california housing dataset and split it into a training and
+# We will load the California housing dataset and split it into a training and
 # a testing set.
 
 # %%
@@ -16,8 +16,8 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, random_state=0, test_size=0.5)
 
 # %% [markdown]
-# Create a `BaggingRegressor` providing a `DecisionTreeRegressor` with default
-# parameter as a `base_estimator`. Train the regressor and evaluate the
+# Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
+# to its parameter `base_estimator`. Train the regressor and evaluate its
 # performance on the testing set.
 
 # %%
@@ -25,9 +25,13 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # %% [markdown]
 # Now, create a `RandomizedSearchCV` instance using the previous model and
-# tune the important parameters of the bagging regressor. You can list the
-# parameters using `get_params`. Find the best parameters and check if you
-# are able to find a set of parameters which improve the default regressor.
+# tune the important parameters of the bagging regressor. Find the best
+# parameters  and check if you are able to find a set of parameters that
+# improve the default regressor.
+
+# ```{tip}
+# You can list the bagging regressor's parameters using the `get_params` method.
+# ```
 
 # %%
 # Write your code here.

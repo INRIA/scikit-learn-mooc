@@ -2,7 +2,7 @@
 # # Gradient-boosting decision tree (GBDT)
 #
 # In this notebook, we will present the gradient boosting decision tree algorithm
-# and its differences with AdaBoost.
+# and contrast it with AdaBoost.
 #
 # Gradient-boosting differs from AdaBoost due to the following reason: instead
 # of assigning weights to specific samples, GBDT will fit a decision tree on

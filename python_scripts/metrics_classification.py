@@ -2,9 +2,9 @@
 # # Classification
 #
 # This notebook aims at giving an overview of the classification metrics that
-# can be used to evaluate the predictive model performance.  We can recall that
-# in a classification setting, the target `y` is categorical rather than
-# continuous.
+# can be used to evaluate the predictive model performance.
+# We can recall that in a classification setting, the target `y` is categorical
+# rather than continuous.
 #
 # We will load the blood transfusion dataset.
 
@@ -27,8 +27,8 @@ _ = ax.set_title("Number of samples per classes present\n in the target")
 
 # %% [markdown]
 # We can see that the target `y` contains two classes corresponding to whether
-# or not a subject gave blood or not. We will use a logistic regression
-# classifier to predict this outcome.
+# a subject gave blood We will use a logistic regression classifier to predict
+# this outcome.
 #
 # To focus on the metrics presentation, we will only use a single split instead
 # of cross-validation.
@@ -41,7 +41,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # %% [markdown]
 # We will use a logistic regression classifier as a base model. We will train
-# the model on the train set and we will later use the test set to compute the
+# the model on the train set, and later use the test set to compute the
 # different classification metric.
 
 # %%
@@ -52,18 +52,18 @@ classifier.fit(X_train, y_train)
 
 # %% [markdown]
 # ## Classifier predictions
-# Before to go into details regarding the metrics, we will recall what type
+# Before we go into details regarding the metrics, we will recall what type
 # of predictions a classifier can provide.
 #
-# In this purpose, we create a synthetic sample for a new potential donor:
-# he/she donated blood 6 months ago and has given a total of 1000 c.c. of
-# blood, twice in the past. He/she gave blood for the first time 20 months ago.
+# For this reason, we will create a synthetic sample for a new potential donor:
+# he/she donated blood twice in the past (1000 c.c. each time). The last time
+# was 6 months ago, and the first time goes back to 20 months ago.
 
 # %%
 new_donor = [[6, 2, 1000, 20]]
 
 # %% [markdown]
-# We can get the class predicted by the classifier calling the method
+# We can get the class predicted by the classifier by calling the method
 # `predict`.
 
 # %%
@@ -73,9 +73,9 @@ classifier.predict(new_donor)
 # With this information, our classifier predicts that this synthetic subject
 # is more likely to not donate blood again.
 #
-# However, we cannot check if the prediction is correct or not (we do not know
+# However, we cannot check whether the prediction is correct (we do not know
 # the true target value). That's the purpose of the testing set. First, we
-# predict whether or not a subject will give blood with the help of the trained
+# predict whether a subject will give blood with the help of the trained
 # classifier.
 
 # %%
@@ -85,18 +85,17 @@ y_pred[:5]
 # %% [markdown]
 # ## Accuracy as a baseline
 # Now that we have these predictions, we can compare them with the true
-# predictions (sometimes called ground-truth) which we did not use up to now.
+# predictions (sometimes called ground-truth) which we did not use until now.
 
 # %%
 y_test == y_pred
 
 # %% [markdown]
 # In the comparison above, a `True` value means that the value predicted by our
-# classifier is identical to the real `prediction` while a `False` means that
-# our classifier made a mistake. One way to get an overall statistic that tells
-# us how good the performance of our classifier is, is to compute the number of
-# times our classifier was right and divide it by the number of samples in our
-# set.
+# classifier is identical to the real value, while a `False` means that our
+# classifier made a mistake. One way of getting an overall rate representing the
+# performance of our classifier would be to compute how many times our
+# classifier was right and divide it by the number of samples in our set.
 
 # %%
 import numpy as np
@@ -104,7 +103,7 @@ import numpy as np
 np.mean(y_test == y_pred)
 
 # %% [markdown]
-# This measure is also known as the accuracy. Here, our classifier is 78%
+# This measure is called the accuracy. Here, our classifier is 78%
 # accurate at classifying if a subject will give blood. `scikit-learn` provides
 # a function that computes this metric in the module `sklearn.metrics`.
 
@@ -115,8 +114,8 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.3f}")
 
 # %% [markdown]
-# Scikit-learn also has a method named `score`, built into
-# `LogisticRegression`, which computes the accuracy score.
+# Scikit-learn also has a method named `score` (part of the standard API),
+# built into `LogisticRegression`, which computes the accuracy score.
 
 # %%
 classifier.score(X_test, y_test)
@@ -144,29 +143,29 @@ plot_confusion_matrix(classifier, X_test, y_test)
 # predictions:
 #
 # * the top left corner are true positives (TP) and corresponds to people
-#   who gave blood and was predicted as such by the classifier;
+#   who gave blood and were predicted as such by the classifier;
 # * the bottom right corner are true negatives (TN) and correspond to
-#   a people who did not give blood and was predicted as such by the
+#   people who did not give blood and were predicted as such by the
 #   classifier;
 # * the top right corner are false negatives (FN) and correspond to
-#   people who gave blood but was predicted to not have given blood;
+#   people who gave blood but were predicted to not have given blood;
 # * the bottom left corner are false positives (FP) and correspond to
-#   people who did not give blood but was predicted to have given blood.
+#   people who did not give blood but were predicted to have given blood.
 #
-# Once we have split this information, we can compute statistics tp
+# Once we have split this information, we can compute metrics to
 # highlight the performance of our classifier in a particular setting. For
 # instance, we could be interested in the fraction of people who really gave
 # blood when the classifier predicted so or the fraction of people predicted
 # to have given blood out of the total population that actually did so.
 #
-# The former statistic, known as the precision, is defined as TP / (TP + FP)
+# The former metric, known as the precision, is defined as TP / (TP + FP)
 # and represents how likely the person actually gave blood when the classifier
 # predicted that they did.
-# The latter statistic, known as the recall, defined as TP / (TP + FN) and
+# The latter, known as the recall, defined as TP / (TP + FN) and
 # assesses how well the classifier is able to correctly identify people who
 # did give blood.
-# We could, similar to accuracy, manually compute these values
-# but scikit-learn provides functions to compute these statistics.
+# We could, similarly to accuracy, manually compute these values,
+# however scikit-learn provides functions to compute these statistics.
 
 # %%
 from sklearn.metrics import precision_score, recall_score
@@ -199,11 +198,11 @@ ax.set_xlabel("Class frequency")
 _ = ax.set_title("Class frequency in the training set")
 
 # %% [markdown]
-# We observe that the positive class, `'donated'`, comprises only 24% of the of
-# the samples. The good accuracy of our classifier is then linked to its
-# ability to predict correctly the negative class `'not donated'` which may or
-# may not be relevant, depending on the application. We can illustrate the
-# issue using a dummy classifier as a baseline.
+# We observe that the positive class, `'donated'`, comprises only 24% of the
+# samples. The good accuracy of our classifier is then linked to its ability to
+# correctly predict the negative class `'not donated'` which may or may not be
+# relevant, depending on the application. We can illustrate the issue using a
+# dummy classifier as a baseline.
 
 # %%
 from sklearn.dummy import DummyClassifier
@@ -236,7 +235,7 @@ print(f"Balanced accuracy: {balanced_accuracy:.3f}")
 # ## Evaluation and different probability thresholds
 #
 # All statistics that we presented up to now rely on `classifier.predict` which
-# outputs the most likely label. We haven't made use use of the probability
+# outputs the most likely label. We haven't made use of the probability
 # associated with this prediction, which gives the confidence of the
 # classifier in this prediction. By default, the prediction of a classifier
 # corresponds to a threshold of 0.5 probability in a binary classification
@@ -299,7 +298,7 @@ plt.legend()
 
 # %% [markdown]
 # On this curve, each blue dot corresponds to a level of probability which we
-# used as a decision threshold. We can see that by varying this decision
+# used as a decision threshold. We can see that, by varying this decision
 # threshold, we get different precision vs. recall values.
 #
 # A perfect classifier would have a precision of 1 for all recall values. A
@@ -307,7 +306,7 @@ plt.legend()
 # and is named average precision. With an ideal classifier, the average
 # precision would be 1.
 #
-# The precision and recall metric focuses on the positive class however, one
+# The precision and recall metric focuses on the positive class, however, one
 # might be interested in the compromise between accurately discriminating the
 # positive class and accurately discriminating the negative classes. The
 # statistics used for this are sensitivity and specificity. Sensitivity is just
@@ -344,10 +343,10 @@ plt.legend()
 # we vary the probability threshold for determining "hard" prediction and
 # compute the metrics. As with the precision-recall curve, we can compute the
 # area under the ROC (ROC-AUC) to characterize the performance of our
-# classifier. However, it is important to observer that the lower bound of the
+# classifier. However, it is important to observe that the lower bound of the
 # ROC-AUC is 0.5. Indeed, we show the performance of a dummy classifier (the
-# green dashed line) to show that the even worst performance obtained will
-# always be above this line.
+# green dashed line) to show that even the worst performance obtained will
+# be above this line.
 #
 # ## Link between confusion matrix, precision-recall curve and ROC curve
 #

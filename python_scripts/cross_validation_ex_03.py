@@ -4,7 +4,7 @@
 # The goal of this exercise is to highlight one limitation of
 # applying blindly a k-fold cross-validation.
 #
-# We will use the iris dataset to demonstrate an issue.
+# In this exercise we will use the iris dataset.
 
 # %%
 from sklearn.datasets import load_iris

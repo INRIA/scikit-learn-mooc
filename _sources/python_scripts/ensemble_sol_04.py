@@ -1,14 +1,14 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 04
 #
-# The aim of this exercise is to study:
+# The aim of this exercise is to:
 #
-# * if a GBDT tends to overfit if the number of estimators is not appropriate
-#   as previously saw for AdaBoost;
-# * use the early-stopping strategy which avoid for grid-searching the best
-#   number of parameters.
+# * verify if a GBDT tends to overfit if the number of estimators is not appropriate
+#   as previously seen for AdaBoost;
+# * use the early-stopping strategy to avoid adding unnecessary trees, to
+#   get the best performances.
 #
-# We will use california housing to conduct our experiments
+# As usual, we will use the California housing dataset to conduct our experiments
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -70,13 +70,13 @@ _ = plt.title("Validation curve for GBDT regressor")
 # To avoid adding new unnecessary tree, gradient boosting offers an
 # early-stopping option. Internally, the algorithm will use an out-of-sample
 # set to compute the performance of the model at each addition of a tree.
-# Thus, if the the performance are not improving for several iterations, one
-# could stop adding tree.
+# Thus, if the the performance are not improving for several iterations, it
+# will stop adding trees.
 #
 # Now, create a gradient-boosting model with `n_estimators=1000`. This number
 # of trees will be too large. Change the parameter `n_iter_no_change` such
 # that the gradient boosting fitting will stop after adding 5 trees that do not
-# allow to improve the overall performance.
+# improve the overall performance.
 
 # %%
 gbdt = GradientBoostingRegressor(n_estimators=1000, n_iter_no_change=5)

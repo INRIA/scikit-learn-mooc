@@ -861,6 +861,11 @@
      📃 Solution for Exercise 02
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html#this-notebook-aims-at-building-baseline-classifiers-which-we-ll-use-to">
+     This notebook aims at building baseline classifiers, which we’ll use to
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
@@ -1187,7 +1192,7 @@ financial quotations from some energy companies.</p>
 </div>
 <p>We will repeat the experiment asked during the exercise. Instead of using
 random data, we will use real quotations this time. While it was obvious that
-a predictive model could not work in practice on random data, this indeed the
+a predictive model could not work in practice on random data, this is the
 same on these real data. So here, we want to predict the quotation of Chevron
 using all other energy companies’ quotes.</p>
 <p>To make explanatory plots, we will use a single split in addition to the
@@ -1226,7 +1231,7 @@ check the performance of our model.</p>
 </div>
 </div>
 </div>
-<p>And finally, we perform the evaluation.</p>
+<p>Finally, we perform the evaluation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
@@ -1275,8 +1280,8 @@ purpose.</p>
 </div>
 </div>
 </div>
-<p>We obtain similar good results in terms of <span class="math notranslate nohighlight">\(R^2\)</span>. We will plot the
-training, testing and prediction samples.</p>
+<p>Similarly, we obtain good results in terms of <span class="math notranslate nohighlight">\(R^2\)</span>.
+We will plot the training, testing and prediction samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -1292,14 +1297,14 @@ training, testing and prediction samples.</p>
 </div>
 </div>
 <p>So in this context, it seems that the model predictions are following the
-testing. But we can as well see that the testing samples are next to some
+testing. But we can also see that the testing samples are next to some
 training sample. And with these time-series, we see a relationship between a
 sample at the time <code class="docutils literal notranslate"><span class="pre">t</span></code> and a sample at <code class="docutils literal notranslate"><span class="pre">t+1</span></code>. In this case, we are violating
 the i.i.d. assumption. The insight to get is the following: a model can
 output of its training set at the time <code class="docutils literal notranslate"><span class="pre">t</span></code> for a testing sample at the time
-<code class="docutils literal notranslate"><span class="pre">t+1</span></code>. This prediction would be closed to the true value even if our model
-did not learn anything else than memorizing the training dataset.</p>
-<p>An easy way to verify this hypothesis is not to shuffle the data when doing
+<code class="docutils literal notranslate"><span class="pre">t+1</span></code>. This prediction would be close to the true value even if our model
+did not learn anything, but just memorized the training dataset.</p>
+<p>An easy way to verify this hypothesis is to not shuffle the data when doing
 the split. In this case, we will use the first 75% of the data to train and
 the remaining data to test.</p>
 <div class="cell docutils container">

@@ -861,6 +861,11 @@
      📃 Solution for Exercise 02
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html#this-notebook-aims-at-building-baseline-classifiers-which-we-ll-use-to">
+     This notebook aims at building baseline classifiers, which we’ll use to
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
@@ -1143,18 +1148,17 @@
   <div class="section" id="nested-cross-validation">
 <h1>Nested cross-validation<a class="headerlink" href="#nested-cross-validation" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we show a pattern called <strong>nested cross-validation</strong> which
-is should be used when you want to both evaluate a model and tune the
-hyperparameters’ model.</p>
+should be used when you want to both evaluate a model and tune the
+model’s hyperparameters.</p>
 <p>Cross-validation is a powerful tool to evaluate the performance of a model.
 It is also used to select the best model from a pool of models. This pool of
 models can be the same family of predictor but with different parameters. In
-this case, we call this procedure <strong>fine-tuning</strong> of the model
-hyperparameters.</p>
+this case, we call this procedure <strong>fine-tuning</strong> the model hyperparameters.</p>
 <p>We could also imagine that we would like to choose among heterogeneous models
 that will similarly use the cross-validation.</p>
-<p>Before to go into details regarding the nested cross-validation, we will
-first recall the patter used to fine tune hyperparameters’ model.</p>
-<p>First, we will load the breast cancer dataset.</p>
+<p>Before we go into details regarding the nested cross-validation, we will
+first recall the pattern used to fine tune a model’s hyperparameters.</p>
+<p>Let’s load the breast cancer dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_breast_cancer</span>
@@ -1164,7 +1168,7 @@ first recall the patter used to fine tune hyperparameters’ model.</p>
 </div>
 </div>
 </div>
-<p>Now, we show a minimal example of using the utility <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> to find
+<p>Now, we’ll make a minimal example using the utility <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> to find
 the best parameters via cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1291,7 +1295,7 @@ and without the nested cross-validation.</p>
 </div>
 </div>
 </div>
-<p>We can merge the dta together and make a box plot of the two strategies.</p>
+<p>We can merge the data together and make a box plot of the two strategies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1332,10 +1336,10 @@ and without the nested cross-validation.</p>
 </div>
 <p>We observe that the model’s performance with the nested cross-validation is
 not as good as the non-nested cross-validation.</p>
-<p>As a conclusion, when optimizing part of the machine learning pipeline
+<p>As a conclusion, when optimizing parts of the machine learning pipeline
 (e.g. hyperparameter, transform, etc.), one needs to use nested
 cross-validation to evaluate the performance of the predictive model.
-Otherwise, the results obtained without nested cross-validation are too
+Otherwise, the results obtained without nested cross-validation are
 over-optimistic.</p>
 </div>
 

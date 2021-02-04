@@ -861,6 +861,11 @@
      📃 Solution for Exercise 02
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html#this-notebook-aims-at-building-baseline-classifiers-which-we-ll-use-to">
+     This notebook aims at building baseline classifiers, which we’ll use to
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
@@ -1143,10 +1148,10 @@
   <div class="section" id="adaptive-boosting-adaboost">
 <h1>Adaptive Boosting (AdaBoost)<a class="headerlink" href="#adaptive-boosting-adaboost" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we present the Adaptive Boosting (AdaBoost) algorithm. The
-aim is to intuitions regarding the internal machinery of AdaBoost and
-boosting more in general.</p>
-<p>We will load the “penguin” dataset used in the “tree in depth” notebook. We
-will predict penguin species from the features culmen length and depth.</p>
+aim is to get intuitions regarding the internal machinery of AdaBoost and
+boosting in general.</p>
+<p>We will load the “penguin” dataset. We will predict penguin species from the
+culmen length and depth features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1163,8 +1168,8 @@ will predict penguin species from the features culmen length and depth.</p>
 </div>
 </div>
 </div>
-<p>In addition, we are also using on the function used the previous “tree in
-depth” notebook to plot the decision function of the tree.</p>
+<p>In addition, we are also using the function used in the previous notebook
+to plot the decision function of the tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1198,9 +1203,9 @@ depth” notebook to plot the decision function of the tree.</p>
 </div>
 </div>
 </div>
-<p>We will purposely train a shallow decision tree. Since the tree is shallow,
+<p>We will purposefully train a shallow decision tree. Since it is shallow,
 it is unlikely to overfit and some of the training examples will even be
-misclassified on the training set.</p>
+misclassified.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -1234,15 +1239,15 @@ misclassified on the training set.</p>
 </div>
 <p>We observe that several samples have been misclassified by the classifier.</p>
 <p>We mentioned that boosting relies on creating a new classifier which tries to
-correct these misclassifications. In scikit-learn, learners support a
-parameter <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> which forces the learner to pay more attention to
-samples with higher weights, during the training.</p>
+correct these misclassifications. In scikit-learn, learners have a
+parameter <code class="docutils literal notranslate"><span class="pre">sample_weight</span></code> which forces it to pay more attention to
+samples with higher weights during the training.</p>
 <p>This parameter is set when calling
 <code class="docutils literal notranslate"><span class="pre">classifier.fit(X,</span> <span class="pre">y,</span> <span class="pre">sample_weight=weights)</span></code>.
 We will use this trick to create a new classifier by ‘discarding’ all
 correctly classified samples and only considering the misclassified samples.
-Thus, misclassified samples will be assigned a weight of 1 while well
-classified samples will assigned to a weight of 0.</p>
+Thus, misclassified samples will be assigned a weight of 1 and well
+classified samples will be assigned a weight of 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -1361,15 +1366,15 @@ Error of each classifier: [0.05263158 0.05864198 0.08787269]
 <img alt="../_images/ensemble_adaboost_13_1.png" src="../_images/ensemble_adaboost_13_1.png" />
 </div>
 </div>
-<p>We see that AdaBoost has learnt three different classifiers each of which
+<p>We see that AdaBoost learned three different classifiers, each of which
 focuses on different samples. Looking at the weights of each learner, we see
 that the ensemble gives the highest weight to the first classifier. This
 indeed makes sense when we look at the errors of each classifier. The first
 classifier also has the highest classification performance.</p>
 <p>While AdaBoost is a nice algorithm to demonstrate the internal machinery of
-boosting algorithms, it is not the most efficient machine-learning algorithm.
-The most efficient algorithm based on boosting is the gradient-boosting
-decision tree (GBDT) algorithm which we will discuss after a short exercise.</p>
+boosting algorithms, it is not the most efficient.
+This title is handed to the gradient-boosting decision tree (GBDT) algorithm,
+which we will discuss after a short exercise.</p>
 </div>
 
     <script type="text/x-thebe-config">

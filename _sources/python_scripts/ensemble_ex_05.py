@@ -6,7 +6,7 @@
 # a cross-validation framework in order to inspect internal parameters found
 # via grid-search.
 #
-# We will use the california housing dataset.
+# We will use the California housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -14,9 +14,8 @@ from sklearn.datasets import fetch_california_housing
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %% [markdown]
-# First, create a histogram gradient boosting regressor. You can set the number
-# of trees to be large enough. Indeed, you fix the parameter such that model
-# will use early-stopping.
+# First, create a histogram gradient boosting regressor. You can set the
+# trees number to be large, and configure the model to use early-stopping.
 
 # %%
 # Write your code here.
@@ -29,25 +28,32 @@ X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 # * `max_leaf_nodes: [15, 31]`;
 # * `learning_rate: [0.1, 1]`.
 #
-# Feel free to explore more the space with additional values. Create the
-# grid-search providing the previous gradient boosting instance as model.
+# Feel free to explore the space with additional values. Create the
+# grid-search providing the previous gradient boosting instance as the model.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
 # Finally, we will run our experiment through cross-validation. In this regard,
-# define a 5-fold cross-validation. Besides, be sure to shuffle the the data.
+# define a 5-fold cross-validation. Besides, be sure to shuffle the data.
 # Subsequently, use the function `sklearn.model_selection.cross_validate`
-# to run the cross-validation. You should as well set `return_estimator=True`,
-# such that we can investigate the inner model trained via cross-validation.
+# to run the cross-validation. You should also set `return_estimator=True`,
+# so that we can investigate the inner model trained via cross-validation.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# We got the results of the cross-validation. First check what is the mean and
+# Now that we got the cross-validation results, print out the mean and
 # standard deviation score.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Then, inspect the `estimator` entry of the results and check the best
+# parameters values. Besides, check the number of trees used by the model.
 
 # %%
 # Write your code here.

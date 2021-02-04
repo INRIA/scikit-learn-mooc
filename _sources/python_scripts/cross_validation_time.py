@@ -40,7 +40,7 @@ _ = ax.set_ylabel("Quote value")
 # %% [markdown]
 # We will repeat the experiment asked during the exercise. Instead of using
 # random data, we will use real quotations this time. While it was obvious that
-# a predictive model could not work in practice on random data, this indeed the
+# a predictive model could not work in practice on random data, this is the
 # same on these real data. So here, we want to predict the quotation of Chevron
 # using all other energy companies' quotes.
 #
@@ -75,7 +75,7 @@ from sklearn.model_selection import ShuffleSplit
 cv = ShuffleSplit(random_state=0)
 
 # %% [markdown]
-# And finally, we perform the evaluation.
+# Finally, we perform the evaluation.
 
 # %%
 from sklearn.model_selection import cross_val_score
@@ -108,8 +108,8 @@ test_score = r2_score(y_test, y_pred)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
-# We obtain similar good results in terms of $R^2$. We will plot the
-# training, testing and prediction samples.
+# Similarly, we obtain good results in terms of $R^2$.
+# We will plot the training, testing and prediction samples.
 
 # %%
 _, ax = plt.subplots(figsize=(10, 8))
@@ -120,15 +120,15 @@ _ = plt.legend()
 
 # %% [markdown]
 # So in this context, it seems that the model predictions are following the
-# testing. But we can as well see that the testing samples are next to some
+# testing. But we can also see that the testing samples are next to some
 # training sample. And with these time-series, we see a relationship between a
 # sample at the time `t` and a sample at `t+1`. In this case, we are violating
 # the i.i.d. assumption. The insight to get is the following: a model can
 # output of its training set at the time `t` for a testing sample at the time
-# `t+1`. This prediction would be closed to the true value even if our model
-# did not learn anything else than memorizing the training dataset.
+# `t+1`. This prediction would be close to the true value even if our model
+# did not learn anything, but just memorized the training dataset.
 #
-# An easy way to verify this hypothesis is not to shuffle the data when doing
+# An easy way to verify this hypothesis is to not shuffle the data when doing
 # the split. In this case, we will use the first 75% of the data to train and
 # the remaining data to test.
 

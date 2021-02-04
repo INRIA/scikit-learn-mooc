@@ -16,8 +16,8 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, random_state=0, test_size=0.5)
 
 # %% [markdown]
-# Create a `BaggingRegressor` providing a `DecisionTreeRegressor` with default
-# parameters as a `base_estimator`. Train the regressor and evaluate the
+# Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
+# to its parameter `base_estimator`. Train the regressor and evaluate its
 # performance on the testing set.
 
 # %%
@@ -28,15 +28,18 @@ tree = DecisionTreeRegressor()
 bagging = BaggingRegressor(base_estimator=tree, n_jobs=-1)
 bagging.fit(X_train, y_train)
 test_score = bagging.score(X_test, y_test)
-print(f"Basic R2 score of a bagging regressor:\n"
+print(f"Basic R2 score of the bagging regressor:\n"
       f"{test_score:.2f}")
 
 # %% [markdown]
 # Now, create a `RandomizedSearchCV` instance using the previous model and
-# tune the important parameters of the bagging regressor. You can list the
-# parameters using the `get_params` method. Find the best parameters and
-# check if you are able to find a set of parameters that improve the
-# default regressor.
+# tune the important parameters of the bagging regressor. Find the best
+# parameters  and check if you are able to find a set of parameters that
+# improve the default regressor.
+
+# ```{tip}
+# You can list the bagging regressor's parameters using the `get_params` method.
+# ```
 
 # %%
 for param in bagging.get_params().keys():
@@ -66,7 +69,7 @@ cv_results
 
 # %%
 test_score = search.score(X_test, y_test)
-print(f"Basic R2 score of a bagging regressor:\n"
+print(f"Basic R2 score of the bagging regressor:\n"
       f"{test_score:.2f}")
 
 # %% [markdown]

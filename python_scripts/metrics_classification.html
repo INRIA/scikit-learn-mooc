@@ -861,6 +861,11 @@
      📃 Solution for Exercise 02
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html#this-notebook-aims-at-building-baseline-classifiers-which-we-ll-use-to">
+     This notebook aims at building baseline classifiers, which we’ll use to
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
@@ -1182,9 +1187,9 @@
   <div class="section" id="classification">
 <h1>Classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h1>
 <p>This notebook aims at giving an overview of the classification metrics that
-can be used to evaluate the predictive model performance.  We can recall that
-in a classification setting, the target <code class="docutils literal notranslate"><span class="pre">y</span></code> is categorical rather than
-continuous.</p>
+can be used to evaluate the predictive model performance.
+We can recall that in a classification setting, the target <code class="docutils literal notranslate"><span class="pre">y</span></code> is categorical
+rather than continuous.</p>
 <p>We will load the blood transfusion dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1213,8 +1218,8 @@ continuous.</p>
 </div>
 </div>
 <p>We can see that the target <code class="docutils literal notranslate"><span class="pre">y</span></code> contains two classes corresponding to whether
-or not a subject gave blood or not. We will use a logistic regression
-classifier to predict this outcome.</p>
+a subject gave blood We will use a logistic regression classifier to predict
+this outcome.</p>
 <p>To focus on the metrics presentation, we will only use a single split instead
 of cross-validation.</p>
 <div class="cell docutils container">
@@ -1228,7 +1233,7 @@ of cross-validation.</p>
 </div>
 </div>
 <p>We will use a logistic regression classifier as a base model. We will train
-the model on the train set and we will later use the test set to compute the
+the model on the train set, and later use the test set to compute the
 different classification metric.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1247,11 +1252,11 @@ different classification metric.</p>
 </div>
 <div class="section" id="classifier-predictions">
 <h2>Classifier predictions<a class="headerlink" href="#classifier-predictions" title="Permalink to this headline">¶</a></h2>
-<p>Before to go into details regarding the metrics, we will recall what type
+<p>Before we go into details regarding the metrics, we will recall what type
 of predictions a classifier can provide.</p>
-<p>In this purpose, we create a synthetic sample for a new potential donor:
-he/she donated blood 6 months ago and has given a total of 1000 c.c. of
-blood, twice in the past. He/she gave blood for the first time 20 months ago.</p>
+<p>For this reason, we will create a synthetic sample for a new potential donor:
+he/she donated blood twice in the past (1000 c.c. each time). The last time
+was 6 months ago, and the first time goes back to 20 months ago.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_donor</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">20</span><span class="p">]]</span>
@@ -1259,7 +1264,7 @@ blood, twice in the past. He/she gave blood for the first time 20 months ago.</p
 </div>
 </div>
 </div>
-<p>We can get the class predicted by the classifier calling the method
+<p>We can get the class predicted by the classifier by calling the method
 <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1275,9 +1280,9 @@ blood, twice in the past. He/she gave blood for the first time 20 months ago.</p
 </div>
 <p>With this information, our classifier predicts that this synthetic subject
 is more likely to not donate blood again.</p>
-<p>However, we cannot check if the prediction is correct or not (we do not know
+<p>However, we cannot check whether the prediction is correct (we do not know
 the true target value). That’s the purpose of the testing set. First, we
-predict whether or not a subject will give blood with the help of the trained
+predict whether a subject will give blood with the help of the trained
 classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1297,7 +1302,7 @@ classifier.</p>
 <div class="section" id="accuracy-as-a-baseline">
 <h2>Accuracy as a baseline<a class="headerlink" href="#accuracy-as-a-baseline" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have these predictions, we can compare them with the true
-predictions (sometimes called ground-truth) which we did not use up to now.</p>
+predictions (sometimes called ground-truth) which we did not use until now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_test</span> <span class="o">==</span> <span class="n">y_pred</span>
@@ -1322,11 +1327,10 @@ Name: Class, Length: 374, dtype: bool
 </div>
 </div>
 <p>In the comparison above, a <code class="docutils literal notranslate"><span class="pre">True</span></code> value means that the value predicted by our
-classifier is identical to the real <code class="docutils literal notranslate"><span class="pre">prediction</span></code> while a <code class="docutils literal notranslate"><span class="pre">False</span></code> means that
-our classifier made a mistake. One way to get an overall statistic that tells
-us how good the performance of our classifier is, is to compute the number of
-times our classifier was right and divide it by the number of samples in our
-set.</p>
+classifier is identical to the real value, while a <code class="docutils literal notranslate"><span class="pre">False</span></code> means that our
+classifier made a mistake. One way of getting an overall rate representing the
+performance of our classifier would be to compute how many times our
+classifier was right and divide it by the number of samples in our set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1341,7 +1345,7 @@ set.</p>
 </div>
 </div>
 </div>
-<p>This measure is also known as the accuracy. Here, our classifier is 78%
+<p>This measure is called the accuracy. Here, our classifier is 78%
 accurate at classifying if a subject will give blood. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides
 a function that computes this metric in the module <code class="docutils literal notranslate"><span class="pre">sklearn.metrics</span></code>.</p>
 <div class="cell docutils container">
@@ -1359,8 +1363,8 @@ a function that computes this metric in the module <code class="docutils literal
 </div>
 </div>
 </div>
-<p>Scikit-learn also has a method named <code class="docutils literal notranslate"><span class="pre">score</span></code>, built into
-<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>, which computes the accuracy score.</p>
+<p><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> also has a method named <code class="docutils literal notranslate"><span class="pre">score</span></code> (part of the standard
+scikit-learn API), which computes the accuracy score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
@@ -1406,28 +1410,28 @@ while off-diagonal numbers are related to incorrect predictions
 predictions:</p>
 <ul class="simple">
 <li><p>the top left corner are true positives (TP) and corresponds to people
-who gave blood and was predicted as such by the classifier;</p></li>
+who gave blood and were predicted as such by the classifier;</p></li>
 <li><p>the bottom right corner are true negatives (TN) and correspond to
-a people who did not give blood and was predicted as such by the
+people who did not give blood and were predicted as such by the
 classifier;</p></li>
 <li><p>the top right corner are false negatives (FN) and correspond to
-people who gave blood but was predicted to not have given blood;</p></li>
+people who gave blood but were predicted to not have given blood;</p></li>
 <li><p>the bottom left corner are false positives (FP) and correspond to
-people who did not give blood but was predicted to have given blood.</p></li>
+people who did not give blood but were predicted to have given blood.</p></li>
 </ul>
-<p>Once we have split this information, we can compute statistics tp
+<p>Once we have split this information, we can compute metrics to
 highlight the performance of our classifier in a particular setting. For
 instance, we could be interested in the fraction of people who really gave
 blood when the classifier predicted so or the fraction of people predicted
 to have given blood out of the total population that actually did so.</p>
-<p>The former statistic, known as the precision, is defined as TP / (TP + FP)
+<p>The former metric, known as the precision, is defined as TP / (TP + FP)
 and represents how likely the person actually gave blood when the classifier
 predicted that they did.
-The latter statistic, known as the recall, defined as TP / (TP + FN) and
+The latter, known as the recall, defined as TP / (TP + FN) and
 assesses how well the classifier is able to correctly identify people who
 did give blood.
-We could, similar to accuracy, manually compute these values
-but scikit-learn provides functions to compute these statistics.</p>
+We could, similarly to accuracy, manually compute these values,
+however scikit-learn provides functions to compute these statistics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
@@ -1473,11 +1477,11 @@ training set.</p>
 <img alt="../_images/metrics_classification_27_0.png" src="../_images/metrics_classification_27_0.png" />
 </div>
 </div>
-<p>We observe that the positive class, <code class="docutils literal notranslate"><span class="pre">'donated'</span></code>, comprises only 24% of the of
-the samples. The good accuracy of our classifier is then linked to its
-ability to predict correctly the negative class <code class="docutils literal notranslate"><span class="pre">'not</span> <span class="pre">donated'</span></code> which may or
-may not be relevant, depending on the application. We can illustrate the
-issue using a dummy classifier as a baseline.</p>
+<p>We observe that the positive class, <code class="docutils literal notranslate"><span class="pre">'donated'</span></code>, comprises only 24% of the
+samples. The good accuracy of our classifier is then linked to its ability to
+correctly predict the negative class <code class="docutils literal notranslate"><span class="pre">'not</span> <span class="pre">donated'</span></code> which may or may not be
+relevant, depending on the application. We can illustrate the issue using a
+dummy classifier as a baseline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
@@ -1523,7 +1527,7 @@ classes. It is defined as the average recall obtained on each class.</p>
 <div class="section" id="evaluation-and-different-probability-thresholds">
 <h2>Evaluation and different probability thresholds<a class="headerlink" href="#evaluation-and-different-probability-thresholds" title="Permalink to this headline">¶</a></h2>
 <p>All statistics that we presented up to now rely on <code class="docutils literal notranslate"><span class="pre">classifier.predict</span></code> which
-outputs the most likely label. We haven’t made use use of the probability
+outputs the most likely label. We haven’t made use of the probability
 associated with this prediction, which gives the confidence of the
 classifier in this prediction. By default, the prediction of a classifier
 corresponds to a threshold of 0.5 probability in a binary classification
@@ -1665,13 +1669,13 @@ threshold. Let’s start by computing the precision-recall curve.</p>
 </div>
 </div>
 <p>On this curve, each blue dot corresponds to a level of probability which we
-used as a decision threshold. We can see that by varying this decision
+used as a decision threshold. We can see that, by varying this decision
 threshold, we get different precision vs. recall values.</p>
 <p>A perfect classifier would have a precision of 1 for all recall values. A
 metric characterizing the curve is linked to the area under the curve (AUC)
 and is named average precision. With an ideal classifier, the average
 precision would be 1.</p>
-<p>The precision and recall metric focuses on the positive class however, one
+<p>The precision and recall metric focuses on the positive class, however, one
 might be interested in the compromise between accurately discriminating the
 positive class and accurately discriminating the negative classes. The
 statistics used for this are sensitivity and specificity. Sensitivity is just
@@ -1716,10 +1720,10 @@ generally plotted as a curve called the receiver operating characteristic
 we vary the probability threshold for determining “hard” prediction and
 compute the metrics. As with the precision-recall curve, we can compute the
 area under the ROC (ROC-AUC) to characterize the performance of our
-classifier. However, it is important to observer that the lower bound of the
+classifier. However, it is important to observe that the lower bound of the
 ROC-AUC is 0.5. Indeed, we show the performance of a dummy classifier (the
-green dashed line) to show that the even worst performance obtained will
-always be above this line.</p>
+green dashed line) to show that even the worst performance obtained will
+be above this line.</p>
 </div>
 <div class="section" id="link-between-confusion-matrix-precision-recall-curve-and-roc-curve">
 <h2>Link between confusion matrix, precision-recall curve and ROC curve<a class="headerlink" href="#link-between-confusion-matrix-precision-recall-curve-and-roc-curve" title="Permalink to this headline">¶</a></h2>

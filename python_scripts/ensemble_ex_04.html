@@ -861,6 +861,11 @@
      📃 Solution for Exercise 02
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html#this-notebook-aims-at-building-baseline-classifiers-which-we-ll-use-to">
+     This notebook aims at building baseline classifiers, which we’ll use to
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
@@ -1142,14 +1147,14 @@
                 
   <div class="section" id="exercise-04">
 <h1>📝 Exercise 04<a class="headerlink" href="#exercise-04" title="Permalink to this headline">¶</a></h1>
-<p>The aim of this exercise is to study:</p>
+<p>The aim of this exercise is to:</p>
 <ul class="simple">
-<li><p>if a GBDT tends to overfit if the number of estimators is not appropriate
-as previously saw for AdaBoost;</p></li>
-<li><p>use the early-stopping strategy which avoid for grid-searching the best
-number of parameters.</p></li>
+<li><p>verify if a GBDT tends to overfit if the number of estimators is not appropriate
+as previously seen for AdaBoost;</p></li>
+<li><p>use the early-stopping strategy to avoid adding unnecessary trees, to
+get the best performances.</p></li>
 </ul>
-<p>We will use california housing to conduct our experiments</p>
+<p>As usual, we will use the California housing dataset to conduct our experiments</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -1179,12 +1184,12 @@ plateau where adding new trees will just make fitting and scoring slower.</p>
 <p>To avoid adding new unnecessary tree, gradient boosting offers an
 early-stopping option. Internally, the algorithm will use an out-of-sample
 set to compute the performance of the model at each addition of a tree.
-Thus, if the the performance are not improving for several iterations, one
-could stop adding tree.</p>
+Thus, if the the performance are not improving for several iterations, it
+will stop adding trees.</p>
 <p>Now, create a gradient-boosting model with <code class="docutils literal notranslate"><span class="pre">n_estimators=1000</span></code>. This number
 of trees will be too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such
 that the gradient boosting fitting will stop after adding 5 trees that do not
-allow to improve the overall performance.</p>
+improve the overall performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>

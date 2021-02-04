@@ -861,6 +861,11 @@
      📃 Solution for Exercise 02
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html#this-notebook-aims-at-building-baseline-classifiers-which-we-ll-use-to">
+     This notebook aims at building baseline classifiers, which we’ll use to
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
@@ -1143,7 +1148,7 @@
   <div class="section" id="stratification">
 <h1>Stratification<a class="headerlink" href="#stratification" title="Permalink to this headline">¶</a></h1>
 <p>Let’s start with the concept of stratification by giving an example where
-we can get into trouble if we are not careful. We load the iris dataset.</p>
+we can get into trouble if we are not careful. Let’s load the iris dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
@@ -1168,10 +1173,9 @@ this is a toy dataset.</p>
 </div>
 </div>
 <p>Once we created our model, we will use the cross-validation framework to
-evaluate it. We will use a strategy called <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation. We give
-a simple usage example of the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> strategy to get an intuition of how it
-splits the dataset. We will define a dataset with nine samples and repeat the
-cross-validation three times (i.e. <code class="docutils literal notranslate"><span class="pre">n_splits</span></code>).</p>
+evaluate it. We will use the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation strategy.
+We will define a dataset with nine samples and repeat the cross-validation
+three times (i.e. <code class="docutils literal notranslate"><span class="pre">n_splits</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1192,12 +1196,12 @@ TRAIN: [0 1 2 3 4 5] TEST: [6 7 8]
 </div>
 </div>
 </div>
-<p>By defining three splits, we will use three samples each time for testing and
-six for training. <code class="docutils literal notranslate"><span class="pre">KFold</span></code> does not shuffle by default. It means that it will
-select the three first samples for the testing set at the first split, then
-the three next three samples for the second split, and the three next for the
-last split. In the end, all samples have been used in testing at least once
-among the different splits.</p>
+<p>By defining three splits, we will use three samples for testing and six for
+training each time. <code class="docutils literal notranslate"><span class="pre">KFold</span></code> does not shuffle by default. It means that it
+will select the three first samples for the testing set at the first split,
+then the three next three samples for the second split, and the three next
+for the last split. In the end, all samples have been used in testing at
+least once among the different splits.</p>
 <p>Now, let’s apply this strategy to check the performance of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1219,7 +1223,7 @@ among the different splits.</p>
 </div>
 <p>It is a real surprise that our model cannot correctly classify any sample in
 any cross-validation split. We will now check our target’s value to
-understand the issue while we should have started with this step.</p>
+understand the issue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -1241,7 +1245,7 @@ understand the issue while we should have started with this step.</p>
 consequences when using the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation. To illustrate the
 consequences, we will show the class count in each fold of the
 cross-validation in the train and test set.</p>
-<p>For this matter, we create a function, because we will reuse it, which given
+<p>For this matter, we’ll create a function (as we will reuse it), which given
 a cross-validation object and the data <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, is returning a dataframe
 with the class counts by folds and by split sets.</p>
 <div class="cell docutils container">
@@ -1273,7 +1277,7 @@ with the class counts by folds and by split sets.</p>
 </div>
 </div>
 </div>
-<p>Let’s compute the statistics using the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation and we will
+<p>Let’s compute the statistics using the <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation, and
 plot these information in a bar plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1394,8 +1398,8 @@ plot these information in a bar plot.</p>
 in the training set and all samples of the remaining class is used as a test
 set. So our model is unable to predict this class that was unseen during the
 training stage.</p>
-<p>One possibility to solve the issue is to shuffle the data before to split the
-data into three groups.</p>
+<p>One possibility to solve the issue is to shuffle the data before splitting
+the data into three groups.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1440,7 +1444,7 @@ frequencies as our original dataset because the count for each class is
 varying a little.</p>
 <p>However, one might want to split our data by preserving the original class
 frequencies: we want to <strong>stratify</strong> our data by class. In scikit-learn, some
-cross-validation strategies are implementing the stratification and contains
+cross-validation strategies implement the stratification ; they contain
 <code class="docutils literal notranslate"><span class="pre">Stratified</span></code> in their names.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1484,8 +1488,8 @@ cross-validation strategies are implementing the stratification and contains
 <img alt="../_images/cross_validation_stratification_22_0.png" src="../_images/cross_validation_stratification_22_0.png" />
 </div>
 </div>
-<p>In this case, we observe that the class counts either in the train set or the
-test set are very close. The difference is due to the small number of samples
+<p>In this case, we observe that the class counts are very close both in the train
+set and the test set. The difference is due to the small number of samples
 in the iris dataset.</p>
 <p>In conclusion, this is a good practice to use stratification within the
 cross-validation framework when dealing with a classification problem.</p>

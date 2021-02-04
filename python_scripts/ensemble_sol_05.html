@@ -861,6 +861,11 @@
      📃 Solution for Exercise 02
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html#this-notebook-aims-at-building-baseline-classifiers-which-we-ll-use-to">
+     This notebook aims at building baseline classifiers, which we’ll use to
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
@@ -1146,7 +1151,7 @@
 gradient-boosting in scikit-learn. Besides, we will use this model within
 a cross-validation framework in order to inspect internal parameters found
 via grid-search.</p>
-<p>We will use the california housing dataset.</p>
+<p>We will use the California housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -1156,9 +1161,8 @@ via grid-search.</p>
 </div>
 </div>
 </div>
-<p>First, create a histogram gradient boosting regressor. You can set the number
-of trees to be large enough. Indeed, you fix the parameter such that model
-will use early-stopping.</p>
+<p>First, create a histogram gradient boosting regressor. You can set the
+trees number to be large, and configure the model to use early-stopping.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
@@ -1177,8 +1181,8 @@ In this grid-search, you should search for the following parameters:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes:</span> <span class="pre">[15,</span> <span class="pre">31]</span></code>;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">learning_rate:</span> <span class="pre">[0.1,</span> <span class="pre">1]</span></code>.</p></li>
 </ul>
-<p>Feel free to explore more the space with additional values. Create the
-grid-search providing the previous gradient boosting instance as model.</p>
+<p>Feel free to explore the space with additional values. Create the
+grid-search providing the previous gradient boosting instance as the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
@@ -1195,10 +1199,10 @@ grid-search providing the previous gradient boosting instance as model.</p>
 </div>
 </div>
 <p>Finally, we will run our experiment through cross-validation. In this regard,
-define a 5-fold cross-validation. Besides, be sure to shuffle the the data.
+define a 5-fold cross-validation. Besides, be sure to shuffle the data.
 Subsequently, use the function <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code>
-to run the cross-validation. You should as well set <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code>,
-such that we can investigate the inner model trained via cross-validation.</p>
+to run the cross-validation. You should also set <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code>,
+so that we can investigate the inner model trained via cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
@@ -1211,7 +1215,7 @@ such that we can investigate the inner model trained via cross-validation.</p>
 </div>
 </div>
 </div>
-<p>We got the results of the cross-validation. First check what is the mean and
+<p>Now that we got the cross-validation results, print out the mean and
 standard deviation score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1296,9 +1300,9 @@ plot of these scores.</p>
 <img alt="../_images/ensemble_sol_05_15_0.png" src="../_images/ensemble_sol_05_15_0.png" />
 </div>
 </div>
-<p>We see that the first 4 first ranked set of parameters are very close.
-Indeed, one would select any of these 4 combinations just due to random
-variations. It coincides with the results that we observe when inspecting the
+<p>We see that the first 4 ranked set of parameters are very close.
+We could select any of these 4 combinations.
+It coincides with the results we observe when inspecting the
 best parameters of the outer CV.</p>
 </div>
 

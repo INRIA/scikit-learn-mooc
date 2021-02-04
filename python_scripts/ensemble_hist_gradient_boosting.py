@@ -2,12 +2,12 @@
 # # Speeding-up gradient-boosting
 # In this notebook, we present a modified version of gradient boosting which
 # uses a reduced number of splits when building the different trees. This
-# algorithm is called the "histogram gradient boosting" in scikit-learn.
+# algorithm is called "histogram gradient boosting" in scikit-learn.
 #
 # We previously mentioned that random-forest is an efficient algorithm since
 # each tree of the ensemble can be fitted at the same time independently.
-# Therefore, the algorithm scales efficiently with both the number of
-# processing units and the number of samples.
+# Therefore, the algorithm scales efficiently with both the number of cores and
+# the number of samples.
 #
 # In gradient-boosting, the algorithm is a sequential algorithm. It requires
 # the `N-1` trees to have been fit to be able to fit the tree at stage `N`.

@@ -114,8 +114,8 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.3f}")
 
 # %% [markdown]
-# Scikit-learn also has a method named `score` (part of the standard API),
-# built into `LogisticRegression`, which computes the accuracy score.
+# `LogisticRegression` also has a method named `score` (part of the standard scikit-learn API),
+# which computes the accuracy score.
 
 # %%
 classifier.score(X_test, y_test)

@@ -259,8 +259,8 @@ print(f"Score time: {score_time_random_forest:.5f} s")
 
 # %% [markdown]
 # In term of computation performance, the forest can be parallelized and will
-# benefit from having multiple processing units. In terms of scoring performance,
-# both algorithms lead to very close results.
+# benefit from using multiple cores. In terms of scoring performance, both
+# algorithms lead to very close results.
 #
 # However, we can observe that the gradient boosting is a very fast algorithm
 # to predict compared to random forest. This is due to the fact that gradient

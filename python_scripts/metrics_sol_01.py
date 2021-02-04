@@ -3,9 +3,9 @@
 #
 # We presented different classification metrics in the previous notebook.
 # However, we did not use it with a cross-validation. This exercise aims at
-# practising and implementing cross-validation that will use such score.
+# practising and implementing cross-validation.
 #
-# We will reuse the same blood transfusion dataset.
+# We will reuse the blood transfusion dataset.
 
 # %%
 import pandas as pd
@@ -24,9 +24,9 @@ tree = DecisionTreeClassifier()
 # %% [markdown]
 # Create a `StratifiedKFold` cross-validation object. Then use it inside the
 # `cross_val_score` function to evaluate the decision tree. We will first use
-# the accuracy as a score function. Check the documentation of the parameter
-# `scoring` in `cross_val_score` to check how to explicitely mention to compute
-# the accuracy (even if this is the default score).
+# the accuracy as a score function. Explicitly use the `scoring` parameter
+# of `cross_val_score` to compute the accuracy (even if this is the default
+# score). Check its documentation to learn how to do that.
 
 # %%
 from sklearn.model_selection import cross_val_score, StratifiedKFold
@@ -58,16 +58,16 @@ except ValueError as exc:
 
 # %% [markdown]
 # ```{tip}
-# We use a `try`/`except` pattern to be able to print the exception.
+# We catch the exception with a `try`/`except` pattern to be able to print it.
 # ```
-# We get an exception because by default `pos_label=1` which is not the case
-# in our case. Thus, we would like to specify a parameter linked to the score
-# function. In this case, we need to create a scorer using the scoring function
-# and the helper function `make_scorer`.
+# We get an exception because the default scorer has its positive label set to
+# one (`pos_label=1`), which is not our case (our positive label is "donated").
+# In this case, we need to create a scorer using the scoring function and the
+# helper function `make_scorer`.
 #
 # So, import `sklearn.metrics.make_scorer` and
-# `sklearn.metrics.precision_score`. Check the documentation of `make_scorer`.
-# Finally, create a scorer by calling `make_scorer` using the score function
+# `sklearn.metrics.precision_score`. Check their documentations for more
+# information.
 # `precision_score` and pass the extra parameter `pos_label="donated"`.
 
 # %%
@@ -76,7 +76,7 @@ from sklearn.metrics import make_scorer, precision_score
 precision = make_scorer(precision_score, pos_label="donated")
 
 # %% [markdown]
-# Now, instead to provide the string `"precision"` to the `scoring` parameter
+# Now, instead of providing the string `"precision"` to the `scoring` parameter
 # in the `cross_val_score` call, pass the scorer that you created above.
 
 # %%
@@ -85,9 +85,9 @@ print(f"Precision score: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # `cross_val_score` will only compute a single score provided to the `scoring`
-# parameter. The function `cross_validate` allows to compute multiple score
-# which could be handy by passing a list of string or scorer to the parameter
-# scoring.
+# parameter. The function `cross_validate` allows the computation of multiple
+# scores by passing a list of string or scorer to the parameter `scoring`,
+# which could be handy.
 #
 # Import `sklearn.model_selection.cross_validate` and compute the accuracy and
 # balanced accuracy through cross-validation. Plot the cross-validation score

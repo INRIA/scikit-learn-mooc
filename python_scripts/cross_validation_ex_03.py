@@ -1,10 +1,10 @@
 # %% [markdown]
 # # 📝 Introductory exercise regarding stratification
 #
-# The goal of this exercise is to find the limitation blindly a k-fold
+# The goal of this exercise is to find the limitation of the k-fold
 # cross-validation.
 #
-# We will use the iris dataset to demonstrate one of the issue.
+# We will use the iris dataset to demonstrate an issue.
 
 # %%
 from sklearn.datasets import load_iris

@@ -3,14 +3,14 @@
 #
 # In this notebook, we will present the metrics that can be used in regression.
 #
-# Unlike in classification problems, the target `y` is a continuous variable in
-# regression problems. Therefore, classification metrics cannot be used to
-# evaluate the performance of regression models. Instead, there exists a set of
-# metrics dedicated to regression.
+# A set of metrics are dedicated to regression. Indeed, classification metrics
+# cannot be used to evaluate the performance of regression models because there
+# is a fundamental difference between their target type `y`: it is a continuous
+# variable in regression, while a discrete variable in classification.
 #
-# We will use the Ames housing dataset where the goal is to predict the price
-# of houses in Ames town. As for the classification, we will only use a single
-# train-test split to focus only on the regression metrics.
+# We will use the Ames housing dataset. The goal is to predict the price
+# of houses in the city of Ames, Iowa. As with classification, we will only use
+# a single train-test split to focus solely on the regression metrics.
 
 # %%
 import pandas as pd
@@ -32,11 +32,12 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # %% [markdown]
-# Some machine learning models were designed to be solved as an optimization
-# problem: minimzing an error (also known as loss function) using a training
-# set. A basic loss function used in regression is the mean squared error.
-# Thus, this metric is sometimes used to evaluate a model since this is also
-# the loss function optimized by a model.
+# Some machine learning models are designed to be solved as an optimization
+# problem: minimizing an error (also known as the loss function) using a
+# training set.
+# A basic loss function used in regression is the mean squared error (MSE).
+# Thus, this metric is sometimes used to evaluate the model since it is
+# optimized by said model.
 #
 # We will give an example using a linear regression model.
 
@@ -52,9 +53,9 @@ print(f"Mean squared error on the training set: "
       f"{mean_squared_error(y_train, y_pred):.3f}")
 
 # %% [markdown]
-# Our linear regression model is the moodel minimizing the mean squared error
-# on the training set. It means that there is no other set of coefficients
-# which will decrease the error.
+# Our linear regression model is minimizing the mean squared error on the
+# training set. It means that there is no other set of coefficients which
+# will decrease the error.
 #
 # Then, we can compute the mean squared error on the test set.
 
@@ -68,7 +69,7 @@ print(f"Mean squared error on the testing set: "
 # The raw MSE can be difficult to interpret. One way is to rescale the MSE
 # by the variance of the target. This score is known as the $R^2$ also called
 # the coefficient of determination. Indeed, this is the default score used
-# in scikit-learn by calliing the method `score`.
+# in scikit-learn by calling the method `score`.
 
 # %%
 regressor.score(X_test, y_test)
@@ -88,7 +89,7 @@ print(f"R2 score for a regressor predicting the mean:"
       f"{dummy_regressor.score(X_test, y_test):.3f}")
 
 # %% [markdown]
-# The $R^2$ score gives insight into the goodness of fit of the model. However,
+# The $R^2$ score gives insight into the quality of the model's fit. However,
 # this score cannot be compared from one dataset to another and the value
 # obtained does not have a meaningful interpretation relative the original unit
 # of the target. If we wanted to get an interpretable score, we would be
@@ -143,7 +144,7 @@ _ = ax.legend()
 #
 # On this plot, we see that for the large True price values, our model tends to
 # under-estimate the price of the house. Typically, this issue arises when the
-# target to predict does not follow a normal distribution. In these cases the
+# target to predict does not follow a normal distribution. In this case the
 # model would benefit from target transformation.
 
 # %%

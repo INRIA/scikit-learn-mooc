@@ -2,7 +2,7 @@
 # # 📝 Exercise 02
 #
 # The aim of this exercise it to explore some attributes available in
-# scikit-learn's random forest.
+# scikit-learn random forest.
 #
 # First, we will fit the penguins regression dataset.
 

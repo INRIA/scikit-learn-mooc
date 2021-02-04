@@ -1,7 +1,7 @@
 # %% [markdown]
 # # Stratification
 # Let's start with the concept of stratification by giving an example where
-# we can get into trouble if we are not careful. We load the iris dataset.
+# we can get into trouble if we are not careful. Let's load the iris dataset.
 
 # %%
 from sklearn.datasets import load_iris
@@ -22,10 +22,9 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 
 # %% [markdown]
 # Once we created our model, we will use the cross-validation framework to
-# evaluate it. We will use a strategy called `KFold` cross-validation. We give
-# a simple usage example of the `KFold` strategy to get an intuition of how it
-# splits the dataset. We will define a dataset with nine samples and repeat the
-# cross-validation three times (i.e. `n_splits`).
+# evaluate it. We will use the `KFold` cross-validation strategy.
+# We will define a dataset with nine samples and repeat the cross-validation
+# three times (i.e. `n_splits`).
 
 # %%
 import numpy as np
@@ -37,12 +36,12 @@ for train_index, test_index in cv.split(X_random):
     print("TRAIN:", train_index, "TEST:", test_index)
 
 # %% [markdown]
-# By defining three splits, we will use three samples each time for testing and
-# six for training. `KFold` does not shuffle by default. It means that it will
-# select the three first samples for the testing set at the first split, then
-# the three next three samples for the second split, and the three next for the
-# last split. In the end, all samples have been used in testing at least once
-# among the different splits.
+# By defining three splits, we will use three samples for testing and six for
+# training each time. `KFold` does not shuffle by default. It means that it
+# will select the three first samples for the testing set at the first split,
+# then the three next three samples for the second split, and the three next
+# for the last split. In the end, all samples have been used in testing at
+# least once among the different splits.
 #
 # Now, let's apply this strategy to check the performance of our model.
 
@@ -58,7 +57,7 @@ print(f"The average accuracy is "
 # %% [markdown]
 # It is a real surprise that our model cannot correctly classify any sample in
 # any cross-validation split. We will now check our target's value to
-# understand the issue while we should have started with this step.
+# understand the issue.
 
 # %%
 import seaborn as sns
@@ -76,7 +75,7 @@ _ = ax.set_title("Class value in target y")
 # consequences, we will show the class count in each fold of the
 # cross-validation in the train and test set.
 #
-# For this matter, we create a function, because we will reuse it, which given
+# For this matter, we'll create a function (as we will reuse it), which given
 # a cross-validation object and the data `X` and `y`, is returning a dataframe
 # with the class counts by folds and by split sets.
 
@@ -107,7 +106,7 @@ def compute_class_count_cv(cv, X, y):
 
 
 # %% [markdown]
-# Let's compute the statistics using the `KFold` cross-validation and we will
+# Let's compute the statistics using the `KFold` cross-validation, and
 # plot these information in a bar plot.
 
 # %%
@@ -128,8 +127,8 @@ _ = g.fig.suptitle("Class count with K-fold cross-validation", y=1.05)
 # set. So our model is unable to predict this class that was unseen during the
 # training stage.
 #
-# One possibility to solve the issue is to shuffle the data before to split the
-# data into three groups.
+# One possibility to solve the issue is to shuffle the data before splitting
+# the data into three groups.
 
 # %%
 cv = KFold(n_splits=3, shuffle=True, random_state=0)
@@ -163,7 +162,7 @@ _ = g.fig.suptitle(
 #
 # However, one might want to split our data by preserving the original class
 # frequencies: we want to **stratify** our data by class. In scikit-learn, some
-# cross-validation strategies are implementing the stratification and contains
+# cross-validation strategies implement the stratification ; they contain
 # `Stratified` in their names.
 
 # %%
@@ -189,8 +188,8 @@ _ = g.fig.suptitle(
     "Class count with stratifiedK-fold cross-validation", y=1.05)
 
 # %% [markdown]
-# In this case, we observe that the class counts either in the train set or the
-# test set are very close. The difference is due to the small number of samples
+# In this case, we observe that the class counts are very close both in the train
+# set and the test set. The difference is due to the small number of samples
 # in the iris dataset.
 #
 # In conclusion, this is a good practice to use stratification within the

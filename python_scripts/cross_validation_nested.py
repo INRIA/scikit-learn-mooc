@@ -2,22 +2,21 @@
 # # Nested cross-validation
 #
 # In this notebook, we show a pattern called **nested cross-validation** which
-# is should be used when you want to both evaluate a model and tune the
-# hyperparameters' model.
+# should be used when you want to both evaluate a model and tune the
+# model's hyperparameters.
 #
 # Cross-validation is a powerful tool to evaluate the performance of a model.
 # It is also used to select the best model from a pool of models. This pool of
 # models can be the same family of predictor but with different parameters. In
-# this case, we call this procedure **fine-tuning** of the model
-# hyperparameters.
+# this case, we call this procedure **fine-tuning** the model hyperparameters.
 #
 # We could also imagine that we would like to choose among heterogeneous models
 # that will similarly use the cross-validation.
 #
-# Before to go into details regarding the nested cross-validation, we will
-# first recall the patter used to fine tune hyperparameters' model.
+# Before we go into details regarding the nested cross-validation, we will
+# first recall the pattern used to fine tune a model's hyperparameters.
 #
-# First, we will load the breast cancer dataset.
+# Let's load the breast cancer dataset.
 
 # %%
 from sklearn.datasets import load_breast_cancer
@@ -25,7 +24,7 @@ from sklearn.datasets import load_breast_cancer
 X, y = load_breast_cancer(return_X_y=True)
 
 # %% [markdown]
-# Now, we show a minimal example of using the utility `GridSearchCV` to find
+# Now, we'll make a minimal example using the utility `GridSearchCV` to find
 # the best parameters via cross-validation.
 
 # %%
@@ -127,7 +126,7 @@ for i in range(N_TRIALS):
     test_score_nested.append(test_score.mean())
 
 # %% [markdown]
-# We can merge the dta together and make a box plot of the two strategies.
+# We can merge the data together and make a box plot of the two strategies.
 
 # %%
 import pandas as pd
@@ -160,8 +159,8 @@ _ = ax.set_title("Comparison of mean accuracy obtained on the test sets with\n"
 # We observe that the model's performance with the nested cross-validation is
 # not as good as the non-nested cross-validation.
 #
-# As a conclusion, when optimizing part of the machine learning pipeline
+# As a conclusion, when optimizing parts of the machine learning pipeline
 # (e.g. hyperparameter, transform, etc.), one needs to use nested
 # cross-validation to evaluate the performance of the predictive model.
-# Otherwise, the results obtained without nested cross-validation are too
+# Otherwise, the results obtained without nested cross-validation are
 # over-optimistic.

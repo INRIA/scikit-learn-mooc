@@ -1,6 +1,11 @@
 # %% [markdown]
 # # 📝 Introductory exercise for non i.i.d. data
 #
+# ```{note}
+# i.i.d is the acronym of "independent and identically distributed"
+# (as in "independent and identically distributed random variables").
+# ```
+#
 # This exercise aims at showing some aspects to consider when dealing with non
 # i.i.d data, typically time series.
 #
@@ -56,7 +61,7 @@ ax.set_ylabel("Stock value")
 _ = ax.set_title("Stock values over time")
 
 # %% [markdown]
-# Because the stocks are generated randomly, there is no possibility for a
+# Because the stocks are generated randomly, it is not possible for a
 # predictive model to be able to predict the value of a stock depending on the
 # other stocks. By using the cross-validation framework from the previous
 # exercise, we will check that we get such expected results.

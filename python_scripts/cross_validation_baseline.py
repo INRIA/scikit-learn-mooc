@@ -2,9 +2,9 @@
 # # Comparing results with baseline and chance level
 #
 # In this notebook, we present how to compare the performance of a model
-# minimal baseline.
+# to a minimal baseline.
 #
-# Indeed, in the previous notebook, we compare the generalization error by
+# Indeed, in the previous notebook, we compared the generalization error by
 # taking into account the target distribution. A good practice is to compare
 # the generalization error with a dummy baseline and the chance level. In
 # regression, we could use the `DummyRegressor` and predict the mean target
@@ -12,7 +12,7 @@
 # labels and check the difference of result.
 #
 # Therefore, we will conduct experiment to get the score of a model and the two
-# baselines. We will start by loading the california housing dataset.
+# baselines. We will start by loading the California housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -30,7 +30,7 @@ cv = ShuffleSplit(n_splits=30, test_size=0.2, random_state=0)
 # %% [markdown]
 # We will start by running the cross-validation for the decision tree
 # regressor which is our model of interest. Besides, we will store the
-# generalization error into a pandas series.
+# generalization error in a pandas series.
 
 # %%
 import pandas as pd
@@ -92,9 +92,9 @@ sns.displot(final_errors, kind="kde")
 _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
-# We see that even if the performance of our model is far to be good, it is
-# better than the two baselines. Besides, we see that the dummy regressor is
-# better than a chance level regressor.
+# We see that even if the performance of our model is far from being good, it
+# is better than the two baselines. Besides, we see that the dummy regressor
+# is better than a chance level regressor.
 #
 # In practice, using a dummy regressor might be sufficient as a baseline.
 # Indeed, to obtain a reliable estimate the permutation of the target should

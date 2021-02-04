@@ -1,30 +1,29 @@
 # %% [markdown]
 # # Speeding-up gradient-boosting
 # In this notebook, we present a modified version of gradient boosting which
-# uses a reduce number of split when building the different trees. This
-# algorithm is called histogram gradient boosting in scikit-learn.
+# uses a reduced number of splits when building the different trees. This
+# algorithm is called "histogram gradient boosting" in scikit-learn.
 #
 # We previously mentioned that random-forest is an efficient algorithm since
 # each tree of the ensemble can be fitted at the same time independently.
-# Therefore, the algorithm scales efficiently with both the number of CPUs and
+# Therefore, the algorithm scales efficiently with both the number of cores and
 # the number of samples.
 #
 # In gradient-boosting, the algorithm is a sequential algorithm. It requires
 # the `N-1` trees to have been fit to be able to fit the tree at stage `N`.
 # Therefore, the algorithm is quite computationally expensive. The most
-# expensive part in this algorithm is the search for the best split in the tree
-# which is a brute-force approach: all possible split are evaluated and the
-# best one is picked. We explained this process in the notebook "tree in
+# expensive part in this algorithm is the search for the best split in the
+# tree which is a brute-force approach: all possible split are evaluated and
+# the best one is picked. We explained this process in the notebook "tree in
 # depth", which you can refer to.
 #
-# To accelerate the gradient-boosting algorithm, one could reduce the number of
-# splits to be evaluated. As a consequence, the performance of such a
+# To accelerate the gradient-boosting algorithm, one could reduce the number
+# of splits to be evaluated. As a consequence, the performance of such a
 # tree would be reduced. However, since we are combining several trees in a
-# gradient-boosting, we can add more estimators to overcome
-# this issue.
+# gradient-boosting, we can add more estimators to overcome this issue.
 #
 # We will make a naive implementation of such algorithm using building blocks
-# from scikit-learn. First, we will load the california housing dataset.
+# from scikit-learn. First, we will load the California housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -56,7 +55,7 @@ print(f"Fit time: {fit_time_gradient_boosting:.2f} s")
 print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
 
 # %% [markdown]
-# We recall that a way to accelerate the gradient boosting is to reduce the
+# We recall that a way of accelerating the gradient boosting is to reduce the
 # number of split considered within the tree building. One way is to bin the
 # data before to give them into the gradient boosting. A transformer called
 # `KBinsDiscretizer` is doing such transformation. Thus, we can pipeline
@@ -76,10 +75,10 @@ X_trans
 # %% [markdown]
 # ```{note}
 # The code cell above will generate a couple of warnings. Indeed, for some of
-# the features, we requested too much bins in regard of the data dispersion for
-# those features. The too small bins will be removed.
+# the features, we requested too much bins in regard of the data dispersion
+# for those features. The smallest bins will be removed.
 # ```
-# We see that the discretizer transform the original data into an integer.
+# We see that the discretizer transforms the original data into an integer.
 # This integer represents the bin index when the distribution by quantile is
 # performed. We can check the number of bins per feature.
 
@@ -88,8 +87,8 @@ X_trans
 
 # %% [markdown]
 # After this transformation, we see that we have at most 256 unique values per
-# features. Now, we will use this transformer to discretize data before to
-# train the gradient boosting regressor.
+# features. Now, we will use this transformer to discretize data before
+# training the gradient boosting regressor.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -111,17 +110,17 @@ print(f"Fit time: {fit_time_gradient_boosting:.2f} s")
 print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
 
 # %% [markdown]
-# Here, we observe that the fit time have been drastically reduce but that the
-# performance of the model are the identical. Scikit-learn provides a specific
-# class even more optimized for large dataset called
+# Here, we observe that the fit time has been drastically reduced but that the
+# performance of the model is the identical. Scikit-learn provides a specific
+# classes which are even more optimized for large dataset, called
 # `HistGradientBoostingClassifier` and `HistGradientBoostingRegressor`. Each
-# feature in the dataset `X` is first binned by computing histograms which are
-# later used to evaluate the potential splits. The number of splits to evaluate
-# is then much smaller. This algorithm becomes much more efficient than
-# gradient boosting when the dataset has 10,000+ samples.
+# feature in the dataset `X` is first binned by computing histograms, which
+# are later used to evaluate the potential splits. The number of splits to
+# evaluate is then much smaller. This algorithm becomes much more efficient
+# than gradient boosting when the dataset has over 10,000 samples.
 #
-# Below we will give an example of a large dataset and we can compare
-# computation time with the earlier experiment in the previous section.
+# Below we will give an example for a large dataset and we will compare
+# computation times with the experiment of the previous section.
 
 # %%
 from time import time

@@ -7,10 +7,9 @@
 In the previous module, we presented the general cross-validation framework
 and used it to evaluate models' performance. However, this is important to
 keep in mind that some elements in the cross-validation need to be decided
-depending of the nature of the problem: (i) the cross-validation strategy and
+depending on the nature of the problem: (i) the cross-validation strategy and
 (ii) the evaluation metrics. Besides, it is always good to compare the models'
-performance with some baseline for which one expects a given level of
-performance.
+performance with some baseline model.
 
 In this module, we present both aspects and give insights on when to use a
 specific cross-validation strategy and a metric. In addition, we will also
@@ -40,10 +39,10 @@ The objective in the module are the following:
   depending on the data;
 - get the intuitions behind comparing a model with some basic models that
   can be used as baseline;
-- understand the principle behind using nested cross-validation when the model
+- understand the principles behind using nested cross-validation when the model
   needs to be evaluated as well as optimized;
-- understand the difference between regression and classification metrics;
-- understand the difference between metrics.
+- understand the differences between regression and classification metrics;
+- understand the differences between metrics.
 
 <!-- Give the investment in time -->
 

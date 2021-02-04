@@ -1,13 +1,13 @@
 # %% [markdown]
 # # Gradient-boosting decision tree (GBDT)
 #
-# In this notebook, we present gradient boosting decision tree algorithm and
-# the difference with AdaBoost.
+# In this notebook, we will present the gradient boosting decision tree algorithm
+# and contrast it with AdaBoost.
 #
 # Gradient-boosting differs from AdaBoost due to the following reason: instead
 # of assigning weights to specific samples, GBDT will fit a decision tree on
 # the residuals error (hence the name "gradient") of the previous tree.
-# Therefore, each new added tree in the ensemble predicts the error made by the
+# Therefore, each new tree in the ensemble predicts the error made by the
 # previous learner instead of predicting the target directly.
 #
 # In this section, we will provide some intuition about the way learners are
@@ -20,7 +20,7 @@
 import pandas as pd
 import numpy as np
 
-# create a random number generator that
+# Create a random number generator that
 # will be used to set the randomness
 rng = np.random.RandomState(0)
 
@@ -53,7 +53,7 @@ _ = sns.scatterplot(x=X_train["Feature"], y=y_train,
 
 # %% [markdown]
 # As we previously discussed, boosting will be based on assembling a sequence
-# of learners. We will start by creating a decision tree regressor. We will fix
+# of learners. We will start by creating a decision tree regressor. We will set
 # the depth of the tree so that the resulting learner will underfit the data.
 
 # %%
@@ -82,8 +82,8 @@ _ = plt.legend([line_predictions[0], lines_residuals[0]],
 
 # %% [markdown]
 # ```{tip}
-# In the cell above, we manually edit the legend to get only a single label
-# for all residual lines.
+# In the cell above, we manually edited the legend to get only a single label
+# for all the residual lines.
 # ```
 # Since the tree underfits the data, its accuracy is far from perfect on the
 # training data. We can observe this in the figure by looking at the difference
@@ -190,7 +190,7 @@ print(f"Prediction of the residual for x={x_max:.3f}: "
       f"{tree_residuals.predict([[x_max]])[0]:.3f}")
 
 # %% [markdown]
-# We see that our second tree is capable of prediting the exact residual
+# We see that our second tree is capable of predicting the exact residual
 # (error) of our first tree. Therefore, we can predict the value of `x` by
 # summing the prediction of the all trees in the ensemble.
 
@@ -259,7 +259,7 @@ print(f"Score time: {score_time_random_forest:.5f} s")
 
 # %% [markdown]
 # In term of computation performance, the forest can be parallelized and will
-# benefit from the having multiple CPUs. In terms of scoring performance, both
+# benefit from using multiple cores. In terms of scoring performance, both
 # algorithms lead to very close results.
 #
 # However, we can observe that the gradient boosting is a very fast algorithm

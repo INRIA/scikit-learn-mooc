@@ -2,11 +2,11 @@
 # # Adaptive Boosting (AdaBoost)
 #
 # In this notebook, we present the Adaptive Boosting (AdaBoost) algorithm. The
-# aim is to intuitions regarding the internal machinery of AdaBoost and
-# boosting more in general.
+# aim is to get intuitions regarding the internal machinery of AdaBoost and
+# boosting in general.
 #
-#  We will load the "penguin" dataset used in the "tree in depth" notebook. We
-# will predict penguin species from the features culmen length and depth.
+# We will load the "penguin" dataset. We will predict penguin species from the
+# culmen length and depth features.
 
 # %%
 import pandas as pd
@@ -21,8 +21,8 @@ range_features = {
     for feature_name in X.columns}
 
 # %% [markdown]
-# In addition, we are also using on the function used the previous "tree in
-# depth" notebook to plot the decision function of the tree.
+# In addition, we are also using the function used in the previous notebook
+# to plot the decision function of the tree.
 
 # %%
 import numpy as np
@@ -55,9 +55,9 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
 
 # %% [markdown]
-# We will purposely train a shallow decision tree. Since the tree is shallow,
+# We will purposefully train a shallow decision tree. Since it is shallow,
 # it is unlikely to overfit and some of the training examples will even be
-# misclassified on the training set.
+# misclassified.
 
 # %%
 import seaborn as sns
@@ -87,16 +87,16 @@ _ = ax.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
 # We observe that several samples have been misclassified by the classifier.
 #
 # We mentioned that boosting relies on creating a new classifier which tries to
-# correct these misclassifications. In scikit-learn, learners support a
-# parameter `sample_weight` which forces the learner to pay more attention to
-# samples with higher weights, during the training.
+# correct these misclassifications. In scikit-learn, learners have a
+# parameter `sample_weight` which forces it to pay more attention to
+# samples with higher weights during the training.
 #
 # This parameter is set when calling
 # `classifier.fit(X, y, sample_weight=weights)`.
 # We will use this trick to create a new classifier by 'discarding' all
 # correctly classified samples and only considering the misclassified samples.
-# Thus, misclassified samples will be assigned a weight of 1 while well
-# classified samples will assigned to a weight of 0.
+# Thus, misclassified samples will be assigned a weight of 1 and well
+# classified samples will be assigned a weight of 0.
 
 # %%
 sample_weight = np.zeros_like(y, dtype=int)
@@ -192,13 +192,13 @@ print(f"Weight of each classifier: {adaboost.estimator_weights_}")
 print(f"Error of each classifier: {adaboost.estimator_errors_}")
 
 # %% [markdown]
-# We see that AdaBoost has learnt three different classifiers each of which
+# We see that AdaBoost learned three different classifiers, each of which
 # focuses on different samples. Looking at the weights of each learner, we see
 # that the ensemble gives the highest weight to the first classifier. This
 # indeed makes sense when we look at the errors of each classifier. The first
 # classifier also has the highest classification performance.
 #
 # While AdaBoost is a nice algorithm to demonstrate the internal machinery of
-# boosting algorithms, it is not the most efficient machine-learning algorithm.
-# The most efficient algorithm based on boosting is the gradient-boosting
-# decision tree (GBDT) algorithm which we will discuss after a short exercise.
+# boosting algorithms, it is not the most efficient.
+# This title is handed to the gradient-boosting decision tree (GBDT) algorithm,
+# which we will discuss after a short exercise.

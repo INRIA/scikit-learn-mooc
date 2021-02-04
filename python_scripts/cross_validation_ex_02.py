@@ -1,7 +1,7 @@
 # %% [markdown]
 # # 📝 Exercise 02
 #
-# This notebook aims at building baseline classifiers, which we'll use tp
+# This notebook aims at building baseline classifiers, which we'll use to
 # compare our predictive model. Besides, we will check the differences with
 # the baselines that we saw in regression.
 #

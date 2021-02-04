@@ -20,7 +20,7 @@
 import pandas as pd
 import numpy as np
 
-# Creates a random number generator that
+# Create a random number generator that
 # will be used to set the randomness
 rng = np.random.RandomState(0)
 

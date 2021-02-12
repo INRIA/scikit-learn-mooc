@@ -59,7 +59,7 @@ print(f"R2 score of linear regresion model on the test set:\n"
 # %% [markdown]
 # We see that we obtain an $R^2$ score below zero.
 #
-# It means that our model is far worth than predicting the mean of `y_train`.
+# It means that our model is far worse at predicting the mean of `y_train`.
 # This issue is due to overfitting.
 # We can compute the score on the training set to confirm this intuition.
 

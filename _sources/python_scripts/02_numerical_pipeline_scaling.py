@@ -162,8 +162,8 @@ data_train.describe()
 # not need such preprocessing.
 #
 # We show how to apply such normalization using a scikit-learn transformer
-# called `StandardScaler`. This transformer intend to transform feature such
-# that each of them will all have a mean value and a unit standard deviation.
+# called `StandardScaler`. This transformer shifts and scales each feature
+# individually so that they all have a 0-mean and a unit standard deviation.
 
 # %%
 from sklearn.preprocessing import StandardScaler

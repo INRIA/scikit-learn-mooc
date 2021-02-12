@@ -248,9 +248,9 @@ print(f"The standard deviation of the target is: {y.std():.2f} k$")
 # standard deviation around 115 k\$.
 #
 # We notice that the mean estimate of the generalization error obtained by
-# cross-validation is a bit than the natural scale of variation of the target
-# variable. Furthermore the standard deviation of the cross validation estimate
-# of the generalization error is even much smaller.
+# cross-validation is a bit smaller than the natural scale of variation of the
+# target variable. Furthermore the standard deviation of the cross validation
+# estimate of the generalization error is even smaller.
 #
 # This is a good start, but not necessarily enough to decide whether the
 # generalization performance is good enough to make our prediction useful in

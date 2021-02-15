@@ -48,8 +48,6 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
@@ -2066,8 +2064,17 @@ different parameters will be quickly untractable.</p>
 <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> allows for such stochastic search. It is used similarly
 to the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> but the sampling distributions need to be specified
 instead of the parameter values. For instance, we will draw candidates using
-a log-uniform distribution also called reciprocal distribution. In addition,
-we will optimize 3 other parameters:</p>
+a log-uniform distribution also called reciprocal distribution, because
+the parameters we are interested in take positive values with a natural
+log scaling (.1 is as close to 1 as 10 is).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Random search (with <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code>) is typical beneficial compared
+to grid search (with <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>) to optimize 3 or more
+hyperparameter.</p>
+</div>
+<p>We will optimize 3 other parameters in addition to the ones we
+optimized above:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: it corresponds to the number of trees in the ensemble;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>: it corresponds to the minimum number of samples

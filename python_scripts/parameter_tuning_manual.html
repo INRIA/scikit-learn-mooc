@@ -1148,7 +1148,7 @@
 <p>This notebook shows how one can get and set the value of hyperparameter in
 a scikit-learn estimator.</p>
 <p>We will start by loading the adult census dataset and only use the numerical
-feature. Subsequently, we will divide the dataset into two subsets.</p>
+feature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1165,6 +1165,9 @@ feature. Subsequently, we will divide the dataset into two subsets.</p>
 </div>
 </div>
 </div>
+<p>Our data is only numerical
+data.head()</p>
+<p>We now divide the dataset into two subsets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -1177,6 +1180,9 @@ feature. Subsequently, we will divide the dataset into two subsets.</p>
 </div>
 <p>Let’s create a simple predictive model made of a scaling followed by a
 logistic regression classifier.</p>
+<p>Many models, including linear ones, work better if all features have a
+similar scaling. For this purporse, we use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which
+transforms the data by rescaling features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
@@ -1289,6 +1295,26 @@ parameter, for example <code class="docutils literal notranslate"><span class="p
 </pre></div>
 </div>
 </div>
+</div>
+<p>We can vary systematically the value of C to see if there is an optimal
+value
+for C in [1e-3, 1e-2, 1e-1, 1, 10]:
+model.set_params(classifier__C=C)
+model.fit(data_train, target_train)
+print(f”The test accuracy score with C={C} is: “
+f”{model.score(data_test, target_test):.3f}”)</p>
+<p>We can see that as long as C is high enough, the model seems to perform
+well.</p>
+<p>What we did here is very manual: it involves scanning the values for C
+and picking the best one manually. In the next lesson, we will see how
+to do this automatically.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When we evaluate a family of models on test data and pick the best
+performer, we can not trust the corresponding prediction accuracy, and
+we need to apply the selected model to new data. Indeed, the test data
+has been used to select the model, and it is thus no longer independent
+from this model.</p>
 </div>
 <p>In this notebook we have seen:</p>
 <ul class="simple">

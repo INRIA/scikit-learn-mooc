@@ -234,8 +234,18 @@ ax.invert_yaxis()
 # `RandomizedSearchCV` allows for such stochastic search. It is used similarly
 # to the `GridSearchCV` but the sampling distributions need to be specified
 # instead of the parameter values. For instance, we will draw candidates using
-# a log-uniform distribution also called reciprocal distribution. In addition,
-# we will optimize 3 other parameters:
+# a log-uniform distribution also called reciprocal distribution, because
+# the parameters we are interested in take positive values with a natural
+# log scaling (.1 is as close to 1 as 10 is).
+#
+# ```{note}
+# Random search (with `RandomizedSearchCV`) is typical beneficial compared
+# to grid search (with `GridSearchCV`) to optimize 3 or more
+# hyperparameter.
+# ```
+#
+# We will optimize 3 other parameters in addition to the ones we
+# optimized above:
 #
 # * `max_iter`: it corresponds to the number of trees in the ensemble;
 # * `min_samples_leaf`: it corresponds to the minimum number of samples

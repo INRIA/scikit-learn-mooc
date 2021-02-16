@@ -41,14 +41,28 @@ df_train, df_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # We will define a pipeline as seen in the first module. It will handle both
-# numerical and categorical features. We use an ordinal since we will use a
-# tree-based model as a predictor.
+# numerical and categorical features.
+#
+# As we will use a tree-based model as a predictor, here we apply an
+# ordinal encoder on the categorical features: it encodes
+# every category with an arbitrary integer. For simple models such as
+# linear models, a one-hot encoder should be prefered. But for complex
+# models, in particular tree-based models, the ordinal encoder is useful
+# as it avoids having high-dimensional representations
+
+# %%
+from sklearn.preprocessing import OrdinalEncoder
+
+categorical_preprocessor = OrdinalEncoder(categories=categories)
+
+# %% [markdown]
+# We now use a column transformer with code to select the
+# categorical columns and apply to them the ordinal encoder
 
 # %%
 from sklearn.compose import ColumnTransformer
 from sklearn.compose import make_column_selector as selector
 
-from sklearn.preprocessing import OrdinalEncoder
 
 categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
@@ -56,7 +70,6 @@ categorical_columns = categorical_columns_selector(data)
 categories = [
     data[column].unique() for column in data[categorical_columns]]
 
-categorical_preprocessor = OrdinalEncoder(categories=categories)
 
 preprocessor = ColumnTransformer([
     ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
@@ -92,7 +105,6 @@ model.fit(df_train, target_train)
 
 # %%
 # %%time
-import numpy as np
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {
@@ -230,13 +242,28 @@ ax.invert_yaxis()
 # explicitly. We already mentioned that exploring a large number of values for
 # different parameters will be quickly untractable.
 #
-# Instead, we can randomly generate the parameter candidates. The
-# `RandomizedSearchCV` allows for such stochastic search. It is used similarly
-# to the `GridSearchCV` but the sampling distributions need to be specified
-# instead of the parameter values. For instance, we will draw candidates using
-# a log-uniform distribution also called reciprocal distribution, because
-# the parameters we are interested in take positive values with a natural
-# log scaling (.1 is as close to 1 as 10 is).
+# Instead, we can randomly generate the parameter candidates. Indeed,
+# such approach avoids the regularity of the grid. Hence, adding more
+# evaluations can increase the resolution in each direction. This is the
+# case in the frequent situation where the choice of some hyperparameters
+# is not very important, as for hyperparameter 2 in the figure below.
+#
+# ![Randomized vs grid search](../images/grid_vs_random_search.svg)
+#
+# Indeed, the number of evaluation points need to be divided across the
+# two different hyperparameters. With a grid, the danger is that the
+# region of good hyperparameters fall between the line of the grid: this
+# region is aligned with the grid given that hyperparameter 2 has a weak
+# influence. Rather, stochastic search will sample hyperparameter 1
+# independently from hyperparameter 2 and find the optimal region.
+#
+# The `RandomizedSearchCV` class allows for such stochastic search. It is
+# used similarly to the `GridSearchCV` but the sampling distributions
+# need to be specified instead of the parameter values. For instance, we
+# will draw candidates using a log-uniform distribution also called
+# reciprocal distribution, because the parameters we are interested in
+# take positive values with a natural log scaling (.1 is as close to 1 as
+# 10 is).
 #
 # ```{note}
 # Random search (with `RandomizedSearchCV`) is typical beneficial compared
@@ -349,6 +376,7 @@ cv_results = pd.read_csv("../figures/randomized_search_results.csv",
     shorten_param, axis=1).sort_values("mean_test_score"))
 
 # %%
+import numpy as np
 import plotly.express as px
 
 fig = px.parallel_coordinates(

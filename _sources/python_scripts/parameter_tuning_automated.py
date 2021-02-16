@@ -255,7 +255,7 @@ ax.invert_yaxis()
 # case in the frequent situation where the choice of some hyperparameters
 # is not very important, as for hyperparameter 2 in the figure below.
 #
-# ![Randomized vs grid search](../images/grid_vs_random_search.svg)
+# ![Randomized vs grid search](../images/grid_vs_random_search.png)
 #
 # Indeed, the number of evaluation points need to be divided across the
 # two different hyperparameters. With a grid, the danger is that the

@@ -49,9 +49,24 @@ df_train, df_test, target_train, target_test = train_test_split(
 # linear models, a one-hot encoder should be prefered. But for complex
 # models, in particular tree-based models, the ordinal encoder is useful
 # as it avoids having high-dimensional representations
+#
+# First we select all the categorical columns
+
+# %%
+from sklearn.compose import make_column_selector as selector
+
+
+categorical_columns_selector = selector(dtype_include=object)
+categorical_columns = categorical_columns_selector(data)
+
+# %% [markdown]
+# Then we build our ordinal encoder, giving it the known categories.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
+
+categories = [
+    data[column].unique() for column in data[categorical_columns]]
 
 categorical_preprocessor = OrdinalEncoder(categories=categories)
 
@@ -61,14 +76,6 @@ categorical_preprocessor = OrdinalEncoder(categories=categories)
 
 # %%
 from sklearn.compose import ColumnTransformer
-from sklearn.compose import make_column_selector as selector
-
-
-categorical_columns_selector = selector(dtype_include=object)
-categorical_columns = categorical_columns_selector(data)
-
-categories = [
-    data[column].unique() for column in data[categorical_columns]]
 
 
 preprocessor = ColumnTransformer([

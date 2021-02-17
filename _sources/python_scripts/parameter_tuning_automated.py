@@ -21,10 +21,18 @@ import pandas as pd
 
 df = pd.read_csv("../datasets/adult-census.csv")
 
+# %% [markdown]
+# We extract the column containing the target
+
 # %%
 target_name = "class"
 target = df[target_name]
 target
+
+# %% [markdown]
+# We drop from our data the target name, and well as the fnlwgt column
+# which is a censurs weighting and the education-num column, which
+# duplicates the information in another column.
 
 # %%
 data = df.drop(columns=[target_name, "fnlwgt", "education-num"])

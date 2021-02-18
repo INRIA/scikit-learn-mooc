@@ -228,7 +228,7 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 # We see that the right branch achieves perfect classification. We can now
 # increase the depth to check how the tree will grow.
 
- # %%
+# %%
 _, ax = plt.subplots()
 tree_clf = DecisionTreeClassifier(max_depth=6)
 _ = plot_classification(tree_clf, data_clf[data_clf_columns],
@@ -249,7 +249,7 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 # and apply a constraint at the leaves or nodes level. We will check the effect
 # of `min_samples_leaf`.
 
- # %%
+# %%
 _, ax = plt.subplots()
 tree_clf = DecisionTreeClassifier(min_samples_leaf=60)
 _ = plot_classification(tree_clf, data_clf[data_clf_columns],

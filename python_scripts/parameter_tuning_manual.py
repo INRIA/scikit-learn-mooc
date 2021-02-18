@@ -2,7 +2,12 @@
 # # Set and get hyperparameters in scikit-learn
 #
 # This notebook shows how one can get and set the value of hyperparameter in
-# a scikit-learn estimator.
+# a scikit-learn estimator. We recall that hyperparameters refer to the
+# parameter that will control the learning process.
+#
+# They should not be confused with the fitted parameters, resulting from the
+# training. These fitted parameters are recognizable in scikit-learn because
+# they are spelled with a final underscore `_`, for instance `model.coef_`.
 #
 # We will start by loading the adult census dataset and only use the numerical
 # feature.
@@ -38,7 +43,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # logistic regression classifier.
 #
 # Many models, including linear ones, work better if all features have a
-# similar scaling. For this purporse, we use a `StandardScaler`, which
+# similar scaling. For this purpose, we use a `StandardScaler`, which
 # transforms the data by rescaling features.
 
 # %%
@@ -56,8 +61,8 @@ model.fit(data_train, target_train)
 model.score(data_test, target_test)
 
 # %% [markdown]
-# We created a model with default `C` value that is equal to 1. We saw in the
-# previous exercise that we will be interested to set the value of an
+# We created a model with the default `C` value that is equal to 1. We saw in
+# the previous exercise that we will be interested to set the value of an
 # hyperparameter. One possibility is to set the parameter when we create the
 # model instance. However, we might be interested to set the value of the
 # parameter after the instance is created.

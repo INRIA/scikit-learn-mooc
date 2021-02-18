@@ -183,6 +183,12 @@ pd.crosstab(index=adult_census['education'],
 # for machine learning algorithms.
 
 # %% [markdown]
+# ```{note}
+# In the upcoming notebooks, we will only keep the `education` variable,
+# excluding the `education-num` variable.
+# ```
+
+# %% [markdown]
 # Another way to inspect the data is to do a pairplot and show how each
 # variable differs according to our target, `class`. Plots along the diagonal
 # show the distribution of individual variables for each `class`. The plots on

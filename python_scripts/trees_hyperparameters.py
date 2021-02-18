@@ -1,10 +1,9 @@
 # %% [markdown]
 # # Importance of decision tree hyperparameters on generalization
 #
-# In this notebook, we will illustrate the importance of some
-# key hyperparameters on the decision tree ;
-# we will demonstrate their effects on the
-# classification and regression problems we saw previously.
+# In this notebook, we will illustrate the importance of some key
+# hyperparameters on the decision tree ; we will demonstrate their effects on
+# the classification and regression problems we saw previously.
 #
 # First, we will load the classification and regression datasets.
 
@@ -60,9 +59,13 @@ def plot_classification(model, X, y, ax=None):
     if ax is None:
         _, ax = plt.subplots()
     ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
+    if y.nunique() == 3:
+        palette = ["tab:red", "tab:blue", "black"]
+    else:
+        palette = ["tab:red", "tab:blue"]
     sns.scatterplot(
         x=data_clf_columns[0], y=data_clf_columns[1], hue=target_clf_column,
-        data=data_clf, ax=axs[0], palette=["tab:red", "tab:blue", "black"])
+        data=data_clf, ax=ax, palette=palette)
 
     return ax
 
@@ -150,5 +153,114 @@ axs[1].set_title(f"Optimal depth found via CV: "
 plt.subplots_adjust(wspace=0.3)
 
 # %% [markdown]
-# The other parameters are used to fine tune the decision tree and have less
-# impact than `max_depth`.
+# ## Other hyperparameters in decision trees
+#
+# The `max_depth` parameter offers a possibility to have a global impact on
+# the full tree structure. Indeed, by limiting the depth, you will stop all
+# the branch trees to grow after this specific level.
+#
+# The other hyperparameters in decision trees provide a more fine grain
+# optimization, acting at the level of the node and leaf. This is particularly
+# interesting if the grown tree has an asymmetric shape where it could be
+# beneficial to let the tree being more expressive in some ramifications.
+#
+# We will craft a toy dataset to illustrate this behavior. We will generate a
+# dataset composed of 2 subsets: one subset where a clear separation will be
+# found by the tree and a another subset where samples from both classes will
+# be mixed. It implies that a decision tree will need more splits to classify
+# properly samples from the second subset than from the first subset.
+
+# %%
+from sklearn.datasets import make_classification, make_blobs
+
+data_clf_columns = ["Feature #0", "Feature #1"]
+target_clf_column = "Class"
+
+X_1, y_1 = make_classification(
+    n_samples=300, n_features=2, n_classes=2, n_clusters_per_class=1,
+    n_redundant=0, class_sep=0.5, random_state=0)
+X_2, y_2 = make_blobs(
+    n_samples=300, centers=[[4, 6], [7, 0]], random_state=0)
+
+X = np.concatenate([X_1, X_2], axis=0)
+y = np.concatenate([y_1, y_2])
+data_clf = np.concatenate([X, y[:, np.newaxis]], axis=1)
+data_clf = pd.DataFrame(
+    data_clf, columns=data_clf_columns + [target_clf_column])
+
+# %% [markdown]
+# We can visualize the dataset that we just generated.
+
+# %%
+sns.scatterplot(
+    x=data_clf_columns[0], y=data_clf_columns[1], hue=target_clf_column,
+    data=data_clf)
+
+# %% [markdown]
+# From our tree understanding, we should have the intuitions that the separated
+# blobs should be easily separable in the first level of the tree.
+#
+# We will check if a `max_depth=3` will be enough to separate the distinct
+# blobs.
+
+# %%
+_, ax = plt.subplots(figsize=(6, 6))
+tree_clf = DecisionTreeClassifier(max_depth=3)
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column], ax=ax)
+
+# %% [markdown]
+# Indeed, we see that red blob on the top and the blue blob on the right of
+# the plot are perfectly separated. However, the tree is still making mistakes
+# in the area where the blobs are mixed together. We can check the tree
+# representation.
+
+# %%
+from sklearn.tree import plot_tree
+
+_, ax = plt.subplots(figsize=(6, 6))
+_ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
+
+# %% [markdown]
+# After a depth of level 2, we see that the two blobs of 150 and 152 samples
+# are respectively separated from the rest. Therefore, increasing the depth
+# will just continue to split the imperfectly classified data.
+
+ # %%
+_, ax = plt.subplots(figsize=(6, 6))
+tree_clf = DecisionTreeClassifier(max_depth=5)
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column], ax=ax)
+
+# %%
+_, ax = plt.subplots(figsize=(11, 7))
+_ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
+
+# %% [markdown]
+# We see, that the tree continue to split the area where misclassification
+# occurs. Thus, we have a tree structure which asymmetric with 2 leaves
+# declared really early and the remaining branch which needs to grow.
+#
+# In this scenario, `max_depth` will limit the growth of all branches in the
+# same manner, even if some ramifications would require more splits. The
+# hyperparameters `min_samples_leaf`, `min_samples_split`, `max_leaf_nodes`,
+# or `min_impurity_decrease` allows to grow asymmetric trees and apply a
+# constraint at the leaves or nodes level. Let's see the effect of
+# `min_samples_leaf`.
+
+# %%
+ # %%
+_, ax = plt.subplots(figsize=(6, 6))
+tree_clf = DecisionTreeClassifier(min_samples_leaf=60)
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column], ax=ax)
+
+# %%
+_, ax = plt.subplots(figsize=(8, 8))
+_ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
+
+# %% [markdown]
+# This hyperparameter allows to have leave with a minimum number of samples.
+# Therefore, we see that we can built different branches individually and the
+# criterion to stop splitting will be linked to the leaf value instead of at
+# the level of the tree.

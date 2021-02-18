@@ -1146,7 +1146,11 @@
   <div class="section" id="set-and-get-hyperparameters-in-scikit-learn">
 <h1>Set and get hyperparameters in scikit-learn<a class="headerlink" href="#set-and-get-hyperparameters-in-scikit-learn" title="Permalink to this headline">¶</a></h1>
 <p>This notebook shows how one can get and set the value of hyperparameter in
-a scikit-learn estimator.</p>
+a scikit-learn estimator. We recall that hyperparameters refer to the
+parameter that will control the learning process.</p>
+<p>They should not be confused with the fitted parameters, resulting from the
+training. These fitted parameters are recognizable in scikit-learn because
+they are spelled with a final underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>, for instance <code class="docutils literal notranslate"><span class="pre">model.coef_</span></code>.</p>
 <p>We will start by loading the adult census dataset and only use the numerical
 feature.</p>
 <div class="cell docutils container">
@@ -1181,7 +1185,7 @@ data.head()</p>
 <p>Let’s create a simple predictive model made of a scaling followed by a
 logistic regression classifier.</p>
 <p>Many models, including linear ones, work better if all features have a
-similar scaling. For this purporse, we use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which
+similar scaling. For this purpose, we use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which
 transforms the data by rescaling features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1216,8 +1220,8 @@ transforms the data by rescaling features.</p>
 </div>
 </div>
 </div>
-<p>We created a model with default <code class="docutils literal notranslate"><span class="pre">C</span></code> value that is equal to 1. We saw in the
-previous exercise that we will be interested to set the value of an
+<p>We created a model with the default <code class="docutils literal notranslate"><span class="pre">C</span></code> value that is equal to 1. We saw in
+the previous exercise that we will be interested to set the value of an
 hyperparameter. One possibility is to set the parameter when we create the
 model instance. However, we might be interested to set the value of the
 parameter after the instance is created.</p>

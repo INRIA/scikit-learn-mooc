@@ -52,7 +52,7 @@ y.head()
 # %%
 from sklearn.tree import DecisionTreeRegressor
 
-regressor = DecisionTreeRegressor()
+regressor = DecisionTreeRegressor(random_state=0)
 regressor.fit(X, y)
 
 # %% [markdown]
@@ -232,7 +232,7 @@ print(f"The standard deviation of the generalization error is: "
 # %% [markdown]
 # Note that the standard deviation is much smaller than the mean: we could
 # summarize that our cross-validation estimate of the generalization error is
-# 45.7 +/- 1.1 k\$.
+# 45.88 +/- 1.00 k\$.
 #
 # If we were to train a single model on the full dataset (without
 # cross-validation) and then had later access to an unlimited amount of test
@@ -276,6 +276,33 @@ print(f"The standard deviation of the target is: {y.std():.2f} k$")
 # But in all cases, an error of 45 k\$ might be too large to automatically use
 # our model to tag house value without expert supervision.
 #
+# ## More detail regarding `cross_validate`
+#
+# During cross-validation, many models are trained and evaluated. Indeed, the
+# number of elements in each array of the output of `cross_validate` is a
+# result from one of this `fit`/`score`. To make it explicit, it is possible
+# to retrieve theses fitted models for each of the fold by passing the option
+# `return_estimator=True` in `cross_validate`.
+
+# %%
+cv_results = cross_validate(regressor, X, y, return_estimator=True)
+cv_results
+
+# %%
+cv_results["estimator"]
+
+# %% [markdown]
+# The five decision tree regressors corresponds to the five fitted decision
+# trees on the different folds. Having access to these regressors is handy
+# because it allows to inspect the internal fitted parameters of these
+# regressors.
+#
+# In the case where you are interested only about the test score, scikit-learn
+# provide a `cross_val_score` function. It is identical to calling the
+# `cross_validate` function and to select the `test_score` only (as we
+# extensively did in the previous notebooks).
+
+# %% [markdown]
 # ## Summary
 #
 # In this notebook, we saw:

@@ -235,22 +235,55 @@ print(f"R2 score of ridge model on the train set:\n"
 import numpy as np
 from sklearn.linear_model import RidgeCV
 
-alphas = np.logspace(-10, -1, num=30)
+alphas = np.logspace(-2, 0, num=20)
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
-                      RidgeCV(store_cv_values=True))
+                      RidgeCV(alphas=alphas, store_cv_values=True))
 
 # %%
-cv_results = cross_validate(ridge, X, y, cv=10,
+from sklearn.model_selection import ShuffleSplit
+
+cv = ShuffleSplit(n_splits=5, random_state=1)
+cv_results = cross_validate(ridge, X, y, cv=cv,
                             return_train_score=True,
-                            return_estimator=True)
+                            return_estimator=True,
+                            n_jobs=-1)
 test_score = cv_results["test_score"]
 print(f"R2 score of ridge model with optimal alpha on the test set:\n"
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
+# %%
+train_score = cv_results["train_score"]
+print(f"R2 score of ridge model on the train set:\n"
+      f"{train_score.mean():.3f} +/- {train_score.std():.3f}")
+
 # %% [markdown]
-# In the next exercise, you will use a scikit-learn estimator which allows to
-# make some parameters tuning instead of programming yourself a `for` loop by
-# hand.
+# By optimizing `alpha`, we see that the training an testing scores are closed.
+# It indicates that our model is not overfitting.
 #
+# When fitting the ridge regressor, we also requested to store the error found
+# during cross-validation (by setting the parameter `store_cv_values=True`).
+# We will plot the mean MSE for the different `alphas`.
+
+# %%
+cv_alphas = pd.DataFrame(
+    [est[-1].cv_values_.mean(axis=0) for est in cv_results["estimator"]],
+     columns=alphas)
+
+_, ax = plt.subplots()
+cv_alphas.mean(axis=0).plot(ax=ax, marker="+")
+ax.set_ylabel("Mean squared error\n (lower is better)")
+ax.set_xlabel("alpha")
+_ = ax.set_title("Error obtained by cross-validation")
+
+# %% [markdown]
+# As we can see, regularization is just like salt in cooking: one must balance
+# its amount to get the best performance. We can check if the best `alpha`
+# found is stable across the cross-validation fold.
+
+# %%
+best_alphas = [est[-1].alpha_ for est in cv_results["estimator"]]
+best_alphas
+
+# %% [markdown]
 # In this notebook, you learned about the concept of regularization and
 # the importance of preprocessing and parameter tuning.

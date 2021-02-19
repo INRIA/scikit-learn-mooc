@@ -31,7 +31,7 @@
 #
 # ## Data preparation
 #
-# First, let's charge the full adult census dataset.
+# First, let's load the full adult census dataset.
 
 # %%
 import pandas as pd

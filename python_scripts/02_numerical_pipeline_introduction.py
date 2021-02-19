@@ -20,7 +20,7 @@
 #
 # In particular we will highlight:
 #
-# * the scikit-learn API : `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
+# * the scikit-learn API: `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
 # * how to evaluate the performance of a model with a train-test split.
 #
 # ## Loading the dataset with Pandas

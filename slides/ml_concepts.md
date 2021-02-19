@@ -50,7 +50,7 @@ Some examples of machine learning
 
 ???
 
-First, I would like to discuss : Why and when would we use machine learning?
+First, I would like to discuss: Why and when would we use machine learning?
 
 Let me start with a couple examples.
 
@@ -134,7 +134,7 @@ US Census data:
 
 For this, we can use data from the US census.
 
-As you see, it gives fairly diverse information about individuals :
+As you see, it gives fairly diverse information about individuals:
 _age, work class, education, marital status, occupation, relationship, and more information_,
 as well as whether they earn more or less than 50 thousand dollars a year.
 We can use machine learning to build rules that will predict this income

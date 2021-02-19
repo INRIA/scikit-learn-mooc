@@ -22,7 +22,7 @@ import pandas as pd
 df = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We extract the column containing the target
+# We extract the column containing the target.
 
 # %%
 target_name = "class"
@@ -30,8 +30,8 @@ target = df[target_name]
 target
 
 # %% [markdown]
-# We drop from our data the target name, and well as the fnlwgt column
-# which is a censurs weighting and the education-num column, which
+# We drop from our data the target name, and well as the `"fnlwgt"` column
+# which is a censurs weighting and the `"education-num"` column, which
 # duplicates the information in another column.
 
 # %%
@@ -51,14 +51,14 @@ df_train, df_test, target_train, target_test = train_test_split(
 # We will define a pipeline as seen in the first module. It will handle both
 # numerical and categorical features.
 #
-# As we will use a tree-based model as a predictor, here we apply an
-# ordinal encoder on the categorical features: it encodes
-# every category with an arbitrary integer. For simple models such as
-# linear models, a one-hot encoder should be prefered. But for complex
-# models, in particular tree-based models, the ordinal encoder is useful
-# as it avoids having high-dimensional representations
+# As we will use a tree-based model as a predictor, here we apply an ordinal
+# encoder on the categorical features: it encodes every category with an
+# arbitrary integer. For simple models such as linear models, a one-hot encoder
+# should be preferred. But for complex models, in particular tree-based models,
+# the ordinal encoder is useful as it avoids having high-dimensional
+# representations.
 #
-# First we select all the categorical columns
+# First we select all the categorical columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -79,8 +79,8 @@ categories = [
 categorical_preprocessor = OrdinalEncoder(categories=categories)
 
 # %% [markdown]
-# We now use a column transformer with code to select the
-# categorical columns and apply to them the ordinal encoder
+# We now use a column transformer with code to select the categorical columns
+# and apply to them the ordinal encoder.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -174,7 +174,7 @@ print(f"The best set of parameters is: "
 #
 # In addition, we can inspect all results which are stored in the attribute
 # `cv_results_` of the grid-search. We will filter some specific columns
-# from these results
+# from these results.
 
 # %%
 cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
@@ -281,9 +281,9 @@ ax.invert_yaxis()
 # 10 is).
 #
 # ```{note}
-# Random search (with `RandomizedSearchCV`) is typical beneficial compared
+# Random search (with `RandomizedSearchCV`) is typically beneficial compared
 # to grid search (with `GridSearchCV`) to optimize 3 or more
-# hyperparameter.
+# hyperparameters.
 # ```
 #
 # We will optimize 3 other parameters in addition to the ones we

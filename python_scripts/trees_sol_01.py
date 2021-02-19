@@ -81,7 +81,7 @@ _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
 # Did we make use of the feature "Culmen Length"?
-# Plot the tree using the function `sklearn.tree.plot_tree` to find out !
+# Plot the tree using the function `sklearn.tree.plot_tree` to find out!
 
 # %%
 from sklearn.tree import plot_tree

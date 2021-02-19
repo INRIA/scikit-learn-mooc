@@ -320,7 +320,7 @@ print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 # %% [markdown]
 #
 # In this notebook we have:
-# * seen two common strategies for encoding categorical features : **ordinal
+# * seen two common strategies for encoding categorical features: **ordinal
 #   encoding** and **one-hot encoding**;
 # * used a **pipeline** to use a **one-hot encoder** before fitting a logistic
 #   regression.

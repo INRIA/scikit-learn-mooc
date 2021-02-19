@@ -24,9 +24,10 @@ numerical_columns = [
 target = df[target_name]
 data = df[numerical_columns]
 
-
 # %% [markdown]
-# Our data is only numerical
+# Our data is only numerical.
+
+# %%
 data.head()
 
 # %% [markdown]
@@ -39,12 +40,12 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
 
 # %% [markdown]
-# Let's create a simple predictive model made of a scaling followed by a
+# Let's create a simple predictive model made of a scaler followed by a
 # logistic regression classifier.
 #
-# Many models, including linear ones, work better if all features have a
-# similar scaling. For this purpose, we use a `StandardScaler`, which
-# transforms the data by rescaling features.
+# As mentioned in previous notebooks, many models, including linear ones,
+# work better if all features have a similar scaling. For this purpose,
+# we use a `StandardScaler`, which transforms the data by rescaling features.
 
 # %%
 from sklearn.pipeline import Pipeline
@@ -101,7 +102,9 @@ model.get_params()['classifier__C']
 
 # %% [markdown]
 # We can vary systematically the value of C to see if there is an optimal
-# value
+# value.
+
+# %%
 for C in [1e-3, 1e-2, 1e-1, 1, 10]:
     model.set_params(classifier__C=C)
     model.fit(data_train, target_train)

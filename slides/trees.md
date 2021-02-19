@@ -11,11 +11,11 @@ These are models for both regression and classification.
 <img src="../figures/scikit-learn-logo.svg">
 
 ???
-Decision tree are built as a set of rules for both 
+Decision tree are built as a set of rules for both
 classification and regression problems.
 
-These are the building blocks for more elaborate models such 
-as *random forest* and *gradient boosting trees*, as we will see.
+These are the building blocks for more elaborate models such
+as _random forest_ and _gradient boosting trees_, as we will see.
 
 ---
 
@@ -46,7 +46,7 @@ and how it can form the basis of classification and regression models.
 ???
 A decision tree is a set of rules, combined in a hierarchical manner.
 
-In this example, if a new point has to be classified :
+In this example, if a new point has to be classified:
 
 - we will first check the age feature, if it is lower than 28.5, we shall classify it as "low income".
 - Otherwise, depending on the hours per week feature, we will classify it as low or high income.
@@ -60,7 +60,7 @@ In this example, if a new point has to be classified :
 .pull-right[<img src="../figures/tree_blue_orange1.svg" width="100%">]
 
 ???
-Each split shall maximize the "information gain". 
+Each split shall maximize the "information gain".
 That will be defined precisely in the following notebook.
 
 ---
@@ -72,7 +72,7 @@ That will be defined precisely in the following notebook.
 .pull-right[<img src="../figures/tree_blue_orange2.svg" width="100%">]
 
 ???
-We can incrementally expand any leaf to refine the decision function. 
+We can incrementally expand any leaf to refine the decision function.
 At each step, the leaf focuses on a smaller subregion of the space.
 
 ---

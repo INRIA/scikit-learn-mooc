@@ -302,6 +302,12 @@ cv_results["estimator"]
 # `cross_validate` function and to select the `test_score` only (as we
 # extensively did in the previous notebooks).
 
+# %%
+from sklearn.model_selection import cross_val_score
+
+scores = cross_val_score(regressor, X, y)
+scores
+
 # %% [markdown]
 # ## Summary
 #

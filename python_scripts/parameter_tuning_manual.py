@@ -31,15 +31,6 @@ data = df[numerical_columns]
 data.head()
 
 # %% [markdown]
-# We now divide the dataset into two subsets.
-
-# %%
-from sklearn.model_selection import train_test_split
-
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
-
-# %% [markdown]
 # Let's create a simple predictive model made of a scaler followed by a
 # logistic regression classifier.
 #
@@ -56,10 +47,18 @@ model = Pipeline(steps=[
     ("preprocessor", StandardScaler()),
     ("classifier", LogisticRegression())
 ])
-model.fit(data_train, target_train)
+
+# %% [markdown]
+# We can evaluate the statistical performance of the model via
+# cross-validation.
 
 # %%
-model.score(data_test, target_test)
+from sklearn.model_selection import cross_validate
+
+cv_results = cross_validate(model, data, target)
+scores = cv_results["test_score"]
+print(f"Accuracy score via cross-validation:\n"
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # We created a model with the default `C` value that is equal to 1. We saw in
@@ -74,9 +73,10 @@ model.score(data_test, target_test)
 
 # %%
 model.set_params(classifier__C=1e-3)
-model.fit(data_train, target_train)
-print(f"The test accuracy score of the model is: "
-      f"{model.score(data_test, target_test):.3f}")
+cv_results = cross_validate(model, data, target)
+scores = cv_results["test_score"]
+print(f"Accuracy score via cross-validation:\n"
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # When the model of interest is a `Pipeline`, the parameter names are of the
@@ -107,9 +107,10 @@ model.get_params()['classifier__C']
 # %%
 for C in [1e-3, 1e-2, 1e-1, 1, 10]:
     model.set_params(classifier__C=C)
-    model.fit(data_train, target_train)
-    print(f"The test accuracy score with C={C} is: "
-          f"{model.score(data_test, target_test):.3f}")
+    cv_results = cross_validate(model, data, target)
+    scores = cv_results["test_score"]
+    print(f"Accuracy score via cross-validation with C={C}:\n"
+          f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # We can see that as long as C is high enough, the model seems to perform

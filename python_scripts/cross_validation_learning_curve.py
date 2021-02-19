@@ -2,10 +2,9 @@
 # # Effect of the sample size in cross-validation
 #
 # In the previous notebook, we presented the general cross-validation framework
-# and how to assess if a predictive model is underfiting, overfitting or
-# generalizing.
-# Besides these aspects, it is also important to understand how the
-# different errors are influenced by the number of samples available.
+# and how to assess if a predictive model is underfiting, overfitting, or
+# generalizing. Besides these aspects, it is also important to understand how
+# the different errors are influenced by the number of samples available.
 #
 # In this notebook, we will show this aspect by looking a the
 # variability of the different errors.
@@ -101,10 +100,10 @@ _ = plt.title("Generalization errors distribution \n"
 
 # %% [markdown]
 # For the different sample sizes, we plotted the distribution of the
-# generalization error. We observe that the smaller the sample is,
-# the larger the variance of the generalization errors is.
-# Thus, having a small number of samples might put us in a situation
-# where it is impossible to get a reliable evaluation.
+# generalization error. We observe that the smaller the number of samples is,
+# the larger the variance of the generalization errors is. Thus, having a small
+# number of samples might put us in a situation where it is impossible to get a
+# reliable evaluation.
 #
 # ## Learning curve
 #

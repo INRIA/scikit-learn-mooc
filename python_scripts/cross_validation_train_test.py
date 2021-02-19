@@ -1,10 +1,13 @@
 # %% [markdown]
 # # The framework and why do we need it
 #
-# In this notebook, we present the general cross-validation framework. Before
-# we dive in, let's linger on the reasons for always having training
-# and testing sets. Let's first look at the limitation of using a dataset
-# without keeping any samples out.
+# In the previous notebooks, we introduce some concepts regarding the
+# evaluation of predictive models. While this section could be slightly
+# redundant, we intend to go into details into the cross-validation framework.
+#
+# Before we dive in, let's linger on the reasons for always having training and
+# testing sets. Let's first look at the limitation of using a dataset without
+# keeping any samples out.
 #
 # To illustrate the different concepts, we will use the California housing
 # dataset.
@@ -16,9 +19,16 @@ housing = fetch_california_housing(as_frame=True)
 X, y = housing.data, housing.target
 
 # %% [markdown]
-# We recall that in this dataset, the aim is to predict the median value of
-# houses in an area in California. The features collected are based on general
-# real-estate and geographical information.
+# In this dataset, the aim is to predict the median value of houses in an area
+# in California. The features collected are based on general real-estate and
+# geographical information.
+#
+# Therefore, the task to solve is different from the one shown in the previous
+# notebook. The target to be predicted is a continuous variable and not anymore
+# discrete. This task is called regression.
+#
+# Therefore, we will use predictive model specific to regression and not to
+# classification.
 
 # %%
 print(housing.DESCR)
@@ -37,9 +47,7 @@ y.head()
 # %% [markdown]
 # ## Empirical error vs generalization error
 #
-# As we are trying to predict prices, a quantitative feature, this is a
-# regression problem. Therefore, we will fit a decision tree regressor
-# on the entire dataset.
+# To solve this regression task, we will use a decision tree regressor.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -89,14 +97,14 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
 # %% [markdown]
-# Then, let's train our model
+# Then, let's train our model.
 
 # %%
 regressor.fit(X_train, y_train)
 
 # %% [markdown]
-# Finally, we can estimate the different types of errors. Let's start by
-# computing the empirical error.
+# Finally, we estimate the different types of errors. Let's start by computing
+# the empirical error.
 
 # %%
 y_pred = regressor.predict(X_train)
@@ -104,9 +112,9 @@ score = mean_absolute_error(y_pred, y_train)
 print(f"The empirical error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# We observe the same phenomena as in the previous experiment:
-# our model memorized the training set.
-# However, we can now compute the generalization error on the testing set.
+# We observe the same phenomena as in the previous experiment: our model
+# memorized the training set. However, we now compute the generalization
+# error on the testing set.
 
 # %%
 y_pred = regressor.predict(X_test)
@@ -120,11 +128,11 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # %% [markdown]
 # ## Stability of the cross-validation estimates
 #
-# When doing a single train-test split we don't give any indication
-# regarding the robustness of the evaluation of our predictive model: in
-# particular, if the test set is small, this estimate of the generalization
-# error can be unstable and wouldn't reflect the "true error rate" we would have
-# observed with the same model on an unlimited amount of test data.
+# When doing a single train-test split we don't give any indication regarding
+# the robustness of the evaluation of our predictive model: in particular, if
+# the test set is small, this estimate of the generalization error will be
+# unstable and wouldn't reflect the "true error rate" we would have observed
+# with the same model on an unlimited amount of test data.
 #
 # For instance, we could have been lucky when we did our random split of our
 # limited dataset and isolated some of the easiest cases to predict in the

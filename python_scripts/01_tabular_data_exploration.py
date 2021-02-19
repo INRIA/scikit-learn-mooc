@@ -30,6 +30,13 @@
 #
 # We will use data from the "Current Population adult_census" from 1994 that we
 # downloaded from [OpenML](http://openml.org/).
+#
+# We use pandas to read this dataset.
+#
+# ```{note}
+# [Pandas](https://pandas.pydata.org/) is a Python library used for
+# manipulating 1 and 2 dimensional structured data.
+# ```
 
 # %%
 import pandas as pd
@@ -47,10 +54,17 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # %% [markdown]
 # ## The variables (columns) in the dataset
 #
-# The data are stored in a pandas dataframe.
+# The data are stored in a pandas dataframe. A dataframe is type of structured
+# data composed of 2 dimensions. This type of data are also referred as tabular
+# data.
 #
-# Pandas is a Python library used for manipulating tables
-# (which can be seen as Excel sheets): <https://pandas.pydata.org/>
+# The rows represents a record. In the field of machine learning or descriptive
+# statistics, the terms commonly used to refer to rows are "sample",
+# "instance", or "observation".
+#
+# The columns represents a type of information collected. In the field of
+# machined learning and descriptive statistics, the terms commonly used to
+# refer to columns are "feature", "variable", "attribute", or "covariate".
 
 # %%
 adult_census.head()  # Print the first few lines of our dataframe
@@ -68,18 +82,18 @@ adult_census[target_column].value_counts()
 
 # %% [markdown]
 # ```{note}
-# Classes are slightly imbalanced,
-# meaning there are more instances of one or more classes compared to others.
-# Class imbalance happens often in practice and may need special techniques
-# for machine learning.
-# For example in a medical setting, if we are trying to predict whether patients
-# will develop a rare disease, there will be a lot more healthy patients than ill
-# patients in the dataset.
+# Classes are slightly imbalanced, meaning there are more samples of one or
+# more classes compared to others. Class imbalance happens often in practice
+# and may need special techniques when building a predictive model.
+#
+# For example in a medical setting, if we are trying to predict whether
+# subjects will develop a rare disease, there will be a lot more healthy
+# subjects than ill subjects in the dataset.
 # ```
 
 # %% [markdown]
 # The dataset contains both numerical and categorical data. Numerical values
-# can take continuous values for example `age`. Categorical values can have a
+# take continuous values, for example `age`. Categorical values can have a
 # finite number of values, for example `native-country`.
 
 # %%
@@ -109,8 +123,7 @@ print(f"The dataset contains {adult_census.shape[0]} samples and "
 
 # %% [markdown]
 # ## Visual inspection of the data
-# Before building a machine learning model, it is a good idea to look at the
-# data:
+# Before building a predictive model, it is a good idea to look at the data:
 #
 # * maybe the task you are trying to achieve can be solved without machine
 #   learning;
@@ -122,9 +135,9 @@ print(f"The dataset contains {adult_census.shape[0]} samples and "
 #   capped values).
 
 # %% [markdown]
-# Let's look at the distribution of individual variables, to get some insights
+# Let's look at the distribution of individual features, to get some insights
 # about the data. We can start by plotting histograms, note that this only
-# works for numerical variables:
+# works for features containing numerical values:
 
 # %%
 import seaborn as sns
@@ -147,14 +160,14 @@ _ = adult_census.hist(figsize=(20, 14))
 #
 # We can already make a few comments about some of the variables:
 #
-# * age: there are not that many points for 'age > 70'. The dataset description
-#   does indicate that retired people have been filtered out
+# * `age`: there are not that many points for 'age > 70'. The dataset
+#   description does indicate that retired people have been filtered out
 #   (`hours-per-week > 0`);
-# * education-num: peak at 10 and 13, hard to tell what it corresponds to
+# * `education-num`: peak at 10 and 13, hard to tell what it corresponds to
 #   without looking much further. We'll do that later in this notebook;
-# * hours per week peaks at 40, this was very likely the standard number of
+# * `hours-per-week` peaks at 40, this was very likely the standard number of
 #   working hours at the time of the data collection;
-# * most values of capital-gain and capital-loss are close to zero.
+# * most values of `capital-gain` and `capital-loss` are close to zero.
 
 # %% [markdown]
 # For categorical variables, we can look at the distribution of values:
@@ -176,11 +189,11 @@ pd.crosstab(index=adult_census['education'],
             columns=adult_census['education-num'])
 
 # %% [markdown]
-# This shows that education and education-num gives you the same information.
-# For example, `education-num=2` is equivalent to `education='1st-4th'`. In
-# practice that means we can remove `education-num` without losing information.
-# Note that having redundant (or highly correlated) columns can be a problem
-# for machine learning algorithms.
+# This shows that `education` and `education-num` gives you the same
+# information. For example, `education-num=2` is equivalent to
+# `education='1st-4th'`. In practice that means we can remove `education-num`
+# without losing information. Note that having redundant (or highly correlated)
+# columns can be a problem for machine learning algorithms.
 
 # %% [markdown]
 # ```{note}
@@ -189,7 +202,7 @@ pd.crosstab(index=adult_census['education'],
 # ```
 
 # %% [markdown]
-# Another way to inspect the data is to do a pairplot and show how each
+# Another way to inspect the data is to do a `pairplot` and show how each
 # variable differs according to our target, `class`. Plots along the diagonal
 # show the distribution of individual variables for each `class`. The plots on
 # the off-diagonal can reveal interesting interactions between variables.

@@ -2,7 +2,7 @@
 
 To preview slides `https://inria.github.io/scikit-learn-mooc/slides/?file=[FILENAME].md`
 
-Example : https://inria.github.io/scikit-learn-mooc/slides/?file=ml_concepts.md
+Example: https://inria.github.io/scikit-learn-mooc/slides/?file=ml_concepts.md
 
 # Export
 

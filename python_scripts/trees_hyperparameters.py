@@ -2,7 +2,7 @@
 # # Importance of decision tree hyperparameters on generalization
 #
 # In this notebook, we will illustrate the importance of some key
-# hyperparameters on the decision tree ; we will demonstrate their effects on
+# hyperparameters on the decision tree; we will demonstrate their effects on
 # the classification and regression problems we saw previously.
 #
 # First, we will load the classification and regression datasets.
@@ -127,7 +127,7 @@ fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
 plt.subplots_adjust(wspace=0.3)
 
 # %% [markdown]
-# For both classification and regression setting, we can observe that
+# For both classification and regression setting, we observe that
 # increasing the depth will make the tree model more expressive. However, a
 # tree that is too deep will overfit the training data, creating partitions
 # which are only correct for "outliers" (noisy samples). The `max_depth` is one
@@ -200,8 +200,9 @@ _ = sns.scatterplot(
     data=data_clf, palette=["tab:red", "tab:blue"])
 
 # %% [markdown]
-# We will first train a shallow decision tree with `max_depth=2`. We can expect
-# this depth to be enough to separate the blobs that are easy to separate.
+# We will first train a shallow decision tree with `max_depth=2`. We would
+# expect this depth to be enough to separate the blobs that are easy to
+# separate.
 
 # %%
 _, ax = plt.subplots()
@@ -215,7 +216,7 @@ _ = plot_classification(tree_clf, data_clf[data_clf_columns],
 #
 # Indeed, we see that red blob on the top and the blue blob on the right of
 # the plot are perfectly separated. However, the tree is still making mistakes
-# in the area where the blobs are mixed together. We can check the tree
+# in the area where the blobs are mixed together. Let's check the tree
 # representation.
 
 # %%
@@ -225,7 +226,7 @@ _, ax = plt.subplots(figsize=(10, 10))
 _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 
 # %% [markdown]
-# We see that the right branch achieves perfect classification. We can now
+# We see that the right branch achieves perfect classification. Now, we
 # increase the depth to check how the tree will grow.
 
 # %%

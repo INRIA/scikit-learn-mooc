@@ -16,7 +16,10 @@
 # # Preprocessing for numerical features
 #
 # In this notebook, we present how to build predictive models on tabular
-# datasets, with only numerical features.
+# datasets, with only numerical features. By contrast, with the previous
+# notebook, we will select the numerical features from the original dataset
+# instead to read an external file where the selection has been done
+# beforehand.
 #
 # In particular we will highlight:
 #
@@ -28,7 +31,7 @@
 #
 # ## Data preparation
 #
-# First, let's charge the full adult census dataset.
+# First, let's load the full adult census dataset.
 
 # %%
 import pandas as pd
@@ -131,35 +134,34 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 data_train.describe()
 
 # %% [markdown]
-# We see that the dataset's features span across different ranges.
-# However, we want to have normalized features because some algorithms make
-# assumptions regarding their distribution, and being normalized is usually
-# one of them.
+# We see that the dataset's features span across different ranges. Some
+# algorithms have some assumptions regarding the feature distrbutions and
+# usually normalizing features will be helpful to address this assumptions.
 #
 # ```{tip}
 # Here are some reasons for scaling features:
 #
-# * Models that rely on the distance between a pair of samples (e.g k-nearest
-#   neighbors) should be trained on normalized features to make each feature
-#   contribute approximately equally to the distance computations.
+# * Models that rely on the distance between a pair of samples, for instance
+#   k-nearest neighbors, should be trained on normalized features to make each
+#   feature contribute approximately equally to the distance computations.
 #
 # * Many models such as logistic regression use a numerical solver (based on
 #   gradient descent) to find their optimal parameters. This solver converges
 #   faster when the features are scaled.
 #
-# * predictors using Euclidean distance (e.g k-nearest-neighbors) should have
-#   normalized features so that each one contributes equally to the distance
-#   computation;
-# * predictors using gradient-descent based algorithms (e.g logistic regression)
-#   to find optimal parameters work better and faster;
-# * predictors using regularization (e.g logistic regression) require normalized
-#   features to properly apply the weights.
+# * predictors using Euclidean distance, for instance k-nearest-neighbors,
+#   should have normalized features so that each one contributes equally to the
+#   distance computation;
+# * predictors using gradient-descent based algorithms, for instance
+#   logistic regression, to find optimal parameters work better and faster;
+# * predictors using regularization, for instance logistic regression,
+#   require normalized features to properly apply the weights.
 # ```
 #
 # Whether or not a machine learning model requires scaling the features depends
 # on the model family. Linear models such as logistic regression generally
-# benefit from scaling the features while other models such as decision trees do
-# not need such preprocessing.
+# benefit from scaling the features while other models such as decision trees
+# do not need such preprocessing (but will not suffer from it).
 #
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer shifts and scales each feature
@@ -179,10 +181,11 @@ data_train_scaled.describe()
 
 # %% [markdown]
 # We can easily combine these sequential operations with a scikit-learn
-# `Pipeline`, which chains together operations and can be used like any other
+# `Pipeline`, which chains together operations and is used as any other
 # classifier or regressor. The helper function `make_pipeline` will create a
 # `Pipeline`: it takes as arguments the successive transformations to perform,
-# followed by the classifier or regressor model.
+# followed by the classifier or regressor model, and will assign automatically
+# a name at steps based on the name of the classes.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -205,18 +208,21 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 #
 # ## Model evaluation using cross-validation
 #
-# In the previous example, we split the original data into a training set
-# and a testing set.
-# This strategy has several issues: in the setting where the amount of data
-# is limited, the subset used to train or test will be small.
+# In the previous example, we split the original data into a training set and a
+# testing set. This strategy has several issues: in the setting where the
+# amount of data is limited, the subset used to train or test will be small.
 # Moreover, if the splitting was done in a random manner, we do not have
 # information regarding the confidence of the results obtained.
 #
-# Instead, we can use cross-validation.
-# Cross-validation consists of repeating
+# Instead, we can use cross-validation. Cross-validation consists of repeating
 # this random splitting into training and testing sets and aggregating the
 # model performance. By repeating the experiment, one can get an estimate of
 # the variability of the model performance.
+#
+# ```{note}
+# We will go into details regarding cross-validation in the upcoming module
+# "Selecting the best model".
+# ```
 #
 # The function `cross_val_score` allows for such experimental protocol by
 # giving the model, the data and the target. Since there exists several

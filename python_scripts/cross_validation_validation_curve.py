@@ -26,9 +26,9 @@ regressor = DecisionTreeRegressor()
 # ## Overfitting vs. underfitting
 #
 # To better understand the performance of our model and maybe find insights on
-# how to improve it we will compare the generalization error with the empirical
-# error. Thus, we need to compute the error on the training set, which is
-# possible using the `cross_validate` function.
+# how to improve it, we will compare the generalization error with the
+# empirical error. Thus, we need to compute the error on the training set,
+# which is possible using the `cross_validate` function.
 
 # %%
 import pandas as pd
@@ -128,8 +128,8 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 #
 # - For `max_depth > 10`, the decision tree overfits. The empirical error
 #   becomes very small, while the generalization error increases. In this
-#   region, the models captures too much of the noisy part of the variations of
-#   the target and this harms its ability to generalize to test data.
+#   region, the models create decision specifically for noisy samples harming
+#   its ability to generalize to test data.
 #
 # Note that for `max_depth = 10`, the model overfits a bit as there is a gap
 # between the empirical error and the generalization error. It can also
@@ -147,6 +147,7 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 #
 # In this notebook, we saw:
 #
-# * how to identify whether a model is generalizing, overfitting, or underfitting;
+# * how to identify whether a model is generalizing, overfitting, or
+#   underfitting;
 # * how to check influence of an hyperparameter on the tradeoff
 #   underfit/overfit.

@@ -28,6 +28,9 @@ How is organized a tabular dataset ?
 A categorical variable is:
 
 - a) a variable with only two different possible values
+  (for instance "enabled" or "disabled")
 - b) a variable with continuous numerical values
+  (for instance price or temperature)
 - c) a variable with a finite set of possible values
+  (for instance "red", "blue", or "green")
 ```

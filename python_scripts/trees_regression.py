@@ -93,7 +93,7 @@ _ = plt.legend()
 # length and body mass.
 #
 # Instead, we observe that the predictions of the tree are piecewise constant.
-# Indeed, our feature space was split into two partitions. We can check the
+# Indeed, our feature space was split into two partitions. Let's check the
 # tree structure to see what was the threshold found during the training.
 
 # %%
@@ -110,7 +110,7 @@ _ = plot_tree(tree, feature_names=data_columns, ax=ax)
 #
 # In classification, we saw that increasing the depth of the tree allowed us to
 # get more complex decision boundaries.
-# We can check the effect of increasing the depth in a regression setting:
+# Let's check the effect of increasing the depth in a regression setting:
 
 # %%
 tree = DecisionTreeRegressor(max_depth=3)

@@ -81,7 +81,7 @@ _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
 # Did we make use of the feature "Culmen Length"?
-# Plot the tree using the function `sklearn.tree.plot_tree` to find out !
+# Plot the tree using the function `sklearn.tree.plot_tree` to find out!
 
 # %%
 from sklearn.tree import plot_tree
@@ -91,7 +91,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
               class_names=tree.classes_, impurity=False, ax=ax)
 
 # %% [markdown]
-# We can see that the second tree level used the "Culmen Length" to make
+# We see that the second tree level used the "Culmen Length" to make
 # two new decisions. Qualitatively, we saw that such a simple tree was enough
 # to classify the penguins' species.
 #

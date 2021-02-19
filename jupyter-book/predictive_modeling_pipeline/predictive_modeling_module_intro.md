@@ -5,13 +5,12 @@
 <!-- Give in plain English what the module is about -->
 
 This module will give an example of a typical predictive modeling pipeline
-developed using tabular data.  
-Note: Data is called tabular when it has a named column.  
-We will present this pipeline in a progressive way.
-First, we will make an analysis of the dataset used.
-Subsequently, we will train our first pipeline with a subset of the dataset,
-containing only numerical features.  
-Finally, we will extend our pipeline to use mixed types of data, i.e. 
+developed using tabular data (data that can be structured in a 2-dimensional
+table). We will present this pipeline in a progressive way. First, we will make
+an analysis of the dataset used. Subsequently, we will train our first
+predictive pipeline with a subset of the dataset. Then, we will give particular
+attention to the type of data, numerical and categorical, that our model has to
+handle. Finally, we will extend our pipeline to use mixed types of data, i.e.
 numerical and categorical data.
 
 ## Before getting started
@@ -37,7 +36,7 @@ Here are a few good reference links about these requirements:
 
 The objective in the module are the following:
 
-- build intuition regarding an unknown dataset;
+- build intuitions regarding an unknown dataset;
 - identify and differentiate numerical and categorical features;
 - create an advanced predictive pipeline with scikit-learn.
 

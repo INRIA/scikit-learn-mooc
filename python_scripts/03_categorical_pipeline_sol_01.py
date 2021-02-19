@@ -70,7 +70,7 @@ categories
 # ordinal encoder before to feed a logistic regression.
 
 # %%
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
@@ -78,7 +78,8 @@ from sklearn.linear_model import LogisticRegression
 model = make_pipeline(
     OrdinalEncoder(categories=categories),
     LogisticRegression(max_iter=500))
-scores = cross_val_score(model, data_categorical, target)
+cv_results = cross_validate(model, data_categorical, target)
+scores = cv_results["test_score"]
 print(f"The different scores obtained are: \n{scores}")
 
 # %%
@@ -96,8 +97,9 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # %%
 from sklearn.dummy import DummyClassifier
 
-scores = cross_val_score(DummyClassifier(strategy="most_frequent"),
-                         data_categorical, target)
+cv_results = cross_validate(DummyClassifier(strategy="most_frequent"),
+                            data_categorical, target)
+scores = cv_results["test_score"]
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
@@ -111,6 +113,7 @@ from sklearn.preprocessing import OneHotEncoder
 model = make_pipeline(
     OneHotEncoder(categories=categories, drop="if_binary"),
     LogisticRegression(max_iter=500))
-scores = cross_val_score(model, data_categorical, target)
+cv_results = cross_validate(model, data_categorical, target)
+scores = cv_results["test_score"]
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")

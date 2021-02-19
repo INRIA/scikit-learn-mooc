@@ -118,21 +118,22 @@ data["age"].describe()
 #
 # However, the column `"education-num"` is different. It corresponds to the
 # educational stage that is not necessarily the number of years studied, and
-# thus not a quantitative measurement. This variable is a categorical variable
-# already encoded with discrete numerical value. To see this specificities, we
-# can look at the count for each educational stage:
+# thus not a quantitative measurement. This feature is a categorical feature
+# already encoded with discrete numerical values. To see this specificity, we
+# will look at the count for each educational stage:
 
 # %%
 data["education-num"].value_counts().sort_index()
 
 # %% [markdown]
-# This variable is indeed a nominal categorical feature. We exclude it from
-# our analysis since particular attention will be given to categorical
-# features in the next notebook.
+# This feature is indeed a nominal categorical feature. We exclude it from
+# our analysis since particular attention is required when dealing with
+# categorical features. This topic will be discussed in depth in the subsequent
+# notebook.
 #
 # In addition, we decide to ignore the column `"fnlwgt"`. This decision is not
 # linked with the feature being numerical or categorical. Indeed, this feature
-# is derived from a combination other variable as mentioned in the description
+# is derived from a combination other features, as mentioned in the description
 # of the dataset. Thus, we will only focus on the original data collected
 # during the survey.
 #

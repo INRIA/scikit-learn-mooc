@@ -285,9 +285,9 @@ print(f"The mean cross-validation accuracy is: "
 # the blue samples. Cross-validation is therefore computationally intensive
 # because it requires training several models instead of one.
 #
-# Note that the `cross_val_score` method above discards the 5 models that were
-# trained on the different overlapping subset of the dataset. The goal of
-# cross-validation is not to train a model, but rather to estimate
+# Note that by default the `cross_validate` function above discards the 5
+# models that were trained on the different overlapping subset of the dataset.
+# The goal of cross-validation is not to train a model, but rather to estimate
 # approximately the generalization performance of a model that would have been
 # trained to the full training set, along with an estimate of the variability
 # (uncertainty on the generalization accuracy).

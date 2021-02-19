@@ -67,6 +67,15 @@ data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
 # %% [markdown]
+#
+# ```{caution}
+# Be aware that we are using a single train-test split instead of a
+# cross-validation to present the scikit-learn transformers API. We are not
+# interested in evaluating the statistical performance of the predictive model.
+# For this latest purpose, it would be required to evaluate via
+# cross-validation.
+# ```
+#
 # ## Model fitting without preprocessing
 #
 # We will use the logistic regression classifier as in the previous notebook.

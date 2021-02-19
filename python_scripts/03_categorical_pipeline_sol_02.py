@@ -59,7 +59,7 @@ categories = [
 
 # %%
 # %%time
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
@@ -72,7 +72,8 @@ preprocessor = ColumnTransformer([
     remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-scores = cross_val_score(model, data, target)
+cv_results = cross_validate(model, data, target)
+scores = cv_results["test_score"]
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
@@ -89,7 +90,8 @@ preprocessor = ColumnTransformer([
      categorical_columns)])
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-scores = cross_val_score(model, data, target)
+cv_results = cross_validate(model, data, target)
+scores = cv_results["test_score"]
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
@@ -132,7 +134,8 @@ preprocessor = ColumnTransformer([
     remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-scores = cross_val_score(model, data, target)
+cv_results = cross_validate(model, data, target)
+scores = cv_results["test_score"]
 print(f"The different scores obtained are: \n{scores}")
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 

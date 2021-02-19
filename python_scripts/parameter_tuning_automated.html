@@ -1195,7 +1195,7 @@ tuning.</p></li>
 </div>
 </div>
 </div>
-<p>We extract the column containing the target</p>
+<p>We extract the column containing the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
@@ -1221,8 +1221,8 @@ Name: class, Length: 48842, dtype: object
 </div>
 </div>
 </div>
-<p>We drop from our data the target name, and well as the fnlwgt column
-which is a censurs weighting and the education-num column, which
+<p>We drop from our data the target name, and well as the <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> column
+which is a censurs weighting and the <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> column, which
 duplicates the information in another column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1357,13 +1357,13 @@ duplicates the information in another column.</p>
 </div>
 <p>We will define a pipeline as seen in the first module. It will handle both
 numerical and categorical features.</p>
-<p>As we will use a tree-based model as a predictor, here we apply an
-ordinal encoder on the categorical features: it encodes
-every category with an arbitrary integer. For simple models such as
-linear models, a one-hot encoder should be prefered. But for complex
-models, in particular tree-based models, the ordinal encoder is useful
-as it avoids having high-dimensional representations</p>
-<p>First we select all the categorical columns</p>
+<p>As we will use a tree-based model as a predictor, here we apply an ordinal
+encoder on the categorical features: it encodes every category with an
+arbitrary integer. For simple models such as linear models, a one-hot encoder
+should be preferred. But for complex models, in particular tree-based models,
+the ordinal encoder is useful as it avoids having high-dimensional
+representations.</p>
+<p>First we select all the categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -1388,8 +1388,8 @@ as it avoids having high-dimensional representations</p>
 </div>
 </div>
 </div>
-<p>We now use a column transformer with code to select the
-categorical columns and apply to them the ordinal encoder</p>
+<p>We now use a column transformer with code to select the categorical columns
+and apply to them the ordinal encoder.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -1617,7 +1617,7 @@ similar to the ones we found in the previous exercise, where we searched the
 best parameters “by hand” through a double for loop.</p>
 <p>In addition, we can inspect all results which are stored in the attribute
 <code class="docutils literal notranslate"><span class="pre">cv_results_</span></code> of the grid-search. We will filter some specific columns
-from these results</p>
+from these results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
@@ -2106,9 +2106,9 @@ take positive values with a natural log scaling (.1 is as close to 1 as
 10 is).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Random search (with <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code>) is typical beneficial compared
+<p>Random search (with <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code>) is typically beneficial compared
 to grid search (with <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>) to optimize 3 or more
-hyperparameter.</p>
+hyperparameters.</p>
 </div>
 <p>We will optimize 3 other parameters in addition to the ones we
 optimized above:</p>

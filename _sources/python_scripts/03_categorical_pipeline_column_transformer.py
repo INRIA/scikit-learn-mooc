@@ -15,8 +15,10 @@
 # %% [markdown]
 # # Using numerical and categorical variables together
 #
-# In this notebook, we will present typical ways of dealing with
-# both numerical and categorical variables together.
+# In the previous notebooks, we showed the required preprocessing to apply
+# when dealing with numerical and categorical variables. However, we decoupled
+# the process to treat each type individually. In this notebook, we will show
+# how to combine these preprocessing steps.
 #
 # We will first load the entire adult census dataset.
 
@@ -31,9 +33,9 @@ target = df[target_name]
 data = df.drop(columns=[target_name, "fnlwgt"])
 
 # %% [markdown]
-# We recall that both "education-num" and "education" contain the same
-# information. In the previous notebook, we dropped "education-num" and
-# used "education" instead ; we will do the same processing here.
+# We recall that both `"education-num"` and `"education"` contain the same
+# information. In the previous notebook, we dropped `"education-num"` and
+# used `"education"` instead; we will do the same processing here.
 
 # %%
 data = data.drop(columns="education-num")
@@ -74,16 +76,17 @@ categories = [data[column].unique()
 # model on a dataset that combines both kinds of variables together
 # (heterogeneously typed tabular data).
 #
-# We can first define the columns depending on their data type:
+# We first define the columns depending on their data type:
 #
 # * **one-hot encoding** will be applied to categorical columns. Besides, we
 #   will use the option `drop="if_binary"` to drop one of the column since the
 #   information will be correlated;
 # * **numerical scaling** numerical features which will be standardized.
 #
-# We can now create our `ColumnTransfomer` by specifying three values:
+# Now, we create our `ColumnTransfomer` by specifying three values:
 # the preprocessor name, the transformer, and the columns.
-# First, let's create the preprocessors for the numerical and categorical parts.
+# First, let's create the preprocessors for the numerical and categorical
+# parts.
 
 # %%
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -93,8 +96,8 @@ categorical_preprocessor = OneHotEncoder(categories=categories,
 numerical_preprocessor = StandardScaler()
 
 # %% [markdown]
-# Now, we can create the transformer and associate each of these
-# preprocessors with their respective columns.
+# Now, we create the transformer and associate each of these preprocessors
+# with their respective columns.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -104,7 +107,7 @@ preprocessor = ColumnTransformer([
     ('standard-scaler', numerical_preprocessor, numerical_columns)])
 
 # %% [markdown]
-# Finally, we can define a pipeline to stack this "preprocessor" with our
+# Finally, we define a pipeline to stack this "preprocessor" with our
 # classifier (logistic regression).
 
 # %%
@@ -124,11 +127,11 @@ model
 
 # %% [markdown]
 # The final model is more complex than the previous models but still follows
-# the same API:
+# the same API (the same set of methods that can be called by the user):
 #
 # - the `fit` method is called to preprocess the data then train the
 #   classifier;
-# - the `predict` method can make predictions on new data;
+# - the `predict` method make predictions on new data;
 # - the `score` method is used to predict on the test data and compare the
 #   predictions to the expected test labels to compute the accuracy.
 #
@@ -147,10 +150,11 @@ data_train, data_test, target_train, target_test = train_test_split(
 _ = model.fit(data_train, target_train)
 
 # %% [markdown]
-# Then, we can send the raw dataset straight to the pipeline ;
-# indeed, we don't need to make any processing as it will be handled when
-# calling `predict`. Let's demonstrate that by predicting on the first five
-# samples from the test set.
+# Then, we can send the raw dataset straight to the pipeline. Indeed, we do not
+# need to make any manual preprocessing (calling the `transform` or
+# `fit_transform` methods) as it will be handled when calling the `predict`
+# method. As an example, we predict on the five first samples from the test
+# set.
 
 # %%
 data_test.head()
@@ -162,8 +166,8 @@ model.predict(data_test)[:5]
 target_test[:5]
 
 # %% [markdown]
-# We can get the accuracy score by calling directly the `score` method. We will
-# compute the score on the entire test set.
+# To get directly the accuracy score, we need to call the `score` method. Let's
+# compute the accuracy score on the entire test set.
 
 # %%
 model.score(data_test, target_test)
@@ -171,8 +175,9 @@ model.score(data_test, target_test)
 # %% [markdown]
 # ## Evaluation of the model with cross-validation
 #
-# This model can also be cross-validated as we previously did (instead of using
-# a single train-test split):
+# As previously stated, a predictive model should be evaluated by
+# cross-validation. Our model is usable with the cross-validation tools of
+# scikit-learn as any other predictors:
 
 # %%
 from sklearn.model_selection import cross_val_score

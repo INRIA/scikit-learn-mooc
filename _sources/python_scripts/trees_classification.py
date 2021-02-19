@@ -179,8 +179,8 @@ ax.set_ylabel("Probability")
 _ = ax.set_title("Probability to belong to a penguin class")
 
 # %% [markdown]
-# We can manually compute the different probability directly from the tree
-# structure
+# We will manually compute the different probability directly from the tree
+# structure.
 
 # %%
 print(f"Probabilities for the different classes:\n"

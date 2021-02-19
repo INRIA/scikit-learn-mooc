@@ -1171,9 +1171,9 @@
 <h1>Working with numerical data<a class="headerlink" href="#working-with-numerical-data" title="Permalink to this headline">¶</a></h1>
 <p>In the previous notebook, we trained a k-nearest neighbors model on
 some data.</p>
-<p>However, we oversimplified the procedure by loading a dataset that
-contained exclusively numerical data.
-Besides, we used datasets which were already split into train-test sets.</p>
+<p>However, we oversimplified the procedure by loading a dataset that contained
+exclusively numerical data. Besides, we used datasets which were already
+split into train-test sets.</p>
 <p>In this notebook, we aim at:</p>
 <ul class="simple">
 <li><p>identifying numerical data in a heterogeneous dataset;</p></li>
@@ -1185,8 +1185,8 @@ Besides, we used datasets which were already split into train-test sets.</p>
 exploration.</p>
 <div class="section" id="loading-the-entire-dataset">
 <h2>Loading the entire dataset<a class="headerlink" href="#loading-the-entire-dataset" title="Permalink to this headline">¶</a></h2>
-<p>As in the previous notebook, we rely on Pandas to open the CSV file into
-a dataframe.</p>
+<p>As in the previous notebook, we rely on pandas to open the CSV file into
+a pandas dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1327,8 +1327,8 @@ a dataframe.</p>
 </table>
 </div></div></div>
 </div>
-<p>The next step separates the target from the data.
-We performed the same procedure in the previous notebook.</p>
+<p>The next step separates the target from the data. We performed the same
+procedure in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">),</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
@@ -1535,8 +1535,8 @@ dtype: object
 </div>
 </div>
 </div>
-<p>We seem to have only two data types.
-We can make sure by checking the unique data types.</p>
+<p>We seem to have only two data types. We can make sure by checking the unique
+data types.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -1549,7 +1549,7 @@ We can make sure by checking the unique data types.</p>
 </div>
 </div>
 </div>
-<p>Precisely ! The only two types in the dataset are integer and object.
+<p>Indeed, the only two types in the dataset are integer and object.
 We can look at the first few lines of the dataframe to understand the
 meaning of the <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p>
 <div class="cell docutils container">
@@ -1776,10 +1776,9 @@ integers and check their content.</p>
 <p>Now that we limited the dataset to numerical columns only,
 we can analyse these numbers to figure out what they represent.
 Discarding <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> for the moment, we can identify two types of usage.</p>
-<p>The first column, <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code>, is self-explanatory.
-We can note that the values are continuous, meaning they can take up any
-number in a given range.
-Let’s find out what this range is:</p>
+<p>The first column, <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code>, is self-explanatory. We can note that the values
+are continuous, meaning they can take up any number in a given range. Let’s
+find out what this range is:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1861,13 +1860,13 @@ new dataframe.</p>
 </div>
 <div class="section" id="train-test-split-the-dataset">
 <h2>Train-test split the dataset<a class="headerlink" href="#train-test-split-the-dataset" title="Permalink to this headline">¶</a></h2>
-<p>In the previous notebook, we loaded two separate datasets: a training
-one and a testing one. However, as mentioned earlier, having separate
-datasets like that is unusual: most of the time, we have a single one,
-which we will subdivide.
-We also mentioned that scikit-learn provides the helper function
-<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.train_test_split</span></code> which is used to
-automatically split the data.</p>
+<p>In the previous notebook, we loaded two separate datasets: a training one and
+a testing one. However, as mentioned earlier, having separate datasets like
+that is unusual: most of the time, we have a single one, which we will
+subdivide.</p>
+<p>We also mentioned that scikit-learn provides the helper function
+<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.train_test_split</span></code> which is used to automatically
+split the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>

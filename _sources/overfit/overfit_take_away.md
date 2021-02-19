@@ -21,10 +21,8 @@
 
 - The test error of a model that is neither overfitting nor underfitting can
   still be high if the variations of the target variable cannot be fully
-  determined by the input features.  
-  This irreducible error is caused by what we
-  sometimes call label noise.  
-  In practice, this often happens when we do not
+  determined by the input features. This irreducible error is caused by what we
+  sometimes call label noise. In practice, this often happens when we do not
   have access to important features for one reason or another.
 
 ## To go further

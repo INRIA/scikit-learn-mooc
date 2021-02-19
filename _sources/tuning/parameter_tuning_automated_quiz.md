@@ -3,18 +3,18 @@
 ```{admonition} Question
 What does `CV` stand for in `GridSearchCV` and why?
 
-- a) cross-validation : once we found the best parameters we estimate the model
+- a) cross-validation: once we found the best parameters we estimate the model
      performance through cross-validation on the full data
 - b) circular values: we do a permutation of all the possible parameter value combinations
-- c) cross-validation : for each parameter set, the score is computed by
+- c) cross-validation: for each parameter set, the score is computed by
      cross-validation on the training data
-- d) contribution value : we estimate how much each parameter contributes to the
+- d) contribution value: we estimate how much each parameter contributes to the
      model generalization performance
 ```
 
 +++
 
-``````{admonition} Question
+````{admonition} Question
 Given `pipeline` defined by:
 ```py
 from sklearn.preprocessing import StandardScaler
@@ -42,11 +42,11 @@ How should the `param_grid` variable be defined:
 - b) `param_grid = {classifier__C': [0.1, 1, 10]}`
 - c) `param_grid = {'classifier__C': 0.1, 'classifier__C': 1, 'classifier__C': 10}`
 - d) `param_grid = {'C': [0.1, 1, 10]}`
-``````
+````
 
 +++
 
-``````{admonition} Question
+```{admonition} Question
 Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 
 - a) `RandomizedSearchCV` has a fixed computation budget through its `n_iter` parameter
@@ -56,4 +56,4 @@ Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 - d) both `GridSearchCV` and `RandomizedSearchCV` have the attributes `cv_results_` and `best_params_`
 - e) both `GridSearchCV` and `RandomizedSearchCV` can use probability
      distributions to draw parameter values from
-``````
+```

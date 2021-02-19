@@ -62,13 +62,13 @@ sns.kdeplot(data=data, x=culmen_columns[1], hue=target_column,
 plt.subplots_adjust(wspace=0.4)
 
 # %% [markdown]
-# We can first check the feature distributions by looking at the diagonal plots
-# of the pairplot. We can build the following intuitions:
+# First let's check the feature distributions by looking at the diagonal plots
+# of the pairplot. We can deduce the following intuitions:
 #
-# * The Adelie species can be differentiated from the Gentoo and Chinstrap species
-#   depending on the culmen length;
-# * The Gentoo species can be differentiated from the Adelie and Chinstrap species
-#   depending on the culmen depth.
+# * The Adelie species can be differentiated from the Gentoo and Chinstrap
+#   species depending on the culmen length;
+# * The Gentoo species can be differentiated from the Adelie and Chinstrap
+#   species depending on the culmen depth.
 #
 # ## Regression dataset
 #
@@ -91,7 +91,7 @@ _ = sns.scatterplot(data=data, x=data_columns[0], y=target_column)
 
 # %% [markdown]
 # Here, we deal with a regression problem because our target is a continuous
-# variable ranging from 2.7 kg to 6.3 kg. From the scatter plot above, we can
+# variable ranging from 2.7 kg to 6.3 kg. From the scatter plot above, we
 # observe that we have a linear relationship between the flipper length
 # and the body mass. The longer the flipper of a penguin, the heavier the
 # penguin.

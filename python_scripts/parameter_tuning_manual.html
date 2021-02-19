@@ -1169,8 +1169,78 @@ feature.</p>
 </div>
 </div>
 </div>
-<p>Our data is only numerical
-data.head()</p>
+<p>Our data is only numerical.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>28</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <p>We now divide the dataset into two subsets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1182,11 +1252,11 @@ data.head()</p>
 </div>
 </div>
 </div>
-<p>Let’s create a simple predictive model made of a scaling followed by a
+<p>Let’s create a simple predictive model made of a scaler followed by a
 logistic regression classifier.</p>
-<p>Many models, including linear ones, work better if all features have a
-similar scaling. For this purpose, we use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which
-transforms the data by rescaling features.</p>
+<p>As mentioned in previous notebooks, many models, including linear ones,
+work better if all features have a similar scaling. For this purpose,
+we use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which transforms the data by rescaling features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
@@ -1301,12 +1371,35 @@ parameter, for example <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <p>We can vary systematically the value of C to see if there is an optimal
-value
-for C in [1e-3, 1e-2, 1e-1, 1, 10]:
-model.set_params(classifier__C=C)
-model.fit(data_train, target_train)
-print(f”The test accuracy score with C={C} is: “
-f”{model.score(data_test, target_test):.3f}”)</p>
+value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy score with C=</span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2"> is: &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score with C=0.001 is: 0.791
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score with C=0.01 is: 0.806
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score with C=0.1 is: 0.807
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score with C=1 is: 0.807
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score with C=10 is: 0.807
+</pre></div>
+</div>
+</div>
+</div>
 <p>We can see that as long as C is high enough, the model seems to perform
 well.</p>
 <p>What we did here is very manual: it involves scanning the values for C

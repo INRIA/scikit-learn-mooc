@@ -1191,8 +1191,10 @@
                 
   <div class="section" id="using-numerical-and-categorical-variables-together">
 <h1>Using numerical and categorical variables together<a class="headerlink" href="#using-numerical-and-categorical-variables-together" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will present typical ways of dealing with
-both numerical and categorical variables together.</p>
+<p>In the previous notebooks, we showed the required preprocessing to apply
+when dealing with numerical and categorical variables. However, we decoupled
+the process to treat each type individually. In this notebook, we will show
+how to combine these preprocessing steps.</p>
 <p>We will first load the entire adult census dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1208,9 +1210,9 @@ both numerical and categorical variables together.</p>
 </div>
 </div>
 </div>
-<p>We recall that both “education-num” and “education” contain the same
-information. In the previous notebook, we dropped “education-num” and
-used “education” instead ; we will do the same processing here.</p>
+<p>We recall that both <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> contain the same
+information. In the previous notebook, we dropped <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and
+used <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> instead; we will do the same processing here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;education-num&quot;</span><span class="p">)</span>
@@ -1256,16 +1258,17 @@ depending on their nature (i.e. numerical or categorical).</p>
 columns to a specific transformer, making it easy to fit a single predictive
 model on a dataset that combines both kinds of variables together
 (heterogeneously typed tabular data).</p>
-<p>We can first define the columns depending on their data type:</p>
+<p>We first define the columns depending on their data type:</p>
 <ul class="simple">
 <li><p><strong>one-hot encoding</strong> will be applied to categorical columns. Besides, we
 will use the option <code class="docutils literal notranslate"><span class="pre">drop=&quot;if_binary&quot;</span></code> to drop one of the column since the
 information will be correlated;</p></li>
 <li><p><strong>numerical scaling</strong> numerical features which will be standardized.</p></li>
 </ul>
-<p>We can now create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying three values:
+<p>Now, we create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying three values:
 the preprocessor name, the transformer, and the columns.
-First, let’s create the preprocessors for the numerical and categorical parts.</p>
+First, let’s create the preprocessors for the numerical and categorical
+parts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
@@ -1277,8 +1280,8 @@ First, let’s create the preprocessors for the numerical and categorical parts.
 </div>
 </div>
 </div>
-<p>Now, we can create the transformer and associate each of these
-preprocessors with their respective columns.</p>
+<p>Now, we create the transformer and associate each of these preprocessors
+with their respective columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -1290,7 +1293,7 @@ preprocessors with their respective columns.</p>
 </div>
 </div>
 </div>
-<p>Finally, we can define a pipeline to stack this “preprocessor” with our
+<p>Finally, we define a pipeline to stack this “preprocessor” with our
 classifier (logistic regression).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1369,11 +1372,11 @@ view of the pipelines.</p>
               drop='if_binary')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="10e409d1-f6fa-4929-adb0-ae745e44c1d4" type="checkbox" ><label class="sk-toggleable__label" for="10e409d1-f6fa-4929-adb0-ae745e44c1d4">standard-scaler</label><div class="sk-toggleable__content"><pre>['age', 'capital-gain', 'capital-loss', 'hours-per-week']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="b76da390-b05f-45cb-8a77-794a98ed2915" type="checkbox" ><label class="sk-toggleable__label" for="b76da390-b05f-45cb-8a77-794a98ed2915">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1d140dc9-eaa4-4ff7-8962-0cc2c947b26a" type="checkbox" ><label class="sk-toggleable__label" for="1d140dc9-eaa4-4ff7-8962-0cc2c947b26a">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=500)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>The final model is more complex than the previous models but still follows
-the same API:</p>
+the same API (the same set of methods that can be called by the user):</p>
 <ul class="simple">
 <li><p>the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to preprocess the data then train the
 classifier;</p></li>
-<li><p>the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method can make predictions on new data;</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method make predictions on new data;</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">score</span></code> method is used to predict on the test data and compare the
 predictions to the expected test labels to compute the accuracy.</p></li>
 </ul>
@@ -1396,10 +1399,11 @@ predictions to the expected test labels to compute the accuracy.</p></li>
 </div>
 </div>
 </div>
-<p>Then, we can send the raw dataset straight to the pipeline ;
-indeed, we don’t need to make any processing as it will be handled when
-calling <code class="docutils literal notranslate"><span class="pre">predict</span></code>. Let’s demonstrate that by predicting on the first five
-samples from the test set.</p>
+<p>Then, we can send the raw dataset straight to the pipeline. Indeed, we do not
+need to make any manual preprocessing (calling the <code class="docutils literal notranslate"><span class="pre">transform</span></code> or
+<code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> methods) as it will be handled when calling the <code class="docutils literal notranslate"><span class="pre">predict</span></code>
+method. As an example, we predict on the five first samples from the test
+set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1548,8 +1552,8 @@ Name: class, dtype: object
 </div>
 </div>
 </div>
-<p>We can get the accuracy score by calling directly the <code class="docutils literal notranslate"><span class="pre">score</span></code> method. We will
-compute the score on the entire test set.</p>
+<p>To get directly the accuracy score, we need to call the <code class="docutils literal notranslate"><span class="pre">score</span></code> method. Let’s
+compute the accuracy score on the entire test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
@@ -1565,8 +1569,9 @@ compute the score on the entire test set.</p>
 </div>
 <div class="section" id="evaluation-of-the-model-with-cross-validation">
 <h2>Evaluation of the model with cross-validation<a class="headerlink" href="#evaluation-of-the-model-with-cross-validation" title="Permalink to this headline">¶</a></h2>
-<p>This model can also be cross-validated as we previously did (instead of using
-a single train-test split):</p>
+<p>As previously stated, a predictive model should be evaluated by
+cross-validation. Our model is usable with the cross-validation tools of
+scikit-learn as any other predictors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>

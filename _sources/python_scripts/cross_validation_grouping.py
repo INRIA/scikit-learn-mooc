@@ -12,7 +12,7 @@ X, y = digits.data, digits.target
 
 # %% [markdown]
 # We will recreate the same model used in the previous exercise:
-# a logistic regression classifier with scaled data.
+# a logistic regression classifier with preprocessor to scale the data.
 
 # %%
 from sklearn.preprocessing import StandardScaler

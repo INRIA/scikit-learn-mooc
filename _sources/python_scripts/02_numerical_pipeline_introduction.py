@@ -20,7 +20,7 @@
 #
 # In particular we will highlight:
 #
-# * the scikit-learn API : `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
+# * the scikit-learn API: `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
 # * how to evaluate the performance of a model with a train-test split.
 #
 # ## Loading the dataset with Pandas
@@ -164,9 +164,11 @@ print(f"The testing dataset contains {data_test.shape[0]} samples and "
       f"{data_test.shape[1]} features")
 
 # %% [markdown]
-# Note that scikit-learn provides a helper function `train_test_split` which
+# ```{note}
+# Scikit-learn provides a helper function `train_test_split` which
 # can be used to split the dataset into a training and a testing set. It will
 # also ensure that the data are shuffled randomly before splitting the data.
+# ```
 #
 # Instead of computing the prediction and manually computing the average
 # success rate, we can use the method `score`. When dealing with classifiers

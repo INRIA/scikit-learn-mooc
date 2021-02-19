@@ -91,7 +91,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
               class_names=tree.classes_, impurity=False, ax=ax)
 
 # %% [markdown]
-# We can see that the second tree level used the "Culmen Length" to make
+# We see that the second tree level used the "Culmen Length" to make
 # two new decisions. Qualitatively, we saw that such a simple tree was enough
 # to classify the penguins' species.
 #

@@ -118,7 +118,7 @@ data["age"].describe()
 #
 # However, the column `"education-num"` is different. It corresponds to the
 # educational stage that is not necessarily the number of years studied, and
-# thus a quantitative measurement. This variable is a categorical variable
+# thus not a quantitative measurement. This variable is a categorical variable
 # already encoded with discrete numerical value. To see this specificities, we
 # can look at the count for each educational stage:
 

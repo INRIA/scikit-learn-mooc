@@ -1496,7 +1496,8 @@ predictive model.</p>
 <div class="section" id="identify-numerical-data">
 <h2>Identify numerical data<a class="headerlink" href="#identify-numerical-data" title="Permalink to this headline">¶</a></h2>
 <p>Numerical data are represented with numbers. They are linked to measurable
-(quantitative) data, such as age or the number of hours a person works a week.</p>
+(quantitative) data, such as age or the number of hours a person works a
+week.</p>
 <p>Predictive models are natively designed to work with numerical data.
 Moreover, numerical data usually requires very little work before getting
 started with training.</p>
@@ -1682,8 +1683,8 @@ meaning of the <code class="docutils literal notranslate"><span class="pre">obje
 </table>
 </div></div></div>
 </div>
-<p>We see that the <code class="docutils literal notranslate"><span class="pre">object</span></code> data type corresponds to columns containing strings. As
-we saw in the exploration section, these columns contain categories and we
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">object</span></code> data type corresponds to columns containing strings.
+As we saw in the exploration section, these columns contain categories and we
 will see later how to handle those. We can select the columns containing
 integers and check their content.</p>
 <div class="cell docutils container">
@@ -1800,15 +1801,14 @@ Name: age, dtype: float64
 </div>
 </div>
 <p>We can see the age varies between 17 and 90 years.</p>
-<p>The next columns contain related categorical data.
-These are discrete ; in contrast with continuous, they can only take a
-value from a finite set, which we call categories.
-We will come back later on this type of data and how to handle them.
-Here, we are only interested in recognizing them.</p>
-<p>Let’s take for example “education-num”.
-We can assert that each value, which is a number, represents an education
-level. Therefore, there is only a specific amount of values each sample can
-take. Let’s print out the distribution to get an intuition of the data:</p>
+<p>We could extend our analysis and we will find that <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;capital-loss&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> are also representing
+quantitative data.</p>
+<p>However, the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> is different. It corresponds to the
+educational stage that is not necessarily the number of years studied, and
+thus not a quantitative measurement. This feature is a categorical feature
+already encoded with discrete numerical values. To see this specificity, we
+will look at the count for each educational stage:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
@@ -1837,13 +1837,15 @@ Name: education-num, dtype: int64
 </div>
 </div>
 </div>
-<p>We can observe that the distribution is very unequal between categories.
-Such columns would require a specific processing which is different from
-continuous values, so we will ignore them for now.</p>
-<p>Finally, because we want to stick to collected data only, we will ignore
-the column <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> as it is an hand-crafted feature.
-with variable which has been collected.
-In the next notebooks, we will regularly ignore this variable as well.</p>
+<p>This feature is indeed a nominal categorical feature. We exclude it from
+our analysis since particular attention is required when dealing with
+categorical features. This topic will be discussed in depth in the subsequent
+notebook.</p>
+<p>In addition, we decide to ignore the column <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code>. This decision is not
+linked with the feature being numerical or categorical. Indeed, this feature
+is derived from a combination other features, as mentioned in the description
+of the dataset. Thus, we will only focus on the original data collected
+during the survey.</p>
 <p>Now, we can select the subset of numerical columns and store them inside a
 new dataframe.</p>
 <div class="cell docutils container">

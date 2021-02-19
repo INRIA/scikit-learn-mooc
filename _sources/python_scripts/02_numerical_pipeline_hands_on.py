@@ -49,7 +49,8 @@ target
 # ## Identify numerical data
 #
 # Numerical data are represented with numbers. They are linked to measurable
-# (quantitative) data, such as age or the number of hours a person works a week.
+# (quantitative) data, such as age or the number of hours a person works a
+# week.
 #
 # Predictive models are natively designed to work with numerical data.
 # Moreover, numerical data usually requires very little work before getting
@@ -84,8 +85,8 @@ data.dtypes.unique()
 data.head()
 
 # %% [markdown]
-# We see that the `object` data type corresponds to columns containing strings. As
-# we saw in the exploration section, these columns contain categories and we
+# We see that the `object` data type corresponds to columns containing strings.
+# As we saw in the exploration section, these columns contain categories and we
 # will see later how to handle those. We can select the columns containing
 # integers and check their content.
 
@@ -111,29 +112,30 @@ data["age"].describe()
 # %% [markdown]
 # We can see the age varies between 17 and 90 years.
 #
-# The next columns contain related categorical data.
-# These are discrete ; in contrast with continuous, they can only take a
-# value from a finite set, which we call categories.
-# We will come back later on this type of data and how to handle them.
-# Here, we are only interested in recognizing them.
+# We could extend our analysis and we will find that `"capital-gain"`,
+# `"capital-loss"`, `"hours-per-week"` and `"fnlwgt"` are also representing
+# quantitative data.
 #
-# Let's take for example "education-num".
-# We can assert that each value, which is a number, represents an education
-# level. Therefore, there is only a specific amount of values each sample can
-# take. Let’s print out the distribution to get an intuition of the data:
+# However, the column `"education-num"` is different. It corresponds to the
+# educational stage that is not necessarily the number of years studied, and
+# thus not a quantitative measurement. This feature is a categorical feature
+# already encoded with discrete numerical values. To see this specificity, we
+# will look at the count for each educational stage:
 
 # %%
 data["education-num"].value_counts().sort_index()
 
 # %% [markdown]
-# We can observe that the distribution is very unequal between categories.
-# Such columns would require a specific processing which is different from
-# continuous values, so we will ignore them for now.
+# This feature is indeed a nominal categorical feature. We exclude it from
+# our analysis since particular attention is required when dealing with
+# categorical features. This topic will be discussed in depth in the subsequent
+# notebook.
 #
-# Finally, because we want to stick to collected data only, we will ignore
-# the column `"fnlwgt"` as it is an hand-crafted feature.
-# with variable which has been collected.
-# In the next notebooks, we will regularly ignore this variable as well.
+# In addition, we decide to ignore the column `"fnlwgt"`. This decision is not
+# linked with the feature being numerical or categorical. Indeed, this feature
+# is derived from a combination other features, as mentioned in the description
+# of the dataset. Thus, we will only focus on the original data collected
+# during the survey.
 #
 # Now, we can select the subset of numerical columns and store them inside a
 # new dataframe.

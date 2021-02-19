@@ -23,30 +23,31 @@ X.head()
 # %% [markdown]
 # Now this is your turn to train a linear regression model on this dataset.
 # You will need to:
-# * split the dataset into a training and testing set;
-# * train a linear regression model on the training set;
-# * compute the mean absolute error in thousands of dollars (k$);
-# * show the values of the coefficients for each feature.
-
-# %%
-from sklearn.model_selection import train_test_split
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
-)
+# * create a linear regression model;
+# * execute a cross-validation with 10 folds and use the mean absolute error
+#   (MAE) as metric. Ensure to return the fitted estimators;
+# * compute mean and std of the MAE in thousands of dollars (k$);
+# * show the values of the coefficients for each feature using a boxplot by
+#   inspecting the fitted model returned from the cross-validation.
 
 # %%
 from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
-linear_regression.fit(X_train, y_train)
 
 # %%
-from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import cross_validate
 
-y_pred = linear_regression.predict(X_test)
+cv_results = cross_validate(linear_regression, X, y,
+                            scoring="neg_mean_absolute_error",
+                            return_estimator=True,
+                            cv=10,
+                            n_jobs=-1)
+
+# %%
 print(f"Mean absolute error on testing set: "
-      f"{mean_absolute_error(y_test, y_pred):.3f} k$")
+      f"{-cv_results['test_score'].mean():.3f} k$ +/- "
+      f"{cv_results['test_score'].std():.3f}")
 
 # %%
 import pandas as pd
@@ -54,8 +55,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-weights = pd.Series(linear_regression.coef_, index=X.columns)
-weights.plot(kind="barh")
+weights = pd.DataFrame(
+    [est.coef_ for est in cv_results["estimator"]], columns=X.columns)
+weights.plot.box(vert=False)
 _ = plt.title("Value of linear regression coefficients")
-
-# %%

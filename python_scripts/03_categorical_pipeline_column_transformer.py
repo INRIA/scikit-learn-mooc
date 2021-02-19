@@ -33,7 +33,7 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 # %% [markdown]
 # We recall that both "education-num" and "education" contain the same
 # information. In the previous notebook, we dropped "education-num" and
-# used "education" instead ; we will do the same processing here.
+# used "education" instead; we will do the same processing here.
 
 # %%
 data = data.drop(columns="education-num")
@@ -147,7 +147,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 _ = model.fit(data_train, target_train)
 
 # %% [markdown]
-# Then, we can send the raw dataset straight to the pipeline ;
+# Then, we can send the raw dataset straight to the pipeline;
 # indeed, we don't need to make any processing as it will be handled when
 # calling `predict`. Let's demonstrate that by predicting on the first five
 # samples from the test set.

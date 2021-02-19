@@ -16,7 +16,7 @@
 # # Encoding of categorical variables
 #
 # In this notebook, we will present typical ways of dealing with
-# **categorical variables**, namely **ordinal encoding** and
+# **categorical variables** by encoding them, namely **ordinal encoding** and
 # **one-hot encoding**.
 
 # %% [markdown]
@@ -44,24 +44,25 @@ data = df.drop(columns=[target_name, "fnlwgt"])
 # multiplications.
 #
 # In contrast, categorical variables have discrete values, typically
-# represented by string labels taken from a finite list of possible choices.
-# For instance, the variable `native-country` in our dataset is a categorical
-# variable because it encodes the data using a finite list of possible
-# countries (along with the `?` symbol when this information is missing):
+# represented by string labels (but not only) taken from a finite list of
+# possible choices. For instance, the variable `native-country` in our dataset
+# is a categorical variable because it encodes the data using a finite list of
+# possible countries (along with the `?` symbol when this information is
+# missing):
 
 # %%
 data["native-country"].value_counts().sort_index()
 
 # %% [markdown]
-# Now the question is: how can we easily recognize categorical columns
-# among the dataset ? Part of the answer lies in the columns' data type:
+# How can we easily recognize categorical columns among the dataset? Part of
+# the answer lies in the columns' data type:
 
 # %%
 data.dtypes
 
 # %% [markdown]
-# If we look at the "native-country" column,
-# we observe its data type is `object`, meaning it contains string values.
+# If we look at the `"native-country"` column, we observe its data type is
+# `object`, meaning it contains string values.
 #
 # Sometimes, categorical columns could also be encoded with integers. In such
 # case, looking at the data type will not be enough. In a previous notebook,
@@ -72,15 +73,15 @@ data["education-num"].value_counts()
 
 # %% [markdown]
 # When considering categorical columns, we should include these columns.
-# However, we saw earlier that `"education-num"` and `"education"` represent
-# the exact same information. Therefore, we can get rid of one of the two.
-# Because in this notebook we want to work with categorical data,
-# we will use `"education"`, which is of `object` dtype.
+# However, we also saw earlier that `"education-num"` and `"education"`
+# represent the exact same information. Therefore, we can get rid of one of the
+# two. Because in this notebook we will use `"education"` because it represents
+# the original data.
 #
 # ## Select features based on their data type
 #
-# In the previous notebook, we manually defined the numerical columns.
-# We could do the same here by using the scikit-learn helper function
+# In the previous notebook, we manually defined the numerical columns. We could
+# do a similar approach. Instead, we will use the scikit-learn helper function
 # `make_column_selector`, which allows us to select columns based on
 # their data type. We will illustrate how to use this helper.
 
@@ -92,10 +93,10 @@ categorical_columns = categorical_columns_selector(data)
 categorical_columns
 
 # %% [markdown]
-# Here, we created the selector by passing the dtype to include ;
-# we then passed the input dataset to the selector object,
-# which returned a list of column names.
-# We can now filter out the unwanted columns:
+# Here, we created the selector by passing the data type to include; we then
+# passed the input dataset to the selector object, which returned a list of
+# column names that have the requested data type. We can now filter out the
+# unwanted columns:
 
 # %%
 data_categorical = data[categorical_columns]
@@ -151,30 +152,30 @@ print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
-# We can see that the categories have been encoded for each feature (column)
-# independently. We can also note that the number of features before and after
-# the encoding is the same.
+# We see that the categories have been encoded for each feature (column)
+# independently. We also note that the number of features before and after the
+# encoding is the same.
 #
 # ```{tip}
 # This encoding was used by the dataset's publishers on the `"education"`
-# feature, which gave the feature `"education-num"`
+# feature, which gave the feature `"education-num"`.
 # ```
 #
 # However, be careful when applying this encoding strategy:
-# using this integer representation can lead downstream models
+# using this integer representation lead downstream predictive models
 # to assume that the values are ordered (0 < 1 < 2 < 3... for instance).
 #
 # By default, `OrdinalEncoder` uses a lexicographical strategy to map string
-# category labels to integers. This strategy is arbitrary and often meaningless.
-# For instance suppose the dataset has a categorical variable
+# category labels to integers. This strategy is arbitrary and often
+# meaningless. For instance, suppose the dataset has a categorical variable
 # named `"size"` with categories such as "S", "M", "L", "XL". We would like the
 # integer representation to respect the meaning of the sizes by mapping them to
-# increasing integers such as 0, 1, 2, 3.
+# increasing integers such as `0, 1, 2, 3`.
 # However, the lexicographical strategy used by default would map the labels
-# “S”, “M”, “L”, “XL” to 2, 1, 0, 3. (following the alphabetical order).
+# "S", "M", "L", "XL" to 2, 1, 0, 3, by following the alphabetical order.
 #
 # The `OrdinalEncoder` class accepts a `categories` constructor argument to
-# pass in the correct ordering explicitly.
+# pass categories in the expected ordering explicitly.
 #
 # If a categorical variable does not carry any meaningful order information
 # then this encoding might be misleading to downstream statistical models and
@@ -182,13 +183,13 @@ print(
 #
 # ```{important}
 # Note however that the impact of violating this ordering assumption is really
-# dependent on the downstream models (for instance linear models are much more
-# sensitive than models built from an ensemble of decision trees).
+# dependent on the downstream models. For instance, linear models will be
+# impacted by misordered categories while decision trees model will not be.
 # ```
 #
 # ## Encoding nominal categories (without assuming any order)
 #
-# `OneHotEncoder` is an alternative encoder that can prevent the dowstream
+# `OneHotEncoder` is an alternative encoder that prevent the dowstream
 # models to make a false assumption about the ordering of categories. For a
 # given feature, it will create as many new columns as there are possible
 # categories. For a given sample, the value of the column corresponding to the
@@ -222,8 +223,8 @@ ax.set_ylabel("Sample index")
 _ = ax.set_title("Ordinal encoding of 'education' column")
 
 # %% [markdown]
-# As we can see, each category (unique value) became a column ;
-# the encoding returned, for each sample, a 1 to specify which category it belongs to.
+# As we can see, each category (unique value) became a column; the encoding
+# returned, for each sample, a 1 to specify which category it belongs to.
 #
 # Let's apply this encoding on the full dataset.
 
@@ -249,7 +250,7 @@ columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]
-# Look at how the "workclass" variable of the first 3 records has been encoded
+# Look at how the "workclass" variable of the 3 first records has been encoded
 # and compare this to the original string representation.
 #
 # The number of features after the encoding is more than 10 times larger than
@@ -278,7 +279,7 @@ data["native-country"].value_counts()
 # In scikit-learn, there is two solutions to bypass this issue:
 #
 # * list all the possible categories and provide it to the encoder via the
-# keyword argument `categories`;
+#   keyword argument `categories`;
 # * set the parameter `handle_unknown="ignore"`.
 #
 # Here, we will use the former strategy because we are also going to use it for

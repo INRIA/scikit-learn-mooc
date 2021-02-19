@@ -162,7 +162,7 @@ _ = g.fig.suptitle(
 #
 # However, one might want to split our data by preserving the original class
 # frequencies: we want to **stratify** our data by class. In scikit-learn, some
-# cross-validation strategies implement the stratification ; they contain
+# cross-validation strategies implement the stratification; they contain
 # `Stratified` in their names.
 
 # %%

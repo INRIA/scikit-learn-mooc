@@ -4,9 +4,9 @@
 # In the previous notebook, we trained a k-nearest neighbors model on
 # some data.
 #
-# However, we oversimplified the procedure by loading a dataset that
-# contained exclusively numerical data.
-# Besides, we used datasets which were already split into train-test sets.
+# However, we oversimplified the procedure by loading a dataset that contained
+# exclusively numerical data. Besides, we used datasets which were already
+# split into train-test sets.
 #
 # In this notebook, we aim at:
 #
@@ -20,8 +20,8 @@
 #
 # ## Loading the entire dataset
 #
-# As in the previous notebook, we rely on Pandas to open the CSV file into
-# a dataframe.
+# As in the previous notebook, we rely on pandas to open the CSV file into
+# a pandas dataframe.
 
 # %%
 import pandas as pd
@@ -30,8 +30,8 @@ df = pd.read_csv("../datasets/adult-census.csv")
 df.head()
 
 # %% [markdown]
-# The next step separates the target from the data.
-# We performed the same procedure in the previous notebook.
+# The next step separates the target from the data. We performed the same
+# procedure in the previous notebook.
 
 # %%
 data, target = df.drop(columns="class"), df["class"]
@@ -70,14 +70,14 @@ target
 data.dtypes
 
 # %% [markdown]
-# We seem to have only two data types.
-# We can make sure by checking the unique data types.
+# We seem to have only two data types. We can make sure by checking the unique
+# data types.
 
 # %%
 data.dtypes.unique()
 
 # %% [markdown]
-# Precisely ! The only two types in the dataset are integer and object.
+# Indeed, the only two types in the dataset are integer and object.
 # We can look at the first few lines of the dataframe to understand the
 # meaning of the `object` data type.
 
@@ -101,10 +101,9 @@ data[numerical_columns].head()
 # we can analyse these numbers to figure out what they represent.
 # Discarding `"fnlwgt"` for the moment, we can identify two types of usage.
 #
-# The first column, `"age"`, is self-explanatory.
-# We can note that the values are continuous, meaning they can take up any
-# number in a given range.
-# Let's find out what this range is:
+# The first column, `"age"`, is self-explanatory. We can note that the values
+# are continuous, meaning they can take up any number in a given range. Let's
+# find out what this range is:
 
 # %%
 data["age"].describe()
@@ -149,13 +148,14 @@ data_numeric = data[numerical_columns]
 # %% [markdown]
 # ## Train-test split the dataset
 #
-# In the previous notebook, we loaded two separate datasets: a training
-# one and a testing one. However, as mentioned earlier, having separate
-# datasets like that is unusual: most of the time, we have a single one,
-# which we will subdivide.
+# In the previous notebook, we loaded two separate datasets: a training one and
+# a testing one. However, as mentioned earlier, having separate datasets like
+# that is unusual: most of the time, we have a single one, which we will
+# subdivide.
+#
 # We also mentioned that scikit-learn provides the helper function
-# `sklearn.model_selection.train_test_split` which is used to
-# automatically split the data.
+# `sklearn.model_selection.train_test_split` which is used to automatically
+# split the data.
 
 # %%
 from sklearn.model_selection import train_test_split

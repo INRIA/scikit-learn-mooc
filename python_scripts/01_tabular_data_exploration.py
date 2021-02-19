@@ -55,7 +55,8 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # ## The variables (columns) in the dataset
 #
 # The data are stored in a pandas dataframe. A dataframe is type of structured
-# data composed of 2 dimensions.
+# data composed of 2 dimensions. This type of data are also referred as tabular
+# data.
 #
 # The rows represents a record. In the field of machine learning or descriptive
 # statistics, the terms commonly used to refer to rows are "sample",

@@ -18,10 +18,10 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_regression.csv")
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
 feature_name = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-X, y = data[[feature_name]], data[target_name]
+data, target = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
 # ### Model definition
@@ -46,7 +46,7 @@ def linear_model_flipper_mass(
 # %%
 import numpy as np
 
-flipper_length_range = np.linspace(X.min(), X.max(), num=300)
+flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 
 # %%
 # Write your code here.

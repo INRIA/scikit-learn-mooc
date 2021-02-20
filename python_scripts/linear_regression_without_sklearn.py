@@ -9,8 +9,8 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_regression.csv")
-data.head()
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
+penguins.head()
 
 # %% [markdown]
 # This dataset contains measurements taken on penguins. We will formulate the
@@ -23,9 +23,9 @@ sns.set_context("talk")
 
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-X, y = data[[feature_names]], data[target_name]
+data, target = penguins[[feature_names]], penguins[target_name]
 
-_ = sns.scatterplot(data=data, x=feature_names, y=target_name)
+_ = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
 
 # %% [markdown]
 # In this problem, penguin mass is our target. It is a continuous
@@ -59,7 +59,7 @@ import numpy as np
 weight_flipper_length = 45
 intercept_body_mass = -5000
 
-flipper_length_range = np.linspace(X.min(), X.max(), num=300)
+flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
@@ -68,7 +68,7 @@ predicted_body_mass = linear_model_flipper_mass(
 
 # %%
 label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
-ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
 ax.plot(flipper_length_range, predicted_body_mass,
         label=label.format(weight_flipper_length, intercept_body_mass),
         linewidth=4)
@@ -96,7 +96,7 @@ predicted_body_mass = linear_model_flipper_mass(
 
 # %%
 label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
-ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
 ax.plot(flipper_length_range, predicted_body_mass,
         label=label.format(weight_flipper_length, intercept_body_mass),
         linewidth=4)
@@ -132,13 +132,13 @@ weight_flipper_length = 25
 intercept_body_mass = 0
 
 # redefined the flipper length to start at 0 to plot the intercept value
-flipper_length_range = np.linspace(0, X.max(), num=300)
+flipper_length_range = np.linspace(0, data.max(), num=300)
 predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
 # %%
 label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
-ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
 ax.plot(flipper_length_range, predicted_body_mass,
         label=label.format(weight_flipper_length, intercept_body_mass),
         linewidth=4)
@@ -156,7 +156,7 @@ predicted_body_mass = linear_model_flipper_mass(
 
 # %%
 label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
-ax = sns.scatterplot(data=data, x=feature_names, y=target_name)
+ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
 ax.plot(flipper_length_range, predicted_body_mass,
         label=label.format(weight_flipper_length, intercept_body_mass),
         linewidth=4)

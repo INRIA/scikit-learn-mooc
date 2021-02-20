@@ -4,11 +4,11 @@
 # In this notebook, we will present the random forest models and
 # show the differences with the bagging classifiers.
 #
-# Random forests are a popular model in machine learning. They are a modification
-# of the bagging algorithm. In bagging, any classifier or regressor can be used.
-# In random forests, the base classifier or regressor must be a decision tree.
-# In our previous example, we used a decision tree but we could have used a
-# linear model as the regressor for our bagging algorithm.
+# Random forests are a popular model in machine learning. They are a
+# modification of the bagging algorithm. In bagging, any classifier or
+# regressor can be used. In random forests, the base classifier or regressor
+# must be a decision tree. In our previous example, we used a decision tree but
+# we could have used a linear model as the regressor for our bagging algorithm.
 #
 # In addition, random forests are different from bagging when used with
 # classifiers: when searching for the best split, only a subset of the original
@@ -21,7 +21,6 @@
 
 # %%
 from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
 
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 

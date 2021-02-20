@@ -63,7 +63,6 @@ df_train, df_test, target_train, target_test = train_test_split(
 # %%
 from sklearn.compose import make_column_selector as selector
 
-
 categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
@@ -85,7 +84,6 @@ categorical_preprocessor = OrdinalEncoder(categories=categories)
 # %%
 from sklearn.compose import ColumnTransformer
 
-
 preprocessor = ColumnTransformer([
     ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
     remainder='passthrough', sparse_threshold=0)
@@ -105,7 +103,7 @@ model = Pipeline([
     ("preprocessor", preprocessor),
     ("classifier",
      HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4))])
-model.fit(df_train, target_train)
+model
 
 # %% [markdown]
 # ## Tuning using a grid-search
@@ -138,6 +136,17 @@ print(
     f"The test accuracy score of the grid-searched pipeline is: "
     f"{accuracy:.2f}"
 )
+
+# %% [markdown]
+# ```{warning}
+# Be aware that the evaluation should normally be performed in a
+# cross-validation framework by providing `model_grid_search` as a model to
+# the `cross_validate` function.
+#
+# Here, we are using a single train-test split to highlight the specificities
+# of the `model_grid_search` instance. We will show such examples in the last
+# section of this notebook.
+# ```
 
 # %% [markdown]
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines
@@ -421,6 +430,55 @@ fig.show()
 # It is possible to **select a range of results by clicking and holding on
 # any axis** of the parallel coordinate plot. You can then slide (move)
 # the range selection and cross two selections to see the intersections.
+
+# %% [markdown]
+# ## Include an hyperparameter search within a cross-validation
+#
+# As mentioned earlier, using a single train-test split during the grid-search
+# does not give any information regarding the different sources of variations:
+# variations in terms of test score or hyperparameters values.
+#
+# To get reliable information, the hyperparameters search need to be nested
+# within a cross-validation.
+#
+# ```{note}
+# To limit the computational cost, we affect `cv` to a low integer. In
+# practice, the number of fold should be much higher.
+# ```
+
+# %%
+from sklearn.model_selection import cross_validate
+
+param_grid = {
+    'classifier__learning_rate': (0.05, 0.1),
+    'classifier__max_leaf_nodes': (30, 40)}
+model_grid_search = GridSearchCV(model, param_grid=param_grid,
+                                 n_jobs=4, cv=2)
+
+cv_results = cross_validate(
+    model_grid_search, data, target, cv=3, return_estimator=True)
+
+# %% [markdown]
+# Running the above cross-validation will give us an estimate of the
+# generalization score.
+
+scores = cv_results["test_score"]
+print(f"Accuracy score by cross-validation combined with hyperparameters "
+      f"search:\n{scores.mean():.3f} +/- {scores.std():.3f}")
+
+# %% [markdown]
+# The hyperparameters on each fold are potentially different since we nested
+# the grid-search in the cross-validation. Thus, checking the variation of the
+# hyperparameters across folds should also be analyzed.
+
+# %%
+for fold_idx, estimator in enumerate(cv_results["estimator"]):
+    print(f"Best parameter found on fold #{fold_idx + 1}")
+    print(f"{estimator.best_params_}")
+
+# %% [markdown]
+# Obtaining models with unstable hyperparameters would be an issue in practice.
+# Indeed, it would become difficult to set them.
 
 # %% [markdown]
 # ## Quizz

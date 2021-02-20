@@ -15,24 +15,19 @@ from sklearn.datasets import fetch_california_housing
 X, y = fetch_california_housing(as_frame=True, return_X_y=True)
 
 # %% [markdown]
-# As usual, we divide our dataset into training and a testing sets.
+# We will check the performance of decision tree regressor with default
+# parameters.
 
 # %%
-from sklearn.model_selection import train_test_split
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5)
-
-# %% [markdown]
-# We will train a decision tree regressor and check its performance.
-
-# %%
+from sklearn.model_selection import cross_validate
 from sklearn.tree import DecisionTreeRegressor
 
-tree = DecisionTreeRegressor()
-tree.fit(X_train, y_train)
-print(f"R2 score of the default tree:\n"
-      f"{tree.score(X_test, y_test):.3f}")
+tree = DecisionTreeRegressor(random_state=0)
+cv_results = cross_validate(tree, X, y, n_jobs=-1)
+scores = cv_results["test_score"]
+
+print(f"R2 score obtained by cross-validation: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # We obtain fair results. However, as we previously presented in the "tree in
@@ -51,63 +46,32 @@ print(f"R2 score of the default tree:\n"
 # earlier.
 
 # %%
+# %%time
 from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeRegressor
 
 param_grid = {
-    "max_depth": [3, 5, 8, None],
+    "max_depth": [5, 8, None],
     "min_samples_split": [2, 10, 30, 50],
     "min_samples_leaf": [0.01, 0.05, 0.1, 1]}
 cv = 3
 
 tree = GridSearchCV(DecisionTreeRegressor(random_state=0),
                     param_grid=param_grid, cv=cv, n_jobs=-1)
-_ = tree.fit(X_train, y_train)
+cv_results = cross_validate(tree, X, y, n_jobs=-1, return_estimator=True)
+scores = cv_results["test_score"]
+
+print(f"R2 score obtained by cross-validation: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+
+# %% [markdown]
+# We see that optimizing the hyperparameters will have a positive effect
+# on the statistical performance. However, it comes with a higher computational
+# cost.
 
 # %% [markdown]
 # We can create a dataframe storing the important information collected during
 # the tuning of the parameters and investigate the results.
-
-# %%
-import pandas as pd
-
-cv_results = pd.DataFrame(tree.cv_results_)
-interesting_columns = [
-    "param_max_depth",
-    "param_min_samples_split",
-    "param_min_samples_leaf",
-    "mean_test_score",
-    "rank_test_score",
-    "mean_fit_time",
-]
-
-cv_results = cv_results[interesting_columns].sort_values(by="rank_test_score")
-cv_results
-
-# %% [markdown]
-# From theses results, we can see that the best parameters is the combination
-# where the depth of the tree is not limited and the minimum number of samples
-# to create a leaf is also equal to 1 (the default values) and the
-# minimum number of samples to make a split of 50 (much higher than the default
-# value).
-#
-# It is interesting to look at the total amount of time it took to fit all
-# these different models. In addition, we can check the performance of the
-# optimal decision tree on the left-out testing data.
-
-# %%
-total_fitting_time = (cv_results["mean_fit_time"] * cv).sum()
-print(f"Required training time of the GridSearchCV: "
-      f"{total_fitting_time:.2f} seconds")
-print(f"Best R2 score of a single tree: {tree.best_score_:.3f}")
-
-# %% [markdown]
-# Hence, we have a model that has an $R^2$ score below 0.7. So this model is
-# better than the previous default decision tree.
-#
-# However, the amount of time to find the best learner has an heavy
-# computational cost. Indeed, it depends on the number of folds used during the
-# cross-validation in the grid-search multiplied by the number of parameters.
 #
 # Now we will use an ensemble method called bagging. More details about this
 # method will be discussed in the next section. In short, this method will use
@@ -120,27 +84,28 @@ print(f"Best R2 score of a single tree: {tree.best_score_:.3f}")
 # we are not going to tune any parameter of the decision tree.
 
 # %%
-from time import time
+# %%time
 from sklearn.ensemble import BaggingRegressor
 
 base_estimator = DecisionTreeRegressor(random_state=0)
 bagging_regressor = BaggingRegressor(
-    base_estimator=base_estimator, n_estimators=50, random_state=0)
+    base_estimator=base_estimator, n_estimators=20, random_state=0)
 
-start_fitting_time = time()
-bagging_regressor.fit(X_train, y_train)
-elapsed_fitting_time = time() - start_fitting_time
+cv_results = cross_validate(bagging_regressor, X, y, n_jobs=-1)
+scores = cv_results["test_score"]
 
-print(f"Elapsed fitting time: {elapsed_fitting_time:.2f} seconds")
-print(f"R2 score: {bagging_regressor.score(X_test, y_test):.3f}")
+print(f"R2 score obtained by cross-validation: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# We can see that the computation time is much shorter for training the full
-# ensemble than for the parameter search of a single tree. In addition, the
-# score is significantly improved with a $R^2$ close to 0.8. Furthermore, note
-# that this result is obtained before any parameter tuning. This shows the
-# motivation behind the use of an ensemble learner: it gives a relatively good
-# baseline with decent performance without any parameter tuning.
+# Without searching for optimal hyperparameters, the overall statistical
+# performance of the bagging regressor is better than a single decision tree.
+# In addition, the computational cost is reduced in comparison of seeking
+# for the optimal hyperparameters.
+#
+# This shows the motivation behind the use of an ensemble learner: it gives a
+# relatively good baseline with decent performance without any parameter
+# tuning.
 #
 # Now, we will discuss in detail two ensemble families: bagging and
 # boosting:

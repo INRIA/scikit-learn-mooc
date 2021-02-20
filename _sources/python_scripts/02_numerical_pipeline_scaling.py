@@ -67,6 +67,15 @@ data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
 # %% [markdown]
+#
+# ```{caution}
+# Be aware that we are using a single train-test split instead of a
+# cross-validation to present the scikit-learn transformers API. We are not
+# interested in evaluating the statistical performance of the predictive model.
+# For this latest purpose, it would be required to evaluate via
+# cross-validation.
+# ```
+#
 # ## Model fitting without preprocessing
 #
 # We will use the logistic regression classifier as in the previous notebook.
@@ -224,19 +233,33 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # "Selecting the best model".
 # ```
 #
-# The function `cross_val_score` allows for such experimental protocol by
-# giving the model, the data and the target. Since there exists several
-# cross-validation strategies, `cross_val_score` takes a parameter `cv` which
+# The function `cross_validate` allows for such experimental protocol by
+# providing the model, the data, and the target. Since there exists several
+# cross-validation strategies, `cross_validate` takes a parameter `cv` which
 # defines the splitting strategy.
 
 # %%
 # %%time
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_validate
 
-scores = cross_val_score(model, data_numeric, target, cv=5)
-scores
+cv_result = cross_validate(model, data_numeric, target, cv=5)
+cv_result
+
+# %% [markdown]
+# The output of `cross_validate` contains by default three entries: (i) the
+# time to train the model on the training data for each fold, (ii) the time
+# to predict with the model on the testing data for each fold, and (iii) the
+# default score on the testing data for each fold.
+#
+# Additional can be returned, for instance training scores or the fitted models
+# per fold, by passing additional parameters. We will give more details about
+# these features in a subsequent notebook.
+#
+# Let's extract the test scores for the dictionary and compute the mean
+# accuracy and the variation of the accuracy across folds.
 
 # %%
+scores = cv_result["test_score"]
 print(f"The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
@@ -262,9 +285,9 @@ print(f"The mean cross-validation accuracy is: "
 # the blue samples. Cross-validation is therefore computationally intensive
 # because it requires training several models instead of one.
 #
-# Note that the `cross_val_score` method above discards the 5 models that were
-# trained on the different overlapping subset of the dataset. The goal of
-# cross-validation is not to train a model, but rather to estimate
+# Note that by default the `cross_validate` function above discards the 5
+# models that were trained on the different overlapping subset of the dataset.
+# The goal of cross-validation is not to train a model, but rather to estimate
 # approximately the generalization performance of a model that would have been
 # trained to the full training set, along with an estimate of the variability
 # (uncertainty on the generalization accuracy).

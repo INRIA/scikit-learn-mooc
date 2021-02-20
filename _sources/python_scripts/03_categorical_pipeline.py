@@ -305,11 +305,12 @@ model = make_pipeline(
 # columns.
 
 # %%
-from sklearn.model_selection import cross_val_score
-scores = cross_val_score(model, data_categorical, target)
-scores
+from sklearn.model_selection import cross_validate
+cv_results = cross_validate(model, data_categorical, target)
+cv_results
 
 # %%
+scores = cv_results["test_score"]
 print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]

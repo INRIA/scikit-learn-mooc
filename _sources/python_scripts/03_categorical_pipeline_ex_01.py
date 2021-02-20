@@ -56,7 +56,7 @@ categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %%
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression

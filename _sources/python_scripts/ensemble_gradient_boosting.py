@@ -16,7 +16,6 @@
 # machinery.
 
 # %%
-# %%
 import pandas as pd
 import numpy as np
 
@@ -215,54 +214,48 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 
 # %%
 from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_validate
 
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
 # %%
-from time import time
 from sklearn.ensemble import GradientBoostingRegressor
 
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
+cv_results_gbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
 
-start_time = time()
-gradient_boosting.fit(X_train, y_train)
-fit_time_gradient_boosting = time() - start_time
-
-start_time = time()
-score_gradient_boosting = gradient_boosting.score(X_test, y_test)
-score_time_gradient_boosting = time() - start_time
-
-print("Gradient boosting decision tree")
-print(f"R2 score: {score_gradient_boosting:.3f}")
-print(f"Fit time: {fit_time_gradient_boosting:.2f} s")
-print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
+# %%
+print("Gradient Boosting Decision Tree")
+print(f"R2 score via cross-validation: "
+      f"{cv_results_gbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_gbdt['test_score'].std():.3f}")
+print(f"Average fit time: "
+      f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
+print(f"Average score time: "
+      f"{cv_results_gbdt['score_time'].mean():.3f} seconds")
 
 # %%
 from sklearn.ensemble import RandomForestRegressor
 
 random_forest = RandomForestRegressor(n_estimators=200, n_jobs=-1)
+cv_results_rf = cross_validate(gradient_boosting, X, y, n_jobs=-1)
 
-start_time = time()
-random_forest.fit(X_train, y_train)
-fit_time_random_forest = time() - start_time
-
-start_time = time()
-score_random_forest = random_forest.score(X_test, y_test)
-score_time_random_forest = time() - start_time
-
-print("Random forest")
-print(f"R2 score: {score_random_forest:.3f}")
-print(f"Fit time: {fit_time_random_forest:.2f} s")
-print(f"Score time: {score_time_random_forest:.5f} s")
+# %%
+print("Random Forest")
+print(f"R2 score via cross-validation: "
+      f"{cv_results_rf['test_score'].mean():.3f} +/- "
+      f"{cv_results_rf['test_score'].std():.3f}")
+print(f"Average fit time: "
+      f"{cv_results_rf['fit_time'].mean():.3f} seconds")
+print(f"Average score time: "
+      f"{cv_results_rf['score_time'].mean():.3f} seconds")
 
 # %% [markdown]
 # In term of computation performance, the forest can be parallelized and will
-# benefit from using multiple cores. In terms of scoring performance, both
-# algorithms lead to very close results.
+# benefit from using multiple cores of the CPU. In terms of scoring
+# performance, both algorithms lead to very close results.
 #
-# However, we can observe that the gradient boosting is a very fast algorithm
-# to predict compared to random forest. This is due to the fact that gradient
+# However, we see that the gradient boosting is a very fast algorithm to
+# predict compared to random forest. This is due to the fact that gradient
 # boosting uses shallow trees. We will go into details in the next notebook
-# about the tree parametrization.
+# about the hyperparameters to consider when optimizing ensemble methods.

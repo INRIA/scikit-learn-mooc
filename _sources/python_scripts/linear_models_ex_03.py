@@ -23,10 +23,12 @@ X.head()
 # %% [markdown]
 # Now this is your turn to train a linear regression model on this dataset.
 # You will need to:
-# * split the dataset into a training and testing set;
-# * train a linear regression model on the training set;
-# * compute the mean absolute error in thousands of dollars (k$);
-# * show the values of the coefficients for each feature.
+# * create a linear regression model;
+# * execute a cross-validation with 10 folds and use the mean absolute error
+#   (MAE) as metric. Ensure to return the fitted estimators;
+# * compute mean and std of the MAE in thousands of dollars (k$);
+# * show the values of the coefficients for each feature using a boxplot by
+#   inspecting the fitted model returned from the cross-validation.
 
 # %%
 # Write your code here.: make the exercise

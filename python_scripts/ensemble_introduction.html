@@ -57,8 +57,6 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -1162,32 +1160,24 @@ in California based on demographic and geographic data.</p>
 </div>
 </div>
 </div>
-<p>As usual, we divide our dataset into training and a testing sets.</p>
+<p>We will check the performance of decision tree regressor with default
+parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>We will train a decision tree regressor and check its performance.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score of the default tree:</span><span class="se">\n</span><span class="s2">&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score obtained by cross-validation: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score of the default tree:
-0.571
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score obtained by cross-validation: 0.344 +/- 0.116
 </pre></div>
 </div>
 </div>
@@ -1206,204 +1196,39 @@ to have an underfitted or overfitted model.</p>
 earlier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
     <span class="s2">&quot;min_samples_split&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
     <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span>
 <span class="n">cv</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="n">tree</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
                     <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score obtained by cross-validation: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score obtained by cross-validation: 0.523 +/- 0.108
+CPU times: user 25.8 ms, sys: 0 ns, total: 25.8 ms
+Wall time: 13.9 s
 </pre></div>
 </div>
 </div>
 </div>
+<p>We see that optimizing the hyperparameters will have a positive effect
+on the statistical performance. However, it comes with a higher computational
+cost.</p>
 <p>We can create a dataframe storing the important information collected during
 the tuning of the parameters and investigate the results.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
-<span class="n">interesting_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;param_max_depth&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;param_min_samples_split&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;param_min_samples_leaf&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rank_test_score&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mean_fit_time&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">interesting_columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
-<span class="n">cv_results</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>param_max_depth</th>
-      <th>param_min_samples_split</th>
-      <th>param_min_samples_leaf</th>
-      <th>mean_test_score</th>
-      <th>rank_test_score</th>
-      <th>mean_fit_time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>63</th>
-      <td>None</td>
-      <td>50</td>
-      <td>1</td>
-      <td>0.669832</td>
-      <td>1</td>
-      <td>0.045606</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>None</td>
-      <td>30</td>
-      <td>1</td>
-      <td>0.657056</td>
-      <td>2</td>
-      <td>0.048997</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>None</td>
-      <td>50</td>
-      <td>0.01</td>
-      <td>0.654699</td>
-      <td>3</td>
-      <td>0.031863</td>
-    </tr>
-    <tr>
-      <th>50</th>
-      <td>None</td>
-      <td>30</td>
-      <td>0.01</td>
-      <td>0.654699</td>
-      <td>3</td>
-      <td>0.033759</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>None</td>
-      <td>10</td>
-      <td>0.01</td>
-      <td>0.654699</td>
-      <td>3</td>
-      <td>0.031907</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>5</td>
-      <td>2</td>
-      <td>0.1</td>
-      <td>0.495641</td>
-      <td>49</td>
-      <td>0.017541</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>3</td>
-      <td>30</td>
-      <td>0.1</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014526</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>3</td>
-      <td>2</td>
-      <td>0.1</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014494</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>3</td>
-      <td>10</td>
-      <td>0.1</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014525</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>3</td>
-      <td>50</td>
-      <td>0.1</td>
-      <td>0.478877</td>
-      <td>61</td>
-      <td>0.014473</td>
-    </tr>
-  </tbody>
-</table>
-<p>64 rows × 6 columns</p>
-</div></div></div>
-</div>
-<p>From theses results, we can see that the best parameters is the combination
-where the depth of the tree is not limited and the minimum number of samples
-to create a leaf is also equal to 1 (the default values) and the
-minimum number of samples to make a split of 50 (much higher than the default
-value).</p>
-<p>It is interesting to look at the total amount of time it took to fit all
-these different models. In addition, we can check the performance of the
-optimal decision tree on the left-out testing data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_fitting_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_fit_time&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">cv</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Required training time of the GridSearchCV: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">total_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best R2 score of a single tree: </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Required training time of the GridSearchCV: 4.63 seconds
-Best R2 score of a single tree: 0.670
-</pre></div>
-</div>
-</div>
-</div>
-<p>Hence, we have a model that has an <span class="math notranslate nohighlight">\(R^2\)</span> score below 0.7. So this model is
-better than the previous default decision tree.</p>
-<p>However, the amount of time to find the best learner has an heavy
-computational cost. Indeed, it depends on the number of folds used during the
-cross-validation in the grid-search multiplied by the number of parameters.</p>
 <p>Now we will use an ensemble method called bagging. More details about this
 method will be discussed in the next section. In short, this method will use
 a base regressor (i.e. decision tree regressors) and will train several of
@@ -1414,35 +1239,36 @@ the performance on the left-out testing data. It is important to note that
 we are not going to tune any parameter of the decision tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
 
 <span class="n">base_estimator</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">bagging_regressor</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
-    <span class="n">base_estimator</span><span class="o">=</span><span class="n">base_estimator</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">base_estimator</span><span class="o">=</span><span class="n">base_estimator</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="n">start_fitting_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
-<span class="n">bagging_regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">elapsed_fitting_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_fitting_time</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">bagging_regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed fitting time: </span><span class="si">{</span><span class="n">elapsed_fitting_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score: </span><span class="si">{</span><span class="n">bagging_regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score obtained by cross-validation: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Elapsed fitting time: 2.99 seconds
-R2 score: 0.788
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score obtained by cross-validation: 0.639 +/- 0.085
+CPU times: user 27.3 ms, sys: 693 µs, total: 28 ms
+Wall time: 5.23 s
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can see that the computation time is much shorter for training the full
-ensemble than for the parameter search of a single tree. In addition, the
-score is significantly improved with a <span class="math notranslate nohighlight">\(R^2\)</span> close to 0.8. Furthermore, note
-that this result is obtained before any parameter tuning. This shows the
-motivation behind the use of an ensemble learner: it gives a relatively good
-baseline with decent performance without any parameter tuning.</p>
+<p>Without searching for optimal hyperparameters, the overall statistical
+performance of the bagging regressor is better than a single decision tree.
+In addition, the computational cost is reduced in comparison of seeking
+for the optimal hyperparameters.</p>
+<p>This shows the motivation behind the use of an ensemble learner: it gives a
+relatively good baseline with decent performance without any parameter
+tuning.</p>
 <p>Now, we will discuss in detail two ensemble families: bagging and
 boosting:</p>
 <ul class="simple">

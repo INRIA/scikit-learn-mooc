@@ -1250,6 +1250,14 @@ notebook.</p>
 </div>
 </div>
 </div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Be aware that we are using a single train-test split instead of a
+cross-validation to present the scikit-learn transformers API. We are not
+interested in evaluating the statistical performance of the predictive model.
+For this latest purpose, it would be required to evaluate via
+cross-validation.</p>
+</div>
 </div>
 <div class="section" id="model-fitting-without-preprocessing">
 <h2>Model fitting without preprocessing<a class="headerlink" href="#model-fitting-without-preprocessing" title="Permalink to this headline">¶</a></h2>
@@ -1280,7 +1288,7 @@ to train the model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.264 seconds in 59 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.191 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
@@ -1323,7 +1331,7 @@ Please also refer to the documentation for alternative solver options:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.229 seconds in 50 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.169 seconds in 50 iterations
 </pre></div>
 </div>
 </div>
@@ -1612,7 +1620,7 @@ a name at steps based on the name of the classes.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.099 seconds in [12] iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.079 seconds in [12] iterations
 </pre></div>
 </div>
 </div>
@@ -1636,33 +1644,45 @@ the variability of the model performance.</p>
 <p>We will go into details regarding cross-validation in the upcoming module
 “Selecting the best model”.</p>
 </div>
-<p>The function <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> allows for such experimental protocol by
-giving the model, the data and the target. Since there exists several
-cross-validation strategies, <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> takes a parameter <code class="docutils literal notranslate"><span class="pre">cv</span></code> which
+<p>The function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> allows for such experimental protocol by
+providing the model, the data, and the target. Since there exists several
+cross-validation strategies, <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> takes a parameter <code class="docutils literal notranslate"><span class="pre">cv</span></code> which
 defines the splitting strategy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">scores</span>
+<span class="n">cv_result</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv_result</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 986 ms, sys: 361 ms, total: 1.35 s
-Wall time: 708 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 808 ms, sys: 295 ms, total: 1.1 s
+Wall time: 567 ms
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.08737445, 0.08145976, 0.08326983, 0.09004211, 0.07964182]),
+ &#39;score_time&#39;: array([0.01698041, 0.0164628 , 0.0185914 , 0.0160327 , 0.0161469 ]),
+ &#39;test_score&#39;: array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])}
 </pre></div>
 </div>
 </div>
 </div>
+<p>The output of <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> contains by default three entries: (i) the
+time to train the model on the training data for each fold, (ii) the time
+to predict with the model on the testing data for each fold, and (iii) the
+default score on the testing data for each fold.</p>
+<p>Additional can be returned, for instance training scores or the fitted models
+per fold, by passing additional parameters. We will give more details about
+these features in a subsequent notebook.</p>
+<p>Let’s extract the test scores for the dictionary and compute the mean
+accuracy and the variation of the accuracy across folds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cv_result</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1689,9 +1709,9 @@ samples at each iteration of the cross-validation procedure:</p>
 concatenation of the red samples and evaluate the score of the model by using
 the blue samples. Cross-validation is therefore computationally intensive
 because it requires training several models instead of one.</p>
-<p>Note that the <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> method above discards the 5 models that were
-trained on the different overlapping subset of the dataset. The goal of
-cross-validation is not to train a model, but rather to estimate
+<p>Note that by default the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function above discards the 5
+models that were trained on the different overlapping subset of the dataset.
+The goal of cross-validation is not to train a model, but rather to estimate
 approximately the generalization performance of a model that would have been
 trained to the full training set, along with an estimate of the variability
 (uncertainty on the generalization accuracy).</p>

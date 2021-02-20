@@ -144,6 +144,12 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
 
 # %% [markdown]
+#
+# ```{caution}
+# Be aware that we use `train_test_split` here for didactic purposes, to show
+# the scikit-learn API.
+# ```
+#
 # Now, we can train the model on the train set.
 
 # %%
@@ -180,12 +186,13 @@ model.score(data_test, target_test)
 # scikit-learn as any other predictors:
 
 # %%
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_validate
 
-scores = cross_val_score(model, data, target, cv=5)
-scores
+cv_results = cross_validate(model, data, target, cv=5)
+cv_results
 
 # %%
+scores = cv_results["test_score"]
 print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 
 # %% [markdown]

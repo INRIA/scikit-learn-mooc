@@ -4,11 +4,11 @@
 # In this notebook, we will present the random forest models and
 # show the differences with the bagging classifiers.
 #
-# Random forests are a popular model in machine learning. They are a modification
-# of the bagging algorithm. In bagging, any classifier or regressor can be used.
-# In random forests, the base classifier or regressor must be a decision tree.
-# In our previous example, we used a decision tree but we could have used a
-# linear model as the regressor for our bagging algorithm.
+# Random forests are a popular model in machine learning. They are a
+# modification of the bagging algorithm. In bagging, any classifier or
+# regressor can be used. In random forests, the base classifier or regressor
+# must be a decision tree. In our previous example, we used a decision tree but
+# we could have used a linear model as the regressor for our bagging algorithm.
 #
 # In addition, random forests are different from bagging when used with
 # classifiers: when searching for the best split, only a subset of the original
@@ -21,13 +21,11 @@
 
 # %%
 from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
 
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5)
 
 # %%
+from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import BaggingRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
@@ -37,15 +35,16 @@ random_forest = RandomForestRegressor(n_estimators=100, random_state=0,
 
 tree = DecisionTreeRegressor(random_state=0)
 bagging = BaggingRegressor(base_estimator=tree, n_estimators=100,
-                           n_jobs=-1,)
+                           n_jobs=-1)
 
-random_forest.fit(X_train, y_train)
-bagging.fit(X_train, y_train)
+scores_random_forest = cross_val_score(random_forest, X, y)
+scores_bagging = cross_val_score(bagging, X, y)
 
 print(f"Performance of random forest: "
-      f"{random_forest.score(X_test, y_test):.3f}")
+      f"{scores_random_forest.mean():.3f} +/- "
+      f"{scores_random_forest.std():.3f}")
 print(f"Performance of bagging: "
-      f"{bagging.score(X_test, y_test):.3f}")
+      f"{scores_bagging.mean():.3f} +/- {scores_bagging.std():.3f}")
 
 # %% [markdown]
 # Notice that we don't need to provide a `base_estimator` parameter to

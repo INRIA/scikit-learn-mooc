@@ -26,12 +26,12 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name]
+target = adult_census[target_name]
 
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = adult_census.drop(columns=[target_name, "fnlwgt"])
 
 # %% [markdown]
 #
@@ -133,9 +133,9 @@ education_encoded = encoder.fit_transform(education_column)
 import seaborn as sns
 sns.set_context("talk")
 
-df = pd.DataFrame(
+education_encoded_df = pd.DataFrame(
     education_encoded[:10], columns=education_column.columns)
-ax = sns.heatmap(df, annot=True, cmap="tab20", cbar=False)
+ax = sns.heatmap(education_encoded_df, annot=True, cmap="tab20", cbar=False)
 ax.set_ylabel("Sample index")
 _ = ax.set_title("Ordinal encoding of 'education' column")
 
@@ -215,10 +215,10 @@ education_encoded = encoder.fit_transform(education_column)
 # As in the previous section, we will visually check the encoding.
 
 # %%
-df = pd.DataFrame(
+education_encoded_df = pd.DataFrame(
     education_encoded[:10],
     columns=encoder.get_feature_names(education_column.columns))
-ax = sns.heatmap(df, annot=True, cmap="RdBu", cbar=False)
+ax = sns.heatmap(education_encoded_df, annot=True, cmap="RdBu", cbar=False)
 ax.set_ylabel("Sample index")
 _ = ax.set_title("Ordinal encoding of 'education' column")
 

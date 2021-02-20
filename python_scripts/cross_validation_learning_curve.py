@@ -16,7 +16,7 @@
 from sklearn.datasets import fetch_california_housing
 
 housing = fetch_california_housing(as_frame=True)
-X, y = housing.data, housing.target
+data, target = housing.data, housing.target
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -44,9 +44,9 @@ import pandas as pd
 from sklearn.model_selection import cross_validate, ShuffleSplit
 
 
-def make_cv_analysis(regressor, X, y):
+def make_cv_analysis(regressor, data, target):
     cv = ShuffleSplit(n_splits=10, test_size=0.2)
-    cv_results = cross_validate(regressor, X, y,
+    cv_results = cross_validate(regressor, data, target,
                                 cv=cv, scoring="neg_mean_absolute_error",
                                 return_train_score=True)
     cv_results = pd.DataFrame(cv_results)
@@ -58,7 +58,7 @@ def make_cv_analysis(regressor, X, y):
 # defining the number of samples for which we want to run the experiments.
 
 # %%
-sample_sizes = [100, 500, 1000, 5000, 10000, 15000, y.size]
+sample_sizes = [100, 500, 1000, 5000, 10000, 15000, target.size]
 
 # %%
 import numpy as np
@@ -70,10 +70,11 @@ rng = np.random.RandomState(0)
 scores_sample_sizes = {"# samples": [], "test error": []}
 for n_samples in sample_sizes:
     # select a subset of the data with a specific number of samples
-    sample_idx = rng.choice(np.arange(y.size), size=n_samples, replace=False)
-    X_sampled, y_sampled = X.iloc[sample_idx], y[sample_idx]
+    sample_idx = rng.choice(
+        np.arange(target.size), size=n_samples, replace=False)
+    data_sampled, target_sampled = data.iloc[sample_idx], target[sample_idx]
     # run the experiment
-    score = make_cv_analysis(regressor, X_sampled, y_sampled)
+    score = make_cv_analysis(regressor, data_sampled, target_sampled)
     # store the results
     scores_sample_sizes["# samples"].append(n_samples)
     scores_sample_sizes["test error"].append(score)
@@ -117,7 +118,7 @@ from sklearn.model_selection import learning_curve
 
 cv = ShuffleSplit(n_splits=30, test_size=0.2)
 results = learning_curve(
-    regressor, X, y, train_sizes=sample_sizes[:-1], cv=cv,
+    regressor, data, target, train_sizes=sample_sizes[:-1], cv=cv,
     scoring="neg_mean_absolute_error", n_jobs=2)
 train_size, train_scores, test_scores = results[:3]
 train_errors, test_errors = -train_scores, -test_scores

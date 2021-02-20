@@ -26,15 +26,15 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
-df.head()
+adult_census = pd.read_csv("../datasets/adult-census.csv")
+adult_census.head()
 
 # %% [markdown]
 # The next step separates the target from the data. We performed the same
 # procedure in the previous notebook.
 
 # %%
-data, target = df.drop(columns="class"), df["class"]
+data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %%
 data.head()

@@ -36,13 +36,13 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census-numeric.csv")
+adult_census = pd.read_csv("../datasets/adult-census-numeric.csv")
 
 # %% [markdown]
 # Let's have a look at the first records of this dataframe:
 
 # %%
-df.head()
+adult_census.head()
 
 # %% [markdown]
 # We see that this CSV file contains all information: the target that we would
@@ -55,11 +55,11 @@ df.head()
 
 # %%
 target_name = "class"
-target = df[target_name]
+target = adult_census[target_name]
 target
 
 # %%
-data = df.drop(columns=[target_name, ])
+data = adult_census.drop(columns=[target_name, ])
 data.head()
 
 # %% [markdown]
@@ -146,15 +146,15 @@ print(f"Number of correct prediction: "
 # set.
 
 # %%
-df_test = pd.read_csv('../datasets/adult-census-numeric-test.csv')
+adult_census_test = pd.read_csv('../datasets/adult-census-numeric-test.csv')
 
 # %% [markdown]
 # From this new data, we separate out input features and the target to predict,
 # as in the beginning of this notebook.
 
 # %%
-target_test = df_test[target_name]
-data_test = df_test.drop(columns=[target_name, ])
+target_test = adult_census_test[target_name]
+data_test = adult_census_test.drop(columns=[target_name, ])
 
 # %% [markdown]
 # We can check the number of features and samples available in this new set.

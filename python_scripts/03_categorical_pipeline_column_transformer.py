@@ -25,12 +25,12 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name]
+target = adult_census[target_name]
 
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = adult_census.drop(columns=[target_name, "fnlwgt"])
 
 # %% [markdown]
 # We recall that both `"education-num"` and `"education"` contain the same

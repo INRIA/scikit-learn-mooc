@@ -32,7 +32,7 @@ import seaborn as sns
 sns.set_context("talk")
 
 full_data = pd.DataFrame({"data": data, "target": target})
-_ = sns.scatterplot(data=data, x="data", y="target")
+_ = sns.scatterplot(data=full_data, x="data", y="target")
 
 # %% [markdown]
 # We observe that the link between the data `x` and target `y` is non-linear.

@@ -31,7 +31,7 @@ regressor = DecisionTreeRegressor()
 # of rows in `X` / the length of the vector `y`.
 
 # %%
-y.size
+target.size
 
 # %% [markdown]
 # Let's do an experiment and reduce the number of samples and repeat the

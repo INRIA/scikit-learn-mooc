@@ -61,7 +61,7 @@ def f(data, weight=0, intercept=0):
 
 
 # %%
-ax = sns.scatterplot(data=data, x="data", y="target")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
 _ = ax.plot(data, f(data, weight=1.2, intercept=-0.2), color="tab:orange")
 
 # %%

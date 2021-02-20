@@ -198,9 +198,16 @@ accuracy = model.score(data_test, target_test)
 print(f"Accuracy of logistic regression: {accuracy:.3f}")
 
 # %% [markdown]
+#
+# ```{caution}
+# Be aware you should use cross-validation instead of `train_test_split` in
+# practice. We used a single split, to highlight the scikit-learn API and the
+# methods `fit`, `predict`, and `score`. In the module "Select the best model"
+# we will go into details regarding cross-validation.
+# ```
+#
 # Now the real question is: is this performance relevant of a good predictive
-# model?
-# Find out by solving the next exercise !.
+# model? Find out by solving the next exercise!.
 #
 # In this notebook, we learned:
 #

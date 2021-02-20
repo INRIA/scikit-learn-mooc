@@ -122,7 +122,7 @@ mse = mean_squared_error(y, y_pred)
 
 ax = sns.scatterplot(data=data, x="x", y="y")
 ax.plot(x[sorted_idx], y_pred[sorted_idx],
-        linewidth=4, color="tab:orange")
+        color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]

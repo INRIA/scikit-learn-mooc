@@ -19,11 +19,11 @@ rng = np.random.RandomState(0)
 
 # Generate data
 n_sample = 100
-x_max, x_min = 1.4, -1.4
-len_x = (x_max - x_min)
-x = rng.rand(n_sample) * len_x - len_x / 2
+data_max, data_min = 1.4, -1.4
+len_data = (data_max - data_min)
+data = rng.rand(n_sample) * len_data - len_data / 2
 noise = rng.randn(n_sample) * .3
-y = x ** 3 - 0.5 * x ** 2 + noise
+target = data ** 3 - 0.5 * data ** 2 + noise
 
 # %% [markdown]
 # ```{note}
@@ -33,14 +33,14 @@ y = x ** 3 - 0.5 * x ** 2 + noise
 
 # %%
 import pandas as pd
-data = pd.DataFrame({"x": x, "y": y})
+full_data = pd.DataFrame({"data": data, "target": target})
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-_ = sns.scatterplot(data=data, x="x", y="y")
+_ = sns.scatterplot(data=full_data, x="data", y="target")
 
 # %% [markdown]
 # We observe that the link between the data `x` and target `y` is non-linear.
@@ -55,19 +55,19 @@ _ = sns.scatterplot(data=data, x="x", y="y")
 
 
 # %%
-def f(x, weight=0, intercept=0):
-    y_predict = weight * x + intercept
-    return y_predict
+def f(data, weight=0, intercept=0):
+    target_predict = weight * data + intercept
+    return target_predict
 
 
 # %%
-ax = sns.scatterplot(data=data, x="x", y="y")
-_ = ax.plot(x, f(x, weight=1.2, intercept=-0.2), color="tab:orange")
+ax = sns.scatterplot(data=data, x="data", y="target")
+_ = ax.plot(data, f(data, weight=1.2, intercept=-0.2), color="tab:orange")
 
 # %%
 from sklearn.metrics import mean_squared_error
 
-error = mean_squared_error(y, f(x, weight=1.2, intercept=0.2))
+error = mean_squared_error(target, f(data, weight=1.2, intercept=0.2))
 print(f"The MSE is {error}")
 
 # %% [markdown]
@@ -78,11 +78,11 @@ print(f"The MSE is {error}")
 from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
-X = x.reshape(-1, 1)
-linear_regression.fit(X, y)
+data = data.reshape(-1, 1)
+linear_regression.fit(data, target)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-_ = ax.plot(x, linear_regression.predict(X), color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+_ = ax.plot(data.ravel(), linear_regression.predict(data), color="tab:orange")
 
 # %% [markdown]
 # ```{warning}
@@ -93,5 +93,5 @@ _ = ax.plot(x, linear_regression.predict(X), color="tab:orange")
 # ```
 
 # %%
-error = mean_squared_error(y, linear_regression.predict(X))
+error = mean_squared_error(target, linear_regression.predict(data))
 print(f"The MSE is {error}")

@@ -18,12 +18,12 @@ import numpy as np
 rng = np.random.RandomState(0)
 
 n_sample = 100
-x_max, x_min = 1.4, -1.4
-len_x = (x_max - x_min)
-x = rng.rand(n_sample) * len_x - len_x / 2
-sorted_idx = np.argsort(x)
+data_max, data_min = 1.4, -1.4
+len_data = (data_max - data_min)
+data = rng.rand(n_sample) * len_data - len_data / 2
+sorted_idx = np.argsort(data)
 noise = rng.randn(n_sample) * .3
-y = x ** 3 - 0.5 * x ** 2 + noise
+target = data ** 3 - 0.5 * data ** 2 + noise
 
 # %% [markdown]
 # ```{note}
@@ -33,14 +33,14 @@ y = x ** 3 - 0.5 * x ** 2 + noise
 
 # %%
 import pandas as pd
-data = pd.DataFrame({"x": x, "y": y})
+full_data = pd.DataFrame({"data": data, "target": target})
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-_ = sns.scatterplot(data=data, x="x", y="y")
+_ = sns.scatterplot(data=full_data, x="data", y="target")
 # %% [markdown]
 # We will highlight the limitations of fitting a linear regression model as
 # done in the previous exercise.
@@ -58,14 +58,14 @@ from sklearn.metrics import mean_squared_error
 
 linear_regression = LinearRegression()
 # X should be 2D for sklearn
-X = x.reshape((-1, 1))
-linear_regression.fit(X, y)
+data = data.reshape((-1, 1))
+linear_regression.fit(data, target)
 
-y_pred = linear_regression.predict(X)
-mse = mean_squared_error(y, y_pred)
+target_predicted = linear_regression.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x, y_pred, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data.ravel(), target_predicted, color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 
@@ -97,12 +97,13 @@ print(f"weight: {linear_regression.coef_[0]:.2f}, "
 # %%
 from sklearn.tree import DecisionTreeRegressor
 
-tree = DecisionTreeRegressor(max_depth=3).fit(X, y)
-y_pred = tree.predict(X)
-mse = mean_squared_error(y, y_pred)
+tree = DecisionTreeRegressor(max_depth=3).fit(data, target)
+target_predicted = tree.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx],
+        color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -114,14 +115,14 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # we could create two new features (`x^2` and `x^3`) using this information.
 
 # %%
-X = np.vstack([x, x ** 2, x ** 3]).T
+data = np.concatenate([data, data ** 2, data ** 3], axis=1)
 
-linear_regression.fit(X, y)
-y_pred = linear_regression.predict(X)
-mse = mean_squared_error(y, y_pred)
+linear_regression.fit(data, target)
+target_predicted = linear_regression.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx],
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx, 0], target_predicted[sorted_idx],
         color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
@@ -146,16 +147,16 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 
-X = x.reshape(-1, 1)
+data = data[:, [0]]
 
 model = make_pipeline(PolynomialFeatures(degree=3),
                       LinearRegression())
-model.fit(X, y)
-y_pred = model.predict(X)
-mse = mean_squared_error(y, y_pred)
+model.fit(data, target)
+target_predicted = model.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -172,12 +173,12 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 from sklearn.svm import SVR
 
 svr = SVR(kernel="linear")
-svr.fit(X, y)
-y_pred = svr.predict(X)
-mse = mean_squared_error(y, y_pred)
+svr.fit(data, target)
+target_predicted = svr.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -187,12 +188,12 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %%
 svr = SVR(kernel="poly", degree=3)
-svr.fit(X, y)
-y_pred = svr.predict(X)
-mse = mean_squared_error(y, y_pred)
+svr.fit(data, target)
+target_predicted = svr.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]

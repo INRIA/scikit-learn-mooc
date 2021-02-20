@@ -9,6 +9,12 @@
 # hyperparameters of both random forest and gradient boosting decision tree
 # models.
 #
+# ```{caution}
+# For the sake of clarity, no cross-validation will be used to estimate the
+# generalization error. We are only showing the effect of the parameters
+# on the validation set of what should be the inner cross-validation.
+# ```
+#
 # ## Random forest
 #
 # The main parameter to tune for random forest is the `n_estimators`

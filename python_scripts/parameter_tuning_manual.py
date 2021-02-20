@@ -15,14 +15,14 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
 numerical_columns = [
     "age", "capital-gain", "capital-loss", "hours-per-week"]
 
-target = df[target_name]
-data = df[numerical_columns]
+target = adult_census[target_name]
+data = adult_census[numerical_columns]
 
 # %% [markdown]
 # Our data is only numerical.

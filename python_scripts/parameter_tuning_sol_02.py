@@ -28,11 +28,11 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt"])
+target = adult_census[target_name]
+data = adult_census.drop(columns=[target_name, "fnlwgt"])
 
 df_train, df_test, target_train, target_test = train_test_split(
     data, target, train_size=0.2, random_state=42)

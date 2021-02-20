@@ -26,15 +26,15 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt"])
+target = adult_census[target_name]
+data = adult_census.drop(columns=[target_name, "fnlwgt"])
 
 from sklearn.model_selection import train_test_split
 
-df_train, df_test, target_train, target_test = train_test_split(
+data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
 
 # %% [markdown]
@@ -82,9 +82,9 @@ from sklearn.linear_model import LogisticRegression
 # data.
 #
 # Notes: some combinations of the hyperparameters proposed above are invalid.
-# You can make the parameter search accept such failures by setting `error_score`
-# to `np.nan`. The warning messages give more details on which parameter
-# combinations but the computation will proceed.
+# You can make the parameter search accept such failures by setting
+# `error_score` to `np.nan`. The warning messages give more details on which
+# parameter combinations but the computation will proceed.
 #
 # Once the computation has completed, print the best combination of parameters
 # stored in the `best_params_` attribute.

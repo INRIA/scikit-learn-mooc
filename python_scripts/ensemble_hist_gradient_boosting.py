@@ -27,32 +27,28 @@
 
 # %%
 from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
 
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
 # %% [markdown]
 # We will make a quick benchmark of the original gradient boosting.
 
 # %%
-from time import time
+from sklearn.model_selection import cross_validate
 from sklearn.ensemble import GradientBoostingRegressor
 
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
+cv_results_gbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
 
-start_time = time()
-gradient_boosting.fit(X_train, y_train)
-fit_time_gradient_boosting = time() - start_time
-
-start_time = time()
-score_gradient_boosting = gradient_boosting.score(X_test, y_test)
-score_time_gradient_boosting = time() - start_time
-
-print("Gradient boosting decision tree")
-print(f"R2 score: {score_gradient_boosting:.3f}")
-print(f"Fit time: {fit_time_gradient_boosting:.2f} s")
-print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
+# %%
+print("Gradient Boosting Decision Tree")
+print(f"R2 score via cross-validation: "
+      f"{cv_results_gbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_gbdt['test_score'].std():.3f}")
+print(f"Average fit time: "
+      f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
+print(f"Average score time: "
+      f"{cv_results_gbdt['score_time'].mean():.3f} seconds")
 
 # %% [markdown]
 # We recall that a way of accelerating the gradient boosting is to reduce the
@@ -69,7 +65,7 @@ from sklearn.preprocessing import KBinsDiscretizer
 
 discretizer = KBinsDiscretizer(
     n_bins=256, encode="ordinal", strategy="quantile")
-X_trans = discretizer.fit_transform(X_train)
+X_trans = discretizer.fit_transform(X)
 X_trans
 
 # %% [markdown]
@@ -95,54 +91,48 @@ from sklearn.pipeline import make_pipeline
 
 gradient_boosting = make_pipeline(
     discretizer, GradientBoostingRegressor(n_estimators=200))
+cv_results_gbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
 
-start_time = time()
-gradient_boosting.fit(X_train, y_train)
-fit_time_gradient_boosting = time() - start_time
-
-start_time = time()
-score_gradient_boosting = gradient_boosting.score(X_test, y_test)
-score_time_gradient_boosting = time() - start_time
-
-print("KBinsDiscritizer + Gradient boosting decision tree")
-print(f"R2 score: {score_gradient_boosting:.3f}")
-print(f"Fit time: {fit_time_gradient_boosting:.2f} s")
-print(f"Score time: {score_time_gradient_boosting:.5f} s\n")
+# %%
+print("Gradient Boosting Decision Tree with KBinsDiscretizer")
+print(f"R2 score via cross-validation: "
+      f"{cv_results_gbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_gbdt['test_score'].std():.3f}")
+print(f"Average fit time: "
+      f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
+print(f"Average score time: "
+      f"{cv_results_gbdt['score_time'].mean():.3f} seconds")
 
 # %% [markdown]
-# Here, we observe that the fit time has been drastically reduced but that the
+# Here, we see that the fit time has been drastically reduced but that the
 # performance of the model is the identical. Scikit-learn provides a specific
 # classes which are even more optimized for large dataset, called
 # `HistGradientBoostingClassifier` and `HistGradientBoostingRegressor`. Each
-# feature in the dataset `X` is first binned by computing histograms, which
-# are later used to evaluate the potential splits. The number of splits to
-# evaluate is then much smaller. This algorithm becomes much more efficient
-# than gradient boosting when the dataset has over 10,000 samples.
+# feature in the dataset `X` is first binned by computing histograms, which are
+# later used to evaluate the potential splits. The number of splits to evaluate
+# is then much smaller. This algorithm becomes much more efficient than
+# gradient boosting when the dataset has over 10,000 samples.
 #
 # Below we will give an example for a large dataset and we will compare
 # computation times with the experiment of the previous section.
 
 # %%
-from time import time
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 histogram_gradient_boosting = HistGradientBoostingRegressor(
     max_iter=200, random_state=0)
+cv_results_hgbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
 
-start_time = time()
-histogram_gradient_boosting.fit(X_train, y_train)
-fit_time_histogram_gradient_boosting = time() - start_time
-
-start_time = time()
-score_histogram_gradient_boosting = histogram_gradient_boosting.score(
-    X_test, y_test)
-score_time_histogram_gradient_boosting = time() - start_time
-
-print("Historgram gradient boosting decision tree")
-print(f"R2 score: {score_histogram_gradient_boosting:.3f}")
-print(f"Fit time: {fit_time_histogram_gradient_boosting:.2f} s")
-print(f"Score time: {score_time_histogram_gradient_boosting:.5f} s\n")
+# %%
+print("Histogram Gradient Boosting Decision Tree")
+print(f"R2 score via cross-validation: "
+      f"{cv_results_hgbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_hgbdt['test_score'].std():.3f}")
+print(f"Average fit time: "
+      f"{cv_results_hgbdt['fit_time'].mean():.3f} seconds")
+print(f"Average score time: "
+      f"{cv_results_hgbdt['score_time'].mean():.3f} seconds")
 
 # %% [markdown]
 # The histogram gradient-boosting is the best algorithm in terms of score.

@@ -22,7 +22,7 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %%
 from sklearn.model_selection import cross_val_score
@@ -37,8 +37,8 @@ tree = DecisionTreeRegressor(random_state=0)
 bagging = BaggingRegressor(base_estimator=tree, n_estimators=100,
                            n_jobs=-1)
 
-scores_random_forest = cross_val_score(random_forest, X, y)
-scores_bagging = cross_val_score(bagging, X, y)
+scores_random_forest = cross_val_score(random_forest, data, target)
+scores_bagging = cross_val_score(bagging, data, target)
 
 print(f"Performance of random forest: "
       f"{scores_random_forest.mean():.3f} +/- "

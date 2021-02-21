@@ -80,8 +80,8 @@ linear_model = LogisticRegression()
 linear_model.fit(data_train, target_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target,
-                data=data, palette=palette, ax=ax)
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=penguins, palette=palette, ax=ax)
 _ = plot_decision_function(linear_model, range_features, ax=ax)
 
 # %% [markdown]
@@ -115,8 +115,8 @@ tree = DecisionTreeClassifier(max_depth=1)
 tree.fit(data_train, target_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target,
-                data=data, palette=palette, ax=ax)
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+                data=penguins, palette=palette, ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]

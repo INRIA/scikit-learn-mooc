@@ -18,8 +18,8 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
-X.head()
+data, target = fetch_california_housing(as_frame=True, return_X_y=True)
+data.head()
 
 # %% [markdown]
 # In one of the previous notebook, we showed that linear models could be used
@@ -41,7 +41,7 @@ from sklearn.linear_model import LinearRegression
 
 linear_regression = make_pipeline(PolynomialFeatures(degree=2),
                                   LinearRegression())
-cv_results = cross_validate(linear_regression, X, y, cv=10,
+cv_results = cross_validate(linear_regression, data, target, cv=10,
                             return_train_score=True,
                             return_estimator=True)
 test_score = cv_results["test_score"]
@@ -89,10 +89,10 @@ boxplot_property = {
 weights_linear_regression = pd.DataFrame(
     [est[-1].coef_ for est in cv_results["estimator"]],
     columns=cv_results["estimator"][0][0].get_feature_names(
-        input_features=X.columns))
+        input_features=data.columns))
 _, ax = plt.subplots(figsize=(6, 16))
 weights_linear_regression.plot.box(ax=ax, **boxplot_property)
-ax.set_title("Linear regression coefficients")
+_ = ax.set_title("Linear regression coefficients")
 
 # %% [markdown]
 # We can force the linear regression model to consider all features in a more
@@ -105,7 +105,7 @@ from sklearn.linear_model import Ridge
 
 ridge = make_pipeline(PolynomialFeatures(degree=2),
                       Ridge(alpha=100))
-cv_results = cross_validate(ridge, X, y, cv=10,
+cv_results = cross_validate(ridge, data, target, cv=10,
                             return_train_score=True,
                             return_estimator=True)
 test_score = cv_results["test_score"]
@@ -126,7 +126,7 @@ print(f"R2 score of ridge model on the train set:\n"
 weights_ridge = pd.DataFrame(
     [est[-1].coef_ for est in cv_results["estimator"]],
     columns=cv_results["estimator"][0][0].get_feature_names(
-        input_features=X.columns))
+        input_features=data.columns))
 
 # %%
 _, axs = plt.subplots(ncols=2, figsize=(12, 16))
@@ -181,7 +181,7 @@ from sklearn.preprocessing import StandardScaler
 
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
                       Ridge(alpha=0.5))
-cv_results = cross_validate(ridge, X, y, cv=10,
+cv_results = cross_validate(ridge, data, target, cv=10,
                             return_train_score=True,
                             return_estimator=True)
 test_score = cv_results["test_score"]
@@ -243,10 +243,9 @@ ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
 from sklearn.model_selection import ShuffleSplit
 
 cv = ShuffleSplit(n_splits=5, random_state=1)
-cv_results = cross_validate(ridge, X, y, cv=cv,
+cv_results = cross_validate(ridge, data, target, cv=cv,
                             return_train_score=True,
-                            return_estimator=True,
-                            n_jobs=-1)
+                            return_estimator=True, n_jobs=-1)
 test_score = cv_results["test_score"]
 print(f"R2 score of ridge model with optimal alpha on the test set:\n"
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
@@ -267,7 +266,7 @@ print(f"R2 score of ridge model on the train set:\n"
 # %%
 cv_alphas = pd.DataFrame(
     [est[-1].cv_values_.mean(axis=0) for est in cv_results["estimator"]],
-     columns=alphas)
+    columns=alphas)
 
 _, ax = plt.subplots()
 cv_alphas.mean(axis=0).plot(ax=ax, marker="+")

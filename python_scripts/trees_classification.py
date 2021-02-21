@@ -80,7 +80,7 @@ linear_model = LogisticRegression()
 linear_model.fit(data_train, target_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target,
                 data=data, palette=palette, ax=ax)
 _ = plot_decision_function(linear_model, range_features, ax=ax)
 
@@ -115,7 +115,7 @@ tree = DecisionTreeClassifier(max_depth=1)
 tree.fit(data_train, target_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
+sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target,
                 data=data, palette=palette, ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
@@ -203,7 +203,7 @@ tree.predict_proba([[10000, 17]])
 
 # %%
 model_name = tree.__class__.__name__
-tree.fit(data_train, data_test)
+tree.fit(data_train, target_train)
 test_score = tree.score(data_test, target_test)
 print(f"Accuracy of the {model_name}: {test_score:.2f}")
 

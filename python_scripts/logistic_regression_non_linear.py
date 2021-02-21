@@ -84,8 +84,8 @@ sns.set_context("talk")
 
 _, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
 
-for ax, (X, y) in zip(axs, datasets):
-    sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
+for ax, (data, target) in zip(axs, datasets):
+    sns.scatterplot(x=data.iloc[:, 0], y=data.iloc[:, 1], hue=target,
                     palette=["tab:red", "tab:blue"], ax=ax)
 
 # %% [markdown]
@@ -102,12 +102,12 @@ from sklearn.svm import SVC
 linear_model = make_pipeline(StandardScaler(), SVC(kernel="linear"))
 
 _, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
-for ax, (X, y) in zip(axs, datasets):
-    linear_model.fit(X, y)
+for ax, (data, target) in zip(axs, datasets):
+    linear_model.fit(data, target)
     plot_decision_function(linear_model, range_features, ax=ax)
-    sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
+    sns.scatterplot(x=data.iloc[:, 0], y=data.iloc[:, 1], hue=target,
                     palette=["tab:red", "tab:blue"], ax=ax)
-    ax.set_title(f"Accuracy: {linear_model.score(X, y):.3f}")
+    ax.set_title(f"Accuracy: {linear_model.score(data, target):.3f}")
 
 # %% [markdown]
 # As expected, the linear model parametrization is not enough to adapt the
@@ -120,12 +120,12 @@ for ax, (X, y) in zip(axs, datasets):
 kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf"))
 
 _, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
-for ax, (X, y) in zip(axs, datasets):
-    kernel_model.fit(X, y)
+for ax, (data, target) in zip(axs, datasets):
+    kernel_model.fit(data, target)
     plot_decision_function(kernel_model, range_features, ax=ax)
-    sns.scatterplot(x=X.iloc[:, 0], y=X.iloc[:, 1], hue=y,
+    sns.scatterplot(x=data.iloc[:, 0], y=data.iloc[:, 1], hue=target,
                     palette=["tab:red", "tab:blue"], ax=ax)
-    ax.set_title(f"Accuracy: {kernel_model.score(X, y):.3f}")
+    ax.set_title(f"Accuracy: {kernel_model.score(data, target):.3f}")
 
 # %% [markdown]
 # In this later case, we can see that the accuracy is close to be perfect and

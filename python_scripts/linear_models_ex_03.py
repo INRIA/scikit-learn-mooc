@@ -17,8 +17,8 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
-X.head()
+data, target = fetch_california_housing(as_frame=True, return_X_y=True)
+data.head()
 
 # %% [markdown]
 # Now this is your turn to train a linear regression model on this dataset.

@@ -17,8 +17,8 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
-X.head()
+data, target = fetch_california_housing(as_frame=True, return_X_y=True)
+data.head()
 
 # %% [markdown]
 # Now this is your turn to train a linear regression model on this dataset.
@@ -38,11 +38,9 @@ linear_regression = LinearRegression()
 # %%
 from sklearn.model_selection import cross_validate
 
-cv_results = cross_validate(linear_regression, X, y,
+cv_results = cross_validate(linear_regression, data, target,
                             scoring="neg_mean_absolute_error",
-                            return_estimator=True,
-                            cv=10,
-                            n_jobs=-1)
+                            return_estimator=True, cv=10, n_jobs=-1)
 
 # %%
 print(f"Mean absolute error on testing set: "
@@ -56,6 +54,6 @@ import seaborn as sns
 sns.set_context("talk")
 
 weights = pd.DataFrame(
-    [est.coef_ for est in cv_results["estimator"]], columns=X.columns)
+    [est.coef_ for est in cv_results["estimator"]], columns=data.columns)
 weights.plot.box(vert=False)
 _ = plt.title("Value of linear regression coefficients")

@@ -21,8 +21,8 @@ data, target = fetch_california_housing(as_frame=True, return_X_y=True)
 # commonly called `y`.
 
 # %% [markdown]
-# We will check the performance of decision tree regressor with default
-# parameters.
+# We will check the statistical performance of decision tree regressor with
+# default parameters.
 
 # %%
 from sklearn.model_selection import cross_validate
@@ -86,9 +86,9 @@ print(f"R2 score obtained by cross-validation: "
 # them on a slightly modified version of the training set. Then, the
 # predictions of all these base regressors will be combined by averaging.
 #
-# Here, we will use 50 decision trees and check the fitting time as well as
-# the performance on the left-out testing data. It is important to note that
-# we are not going to tune any parameter of the decision tree.
+# Here, we will use 50 decision trees and check the fitting time as well as the
+# statistical performance on the left-out testing data. It is important to note
+# that we are not going to tune any parameter of the decision tree.
 
 # %%
 # %%time
@@ -111,8 +111,8 @@ print(f"R2 score obtained by cross-validation: "
 # for the optimal hyperparameters.
 #
 # This shows the motivation behind the use of an ensemble learner: it gives a
-# relatively good baseline with decent performance without any parameter
-# tuning.
+# relatively good baseline with decent statistical performance without any
+# parameter tuning.
 #
 # Now, we will discuss in detail two ensemble families: bagging and
 # boosting:

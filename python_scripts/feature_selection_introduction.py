@@ -128,8 +128,8 @@ _ = plt.title("Time to make prediction")
 # We can draw the same conclusions for both training and scoring elapsed time:
 # selecting the most informative features speed-up our pipeline.
 #
-# Of course, such speed-up is beneficial only if the performance in terms of
-# metrics remain the same. Let's check the testing score.
+# Of course, such speed-up is beneficial only if the statistical performance in
+# terms of metrics remain the same. Let's check the testing score.
 
 # %%
 cv_results["test_score"].plot.box(**boxplot_property)
@@ -137,11 +137,11 @@ plt.xlabel("Accuracy score")
 _ = plt.title("Test score via cross-validation")
 
 # %% [markdown]
-# We can observe that the model's performance selecting a subset of features
-# decreases compared with the model using all available features. Since we
-# generated the dataset, we can infer that the decrease is because of the
-# selection. The feature selection algorithm did not choose the two informative
-# features.
+# We can observe that the model's statistical performance selecting a subset of
+# features decreases compared with the model using all available features.
+# Since we generated the dataset, we can infer that the decrease is because of
+# the selection. The feature selection algorithm did not choose the two
+# informative features.
 #
 # We can investigate which feature have been selected during the
 # cross-validation. We will print the indices of the two selected features.
@@ -159,12 +159,13 @@ for idx, pipeline in enumerate(cv_results_with_selection["estimator"]):
 # We see that the feature `53` is always selected while the other feature
 # varies depending on the cross-validation fold.
 #
-# If we would like to keep our score with similar performance, we could choose
-# another metric to perform the test or select more features. For instance, we
-# could select the number of features based on a specific percentile of the
-# highest scores. Besides, we should keep in mind that we simplify our problem
-# by having informative and not informative features. Correlation between
-# features makes the problem of feature selection even harder.
+# If we would like to keep our score with similar statistical performance, we
+# could choose another metric to perform the test or select more features. For
+# instance, we could select the number of features based on a specific
+# percentile of the highest scores. Besides, we should keep in mind that we
+# simplify our problem by having informative and not informative features.
+# Correlation between features makes the problem of feature selection even
+# harder.
 #
 # Therefore, we could come with a much more complicated procedure that could
 # tune (via cross-validation) the number of selected features and change

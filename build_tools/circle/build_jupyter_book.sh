@@ -5,10 +5,9 @@ apt-get install make
 
 source /opt/conda/etc/profile.d/conda.sh
 conda update --yes conda
-conda create -n testenv --yes pip python=3.7
-conda activate testenv
-pip install -r requirements.txt
-pip install jupyter-book
+conda create -n scikit-learn-mooc --yes python=3
+conda activate scikit-learn-mooc
+pip install -r requirements-dev.txt
 
 cd jupyter-book
 make 2>&1 | tee build.log

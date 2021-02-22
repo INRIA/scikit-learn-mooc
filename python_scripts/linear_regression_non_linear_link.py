@@ -2,8 +2,8 @@
 # # Linear regression with non-linear link between data and target
 #
 # In the previous exercise, you were asked to train a linear regression model
-# on a dataset where the matrix `X` and the target `y` do not have a linear
-# link.
+# on a dataset where the matrix `data` and the vector `target` do not have a
+# linear link.
 #
 # In this notebook, we show that even if the parametrization of linear models
 # is not natively adapated to data with non-linearity, it is still possible
@@ -46,10 +46,11 @@ _ = sns.scatterplot(data=full_data, x="data", y="target")
 # done in the previous exercise.
 #
 # ```{warning}
-# In scikit-learn, by convention `X` should be a 2D matrix of shape
-# `(n_samples, n_features)`. If `X` is a 1D vector, you need to reshape it
-# into a matrix with a single column if the vector represents a feature or a
-# single row if the vector represents a sample.
+# In scikit-learn, by convention `data` (also called `X` in the scikit-learn
+# documentation) should be a 2D matrix of shape `(n_samples, n_features)`.
+# If `data` is a 1D vector, you need to reshape it into a matrix with a
+# single column if the vector represents a feature or a single row if the
+# vector represents a sample.
 # ```
 
 # %%
@@ -79,9 +80,9 @@ print(f"weight: {linear_regression.coef_[0]:.2f}, "
       f"intercept: {linear_regression.intercept_:.2f}")
 
 # %% [markdown]
-# It is important to note that the model learnt will not be able to handle
-# the non-linear relationship between `x` and `y` since linear models assume
-# the relationship between `x` and `y` to be linear.
+# It is important to note that the model learnt will not be able to handle the
+# non-linear relationship between `data` and `target` since linear models
+# assume the relationship between `data` and `target` to be linear.
 #
 # Indeed, there are 3 possibilities to solve this issue:
 #
@@ -107,12 +108,12 @@ ax.plot(data[sorted_idx], target_predicted[sorted_idx],
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# Instead of having a model
-# which can natively deal with non-linearity, we could also modify our data: we
-# could create new features, derived from the original features, using some
-# expert knowledge. In this example, we know that we have a cubic and squared
-# relationship between `x` and `y` (because we generated the data). Indeed,
-# we could create two new features (`x^2` and `x^3`) using this information.
+# Instead of having a model which can natively deal with non-linearity, we
+# could also modify our data: we could create new features, derived from the
+# original features, using some expert knowledge. In this example, we know that
+# we have a cubic and squared relationship between `data` and `target` (because
+# we generated the data). Indeed, we could create two new features (`data ** 2`
+# and `data ** 3`) using this information.
 
 # %%
 data = np.concatenate([data, data ** 2, data ** 3], axis=1)

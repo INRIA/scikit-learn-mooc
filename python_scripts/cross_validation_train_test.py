@@ -19,6 +19,13 @@ housing = fetch_california_housing(as_frame=True)
 data, target = housing.data, housing.target
 
 # %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
+
+# %% [markdown]
 # In this dataset, the aim is to predict the median value of houses in an area
 # in California. The features collected are based on general real-estate and
 # geographical information.
@@ -240,8 +247,8 @@ print(f"The standard deviation of the generalization error is: "
 # data, we would expect its true generalization error to fall close to that
 # region.
 #
-# While this information is interesting in itself, it should be contrasted
-# to the scale of the natural variability of the target `y` in our dataset.
+# While this information is interesting in itself, it should be contrasted to
+# the scale of the natural variability of the vector `target` in our dataset.
 #
 # Let us plot the distribution of the target variable:
 

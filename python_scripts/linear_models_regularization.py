@@ -23,15 +23,15 @@ data.head()
 
 # %% [markdown]
 # In one of the previous notebook, we showed that linear models could be used
-# even in settings where `X` and `y` are not linearly linked.
+# even in settings where `data` and `target` are not linearly linked.
 #
 # We showed that one can use the `PolynomialFeatures` transformer to create
 # additional features encoding non-linear interactions between features.
 #
 # Here, we will use this transformer to augment the feature space.
-# Subsequently, we will train a linear regression model.
-# We will use the out-of-sample test set to evaluate the
-# generalization capabilities of our model.
+# Subsequently, we will train a linear regression model. We will use the
+# out-of-sample test set to evaluate the generalization capabilities of our
+# model.
 
 # %%
 from sklearn.model_selection import cross_validate

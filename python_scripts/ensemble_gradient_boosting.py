@@ -1,8 +1,8 @@
 # %% [markdown]
 # # Gradient-boosting decision tree (GBDT)
 #
-# In this notebook, we will present the gradient boosting decision tree algorithm
-# and contrast it with AdaBoost.
+# In this notebook, we will present the gradient boosting decision tree
+# algorithm and contrast it with AdaBoost.
 #
 # Gradient-boosting differs from AdaBoost due to the following reason: instead
 # of assigning weights to specific samples, GBDT will fit a decision tree on
@@ -25,7 +25,8 @@ rng = np.random.RandomState(0)
 
 
 def generate_data(n_samples=50):
-    """Generate synthetic dataset. Returns `X_train`, `X_test`, `y_train`."""
+    """Generate synthetic dataset. Returns `data_train`, `data_test`,
+    `target_train`."""
     x_max, x_min = 1.4, -1.4
     len_x = x_max - x_min
     x = rng.rand(n_samples) * len_x - len_x / 2
@@ -34,7 +35,7 @@ def generate_data(n_samples=50):
 
     data_train = pd.DataFrame(x, columns=["Feature"])
     data_test = pd.DataFrame(np.linspace(x_max, x_min, num=300),
-                          columns=["Feature"])
+                             columns=["Feature"])
     target_train = pd.Series(y, name="Target")
 
     return data_train, data_test, target_train
@@ -92,9 +93,9 @@ _ = plt.legend([line_predictions[0], lines_residuals[0]],
 #
 # Indeed, our initial tree was not expressive enough to handle the complexity
 # of the data, as shown by the residuals. In a gradient-boosting algorithm, the
-# idea is to create a second tree which, given the same data `x`, will try to
-# predict the residuals instead of the target `y`. We would therefore have a
-# tree that is able to predict the errors made by the initial tree.
+# idea is to create a second tree which, given the same data `data`, will try
+# to predict the residuals instead of the vector `target`. We would therefore
+# have a tree that is able to predict the errors made by the initial tree.
 #
 # Let's train such a tree.
 
@@ -122,13 +123,13 @@ _ = plt.legend([line_predictions[0], lines_residuals[0]],
 
 # %% [markdown]
 # We see that this new tree only manages to fit some of the residuals. We will
-# focus on the last sample in `X_train` and explain how the predictions of both
-# trees are combined. Let's first select the last sample in `X_train`.
+# focus on the last sample in `data_train` and explain how the predictions of
+# both trees are combined. Let's first select the last sample in `data_train`.
 
 # %%
-x_max = data_train.iloc[-1, 0]
-y_true = target_train.iloc[-1]
-y_true_residual = residuals.iloc[-1]
+data_max = data_train.iloc[-1, 0]
+target_true = target_train.iloc[-1]
+target_true_residual = residuals.iloc[-1]
 
 # %% [markdown]
 # Let's plot the previous information and highlight our sample of interest.
@@ -154,9 +155,9 @@ for idx in range(len(target_train)):
                 color="red")
 
 # plot the sample of interest
-axs[0].scatter(x_max, y_true, label="Sample of interest",
+axs[0].scatter(data_max, target_true, label="Sample of interest",
                color="tab:orange", s=200)
-axs[1].scatter(x_max, y_true_residual, label="Sample of interest",
+axs[1].scatter(data_max, target_true_residual, label="Sample of interest",
                color="tab:orange", s=200)
 
 axs[0].set_xlim([-0.5, 0])
@@ -175,20 +176,20 @@ plt.subplots_adjust(wspace=0.35)
 # and compare it with the true value.
 
 # %%
-print(f"True value to predict for f(x={x_max:.3f}) = {y_true:.3f}")
+print(f"True value to predict for f(x={data_max:.3f}) = {target_true:.3f}")
 
-y_pred_first_tree = tree.predict([[x_max]])[0]
-print(f"Prediction of the first decision tree for x={x_max:.3f}: "
+y_pred_first_tree = tree.predict([[data_max]])[0]
+print(f"Prediction of the first decision tree for x={data_max:.3f}: "
       f"y={y_pred_first_tree:.3f}")
-print(f"Error of the tree: {y_true - y_pred_first_tree:.3f}")
+print(f"Error of the tree: {target_true - y_pred_first_tree:.3f}")
 
 # %% [markdown]
 # As we visually observed, we have a small error. Now, we can use the second
 # tree to try to predict this residual.
 
 # %%
-print(f"Prediction of the residual for x={x_max:.3f}: "
-      f"{tree_residuals.predict([[x_max]])[0]:.3f}")
+print(f"Prediction of the residual for x={data_max:.3f}: "
+      f"{tree_residuals.predict([[data_max]])[0]:.3f}")
 
 # %% [markdown]
 # We see that our second tree is capable of predicting the exact residual
@@ -197,11 +198,11 @@ print(f"Prediction of the residual for x={x_max:.3f}: "
 
 # %%
 y_pred_first_and_second_tree = (
-    y_pred_first_tree + tree_residuals.predict([[x_max]])[0]
+    y_pred_first_tree + tree_residuals.predict([[data_max]])[0]
 )
 print(f"Prediction of the first and second decision trees combined for "
-      f"x={x_max:.3f}: y={y_pred_first_and_second_tree:.3f}")
-print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
+      f"x={data_max:.3f}: y={y_pred_first_and_second_tree:.3f}")
+print(f"Error of the tree: {target_true - y_pred_first_and_second_tree:.3f}")
 
 # %% [markdown]
 # We chose a sample for which only two trees were enough to make the perfect

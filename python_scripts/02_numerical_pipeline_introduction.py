@@ -94,6 +94,13 @@ model = KNeighborsClassifier()
 model.fit(data, target)
 
 # %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
+
+# %% [markdown]
 # Let's use our model to make some predictions using the same dataset. For
 # the sake of simplicity, we will look at the five first predicted targets.
 

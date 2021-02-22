@@ -31,7 +31,7 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_classification.csv")
+penguins = pd.read_csv("../datasets/penguins_classification.csv")
 
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
@@ -40,7 +40,7 @@ target_column = "Species"
 # Let's check the dataset more into details.
 
 # %%
-data.head()
+penguins.head()
 
 # %% [markdown]
 # Since that we have few samples, we can check a scatter plot to observe the
@@ -54,10 +54,10 @@ sns.set_context("talk")
 _, axs = plt.subplots(ncols=3, figsize=(16, 4))
 
 sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=data, ax=axs[0])
-sns.kdeplot(data=data, x=culmen_columns[0], hue=target_column,
+                data=penguins, ax=axs[0])
+sns.kdeplot(data=penguins, x=culmen_columns[0], hue=target_column,
             ax=axs[1])
-sns.kdeplot(data=data, x=culmen_columns[1], hue=target_column,
+sns.kdeplot(data=penguins, x=culmen_columns[1], hue=target_column,
             ax=axs[2])
 plt.subplots_adjust(wspace=0.4)
 
@@ -81,13 +81,13 @@ plt.subplots_adjust(wspace=0.4)
 # length and the body mass of penguins.
 
 # %%
-data = pd.read_csv("../datasets/penguins_regression.csv")
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
 data_columns = ["Flipper Length (mm)"]
 target_column = "Body Mass (g)"
 
 # %%
-_ = sns.scatterplot(data=data, x=data_columns[0], y=target_column)
+_ = sns.scatterplot(data=penguins, x=data_columns[0], y=target_column)
 
 # %% [markdown]
 # Here, we deal with a regression problem because our target is a continuous

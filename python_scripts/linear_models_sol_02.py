@@ -43,10 +43,10 @@ sns.set_context("talk")
 _ = sns.scatterplot(data=full_data, x="data", y="target")
 
 # %% [markdown]
-# We observe that the link between the data `x` and target `y` is non-linear.
-# For instance, `x` could represent to be the years of experience (normalized)
-# and `y` the salary (normalized). Therefore, the problem here would be to
-# infer the salary given the years of experience.
+# We observe that the link between the data `data` and vector `target` is
+# non-linear. For instance, `data` could represent to be the years of
+# experience (normalized) and `target` the salary (normalized). Therefore, the
+# problem here would be to infer the salary given the years of experience.
 #
 # Using the function `f` defined below, find both the `weight` and the
 # `intercept` that you think will lead to a good linear model. Plot both the
@@ -86,10 +86,11 @@ _ = ax.plot(data.ravel(), linear_regression.predict(data), color="tab:orange")
 
 # %% [markdown]
 # ```{warning}
-# In scikit-learn, by convention `X` should be a 2D matrix of shape
-# `(n_samples, n_features)`. If `X` is a 1D vector, you need to reshape it
-# into a matrix with a single column if the vector represents a feature or a
-# single row if the vector represents a sample.
+# In scikit-learn, by convention `data` (also called `X` in the scikit-learn
+# documentation) should be a 2D matrix of shape `(n_samples, n_features)`.
+# If `data` is a 1D vector, you need to reshape it into a matrix with a
+# single column if the vector represents a feature or a single row if the
+# vector represents a sample.
 # ```
 
 # %%

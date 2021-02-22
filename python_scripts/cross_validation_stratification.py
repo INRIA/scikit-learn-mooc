@@ -70,14 +70,14 @@ ax.set_yticks(target.unique())
 _ = ax.set_title("Class value in target y")
 
 # %% [markdown]
-# We see that the target vector `y` is ordered. It will have some unexpected
-# consequences when using the `KFold` cross-validation. To illustrate the
-# consequences, we will show the class count in each fold of the
+# We see that the target vector `target` is ordered. It will have some
+# unexpected consequences when using the `KFold` cross-validation. To
+# illustrate the consequences, we will show the class count in each fold of the
 # cross-validation in the train and test set.
 #
-# For this matter, we'll create a function (as we will reuse it), which given
-# a cross-validation object and the data `X` and `y`, is returning a dataframe
-# with the class counts by folds and by split sets.
+# For this matter, we'll create a function (as we will reuse it), which given a
+# cross-validation object and the data `data` and `target`, is returning a
+# dataframe with the class counts by folds and by split sets.
 
 # %%
 from collections import Counter

@@ -35,10 +35,10 @@ full_data = pd.DataFrame({"data": data, "target": target})
 _ = sns.scatterplot(data=full_data, x="data", y="target")
 
 # %% [markdown]
-# We observe that the link between the data `x` and target `y` is non-linear.
-# For instance, `x` could represent to be the years of experience (normalized)
-# and `y` the salary (normalized). Therefore, the problem here would be to
-# infer the salary given the years of experience.
+# We observe that the link between the data `data` and vector `target` is
+# non-linear. For instance, `data` could represent to be the years of
+# experience (normalized) and `target` the salary (normalized). Therefore, the
+# problem here would be to infer the salary given the years of experience.
 #
 # Using the function `f` defined below, find both the `weight` and the
 # `intercept` that you think will lead to a good linear model. Plot both the

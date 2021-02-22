@@ -5,8 +5,9 @@
 #
 # A set of metrics are dedicated to regression. Indeed, classification metrics
 # cannot be used to evaluate the performance of regression models because there
-# is a fundamental difference between their target type `y`: it is a continuous
-# variable in regression, while a discrete variable in classification.
+# is a fundamental difference between their target type `target`: it is a
+# continuous variable in regression, while a discrete variable in
+# classification.
 #
 # We will use the Ames housing dataset. The goal is to predict the price
 # of houses in the city of Ames, Iowa. As with classification, we will only use

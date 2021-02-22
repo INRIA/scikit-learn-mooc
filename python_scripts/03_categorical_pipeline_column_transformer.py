@@ -33,6 +33,13 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=[target_name, "fnlwgt"])
 
 # %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
+
+# %% [markdown]
 # We recall that both `"education-num"` and `"education"` contain the same
 # information. In the previous notebook, we dropped `"education-num"` and
 # used `"education"` instead; we will do the same processing here.

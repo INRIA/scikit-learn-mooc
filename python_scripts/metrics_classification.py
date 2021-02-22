@@ -2,9 +2,9 @@
 # # Classification
 #
 # This notebook aims at giving an overview of the classification metrics that
-# can be used to evaluate the predictive model performance.
-# We can recall that in a classification setting, the target `y` is categorical
-# rather than continuous.
+# can be used to evaluate the predictive model performance. We can recall that
+# in a classification setting, the vector `target` is categorical rather than
+# continuous.
 #
 # We will load the blood transfusion dataset.
 
@@ -16,7 +16,7 @@ data = blood_transfusion.drop(columns="Class")
 target = blood_transfusion["Class"]
 
 # %% [markdown]
-# Let's start by checking the classes present in the target vector `y`.
+# Let's start by checking the classes present in the target vector `target`.
 
 # %%
 import seaborn as sns
@@ -27,9 +27,9 @@ ax.set_xlabel("Number of samples")
 _ = ax.set_title("Number of samples per classes present\n in the target")
 
 # %% [markdown]
-# We can see that the target `y` contains two classes corresponding to whether
-# a subject gave blood We will use a logistic regression classifier to predict
-# this outcome.
+# We can see that the vector `target` contains two classes corresponding to
+# whether a subject gave blood We will use a logistic regression classifier to
+# predict this outcome.
 #
 # To focus on the metrics presentation, we will only use a single split instead
 # of cross-validation.
@@ -216,7 +216,7 @@ print(f"Accuracy of the dummy classifier: "
 # %% [markdown]
 # With the dummy classifier, which always predicts the negative class `'not
 # donated'`, we obtain an accuracy score of 76%. Therefore, it means that this
-# classifier, without learning anything from the data `X`, is capable of
+# classifier, without learning anything from the data `data`, is capable of
 # predicting as accurately as our logistic regression model.
 #
 # The problem illustrated above is also known as the class imbalance problem.

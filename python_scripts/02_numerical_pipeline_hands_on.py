@@ -43,6 +43,13 @@ data.head()
 target
 
 # %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
+
+# %% [markdown]
 # At this point, we can focus on the data we want to use to train our
 # predictive model.
 #

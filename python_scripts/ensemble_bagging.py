@@ -72,8 +72,8 @@ _ = ax.legend()
 # Thus, the bootstrap sample will contain some data points several times while
 # some of the original data points will not be present.
 #
-# We will create a function that given `X` and `y` will return a bootstrap
-# sample `X_bootstrap` and `y_bootstrap`.
+# We will create a function that given `data` and `target` will return a
+# bootstrap sample `data_bootstrap` and `target_bootstrap`.
 
 
 # %%

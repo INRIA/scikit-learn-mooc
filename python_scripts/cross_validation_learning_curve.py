@@ -28,7 +28,7 @@ regressor = DecisionTreeRegressor()
 # ## Ability of a model to learn depending of the sample size
 #
 # We recall that the size of the dataset is given by the number
-# of rows in `X` / the length of the vector `y`.
+# of rows in `data` / the length of the vector `target`.
 
 # %%
 target.size
@@ -36,8 +36,9 @@ target.size
 # %% [markdown]
 # Let's do an experiment and reduce the number of samples and repeat the
 # previous experiment. We will create a function that define a `ShuffleSplit`
-# and given a regressor and the data `X` and `y` will run a cross-validation.
-# The function will finally return the generalization error as a NumPy array.
+# and given a regressor and the data `data` and `target` will run a
+# cross-validation. The function will finally return the generalization error
+# as a NumPy array.
 
 # %%
 import pandas as pd

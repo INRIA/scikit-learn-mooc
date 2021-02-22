@@ -20,6 +20,12 @@ from sklearn.datasets import fetch_california_housing
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+
+# %% [markdown]
 # Across all evaluations, we will use a `ShuffleSplit` cross-validation.
 
 # %%
@@ -49,7 +55,7 @@ errors_regressor = pd.Series(-result_regressor["test_score"],
 # Then, we will evaluate our first baseline. This baseline is called a dummy
 # regressor. This dummy regressor will always predict the mean target computed
 # on the training. Therefore, the dummy regressor will never use any
-# information regarding the data `X`.
+# information regarding the data `data`.
 
 # %%
 from sklearn.dummy import DummyRegressor

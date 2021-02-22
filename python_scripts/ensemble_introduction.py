@@ -15,6 +15,12 @@ from sklearn.datasets import fetch_california_housing
 data, target = fetch_california_housing(as_frame=True, return_X_y=True)
 
 # %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+
+# %% [markdown]
 # We will check the performance of decision tree regressor with default
 # parameters.
 

@@ -108,10 +108,10 @@ print(f"Average score time: "
 # performance of the model is the identical. Scikit-learn provides a specific
 # classes which are even more optimized for large dataset, called
 # `HistGradientBoostingClassifier` and `HistGradientBoostingRegressor`. Each
-# feature in the dataset `X` is first binned by computing histograms, which are
-# later used to evaluate the potential splits. The number of splits to evaluate
-# is then much smaller. This algorithm becomes much more efficient than
-# gradient boosting when the dataset has over 10,000 samples.
+# feature in the dataset `data` is first binned by computing histograms, which
+# are later used to evaluate the potential splits. The number of splits to
+# evaluate is then much smaller. This algorithm becomes much more efficient
+# than gradient boosting when the dataset has over 10,000 samples.
 #
 # Below we will give an example for a large dataset and we will compare
 # computation times with the experiment of the previous section.

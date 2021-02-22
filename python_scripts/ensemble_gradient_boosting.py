@@ -32,12 +32,12 @@ def generate_data(n_samples=50):
     noise = rng.randn(n_samples) * 0.3
     y = x ** 3 - 0.5 * x ** 2 + noise
 
-    X_train = pd.DataFrame(x, columns=["Feature"])
-    X_test = pd.DataFrame(np.linspace(x_max, x_min, num=300),
+    data_train = pd.DataFrame(x, columns=["Feature"])
+    data_test = pd.DataFrame(np.linspace(x_max, x_min, num=300),
                           columns=["Feature"])
-    y_train = pd.Series(y, name="Target")
+    target_train = pd.Series(y, name="Target")
 
-    return X_train, X_test, y_train
+    return data_train, data_test, target_train
 
 
 # %%
@@ -45,9 +45,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-X_train, X_test, y_train = generate_data()
+data_train, data_test, target_train = generate_data()
 
-_ = sns.scatterplot(x=X_train["Feature"], y=y_train,
+_ = sns.scatterplot(x=data_train["Feature"], y=target_train,
                     color="black", alpha=0.5)
 
 # %% [markdown]
@@ -59,21 +59,22 @@ _ = sns.scatterplot(x=X_train["Feature"], y=y_train,
 from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=3, random_state=0)
-tree.fit(X_train, y_train)
+tree.fit(data_train, target_train)
 
-y_pred_train = tree.predict(X_train)
-y_pred_test = tree.predict(X_test)
+target_train_predicted = tree.predict(data_train)
+target_test_predicted = tree.predict(data_test)
 
 # plot the data
-_ = sns.scatterplot(x=X_train["Feature"], y=y_train,
+_ = sns.scatterplot(x=data_train["Feature"], y=target_train,
                     color="black", alpha=0.5)
 # plot the predictions
-line_predictions = plt.plot(X_test, y_pred_test, "--")
+line_predictions = plt.plot(data_test, target_test_predicted, "--")
 
-for idx in range(len(y_train)):
+for idx in range(len(target_train)):
     # plot the residuals
-    lines_residuals = plt.plot([X_train.iloc[idx], X_train.iloc[idx]],
-                               [y_train.iloc[idx], y_pred_train[idx]],
+    lines_residuals = plt.plot([data_train.iloc[idx], data_train.iloc[idx]],
+                               [target_train.iloc[idx],
+                                target_train_predicted[idx]],
                                color="red")
 
 _ = plt.legend([line_predictions[0], lines_residuals[0]],
@@ -98,21 +99,22 @@ _ = plt.legend([line_predictions[0], lines_residuals[0]],
 # Let's train such a tree.
 
 # %%
-residuals = y_train - y_pred_train
+residuals = target_train - target_train_predicted
 
 tree_residuals = DecisionTreeRegressor(max_depth=5, random_state=0)
-tree_residuals.fit(X_train, residuals)
+tree_residuals.fit(data_train, residuals)
 
-y_pred_train_residuals = tree_residuals.predict(X_train)
-y_pred_test_residuals = tree_residuals.predict(X_test)
+target_train_predicted_residuals = tree_residuals.predict(data_train)
+target_test_predicted_residuals = tree_residuals.predict(data_test)
 
-_ = sns.scatterplot(x=X_train["Feature"], y=residuals,
+_ = sns.scatterplot(x=data_train["Feature"], y=residuals,
                     color="black", alpha=0.5)
-line_predictions = plt.plot(X_test, y_pred_test_residuals, "--")
+line_predictions = plt.plot(data_test, target_test_predicted_residuals, "--")
 
-for idx in range(len(y_train)):
-    lines_residuals = plt.plot([X_train.iloc[idx], X_train.iloc[idx]],
-                               [residuals[idx], y_pred_train_residuals[idx]],
+for idx in range(len(target_train)):
+    lines_residuals = plt.plot([data_train.iloc[idx], data_train.iloc[idx]],
+                               [residuals[idx],
+                                target_train_predicted_residuals[idx]],
                                color="red")
 
 _ = plt.legend([line_predictions[0], lines_residuals[0]],
@@ -124,8 +126,8 @@ _ = plt.legend([line_predictions[0], lines_residuals[0]],
 # trees are combined. Let's first select the last sample in `X_train`.
 
 # %%
-x_max = X_train.iloc[-1, 0]
-y_true = y_train.iloc[-1]
+x_max = data_train.iloc[-1, 0]
+y_true = target_train.iloc[-1]
 y_true_residual = residuals.iloc[-1]
 
 # %% [markdown]
@@ -135,20 +137,20 @@ y_true_residual = residuals.iloc[-1]
 _, axs = plt.subplots(ncols=2, figsize=(12, 6), sharex=True)
 
 # plot all samples
-sns.scatterplot(x=X_train["Feature"], y=y_train,
+sns.scatterplot(x=data_train["Feature"], y=target_train,
                 color="black", alpha=0.5, ax=axs[0])
-axs[0].plot(X_test, y_pred_test, "--")
-sns.scatterplot(x=X_train["Feature"], y=residuals,
+axs[0].plot(data_test, target_test_predicted, "--")
+sns.scatterplot(x=data_train["Feature"], y=residuals,
                 color="black", alpha=0.5, ax=axs[1])
-plt.plot(X_test, y_pred_test_residuals, "--")
+plt.plot(data_test, target_test_predicted_residuals, "--")
 
 # plot the predictions of the trees
-for idx in range(len(y_train)):
-    axs[0].plot([X_train.iloc[idx], X_train.iloc[idx]],
-                [y_train.iloc[idx], y_pred_train[idx]],
+for idx in range(len(target_train)):
+    axs[0].plot([data_train.iloc[idx], data_train.iloc[idx]],
+                [target_train.iloc[idx], target_train_predicted[idx]],
                 color="red")
-    axs[1].plot([X_train.iloc[idx], X_train.iloc[idx]],
-                [residuals[idx], y_pred_train_residuals[idx]],
+    axs[1].plot([data_train.iloc[idx], data_train.iloc[idx]],
+                [residuals[idx], target_train_predicted_residuals[idx]],
                 color="red")
 
 # plot the sample of interest
@@ -216,13 +218,13 @@ print(f"Error of the tree: {y_true - y_pred_first_and_second_tree:.3f}")
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import cross_validate
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %%
 from sklearn.ensemble import GradientBoostingRegressor
 
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
-cv_results_gbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
+cv_results_gbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
 
 # %%
 print("Gradient Boosting Decision Tree")
@@ -238,7 +240,7 @@ print(f"Average score time: "
 from sklearn.ensemble import RandomForestRegressor
 
 random_forest = RandomForestRegressor(n_estimators=200, n_jobs=-1)
-cv_results_rf = cross_validate(gradient_boosting, X, y, n_jobs=-1)
+cv_results_rf = cross_validate(gradient_boosting, data, target, n_jobs=-1)
 
 # %%
 print("Random Forest")

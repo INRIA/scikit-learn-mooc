@@ -28,12 +28,12 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %%
 target_name = "class"
-target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt", "education-num"])
+target = adult_census[target_name]
+data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
 
 # %% [markdown]
 # As in the previous notebooks, we use the utility `make_column_selector`

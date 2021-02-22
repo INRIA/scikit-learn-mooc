@@ -1194,10 +1194,16 @@ dataset.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
 <span class="n">housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">housing</span><span class="o">.</span><span class="n">target</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">housing</span><span class="o">.</span><span class="n">target</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Here and later, we use the name <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> to be explicit. In
+scikit-learn, documentation <code class="docutils literal notranslate"><span class="pre">data</span></code> is commonly named <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> is
+commonly called <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 </div>
 <p>In this dataset, the aim is to predict the median value of houses in an area
 in California. The features collected are based on general real-estate and
@@ -1260,7 +1266,7 @@ It can be downloaded/loaded using the
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1357,8 +1363,8 @@ It can be downloaded/loaded using the
 dollar (<span class="math notranslate nohighlight">\() range to the thousand dollars (k\)</span>) range.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">*=</span> <span class="mi">100</span>
-<span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>
+<span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1381,7 +1387,7 @@ Name: MedHouseVal, dtype: float64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1398,8 +1404,8 @@ absolute error, which gives us an error in the native unit, i.e. k$.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
 
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our regressor makes an error of </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1433,7 +1439,8 @@ to minimize the error on data that has not been seen during training.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+      <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1441,7 +1448,7 @@ to minimize the error on data that has not been seen during training.</p>
 <p>Then, let’s train our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1455,8 +1462,8 @@ to minimize the error on data that has not been seen during training.</p>
 the empirical error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_train</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The empirical error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1472,8 +1479,8 @@ memorized the training set. However, we now compute the generalization
 error on the testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The generalization error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1522,7 +1529,7 @@ with a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">)</span>
+    <span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1565,33 +1572,33 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.143362</td>
-      <td>0.002873</td>
-      <td>-45.531582</td>
+      <td>0.200642</td>
+      <td>0.003698</td>
+      <td>-47.282798</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.136344</td>
-      <td>0.002768</td>
-      <td>-46.547204</td>
+      <td>0.197065</td>
+      <td>0.003783</td>
+      <td>-47.996919</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.135891</td>
-      <td>0.002770</td>
-      <td>-46.996290</td>
+      <td>0.198297</td>
+      <td>0.003859</td>
+      <td>-46.333281</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.141001</td>
-      <td>0.002747</td>
-      <td>-44.258589</td>
+      <td>0.200849</td>
+      <td>0.003995</td>
+      <td>-47.353267</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.138388</td>
-      <td>0.002664</td>
-      <td>-44.101521</td>
+      <td>0.199175</td>
+      <td>0.003827</td>
+      <td>-46.890380</td>
     </tr>
   </tbody>
 </table>
@@ -1646,73 +1653,73 @@ where “higher is better”, this explains we used
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.143362</td>
-      <td>0.002873</td>
-      <td>-45.531582</td>
-      <td>45.531582</td>
+      <td>0.200642</td>
+      <td>0.003698</td>
+      <td>-47.282798</td>
+      <td>47.282798</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.136344</td>
-      <td>0.002768</td>
-      <td>-46.547204</td>
-      <td>46.547204</td>
+      <td>0.197065</td>
+      <td>0.003783</td>
+      <td>-47.996919</td>
+      <td>47.996919</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.135891</td>
-      <td>0.002770</td>
-      <td>-46.996290</td>
-      <td>46.996290</td>
+      <td>0.198297</td>
+      <td>0.003859</td>
+      <td>-46.333281</td>
+      <td>46.333281</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.141001</td>
-      <td>0.002747</td>
-      <td>-44.258589</td>
-      <td>44.258589</td>
+      <td>0.200849</td>
+      <td>0.003995</td>
+      <td>-47.353267</td>
+      <td>47.353267</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.138388</td>
-      <td>0.002664</td>
-      <td>-44.101521</td>
-      <td>44.101521</td>
+      <td>0.199175</td>
+      <td>0.003827</td>
+      <td>-46.890380</td>
+      <td>46.890380</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.137066</td>
-      <td>0.002641</td>
-      <td>-44.534876</td>
-      <td>44.534876</td>
+      <td>0.199637</td>
+      <td>0.003819</td>
+      <td>-46.883763</td>
+      <td>46.883763</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.134135</td>
-      <td>0.002643</td>
-      <td>-46.070558</td>
-      <td>46.070558</td>
+      <td>0.200470</td>
+      <td>0.003833</td>
+      <td>-44.040835</td>
+      <td>44.040835</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.138064</td>
-      <td>0.002628</td>
-      <td>-46.923057</td>
-      <td>46.923057</td>
+      <td>0.197394</td>
+      <td>0.003762</td>
+      <td>-46.732571</td>
+      <td>46.732571</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.135914</td>
-      <td>0.002624</td>
-      <td>-46.679399</td>
-      <td>46.679399</td>
+      <td>0.201500</td>
+      <td>0.003849</td>
+      <td>-44.385218</td>
+      <td>44.385218</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.137107</td>
-      <td>0.003172</td>
-      <td>-45.538443</td>
-      <td>45.538443</td>
+      <td>0.202325</td>
+      <td>0.003814</td>
+      <td>-46.558860</td>
+      <td>46.558860</td>
     </tr>
   </tbody>
 </table>
@@ -1749,7 +1756,7 @@ an estimate of its variability.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cross_validation_train_test_31_0.png" src="../_images/cross_validation_train_test_31_0.png" />
+<img alt="../_images/cross_validation_train_test_32_0.png" src="../_images/cross_validation_train_test_32_0.png" />
 </div>
 </div>
 <p>We observe that the generalization error is clustered around 45.5 k$ and
@@ -1762,7 +1769,7 @@ ranges from 43 k$ to 49 k$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 45.93 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 46.50 k$
 </pre></div>
 </div>
 </div>
@@ -1775,7 +1782,7 @@ ranges from 43 k$ to 49 k$.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 1.13 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 1.17 k$
 </pre></div>
 </div>
 </div>
@@ -1787,23 +1794,23 @@ summarize that our cross-validation estimate of the generalization error is
 cross-validation) and then had later access to an unlimited amount of test
 data, we would expect its true generalization error to fall close to that
 region.</p>
-<p>While this information is interesting in itself, it should be contrasted
-to the scale of the natural variability of the target <code class="docutils literal notranslate"><span class="pre">y</span></code> in our dataset.</p>
+<p>While this information is interesting in itself, it should be contrasted to
+the scale of the natural variability of the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> in our dataset.</p>
 <p>Let us plot the distribution of the target variable:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Median House Value (k$)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cross_validation_train_test_36_0.png" src="../_images/cross_validation_train_test_36_0.png" />
+<img alt="../_images/cross_validation_train_test_37_0.png" src="../_images/cross_validation_train_test_37_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The standard deviation of the target is: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The standard deviation of the target is: </span><span class="si">{</span><span class="n">target</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1841,14 +1848,14 @@ to retrieve theses fitted models for each of the fold by passing the option
 <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> in <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">cv_results</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.13628578, 0.13416338, 0.13187575, 0.13363695, 0.13108969]),
- &#39;score_time&#39;: array([0.00244474, 0.00243044, 0.00243402, 0.00235248, 0.00242352]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.20676589, 0.19780016, 0.19804955, 0.19883871, 0.19249415]),
+ &#39;score_time&#39;: array([0.00325131, 0.00318122, 0.00326729, 0.00309873, 0.00326133]),
  &#39;estimator&#39;: [DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),
@@ -1887,7 +1894,7 @@ extensively did in the previous notebooks).</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
 
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 <span class="n">scores</span>
 </pre></div>
 </div>

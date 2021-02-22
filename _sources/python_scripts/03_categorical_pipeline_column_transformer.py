@@ -25,12 +25,19 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name]
+target = adult_census[target_name]
 
-data = df.drop(columns=[target_name, "fnlwgt"])
+data = adult_census.drop(columns=[target_name, "fnlwgt"])
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
 
 # %% [markdown]
 # We recall that both `"education-num"` and `"education"` contain the same

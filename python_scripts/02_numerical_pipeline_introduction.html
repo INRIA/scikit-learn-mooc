@@ -1210,7 +1210,7 @@ subset of the original data with only the numerical columns.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric.csv&quot;</span><span class="p">)</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1218,7 +1218,7 @@ subset of the original data with only the numerical columns.</p>
 <p>Let’s have a look at the first records of this dataframe:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1242,7 +1242,6 @@ subset of the original data with only the numerical columns.</p>
     <tr style="text-align: right;">
       <th></th>
       <th>age</th>
-      <th>education-num</th>
       <th>capital-gain</th>
       <th>capital-loss</th>
       <th>hours-per-week</th>
@@ -1253,7 +1252,6 @@ subset of the original data with only the numerical columns.</p>
     <tr>
       <th>0</th>
       <td>41</td>
-      <td>12</td>
       <td>0</td>
       <td>0</td>
       <td>92</td>
@@ -1262,7 +1260,6 @@ subset of the original data with only the numerical columns.</p>
     <tr>
       <th>1</th>
       <td>48</td>
-      <td>3</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
@@ -1271,7 +1268,6 @@ subset of the original data with only the numerical columns.</p>
     <tr>
       <th>2</th>
       <td>60</td>
-      <td>9</td>
       <td>0</td>
       <td>0</td>
       <td>25</td>
@@ -1280,7 +1276,6 @@ subset of the original data with only the numerical columns.</p>
     <tr>
       <th>3</th>
       <td>37</td>
-      <td>9</td>
       <td>0</td>
       <td>0</td>
       <td>45</td>
@@ -1289,7 +1284,6 @@ subset of the original data with only the numerical columns.</p>
     <tr>
       <th>4</th>
       <td>73</td>
-      <td>10</td>
       <td>3273</td>
       <td>0</td>
       <td>40</td>
@@ -1310,7 +1304,7 @@ data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 <span class="n">target</span>
 </pre></div>
 </div>
@@ -1334,7 +1328,7 @@ Name: class, Length: 39073, dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1359,7 +1353,6 @@ Name: class, Length: 39073, dtype: object
     <tr style="text-align: right;">
       <th></th>
       <th>age</th>
-      <th>education-num</th>
       <th>capital-gain</th>
       <th>capital-loss</th>
       <th>hours-per-week</th>
@@ -1369,7 +1362,6 @@ Name: class, Length: 39073, dtype: object
     <tr>
       <th>0</th>
       <td>41</td>
-      <td>12</td>
       <td>0</td>
       <td>0</td>
       <td>92</td>
@@ -1377,7 +1369,6 @@ Name: class, Length: 39073, dtype: object
     <tr>
       <th>1</th>
       <td>48</td>
-      <td>3</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
@@ -1385,7 +1376,6 @@ Name: class, Length: 39073, dtype: object
     <tr>
       <th>2</th>
       <td>60</td>
-      <td>9</td>
       <td>0</td>
       <td>0</td>
       <td>25</td>
@@ -1393,7 +1383,6 @@ Name: class, Length: 39073, dtype: object
     <tr>
       <th>3</th>
       <td>37</td>
-      <td>9</td>
       <td>0</td>
       <td>0</td>
       <td>45</td>
@@ -1401,7 +1390,6 @@ Name: class, Length: 39073, dtype: object
     <tr>
       <th>4</th>
       <td>73</td>
-      <td>10</td>
       <td>3273</td>
       <td>0</td>
       <td>40</td>
@@ -1420,9 +1408,7 @@ samples are available in our dataset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;education-num&#39;, &#39;capital-gain&#39;, &#39;capital-loss&#39;,
-       &#39;hours-per-week&#39;],
-      dtype=&#39;object&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;age&#39;, &#39;capital-gain&#39;, &#39;capital-loss&#39;, &#39;hours-per-week&#39;], dtype=&#39;object&#39;)
 </pre></div>
 </div>
 </div>
@@ -1435,7 +1421,7 @@ samples are available in our dataset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset contains 39073 samples and 5 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset contains 39073 samples and 4 features
 </pre></div>
 </div>
 </div>
@@ -1466,6 +1452,12 @@ notebook, we will introduce better models.</p>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Here and later, we use the name <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> to be explicit. In
+scikit-learn, documentation <code class="docutils literal notranslate"><span class="pre">data</span></code> is commonly named <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> is
+commonly called <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 </div>
 <p>Let’s use our model to make some predictions using the same dataset. For
 the sake of simplicity, we will look at the five first predicted targets.</p>
@@ -1541,7 +1533,7 @@ sample.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8516366800603997
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8224349294909529
 </pre></div>
 </div>
 </div>
@@ -1563,7 +1555,7 @@ to assess a model is called testing data.</p>
 set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../datasets/adult-census-numeric-test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../datasets/adult-census-numeric-test.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1572,8 +1564,8 @@ set.</p>
 as in the beginning of this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1587,7 +1579,7 @@ as in the beginning of this notebook.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 9769 samples and 5 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing dataset contains 9769 samples and 4 features
 </pre></div>
 </div>
 </div>
@@ -1612,7 +1604,7 @@ this method returns their performance metric.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a KNeighborsClassifier is 0.822
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy using a KNeighborsClassifier is 0.807
 </pre></div>
 </div>
 </div>

@@ -11,12 +11,12 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_regression.csv")
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
 data_columns = ["Flipper Length (mm)"]
 target_column = "Body Mass (g)"
 
-X_train, y_train = data[data_columns], data[target_column]
+data_train, target_train = penguins[data_columns], penguins[target_column]
 
 # %% [markdown]
 # To illustrate how decision trees are predicting in a regression setting, we
@@ -26,15 +26,15 @@ X_train, y_train = data[data_columns], data[target_column]
 # %%
 import numpy as np
 
-X_test = pd.DataFrame(np.arange(X_train[data_columns[0]].min(),
-                                X_train[data_columns[0]].max()),
-                      columns=data_columns)
+data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
+                                   data_train[data_columns[0]].max()),
+                         columns=data_columns)
 
 # %%
 import seaborn as sns
 sns.set_context("talk")
 
-_ = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
+_ = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)")
 
 # %% [markdown]
 # We will first illustrate the difference between a linear model and a decision
@@ -44,15 +44,15 @@ _ = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)")
 from sklearn.linear_model import LinearRegression
 
 linear_model = LinearRegression()
-linear_model.fit(X_train, y_train)
-y_pred = linear_model.predict(X_test)
+linear_model.fit(data_train, target_train)
+target_predicted = linear_model.predict(data_test)
 
 # %%
 import matplotlib.pyplot as plt
 
-ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(X_test, y_pred, linewidth=4, label="Linear regression")
+ax.plot(data_test, target_predicted, linewidth=4, label="Linear regression")
 _ = plt.legend()
 
 # %% [markdown]
@@ -61,10 +61,10 @@ _ = plt.legend()
 # will be on the line.
 
 # %%
-ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(X_test, y_pred, linewidth=4, label="Linear regression")
-ax.plot(X_test[::3], y_pred[::3], label="Test predictions",
+ax.plot(data_test, target_predicted, linewidth=4, label="Linear regression")
+ax.plot(data_test[::3], target_predicted[::3], label="Test predictions",
         color="tab:orange", marker=".", markersize=15, linestyle="")
 _ = plt.legend()
 
@@ -78,13 +78,13 @@ _ = plt.legend()
 from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=1)
-tree.fit(X_train, y_train)
-y_pred = tree.predict(X_test)
+tree.fit(data_train, target_train)
+target_predicted = tree.predict(data_test)
 
 # %%
-ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(X_test, y_pred, linewidth=4, label="Decision tree")
+ax.plot(data_test, target_predicted, linewidth=4, label="Decision tree")
 _ = plt.legend()
 
 # %% [markdown]
@@ -114,13 +114,13 @@ _ = plot_tree(tree, feature_names=data_columns, ax=ax)
 
 # %%
 tree = DecisionTreeRegressor(max_depth=3)
-tree.fit(X_train, y_train)
-y_pred = tree.predict(X_test)
+tree.fit(data_train, target_train)
+target_predicted = tree.predict(data_test)
 
 # %%
-ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(X_test, y_pred, linewidth=4, label="Decision tree")
+ax.plot(data_test, target_predicted, linewidth=4, label="Decision tree")
 _ = plt.legend()
 
 # %% [markdown]

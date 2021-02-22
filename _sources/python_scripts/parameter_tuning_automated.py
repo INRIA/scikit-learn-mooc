@@ -19,14 +19,14 @@ set_config(display="diagram")
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
 # We extract the column containing the target.
 
 # %%
 target_name = "class"
-target = df[target_name]
+target = adult_census[target_name]
 target
 
 # %% [markdown]
@@ -35,7 +35,7 @@ target
 # duplicates the information in another column.
 
 # %%
-data = df.drop(columns=[target_name, "fnlwgt", "education-num"])
+data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
 data.head()
 
 # %% [markdown]
@@ -44,7 +44,7 @@ data.head()
 # %%
 from sklearn.model_selection import train_test_split
 
-df_train, df_test, target_train, target_test = train_test_split(
+data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=42)
 
 # %% [markdown]
@@ -125,13 +125,13 @@ param_grid = {
     'classifier__max_leaf_nodes': (3, 10, 30, 100)}
 model_grid_search = GridSearchCV(model, param_grid=param_grid,
                                  n_jobs=4, cv=2)
-model_grid_search.fit(df_train, target_train)
+model_grid_search.fit(data_train, target_train)
 
 # %% [markdown]
 # Finally, we will check the accuracy of our model using the test set.
 
 # %%
-accuracy = model_grid_search.score(df_test, target_test)
+accuracy = model_grid_search.score(data_test, target_test)
 print(
     f"The test accuracy score of the grid-searched pipeline is: "
     f"{accuracy:.2f}"
@@ -166,7 +166,7 @@ print(
 # parameters.
 
 # %%
-model_grid_search.predict(df_test.iloc[0:5])
+model_grid_search.predict(data_test.iloc[0:5])
 
 # %% [markdown]
 # You can know about these parameters by looking at the `best_params_`
@@ -340,15 +340,16 @@ param_distributions = {
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=10,
     n_jobs=4, cv=5)
-model_random_search.fit(df_train, target_train)
+model_random_search.fit(data_train, target_train)
 
 # %% [markdown]
 # Then, we can compute the accuracy score on the test set.
 
 # %%
-accuracy = model_random_search.score(df_test, target_test)
+accuracy = model_random_search.score(data_test, target_test)
 
-print(f"The test accuracy score of the best model is " f"{accuracy:.2f}")
+print(f"The test accuracy score of the best model is "
+      f"{accuracy:.2f}")
 
 # %%
 from pprint import pprint
@@ -462,6 +463,7 @@ cv_results = cross_validate(
 # Running the above cross-validation will give us an estimate of the
 # generalization score.
 
+# %%
 scores = cv_results["test_score"]
 print(f"Accuracy score by cross-validation combined with hyperparameters "
       f"search:\n{scores.mean():.3f} +/- {scores.std():.3f}")

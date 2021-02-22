@@ -19,11 +19,11 @@ rng = np.random.RandomState(0)
 
 # Generate data
 n_sample = 100
-x_max, x_min = 1.4, -1.4
-len_x = (x_max - x_min)
-x = rng.rand(n_sample) * len_x - len_x / 2
+data_max, data_min = 1.4, -1.4
+len_data = (data_max - data_min)
+data = rng.rand(n_sample) * len_data - len_data / 2
 noise = rng.randn(n_sample) * .3
-y = x ** 3 - 0.5 * x ** 2 + noise
+target = data ** 3 - 0.5 * data ** 2 + noise
 
 # %% [markdown]
 # ```{note}
@@ -33,20 +33,20 @@ y = x ** 3 - 0.5 * x ** 2 + noise
 
 # %%
 import pandas as pd
-data = pd.DataFrame({"x": x, "y": y})
+full_data = pd.DataFrame({"data": data, "target": target})
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-_ = sns.scatterplot(data=data, x="x", y="y")
+_ = sns.scatterplot(data=full_data, x="data", y="target")
 
 # %% [markdown]
-# We observe that the link between the data `x` and target `y` is non-linear.
-# For instance, `x` could represent to be the years of experience (normalized)
-# and `y` the salary (normalized). Therefore, the problem here would be to
-# infer the salary given the years of experience.
+# We observe that the link between the data `data` and vector `target` is
+# non-linear. For instance, `data` could represent to be the years of
+# experience (normalized) and `target` the salary (normalized). Therefore, the
+# problem here would be to infer the salary given the years of experience.
 #
 # Using the function `f` defined below, find both the `weight` and the
 # `intercept` that you think will lead to a good linear model. Plot both the
@@ -55,19 +55,19 @@ _ = sns.scatterplot(data=data, x="x", y="y")
 
 
 # %%
-def f(x, weight=0, intercept=0):
-    y_predict = weight * x + intercept
-    return y_predict
+def f(data, weight=0, intercept=0):
+    target_predict = weight * data + intercept
+    return target_predict
 
 
 # %%
-ax = sns.scatterplot(data=data, x="x", y="y")
-_ = ax.plot(x, f(x, weight=1.2, intercept=-0.2), color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+_ = ax.plot(data, f(data, weight=1.2, intercept=-0.2), color="tab:orange")
 
 # %%
 from sklearn.metrics import mean_squared_error
 
-error = mean_squared_error(y, f(x, weight=1.2, intercept=0.2))
+error = mean_squared_error(target, f(data, weight=1.2, intercept=0.2))
 print(f"The MSE is {error}")
 
 # %% [markdown]
@@ -78,20 +78,21 @@ print(f"The MSE is {error}")
 from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
-X = x.reshape(-1, 1)
-linear_regression.fit(X, y)
+data = data.reshape(-1, 1)
+linear_regression.fit(data, target)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-_ = ax.plot(x, linear_regression.predict(X), color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+_ = ax.plot(data.ravel(), linear_regression.predict(data), color="tab:orange")
 
 # %% [markdown]
 # ```{warning}
-# In scikit-learn, by convention `X` should be a 2D matrix of shape
-# `(n_samples, n_features)`. If `X` is a 1D vector, you need to reshape it
-# into a matrix with a single column if the vector represents a feature or a
-# single row if the vector represents a sample.
+# In scikit-learn, by convention `data` (also called `X` in the scikit-learn
+# documentation) should be a 2D matrix of shape `(n_samples, n_features)`.
+# If `data` is a 1D vector, you need to reshape it into a matrix with a
+# single column if the vector represents a feature or a single row if the
+# vector represents a sample.
 # ```
 
 # %%
-error = mean_squared_error(y, linear_regression.predict(X))
+error = mean_squared_error(target, linear_regression.predict(data))
 print(f"The MSE is {error}")

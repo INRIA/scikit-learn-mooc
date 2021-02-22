@@ -26,21 +26,28 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
-df.head()
+adult_census = pd.read_csv("../datasets/adult-census.csv")
+adult_census.head()
 
 # %% [markdown]
 # The next step separates the target from the data. We performed the same
 # procedure in the previous notebook.
 
 # %%
-data, target = df.drop(columns="class"), df["class"]
+data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %%
 data.head()
 
 # %%
 target
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
 
 # %% [markdown]
 # At this point, we can focus on the data we want to use to train our

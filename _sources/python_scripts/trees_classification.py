@@ -7,7 +7,7 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_classification.csv")
+penguins = pd.read_csv("../datasets/penguins_classification.csv")
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
@@ -18,12 +18,18 @@ target_column = "Species"
 # %%
 from sklearn.model_selection import train_test_split
 
-X, y = data[culmen_columns], data[target_column]
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0)
+data, target = penguins[culmen_columns], penguins[target_column]
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0)
 range_features = {
-    feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X.columns}
+    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
+    for feature_name in data.columns}
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
 
 # %% [markdown]
 # In a previous notebook, we learnt that a linear classifier will define a
@@ -77,11 +83,11 @@ sns.set_context("talk")
 palette = ["tab:red", "tab:blue", "black"]
 
 linear_model = LogisticRegression()
-linear_model.fit(X_train, y_train)
+linear_model.fit(data_train, target_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
 sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=data, palette=palette, ax=ax)
+                data=penguins, palette=palette, ax=ax)
 _ = plot_decision_function(linear_model, range_features, ax=ax)
 
 # %% [markdown]
@@ -95,7 +101,8 @@ _ = plot_decision_function(linear_model, range_features, ax=ax)
 
 # %%
 model_name = linear_model.__class__.__name__
-test_score = linear_model.fit(X_train, y_train).score(X_test, y_test)
+linear_model.fit(data_train, target_train)
+test_score = linear_model.score(data_test, target_test)
 print(f"Accuracy of the {model_name}: {test_score:.2f}")
 
 # %% [markdown]
@@ -111,11 +118,11 @@ print(f"Accuracy of the {model_name}: {test_score:.2f}")
 from sklearn.tree import DecisionTreeClassifier
 
 tree = DecisionTreeClassifier(max_depth=1)
-tree.fit(X_train, y_train)
+tree.fit(data_train, target_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
 sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=data, palette=palette, ax=ax)
+                data=penguins, palette=palette, ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
@@ -140,13 +147,12 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # sub-partitions. This measure is also known as a **criterion**,
 # and is a settable parameter.
 #
-# If we look more closely at the partition, we see that the sample superior
-# to 16.45 belongs mainly to the Adelie class. Looking at the values,
-# we indeed observe 103 Adelie individuals in this space. 
-# We also count 52 Chinstrap samples and 6 Gentoo samples.
-# We can make similar interpretation for the partition defined by a threshold
-# inferior to 16.45mm. In this case, the most represented class is the Gentoo
-# species.
+# If we look more closely at the partition, we see that the sample superior to
+# 16.45 belongs mainly to the Adelie class. Looking at the values, we indeed
+# observe 103 Adelie individuals in this space. We also count 52 Chinstrap
+# samples and 6 Gentoo samples. We can make similar interpretation for the
+# partition defined by a threshold inferior to 16.45mm. In this case, the most
+# represented class is the Gentoo species.
 #
 # Let's see how our tree would work as a predictor. Let's start to see the
 # class predicted when the culmen length is inferior to the threshold.
@@ -203,7 +209,8 @@ tree.predict_proba([[10000, 17]])
 
 # %%
 model_name = tree.__class__.__name__
-test_score = tree.fit(X_train, y_train).score(X_test, y_test)
+tree.fit(data_train, target_train)
+test_score = tree.score(data_test, target_test)
 print(f"Accuracy of the {model_name}: {test_score:.2f}")
 
 # %% [markdown]

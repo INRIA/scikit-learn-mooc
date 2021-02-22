@@ -11,10 +11,11 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_classification.csv")
+penguins = pd.read_csv("../datasets/penguins_classification.csv")
 
 # only keep the Adelie and Chinstrap classes
-data = data.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
+penguins = penguins.set_index("Species").loc[
+    ["Adelie", "Chinstrap"]].reset_index()
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
@@ -25,7 +26,7 @@ target_column = "Species"
 import seaborn as sns
 sns.set_context("talk")
 
-_ = sns.pairplot(data=data, hue="Species", height=3.3)
+_ = sns.pairplot(data=penguins, hue="Species", height=3.3)
 
 # %% [markdown]
 # We can observe that we have quite a simple problem. When the culmen
@@ -39,13 +40,13 @@ _ = sns.pairplot(data=data, hue="Species", height=3.3)
 # %%
 from sklearn.model_selection import train_test_split
 
-X, y = data[culmen_columns], data[target_column]
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, stratify=y, random_state=0,
+data, target = penguins[culmen_columns], penguins[target_column]
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, stratify=target, random_state=0,
 )
 range_features = {
-    feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X
+    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
+    for feature_name in data
 }
 
 # %% [markdown]
@@ -101,11 +102,11 @@ from sklearn.linear_model import LogisticRegression
 logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="none")
 )
-logistic_regression.fit(X_train, y_train)
+logistic_regression.fit(data_train, target_train)
 
 ax = plot_decision_function(logistic_regression, range_features)
 _ = sns.scatterplot(
-    x=X_test.iloc[:, 0], y=X_test.iloc[:, 1], hue=y_test,
+    x=data_test.iloc[:, 0], y=data_test.iloc[:, 1], hue=target_test,
     palette=["tab:red", "tab:blue"], ax=ax)
 
 # %% [markdown]
@@ -117,7 +118,7 @@ _ = sns.scatterplot(
 # features:
 
 # %%
-weights = pd.Series(logistic_regression[-1].coef_.ravel(), index=X.columns)
+weights = pd.Series(logistic_regression[-1].coef_.ravel(), index=data.columns)
 _ = weights.plot(kind="barh")
 
 # %% [markdown]

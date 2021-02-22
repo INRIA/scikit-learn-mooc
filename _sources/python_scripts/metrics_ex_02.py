@@ -10,10 +10,11 @@
 import pandas as pd
 import numpy as np
 
-data = pd.read_csv("../datasets/house_prices.csv")
-X, y = data.drop(columns="SalePrice"), data["SalePrice"]
-X = X.select_dtypes(np.number)
-y /= 1000
+ames_housing = pd.read_csv("../datasets/house_prices.csv")
+data = ames_housing.drop(columns="SalePrice")
+target = ames_housing["SalePrice"]
+data = data.select_dtypes(np.number)
+target /= 1000
 
 # %% [markdown]
 # The first step will be to create a linear regression model.

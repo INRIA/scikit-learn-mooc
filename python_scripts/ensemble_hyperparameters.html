@@ -1194,8 +1194,9 @@ underfitted forest.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1212,7 +1213,7 @@ underfitted forest.</p>
 <span class="p">}</span>
 <span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
     <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
@@ -1248,66 +1249,66 @@ underfitted forest.</p>
   </thead>
   <tbody>
     <tr>
-      <th>7</th>
-      <td>20</td>
-      <td>None</td>
-      <td>0.791161</td>
-      <td>1</td>
-    </tr>
-    <tr>
       <th>8</th>
       <td>30</td>
       <td>None</td>
-      <td>0.790891</td>
+      <td>0.794085</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>20</td>
+      <td>None</td>
+      <td>0.789921</td>
       <td>2</td>
     </tr>
     <tr>
       <th>6</th>
       <td>10</td>
       <td>None</td>
-      <td>0.778580</td>
+      <td>0.777482</td>
       <td>3</td>
     </tr>
     <tr>
       <th>5</th>
       <td>30</td>
       <td>5</td>
-      <td>0.662419</td>
+      <td>0.665857</td>
       <td>4</td>
     </tr>
     <tr>
       <th>4</th>
       <td>20</td>
       <td>5</td>
-      <td>0.662109</td>
+      <td>0.662106</td>
       <td>5</td>
     </tr>
     <tr>
       <th>3</th>
       <td>10</td>
       <td>5</td>
-      <td>0.655230</td>
+      <td>0.660869</td>
       <td>6</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>20</td>
+      <th>0</th>
+      <td>10</td>
       <td>3</td>
-      <td>0.563743</td>
+      <td>0.563002</td>
       <td>7</td>
     </tr>
     <tr>
       <th>2</th>
       <td>30</td>
       <td>3</td>
-      <td>0.561605</td>
+      <td>0.562439</td>
       <td>8</td>
     </tr>
     <tr>
-      <th>0</th>
-      <td>10</td>
+      <th>1</th>
+      <td>20</td>
       <td>3</td>
-      <td>0.558908</td>
+      <td>0.561009</td>
       <td>9</td>
     </tr>
   </tbody>
@@ -1356,7 +1357,7 @@ similar to having a too large tree depth.</p>
 <span class="p">}</span>
 <span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
     <span class="n">GradientBoostingRegressor</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
@@ -1397,7 +1398,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>5</td>
       <td>0.1</td>
-      <td>0.798211</td>
+      <td>0.798458</td>
       <td>1</td>
     </tr>
     <tr>
@@ -1405,7 +1406,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>3</td>
       <td>1</td>
-      <td>0.784734</td>
+      <td>0.783448</td>
       <td>2</td>
     </tr>
     <tr>
@@ -1413,7 +1414,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>3</td>
       <td>1</td>
-      <td>0.780173</td>
+      <td>0.781074</td>
       <td>3</td>
     </tr>
     <tr>
@@ -1421,7 +1422,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>5</td>
       <td>0.1</td>
-      <td>0.767480</td>
+      <td>0.766523</td>
       <td>4</td>
     </tr>
     <tr>
@@ -1429,7 +1430,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>3</td>
       <td>0.1</td>
-      <td>0.754048</td>
+      <td>0.754023</td>
       <td>5</td>
     </tr>
     <tr>
@@ -1437,7 +1438,7 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>5</td>
       <td>1</td>
-      <td>0.752837</td>
+      <td>0.752412</td>
       <td>6</td>
     </tr>
     <tr>
@@ -1445,7 +1446,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>5</td>
       <td>1</td>
-      <td>0.748822</td>
+      <td>0.744990</td>
       <td>7</td>
     </tr>
     <tr>
@@ -1453,7 +1454,7 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>3</td>
       <td>1</td>
-      <td>0.744140</td>
+      <td>0.743908</td>
       <td>8</td>
     </tr>
     <tr>
@@ -1461,7 +1462,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>5</td>
       <td>1</td>
-      <td>0.734360</td>
+      <td>0.734326</td>
       <td>9</td>
     </tr>
     <tr>
@@ -1477,7 +1478,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>None</td>
       <td>0.1</td>
-      <td>0.635370</td>
+      <td>0.633905</td>
       <td>11</td>
     </tr>
     <tr>
@@ -1485,7 +1486,7 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>None</td>
       <td>0.1</td>
-      <td>0.627978</td>
+      <td>0.626353</td>
       <td>12</td>
     </tr>
     <tr>
@@ -1493,7 +1494,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>None</td>
       <td>0.1</td>
-      <td>0.623164</td>
+      <td>0.622122</td>
       <td>13</td>
     </tr>
     <tr>
@@ -1501,23 +1502,23 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>5</td>
       <td>0.1</td>
-      <td>0.597219</td>
+      <td>0.597203</td>
       <td>14</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>10</td>
-      <td>None</td>
-      <td>1</td>
-      <td>0.593656</td>
-      <td>15</td>
     </tr>
     <tr>
       <th>16</th>
       <td>30</td>
       <td>None</td>
       <td>1</td>
-      <td>0.592022</td>
+      <td>0.594082</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>10</td>
+      <td>None</td>
+      <td>1</td>
+      <td>0.593752</td>
       <td>16</td>
     </tr>
     <tr>
@@ -1525,7 +1526,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>None</td>
       <td>1</td>
-      <td>0.591547</td>
+      <td>0.591806</td>
       <td>17</td>
     </tr>
     <tr>

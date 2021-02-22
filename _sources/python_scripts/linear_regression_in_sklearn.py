@@ -21,17 +21,17 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_regression.csv")
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-X, y = data[[feature_names]], data[target_name]
+data, target = penguins[[feature_names]], penguins[target_name]
 
 
 # %%
 from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
-linear_regression.fit(X, y)
+linear_regression.fit(data, target)
 
 # %% [markdown]
 # The instance `linear_regression` will store the parameter values in the
@@ -56,8 +56,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-flipper_length_range = np.linspace(X.min(), X.max(), num=300)
-sns.scatterplot(x=X[feature_names], y=y)
+flipper_length_range = np.linspace(data.min(), data.max(), num=300)
+sns.scatterplot(x=data[feature_names], y=target)
 plt.plot(flipper_length_range,
          weight_flipper_length * flipper_length_range + intercept_body_mass,
          linewidth=4)
@@ -71,8 +71,8 @@ _ = plt.title("Model using LinearRegression from scikit-learn")
 # %%
 from sklearn.metrics import mean_squared_error
 
-inferred_body_mass = linear_regression.predict(X)
-model_error = mean_squared_error(y, inferred_body_mass)
+inferred_body_mass = linear_regression.predict(data)
+model_error = mean_squared_error(target, inferred_body_mass)
 print(f"The error of the optimal model is {model_error:.2f}")
 
 # %% [markdown]

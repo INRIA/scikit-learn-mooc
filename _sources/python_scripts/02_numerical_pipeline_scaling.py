@@ -36,7 +36,7 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
 # We will now drop the target from the data we will use to train our
@@ -44,8 +44,15 @@ df = pd.read_csv("../datasets/adult-census.csv")
 
 # %%
 target_name = "class"
-target = df[target_name]
-data = df.drop(columns=target_name)
+target = adult_census[target_name]
+data = adult_census.drop(columns=target_name)
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
 
 # %% [markdown]
 # Then, we select only the numerical columns, as seen in the previous

@@ -6,7 +6,7 @@
 # %%
 from sklearn.datasets import load_iris
 
-X, y = load_iris(as_frame=True, return_X_y=True)
+data, target = load_iris(as_frame=True, return_X_y=True)
 
 # %% [markdown]
 # At this point, we create a basic machine-learning model: a logistic
@@ -30,9 +30,9 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 import numpy as np
 from sklearn.model_selection import KFold
 
-X_random = np.random.randn(9, 1)
+data_random = np.random.randn(9, 1)
 cv = KFold(n_splits=3)
-for train_index, test_index in cv.split(X_random):
+for train_index, test_index in cv.split(data_random):
     print("TRAIN:", train_index, "TEST:", test_index)
 
 # %% [markdown]
@@ -49,7 +49,7 @@ for train_index, test_index in cv.split(X_random):
 from sklearn.model_selection import cross_validate
 
 cv = KFold(n_splits=3)
-results = cross_validate(model, X, y, cv=cv)
+results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
 print(f"The average accuracy is "
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
@@ -63,38 +63,38 @@ print(f"The average accuracy is "
 import seaborn as sns
 sns.set_context("talk")
 
-ax = y.plot()
+ax = target.plot()
 ax.set_xlabel("Sample index")
 ax.set_ylabel("Class")
-ax.set_yticks(y.unique())
+ax.set_yticks(target.unique())
 _ = ax.set_title("Class value in target y")
 
 # %% [markdown]
-# We see that the target vector `y` is ordered. It will have some unexpected
-# consequences when using the `KFold` cross-validation. To illustrate the
-# consequences, we will show the class count in each fold of the
+# We see that the target vector `target` is ordered. It will have some
+# unexpected consequences when using the `KFold` cross-validation. To
+# illustrate the consequences, we will show the class count in each fold of the
 # cross-validation in the train and test set.
 #
-# For this matter, we'll create a function (as we will reuse it), which given
-# a cross-validation object and the data `X` and `y`, is returning a dataframe
-# with the class counts by folds and by split sets.
+# For this matter, we'll create a function (as we will reuse it), which given a
+# cross-validation object and the data `data` and `target`, is returning a
+# dataframe with the class counts by folds and by split sets.
 
 # %%
 from collections import Counter
 import pandas as pd
 
 
-def compute_class_count_cv(cv, X, y):
+def compute_class_count_cv(cv, data, target):
     class_probability = []
-    for cv_idx, (train_index, test_index) in enumerate(cv.split(X, y)):
+    for cv_idx, (train_index, test_index) in enumerate(cv.split(data, target)):
         # Compute the class probability for the training set
-        train_class = Counter(y[train_index])
+        train_class = Counter(target[train_index])
         class_probability += [
             ["Train set", f"CV #{cv_idx}", klass, proportion]
             for klass, proportion in train_class.items()
         ]
         # Compute the class probability for the test set
-        test_class = Counter(y[test_index])
+        test_class = Counter(target[test_index])
         class_probability += [
             ["Test set", f"CV #{cv_idx}", klass, proportion]
             for klass, proportion in test_class.items()
@@ -110,7 +110,7 @@ def compute_class_count_cv(cv, X, y):
 # plot these information in a bar plot.
 
 # %%
-kfold_class_count = compute_class_count_cv(cv, X, y)
+kfold_class_count = compute_class_count_cv(cv, data, target)
 kfold_class_count
 
 # %%
@@ -132,7 +132,7 @@ _ = g.fig.suptitle("Class count with K-fold cross-validation", y=1.05)
 
 # %%
 cv = KFold(n_splits=3, shuffle=True, random_state=0)
-results = cross_validate(model, X, y, cv=cv)
+results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
 print(f"The average accuracy is "
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
@@ -145,7 +145,7 @@ print(f"The average accuracy is "
 # model with a class distribution that we will encounter in production.
 
 # %%
-kfold_shuffled_class_count = compute_class_count_cv(cv, X, y)
+kfold_shuffled_class_count = compute_class_count_cv(cv, data, target)
 
 g = sns.FacetGrid(kfold_shuffled_class_count, col="Set")
 g.map_dataframe(
@@ -171,13 +171,13 @@ from sklearn.model_selection import StratifiedKFold
 cv = StratifiedKFold(n_splits=3)
 
 # %%
-results = cross_validate(model, X, y, cv=cv)
+results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
 print(f"The average accuracy is "
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
 # %%
-stratified_kfold_class_count = compute_class_count_cv(cv, X, y)
+stratified_kfold_class_count = compute_class_count_cv(cv, data, target)
 
 g = sns.FacetGrid(stratified_kfold_class_count, col="Set")
 g.map_dataframe(
@@ -188,9 +188,9 @@ _ = g.fig.suptitle(
     "Class count with stratifiedK-fold cross-validation", y=1.05)
 
 # %% [markdown]
-# In this case, we observe that the class counts are very close both in the train
-# set and the test set. The difference is due to the small number of samples
-# in the iris dataset.
+# In this case, we observe that the class counts are very close both in the
+# train set and the test set. The difference is due to the small number of
+# samples in the iris dataset.
 #
 # In conclusion, this is a good practice to use stratification within the
 # cross-validation framework when dealing with a classification problem.

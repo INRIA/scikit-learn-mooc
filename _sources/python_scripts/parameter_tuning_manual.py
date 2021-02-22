@@ -15,14 +15,21 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
 numerical_columns = [
     "age", "capital-gain", "capital-loss", "hours-per-week"]
 
-target = df[target_name]
-data = df[numerical_columns]
+target = adult_census[target_name]
+data = adult_census[numerical_columns]
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
 
 # %% [markdown]
 # Our data is only numerical.

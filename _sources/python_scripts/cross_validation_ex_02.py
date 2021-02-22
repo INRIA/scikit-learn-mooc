@@ -10,8 +10,8 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/adult-census-numeric-all.csv")
-X, y = data.drop(columns="class"), data["class"]
+adult_census = pd.read_csv("../datasets/adult-census-numeric-all.csv")
+data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %% [markdown]
 # First, define a `ShuffleSplit` cross-validation strategy taking half of the

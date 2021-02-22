@@ -10,8 +10,8 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/adult-census-numeric-all.csv")
-X, y = data.drop(columns="class"), data["class"]
+adult_census = pd.read_csv("../datasets/adult-census-numeric-all.csv")
+data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %% [markdown]
 # First, define a `ShuffleSplit` cross-validation strategy taking half of the
@@ -40,7 +40,7 @@ classifier = make_pipeline(StandardScaler(), LogisticRegression())
 # %%
 from sklearn.model_selection import cross_validate
 
-result_classifier = cross_validate(classifier, X, y, cv=cv, n_jobs=-1)
+result_classifier = cross_validate(classifier, data, target, cv=cv, n_jobs=-1)
 
 test_score_classifier = pd.Series(
     result_classifier["test_score"], name="Classifier score")
@@ -53,7 +53,7 @@ test_score_classifier = pd.Series(
 from sklearn.model_selection import permutation_test_score
 
 score, permutation_score, pvalue = permutation_test_score(
-    classifier, X, y, cv=cv, n_jobs=-1, n_permutations=10)
+    classifier, data, target, cv=cv, n_jobs=-1, n_permutations=10)
 test_score_permutation = pd.Series(permutation_score, name="Permuted score")
 
 # %% [markdown]
@@ -65,7 +65,7 @@ test_score_permutation = pd.Series(permutation_score, name="Permuted score")
 from sklearn.dummy import DummyClassifier
 
 dummy = DummyClassifier(strategy="most_frequent")
-result_dummy = cross_validate(dummy, X, y, cv=cv, n_jobs=-1)
+result_dummy = cross_validate(dummy, data, target, cv=cv, n_jobs=-1)
 test_score_dummy = pd.Series(result_dummy["test_score"], name="Dummy score")
 
 # %% [markdown]
@@ -104,7 +104,7 @@ _ = plt.xlabel("Accuracy (%)")
 
 # %%
 dummy = DummyClassifier(strategy="stratified")
-result_dummy_stratify = cross_validate(dummy, X, y, cv=cv, n_jobs=-1)
+result_dummy_stratify = cross_validate(dummy, data, target, cv=cv, n_jobs=-1)
 test_score_dummy_stratify = pd.Series(
     result_dummy_stratify["test_score"], name="Dummy 'stratify' score")
 

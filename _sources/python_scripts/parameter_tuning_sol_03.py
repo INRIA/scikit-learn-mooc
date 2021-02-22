@@ -26,15 +26,15 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
-target = df[target_name]
-data = df.drop(columns=[target_name, "fnlwgt"])
+target = adult_census[target_name]
+data = adult_census.drop(columns=[target_name, "fnlwgt"])
 
 from sklearn.model_selection import train_test_split
 
-df_train, df_test, target_train, target_test = train_test_split(
+data_train, data_test, target_train, target_test = train_test_split(
     data, target, train_size=0.2, random_state=42)
 
 # %% [markdown]
@@ -121,7 +121,7 @@ param_distributions = {
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions,
     n_iter=20, error_score=np.nan, n_jobs=2, verbose=1)
-model_random_search.fit(df_train, target_train)
+model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 
 # %% [markdown]

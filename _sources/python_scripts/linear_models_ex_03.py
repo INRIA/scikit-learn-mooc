@@ -1,8 +1,8 @@
 # %% [markdown]
 # # 📝 Exercise 03
 #
-# In all previous notebooks, we only used a single feature in `X`. But we have
-# already shown that we could add new features to make the model more
+# In all previous notebooks, we only used a single feature in `data`. But we
+# have already shown that we could add new features to make the model more
 # expressive by deriving new features, based on the original feature.
 #
 # The aim of this notebook is to train a linear regression algorithm on a
@@ -17,8 +17,8 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
-X.head()
+data, target = fetch_california_housing(as_frame=True, return_X_y=True)
+data.head()
 
 # %% [markdown]
 # Now this is your turn to train a linear regression model on this dataset.

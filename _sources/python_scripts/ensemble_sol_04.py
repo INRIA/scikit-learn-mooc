@@ -3,20 +3,20 @@
 #
 # The aim of this exercise is to:
 #
-# * verify if a GBDT tends to overfit if the number of estimators is not appropriate
-#   as previously seen for AdaBoost;
+# * verify if a GBDT tends to overfit if the number of estimators is not
+#   appropriate as previously seen for AdaBoost;
 # * use the early-stopping strategy to avoid adding unnecessary trees, to
 #   get the best performances.
 #
-# As usual, we will use the California housing dataset to conduct our experiments
+# we will use the California housing dataset to conduct our experiments.
 
 # %%
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0, test_size=0.5
 )
 
 # %% [markdown]
@@ -32,7 +32,7 @@ from sklearn.model_selection import validation_curve
 gbdt = GradientBoostingRegressor()
 param_range = np.unique(np.logspace(0, 1.8, num=30).astype(int))
 train_scores, test_scores = validation_curve(
-    gbdt, X_train, y_train, param_name="n_estimators",
+    gbdt, data_train, target_train, param_name="n_estimators",
     param_range=param_range, n_jobs=-1)
 
 # %%
@@ -80,7 +80,7 @@ _ = plt.title("Validation curve for GBDT regressor")
 
 # %%
 gbdt = GradientBoostingRegressor(n_estimators=1000, n_iter_no_change=5)
-gbdt.fit(X_train, y_train)
+gbdt.fit(data_train, target_train)
 gbdt.n_estimators_
 
 # %% [markdown]

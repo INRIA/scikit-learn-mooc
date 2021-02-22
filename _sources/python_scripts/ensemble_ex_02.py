@@ -10,11 +10,12 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv("../datasets/penguins_regression.csv")
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
 feature_names = ["Flipper Length (mm)"]
 target_name = "Body Mass (g)"
-X, y = data[feature_names], data[target_name]
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+data, target = penguins[feature_names], penguins[target_name]
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0)
 
 # %% [markdown]
 # Create a random forest containing three trees. Train the forest and

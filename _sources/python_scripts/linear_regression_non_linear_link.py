@@ -2,8 +2,8 @@
 # # Linear regression with non-linear link between data and target
 #
 # In the previous exercise, you were asked to train a linear regression model
-# on a dataset where the matrix `X` and the target `y` do not have a linear
-# link.
+# on a dataset where the matrix `data` and the vector `target` do not have a
+# linear link.
 #
 # In this notebook, we show that even if the parametrization of linear models
 # is not natively adapated to data with non-linearity, it is still possible
@@ -18,12 +18,12 @@ import numpy as np
 rng = np.random.RandomState(0)
 
 n_sample = 100
-x_max, x_min = 1.4, -1.4
-len_x = (x_max - x_min)
-x = rng.rand(n_sample) * len_x - len_x / 2
-sorted_idx = np.argsort(x)
+data_max, data_min = 1.4, -1.4
+len_data = (data_max - data_min)
+data = rng.rand(n_sample) * len_data - len_data / 2
+sorted_idx = np.argsort(data)
 noise = rng.randn(n_sample) * .3
-y = x ** 3 - 0.5 * x ** 2 + noise
+target = data ** 3 - 0.5 * data ** 2 + noise
 
 # %% [markdown]
 # ```{note}
@@ -33,23 +33,24 @@ y = x ** 3 - 0.5 * x ** 2 + noise
 
 # %%
 import pandas as pd
-data = pd.DataFrame({"x": x, "y": y})
+full_data = pd.DataFrame({"data": data, "target": target})
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-_ = sns.scatterplot(data=data, x="x", y="y")
+_ = sns.scatterplot(data=full_data, x="data", y="target")
 # %% [markdown]
 # We will highlight the limitations of fitting a linear regression model as
 # done in the previous exercise.
 #
 # ```{warning}
-# In scikit-learn, by convention `X` should be a 2D matrix of shape
-# `(n_samples, n_features)`. If `X` is a 1D vector, you need to reshape it
-# into a matrix with a single column if the vector represents a feature or a
-# single row if the vector represents a sample.
+# In scikit-learn, by convention `data` (also called `X` in the scikit-learn
+# documentation) should be a 2D matrix of shape `(n_samples, n_features)`.
+# If `data` is a 1D vector, you need to reshape it into a matrix with a
+# single column if the vector represents a feature or a single row if the
+# vector represents a sample.
 # ```
 
 # %%
@@ -58,14 +59,14 @@ from sklearn.metrics import mean_squared_error
 
 linear_regression = LinearRegression()
 # X should be 2D for sklearn
-X = x.reshape((-1, 1))
-linear_regression.fit(X, y)
+data = data.reshape((-1, 1))
+linear_regression.fit(data, target)
 
-y_pred = linear_regression.predict(X)
-mse = mean_squared_error(y, y_pred)
+target_predicted = linear_regression.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x, y_pred, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data.ravel(), target_predicted, color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 
@@ -79,9 +80,9 @@ print(f"weight: {linear_regression.coef_[0]:.2f}, "
       f"intercept: {linear_regression.intercept_:.2f}")
 
 # %% [markdown]
-# It is important to note that the model learnt will not be able to handle
-# the non-linear relationship between `x` and `y` since linear models assume
-# the relationship between `x` and `y` to be linear.
+# It is important to note that the model learnt will not be able to handle the
+# non-linear relationship between `data` and `target` since linear models
+# assume the relationship between `data` and `target` to be linear.
 #
 # Indeed, there are 3 possibilities to solve this issue:
 #
@@ -97,31 +98,32 @@ print(f"weight: {linear_regression.coef_[0]:.2f}, "
 # %%
 from sklearn.tree import DecisionTreeRegressor
 
-tree = DecisionTreeRegressor(max_depth=3).fit(X, y)
-y_pred = tree.predict(X)
-mse = mean_squared_error(y, y_pred)
+tree = DecisionTreeRegressor(max_depth=3).fit(data, target)
+target_predicted = tree.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx],
+        color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
-# Instead of having a model
-# which can natively deal with non-linearity, we could also modify our data: we
-# could create new features, derived from the original features, using some
-# expert knowledge. In this example, we know that we have a cubic and squared
-# relationship between `x` and `y` (because we generated the data). Indeed,
-# we could create two new features (`x^2` and `x^3`) using this information.
+# Instead of having a model which can natively deal with non-linearity, we
+# could also modify our data: we could create new features, derived from the
+# original features, using some expert knowledge. In this example, we know that
+# we have a cubic and squared relationship between `data` and `target` (because
+# we generated the data). Indeed, we could create two new features (`data ** 2`
+# and `data ** 3`) using this information.
 
 # %%
-X = np.vstack([x, x ** 2, x ** 3]).T
+data = np.concatenate([data, data ** 2, data ** 3], axis=1)
 
-linear_regression.fit(X, y)
-y_pred = linear_regression.predict(X)
-mse = mean_squared_error(y, y_pred)
+linear_regression.fit(data, target)
+target_predicted = linear_regression.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx],
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx, 0], target_predicted[sorted_idx],
         color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
@@ -146,16 +148,16 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 
-X = x.reshape(-1, 1)
+data = data[:, [0]]
 
 model = make_pipeline(PolynomialFeatures(degree=3),
                       LinearRegression())
-model.fit(X, y)
-y_pred = model.predict(X)
-mse = mean_squared_error(y, y_pred)
+model.fit(data, target)
+target_predicted = model.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -172,12 +174,12 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 from sklearn.svm import SVR
 
 svr = SVR(kernel="linear")
-svr.fit(X, y)
-y_pred = svr.predict(X)
-mse = mean_squared_error(y, y_pred)
+svr.fit(data, target)
+target_predicted = svr.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -187,12 +189,12 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %%
 svr = SVR(kernel="poly", degree=3)
-svr.fit(X, y)
-y_pred = svr.predict(X)
-mse = mean_squared_error(y, y_pred)
+svr.fit(data, target)
+target_predicted = svr.predict(data)
+mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=data, x="x", y="y")
-ax.plot(x[sorted_idx], y_pred[sorted_idx], color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data[sorted_idx], target_predicted[sorted_idx], color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]

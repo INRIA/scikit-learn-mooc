@@ -1,8 +1,8 @@
 # %% [markdown]
 # # 📃 Solution of Exercise 01
 #
-# The aim of this notebook is to investigate if we can fine-tune a bagging
-# regressor and evaluate the gain obtained.
+# The aim of this notebook is to investigate if we can tune the hyperparameters
+# of a bagging regressor and evaluate the gain obtained.
 #
 # We will load the California housing dataset and split it into a training and
 # a testing set.
@@ -74,7 +74,7 @@ print(f"Basic R2 score of the bagging regressor:\n"
       f"{test_score:.2f}")
 
 # %% [markdown]
-# We see that the predictor provided by the bagging regressor does not
-# need much fine-tuning compared to a single decision tree.
-# We see that the bagging regressor provides a predictor for which fine tuning
-# is not as important as in the case of fitting a single decision tree.
+# We see that the predictor provided by the bagging regressor does not need
+# much hyperparameters tuning compared to a single decision tree. We see that
+# the bagging regressor provides a predictor for which fine tuning is not as
+# important as in the case of fitting a single decision tree.

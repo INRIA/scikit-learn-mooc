@@ -1,8 +1,8 @@
 # %% [markdown]
 # # 📝 Exercise 01
 #
-# The aim of this notebook is to investigate if we can fine-tune a bagging
-# regressor and evaluate the gain obtained.
+# The aim of this notebook is to investigate if we can tune the hyperparameters
+# of a bagging regressor and evaluate the gain obtained.
 #
 # We will load the California housing dataset and split it into a training and
 # a testing set.

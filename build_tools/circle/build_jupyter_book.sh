@@ -6,6 +6,7 @@ apt-get install make
 source /opt/conda/etc/profile.d/conda.sh
 conda update --yes conda
 conda create -n scikit-learn-mooc --yes python=3
+conda activate scikit-learn-moooc
 pip install -r requirements-dev.txt
 
 cd jupyter-book

@@ -287,14 +287,16 @@ data["native-country"].value_counts()
 #
 # * list all the possible categories and provide it to the encoder via the
 #   keyword argument `categories`;
-# * set the parameter `handle_unknown="ignore"`.
+# * use the parameter `handle_unknown`.
 #
-# Here, we will use the former strategy because we are also going to use it for
-# the ordinal encoder later on.
+# Here, we will use the latter solution for simplicity.
 
-# %%
-categories = [data_categorical[column].unique()
-              for column in data_categorical]
+# %% [markdown]
+# ```{tip}
+# Be aware the the `OrdinalEncoder` exposes as well a parameter
+# `handle_unknown`. It can be set to `use_encoded_value` and by setting
+# `unknown_value` to handle rare categories.
+# ```
 
 # %% [markdown]
 # We can now create our machine learning pipeline.
@@ -304,8 +306,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
 model = make_pipeline(
-    OneHotEncoder(categories=categories, drop="if_binary"),
-    LogisticRegression(max_iter=500))
+    OneHotEncoder(handle_unknown="ignore"), LogisticRegression(max_iter=500)
+)
 
 # %% {markdown}
 # ```{note}

@@ -1,83 +1,86 @@
 # %% [markdown]
 # # 📝 Exercise 04
 #
-# In the previous notebook, we illustrated how the regularization
-# parameter of the Ridge model needs to be optimized by hand.
+# In the previous notebook, we saw the effect of applying some regularization
+# on the coefficient of a linear model.
 #
-# However, this way of optimizing hyperparameters is not effective:
-# we did a single split, while cross-validation would be
-# much more effective.
+# In this exercise, we will study the advantage of using some regularization
+# when dealing with correlated features.
 #
-# This exercise will make you implement the same search but using the class
-# `GridSearchCV`.
-#
-# First, we will:
-#
-# * load the California housing dataset;
-# * split the data into training and testing sets;
-# * create a machine learning pipeline composed of a standard scaler to
-#   normalize the data, and a ridge regression as a linear model.
+# We will first create a regression dataset. This dataset will contain 2,000
+# samples and 5 features from which only 2 features will be informative.
 
 # %%
-from sklearn.datasets import fetch_california_housing
+from sklearn.datasets import make_regression
 
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
-X.head()
-
-# %%
-from sklearn.model_selection import train_test_split
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
+data, target, coef = make_regression(
+    n_samples=2_000, n_features=5, n_informative=2, shuffle=False,
+    coef=True, random_state=0, noise=30,
 )
 
-# %%
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import Ridge
-
-ridge = make_pipeline(StandardScaler(), Ridge())
-
 # %% [markdown]
-# Now the exercise is to use a `GridSearchCV` estimator to optimize the
-# parameter `alpha` of the ridge regressor. Let's redefine the
-# regularization parameter candidates like we did in the previous notebook.
+# When creating the dataset, `make_regression` returns the true coefficient
+# used to generate the dataset. Let's plot this information.
 
 # %%
-import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
 
-alphas = np.logspace(-1, 2, num=30)
+sns.set_context("poster")
+
+feature_names = [f"Features {i}" for i in range(data.shape[1])]
+coef = pd.Series(coef, index=feature_names)
+coef.plot.barh()
+coef
 
 # %% [markdown]
-# You can refer to the documentation of `GridSearchCV`
-# [here](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html)
-# to check how to use this estimator.
-# First, train the grid-search using the previous machine learning pipeline and
-# print the value of the best parameter found.
+# Create a `LinearRegression` regressor and fit on the entire dataset and
+# check the value of the coefficients. Are the coefficients of the linear
+# regressor close to the coefficients used to generate the dataset?
+
+# %%
+from sklearn.linear_model import LinearRegression
+
+linear_regression = LinearRegression()
+linear_regression.fit(data, target)
+linear_regression.coef_
+
+# %%
+feature_names = [f"Features {i}" for i in range(data.shape[1])]
+coef = pd.Series(linear_regression.coef_, index=feature_names)
+_ = coef.plot.barh()
+
+# %% [markdown]
+# We see that the coefficients are close to the coefficients used to generate
+# the dataset. The dispersion is indeed cause by the noise injected during the
+# dataset generation.
+
+# %% [markdown]
+# Now, create a new dataset that will be the same as `data` with 4 additional
+# columns that will repeat twice features 0 and 1. This procedure will create
+# perfectly correlated features.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Once you found the best parameter `alpha`, use the grid-search estimator
-# that you created to predict and estimate the $R^2$ score of this model.
+# Fit again the linear regressor on this new dataset and check the
+# coefficients. What do you observe?
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# It is also interesting to know that several regressors and classifiers
-# in scikit-learn are optimized to make this parameter tuning. They usually
-# finish with the term "CV" for "Cross Validation" (e.g. `RidgeCV`).
-#
-# They are more efficient than using `GridSearchCV` and you should use them
-# instead.
-#
-# Repeat the previous exercise using the `RidgeVC` estimator
-# instead of a grid-search.
-#
-# Refer to the [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html)
-# of `RidgeCV` for more information on how to use it.
+# Create a ridge regressor and fit on the same dataset. Check the coefficients.
+# What do you observe?
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Can you find the relationship between the ridge coefficients and the original
+# coefficients?
 
 # %%
 # Write your code here.

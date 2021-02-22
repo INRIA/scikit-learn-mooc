@@ -2,7 +2,7 @@
 # # Overfit-generalization-underfit
 #
 # In the previous notebook, we presented the general cross-validation framework
-# and how it helps us quantify the empirical and generalization errors as well
+# and how it helps us quantify the training and testing errors as well
 # as their fluctuations.
 #
 # In this notebook, we will put these two errors into perspective and show how
@@ -26,8 +26,8 @@ regressor = DecisionTreeRegressor()
 # ## Overfitting vs. underfitting
 #
 # To better understand the performance of our model and maybe find insights on
-# how to improve it, we will compare the generalization error with the
-# empirical error. Thus, we need to compute the error on the training set,
+# how to improve it, we will compare the testing error with the
+# training error. Thus, we need to compute the error on the training set,
 # which is possible using the `cross_validate` function.
 
 # %%
@@ -55,21 +55,20 @@ sns.histplot(scores, bins=50)
 _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
-# By plotting the distribution of the empirical and generalization errors, we
+# By plotting the distribution of the training and testing errors, we
 # get information about whether our model is over-fitting, under-fitting (or
 # both at the same time).
 #
-# Here, we observe a **small empirical error** (actually zero), meaning that
+# Here, we observe a **small training error** (actually zero), meaning that
 # the model is **not under-fitting**: it is flexible enough to capture any
 # variations present in the training set.
 #
-# However the **significantly larger generalization error** tells us that the
+# However the **significantly larger testing error** tells us that the
 # model is **over-fitting**: the model has memorized many variations of the
 # training set that could be considered "noisy" because they do not generalize
 # to help us make good prediction on the test set.
 #
 # ## Validation curve
-
 #
 # Some model hyperparameters are usually the key to go from a model that
 # underfits to a model that overfits, hopefully going through a region were we

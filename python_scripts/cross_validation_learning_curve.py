@@ -97,7 +97,7 @@ sns.set_context("talk")
 
 sns.displot(scores_sample_sizes, kind="kde")
 plt.xlabel("Mean absolute error (k$)")
-_ = plt.title("Generalization errors distribution \n"
+_ = plt.title("Testing errors distribution \n"
               "by varying the sample size")
 
 # %% [markdown]

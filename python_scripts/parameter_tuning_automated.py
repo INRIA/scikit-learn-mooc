@@ -481,6 +481,7 @@ for fold_idx, estimator in enumerate(cv_results["estimator"]):
 # Indeed, it would become difficult to set them.
 
 # %% [markdown]
+# FIXME: xxxx
 # ## Quizz
 #
 # Select the worst performing models (for instance models with a

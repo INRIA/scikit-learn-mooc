@@ -4,9 +4,9 @@
 # In this notebook, we present how to compare the statistical performance of a
 # model to a minimal baseline.
 #
-# Indeed, in the previous notebook, we compared the generalization error by
+# Indeed, in the previous notebook, we compared the testing error by
 # taking into account the target distribution. A good practice is to compare
-# the generalization error with a dummy baseline and the chance level. In
+# the testing error with a dummy baseline and the chance level. In
 # regression, we could use the `DummyRegressor` and predict the mean target
 # without using the data. The chance level can be determined by permuting the
 # labels and check the difference of result.
@@ -36,7 +36,7 @@ cv = ShuffleSplit(n_splits=30, test_size=0.2, random_state=0)
 # %% [markdown]
 # We will start by running the cross-validation for the decision tree
 # regressor which is our model of interest. Besides, we will store the
-# generalization error in a pandas series.
+# testing error in a pandas series.
 
 # %%
 import pandas as pd
@@ -82,7 +82,7 @@ score, permutation_score, pvalue = permutation_test_score(
 errors_permutation = pd.Series(-permutation_score, name="Permuted error")
 
 # %% [markdown]
-# Finally, we plot the generalization errors for the two baselines and the
+# Finally, we plot the testing errors for the two baselines and the
 # actual regressor.
 
 # %%

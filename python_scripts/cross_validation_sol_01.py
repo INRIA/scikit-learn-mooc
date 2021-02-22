@@ -77,7 +77,7 @@ sns.set_context("talk")
 _, ax = plt.subplots()
 
 for name, scores in zip(
-    ["Empirical score", "Generalization score"], [train_scores, test_scores]
+    ["Training score", "Testing score"], [train_scores, test_scores]
 ):
     ax.plot(
         gammas, scores.mean(axis=1), linestyle="-.", label=name,
@@ -99,7 +99,7 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 # the SVC classifier when `gamma > 1`.
 # The best setting is around `gamma = 1` while for `gamma < 1`,
 # it is not very clear if the classifier is under-fitting but the
-# generalization score is worse than for `gamma = 1`.
+# testing score is worse than for `gamma = 1`.
 #
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize.
@@ -119,7 +119,7 @@ train_size, train_scores, test_scores = results[:3]
 _, ax = plt.subplots()
 
 for name, scores in zip(
-    ["Empirical score", "Generalization score"], [train_scores, test_scores]
+    ["Training score", "Testing score"], [train_scores, test_scores]
 ):
     ax.plot(
         train_sizes, scores.mean(axis=1), linestyle="-.", label=name,
@@ -137,6 +137,6 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 
 # %% [markdown]
 # We observe that adding new samples in the dataset does not improve the
-# generalization score. We can only conclude that the standard deviation of
-# the empirical error is decreasing when adding more samples which is not a
+# testing score. We can only conclude that the standard deviation of
+# the training error is decreasing when adding more samples which is not a
 # surprise.

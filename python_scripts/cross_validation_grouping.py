@@ -49,7 +49,7 @@ print(f"The average accuracy is "
 
 # %% [markdown]
 # We observe that shuffling the data improves the mean accuracy.
-# We could go a little further and plot the distribution of the generalization
+# We could go a little further and plot the distribution of the testing
 # score. We can first concatenate the test scores.
 
 # %%
@@ -73,7 +73,7 @@ plt.xlim([0.8, 1.0])
 _ = plt.xlabel("Accuracy score")
 
 # %% [markdown]
-# The cross-validation generalization error that uses the shuffling has less
+# The cross-validation testing error that uses the shuffling has less
 # variance than the one that does not impose any shuffling. It means that some
 # specific fold leads to a low score in this case.
 

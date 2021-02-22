@@ -64,7 +64,7 @@ cv_results_with_selection = cross_validate(model_with_selection, data, target,
 cv_results_with_selection = pd.DataFrame(cv_results_with_selection)
 
 # %% [markdown]
-# We can compare the generalization score of the two models. For this matter,
+# We can compare the testing score of the two models. For this matter,
 # we are combining results in a single dataframe.
 
 # %%
@@ -75,7 +75,7 @@ cv_results = pd.concat(
 ).swaplevel(axis="columns")
 
 # %% [markdown]
-# Finally, we can check the generalization score of each the model.
+# Finally, we can check the testing score of each the model.
 
 # %%
 import matplotlib.pyplot as plt

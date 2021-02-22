@@ -459,7 +459,7 @@ cv_results = cross_validate(
 
 # %% [markdown]
 # Running the above cross-validation will give us an estimate of the
-# generalization score.
+# testing score.
 
 # %%
 scores = cv_results["test_score"]

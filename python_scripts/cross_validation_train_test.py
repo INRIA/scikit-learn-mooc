@@ -52,7 +52,7 @@ target *= 100
 target.head()
 
 # %% [markdown]
-# ## Empirical error vs generalization error
+# ## Training error vs testing error
 #
 # To solve this regression task, we will use a decision tree regressor.
 
@@ -86,23 +86,33 @@ print(f"On average, our regressor makes an error of {score:.2f} k$")
 # This error computed above is called the **empirical error** or **training
 # error**.
 #
-# We trained a predictive model to minimize the empirical error but our aim is
+# ```{note}
+# In this MOOC, we will use consistently the term "training error".
+# ```
+#
+# We trained a predictive model to minimize the training error but our aim is
 # to minimize the error on data that has not been seen during training.
 #
 # This error is also called the **generalization error** or the "true"
-# **testing error**. Thus, the most basic evaluation involves:
+# **testing error**.
+#
+# ```{note}
+# In this MOOC, we will use consistently the term "testing error".
+# ```
+#
+# Thus, the most basic evaluation involves:
 #
 # * splitting our dataset into two subsets: a training set and a testing set;
 # * fitting the model on the training set;
-# * estimating the empirical error on the training set;
-# * estimating the generalization error on the testing set.
+# * estimating the training error on the training set;
+# * estimating the testing error on the testing set.
 #
 # So let's split our dataset.
 # %%
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-      data, target, random_state=0)
+    data, target, random_state=0)
 
 # %% [markdown]
 # Then, let's train our model.
@@ -112,44 +122,43 @@ regressor.fit(data_train, target_train)
 
 # %% [markdown]
 # Finally, we estimate the different types of errors. Let's start by computing
-# the empirical error.
+# the training error.
 
 # %%
 target_predicted = regressor.predict(data_train)
 score = mean_absolute_error(target_train, target_predicted)
-print(f"The empirical error of our model is {score:.2f} k$")
+print(f"The training error of our model is {score:.2f} k$")
 
 # %% [markdown]
 # We observe the same phenomena as in the previous experiment: our model
-# memorized the training set. However, we now compute the generalization
-# error on the testing set.
+# memorized the training set. However, we now compute the testing error.
 
 # %%
 target_predicted = regressor.predict(data_test)
 score = mean_absolute_error(target_test, target_predicted)
-print(f"The generalization error of our model is {score:.2f} k$")
+print(f"The testing error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# This generalization error is actually about what we would expect from
-# our model if it was used in a production environment.
+# This testing error is actually about what we would expect from our model if
+# it was used in a production environment.
 
 # %% [markdown]
 # ## Stability of the cross-validation estimates
 #
 # When doing a single train-test split we don't give any indication regarding
 # the robustness of the evaluation of our predictive model: in particular, if
-# the test set is small, this estimate of the generalization error will be
+# the test set is small, this estimate of the testing error will be
 # unstable and wouldn't reflect the "true error rate" we would have observed
 # with the same model on an unlimited amount of test data.
 #
 # For instance, we could have been lucky when we did our random split of our
 # limited dataset and isolated some of the easiest cases to predict in the
-# testing set just by chance: the estimation of the generalization error would
-# be overly optimistic, in this case.
+# testing set just by chance: the estimation of the testing error would be
+# overly optimistic, in this case.
 #
 # **Cross-validation** allows estimating the robustness of a predictive model
-# by repeating the splitting procedure. It will give several empirical and
-# generalization errors and thus some **estimate of the variability of the
+# by repeating the splitting procedure. It will give several training and
+# testing errors and thus some **estimate of the variability of the
 # model statistical performance**.
 #
 # There are different cross-validation strategies, for now we are going to
@@ -158,7 +167,7 @@ print(f"The generalization error of our model is {score:.2f} k$")
 # - randomly shuffle the order of the samples of a copy of the full dataset;
 # - split the shuffled dataset into a train and a test set;
 # - train a new model on the train set;
-# - evaluate the generalization error on the test set.
+# - evaluate the testing error on the test set.
 #
 # We repeat this procedure `n_splits` times. Using `n_splits=30` means that we
 # will train 30 models in total and all of them will be discarded: we just
@@ -206,15 +215,15 @@ cv_results.head(10)
 # %% [markdown]
 # We get timing information to fit and predict at each round of
 # cross-validation. Also, we get the test score, which corresponds to the
-# generalization error on each of the split.
+# testing error on each of the split.
 
 # %%
 len(cv_results)
 
 # %% [markdown]
 # We get 30 entries in our resulting dataframe because we performed 30 splits.
-# Therefore, we can show the generalization error distribution and thus, have
-# an estimate of its variability.
+# Therefore, we can show the testing error distribution and thus, have an
+# estimate of its variability.
 
 # %%
 import matplotlib.pyplot as plt
@@ -226,25 +235,25 @@ sns.displot(cv_results["test_error"], kde=True, bins=10)
 _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
-# We observe that the generalization error is clustered around 45.5 k\$ and
+# We observe that the testing error is clustered around 45.5 k\$ and
 # ranges from 43 k\$ to 49 k\$.
 
 # %%
-print(f"The mean cross-validated generalization error is: "
+print(f"The mean cross-validated testing error is: "
       f"{cv_results['test_error'].mean():.2f} k$")
 
 # %%
-print(f"The standard deviation of the generalization error is: "
+print(f"The standard deviation of the testing error is: "
       f"{cv_results['test_error'].std():.2f} k$")
 
 # %% [markdown]
 # Note that the standard deviation is much smaller than the mean: we could
-# summarize that our cross-validation estimate of the generalization error is
+# summarize that our cross-validation estimate of the testing error is
 # 45.88 +/- 1.00 k\$.
 #
 # If we were to train a single model on the full dataset (without
 # cross-validation) and then had later access to an unlimited amount of test
-# data, we would expect its true generalization error to fall close to that
+# data, we would expect its true testing error to fall close to that
 # region.
 #
 # While this information is interesting in itself, it should be contrasted to
@@ -263,10 +272,10 @@ print(f"The standard deviation of the target is: {target.std():.2f} k$")
 # The target variable ranges from close to 0 k\$ up to 500 k\$ and, with a
 # standard deviation around 115 k\$.
 #
-# We notice that the mean estimate of the generalization error obtained by
+# We notice that the mean estimate of the testing error obtained by
 # cross-validation is a bit smaller than the natural scale of variation of the
 # target variable. Furthermore the standard deviation of the cross validation
-# estimate of the generalization error is even smaller.
+# estimate of the testing error is even smaller.
 #
 # This is a good start, but not necessarily enough to decide whether the
 # generalization performance is good enough to make our prediction useful in
@@ -322,6 +331,6 @@ scores
 # In this notebook, we saw:
 #
 # * the necessity of splitting the data into a train and test set;
-# * the meaning of the empirical and generalization errors;
+# * the meaning of the training and testing errors;
 # * the overall cross-validation framework with the possibility to study
 #   statistical performance variations;

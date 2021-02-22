@@ -8,7 +8,7 @@
 # Cross-validation is a powerful tool to evaluate the performance of a model.
 # It is also used to select the best model from a pool of models. This pool of
 # models can be the same family of predictor but with different parameters. In
-# this case, we call this procedure **fine-tuning** the model hyperparameters.
+# this case, we call this procedure **hyperparameters tuning**.
 #
 # We could also imagine that we would like to choose among heterogeneous models
 # that will similarly use the cross-validation.
@@ -71,7 +71,7 @@ print(f"The mean score in CV is: {search.best_score_:.3f}")
 # corresponding to the previous procedure shown to optimize the
 # hyperparameters. We will also include this procedure within an outer
 # cross-validation, which will be used to estimate the testing error of
-# our fine-tuned model.
+# our tuned model.
 #
 # In this case, our inner cross-validation will always get the training set of
 # the outer cross-validation, making it possible to compute the testing

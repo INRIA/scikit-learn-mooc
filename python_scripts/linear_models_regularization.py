@@ -6,7 +6,7 @@
 #
 # Besides, we will also present the preprocessing required when dealing
 # with regularized models, furthermore when the regularization parameter
-# needs to be fine-tuned.
+# needs to be tuned.
 #
 # We will start by highlighting the over-fitting issue that can arise with
 # a simple linear regression model.

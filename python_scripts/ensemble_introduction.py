@@ -48,7 +48,7 @@ print(f"R2 score obtained by cross-validation: "
 # what each parameter should be set to. Thus, not making a search could lead us
 # to have an underfitted or overfitted model.
 #
-# Now, we make a grid-search to fine-tune the parameters that we mentioned
+# Now, we make a grid-search to tune the hyperparameters that we mentioned
 # earlier.
 
 # %%

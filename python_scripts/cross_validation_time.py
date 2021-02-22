@@ -50,9 +50,9 @@ _ = ax.set_ylabel("Quote value")
 # %%
 from sklearn.model_selection import train_test_split
 
-X, y = quotes.drop(columns=["Chevron"]), quotes["Chevron"]
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, shuffle=True, random_state=0)
+data, target = quotes.drop(columns=["Chevron"]), quotes["Chevron"]
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=True, random_state=0)
 
 # %% [markdown]
 # We will use a decision tree regressor that we expect to overfit and thus not
@@ -80,7 +80,8 @@ cv = ShuffleSplit(random_state=0)
 # %%
 from sklearn.model_selection import cross_val_score
 
-test_score = cross_val_score(regressor, X_train, y_train, cv=cv, n_jobs=-1)
+test_score = cross_val_score(regressor, data_train, target_train, cv=cv,
+                             n_jobs=-1)
 print(f"The mean R2 is: "
       f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
 
@@ -93,10 +94,10 @@ print(f"The mean R2 is: "
 # purpose.
 
 # %%
-regressor.fit(X_train, y_train)
-y_pred = regressor.predict(X_test)
-# Affect the index of `y_test` to ease the plotting
-y_pred = pd.Series(y_pred, index=y_test.index)
+regressor.fit(data_train, target_train)
+target_predicted = regressor.predict(data_test)
+# Affect the index of `target_predicted` to ease the plotting
+target_predicted = pd.Series(target_predicted, index=target_test.index)
 
 # %% [markdown]
 # Let's check the performance of our model on this split.
@@ -104,7 +105,7 @@ y_pred = pd.Series(y_pred, index=y_test.index)
 # %%
 from sklearn.metrics import r2_score
 
-test_score = r2_score(y_test, y_pred)
+test_score = r2_score(target_test, target_predicted)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
@@ -113,9 +114,9 @@ print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %%
 _, ax = plt.subplots(figsize=(10, 8))
-y_train.plot(ax=ax, label="Training")
-y_test.plot(ax=ax, label="Testing")
-y_pred.plot(ax=ax, label="Prediction")
+target_train.plot(ax=ax, label="Training")
+target_test.plot(ax=ax, label="Testing")
+target_predicted.plot(ax=ax, label="Prediction")
 _ = plt.legend()
 
 # %% [markdown]
@@ -133,15 +134,15 @@ _ = plt.legend()
 # the remaining data to test.
 
 # %%
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, shuffle=False, random_state=0,
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=False, random_state=0,
 )
-regressor.fit(X_train, y_train)
-y_pred = regressor.predict(X_test)
-y_pred = pd.Series(y_pred, index=y_test.index)
+regressor.fit(data_train, target_train)
+target_predicted = regressor.predict(data_test)
+target_predicted = pd.Series(target_predicted, index=target_test.index)
 
 # %%
-test_score = r2_score(y_test, y_pred)
+test_score = r2_score(target_test, target_predicted)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
@@ -151,9 +152,9 @@ print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %%
 _, ax = plt.subplots(figsize=(10, 8))
-y_train.plot(ax=ax, label="Training")
-y_test.plot(ax=ax, label="Testing")
-y_pred.plot(ax=ax, label="Prediction")
+target_train.plot(ax=ax, label="Training")
+target_test.plot(ax=ax, label="Testing")
+target_predicted.plot(ax=ax, label="Prediction")
 _ = plt.legend()
 
 # %% [markdown]
@@ -170,7 +171,7 @@ from sklearn.model_selection import LeaveOneGroupOut
 
 groups = quotes.index.to_period("Q")
 cv = LeaveOneGroupOut()
-test_score = cross_val_score(regressor, X, y,
+test_score = cross_val_score(regressor, data, target,
                              cv=cv, groups=groups, n_jobs=-1)
 print(f"The mean R2 is: "
       f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
@@ -189,7 +190,7 @@ print(f"The mean R2 is: "
 from sklearn.model_selection import TimeSeriesSplit
 
 cv = TimeSeriesSplit(n_splits=groups.nunique())
-test_score = cross_val_score(regressor, X, y,
+test_score = cross_val_score(regressor, data, target,
                              cv=cv, groups=groups, n_jobs=-1)
 print(f"The mean R2 is: "
       f"{test_score.mean():.2f} +/- {test_score.std():.2f}")

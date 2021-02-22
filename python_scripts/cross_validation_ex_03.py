@@ -9,7 +9,7 @@
 # %%
 from sklearn.datasets import load_iris
 
-X, y = load_iris(return_X_y=True, as_frame=True)
+data, target = load_iris(return_X_y=True, as_frame=True)
 
 # %% [markdown]
 # Create a decision tree classifier that we will use in the next experiments.

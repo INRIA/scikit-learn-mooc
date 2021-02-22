@@ -34,8 +34,9 @@
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0)
 
 # %%
 import pandas as pd
@@ -48,7 +49,7 @@ param_grid = {
 }
 grid_search = GridSearchCV(
     RandomForestRegressor(n_jobs=-1), param_grid=param_grid, n_jobs=-1)
-grid_search.fit(X_train, y_train)
+grid_search.fit(data_train, target_train)
 
 columns = [f"param_{name}" for name in param_grid.keys()]
 columns += ["mean_test_score", "rank_test_score"]
@@ -101,7 +102,7 @@ param_grid = {
 }
 grid_search = GridSearchCV(
     GradientBoostingRegressor(), param_grid=param_grid, n_jobs=-1)
-grid_search.fit(X_train, y_train)
+grid_search.fit(data_train, target_train)
 
 columns = [f"param_{name}" for name in param_grid.keys()]
 columns += ["mean_test_score", "rank_test_score"]

@@ -25,10 +25,10 @@ from sklearn.linear_model import LinearRegression
 model = LinearRegression()
 
 # %% [markdown]
-# Then, use the `cross_val_score` to estimate the performance of the model.
-# Use a `KFold` cross-validation with 10 folds. Make the use of the $R^2$ score
-# explicit by assigning the parameter `scoring` (even though it is the default
-# score).
+# Then, use the `cross_val_score` to estimate the statistical performance of
+# the model. Use a `KFold` cross-validation with 10 folds. Make the use of the
+# $R^2$ score explicit by assigning the parameter `scoring` (even though it is
+# the default score).
 
 # %%
 from sklearn.model_selection import cross_val_score

@@ -17,9 +17,9 @@
 # the best one is picked. We explained this process in the notebook "tree in
 # depth", which you can refer to.
 #
-# To accelerate the gradient-boosting algorithm, one could reduce the number
-# of splits to be evaluated. As a consequence, the performance of such a
-# tree would be reduced. However, since we are combining several trees in a
+# To accelerate the gradient-boosting algorithm, one could reduce the number of
+# splits to be evaluated. As a consequence, the statistical performance of such
+# a tree would be reduced. However, since we are combining several trees in a
 # gradient-boosting, we can add more estimators to overcome this issue.
 #
 # We will make a naive implementation of such algorithm using building blocks
@@ -105,8 +105,8 @@ print(f"Average score time: "
 
 # %% [markdown]
 # Here, we see that the fit time has been drastically reduced but that the
-# performance of the model is the identical. Scikit-learn provides a specific
-# classes which are even more optimized for large dataset, called
+# statistical performance of the model is identical. Scikit-learn provides a
+# specific classes which are even more optimized for large dataset, called
 # `HistGradientBoostingClassifier` and `HistGradientBoostingRegressor`. Each
 # feature in the dataset `data` is first binned by computing histograms, which
 # are later used to evaluate the potential splits. The number of splits to

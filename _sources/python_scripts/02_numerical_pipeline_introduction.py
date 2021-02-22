@@ -21,7 +21,8 @@
 # In particular we will highlight:
 #
 # * the scikit-learn API: `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
-# * how to evaluate the performance of a model with a train-test split.
+# * how to evaluate the statistical performance of a model with a train-test
+#   split.
 #
 # ## Loading the dataset with Pandas
 #
@@ -205,15 +206,25 @@ print(f"The test accuracy using a {model_name} is "
 # on the training set, we find that this evaluation was indeed optimistic
 # compared to the score obtained on an held-out test set.
 #
-# It shows the importance to always test the performance of predictive models
-# on a different set than the one used to train these models. We will come
-# back more into details regarding how predictive models should be evaluated.
+# It shows the importance to always test the statistical performance of
+# predictive models on a different set than the one used to train these models.
+# We will come back more into details regarding how predictive models should be
+# evaluated.
+
+# %% [markdown]
+# ```{note}
+# In this MOOC, we will refer to **statistical performance** of a model when
+# refering to the score or error obtained by compairing the prediction of a
+# model and the true targets. We will refer to **computational performance** of
+# a predictive model when accessing the computational costs of training or
+# scoring of a predictive model.
+# ```
 
 # %% [markdown]
 # In this notebook we:
 #
 # * fitted a **k-nearest neighbors** model on a training dataset;
-# * evaluated its performance on the testing data;
+# * evaluated its statistical performance on the testing data;
 # * introduced the scikit-learn API `.fit(X, y)` (to train a model),
 #   `.predict(X)` (to make predictions) and `.score(X, y)`
 #   (to evaluate a model).

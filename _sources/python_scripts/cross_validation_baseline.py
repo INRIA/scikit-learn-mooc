@@ -1,8 +1,8 @@
 # %% [markdown]
 # # Comparing results with baseline and chance level
 #
-# In this notebook, we present how to compare the performance of a model
-# to a minimal baseline.
+# In this notebook, we present how to compare the statistical performance of a
+# model to a minimal baseline.
 #
 # Indeed, in the previous notebook, we compared the testing error by
 # taking into account the target distribution. A good practice is to compare
@@ -67,10 +67,10 @@ result_dummy = cross_validate(dummy, data, target,
 errors_dummy = pd.Series(-result_dummy["test_score"], name="Dummy error")
 
 # %% [markdown]
-# Finally, we will evaluate the performance of the second baseline. This
-# baseline will provide the performance of the chance level. Indeed, we will
-# train a decision tree on some training data and evaluate the same tree on
-# data where the target vector has been randomized.
+# Finally, we will evaluate the statistical performance of the second baseline.
+# This baseline will provide the statistical performance of the chance level.
+# Indeed, we will train a decision tree on some training data and evaluate the
+# same tree on data where the target vector has been randomized.
 
 # %%
 from sklearn.model_selection import permutation_test_score
@@ -98,9 +98,9 @@ sns.displot(final_errors, kind="kde")
 _ = plt.xlabel("Mean absolute error (k$)")
 
 # %% [markdown]
-# We see that even if the performance of our model is far from being good, it
-# is better than the two baselines. Besides, we see that the dummy regressor
-# is better than a chance level regressor.
+# We see that even if the statistical performance of our model is far from
+# being good, it is better than the two baselines. Besides, we see that the
+# dummy regressor is better than a chance level regressor.
 #
 # In practice, using a dummy regressor might be sufficient as a baseline.
 # Indeed, to obtain a reliable estimate the permutation of the target should

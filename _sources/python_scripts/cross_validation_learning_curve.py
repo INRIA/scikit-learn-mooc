@@ -112,7 +112,7 @@ _ = plt.title("Testing errors distribution \n"
 # Here, we plotted the different curves to highlight the issue of small sample
 # size. However, this experiment is also used to draw the so-called **learning
 # curve**. This curve gives some additional indication regarding the benefit of
-# adding new training samples to improve a model's performance.
+# adding new training samples to improve a model's statistical performance.
 
 # %%
 from sklearn.model_selection import learning_curve

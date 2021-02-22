@@ -1159,9 +1159,9 @@ expensive part in this algorithm is the search for the best split in the
 tree which is a brute-force approach: all possible split are evaluated and
 the best one is picked. We explained this process in the notebook “tree in
 depth”, which you can refer to.</p>
-<p>To accelerate the gradient-boosting algorithm, one could reduce the number
-of splits to be evaluated. As a consequence, the performance of such a
-tree would be reduced. However, since we are combining several trees in a
+<p>To accelerate the gradient-boosting algorithm, one could reduce the number of
+splits to be evaluated. As a consequence, the statistical performance of such
+a tree would be reduced. However, since we are combining several trees in a
 gradient-boosting, we can add more estimators to overcome this issue.</p>
 <p>We will make a naive implementation of such algorithm using building blocks
 from scikit-learn. First, we will load the California housing dataset.</p>
@@ -1306,8 +1306,8 @@ Average score time: 0.015 seconds
 </div>
 </div>
 <p>Here, we see that the fit time has been drastically reduced but that the
-performance of the model is the identical. Scikit-learn provides a specific
-classes which are even more optimized for large dataset, called
+statistical performance of the model is identical. Scikit-learn provides a
+specific classes which are even more optimized for large dataset, called
 <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> and <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingRegressor</span></code>. Each
 feature in the dataset <code class="docutils literal notranslate"><span class="pre">data</span></code> is first binned by computing histograms, which
 are later used to evaluate the potential splits. The number of splits to

@@ -18,7 +18,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
 # to its parameter `base_estimator`. Train the regressor and evaluate its
-# performance on the testing set.
+# statistical performance on the testing set.
 
 # %%
 # Write your code here.

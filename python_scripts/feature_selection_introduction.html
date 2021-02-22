@@ -1291,8 +1291,8 @@ a single pandas dataframe.</p>
 </div>
 <p>We can draw the same conclusions for both training and scoring elapsed time:
 selecting the most informative features speed-up our pipeline.</p>
-<p>Of course, such speed-up is beneficial only if the performance in terms of
-metrics remain the same. Let’s check the testing score.</p>
+<p>Of course, such speed-up is beneficial only if the statistical performance in
+terms of metrics remain the same. Let’s check the testing score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="o">**</span><span class="n">boxplot_property</span><span class="p">)</span>
@@ -1305,11 +1305,11 @@ metrics remain the same. Let’s check the testing score.</p>
 <img alt="../_images/feature_selection_introduction_17_0.png" src="../_images/feature_selection_introduction_17_0.png" />
 </div>
 </div>
-<p>We can observe that the model’s performance selecting a subset of features
-decreases compared with the model using all available features. Since we
-generated the dataset, we can infer that the decrease is because of the
-selection. The feature selection algorithm did not choose the two informative
-features.</p>
+<p>We can observe that the model’s statistical performance selecting a subset of
+features decreases compared with the model using all available features.
+Since we generated the dataset, we can infer that the decrease is because of
+the selection. The feature selection algorithm did not choose the two
+informative features.</p>
 <p>We can investigate which feature have been selected during the
 cross-validation. We will print the indices of the two selected features.</p>
 <div class="cell docutils container">
@@ -1336,12 +1336,13 @@ Fold #4 - features selected are: [49 53]
 </div>
 <p>We see that the feature <code class="docutils literal notranslate"><span class="pre">53</span></code> is always selected while the other feature
 varies depending on the cross-validation fold.</p>
-<p>If we would like to keep our score with similar performance, we could choose
-another metric to perform the test or select more features. For instance, we
-could select the number of features based on a specific percentile of the
-highest scores. Besides, we should keep in mind that we simplify our problem
-by having informative and not informative features. Correlation between
-features makes the problem of feature selection even harder.</p>
+<p>If we would like to keep our score with similar statistical performance, we
+could choose another metric to perform the test or select more features. For
+instance, we could select the number of features based on a specific
+percentile of the highest scores. Besides, we should keep in mind that we
+simplify our problem by having informative and not informative features.
+Correlation between features makes the problem of feature selection even
+harder.</p>
 <p>Therefore, we could come with a much more complicated procedure that could
 fine-tune (via cross-validation) the number of selected features and change
 the way feature is selected (e.g. using a machine-learning model). However,

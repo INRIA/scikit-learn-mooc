@@ -16,7 +16,7 @@
 # # 📃 Solution for Exercise 01
 #
 # The goal is to write an exhaustive search to find the best parameters
-# combination maximizing the model performance.
+# combination maximizing the model statistical performance.
 #
 # Here we use a small subset of the Adult Census dataset to make to code
 # fast to execute. Once your code works on the small subset, try to

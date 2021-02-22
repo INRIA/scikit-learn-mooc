@@ -2,11 +2,11 @@
 # # Automated hyperparameters tuning in scikit-learn
 #
 # In the previous notebook, we saw that hyperparameters can affect the
-# performance of a model. In this notebook, we will show:
+# statistical performance of a model. In this notebook, we will show:
 #
 # * how to tune these hyperparameters with a grid-search and randomized search;
-# * how to evaluate the model performance together with hyperparameter
-#   tuning.
+# * how to evaluate the model statistical performance together with
+#   hyperparameter tuning.
 
 # %% [markdown]
 # Let us reload the dataset as we did previously:
@@ -239,9 +239,9 @@ ax.invert_yaxis()
 # %% [markdown]
 # The above tables highlights the following things:
 #
-# * for too high values of `learning_rate`, the performance of the model is
-#   degraded and adjusting the value of `max_leaf_nodes` cannot fix that
-#   problem;
+# * for too high values of `learning_rate`, the statistical performance of the
+#   model is degraded and adjusting the value of `max_leaf_nodes` cannot fix
+#   that problem;
 # * outside of this pathological region, we observe that the optimal choice
 #   of `max_leaf_nodes` depends on the value of `learning_rate`;
 # * in particular, we observe a "diagonal" of good models with an accuracy
@@ -522,5 +522,6 @@ for fold_idx, estimator in enumerate(cv_results["estimator"]):
 # * a grid-search is a costly exhaustive search and does scale with the number
 #   of parameters to search;
 # * a randomized-search will always run with a fixed given budget;
-# * when assessing the performance of a model, hyperparameters search should
-#   be tuned on the training data of a predefined train test split.
+# * when assessing the statistical performance of a model, hyperparameters
+#   search should be tuned on the training data of a predefined train test
+#   split.

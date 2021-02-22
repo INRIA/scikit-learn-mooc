@@ -65,14 +65,6 @@ numerical_columns = numerical_columns_selector(data)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
-# Besides, we will list the categories for each categorical column beforehand
-# to avoid issues with rare categories when evaluating the model.
-
-# %%
-categories = [data[column].unique()
-              for column in categorical_columns]
-
-# %% [markdown]
 # ## Dispatch columns to a specific processor
 #
 # In the previous sections, we saw that we need to treat data differently
@@ -86,8 +78,8 @@ categories = [data[column].unique()
 # We first define the columns depending on their data type:
 #
 # * **one-hot encoding** will be applied to categorical columns. Besides, we
-#   will use the option `drop="if_binary"` to drop one of the column since the
-#   information will be correlated;
+#   use `handle_unknown="ignore"` to solve the potential issues due to rare
+#   categories.
 # * **numerical scaling** numerical features which will be standardized.
 #
 # Now, we create our `ColumnTransfomer` by specifying three values:
@@ -98,8 +90,7 @@ categories = [data[column].unique()
 # %%
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-categorical_preprocessor = OneHotEncoder(categories=categories,
-                                         drop="if_binary")
+categorical_preprocessor = OneHotEncoder(handle_unknown="ignore")
 numerical_preprocessor = StandardScaler()
 
 # %% [markdown]
@@ -228,7 +219,8 @@ from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.preprocessing import OrdinalEncoder
 
-categorical_preprocessor = OrdinalEncoder(categories=categories)
+categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
+                                          unknown_value=-1)
 
 preprocessor = ColumnTransformer([
     ('categorical', categorical_preprocessor, categorical_columns)],

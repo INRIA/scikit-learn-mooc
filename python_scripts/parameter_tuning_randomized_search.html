@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>📝 Exercise 02 &#8212; Scikit-learn course</title>
+    <title>Hyperparameters tuning by randomized-search &#8212; Scikit-learn course</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -60,8 +60,8 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="📃 Solution for Exercise 02" href="trees_sol_02.html" />
-    <link rel="prev" title="Decision tree for regression" href="trees_regression.html" />
+    <link rel="next" title="Cross-validation and hyperparameters tuning" href="parameter_tuning_nested.html" />
+    <link rel="prev" title="Hyperparameters tuning by grid-search" href="parameter_tuning_grid_search.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -327,7 +327,7 @@
   Hyperparameters tuning
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../tuning/parameter_tuning_module_intro.html">
    Module overview
@@ -362,18 +362,18 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1 collapsible-parent">
+ <li class="toctree-l1 current active collapsible-parent">
   <a class="reference internal" href="../tuning/parameter_tuning_automated_index.html">
    Automated tuning
   </a>
-  <ul class="collapse-ul">
+  <ul class="current collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="parameter_tuning_grid_search.html">
      Hyperparameters tuning by grid-search
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="parameter_tuning_randomized_search.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      Hyperparameters tuning by randomized-search
     </a>
    </li>
@@ -575,7 +575,7 @@
   Decision tree models
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../trees/trees_module_intro.html">
    Module overview
@@ -620,18 +620,18 @@
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1 current active collapsible-parent">
+ <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../trees/trees_regression_index.html">
    Decision tree in regression
   </a>
-  <ul class="current collapse-ul">
+  <ul class="collapse-ul">
    <li class="toctree-l2">
     <a class="reference internal" href="trees_regression.html">
      Decision tree for regression
     </a>
    </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_ex_02.html">
      📝 Exercise 02
     </a>
    </li>
@@ -1103,7 +1103,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/python_scripts/trees_ex_02.py"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/python_scripts/parameter_tuning_randomized_search.py"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
@@ -1123,10 +1123,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/trees_ex_02.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/parameter_tuning_randomized_search.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/trees_ex_02.py"><button
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/parameter_tuning_randomized_search.py"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -1146,6 +1146,25 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#our-predictive-model">
+   Our predictive model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tuning-using-a-randomized-search">
+   Tuning using a randomized-search
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -1153,75 +1172,309 @@
         
               <div>
                 
-  <div class="section" id="exercise-02">
-<h1>📝 Exercise 02<a class="headerlink" href="#exercise-02" title="Permalink to this headline">¶</a></h1>
-<p>The aim of this exercise is to find out whether a decision tree
-model is able to extrapolate.</p>
-<p>By extrapolation, we refer to values predicted by a model outside of the
-range of feature values seen during the training.</p>
-<p>We will first load the regression data.</p>
+  <div class="section" id="hyperparameters-tuning-by-randomized-search">
+<h1>Hyperparameters tuning by randomized-search<a class="headerlink" href="#hyperparameters-tuning-by-randomized-search" title="Permalink to this headline">¶</a></h1>
+<p>In the previous notebook, we showed how to use a grid-search approach to
+search for the best hyperparameters maximizing the statistical performance
+of a predictive model.</p>
+<p>However, a grid-search approach has limitations. It does not scale when
+the number of parameters to tune is increasing. Also, the grid will imposed
+a regularity during the search which might be problematic.</p>
+<p>In this notebook, we will present the another method to tune hyperparameters
+called randomized search.</p>
+<div class="section" id="our-predictive-model">
+<h2>Our predictive model<a class="headerlink" href="#our-predictive-model" title="Permalink to this headline">¶</a></h2>
+<p>Let us reload the dataset as we did previously:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
 
-<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
+<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">data_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">]</span>
-<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We extract the column containing the target.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">target</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We drop from our data the target name, and well as the <code class="docutils literal notranslate"><span class="pre">&quot;fnlwgt&quot;</span></code> column
+which is a censurs weighting and the <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> column, which
+duplicates the information in another column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once the dataset is loaded, we split it into a training and testing sets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-<span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[</span><span class="n">data_columns</span><span class="p">],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>First, create two models, a linear regression model and a decision tree
-regression model, and fit them on the training data. Limit the depth at
-3 levels for the decision tree.</p>
+<p>We will create the same predictive pipeline as seen in the grid-search
+section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+
+<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
+                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;cat-preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span> <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Create a testing dataset, ranging from the minimum to the maximum of the
-flipper length of the training dataset. Get the predictions of each model
-using this test dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for the moment this line is required to import HistGradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
+     <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">))])</span>
+<span class="n">model</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Create a scatter plot containing the training samples and superimpose the
-predictions of both model on the top.</p>
+</div>
+<div class="section" id="tuning-using-a-randomized-search">
+<h2>Tuning using a randomized-search<a class="headerlink" href="#tuning-using-a-randomized-search" title="Permalink to this headline">¶</a></h2>
+<p>With the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator, the parameters need to be specified
+explicitly. We already mentioned that exploring a large number of values for
+different parameters will be quickly untractable.</p>
+<p>Instead, we can randomly generate the parameter candidates. Indeed,
+such approach avoids the regularity of the grid. Hence, adding more
+evaluations can increase the resolution in each direction. This is the
+case in the frequent situation where the choice of some hyperparameters
+is not very important, as for hyperparameter 2 in the figure below.</p>
+<p><img alt="Randomized vs grid search" src="../_images/grid_vs_random_search.svg" /></p>
+<p>Indeed, the number of evaluation points need to be divided across the
+two different hyperparameters. With a grid, the danger is that the
+region of good hyperparameters fall between the line of the grid: this
+region is aligned with the grid given that hyperparameter 2 has a weak
+influence. Rather, stochastic search will sample hyperparameter 1
+independently from hyperparameter 2 and find the optimal region.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> class allows for such stochastic search. It is
+used similarly to the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> but the sampling distributions
+need to be specified instead of the parameter values. For instance, we
+will draw candidates using a log-uniform distribution also called
+reciprocal distribution, because the parameters we are interested in
+take positive values with a natural log scaling (.1 is as close to 1 as
+10 is).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Random search (with <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code>) is typically beneficial compared
+to grid search (with <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>) to optimize 3 or more
+hyperparameters.</p>
+</div>
+<p>We will optimize 3 other parameters in addition to the ones we
+optimized above:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_iter</span></code>: it corresponds to the number of trees in the ensemble;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>: it corresponds to the minimum number of samples
+required in a leaf;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_bins</span></code>: it corresponds to the maximum number of bins to construct the
+histograms.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">reciprocal</span></code> function from SciPy returns a floating number. Since we
+want to us this distribution to create integer, we will create a class that
+will cast the floating number into an integer.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">reciprocal</span>
+
+
+<span class="k">class</span> <span class="nc">reciprocal_int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Integer valued version of the log-uniform distribution&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distribution</span> <span class="o">=</span> <span class="n">reciprocal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Random variable sample&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distribution</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, we will check the extrapolation capabilities of each model. Create a
-dataset containing the value of your previous dataset. Besides, add values
-below and above the minimum and the maximum of the flipper length seen
-during training.</p>
+<p>Now, we can define the randomized search using the different distributions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
+
+<span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;classifier__l2_regularization&#39;</span><span class="p">:</span> <span class="n">reciprocal</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">),</span>
+    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="n">reciprocal</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="n">reciprocal_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+    <span class="s1">&#39;classifier__min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">reciprocal_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;classifier__max_bins&#39;</span><span class="p">:</span> <span class="n">reciprocal_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">255</span><span class="p">)}</span>
+
+<span class="n">model_random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">model_random_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Finally, make predictions with both model on this new testing set. Repeat
-the plotting of the previous exercise.</p>
+<p>Then, we can compute the accuracy score on the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_random_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy score of the best model is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The best parameters are:&quot;</span><span class="p">)</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can inspect the results using the attributes <code class="docutils literal notranslate"><span class="pre">cv_results</span></code> as we previously
+did.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">param_name</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
+<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span>
+    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
+
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv_results</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In practice, a randomized hyperparameter search is usually run with a large
+number of iterations. In order to avoid the computation cost and still make a
+decent analysis, we load the results obtained from a similar search with 200
+iterations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># model_random_search = RandomizedSearchCV(</span>
+<span class="c1">#     model, param_distributions=param_distributions, n_iter=500,</span>
+<span class="c1">#     n_jobs=4, cv=5)</span>
+<span class="c1"># model_random_search.fit(df_train, target_train)</span>
+<span class="c1"># cv_results =  pd.DataFrame(model_random_search.cv_results_)</span>
+<span class="c1"># cv_results.to_csv(&quot;../figures/randomized_search_results.csv&quot;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../figures/randomized_search_results.csv&quot;</span><span class="p">,</span>
+                         <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we have more than 2 paramters in our grid-search, we cannot visualize the
+results using a heatmap. However, we can us a parallel coordinates plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+    <span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">parallel_coordinates</span><span class="p">(</span>
+    <span class="n">cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span>
+        <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">,</span>
+        <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">,</span>
+        <span class="s2">&quot;max_bins&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">,</span>
+        <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">,</span>
+        <span class="s2">&quot;l2_regularization&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">,</span>
+        <span class="s2">&quot;mean_test_score&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">}),</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
+    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">sequential</span><span class="o">.</span><span class="n">Viridis</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The parallel coordinates plot will display the values of the hyperparameters
+on different columns while the performance metric is color coded. Thus, we
+are able to quickly inspect if there is a range of hyperparameters which is
+working or not.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We <strong>transformed most axis values by taking a log10 or log2</strong> to
+spread the active ranges and improve the readability of the plot.</p>
+</div>
+<p>It is possible to <strong>select a range of results by clicking and holding on
+any axis</strong> of the parallel coordinate plot. You can then slide (move)
+the range selection and cross two selections to see the intersections.</p>
+<p>In this notebook, we have seen how randomized search offer a valuable
+alternative to grid-search when the number of hyperparameters to tune is more
+than two. It also alleviates the regularity imposed by the grid that might be
+problematic sometimes.</p>
 </div>
 </div>
 
@@ -1253,8 +1506,8 @@ the plotting of the previous exercise.</p>
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="trees_regression.html" title="previous page">Decision tree for regression</a>
-    <a class='right-next' id="next-link" href="trees_sol_02.html" title="next page">📃 Solution for Exercise 02</a>
+    <a class='left-prev' id="prev-link" href="parameter_tuning_grid_search.html" title="previous page">Hyperparameters tuning by grid-search</a>
+    <a class='right-next' id="next-link" href="parameter_tuning_nested.html" title="next page">Cross-validation and hyperparameters tuning</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

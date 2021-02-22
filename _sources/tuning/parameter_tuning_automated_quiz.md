@@ -57,3 +57,64 @@ Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 - e) both `GridSearchCV` and `RandomizedSearchCV` can use probability
      distributions to draw parameter values from
 ```
+
++++
+
+````{admonition} Question
+We will load the results from the randomized-search performed in the previous
+notebook:
+```py
+import numpy as np
+import pandas as pd
+import plotly.express as px
+
+
+def shorten_param(param_name):
+    if "__" in param_name:
+        return param_name.rsplit("__", 1)[1]
+    return param_name
+
+
+cv_results = pd.read_csv("../figures/randomized_search_results.csv",
+                         index_col=0)
+
+fig = px.parallel_coordinates(
+    cv_results.rename(shorten_param, axis=1).apply({
+        "learning_rate": np.log10,
+        "max_leaf_nodes": np.log2,
+        "max_bins": np.log2,
+        "min_samples_leaf": np.log10,
+        "l2_regularization": np.log10,
+        "mean_test_score": lambda x: x}),
+    color="mean_test_score",
+    color_continuous_scale=px.colors.sequential.Viridis,
+)
+fig.show()
+```
+
+Select the worst performing models (for instance models with a
+"mean_test_score" lower than 0.7): what do have all these models in common
+(choose one):
+
+- a) too large `l2_regularization`
+- b) too small `l2_regularization`
+- c) too large `learning_rate`
+- d) too low `learning_rate`
+- e) too large `max_bins`
+- f) too large `max_bins`
+````
+
++++
+
+```{admonition} Question
+Using the above plot, identify ranges of values for hyperparameter that
+always prevent the model to reach a test score higher than 0.86, irrespective
+of the other values (check the affirmative statement):
+
+- a) too large `l2_regularization`
+- b) too small `l2_regularization`
+- c) too large `learning_rate`
+- d) too low `learning_rate`
+- e) too large `max_bins`
+- f) too large `max_bins`
+```

@@ -368,8 +368,18 @@
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2">
-    <a class="reference internal" href="../python_scripts/parameter_tuning_automated.html">
-     Automated hyperparameters tuning in scikit-learn
+    <a class="reference internal" href="../python_scripts/parameter_tuning_grid_search.html">
+     Hyperparameters tuning by grid-search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_randomized_search.html">
+     Hyperparameters tuning by randomized-search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_scripts/parameter_tuning_nested.html">
+     Cross-validation and hyperparameters tuning
     </a>
    </li>
    <li class="toctree-l2">
@@ -1199,6 +1209,64 @@ parameters and the number of possible parameter values grows</p></li>
 <li><p>d) both <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> and <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> have the attributes <code class="docutils literal notranslate"><span class="pre">cv_results_</span></code> and <code class="docutils literal notranslate"><span class="pre">best_params_</span></code></p></li>
 <li><p>e) both <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> and <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> can use probability
 distributions to draw parameter values from</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>We will load the results from the randomized-search performed in the previous
+notebook:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+
+<span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">param_name</span>
+
+
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../figures/randomized_search_results.csv&quot;</span><span class="p">,</span>
+                         <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">parallel_coordinates</span><span class="p">(</span>
+    <span class="n">cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">({</span>
+        <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">,</span>
+        <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">,</span>
+        <span class="s2">&quot;max_bins&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">,</span>
+        <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">,</span>
+        <span class="s2">&quot;l2_regularization&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">,</span>
+        <span class="s2">&quot;mean_test_score&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">}),</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
+    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">sequential</span><span class="o">.</span><span class="n">Viridis</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Select the worst performing models (for instance models with a
+“mean_test_score” lower than 0.7): what do have all these models in common
+(choose one):</p>
+<ul class="simple">
+<li><p>a) too large <code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code></p></li>
+<li><p>b) too small <code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code></p></li>
+<li><p>c) too large <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></li>
+<li><p>d) too low <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></li>
+<li><p>e) too large <code class="docutils literal notranslate"><span class="pre">max_bins</span></code></p></li>
+<li><p>f) too large <code class="docutils literal notranslate"><span class="pre">max_bins</span></code></p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Using the above plot, identify ranges of values for hyperparameter that
+always prevent the model to reach a test score higher than 0.86, irrespective
+of the other values (check the affirmative statement):</p>
+<ul class="simple">
+<li><p>a) too large <code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code></p></li>
+<li><p>b) too small <code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code></p></li>
+<li><p>c) too large <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></li>
+<li><p>d) too low <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></li>
+<li><p>e) too large <code class="docutils literal notranslate"><span class="pre">max_bins</span></code></p></li>
+<li><p>f) too large <code class="docutils literal notranslate"><span class="pre">max_bins</span></code></p></li>
 </ul>
 </div>
 </div>

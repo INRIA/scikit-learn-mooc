@@ -57,3 +57,67 @@ Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 - e) both `GridSearchCV` and `RandomizedSearchCV` can use probability
      distributions to draw parameter values from
 ```
+
+# %% [markdown]
+
+# FIXME: xxxx
+
+# ## Quizz
+
+#
+
+# Select the worst performing models (for instance models with a
+
+# "mean_test_score" lower than 0.7): what do have all these models in common
+
+# (choose one):
+
+#
+
+#
+
+# | | |
+
+# |-------------------------------|------|
+
+# | too large `l2_regularization` | |
+
+# | too small `l2_regularization` | |
+
+# | too large `learning_rate` | |
+
+# | too low `learning_rate` | |
+
+# | too large `max_bins` | |
+
+# | too large `max_bins` | |
+
+#
+
+#
+
+# Using the above plot, identify ranges of values for hyperparameter that
+
+# always prevent the model to reach a test score higher than 0.86, irrespective
+
+# of the other values:
+
+#
+
+#
+
+# | | True | False |
+
+# |-------------------------------|------|-------|
+
+# | too large `l2_regularization` | | |
+
+# | too small `l2_regularization` | | |
+
+# | too large `learning_rate` | | |
+
+# | too low `learning_rate` | | |
+
+# | too large `max_bins` | | |
+
+# | too large `max_bins` | | |

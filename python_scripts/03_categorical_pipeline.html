@@ -1513,30 +1513,41 @@ works.</p>
 
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">()</span>
 <span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can visually check the encoding obtained.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
-
-<span class="n">education_encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">education_encoded</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">education_column</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">education_encoded_df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab20&quot;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sample index&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ordinal encoding of &#39;education&#39; column&quot;</span><span class="p">)</span>
+<span class="n">education_encoded</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/03_categorical_pipeline_19_0.png" src="../_images/03_categorical_pipeline_19_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.],
+       [11.],
+       [ 7.],
+       ...,
+       [11.],
+       [11.],
+       [11.]])
+</pre></div>
+</div>
 </div>
 </div>
 <p>We see that each category in <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> has been replaced by a numeric
-value. Now, we can check the encoding applied on all categorical features.</p>
+value. We could check the mapping between the categories and the numerical
+values by checking the fitted attribute <code class="docutils literal notranslate"><span class="pre">categories_</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder</span><span class="o">.</span><span class="n">categories_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([&#39; 10th&#39;, &#39; 11th&#39;, &#39; 12th&#39;, &#39; 1st-4th&#39;, &#39; 5th-6th&#39;, &#39; 7th-8th&#39;,
+        &#39; 9th&#39;, &#39; Assoc-acdm&#39;, &#39; Assoc-voc&#39;, &#39; Bachelors&#39;, &#39; Doctorate&#39;,
+        &#39; HS-grad&#39;, &#39; Masters&#39;, &#39; Preschool&#39;, &#39; Prof-school&#39;,
+        &#39; Some-college&#39;], dtype=object)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we can check the encoding applied on all categorical features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_categorical</span><span class="p">)</span>
@@ -1550,6 +1561,46 @@ value. Now, we can check the encoding applied on all categorical features.</p>
        [ 2.,  7.,  2., 11.,  0.,  4.,  1., 39.],
        [ 4., 15.,  2.,  7.,  0.,  2.,  1., 39.],
        [ 0., 15.,  4.,  0.,  3.,  4.,  0., 39.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder</span><span class="o">.</span><span class="n">categories_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[array([&#39; ?&#39;, &#39; Federal-gov&#39;, &#39; Local-gov&#39;, &#39; Never-worked&#39;, &#39; Private&#39;,
+        &#39; Self-emp-inc&#39;, &#39; Self-emp-not-inc&#39;, &#39; State-gov&#39;, &#39; Without-pay&#39;],
+       dtype=object),
+ array([&#39; 10th&#39;, &#39; 11th&#39;, &#39; 12th&#39;, &#39; 1st-4th&#39;, &#39; 5th-6th&#39;, &#39; 7th-8th&#39;,
+        &#39; 9th&#39;, &#39; Assoc-acdm&#39;, &#39; Assoc-voc&#39;, &#39; Bachelors&#39;, &#39; Doctorate&#39;,
+        &#39; HS-grad&#39;, &#39; Masters&#39;, &#39; Preschool&#39;, &#39; Prof-school&#39;,
+        &#39; Some-college&#39;], dtype=object),
+ array([&#39; Divorced&#39;, &#39; Married-AF-spouse&#39;, &#39; Married-civ-spouse&#39;,
+        &#39; Married-spouse-absent&#39;, &#39; Never-married&#39;, &#39; Separated&#39;,
+        &#39; Widowed&#39;], dtype=object),
+ array([&#39; ?&#39;, &#39; Adm-clerical&#39;, &#39; Armed-Forces&#39;, &#39; Craft-repair&#39;,
+        &#39; Exec-managerial&#39;, &#39; Farming-fishing&#39;, &#39; Handlers-cleaners&#39;,
+        &#39; Machine-op-inspct&#39;, &#39; Other-service&#39;, &#39; Priv-house-serv&#39;,
+        &#39; Prof-specialty&#39;, &#39; Protective-serv&#39;, &#39; Sales&#39;, &#39; Tech-support&#39;,
+        &#39; Transport-moving&#39;], dtype=object),
+ array([&#39; Husband&#39;, &#39; Not-in-family&#39;, &#39; Other-relative&#39;, &#39; Own-child&#39;,
+        &#39; Unmarried&#39;, &#39; Wife&#39;], dtype=object),
+ array([&#39; Amer-Indian-Eskimo&#39;, &#39; Asian-Pac-Islander&#39;, &#39; Black&#39;, &#39; Other&#39;,
+        &#39; White&#39;], dtype=object),
+ array([&#39; Female&#39;, &#39; Male&#39;], dtype=object),
+ array([&#39; ?&#39;, &#39; Cambodia&#39;, &#39; Canada&#39;, &#39; China&#39;, &#39; Columbia&#39;, &#39; Cuba&#39;,
+        &#39; Dominican-Republic&#39;, &#39; Ecuador&#39;, &#39; El-Salvador&#39;, &#39; England&#39;,
+        &#39; France&#39;, &#39; Germany&#39;, &#39; Greece&#39;, &#39; Guatemala&#39;, &#39; Haiti&#39;,
+        &#39; Holand-Netherlands&#39;, &#39; Honduras&#39;, &#39; Hong&#39;, &#39; Hungary&#39;, &#39; India&#39;,
+        &#39; Iran&#39;, &#39; Ireland&#39;, &#39; Italy&#39;, &#39; Jamaica&#39;, &#39; Japan&#39;, &#39; Laos&#39;,
+        &#39; Mexico&#39;, &#39; Nicaragua&#39;, &#39; Outlying-US(Guam-USVI-etc)&#39;, &#39; Peru&#39;,
+        &#39; Philippines&#39;, &#39; Poland&#39;, &#39; Portugal&#39;, &#39; Puerto-Rico&#39;,
+        &#39; Scotland&#39;, &#39; South&#39;, &#39; Taiwan&#39;, &#39; Thailand&#39;, &#39; Trinadad&amp;Tobago&#39;,
+        &#39; United-States&#39;, &#39; Vietnam&#39;, &#39; Yugoslavia&#39;], dtype=object)]
 </pre></div>
 </div>
 </div>
@@ -1620,25 +1671,284 @@ inspect results for didactic purposes.</p>
 
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>As in the previous section, we will visually check the encoding.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">education_encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">education_encoded</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span><span class="n">education_column</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">education_encoded_df</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sample index&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ordinal encoding of &#39;education&#39; column&quot;</span><span class="p">)</span>
+<span class="n">education_encoded</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/03_categorical_pipeline_26_0.png" src="../_images/03_categorical_pipeline_26_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 1., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 0.]])
+</pre></div>
 </div>
+</div>
+</div>
+<p>We see that encoding a single feature will give a NumPy array full of zeros
+and ones. We can get a better understanding using the associated feature
+names resulting from the transformation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span><span class="n">input_features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">])</span>
+<span class="n">education_encoded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">education_encoded</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">education_encoded</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>education_ 10th</th>
+      <th>education_ 11th</th>
+      <th>education_ 12th</th>
+      <th>education_ 1st-4th</th>
+      <th>education_ 5th-6th</th>
+      <th>education_ 7th-8th</th>
+      <th>education_ 9th</th>
+      <th>education_ Assoc-acdm</th>
+      <th>education_ Assoc-voc</th>
+      <th>education_ Bachelors</th>
+      <th>education_ Doctorate</th>
+      <th>education_ HS-grad</th>
+      <th>education_ Masters</th>
+      <th>education_ Preschool</th>
+      <th>education_ Prof-school</th>
+      <th>education_ Some-college</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>48837</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>48838</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>48839</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>48840</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>48841</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>48842 rows × 16 columns</p>
+</div></div></div>
 </div>
 <p>As we can see, each category (unique value) became a column; the encoding
 returned, for each sample, a 1 to specify which category it belongs to.</p>
@@ -2032,13 +2342,13 @@ Let’s recall some statistics regarding this column.</p>
  Ecuador                          45
  France                           38
  Ireland                          37
- Hong                             30
  Thailand                         30
+ Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
  Yugoslavia                       23
- Laos                             23
  Outlying-US(Guam-USVI-etc)       23
+ Laos                             23
  Scotland                         21
  Honduras                         20
  Hungary                          19
@@ -2081,18 +2391,13 @@ the ordinal encoder later on.</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ```{note}</span>
-<span class="c1"># Here, we need to increase the number of maximum iteration to obtain a fully</span>
-<span class="c1"># converged `LogisticRegression` and silence a `ConvergenceWarning`. In the</span>
-<span class="c1"># contrary to numerical features, the one-hot encoded categorical feature do</span>
-<span class="c1"># not suffer from large variations and therefore increasing `max_iter` is the</span>
-<span class="c1"># right thing to do.</span>
-<span class="c1"># ```</span>
-</pre></div>
-</div>
-</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here, we need to increase the number of maximum iteration to obtain a fully
+converged <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> and silence a <code class="docutils literal notranslate"><span class="pre">ConvergenceWarning</span></code>. In the
+contrary to numerical features, the one-hot encoded categorical feature do
+not suffer from large variations and therefore increasing <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> is the
+right thing to do.</p>
 </div>
 <p>Finally, we can check the model’s performance only using the categorical
 columns.</p>
@@ -2105,8 +2410,8 @@ columns.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.85652351, 0.71798277, 0.816962  , 0.79458284, 0.71642232]),
- &#39;score_time&#39;: array([0.03718448, 0.03726459, 0.03725195, 0.03713942, 0.03727603]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.06005788, 0.86645532, 0.99284148, 0.99634385, 0.86632085]),
+ &#39;score_time&#39;: array([0.04376459, 0.04337668, 0.04284239, 0.04238367, 0.0435586 ]),
  &#39;test_score&#39;: array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])}
 </pre></div>
 </div>

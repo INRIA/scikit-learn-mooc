@@ -22,7 +22,7 @@
 # %%
 import numpy as np
 rng = np.random.RandomState(42)
-X, y = rng.randn(100, 100000), rng.randint(0, 2, size=100)
+data, target = rng.randn(100, 100000), rng.randint(0, 2, size=100)
 
 # %% [markdown]
 # Now, create a logistic regression model and use cross-validation to check
@@ -34,7 +34,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
 
 model = LogisticRegression()
-test_score = cross_val_score(model, X, y, n_jobs=-1)
+test_score = cross_val_score(model, data, target, n_jobs=-1)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
 # %% [markdown]
@@ -54,8 +54,8 @@ print(f"The mean accuracy is: {test_score.mean():.3f}")
 from sklearn.feature_selection import SelectKBest, f_classif
 
 feature_selector = SelectKBest(score_func=f_classif, k=10)
-X_subset = feature_selector.fit_transform(X, y)
-test_score = cross_val_score(model, X_subset, y)
+data_subset = feature_selector.fit_transform(data, target)
+test_score = cross_val_score(model, data_subset, target)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
 # %% [markdown]
@@ -78,12 +78,13 @@ print(f"The mean accuracy is: {test_score.mean():.3f}")
 # %%
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
-feature_selector.fit(X_train, y_train)
-X_train_subset = feature_selector.transform(X_train)
-X_test_subset = feature_selector.transform(X_test)
-model.fit(X_train_subset, y_train)
-test_score = model.score(X_test_subset, y_test)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0)
+feature_selector.fit(data_train, target_train)
+data_train_subset = feature_selector.transform(data_train)
+data_test_subset = feature_selector.transform(data_test)
+model.fit(data_train_subset, target_train)
+test_score = model.score(data_test_subset, target_test)
 print(f"The mean accuracy is: {test_score:.3f}")
 
 # %% [markdown]
@@ -109,7 +110,7 @@ print(f"The mean accuracy is: {test_score:.3f}")
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(feature_selector, LogisticRegression())
-test_score = cross_val_score(model, X, y)
+test_score = cross_val_score(model, data, target)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
 # %% [markdown]

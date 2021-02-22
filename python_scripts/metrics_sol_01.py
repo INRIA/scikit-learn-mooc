@@ -10,8 +10,9 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/blood_transfusion.csv")
-X, y = data.drop(columns="Class"), data["Class"]
+blood_transfusion = pd.read_csv("../datasets/blood_transfusion.csv")
+data = blood_transfusion.drop(columns="Class")
+target = blood_transfusion["Class"]
 
 # %% [markdown]
 # First, create a decision tree classifier.
@@ -32,14 +33,15 @@ tree = DecisionTreeClassifier()
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 
 cv = StratifiedKFold(n_splits=10)
-scores = cross_val_score(tree, X, y, cv=cv, scoring="accuracy")
+scores = cross_val_score(tree, data, target, cv=cv, scoring="accuracy")
 print(f"Accuracy score: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # Repeat the experiment by computing the `balanced_accuracy`.
 
 # %%
-scores = cross_val_score(tree, X, y, cv=cv, scoring="balanced_accuracy")
+scores = cross_val_score(tree, data, target, cv=cv,
+                         scoring="balanced_accuracy")
 print(f"Balanced accuracy score: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
@@ -52,7 +54,7 @@ print(f"Balanced accuracy score: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %%
 try:
-    scores = cross_val_score(tree, X, y, cv=cv, scoring="precision")
+    scores = cross_val_score(tree, data, target, cv=cv, scoring="precision")
 except ValueError as exc:
     print(exc)
 
@@ -80,7 +82,7 @@ precision = make_scorer(precision_score, pos_label="donated")
 # in the `cross_val_score` call, pass the scorer that you created above.
 
 # %%
-scores = cross_val_score(tree, X, y, cv=cv, scoring=precision)
+scores = cross_val_score(tree, data, target, cv=cv, scoring=precision)
 print(f"Precision score: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
@@ -97,7 +99,7 @@ print(f"Precision score: {scores.mean():.3f} +/- {scores.std():.3f}")
 from sklearn.model_selection import cross_validate
 scoring = ["accuracy", "balanced_accuracy"]
 
-scores = cross_validate(tree, X, y, cv=cv, scoring=scoring)
+scores = cross_validate(tree, data, target, cv=cv, scoring=scoring)
 scores
 
 # %%

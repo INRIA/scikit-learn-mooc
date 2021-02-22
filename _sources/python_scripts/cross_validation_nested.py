@@ -59,26 +59,26 @@ print(f"The mean score in CV is: {search.best_score_:.3f}")
 # %% [markdown]
 # At this stage, one should be extremely careful using this score. The
 # misinterpretation would be the following: since the score was computed on a
-# test set, it could be considered our model's generalization score.
+# test set, it could be considered our model's testing score.
 #
 # However, we should not forget that we used this score to pick-up the best
 # model. It means that we used knowledge from the test set (i.e. test score) to
 # decide our model's training parameter.
 #
-# Thus, this score is not a reasonable estimate of our generalization error.
+# Thus, this score is not a reasonable estimate of our testing error.
 # Indeed, we can show that it will be too optimistic in practice. The good way
 # is to use a "nested" cross-validation. We will use an inner cross-validation
 # corresponding to the previous procedure shown to optimize the
 # hyperparameters. We will also include this procedure within an outer
-# cross-validation, which will be used to estimate the generalization error of
+# cross-validation, which will be used to estimate the testing error of
 # our fine-tuned model.
 #
 # In this case, our inner cross-validation will always get the training set of
-# the outer cross-validation, making it possible to compute the generalization
+# the outer cross-validation, making it possible to compute the testing
 # score on a completely independent set.
 #
 # We will show below how we can create such nested cross-validation and obtain
-# the generalization score.
+# the testing score.
 
 # %%
 from sklearn.model_selection import cross_val_score, KFold
@@ -91,7 +91,7 @@ outer_cv = KFold(n_splits=4, shuffle=True, random_state=0)
 model = GridSearchCV(
     estimator=model_to_tune, param_grid=param_grid, cv=inner_cv, n_jobs=-1)
 
-# Outer cross-validation to compute the generalization score
+# Outer cross-validation to compute the testing score
 test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=-1)
 print(f"The mean score using nested cross-validation is: "
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")

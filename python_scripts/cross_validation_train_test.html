@@ -1144,8 +1144,8 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#empirical-error-vs-generalization-error">
-   Empirical error vs generalization error
+  <a class="reference internal nav-link" href="#training-error-vs-testing-error">
+   Training error vs testing error
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1379,8 +1379,8 @@ Name: MedHouseVal, dtype: float64
 </div>
 </div>
 </div>
-<div class="section" id="empirical-error-vs-generalization-error">
-<h2>Empirical error vs generalization error<a class="headerlink" href="#empirical-error-vs-generalization-error" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="training-error-vs-testing-error">
+<h2>Training error vs testing error<a class="headerlink" href="#training-error-vs-testing-error" title="Permalink to this headline">¶</a></h2>
 <p>To solve this regression task, we will use a decision tree regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1424,15 +1424,24 @@ Therefore, our decision tree fully memorized the dataset given during <code clas
 and therefore made no error when predicting.</p>
 <p>This error computed above is called the <strong>empirical error</strong> or <strong>training
 error</strong>.</p>
-<p>We trained a predictive model to minimize the empirical error but our aim is
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this MOOC, we will use consistently the term “training error”.</p>
+</div>
+<p>We trained a predictive model to minimize the training error but our aim is
 to minimize the error on data that has not been seen during training.</p>
 <p>This error is also called the <strong>generalization error</strong> or the “true”
-<strong>testing error</strong>. Thus, the most basic evaluation involves:</p>
+<strong>testing error</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this MOOC, we will use consistently the term “testing error”.</p>
+</div>
+<p>Thus, the most basic evaluation involves:</p>
 <ul class="simple">
 <li><p>splitting our dataset into two subsets: a training set and a testing set;</p></li>
 <li><p>fitting the model on the training set;</p></li>
-<li><p>estimating the empirical error on the training set;</p></li>
-<li><p>estimating the generalization error on the testing set.</p></li>
+<li><p>estimating the training error on the training set;</p></li>
+<li><p>estimating the testing error on the testing set.</p></li>
 </ul>
 <p>So let’s split our dataset.</p>
 <div class="cell docutils container">
@@ -1440,7 +1449,7 @@ to minimize the error on data that has not been seen during training.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-      <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1459,55 +1468,54 @@ to minimize the error on data that has not been seen during training.</p>
 </div>
 </div>
 <p>Finally, we estimate the different types of errors. Let’s start by computing
-the empirical error.</p>
+the training error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_train</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The empirical error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The training error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The empirical error of our model is 0.00 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The training error of our model is 0.00 k$
 </pre></div>
 </div>
 </div>
 </div>
 <p>We observe the same phenomena as in the previous experiment: our model
-memorized the training set. However, we now compute the generalization
-error on the testing set.</p>
+memorized the training set. However, we now compute the testing error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The generalization error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The testing error of our model is </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The generalization error of our model is 47.28 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The testing error of our model is 47.28 k$
 </pre></div>
 </div>
 </div>
 </div>
-<p>This generalization error is actually about what we would expect from
-our model if it was used in a production environment.</p>
+<p>This testing error is actually about what we would expect from our model if
+it was used in a production environment.</p>
 </div>
 <div class="section" id="stability-of-the-cross-validation-estimates">
 <h2>Stability of the cross-validation estimates<a class="headerlink" href="#stability-of-the-cross-validation-estimates" title="Permalink to this headline">¶</a></h2>
 <p>When doing a single train-test split we don’t give any indication regarding
 the robustness of the evaluation of our predictive model: in particular, if
-the test set is small, this estimate of the generalization error will be
+the test set is small, this estimate of the testing error will be
 unstable and wouldn’t reflect the “true error rate” we would have observed
 with the same model on an unlimited amount of test data.</p>
 <p>For instance, we could have been lucky when we did our random split of our
 limited dataset and isolated some of the easiest cases to predict in the
-testing set just by chance: the estimation of the generalization error would
-be overly optimistic, in this case.</p>
+testing set just by chance: the estimation of the testing error would be
+overly optimistic, in this case.</p>
 <p><strong>Cross-validation</strong> allows estimating the robustness of a predictive model
-by repeating the splitting procedure. It will give several empirical and
-generalization errors and thus some <strong>estimate of the variability of the
+by repeating the splitting procedure. It will give several training and
+testing errors and thus some <strong>estimate of the variability of the
 model performance</strong>.</p>
 <p>There are different cross-validation strategies, for now we are going to
 focus on one called “shuffle-split”. At each iteration of this strategy we:</p>
@@ -1515,7 +1523,7 @@ focus on one called “shuffle-split”. At each iteration of this strategy we:<
 <li><p>randomly shuffle the order of the samples of a copy of the full dataset;</p></li>
 <li><p>split the shuffled dataset into a train and a test set;</p></li>
 <li><p>train a new model on the train set;</p></li>
-<li><p>evaluate the generalization error on the test set.</p></li>
+<li><p>evaluate the testing error on the test set.</p></li>
 </ul>
 <p>We repeat this procedure <code class="docutils literal notranslate"><span class="pre">n_splits</span></code> times. Using <code class="docutils literal notranslate"><span class="pre">n_splits=30</span></code> means that we
 will train 30 models in total and all of them will be discarded: we just
@@ -1572,33 +1580,33 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.200642</td>
-      <td>0.003698</td>
-      <td>-47.282798</td>
+      <td>0.168715</td>
+      <td>0.004458</td>
+      <td>-47.136839</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.197065</td>
-      <td>0.003783</td>
-      <td>-47.996919</td>
+      <td>0.169427</td>
+      <td>0.004187</td>
+      <td>-42.932334</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.198297</td>
-      <td>0.003859</td>
-      <td>-46.333281</td>
+      <td>0.176397</td>
+      <td>0.004189</td>
+      <td>-44.468499</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.200849</td>
-      <td>0.003995</td>
-      <td>-47.353267</td>
+      <td>0.175526</td>
+      <td>0.005117</td>
+      <td>-47.996311</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.199175</td>
-      <td>0.003827</td>
-      <td>-46.890380</td>
+      <td>0.170969</td>
+      <td>0.003606</td>
+      <td>-46.469764</td>
     </tr>
   </tbody>
 </table>
@@ -1653,73 +1661,73 @@ where “higher is better”, this explains we used
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.200642</td>
-      <td>0.003698</td>
-      <td>-47.282798</td>
-      <td>47.282798</td>
+      <td>0.168715</td>
+      <td>0.004458</td>
+      <td>-47.136839</td>
+      <td>47.136839</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.197065</td>
-      <td>0.003783</td>
-      <td>-47.996919</td>
-      <td>47.996919</td>
+      <td>0.169427</td>
+      <td>0.004187</td>
+      <td>-42.932334</td>
+      <td>42.932334</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.198297</td>
-      <td>0.003859</td>
-      <td>-46.333281</td>
-      <td>46.333281</td>
+      <td>0.176397</td>
+      <td>0.004189</td>
+      <td>-44.468499</td>
+      <td>44.468499</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.200849</td>
-      <td>0.003995</td>
-      <td>-47.353267</td>
-      <td>47.353267</td>
+      <td>0.175526</td>
+      <td>0.005117</td>
+      <td>-47.996311</td>
+      <td>47.996311</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.199175</td>
-      <td>0.003827</td>
-      <td>-46.890380</td>
-      <td>46.890380</td>
+      <td>0.170969</td>
+      <td>0.003606</td>
+      <td>-46.469764</td>
+      <td>46.469764</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.199637</td>
-      <td>0.003819</td>
-      <td>-46.883763</td>
-      <td>46.883763</td>
+      <td>0.170912</td>
+      <td>0.003986</td>
+      <td>-45.140081</td>
+      <td>45.140081</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.200470</td>
-      <td>0.003833</td>
-      <td>-44.040835</td>
-      <td>44.040835</td>
+      <td>0.172088</td>
+      <td>0.004128</td>
+      <td>-47.664673</td>
+      <td>47.664673</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.197394</td>
-      <td>0.003762</td>
-      <td>-46.732571</td>
-      <td>46.732571</td>
+      <td>0.171522</td>
+      <td>0.004237</td>
+      <td>-45.668238</td>
+      <td>45.668238</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.201500</td>
-      <td>0.003849</td>
-      <td>-44.385218</td>
-      <td>44.385218</td>
+      <td>0.170964</td>
+      <td>0.004012</td>
+      <td>-47.395562</td>
+      <td>47.395562</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.202325</td>
-      <td>0.003814</td>
-      <td>-46.558860</td>
-      <td>46.558860</td>
+      <td>0.165729</td>
+      <td>0.003664</td>
+      <td>-45.889742</td>
+      <td>45.889742</td>
     </tr>
   </tbody>
 </table>
@@ -1727,7 +1735,7 @@ where “higher is better”, this explains we used
 </div>
 <p>We get timing information to fit and predict at each round of
 cross-validation. Also, we get the test score, which corresponds to the
-generalization error on each of the split.</p>
+testing error on each of the split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
@@ -1741,8 +1749,8 @@ generalization error on each of the split.</p>
 </div>
 </div>
 <p>We get 30 entries in our resulting dataframe because we performed 30 splits.
-Therefore, we can show the generalization error distribution and thus, have
-an estimate of its variability.</p>
+Therefore, we can show the testing error distribution and thus, have an
+estimate of its variability.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1759,40 +1767,40 @@ an estimate of its variability.</p>
 <img alt="../_images/cross_validation_train_test_32_0.png" src="../_images/cross_validation_train_test_32_0.png" />
 </div>
 </div>
-<p>We observe that the generalization error is clustered around 45.5 k$ and
+<p>We observe that the testing error is clustered around 45.5 k$ and
 ranges from 43 k$ to 49 k$.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean cross-validated generalization error is: &quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean cross-validated testing error is: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated generalization error is: 46.50 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validated testing error is: 46.10 k$
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The standard deviation of the generalization error is: &quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The standard deviation of the testing error is: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_error&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the generalization error is: 1.17 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The standard deviation of the testing error is: 1.22 k$
 </pre></div>
 </div>
 </div>
 </div>
 <p>Note that the standard deviation is much smaller than the mean: we could
-summarize that our cross-validation estimate of the generalization error is
+summarize that our cross-validation estimate of the testing error is
 45.88 +/- 1.00 k$.</p>
 <p>If we were to train a single model on the full dataset (without
 cross-validation) and then had later access to an unlimited amount of test
-data, we would expect its true generalization error to fall close to that
+data, we would expect its true testing error to fall close to that
 region.</p>
 <p>While this information is interesting in itself, it should be contrasted to
 the scale of the natural variability of the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> in our dataset.</p>
@@ -1822,10 +1830,10 @@ the scale of the natural variability of the vector <code class="docutils literal
 </div>
 <p>The target variable ranges from close to 0 k$ up to 500 k$ and, with a
 standard deviation around 115 k$.</p>
-<p>We notice that the mean estimate of the generalization error obtained by
+<p>We notice that the mean estimate of the testing error obtained by
 cross-validation is a bit smaller than the natural scale of variation of the
 target variable. Furthermore the standard deviation of the cross validation
-estimate of the generalization error is even smaller.</p>
+estimate of the testing error is even smaller.</p>
 <p>This is a good start, but not necessarily enough to decide whether the
 generalization performance is good enough to make our prediction useful in
 practice.</p>
@@ -1854,8 +1862,8 @@ to retrieve theses fitted models for each of the fold by passing the option
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.20676589, 0.19780016, 0.19804955, 0.19883871, 0.19249415]),
- &#39;score_time&#39;: array([0.00325131, 0.00318122, 0.00326729, 0.00309873, 0.00326133]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.1765089 , 0.16658473, 0.17083597, 0.1718123 , 0.16384745]),
+ &#39;score_time&#39;: array([0.00319743, 0.00340533, 0.00346494, 0.00352979, 0.00336504]),
  &#39;estimator&#39;: [DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),
@@ -1911,7 +1919,7 @@ extensively did in the previous notebooks).</p>
 <p>In this notebook, we saw:</p>
 <ul class="simple">
 <li><p>the necessity of splitting the data into a train and test set;</p></li>
-<li><p>the meaning of the empirical and generalization errors;</p></li>
+<li><p>the meaning of the training and testing errors;</p></li>
 <li><p>the overall cross-validation framework with the possibility to study
 performance variations;</p></li>
 </ul>

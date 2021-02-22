@@ -1222,22 +1222,22 @@ maximize the mean score on the internal test sets.</p>
 </div>
 <p>At this stage, one should be extremely careful using this score. The
 misinterpretation would be the following: since the score was computed on a
-test set, it could be considered our model’s generalization score.</p>
+test set, it could be considered our model’s testing score.</p>
 <p>However, we should not forget that we used this score to pick-up the best
 model. It means that we used knowledge from the test set (i.e. test score) to
 decide our model’s training parameter.</p>
-<p>Thus, this score is not a reasonable estimate of our generalization error.
+<p>Thus, this score is not a reasonable estimate of our testing error.
 Indeed, we can show that it will be too optimistic in practice. The good way
 is to use a “nested” cross-validation. We will use an inner cross-validation
 corresponding to the previous procedure shown to optimize the
 hyperparameters. We will also include this procedure within an outer
-cross-validation, which will be used to estimate the generalization error of
+cross-validation, which will be used to estimate the testing error of
 our fine-tuned model.</p>
 <p>In this case, our inner cross-validation will always get the training set of
-the outer cross-validation, making it possible to compute the generalization
+the outer cross-validation, making it possible to compute the testing
 score on a completely independent set.</p>
 <p>We will show below how we can create such nested cross-validation and obtain
-the generalization score.</p>
+the testing score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">KFold</span>
@@ -1250,7 +1250,7 @@ the generalization score.</p>
 <span class="n">model</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
     <span class="n">estimator</span><span class="o">=</span><span class="n">model_to_tune</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">inner_cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># Outer cross-validation to compute the generalization score</span>
+<span class="c1"># Outer cross-validation to compute the testing score</span>
 <span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">outer_cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean score using nested cross-validation is: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

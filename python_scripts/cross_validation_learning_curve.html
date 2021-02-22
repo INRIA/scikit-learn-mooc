@@ -1215,7 +1215,7 @@ of rows in <code class="docutils literal notranslate"><span class="pre">data</sp
 <p>Let’s do an experiment and reduce the number of samples and repeat the
 previous experiment. We will create a function that define a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
 and given a regressor and the data <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> will run a
-cross-validation. The function will finally return the generalization error
+cross-validation. The function will finally return the testing error
 as a NumPy array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1286,7 +1286,7 @@ easily make some plot.</p>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">scores_sample_sizes</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Generalization errors distribution </span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Testing errors distribution </span><span class="se">\n</span><span class="s2">&quot;</span>
               <span class="s2">&quot;by varying the sample size&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1296,8 +1296,8 @@ easily make some plot.</p>
 </div>
 </div>
 <p>For the different sample sizes, we plotted the distribution of the
-generalization error. We observe that the smaller the number of samples is,
-the larger the variance of the generalization errors is. Thus, having a small
+testing error. We observe that the smaller the number of samples is,
+the larger the variance of the testing errors is. Thus, having a small
 number of samples might put us in a situation where it is impossible to get a
 reliable evaluation.</p>
 </div>
@@ -1326,7 +1326,7 @@ adding new training samples to improve a model’s performance.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="n">error_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Empirical error&quot;</span><span class="p">,</span> <span class="s2">&quot;Generalization error&quot;</span><span class="p">]</span>
+<span class="n">error_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;training error&quot;</span><span class="p">,</span> <span class="s2">&quot;Testing error&quot;</span><span class="p">]</span>
 <span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span><span class="p">]</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">err</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">error_type</span><span class="p">,</span> <span class="n">errors</span><span class="p">):</span>
@@ -1355,7 +1355,7 @@ plateau for which there is no benefit to adding samples anymore or assessing
 the potential gain of adding more samples into the training set.</p>
 <p>For this dataset we notice that our decision tree model would really benefit
 from additional datapoints to reduce the amount of over-fitting and hopefully
-reduce the generalization error even further.</p>
+reduce the testing error even further.</p>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>

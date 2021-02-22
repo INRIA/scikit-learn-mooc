@@ -1219,62 +1219,62 @@ use a support vector machine with an RBF kernel</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.045853</td>
-      <td>0.003758</td>
+      <td>0.040955</td>
+      <td>0.003814</td>
       <td>0.680000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.046612</td>
-      <td>0.003760</td>
+      <td>0.041522</td>
+      <td>0.004120</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.020711</td>
-      <td>0.003529</td>
+      <td>0.021706</td>
+      <td>0.004291</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.023347</td>
-      <td>0.003473</td>
+      <td>0.021783</td>
+      <td>0.004252</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.020302</td>
-      <td>0.003438</td>
+      <td>0.021104</td>
+      <td>0.003830</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.023333</td>
-      <td>0.005667</td>
+      <td>0.019847</td>
+      <td>0.003908</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.019266</td>
-      <td>0.003388</td>
+      <td>0.020765</td>
+      <td>0.004344</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.018443</td>
-      <td>0.003374</td>
+      <td>0.019826</td>
+      <td>0.003931</td>
       <td>0.826667</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.019217</td>
-      <td>0.003337</td>
+      <td>0.020304</td>
+      <td>0.004336</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.019030</td>
-      <td>0.003366</td>
+      <td>0.019653</td>
+      <td>0.003754</td>
       <td>0.733333</td>
     </tr>
   </tbody>
@@ -1327,7 +1327,7 @@ logarithmic scale.</p>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">scores</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;Empirical score&quot;</span><span class="p">,</span> <span class="s2">&quot;Generalization score&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span><span class="p">]</span>
+    <span class="p">[</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span> <span class="s2">&quot;Testing score&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span><span class="p">]</span>
 <span class="p">):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">gammas</span><span class="p">,</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
@@ -1354,7 +1354,7 @@ logarithmic scale.</p>
 the SVC classifier when <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>.
 The best setting is around <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code> while for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>,
 it is not very clear if the classifier is under-fitting but the
-generalization score is worse than for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+testing score is worse than for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
 <p>Now, you can perform an analysis to check whether adding new samples to the
 dataset could help our model to better generalize.
 Compute the learning curve by computing the train and test scores for
@@ -1377,7 +1377,7 @@ Plot the train and test scores with respect to the number of samples.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">scores</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;Empirical score&quot;</span><span class="p">,</span> <span class="s2">&quot;Generalization score&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span><span class="p">]</span>
+    <span class="p">[</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span> <span class="s2">&quot;Testing score&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span><span class="p">]</span>
 <span class="p">):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">train_sizes</span><span class="p">,</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
@@ -1400,8 +1400,8 @@ Plot the train and test scores with respect to the number of samples.</p>
 </div>
 </div>
 <p>We observe that adding new samples in the dataset does not improve the
-generalization score. We can only conclude that the standard deviation of
-the empirical error is decreasing when adding more samples which is not a
+testing score. We can only conclude that the standard deviation of
+the training error is decreasing when adding more samples which is not a
 surprise.</p>
 </div>
 

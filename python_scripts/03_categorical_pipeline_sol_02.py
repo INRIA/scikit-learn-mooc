@@ -112,14 +112,11 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # `HistGradientBoostingClassifier` models, it does not seem to be the case as
 # the cross-validation of the reference pipeline with `OrdinalEncoder` is good.
 #
-# Let's see if we can get an even better accuracy with `OneHotEncoder`:
-#
-# Reminder: in order to avoid creating fully correlated features it is
-# preferable to use a `OneHotEncoder` with the option `drop="if_binary"`.
+# Let's see if we can get an even better accuracy with `OneHotEncoder`.
 #
 # Hint: `HistGradientBoostingClassifier` does not yet support sparse input
 # data. You might want to use
-# `OneHotEncoder(categories=categories, sparse=False)` to force the use a
+# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a
 # dense representation as a workaround.
 
 # %%

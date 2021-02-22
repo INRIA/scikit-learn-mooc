@@ -37,7 +37,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # %%
 target_name = "class"
 target = adult_census[target_name]
-data = adult_census.drop(columns=[target_name, "fnlwgt"])
+data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
 
 # %% [markdown]
 # We can select the categorical based on the `object` dtype.

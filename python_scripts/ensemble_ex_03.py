@@ -5,16 +5,16 @@
 # We will make a grid-search and check the scores by varying the
 # number of estimators.
 #
-# We will first load the California housing dataset and split it into a training
-# and a testing set.
+# We will first load the California housing dataset and split it into a
+# training and a testing set.
 
 # %%
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0, test_size=0.5
 )
 
 # %% [markdown]

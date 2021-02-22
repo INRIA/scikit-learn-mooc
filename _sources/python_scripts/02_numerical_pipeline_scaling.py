@@ -82,61 +82,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # For this latest purpose, it would be required to evaluate via
 # cross-validation.
 # ```
-#
-# ## Model fitting without preprocessing
-#
-# We will use the logistic regression classifier as in the previous notebook.
-# This time, besides fitting the model, we will also compute the time needed
-# to train the model.
 
-# %%
-import time
-from sklearn.linear_model import LogisticRegression
-
-model = LogisticRegression()
-start = time.time()
-model.fit(data_train, target_train)
-elapsed_time = time.time() - start
-
-# %%
-model_name = model.__class__.__name__
-score = model.score(data_test, target_test)
-print(f"The accuracy using a {model_name} is {score:.3f} "
-      f"with a fitting time of {elapsed_time:.3f} seconds "
-      f"in {model.n_iter_[0]} iterations")
-
-# %% [markdown]
-# We did not have issues with our model training: it converged in 59 iterations
-# while we gave maximum number of iterations of 100. However, we can give an
-# hint that this model could converge and train faster. In some case, we might
-# even get a `ConvergenceWarning` using the above pattern. We will show such
-# example by reducing the number of maximum iterations allowed.
-
-# %%
-model = LogisticRegression(max_iter=50)
-start = time.time()
-model.fit(data_train, target_train)
-elapsed_time = time.time() - start
-
-# %%
-model_name = model.__class__.__name__
-score = model.score(data_test, target_test)
-print(f"The accuracy using a {model_name} is {score:.3f} "
-      f"with a fitting time of {elapsed_time:.3f} seconds "
-      f"in {model.n_iter_[0]} iterations")
-
-# %% [markdown]
-# In this case, the score is closed to the previous case because our algorithm
-# is closed to the same solution. The warning suggested by scikit-learn
-# provides two solutions to solve this issue:
-#
-# * increase `max_iter` which is indeed what happens in the former case. We let
-#   the algorithm converge, it will take more time but we are sure to get an
-#   optimal model;
-# * standardize the data which is expected to improve convergence.
-#
-# We will investigate the second option.
-#
 # ## Model fitting with preprocessing
 #
 # A range of preprocessing algorithms in scikit-learn allow us to transform
@@ -204,6 +150,8 @@ data_train_scaled.describe()
 # a name at steps based on the name of the classes.
 
 # %%
+import time
+from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(StandardScaler(), LogisticRegression())
@@ -216,12 +164,41 @@ model_name = model.__class__.__name__
 score = model.score(data_test, target_test)
 print(f"The accuracy using a {model_name} is {score:.3f} "
       f"with a fitting time of {elapsed_time:.3f} seconds "
-      f"in {model[-1].n_iter_} iterations")
+      f"in {model[-1].n_iter_[0]} iterations")
 
 # %% [markdown]
-# We can see that the training time and the number of iterations is much
-# shorter while the predictive performance (accuracy) slightly improved.
+# We could compare this predictive model with the predictive model used in
+# the previous notebook which was not scaling feature.
+
+# %%
+model = LogisticRegression()
+start = time.time()
+model.fit(data_train, target_train)
+elapsed_time = time.time() - start
+
+# %%
+model_name = model.__class__.__name__
+score = model.score(data_test, target_test)
+print(f"The accuracy using a {model_name} is {score:.3f} "
+      f"with a fitting time of {elapsed_time:.3f} seconds "
+      f"in {model.n_iter_[0]} iterations")
+
+# %% [markdown]
+# We see that scaling the data before to train the logistic regression was
+# beneficial in terms of processing performance. Indeed, the number of
+# iterations decreased as well as the training time. The statistical
+# performance did not change since both models converged.
 #
+# ```{warning}
+# Working with non-scaled will potentially force the algorithm to iterate
+# more as we showed in the example above. There is also catastrophic scenario
+# where the number of iterations required are more than the maximum number of
+# iterations allowed by the predictor (controlled by the `max_iter`) parameter.
+# Therefore, before to increase `max_iter`, make sure that the data are well
+# scaled.
+# ```
+
+# %% [markdown]
 # ## Model evaluation using cross-validation
 #
 # In the previous example, we split the original data into a training set and a
@@ -249,6 +226,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # %%time
 from sklearn.model_selection import cross_validate
 
+model = make_pipeline(StandardScaler(), LogisticRegression())
 cv_result = cross_validate(model, data_numeric, target, cv=5)
 cv_result
 

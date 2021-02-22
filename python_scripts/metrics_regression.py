@@ -16,10 +16,11 @@
 import pandas as pd
 import numpy as np
 
-data = pd.read_csv("../datasets/house_prices.csv")
-X, y = data.drop(columns="SalePrice"), data["SalePrice"]
-X = X.select_dtypes(np.number)
-y /= 1000
+ames_housing = pd.read_csv("../datasets/house_prices.csv")
+data = ames_housing.drop(columns="SalePrice")
+target = ames_housing["SalePrice"]
+data = data.select_dtypes(np.number)
+target /= 1000
 
 # %% [markdown]
 # Let's start by splitting our dataset intro a train and test set.
@@ -27,8 +28,8 @@ y /= 1000
 # %%
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, shuffle=True, random_state=0
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=True, random_state=0
 )
 
 # %% [markdown]
@@ -46,11 +47,11 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 regressor = LinearRegression()
-regressor.fit(X_train, y_train)
-y_pred = regressor.predict(X_train)
+regressor.fit(data_train, target_train)
+target_predicted = regressor.predict(data_train)
 
 print(f"Mean squared error on the training set: "
-      f"{mean_squared_error(y_train, y_pred):.3f}")
+      f"{mean_squared_error(target_train, target_predicted):.3f}")
 
 # %% [markdown]
 # Our linear regression model is minimizing the mean squared error on the
@@ -60,10 +61,10 @@ print(f"Mean squared error on the training set: "
 # Then, we can compute the mean squared error on the test set.
 
 # %%
-y_pred = regressor.predict(X_test)
+target_predicted = regressor.predict(data_test)
 
 print(f"Mean squared error on the testing set: "
-      f"{mean_squared_error(y_test, y_pred):.3f}")
+      f"{mean_squared_error(target_test, target_predicted):.3f}")
 
 # %% [markdown]
 # The raw MSE can be difficult to interpret. One way is to rescale the MSE
@@ -72,7 +73,7 @@ print(f"Mean squared error on the testing set: "
 # in scikit-learn by calling the method `score`.
 
 # %%
-regressor.score(X_test, y_test)
+regressor.score(data_test, target_test)
 
 # %% [markdown]
 # The $R^2$ score represents the proportion of variance of the target that is
@@ -84,9 +85,9 @@ regressor.score(X_test, y_test)
 from sklearn.dummy import DummyRegressor
 
 dummy_regressor = DummyRegressor(strategy="mean")
-dummy_regressor.fit(X_train, y_train)
+dummy_regressor.fit(data_train, target_train)
 print(f"R2 score for a regressor predicting the mean:"
-      f"{dummy_regressor.score(X_test, y_test):.3f}")
+      f"{dummy_regressor.score(data_test, target_test):.3f}")
 
 # %% [markdown]
 # The $R^2$ score gives insight into the quality of the model's fit. However,
@@ -98,9 +99,9 @@ print(f"R2 score for a regressor predicting the mean:"
 # %%
 from sklearn.metrics import mean_absolute_error
 
-y_pred = regressor.predict(X_test)
+target_predicted = regressor.predict(data_test)
 print(f"Mean absolute error: "
-      f"{mean_absolute_error(y_test, y_pred):.3f} k$")
+      f"{mean_absolute_error(target_test, target_predicted):.3f} k$")
 
 # %% [markdown]
 # By computing the mean absolute error, we can interpret that our model is
@@ -113,10 +114,21 @@ print(f"Mean absolute error: "
 from sklearn.metrics import median_absolute_error
 
 print(f"Median absolute error: "
-      f"{median_absolute_error(y_test, y_pred):.3f} k$")
+      f"{median_absolute_error(target_test, target_predicted):.3f} k$")
 
 # %% [markdown]
-# **FIXME: in 0.24, introduce median absolute percentage error**
+# The mean absolute error (or median absolute error) still have a known
+# limitation: committing an error of 50 k$ for an house valued at 50 k$ has the
+# same impact than committing an error of 50 k$ for an house valued at 500 k$.
+# Indeed, the mean absolute error is not relative.
+#
+# The mean absolute percentage error introduce this relative scaling.
+
+# %%
+from sklearn.metrics import mean_absolute_percentage_error
+
+print(f"Mean absolute percentage error: "
+      f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %")
 
 # %% [markdown]
 # In addition of metrics, we can visually represent the results by plotting
@@ -124,7 +136,7 @@ print(f"Median absolute error: "
 
 # %%
 predicted_actual = {
-    "True values (k$)": y_test, "Predicted values (k$)": y_pred}
+    "True values (k$)": target_test, "Predicted values (k$)": target_predicted}
 predicted_actual = pd.DataFrame(predicted_actual)
 
 # %%
@@ -155,12 +167,12 @@ transformer = QuantileTransformer(
     n_quantiles=900, output_distribution="normal")
 model_transformed_target = TransformedTargetRegressor(
     regressor=regressor, transformer=transformer)
-model_transformed_target.fit(X_train, y_train)
-y_pred = model_transformed_target.predict(X_test)
+model_transformed_target.fit(data_train, target_train)
+target_predicted = model_transformed_target.predict(data_test)
 
 # %%
 predicted_actual = {
-    "True values (k$)": y_test, "Predicted values (k$)": y_pred}
+    "True values (k$)": target_test, "Predicted values (k$)": target_predicted}
 predicted_actual = pd.DataFrame(predicted_actual)
 
 ax = sns.scatterplot(

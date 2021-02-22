@@ -50,7 +50,7 @@ from sklearn.tree import DecisionTreeClassifier
 
 tree = DecisionTreeClassifier()
 try:
-    scores = cross_val_score(tree, X, y, cv=10, scoring="precision")
+    scores = cross_val_score(tree, data, target, cv=10, scoring="precision")
 except ValueError as exc:
     print(exc)
 

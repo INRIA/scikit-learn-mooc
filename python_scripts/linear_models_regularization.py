@@ -229,7 +229,7 @@ print(f"R2 score of ridge model on the train set:\n"
 # Including the pipeline a cross-validation allows to make a nested
 # cross-validation: the inner cross-validation will search for the best
 # alpha, while the outer cross-validation will give an estimate of the
-# generalization score.
+# testing score.
 
 # %%
 import numpy as np

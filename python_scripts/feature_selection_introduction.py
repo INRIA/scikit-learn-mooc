@@ -64,7 +64,7 @@ model_with_selection = make_pipeline(
 
 # %% [markdown]
 # We will measure the average time spent to train each pipeline and make it
-# predict. Besides, we will compute the generalization score of the model. We
+# predict. Besides, we will compute the testing score of the model. We
 # will collect these results via cross-validation.
 #
 # Let's start with the random forest without feature selection. We will store
@@ -129,7 +129,7 @@ _ = plt.title("Time to make prediction")
 # selecting the most informative features speed-up our pipeline.
 #
 # Of course, such speed-up is beneficial only if the performance in terms of
-# metrics remain the same. Let's check the generalization score.
+# metrics remain the same. Let's check the testing score.
 
 # %%
 cv_results["test_score"].plot.box(**boxplot_property)

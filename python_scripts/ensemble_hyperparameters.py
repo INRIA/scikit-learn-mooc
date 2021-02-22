@@ -11,7 +11,7 @@
 #
 # ```{caution}
 # For the sake of clarity, no cross-validation will be used to estimate the
-# generalization error. We are only showing the effect of the parameters
+# testing error. We are only showing the effect of the parameters
 # on the validation set of what should be the inner cross-validation.
 # ```
 #

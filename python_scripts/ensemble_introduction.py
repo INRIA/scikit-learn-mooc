@@ -12,7 +12,13 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
+data, target = fetch_california_housing(as_frame=True, return_X_y=True)
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
 
 # %% [markdown]
 # We will check the performance of decision tree regressor with default
@@ -23,7 +29,7 @@ from sklearn.model_selection import cross_validate
 from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(random_state=0)
-cv_results = cross_validate(tree, X, y, n_jobs=-1)
+cv_results = cross_validate(tree, data, target, n_jobs=-1)
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "
@@ -58,7 +64,8 @@ cv = 3
 
 tree = GridSearchCV(DecisionTreeRegressor(random_state=0),
                     param_grid=param_grid, cv=cv, n_jobs=-1)
-cv_results = cross_validate(tree, X, y, n_jobs=-1, return_estimator=True)
+cv_results = cross_validate(tree, data, target, n_jobs=-1,
+                            return_estimator=True)
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "
@@ -91,7 +98,7 @@ base_estimator = DecisionTreeRegressor(random_state=0)
 bagging_regressor = BaggingRegressor(
     base_estimator=base_estimator, n_estimators=20, random_state=0)
 
-cv_results = cross_validate(bagging_regressor, X, y, n_jobs=-1)
+cv_results = cross_validate(bagging_regressor, data, target, n_jobs=-1)
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "

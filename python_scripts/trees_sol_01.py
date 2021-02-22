@@ -15,20 +15,20 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_classification.csv")
+penguins = pd.read_csv("../datasets/penguins_classification.csv")
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
 # %%
 from sklearn.model_selection import train_test_split
 
-X, y = data[culmen_columns], data[target_column]
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0
+data, target = penguins[culmen_columns], penguins[target_column]
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0
 )
 range_features = {
-    feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X.columns
+    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
+    for feature_name in data.columns
 }
 
 # %%
@@ -72,11 +72,11 @@ from sklearn.tree import DecisionTreeClassifier
 sns.set_context("talk")
 
 tree = DecisionTreeClassifier(max_depth=2)
-tree.fit(X_train, y_train)
+tree.fit(data_train, target_train)
 
 _, ax = plt.subplots(figsize=(8, 6))
 sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=data, palette=["tab:red", "tab:blue", "black"], ax=ax)
+                data=penguins, palette=["tab:red", "tab:blue", "black"], ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # %% [markdown]
@@ -99,7 +99,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 
 # %%
 model_name = tree.__class__.__name__
-test_score = tree.fit(X_train, y_train).score(X_test, y_test)
+test_score = tree.fit(data_train, target_train).score(data_test, target_test)
 print(f"Accuracy of the {model_name}: {test_score:.2f}")
 
 # %% [markdown]

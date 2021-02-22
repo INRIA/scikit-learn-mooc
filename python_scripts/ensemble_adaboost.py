@@ -11,14 +11,14 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_classification.csv")
+penguins = pd.read_csv("../datasets/penguins_classification.csv")
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
-X, y = data[culmen_columns], data[target_column]
+data, target = penguins[culmen_columns], penguins[target_column]
 range_features = {
-    feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X.columns}
+    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
+    for feature_name in data.columns}
 
 # %% [markdown]
 # In addition, we are also using the function used in the previous notebook
@@ -67,19 +67,19 @@ sns.set_context("talk")
 palette = ["tab:red", "tab:blue", "black"]
 
 tree = DecisionTreeClassifier(max_depth=2, random_state=0)
-tree.fit(X, y)
+tree.fit(data, target)
 
 _, ax = plt.subplots(figsize=(8, 6))
 sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=data, palette=palette, ax=ax)
+                data=penguins, palette=palette, ax=ax)
 _ = plot_decision_function(tree, range_features, ax=ax)
 
 # find the misclassified samples
-y_pred = tree.predict(X)
-misclassified_samples_idx = np.flatnonzero(y != y_pred)
+target_predicted = tree.predict(data)
+misclassified_samples_idx = np.flatnonzero(target != target_predicted)
 
-ax.plot(X.iloc[misclassified_samples_idx, 0],
-        X.iloc[misclassified_samples_idx, 1],
+ax.plot(data.iloc[misclassified_samples_idx, 0],
+        data.iloc[misclassified_samples_idx, 1],
         "+k", label="Misclassified samples")
 _ = ax.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
 
@@ -99,19 +99,19 @@ _ = ax.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
 # classified samples will be assigned a weight of 0.
 
 # %%
-sample_weight = np.zeros_like(y, dtype=int)
+sample_weight = np.zeros_like(target, dtype=int)
 sample_weight[misclassified_samples_idx] = 1
 
 tree = DecisionTreeClassifier(max_depth=2, random_state=0)
-tree.fit(X, y, sample_weight=sample_weight)
+tree.fit(data, target, sample_weight=sample_weight)
 
 _, ax = plt.subplots(figsize=(8, 6))
 sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=data, palette=palette, ax=ax)
+                data=penguins, palette=palette, ax=ax)
 plot_decision_function(tree, range_features, ax=ax)
 
-ax.plot(X.iloc[misclassified_samples_idx, 0],
-        X.iloc[misclassified_samples_idx, 1],
+ax.plot(data.iloc[misclassified_samples_idx, 0],
+        data.iloc[misclassified_samples_idx, 1],
         "+k", label="Previous misclassified samples")
 _ = ax.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
 
@@ -120,8 +120,8 @@ _ = ax.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
 # that the previously misclassified samples are now correctly classified.
 
 # %%
-y_pred = tree.predict(X)
-newly_misclassified_samples_idx = np.flatnonzero(y != y_pred)
+target_predicted = tree.predict(data)
+newly_misclassified_samples_idx = np.flatnonzero(target != target_predicted)
 remaining_misclassified_samples_idx = np.intersect1d(
     misclassified_samples_idx, newly_misclassified_samples_idx
 )
@@ -139,8 +139,8 @@ print(f"Number of samples previously misclassified and "
 
 # %%
 ensemble_weight = [
-    (y.shape[0] - len(misclassified_samples_idx)) / y.shape[0],
-    (y.shape[0] - len(newly_misclassified_samples_idx)) / y.shape[0],
+    (target.shape[0] - len(misclassified_samples_idx)) / target.shape[0],
+    (target.shape[0] - len(newly_misclassified_samples_idx)) / target.shape[0],
 ]
 ensemble_weight
 
@@ -177,13 +177,13 @@ base_estimator = DecisionTreeClassifier(max_depth=3, random_state=0)
 adaboost = AdaBoostClassifier(base_estimator=base_estimator,
                               n_estimators=3, algorithm="SAMME",
                               random_state=0)
-adaboost.fit(X, y)
+adaboost.fit(data, target)
 
 _, axs = plt.subplots(ncols=3, figsize=(18, 6))
 
 for ax, tree in zip(axs, adaboost.estimators_):
     sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
-                    hue=target_column, data=data,
+                    hue=target_column, data=penguins,
                     palette=palette, ax=ax)
     plot_decision_function(tree, range_features, ax=ax)
 plt.subplots_adjust(wspace=0.35)

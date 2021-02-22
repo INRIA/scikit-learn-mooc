@@ -2,33 +2,34 @@
 # # Classification
 #
 # This notebook aims at giving an overview of the classification metrics that
-# can be used to evaluate the predictive model performance.
-# We can recall that in a classification setting, the target `y` is categorical
-# rather than continuous.
+# can be used to evaluate the predictive model performance. We can recall that
+# in a classification setting, the vector `target` is categorical rather than
+# continuous.
 #
 # We will load the blood transfusion dataset.
 
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/blood_transfusion.csv")
-X, y = data.drop(columns="Class"), data["Class"]
+blood_transfusion = pd.read_csv("../datasets/blood_transfusion.csv")
+data = blood_transfusion.drop(columns="Class")
+target = blood_transfusion["Class"]
 
 # %% [markdown]
-# Let's start by checking the classes present in the target vector `y`.
+# Let's start by checking the classes present in the target vector `target`.
 
 # %%
 import seaborn as sns
 sns.set_context("talk")
 
-ax = y.value_counts().plot(kind="barh")
+ax = target.value_counts().plot(kind="barh")
 ax.set_xlabel("Number of samples")
 _ = ax.set_title("Number of samples per classes present\n in the target")
 
 # %% [markdown]
-# We can see that the target `y` contains two classes corresponding to whether
-# a subject gave blood We will use a logistic regression classifier to predict
-# this outcome.
+# We can see that the vector `target` contains two classes corresponding to
+# whether a subject gave blood We will use a logistic regression classifier to
+# predict this outcome.
 #
 # To focus on the metrics presentation, we will only use a single split instead
 # of cross-validation.
@@ -36,8 +37,8 @@ _ = ax.set_title("Number of samples per classes present\n in the target")
 # %%
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, shuffle=True, random_state=0, test_size=0.5)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=True, random_state=0, test_size=0.5)
 
 # %% [markdown]
 # We will use a logistic regression classifier as a base model. We will train
@@ -48,7 +49,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 from sklearn.linear_model import LogisticRegression
 
 classifier = LogisticRegression()
-classifier.fit(X_train, y_train)
+classifier.fit(data_train, target_train)
 
 # %% [markdown]
 # ## Classifier predictions
@@ -79,8 +80,8 @@ classifier.predict(new_donor)
 # classifier.
 
 # %%
-y_pred = classifier.predict(X_test)
-y_pred[:5]
+target_predicted = classifier.predict(data_test)
+target_predicted[:5]
 
 # %% [markdown]
 # ## Accuracy as a baseline
@@ -88,7 +89,7 @@ y_pred[:5]
 # predictions (sometimes called ground-truth) which we did not use until now.
 
 # %%
-y_test == y_pred
+target_test == target_predicted
 
 # %% [markdown]
 # In the comparison above, a `True` value means that the value predicted by our
@@ -100,7 +101,7 @@ y_test == y_pred
 # %%
 import numpy as np
 
-np.mean(y_test == y_pred)
+np.mean(target_test == target_predicted)
 
 # %% [markdown]
 # This measure is called the accuracy. Here, our classifier is 78%
@@ -110,7 +111,7 @@ np.mean(y_test == y_pred)
 # %%
 from sklearn.metrics import accuracy_score
 
-accuracy = accuracy_score(y_test, y_pred)
+accuracy = accuracy_score(target_test, target_predicted)
 print(f"Accuracy: {accuracy:.3f}")
 
 # %% [markdown]
@@ -118,7 +119,7 @@ print(f"Accuracy: {accuracy:.3f}")
 # scikit-learn API), which computes the accuracy score.
 
 # %%
-classifier.score(X_test, y_test)
+classifier.score(data_test, target_test)
 
 # %% [markdown]
 # ## Confusion matrix and derived metrics
@@ -134,7 +135,7 @@ classifier.score(X_test, y_test)
 # %%
 from sklearn.metrics import plot_confusion_matrix
 
-plot_confusion_matrix(classifier, X_test, y_test)
+_ = plot_confusion_matrix(classifier, data_test, target_test)
 
 # %% [markdown]
 # The in-diagonal numbers are related to predictions that were correct
@@ -170,8 +171,8 @@ plot_confusion_matrix(classifier, X_test, y_test)
 # %%
 from sklearn.metrics import precision_score, recall_score
 
-precision = precision_score(y_test, y_pred, pos_label="donated")
-recall = recall_score(y_test, y_pred, pos_label="donated")
+precision = precision_score(target_test, target_predicted, pos_label="donated")
+recall = recall_score(target_test, target_predicted, pos_label="donated")
 
 print(f"Precision score: {precision:.3f}")
 print(f"Recall score: {recall:.3f}")
@@ -193,7 +194,7 @@ print(f"Recall score: {recall:.3f}")
 # training set.
 
 # %%
-ax = y_train.value_counts(normalize=True).plot(kind="barh")
+ax = target_train.value_counts(normalize=True).plot(kind="barh")
 ax.set_xlabel("Class frequency")
 _ = ax.set_title("Class frequency in the training set")
 
@@ -208,14 +209,14 @@ _ = ax.set_title("Class frequency in the training set")
 from sklearn.dummy import DummyClassifier
 
 dummy_classifier = DummyClassifier(strategy="most_frequent")
-dummy_classifier.fit(X_train, y_train)
+dummy_classifier.fit(data_train, target_train)
 print(f"Accuracy of the dummy classifier: "
-      f"{dummy_classifier.score(X_test, y_test):.3f}")
+      f"{dummy_classifier.score(data_test, target_test):.3f}")
 
 # %% [markdown]
 # With the dummy classifier, which always predicts the negative class `'not
 # donated'`, we obtain an accuracy score of 76%. Therefore, it means that this
-# classifier, without learning anything from the data `X`, is capable of
+# classifier, without learning anything from the data `data`, is capable of
 # predicting as accurately as our logistic regression model.
 #
 # The problem illustrated above is also known as the class imbalance problem.
@@ -226,7 +227,7 @@ print(f"Accuracy of the dummy classifier: "
 # %%
 from sklearn.metrics import balanced_accuracy_score
 
-balanced_accuracy = balanced_accuracy_score(y_test, y_pred)
+balanced_accuracy = balanced_accuracy_score(target_test, target_predicted)
 print(f"Balanced accuracy: {balanced_accuracy:.3f}")
 # %% [markdown]
 # The balanced accuracy is equivalent to accuracy in the context of balanced
@@ -243,20 +244,21 @@ print(f"Balanced accuracy: {balanced_accuracy:.3f}")
 # we trained.
 
 # %%
-y_proba = pd.DataFrame(classifier.predict_proba(X_test),
-                       columns=classifier.classes_)
-y_proba[:5]
+target_proba_predicted = pd.DataFrame(classifier.predict_proba(data_test),
+                                      columns=classifier.classes_)
+target_proba_predicted[:5]
 
 # %%
-y_pred = classifier.predict(X_test)
-y_pred[:5]
+target_predicted = classifier.predict(data_test)
+target_predicted[:5]
 
 # %% [markdown]
 # Since probabilities sum to 1 we can get the class with the highest
 # probability without using the threshold 0.5.
 
 # %%
-equivalence_pred_proba = (y_proba.idxmax(axis=1).to_numpy() == y_pred)
+equivalence_pred_proba = (
+    target_proba_predicted.idxmax(axis=1).to_numpy() == target_predicted)
 np.all(equivalence_pred_proba)
 
 # %% [markdown]
@@ -269,32 +271,12 @@ np.all(equivalence_pred_proba)
 # threshold. Let's start by computing the precision-recall curve.
 
 # %%
-import matplotlib.pyplot as plt
-from sklearn.metrics import precision_recall_curve
-from sklearn.metrics import average_precision_score
+from sklearn.metrics import plot_precision_recall_curve
 
-y_pred = classifier.predict_proba(X_test)
-pos_label = "donated"
-precision, recall, threshold = precision_recall_curve(
-    y_test, y_pred[:, 0], pos_label=pos_label)
-average_precision = average_precision_score(
-    y_test, y_pred[:, 0], pos_label=pos_label)
-plt.plot(
-    recall, precision,
-    color="tab:orange", linewidth=3,
-    marker=".", markerfacecolor="tab:blue", markeredgecolor="tab:blue",
-    label=f"Average Precision: {average_precision:.2f}",
+disp = plot_precision_recall_curve(
+    classifier, data_test, target_test, pos_label='donated',
+    marker="x"
 )
-plt.xlabel(f"Recall\n (Positive label: {pos_label})")
-plt.ylabel(f"Precision\n (Positive label: {pos_label})")
-plt.legend()
-
-# # FIXME: to be used when solved in scikit-learn
-# from sklearn.metrics import plot_precision_recall_curve
-
-# disp = plot_precision_recall_curve(
-#     classifier, X_test, y_test, pos_label='donated',
-# )
 
 # %% [markdown]
 # On this curve, each blue dot corresponds to a level of probability which we
@@ -317,26 +299,10 @@ plt.legend()
 # (ROC) curve. Below is such a curve:
 
 # %%
-from sklearn.metrics import roc_curve
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import plot_roc_curve
 
-fpr, tpr, threshold = roc_curve(y_test, y_pred[:, 0], pos_label=pos_label)
-# FIXME: roc_auc_score has a bug and we need to give the inverse probability
-# vector. Should be changed when the following is merged and released:
-# https://github.com/scikit-learn/scikit-learn/pull/17594
-roc_auc = roc_auc_score(y_test, y_pred[:, 1])
-plt.plot(fpr, tpr, color="tab:orange", linewidth=3,
-         marker=".", markerfacecolor="tab:blue", markeredgecolor="tab:blue",
-         label=f"ROC-AUC: {roc_auc:.2f}")
-plt.plot([0, 1], [0, 1], "--", color="tab:green", label="Chance")
-plt.xlabel(f"1 - Specificity\n (Positive label: {pos_label})")
-plt.ylabel(f"Sensitivity\n (Positive label: {pos_label})")
-plt.legend()
-
-# # FIXME: to be used when solved in scikit-learn
-# from sklearn.metrics import plot_roc_curve
-
-# plot_roc_curve(classifier, X_test, y_test, pos_label='donated')
+plot_roc_curve(classifier, data_test, target_test, pos_label='donated',
+               marker="x")
 
 # %% [markdown]
 # This curve was built using the same principle as the precision-recall curve:
@@ -354,6 +320,12 @@ plt.legend()
 
 
 # %%
+import matplotlib.pyplot as plt
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import average_precision_score
+
+
+
 def plot_pr_curve(classifier, X_test, y_test, pos_label,
                   probability_threshold, ax):
     y_pred = classifier.predict_proba(X_test)
@@ -394,6 +366,10 @@ def plot_pr_curve(classifier, X_test, y_test, pos_label,
 
 
 # %%
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_curve
+
+
 def plot_roc_curve(classifier, X_test, y_test, pos_label,
                    probability_threshold, ax):
     y_pred = classifier.predict_proba(X_test)
@@ -484,15 +460,15 @@ def plot_pr_roc(threshold):
     # FIXME: we could optimize the plotting by only updating the the
     fig, axs = plt.subplots(ncols=3, figsize=(21, 6))
     plot_pr_curve(
-        classifier, X_test, y_test, pos_label="donated",
+        classifier, data_test, target_test, pos_label="donated",
         probability_threshold=threshold, ax=axs[0],
     )
     plot_roc_curve(
-        classifier, X_test, y_test, pos_label="donated",
+        classifier, data_test, target_test, pos_label="donated",
         probability_threshold=threshold, ax=axs[1]
     )
     plot_confusion_matrix_with_threshold(
-        classifier, X_test, y_test, pos_label="donated",
+        classifier, data_test, target_test, pos_label="donated",
         probability_threshold=threshold, ax=axs[2]
     )
     fig.suptitle("Overall performance with positive class 'donated'")
@@ -507,5 +483,3 @@ def plot_pr_roc_interactive():
 
 # %%
 plot_pr_roc_interactive()
-
-# %%

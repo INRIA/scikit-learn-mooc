@@ -10,8 +10,9 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/blood_transfusion.csv")
-X, y = data.drop(columns="Class"), data["Class"]
+blood_transfusion = pd.read_csv("../datasets/blood_transfusion.csv")
+data = blood_transfusion.drop(columns="Class")
+target = blood_transfusion["Class"]
 
 # %% [markdown]
 # First, create a decision tree classifier.
@@ -49,7 +50,7 @@ from sklearn.tree import DecisionTreeClassifier
 
 tree = DecisionTreeClassifier()
 try:
-    scores = cross_val_score(tree, X, y, cv=10, scoring="precision")
+    scores = cross_val_score(tree, data, target, cv=10, scoring="precision")
 except ValueError as exc:
     print(exc)
 

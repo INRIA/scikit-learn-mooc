@@ -9,7 +9,7 @@
 # %%
 from sklearn.datasets import load_digits
 
-X, y = load_digits(return_X_y=True, as_frame=True)
+data, target = load_digits(return_X_y=True, as_frame=True)
 
 # %% [markdown]
 # The first step is to create a model. Use a machine learning pipeline

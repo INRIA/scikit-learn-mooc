@@ -21,27 +21,28 @@ rng = np.random.RandomState(0)
 
 
 def generate_data(n_samples=50):
-    """Generate synthetic dataset. Returns `X_train`, `X_test`, `y_train`."""
+    """Generate synthetic dataset. Returns `data_train`, `data_test`,
+    `target_train`."""
     x_max, x_min = 1.4, -1.4
     len_x = x_max - x_min
     x = rng.rand(n_samples) * len_x - len_x / 2
     noise = rng.randn(n_samples) * 0.3
     y = x ** 3 - 0.5 * x ** 2 + noise
 
-    X_train = pd.DataFrame(x, columns=["Feature"])
-    X_test = pd.DataFrame(
+    data_train = pd.DataFrame(x, columns=["Feature"])
+    data_test = pd.DataFrame(
         np.linspace(x_max, x_min, num=300), columns=["Feature"])
-    y_train = pd.Series(y, name="Target")
+    target_train = pd.Series(y, name="Target")
 
-    return X_train, X_test, y_train
+    return data_train, data_test, target_train
 
 
 # %%
 import seaborn as sns
 sns.set_context("talk")
 
-X_train, X_test, y_train = generate_data(n_samples=50)
-_ = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+data_train, data_test, target_train = generate_data(n_samples=50)
+_ = sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                     alpha=0.5)
 
 # %% [markdown]
@@ -52,13 +53,13 @@ _ = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
 from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=3, random_state=0)
-tree.fit(X_train, y_train)
-y_pred = tree.predict(X_test)
+tree.fit(data_train, target_train)
+y_pred = tree.predict(data_test)
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+ax = sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                      alpha=0.5)
-ax.plot(X_test, y_pred, label="Fitted tree")
+ax.plot(data_test, y_pred, label="Fitted tree")
 _ = ax.legend()
 
 # %% [markdown]
@@ -71,18 +72,18 @@ _ = ax.legend()
 # Thus, the bootstrap sample will contain some data points several times while
 # some of the original data points will not be present.
 #
-# We will create a function that given `X` and `y` will return a bootstrap
-# sample `X_bootstrap` and `y_bootstrap`.
+# We will create a function that given `data` and `target` will return a
+# bootstrap sample `data_bootstrap` and `target_bootstrap`.
 
 
 # %%
-def bootstrap_sample(X, y):
+def bootstrap_sample(data, target):
     bootstrap_indices = rng.choice(
-        np.arange(y.shape[0]), size=y.shape[0], replace=True,
+        np.arange(target.shape[0]), size=target.shape[0], replace=True,
     )
-    X_bootstrap_sample = X.iloc[bootstrap_indices]
-    y_bootstrap_sample = y.iloc[bootstrap_indices]
-    return X_bootstrap_sample, y_bootstrap_sample
+    data_bootstrap_sample = data.iloc[bootstrap_indices]
+    target_bootstrap_sample = target.iloc[bootstrap_indices]
+    return data_bootstrap_sample, target_bootstrap_sample
 
 
 # %% [markdown]
@@ -96,10 +97,11 @@ n_bootstrap = 3
 _, ax = plt.subplots(figsize=(8, 6))
 
 for marker, bootstrap_idx in zip(["o", "^", "x"], range(n_bootstrap)):
-    X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
-        X_train, y_train)
+    data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
+        data_train, target_train)
 
-    sns.scatterplot(x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample,
+    sns.scatterplot(x=data_bootstrap_sample["Feature"],
+                    y=target_bootstrap_sample,
                     label=f"Bootstrap sample #{bootstrap_idx}",
                     marker=marker, alpha=0.5, ax=ax)
 
@@ -111,13 +113,14 @@ for marker, bootstrap_idx in zip(["o", "^", "x"], range(n_bootstrap)):
 
 # %%
 # we need to generate a larger set to have a good estimate
-X_huge_train, y_huge_train, X_test_huge = generate_data(n_samples=10000)
-X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
-    X_huge_train, y_huge_train)
+data_train_huge, data_test_huge, target_train_huge = generate_data(
+    n_samples=10000)
+data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
+    data_train_huge, target_bootstrap_sample)
 
 print(
     f"Percentage of samples present in the original dataset: "
-    f"{np.unique(X_bootstrap_sample).size / X_bootstrap_sample.size * 100:.1f}"
+    f"{np.unique(data_bootstrap_sample).size / data_bootstrap_sample.size * 100:.1f}"
     f"%"
 )
 
@@ -136,17 +139,18 @@ _, axs = plt.subplots(ncols=n_bootstrap, figsize=(16, 4),
 
 forest = []
 for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
-    X_bootstrap_sample, y_bootstrap_sample = bootstrap_sample(
-        X_train, y_train)
+    data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
+        data_train, target_train)
     tree = DecisionTreeRegressor(max_depth=3, random_state=0)
-    tree.fit(X_bootstrap_sample, y_bootstrap_sample)
+    tree.fit(data_bootstrap_sample, target_bootstrap_sample)
     forest.append(tree)
 
-    y_pred = forest[-1].predict(X_test)
+    target_predicted = forest[-1].predict(data_test)
 
-    sns.scatterplot(x=X_bootstrap_sample["Feature"], y=y_bootstrap_sample,
+    sns.scatterplot(x=data_bootstrap_sample["Feature"],
+                    y=target_bootstrap_sample,
                     ax=ax, color="black", alpha=0.5)
-    ax.plot(X_test, y_pred, linewidth=3, label="Fitted tree")
+    ax.plot(data_test, target_predicted, linewidth=3, label="Fitted tree")
     ax.set_title(f"Bootstrap sample #{idx}")
     ax.legend()
 
@@ -154,13 +158,14 @@ for idx, (ax, _) in enumerate(zip(axs, range(n_bootstrap))):
 # We can plot these decision functions on the same plot to see the difference.
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black", alpha=0.5)
-y_pred_forest = []
+ax = sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
+                     alpha=0.5)
+target_predicted_forest = []
 for tree_idx, tree in enumerate(forest):
-    y_pred = tree.predict(X_test)
-    ax.plot(X_test, y_pred, label=f"Tree #{tree_idx} predictions",
+    target_predicted = tree.predict(data_test)
+    ax.plot(data_test, target_predicted, label=f"Tree #{tree_idx} predictions",
             linestyle="--", linewidth=3, alpha=0.8)
-    y_pred_forest.append(y_pred)
+    target_predicted_forest.append(target_predicted)
 _ = plt.legend()
 
 # %% [markdown]
@@ -172,17 +177,17 @@ _ = plt.legend()
 # plot the averaged predictions from the previous example.
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+ax = sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                      alpha=0.5)
-y_pred_forest = []
+target_predicted_forest = []
 for tree_idx, tree in enumerate(forest):
-    y_pred = tree.predict(X_test)
-    ax.plot(X_test, y_pred, label=f"Tree #{tree_idx} predictions",
+    target_predicted = tree.predict(data_test)
+    ax.plot(data_test, target_predicted, label=f"Tree #{tree_idx} predictions",
             linestyle="--", linewidth=3, alpha=0.8)
-    y_pred_forest.append(y_pred)
+    target_predicted_forest.append(target_predicted)
 
-y_pred_forest = np.mean(y_pred_forest, axis=0)
-ax.plot(X_test, y_pred_forest, label="Averaged predictions",
+target_predicted_forest = np.mean(target_predicted_forest, axis=0)
+ax.plot(data_test, target_predicted_forest, label="Averaged predictions",
         linestyle="-", linewidth=3, alpha=0.8)
 _ = plt.legend()
 
@@ -200,13 +205,13 @@ from sklearn.ensemble import BaggingRegressor
 
 bagging = BaggingRegressor(base_estimator=DecisionTreeRegressor(),
                            n_estimators=3)
-bagging.fit(X_train, y_train)
-y_pred_forest = bagging.predict(X_test)
+bagging.fit(data_train, target_train)
+target_predicted_forest = bagging.predict(data_test)
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+ax = sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                      alpha=0.5)
-ax.plot(X_test, y_pred_forest, label="Bag of decision trees",
+ax.plot(data_test, target_predicted_forest, label="Bag of decision trees",
         linestyle="-", linewidth=3, alpha=0.8)
 _ = plt.legend()
 
@@ -220,15 +225,15 @@ from sklearn.linear_model import LinearRegression
 
 bagging = BaggingRegressor(base_estimator=LinearRegression(),
                            n_estimators=3)
-bagging.fit(X_train, y_train)
-y_pred_linear = bagging.predict(X_test)
+bagging.fit(data_train, target_train)
+target_predicted_linear = bagging.predict(data_test)
 
 # %%
-ax = sns.scatterplot(x=X_train["Feature"], y=y_train, color="black",
+ax = sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                      alpha=0.5)
-ax.plot(X_test, y_pred_forest, label="Bag of decision trees",
+ax.plot(data_test, target_predicted_forest, label="Bag of decision trees",
         linestyle="-", linewidth=3, alpha=0.8)
-ax.plot(X_test, y_pred_linear, label="Bag of linear regression",
+ax.plot(data_test, target_predicted_linear, label="Bag of linear regression",
         linestyle="-", linewidth=3, alpha=0.8)
 _ = plt.legend()
 

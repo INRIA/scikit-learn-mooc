@@ -16,7 +16,14 @@
 from sklearn.datasets import fetch_california_housing
 
 housing = fetch_california_housing(as_frame=True)
-X, y = housing.data, housing.target
+data, target = housing.data, housing.target
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
+# ```
 
 # %% [markdown]
 # In this dataset, the aim is to predict the median value of houses in an area
@@ -34,15 +41,15 @@ X, y = housing.data, housing.target
 print(housing.DESCR)
 
 # %%
-X.head()
+data.head()
 
 # %% [markdown]
 # To simplify future visualization, let's transform the prices from the
 # dollar ($) range to the thousand dollars (k$) range.
 
 # %%
-y *= 100
-y.head()
+target *= 100
+target.head()
 
 # %% [markdown]
 # ## Empirical error vs generalization error
@@ -53,7 +60,7 @@ y.head()
 from sklearn.tree import DecisionTreeRegressor
 
 regressor = DecisionTreeRegressor(random_state=0)
-regressor.fit(X, y)
+regressor.fit(data, target)
 
 # %% [markdown]
 # After training the regressor, we would like to know its potential
@@ -63,8 +70,8 @@ regressor.fit(X, y)
 # %%
 from sklearn.metrics import mean_absolute_error
 
-y_pred = regressor.predict(X)
-score = mean_absolute_error(y_pred, y)
+target_predicted = regressor.predict(data)
+score = mean_absolute_error(target, target_predicted)
 print(f"On average, our regressor makes an error of {score:.2f} k$")
 
 # %% [markdown]
@@ -94,21 +101,22 @@ print(f"On average, our regressor makes an error of {score:.2f} k$")
 # %%
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+data_train, data_test, target_train, target_test = train_test_split(
+      data, target, random_state=0)
 
 # %% [markdown]
 # Then, let's train our model.
 
 # %%
-regressor.fit(X_train, y_train)
+regressor.fit(data_train, target_train)
 
 # %% [markdown]
 # Finally, we estimate the different types of errors. Let's start by computing
 # the empirical error.
 
 # %%
-y_pred = regressor.predict(X_train)
-score = mean_absolute_error(y_pred, y_train)
+target_predicted = regressor.predict(data_train)
+score = mean_absolute_error(target_train, target_predicted)
 print(f"The empirical error of our model is {score:.2f} k$")
 
 # %% [markdown]
@@ -117,8 +125,8 @@ print(f"The empirical error of our model is {score:.2f} k$")
 # error on the testing set.
 
 # %%
-y_pred = regressor.predict(X_test)
-score = mean_absolute_error(y_pred, y_test)
+target_predicted = regressor.predict(data_test)
+score = mean_absolute_error(target_test, target_predicted)
 print(f"The generalization error of our model is {score:.2f} k$")
 
 # %% [markdown]
@@ -165,7 +173,7 @@ from sklearn.model_selection import ShuffleSplit
 
 cv = ShuffleSplit(n_splits=30, test_size=0.2)
 cv_results = cross_validate(
-    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error")
+    regressor, data, target, cv=cv, scoring="neg_mean_absolute_error")
 
 # %% [markdown]
 # The results `cv_results` are stored into a Python dictionary. We will convert
@@ -239,17 +247,17 @@ print(f"The standard deviation of the generalization error is: "
 # data, we would expect its true generalization error to fall close to that
 # region.
 #
-# While this information is interesting in itself, it should be contrasted
-# to the scale of the natural variability of the target `y` in our dataset.
+# While this information is interesting in itself, it should be contrasted to
+# the scale of the natural variability of the vector `target` in our dataset.
 #
 # Let us plot the distribution of the target variable:
 
 # %%
-sns.displot(y, kde=True, bins=20)
+sns.displot(target, kde=True, bins=20)
 _ = plt.xlabel("Median House Value (k$)")
 
 # %%
-print(f"The standard deviation of the target is: {y.std():.2f} k$")
+print(f"The standard deviation of the target is: {target.std():.2f} k$")
 
 # %% [markdown]
 # The target variable ranges from close to 0 k\$ up to 500 k\$ and, with a
@@ -285,7 +293,7 @@ print(f"The standard deviation of the target is: {y.std():.2f} k$")
 # `return_estimator=True` in `cross_validate`.
 
 # %%
-cv_results = cross_validate(regressor, X, y, return_estimator=True)
+cv_results = cross_validate(regressor, data, target, return_estimator=True)
 cv_results
 
 # %%
@@ -305,7 +313,7 @@ cv_results["estimator"]
 # %%
 from sklearn.model_selection import cross_val_score
 
-scores = cross_val_score(regressor, X, y)
+scores = cross_val_score(regressor, data, target)
 scores
 
 # %% [markdown]

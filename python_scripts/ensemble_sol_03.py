@@ -5,16 +5,16 @@
 # We will make a grid-search and check the scores by varying the
 # number of estimators.
 #
-# We will first load the California housing dataset and split it into a training
-# and a testing set.
+# We will first load the California housing dataset and split it into a
+# training and a testing set.
 
 # %%
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0, test_size=0.5
 )
 
 # %% [markdown]
@@ -31,7 +31,7 @@ from sklearn.model_selection import validation_curve
 adaboost = AdaBoostRegressor()
 param_range = np.unique(np.logspace(0, 1.8, num=30).astype(int))
 train_scores, test_scores = validation_curve(
-    adaboost, X_train, y_train, param_name="n_estimators",
+    adaboost, data_train, target_train, param_name="n_estimators",
     param_range=param_range, n_jobs=-1)
 
 # %% [markdown]
@@ -78,7 +78,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 forest = RandomForestRegressor()
 train_scores, test_scores = validation_curve(
-    adaboost, X_train, y_train, param_name="n_estimators",
+    adaboost, data_train, target_train, param_name="n_estimators",
     param_range=param_range, n_jobs=-1)
 
 # %%

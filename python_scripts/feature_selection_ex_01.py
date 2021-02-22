@@ -10,9 +10,9 @@
 # to insights.
 #
 # First, you will create a completely random dataset using NumPy. Using the
-# function `np.random.randn`, generate a matrix `X` containing 100 samples and
-# 100,000 features. Then, using the function `np.random.randint`, generate
-# a vector `y` with 100 samples containing either 0 or 1.
+# function `np.random.randn`, generate a matrix `data` containing 100 samples
+# and 100,000 features. Then, using the function `np.random.randint`, generate
+# a vector `target` with 100 samples containing either 0 or 1.
 #
 # This type of dimensionality is typical in bioinformatics when dealing with
 # RNA-seq. However, we will use completely randomized features such that we
@@ -35,8 +35,8 @@ import numpy as np
 # Now, we will ask you to program the **wrong** pattern to select feature.
 # Select the feature by using the entire dataset. We will choose ten features
 # with the highest ANOVA F-score computed on the full dataset. Subsequently,
-# subsample the dataset `X` by selecting the features' subset. Finally, train
-# and test a logistic regression model.
+# subsample the dataset `data` by selecting the features' subset. Finally,
+# train and test a logistic regression model.
 #
 # You should get some surprising results.
 

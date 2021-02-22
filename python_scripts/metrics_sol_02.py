@@ -10,10 +10,11 @@
 import pandas as pd
 import numpy as np
 
-data = pd.read_csv("../datasets/house_prices.csv")
-X, y = data.drop(columns="SalePrice"), data["SalePrice"]
-X = X.select_dtypes(np.number)
-y /= 1000
+ames_housing = pd.read_csv("../datasets/house_prices.csv")
+data = ames_housing.drop(columns="SalePrice")
+target = ames_housing["SalePrice"]
+data = data.select_dtypes(np.number)
+target /= 1000
 
 # %% [markdown]
 # The first step will be to create a linear regression model.
@@ -32,7 +33,7 @@ model = LinearRegression()
 # %%
 from sklearn.model_selection import cross_val_score
 
-scores = cross_val_score(model, X, y, cv=10, scoring="r2")
+scores = cross_val_score(model, data, target, cv=10, scoring="r2")
 print(f"R2 score: {scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
@@ -40,14 +41,15 @@ print(f"R2 score: {scores.mean():.3f} +/- {scores.std():.3f}")
 # to refer to the documentation for the `scoring` parameter.
 
 # %%
-scores = cross_val_score(model, X, y, cv=10, scoring="neg_mean_absolute_error")
+scores = cross_val_score(model, data, target, cv=10,
+                         scoring="neg_mean_absolute_error")
 errors = -scores
 print(f"Mean absolute error: "
       f"{errors.mean():.3f} k$ +/- {errors.std():.3f}")
 
 # %% [markdown]
-# The `scoring` parameter in scikit-learn expects score. It means that the higher
-# the values, and the smaller the errors are, the better the model is.
+# The `scoring` parameter in scikit-learn expects score. It means that the
+# higher the values, and the smaller the errors are, the better the model is.
 # Therefore, the error should be multiplied by -1. That's why the string given
 # the `scoring` starts with `neg_` when dealing with metrics which are errors.
 #
@@ -59,7 +61,7 @@ print(f"Mean absolute error: "
 from sklearn.model_selection import cross_validate
 
 scoring = ["r2", "neg_mean_absolute_error"]
-cv_results = cross_validate(model, X, y, scoring=scoring)
+cv_results = cross_validate(model, data, target, scoring=scoring)
 
 # %%
 import pandas as pd

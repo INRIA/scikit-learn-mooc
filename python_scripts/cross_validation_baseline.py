@@ -17,7 +17,13 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
 
 # %% [markdown]
 # Across all evaluations, we will use a `ShuffleSplit` cross-validation.
@@ -38,7 +44,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import cross_validate
 
 regressor = DecisionTreeRegressor()
-result_regressor = cross_validate(regressor, X, y,
+result_regressor = cross_validate(regressor, data, target,
                                   cv=cv, scoring="neg_mean_absolute_error",
                                   n_jobs=-1)
 
@@ -49,13 +55,13 @@ errors_regressor = pd.Series(-result_regressor["test_score"],
 # Then, we will evaluate our first baseline. This baseline is called a dummy
 # regressor. This dummy regressor will always predict the mean target computed
 # on the training. Therefore, the dummy regressor will never use any
-# information regarding the data `X`.
+# information regarding the data `data`.
 
 # %%
 from sklearn.dummy import DummyRegressor
 
 dummy = DummyRegressor()
-result_dummy = cross_validate(dummy, X, y,
+result_dummy = cross_validate(dummy, data, target,
                               cv=cv, scoring="neg_mean_absolute_error",
                               n_jobs=-1)
 errors_dummy = pd.Series(-result_dummy["test_score"], name="Dummy error")
@@ -71,8 +77,8 @@ from sklearn.model_selection import permutation_test_score
 
 regressor = DecisionTreeRegressor()
 score, permutation_score, pvalue = permutation_test_score(
-    regressor, X, y, cv=cv, scoring="neg_mean_absolute_error", n_jobs=-1,
-    n_permutations=30)
+    regressor, data, target, cv=cv, scoring="neg_mean_absolute_error",
+    n_jobs=-1, n_permutations=30)
 errors_permutation = pd.Series(-permutation_score, name="Permuted error")
 
 # %% [markdown]

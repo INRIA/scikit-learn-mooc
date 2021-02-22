@@ -19,26 +19,26 @@ rng = np.random.RandomState(0)
 
 # Generate data
 n_sample = 100
-x_max, x_min = 1.4, -1.4
-len_x = (x_max - x_min)
-x = rng.rand(n_sample) * len_x - len_x / 2
+data_max, data_min = 1.4, -1.4
+len_data = (data_max - data_min)
+data = rng.rand(n_sample) * len_data - len_data / 2
 noise = rng.randn(n_sample) * .3
-y = x ** 3 - 0.5 * x ** 2 + noise
+target = data ** 3 - 0.5 * data ** 2 + noise
 
 # %%
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 sns.set_context("talk")
 
-plt.scatter(x, y)
-plt.xlabel('x')
-_ = plt.ylabel('y')
+full_data = pd.DataFrame({"data": data, "target": target})
+_ = sns.scatterplot(data=full_data, x="data", y="target")
 
 # %% [markdown]
-# We observe that the link between the data `x` and target `y` is non-linear.
-# For instance, `x` could represent to be the years of experience (normalized)
-# and `y` the salary (normalized). Therefore, the problem here would be to
-# infer the salary given the years of experience.
+# We observe that the link between the data `data` and vector `target` is
+# non-linear. For instance, `data` could represent to be the years of
+# experience (normalized) and `target` the salary (normalized). Therefore, the
+# problem here would be to infer the salary given the years of experience.
 #
 # Using the function `f` defined below, find both the `weight` and the
 # `intercept` that you think will lead to a good linear model. Plot both the
@@ -47,9 +47,9 @@ _ = plt.ylabel('y')
 
 
 # %%
-def f(x, weight=0, intercept=0):
-    y_predict = weight * x + intercept
-    return y_predict
+def f(data, weight=0, intercept=0):
+    target_predict = weight * data + intercept
+    return target_predict
 
 
 # %%

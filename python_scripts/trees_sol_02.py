@@ -12,12 +12,12 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_regression.csv")
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
 data_columns = ["Flipper Length (mm)"]
 target_column = "Body Mass (g)"
 
-X_train, y_train = data[data_columns], data[target_column]
+data_train, target_train = penguins[data_columns], penguins[target_column]
 
 # %% [markdown]
 # First, create two models, a linear regression model and a decision tree
@@ -31,8 +31,8 @@ from sklearn.tree import DecisionTreeRegressor
 linear_regression = LinearRegression()
 tree = DecisionTreeRegressor(max_depth=3)
 
-linear_regression.fit(X_train, y_train)
-tree.fit(X_train, y_train)
+linear_regression.fit(data_train, target_train)
+tree.fit(data_train, target_train)
 
 # %% [markdown]
 # Create a testing dataset, ranging from the minimum to the maximum of the
@@ -42,13 +42,13 @@ tree.fit(X_train, y_train)
 # %%
 import numpy as np
 
-X_test = pd.DataFrame(np.arange(X_train[data_columns[0]].min(),
-                                X_train[data_columns[0]].max()),
-                      columns=data_columns)
+data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
+                                   data_train[data_columns[0]].max()),
+                         columns=data_columns)
 
 # %%
-y_pred_linear_regression = linear_regression.predict(X_test)
-y_pred_tree = tree.predict(X_test)
+target_predicted_linear_regression = linear_regression.predict(data_test)
+target_predicted_tree = tree.predict(data_test)
 
 # %% [markdown]
 # Create a scatter plot containing the training samples and superimpose the
@@ -59,11 +59,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_context("talk")
 
-ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(X_test, y_pred_linear_regression, linewidth=4,
+ax.plot(data_test, target_predicted_linear_regression, linewidth=4,
         label="Linear regression")
-ax.plot(X_test, y_pred_tree, linewidth=4, label="Decision tree regression")
+ax.plot(data_test, target_predicted_tree, linewidth=4,
+        label="Decision tree regression")
 _ = plt.legend()
 
 # %% [markdown]
@@ -78,27 +79,28 @@ _ = plt.legend()
 
 # %%
 offset = 30
-X_test = pd.DataFrame(np.arange(X_train[data_columns[0]].min() - offset,
-                                X_train[data_columns[0]].max() + offset),
-                      columns=data_columns)
+data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min() - offset,
+                                   data_train[data_columns[0]].max() + offset),
+                         columns=data_columns)
 
 # %% [markdown]
 # Finally, make predictions with both models on this new testing set. Repeat
 # the plotting of the previous exercise.
 
 # %%
-y_pred_linear_regression = linear_regression.predict(X_test)
-y_pred_tree = tree.predict(X_test)
+target_predicted_linear_regression = linear_regression.predict(data_test)
+target_predicted_tree = tree.predict(data_test)
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-ax = sns.scatterplot(data=data, x="Flipper Length (mm)", y="Body Mass (g)",
+ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(X_test, y_pred_linear_regression, linewidth=4,
+ax.plot(data_test, target_predicted_linear_regression, linewidth=4,
         label="Linear regression")
-ax.plot(X_test, y_pred_tree, linewidth=4, label="Decision tree regression")
+ax.plot(data_test, target_predicted_tree, linewidth=4,
+        label="Decision tree regression")
 _ = plt.legend()
 
 # %% [markdown]

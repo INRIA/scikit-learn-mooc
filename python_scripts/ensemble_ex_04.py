@@ -3,20 +3,20 @@
 #
 # The aim of this exercise is to:
 #
-# * verify if a GBDT tends to overfit if the number of estimators is not appropriate
-#   as previously seen for AdaBoost;
+# * verify if a GBDT tends to overfit if the number of estimators is not
+#   appropriate as previously seen for AdaBoost;
 # * use the early-stopping strategy to avoid adding unnecessary trees, to
 #   get the best performances.
 #
-# As usual, we will use the California housing dataset to conduct our experiments
+# We will use the California housing dataset to conduct our experiments.
 
 # %%
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0, test_size=0.5
 )
 
 # %% [markdown]

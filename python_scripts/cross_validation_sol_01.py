@@ -15,8 +15,9 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/blood_transfusion.csv")
-X, y = data.drop(columns="Class"), data["Class"]
+blood_transfusion = pd.read_csv("../datasets/blood_transfusion.csv")
+data = blood_transfusion.drop(columns="Class")
+target = blood_transfusion["Class"]
 
 # %% [markdown]
 # Create a machine learning pipeline which will standardize the data and then
@@ -37,7 +38,7 @@ model = make_pipeline(StandardScaler(), SVC())
 from sklearn.model_selection import cross_validate, ShuffleSplit
 
 cv = ShuffleSplit(random_state=0)
-cv_results = cross_validate(model, X, y, cv=cv, n_jobs=-1)
+cv_results = cross_validate(model, data, target, cv=cv, n_jobs=-1)
 cv_results = pd.DataFrame(cv_results)
 cv_results
 
@@ -62,7 +63,8 @@ from sklearn.model_selection import validation_curve
 gammas = np.logspace(-3, 2, num=30)
 param_name = "svc__gamma"
 train_scores, test_scores = validation_curve(
-    model, X, y, param_name=param_name, param_range=gammas, cv=cv, n_jobs=-1)
+    model, data, target, param_name=param_name, param_range=gammas, cv=cv,
+    n_jobs=-1)
 
 # %% [markdown]
 # Plot the validation curve for the train and test scores.
@@ -110,7 +112,7 @@ from sklearn.model_selection import learning_curve
 
 train_sizes = np.linspace(0.1, 1, num=10)
 results = learning_curve(
-    model, X, y, train_sizes=train_sizes, cv=cv, n_jobs=-1)
+    model, data, target, train_sizes=train_sizes, cv=cv, n_jobs=-1)
 train_size, train_scores, test_scores = results[:3]
 
 # %%

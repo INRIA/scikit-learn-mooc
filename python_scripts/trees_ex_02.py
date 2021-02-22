@@ -12,12 +12,12 @@
 # %%
 import pandas as pd
 
-data = pd.read_csv("../datasets/penguins_regression.csv")
+penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
 data_columns = ["Flipper Length (mm)"]
 target_column = "Body Mass (g)"
 
-X_train, y_train = data[data_columns], data[target_column]
+data_train, target_train = penguins[data_columns], penguins[target_column]
 
 # %% [markdown]
 # First, create two models, a linear regression model and a decision tree

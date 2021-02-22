@@ -11,9 +11,9 @@
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
-X, y = fetch_california_housing(as_frame=True, return_X_y=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.5)
+data, target = fetch_california_housing(as_frame=True, return_X_y=True)
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0, test_size=0.5)
 
 # %% [markdown]
 # Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
@@ -26,8 +26,8 @@ from sklearn.ensemble import BaggingRegressor
 
 tree = DecisionTreeRegressor()
 bagging = BaggingRegressor(base_estimator=tree, n_jobs=-1)
-bagging.fit(X_train, y_train)
-test_score = bagging.score(X_test, y_test)
+bagging.fit(data_train, target_train)
+test_score = bagging.score(data_test, target_test)
 print(f"Basic R2 score of the bagging regressor:\n"
       f"{test_score:.2f}")
 
@@ -38,7 +38,8 @@ print(f"Basic R2 score of the bagging regressor:\n"
 # improve the default regressor.
 
 # ```{tip}
-# You can list the bagging regressor's parameters using the `get_params` method.
+# You can list the bagging regressor's parameters using the `get_params`
+# method.
 # ```
 
 # %%
@@ -56,7 +57,7 @@ param_grid = {
     "base_estimator__max_depth": randint(3, 10),
 }
 search = RandomizedSearchCV(bagging, param_grid, n_iter=20)
-_ = search.fit(X_train, y_train)
+_ = search.fit(data_train, target_train)
 
 # %%
 import pandas as pd
@@ -68,7 +69,7 @@ cv_results = cv_results[columns].sort_values(by="rank_test_score")
 cv_results
 
 # %%
-test_score = search.score(X_test, y_test)
+test_score = search.score(data_test, target_test)
 print(f"Basic R2 score of the bagging regressor:\n"
       f"{test_score:.2f}")
 

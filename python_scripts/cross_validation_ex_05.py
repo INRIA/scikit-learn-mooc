@@ -66,9 +66,9 @@ _ = ax.set_title("Stock values over time")
 # other stocks. By using the cross-validation framework from the previous
 # exercise, we will check that we get such expected results.
 #
-# First, let's organise our data into a matrix `X` and a target `y`. Split
-# the data such that the `Stock 0` is the stock that we want to predict and
-# the `Stock 1` and `Stock 2` are stocks used to build our model.
+# First, let's organise our data into a matrix `data` and a vector `target`.
+# Split the data such that the `Stock 0` is the stock that we want to predict
+# and the `Stock 1` and `Stock 2` are stocks used to build our model.
 
 # %%
 # Write your code here.

@@ -15,7 +15,7 @@
 from sklearn.datasets import fetch_california_housing
 
 housing = fetch_california_housing(as_frame=True)
-X, y = housing.data, housing.target
+data, target = housing.data, housing.target
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -35,7 +35,7 @@ import pandas as pd
 from sklearn.model_selection import cross_validate, ShuffleSplit
 
 cv = ShuffleSplit(n_splits=30, test_size=0.2)
-cv_results = cross_validate(regressor, X, y,
+cv_results = cross_validate(regressor, data, target,
                             cv=cv, scoring="neg_mean_absolute_error",
                             return_train_score=True, n_jobs=2)
 cv_results = pd.DataFrame(cv_results)
@@ -85,7 +85,7 @@ from sklearn.model_selection import validation_curve
 
 max_depth = [1, 5, 10, 15, 20, 25]
 train_scores, test_scores = validation_curve(
-    regressor, X, y, param_name="max_depth", param_range=max_depth,
+    regressor, data, target, param_name="max_depth", param_range=max_depth,
     cv=cv, scoring="neg_mean_absolute_error", n_jobs=2)
 train_errors, test_errors = -train_scores, -test_scores
 

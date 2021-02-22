@@ -32,7 +32,7 @@
 # %%
 import pandas as pd
 
-df = pd.read_csv("../datasets/adult-census.csv")
+adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
 # We will first split our dataset to have the target separated from the data
@@ -40,8 +40,8 @@ df = pd.read_csv("../datasets/adult-census.csv")
 
 # %%
 target_name = "class"
-target = df[target_name]
-data = df.drop(columns=target_name)
+target = adult_census[target_name]
+data = adult_census.drop(columns=target_name)
 
 # %% [markdown]
 # We start by selecting only the numerical columns as seen in the previous

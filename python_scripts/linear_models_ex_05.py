@@ -14,20 +14,21 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv("../datasets/penguins_classification.csv")
+penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes
-data = data.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
+penguins = penguins.set_index("Species").loc[
+    ["Adelie", "Chinstrap"]].reset_index()
 
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
-X, y = data[culmen_columns], data[target_column]
+data, target = penguins[culmen_columns], penguins[target_column]
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, stratify=y, random_state=0,
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, stratify=target, random_state=0,
 )
 range_features = {
-    feature_name: (X[feature_name].min() - 1, X[feature_name].max() + 1)
-    for feature_name in X
+    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
+    for feature_name in data
 }
 
 # %%

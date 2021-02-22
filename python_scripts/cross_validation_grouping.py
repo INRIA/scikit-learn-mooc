@@ -8,7 +8,7 @@
 from sklearn.datasets import load_digits
 
 digits = load_digits()
-X, y = digits.data, digits.target
+data, target = digits.data, digits.target
 
 # %% [markdown]
 # We will recreate the same model used in the previous exercise:
@@ -29,7 +29,8 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 from sklearn.model_selection import cross_val_score, KFold
 
 cv = KFold(shuffle=False)
-test_score_no_shuffling = cross_val_score(model, X, y, cv=cv, n_jobs=-1)
+test_score_no_shuffling = cross_val_score(model, data, target, cv=cv,
+                                          n_jobs=-1)
 print(f"The average accuracy is "
       f"{test_score_no_shuffling.mean():.3f} +/- "
       f"{test_score_no_shuffling.std():.3f}")
@@ -40,7 +41,8 @@ print(f"The average accuracy is "
 
 # %%
 cv = KFold(shuffle=True)
-test_score_with_shuffling = cross_val_score(model, X, y, cv=cv, n_jobs=-1)
+test_score_with_shuffling = cross_val_score(model, data, target, cv=cv,
+                                            n_jobs=-1)
 print(f"The average accuracy is "
       f"{test_score_with_shuffling.mean():.3f} +/- "
       f"{test_score_with_shuffling.std():.3f}")
@@ -113,7 +115,7 @@ import numpy as np
 # for each writer
 writer_boundaries = [0, 130, 256, 386, 516, 646, 776, 915, 1029,
                      1157, 1287, 1415, 1545, 1667, 1797]
-groups = np.zeros_like(y)
+groups = np.zeros_like(target)
 lower_bounds = writer_boundaries[:-1]
 upper_bounds = writer_boundaries[1:]
 
@@ -141,7 +143,8 @@ _ = plt.title("Underlying writer groups existing in the target")
 from sklearn.model_selection import GroupKFold
 
 cv = GroupKFold()
-test_score = cross_val_score(model, X, y, groups=groups, cv=cv, n_jobs=-1)
+test_score = cross_val_score(model, data, target, groups=groups, cv=cv,
+                             n_jobs=-1)
 print(f"The average accuracy is "
       f"{test_score.mean():.3f} +/- "
       f"{test_score.std():.3f}")

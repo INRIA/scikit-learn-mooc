@@ -13,7 +13,7 @@
 # %%
 from sklearn.datasets import make_classification
 
-X, y = make_classification(
+data, target = make_classification(
     n_samples=5000,
     n_features=100,
     n_informative=2,
@@ -21,6 +21,12 @@ X, y = make_classification(
     n_repeated=0,
     random_state=0,
 )
+
+# %% [markdown]
+# ```{caution}
+# Here and later, we use the name `data` and `target` to be explicit. In
+# scikit-learn, documentation `data` is commonly named `X` and `target` is
+# commonly called `y`.
 
 # %% [markdown]
 # We chose to create a dataset with two informative features among a hundred.
@@ -68,7 +74,8 @@ model_with_selection = make_pipeline(
 import pandas as pd
 from sklearn.model_selection import cross_validate
 
-cv_results_without_selection = cross_validate(model_without_selection, X, y)
+cv_results_without_selection = cross_validate(model_without_selection, data,
+                                              target)
 cv_results_without_selection = pd.DataFrame(cv_results_without_selection)
 
 # %% [markdown]
@@ -77,8 +84,7 @@ cv_results_without_selection = pd.DataFrame(cv_results_without_selection)
 
 # %%
 cv_results_with_selection = cross_validate(
-    model_with_selection, X, y, return_estimator=True
-)
+    model_with_selection, data, target, return_estimator=True)
 cv_results_with_selection = pd.DataFrame(cv_results_with_selection)
 
 # %% [markdown]

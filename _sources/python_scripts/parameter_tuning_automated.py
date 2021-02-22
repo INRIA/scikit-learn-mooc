@@ -72,10 +72,8 @@ categorical_columns = categorical_columns_selector(data)
 # %%
 from sklearn.preprocessing import OrdinalEncoder
 
-categories = [
-    data[column].unique() for column in data[categorical_columns]]
-
-categorical_preprocessor = OrdinalEncoder(categories=categories)
+categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
+                                          unknown_value=-1)
 
 # %% [markdown]
 # We now use a column transformer with code to select the categorical columns
@@ -90,7 +88,7 @@ preprocessor = ColumnTransformer([
 
 # %% [markdown]
 # Finally, we use a tree-based classifier (i.e. histogram gradient-boosting) to
-# predict whether or not a person earns more than 50,000 dollars a year.
+# predict whether or not a person earns more than 50 k$ a year.
 
 # %%
 # %%time

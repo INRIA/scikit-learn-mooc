@@ -2346,8 +2346,8 @@ Let’s recall some statistics regarding this column.</p>
  Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
- Yugoslavia                       23
  Outlying-US(Guam-USVI-etc)       23
+ Yugoslavia                       23
  Laos                             23
  Scotland                         21
  Honduras                         20
@@ -2366,17 +2366,14 @@ training and will not be able to encode it.</p>
 <ul class="simple">
 <li><p>list all the possible categories and provide it to the encoder via the
 keyword argument <code class="docutils literal notranslate"><span class="pre">categories</span></code>;</p></li>
-<li><p>set the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code>.</p></li>
+<li><p>use the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>.</p></li>
 </ul>
-<p>Here, we will use the former strategy because we are also going to use it for
-the ordinal encoder later on.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_categorical</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-              <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">data_categorical</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
+<p>Here, we will use the latter solution for simplicity.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Be aware the the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> exposes as well a parameter
+<code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>. It can be set to <code class="docutils literal notranslate"><span class="pre">use_encoded_value</span></code> and by setting
+<code class="docutils literal notranslate"><span class="pre">unknown_value</span></code> to handle rare categories.</p>
 </div>
 <p>We can now create our machine learning pipeline.</p>
 <div class="cell docutils container">
@@ -2385,8 +2382,8 @@ the ordinal encoder later on.</p>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="s2">&quot;if_binary&quot;</span><span class="p">),</span>
-    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
+    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2410,8 +2407,8 @@ columns.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.06005788, 0.86645532, 0.99284148, 0.99634385, 0.86632085]),
- &#39;score_time&#39;: array([0.04376459, 0.04337668, 0.04284239, 0.04238367, 0.0435586 ]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.94921207, 0.96531868, 0.89504743, 0.96803808, 0.93937969]),
+ &#39;score_time&#39;: array([0.03860569, 0.0395987 , 0.03787827, 0.04076982, 0.03748274]),
  &#39;test_score&#39;: array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])}
 </pre></div>
 </div>

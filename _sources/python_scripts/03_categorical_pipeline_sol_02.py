@@ -48,9 +48,6 @@ categorical_columns_selector = selector(dtype_include=object)
 numerical_columns = numerical_columns_selector(data)
 categorical_columns = categorical_columns_selector(data)
 
-categories = [
-    data[column].unique() for column in data[categorical_columns]]
-
 # %% [markdown]
 # ## Reference pipeline (no numerical scaling and integer-coded categories)
 #
@@ -66,7 +63,8 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 
-categorical_preprocessor = OrdinalEncoder(categories=categories)
+categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
+                                          unknown_value=-1)
 preprocessor = ColumnTransformer([
     ('categorical', categorical_preprocessor, categorical_columns)],
     remainder="passthrough")
@@ -86,7 +84,8 @@ from sklearn.preprocessing import StandardScaler
 
 preprocessor = ColumnTransformer([
     ('numerical', StandardScaler(), numerical_columns),
-    ('categorical', OrdinalEncoder(categories=categories),
+    ('categorical', OrdinalEncoder(handle_unknown="use_encoded_value",
+                                   unknown_value=-1),
      categorical_columns)])
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
@@ -113,22 +112,18 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 # `HistGradientBoostingClassifier` models, it does not seem to be the case as
 # the cross-validation of the reference pipeline with `OrdinalEncoder` is good.
 #
-# Let's see if we can get an even better accuracy with `OneHotEncoder`:
-#
-# Reminder: in order to avoid creating fully correlated features it is
-# preferable to use a `OneHotEncoder` with the option `drop="if_binary"`.
+# Let's see if we can get an even better accuracy with `OneHotEncoder`.
 #
 # Hint: `HistGradientBoostingClassifier` does not yet support sparse input
 # data. You might want to use
-# `OneHotEncoder(categories=categories, sparse=False)` to force the use a
+# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a
 # dense representation as a workaround.
 
 # %%
 # %%time
 from sklearn.preprocessing import OneHotEncoder
 
-categorical_preprocessor = OneHotEncoder(
-    categories=categories, drop="if_binary", sparse=False)
+categorical_preprocessor = OneHotEncoder(handle_unknown="ignore", sparse=False)
 preprocessor = ColumnTransformer([
     ('one-hot-encoder', categorical_preprocessor, categorical_columns)],
     remainder="passthrough")

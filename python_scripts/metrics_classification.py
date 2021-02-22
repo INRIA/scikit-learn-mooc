@@ -2,9 +2,9 @@
 # # Classification
 #
 # This notebook aims at giving an overview of the classification metrics that
-# can be used to evaluate the predictive model performance. We can recall that
-# in a classification setting, the vector `target` is categorical rather than
-# continuous.
+# can be used to evaluate the predictive model statistical performance. We can
+# recall that in a classification setting, the vector `target` is categorical
+# rather than continuous.
 #
 # We will load the blood transfusion dataset.
 
@@ -94,9 +94,10 @@ target_test == target_predicted
 # %% [markdown]
 # In the comparison above, a `True` value means that the value predicted by our
 # classifier is identical to the real value, while a `False` means that our
-# classifier made a mistake. One way of getting an overall rate representing the
-# performance of our classifier would be to compute how many times our
-# classifier was right and divide it by the number of samples in our set.
+# classifier made a mistake. One way of getting an overall rate representing
+# the statistical performance of our classifier would be to compute how many
+# times our classifier was right and divide it by the number of samples in our
+# set.
 
 # %%
 import numpy as np
@@ -153,11 +154,11 @@ _ = plot_confusion_matrix(classifier, data_test, target_test)
 # * the bottom left corner are false positives (FP) and correspond to
 #   people who did not give blood but were predicted to have given blood.
 #
-# Once we have split this information, we can compute metrics to
-# highlight the performance of our classifier in a particular setting. For
+# Once we have split this information, we can compute metrics to highlight the
+# statistical performance of our classifier in a particular setting. For
 # instance, we could be interested in the fraction of people who really gave
-# blood when the classifier predicted so or the fraction of people predicted
-# to have given blood out of the total population that actually did so.
+# blood when the classifier predicted so or the fraction of people predicted to
+# have given blood out of the total population that actually did so.
 #
 # The former metric, known as the precision, is defined as TP / (TP + FP)
 # and represents how likely the person actually gave blood when the classifier
@@ -263,12 +264,12 @@ np.all(equivalence_pred_proba)
 
 # %% [markdown]
 # The default decision threshold (0.5) might not be the best threshold that
-# leads to optimal performance of our classifier. In this case, one can vary
-# the decision threshold, and therefore the underlying prediction, and compute
-# the same statistics presented earlier. Usually, the two metrics recall and
-# precision are computed and plotted on a graph. Each metric plotted on a graph
-# axis and each point on the graph corresponds to a specific decision
-# threshold. Let's start by computing the precision-recall curve.
+# leads to optimal statistical performance of our classifier. In this case, one
+# can vary the decision threshold, and therefore the underlying prediction, and
+# compute the same statistics presented earlier. Usually, the two metrics
+# recall and precision are computed and plotted on a graph. Each metric plotted
+# on a graph axis and each point on the graph corresponds to a specific
+# decision threshold. Let's start by computing the precision-recall curve.
 
 # %%
 from sklearn.metrics import plot_precision_recall_curve
@@ -308,11 +309,11 @@ plot_roc_curve(classifier, data_test, target_test, pos_label='donated',
 # This curve was built using the same principle as the precision-recall curve:
 # we vary the probability threshold for determining "hard" prediction and
 # compute the metrics. As with the precision-recall curve, we can compute the
-# area under the ROC (ROC-AUC) to characterize the performance of our
-# classifier. However, it is important to observe that the lower bound of the
-# ROC-AUC is 0.5. Indeed, we show the performance of a dummy classifier (the
-# green dashed line) to show that even the worst performance obtained will
-# be above this line.
+# area under the ROC (ROC-AUC) to characterize the statistical performance of
+# our classifier. However, it is important to observe that the lower bound of
+# the ROC-AUC is 0.5. Indeed, we show the statistical performance of a dummy
+# classifier (the green dashed line) to show that even the worst statistical
+# performance obtained will be above this line.
 #
 # ## Link between confusion matrix, precision-recall curve and ROC curve
 #
@@ -471,7 +472,8 @@ def plot_pr_roc(threshold):
         classifier, data_test, target_test, pos_label="donated",
         probability_threshold=threshold, ax=axs[2]
     )
-    fig.suptitle("Overall performance with positive class 'donated'")
+    fig.suptitle(
+        "Overall statistical performance with positive class 'donated'")
 
 
 # %%

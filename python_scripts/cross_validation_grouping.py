@@ -150,10 +150,10 @@ print(f"The average accuracy is "
       f"{test_score.std():.3f}")
 
 # %% [markdown]
-# We see that this strategy is less optimistic regarding the model performance.
-# However, this is the most reliable if our goal is to make handwritten digits
-# recognition writers independent. Besides, we can as well see that the
-# standard deviation was reduced.
+# We see that this strategy is less optimistic regarding the model statistical
+# performance. However, this is the most reliable if our goal is to make
+# handwritten digits recognition writers independent. Besides, we can as well
+# see that the standard deviation was reduced.
 
 # %%
 all_scores = pd.DataFrame(

@@ -30,7 +30,7 @@ Measure:
 - errors on test data (generalization)
 
 - errors on the train data
-]
+  ]
 
 ???
 
@@ -38,14 +38,13 @@ To probe the tradeoff between underfit and overfit, our central
 tool will be to measure both the generalization error, on unseen
 test data, and the error on the data used to train the model.
 
-
 ---
 
 # Train vs test error: increasing complexity
 
 .shift-left.pull-left[<img src="../figures/polynomial_overfit_test_1.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_1.svg"
-		width="100%">]
+width="100%">]
 
 ???
 
@@ -61,7 +60,7 @@ noise.
 
 .shift-left.pull-left[<img src="../figures/polynomial_overfit_test_2.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_2.svg"
-		width="100%">]
+width="100%">]
 
 ???
 
@@ -74,7 +73,7 @@ down: the model explains well the data, but does not capture noise yet.
 
 .shift-left.pull-left[<img src="../figures/polynomial_overfit_test_5.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_5.svg"
-		width="100%">]
+width="100%">]
 
 ???
 
@@ -88,7 +87,7 @@ data is larger.
 
 .shift-left.pull-left[<img src="../figures/polynomial_overfit_test_9.svg" width=110%>]
 .width50.pull-right[<img src="../figures/polynomial_validation_curve_15.svg"
-		width="100%">]
+width="100%">]
 
 ???
 
@@ -115,12 +114,12 @@ but a very large test error. There is a sweet spot in the middle, and
 this is where good machine-learning models lie.
 
 ---
+
 class: center, middle
 
 # Varying sample size
 
 Learning curves
-
 
 ???
 
@@ -128,24 +127,23 @@ Another useful way to look at the tradeoff between underfit and overfit
 is with varying sample size. Such an analysis is often known as a
 learning curve.
 
-
 ---
 
 # Varying sample size
 
 .shift-left.pull-left[<img
-		       src="../figures/polynomial_overfit_ntrain_42.svg"
-		       width=110%>]
+src="../figures/polynomial_overfit_ntrain_42.svg"
+width=110%>]
 .width50.pull-right[<img
-		     src="../figures/polynomial_learning_curve_42.svg"
-		     width="100%">]
+src="../figures/polynomial_learning_curve_42.svg"
+width="100%">]
 
 .reversed[Overfit]
 
 ???
 
 If we fit a polynomial of degree 9 on a small dataset, we will not have
-enough data and we will be in an overfitting situation. 
+enough data and we will be in an overfitting situation.
 As a result the train error will be low, and the test error high.
 
 ---
@@ -153,11 +151,11 @@ As a result the train error will be low, and the test error high.
 # Varying varying sample size
 
 .shift-left.pull-left[<img
-		       src="../figures/polynomial_overfit_ntrain_145.svg"
-		       width=110%>]
+src="../figures/polynomial_overfit_ntrain_145.svg"
+width=110%>]
 .width50.pull-right[<img
-		     src="../figures/polynomial_learning_curve_145.svg"
-		     width="100%">]
+src="../figures/polynomial_learning_curve_145.svg"
+width="100%">]
 
 ???
 
@@ -169,11 +167,11 @@ the train error increases: the model is overfitting less.
 # Varying sample size
 
 .shift-left.pull-left[<img
-		       src="../figures/polynomial_overfit_ntrain_1179.svg"
-		       width=110%>]
+src="../figures/polynomial_overfit_ntrain_1179.svg"
+width=110%>]
 .width50.pull-right[<img
-		     src="../figures/polynomial_learning_curve_1179.svg"
-		     width="100%">]
+src="../figures/polynomial_learning_curve_1179.svg"
+width="100%">]
 
 .reversed[Sweet spot?]
 
@@ -187,11 +185,11 @@ longer overfits.
 # Varying sample size
 
 .shift-left.pull-left[<img
-		       src="../figures/polynomial_overfit_ntrain_6766.svg"
-		       width=110%>]
+src="../figures/polynomial_overfit_ntrain_6766.svg"
+width=110%>]
 .width50.pull-right[<img
-		     src="../figures/polynomial_learning_curve_6766.svg"
-		     width="100%">]
+src="../figures/polynomial_learning_curve_6766.svg"
+width="100%">]
 
 .reversed[Diminishing returns]
 
@@ -213,14 +211,13 @@ to try more complex models.
 
 # Bayes error rate
 
-
 .shift-left.pull-left[<img
-		       src="../figures/polynomial_overfit_ntrain_6766.svg"
-		       width=110%>]
+src="../figures/polynomial_overfit_ntrain_6766.svg"
+width=110%>]
 .width50.pull-right[
 The error of the best model trained on unlimited data.
 
-Here, the data-generating process is a degree-9 polynomial 
+Here, the data-generating process is a degree-9 polynomial
 
 We cannot do better
 
@@ -236,41 +233,45 @@ it is useful to try more complex models.
 However, in the specific case of our example, the data-generating process
 in a degree-9 polynomial. As a result, more complex models will not
 improve the prediction: the present model has already captured all the
-non-random link between *X* and *y*.
+non-random link between _X_ and _y_.
 
 The corresponding prediction is imperfect, yet, we cannot do better: the
 prediction is limited by the intrinsic randomness of the link between X
 and y.
 
 ---
+
 class: middle
 
 .center[
+
 # Model families
+
 ]
 
 .centered[
 Crucial to match
 
 .tight[
-* statistical model
 
-* data-generating process
-]
-]
+- statistical model
+
+- data-generating process
+  ]
+  ]
 
 .centered[So far: polynomials for both]
 
-*Some family names: linear models, decision trees, random forests, kernel machines,
-multi-layer perceptrons*
+_Some family names: linear models, decision trees, random forests, kernel machines,
+multi-layer perceptrons_
 
 ???
 
 The excellent performance that we just observed for degree-9 polynomials
 when there is plenty of data comes from the perfect match between the
-statistical model used to analyze the data and the data-generating process. 
-So far, we have used polynomials for both of them, however in practice, 
-given some data, we seldom know a simple form of model in which the data is drawn. 
+statistical model used to analyze the data and the data-generating process.
+So far, we have used polynomials for both of them, however in practice,
+given some data, we seldom know a simple form of model in which the data is drawn.
 
 For this reason, the choice of family of model is crucial.
 
@@ -282,17 +283,18 @@ in the next modules.
 # Different model families
 
 .shift-left.pull-left[<img
-		       src="../figures/different_models_complex_4.svg"
-		       width=100%>]
+src="../figures/different_models_complex_4.svg"
+width=100%>]
 .pull-right.width[
-* Different "inductive bias"
 
-* Different notion of "complexity"
-]
+- Different "inductive bias"
+
+- Different notion of "complexity"
+  ]
 
 ???
 
-Different model families come with different forms  of complexity and bias 
+Different model families come with different forms of complexity and bias
 (which we call inductive bias).
 
 For instance, polynomial regressions tend to be smooth, and their
@@ -305,11 +307,11 @@ complexity is controlled by the number of constant regions that they fit.
 # Different model families
 
 .shift-left.pull-left[<img
-		       src="../figures/different_models_complex_4.svg"
-		       width=100%>]
+src="../figures/different_models_complex_4.svg"
+width=100%>]
 .pull-right[<img
-		       src="../figures/different_models_complex_16.svg"
-		       width=100%>]
+src="../figures/different_models_complex_16.svg"
+width=100%>]
 
 .shift-up.pull-left[.reversed[Simple variant]]
 .shift-up.pull-right[.reversed[Complex variant]]
@@ -331,22 +333,26 @@ later, as we explore various models.
 ---
 
 .center[
+
 # Take home messages
+
 ]
 
 Models **overfit**:
 
 .tight[
+
 - number of examples in the training set is too small
 - testing error is much bigger than training error
-]
+  ]
 
 Models **underfit**:
 
 .tight[
+
 - models fail to capture the shape of the training set
 - even the training error is large
-]
+  ]
 
 Different model families = different complexity & inductive bias
 
@@ -354,8 +360,8 @@ Different model families = different complexity & inductive bias
 
 Let me conclude this lesson by recapitulating the take home messages.
 
-When the models are too complex for the data at hand, they overfit. 
-This means that they explain the data that they have seen too well as 
+When the models are too complex for the data at hand, they overfit.
+This means that they explain the data that they have seen too well as
 they capture noise, and thus do not generalize to new data.
 
 On the opposite, when models are too simple for the data at hand, they

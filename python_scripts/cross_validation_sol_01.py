@@ -31,7 +31,7 @@ from sklearn.svm import SVC
 model = make_pipeline(StandardScaler(), SVC())
 
 # %% [markdown]
-# Evaluate the performance of your model by cross-validation with a
+# Evaluate the statistical performance of your model by cross-validation with a
 # `ShuffleSplit` scheme.
 
 # %%

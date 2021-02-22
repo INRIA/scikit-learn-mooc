@@ -19,7 +19,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Create a random forest containing three trees. Train the forest and
-# check the performance on the testing set.
+# check the statistical performance on the testing set.
 
 # %%
 # Write your code here.

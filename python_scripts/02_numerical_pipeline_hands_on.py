@@ -197,8 +197,8 @@ model = LogisticRegression()
 model.fit(data_train, target_train)
 
 # %% [markdown]
-# We can now check the performance of the model using the test set which we
-# left out until now.
+# We can now check the statistical performance of the model using the test set
+# which we left out until now.
 
 # %%
 accuracy = model.score(data_test, target_test)
@@ -213,8 +213,8 @@ print(f"Accuracy of logistic regression: {accuracy:.3f}")
 # we will go into details regarding cross-validation.
 # ```
 #
-# Now the real question is: is this performance relevant of a good predictive
-# model? Find out by solving the next exercise!.
+# Now the real question is: is this statitical performance relevant of a good
+# predictive model? Find out by solving the next exercise!.
 #
 # In this notebook, we learned:
 #

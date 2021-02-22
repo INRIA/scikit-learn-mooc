@@ -229,7 +229,7 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
 # %% [markdown]
-# Now that we created our model, we can check its performance.
+# Now that we created our model, we can check its statistical performance.
 
 # %%
 # %%time

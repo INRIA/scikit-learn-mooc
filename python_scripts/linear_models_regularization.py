@@ -61,9 +61,9 @@ print(f"R2 score of linear regresion model on the train set:\n"
       f"{train_score.mean():.3f} +/- {train_score.std():.3f}")
 
 # %% [markdown]
-# The score on the training set is much better. This performance gap between
-# the training and testing score is an indication that our model overfitted
-# our training set.
+# The score on the training set is much better. This statistical performance
+# gap between the training and testing score is an indication that our model
+# overfitted our training set.
 #
 # Indeed, this is one of the danger when augmenting the number of features
 # with a `PolynomialFeatures` transformer. Our model will focus on some
@@ -276,8 +276,8 @@ _ = ax.set_title("Error obtained by cross-validation")
 
 # %% [markdown]
 # As we can see, regularization is just like salt in cooking: one must balance
-# its amount to get the best performance. We can check if the best `alpha`
-# found is stable across the cross-validation fold.
+# its amount to get the best statistical performance. We can check if the best
+# `alpha` found is stable across the cross-validation fold.
 
 # %%
 best_alphas = [est[-1].alpha_ for est in cv_results["estimator"]]

@@ -307,6 +307,15 @@ model = make_pipeline(
     OneHotEncoder(categories=categories, drop="if_binary"),
     LogisticRegression(max_iter=500))
 
+# %% {markdown}
+# ```{note}
+# Here, we need to increase the number of maximum iteration to obtain a fully
+# converged `LogisticRegression` and silence a `ConvergenceWarning`. In the
+# contrary to numerical features, the one-hot encoded categorical feature do
+# not suffer from large variations and therefore increasing `max_iter` is the
+# right thing to do.
+# ```
+
 # %% [markdown]
 # Finally, we can check the model's performance only using the categorical
 # columns.

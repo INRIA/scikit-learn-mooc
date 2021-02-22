@@ -69,6 +69,7 @@ _ = plt.xlabel("Mean absolute error (k$)")
 # to help us make good prediction on the test set.
 #
 # ## Validation curve
+
 #
 # Some model hyperparameters are usually the key to go from a model that
 # underfits to a model that overfits, hopefully going through a region were we
@@ -91,13 +92,12 @@ train_errors, test_errors = -train_scores, -test_scores
 
 # %% [markdown]
 # Now that we collected the results, we will show the validation curve by
-# plotting the empirical and generalization errors (as well as their
-# deviations).
+# plotting the training and testing errors (as well as their deviations).
 
 # %%
 _, ax = plt.subplots()
 
-error_type = ["Empirical error", "Generalization error"]
+error_type = ["Training error", "Testing error"]
 errors = [train_errors, test_errors]
 
 for name, err in zip(error_type, errors):
@@ -116,8 +116,8 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 # %% [markdown]
 # The validation curve can be divided into three areas:
 #
-# - For `max_depth < 10`, the decision tree underfits. The empirical error and
-#   therefore the generalization error are both high. The model is too
+# - For `max_depth < 10`, the decision tree underfits. The training error and
+#   therefore the testing error are both high. The model is too
 #   constrained and cannot capture much of the variability of the target
 #   variable.
 #
@@ -126,17 +126,17 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 #   fraction of the variability of the target that generalizes, while not
 #   memorizing all of the noise in the target.
 #
-# - For `max_depth > 10`, the decision tree overfits. The empirical error
-#   becomes very small, while the generalization error increases. In this
+# - For `max_depth > 10`, the decision tree overfits. The training error
+#   becomes very small, while the testing error increases. In this
 #   region, the models create decision specifically for noisy samples harming
 #   its ability to generalize to test data.
 #
 # Note that for `max_depth = 10`, the model overfits a bit as there is a gap
-# between the empirical error and the generalization error. It can also
-# potentially underfit also a bit at the same time, because the empirical error
+# between the training error and the testing error. It can also
+# potentially underfit also a bit at the same time, because the training error
 # is still far from zero (more than 30 k\$), meaning that the model might
 # still be too constrained to model interesting parts of the data. However the
-# generalization error is minimal, and this is what really matters. This is the
+# testing error is minimal, and this is what really matters. This is the
 # best compromise we could reach by just tuning this parameter.
 #
 # We were lucky that the variance of the errors was small compared to their

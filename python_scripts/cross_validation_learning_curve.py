@@ -37,7 +37,7 @@ target.size
 # Let's do an experiment and reduce the number of samples and repeat the
 # previous experiment. We will create a function that define a `ShuffleSplit`
 # and given a regressor and the data `data` and `target` will run a
-# cross-validation. The function will finally return the generalization error
+# cross-validation. The function will finally return the testing error
 # as a NumPy array.
 
 # %%
@@ -102,8 +102,8 @@ _ = plt.title("Generalization errors distribution \n"
 
 # %% [markdown]
 # For the different sample sizes, we plotted the distribution of the
-# generalization error. We observe that the smaller the number of samples is,
-# the larger the variance of the generalization errors is. Thus, having a small
+# testing error. We observe that the smaller the number of samples is,
+# the larger the variance of the testing errors is. Thus, having a small
 # number of samples might put us in a situation where it is impossible to get a
 # reliable evaluation.
 #
@@ -130,7 +130,7 @@ train_errors, test_errors = -train_scores, -test_scores
 # %%
 _, ax = plt.subplots()
 
-error_type = ["Empirical error", "Generalization error"]
+error_type = ["training error", "Testing error"]
 errors = [train_errors, test_errors]
 
 for name, err in zip(error_type, errors):
@@ -155,7 +155,7 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 #
 # For this dataset we notice that our decision tree model would really benefit
 # from additional datapoints to reduce the amount of over-fitting and hopefully
-# reduce the generalization error even further.
+# reduce the testing error even further.
 #
 # ## Summary
 #

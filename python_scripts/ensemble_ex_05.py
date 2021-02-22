@@ -11,7 +11,7 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %% [markdown]
 # First, create a histogram gradient boosting regressor. You can set the

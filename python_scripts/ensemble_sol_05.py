@@ -11,7 +11,7 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %% [markdown]
 # First, create a histogram gradient boosting regressor. You can set the
@@ -59,7 +59,7 @@ from sklearn.model_selection import KFold
 
 cv = KFold(n_splits=5, shuffle=True, random_state=0)
 results = cross_validate(
-    search, X, y, cv=cv, return_estimator=True, n_jobs=-1)
+    search, data, target, cv=cv, return_estimator=True, n_jobs=-1)
 
 # %% [markdown]
 # Now that we got the cross-validation results, print out the mean and

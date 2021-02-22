@@ -28,7 +28,7 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-X, y = fetch_california_housing(return_X_y=True, as_frame=True)
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %% [markdown]
 # We will make a quick benchmark of the original gradient boosting.
@@ -38,7 +38,7 @@ from sklearn.model_selection import cross_validate
 from sklearn.ensemble import GradientBoostingRegressor
 
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
-cv_results_gbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
+cv_results_gbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
 
 # %%
 print("Gradient Boosting Decision Tree")
@@ -65,8 +65,8 @@ from sklearn.preprocessing import KBinsDiscretizer
 
 discretizer = KBinsDiscretizer(
     n_bins=256, encode="ordinal", strategy="quantile")
-X_trans = discretizer.fit_transform(X)
-X_trans
+data_trans = discretizer.fit_transform(data)
+data_trans
 
 # %% [markdown]
 # ```{note}
@@ -79,7 +79,7 @@ X_trans
 # performed. We can check the number of bins per feature.
 
 # %%
-[len(np.unique(col)) for col in X_trans.T]
+[len(np.unique(col)) for col in data_trans.T]
 
 # %% [markdown]
 # After this transformation, we see that we have at most 256 unique values per
@@ -91,7 +91,7 @@ from sklearn.pipeline import make_pipeline
 
 gradient_boosting = make_pipeline(
     discretizer, GradientBoostingRegressor(n_estimators=200))
-cv_results_gbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
+cv_results_gbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
 
 # %%
 print("Gradient Boosting Decision Tree with KBinsDiscretizer")
@@ -122,7 +122,7 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 
 histogram_gradient_boosting = HistGradientBoostingRegressor(
     max_iter=200, random_state=0)
-cv_results_hgbdt = cross_validate(gradient_boosting, X, y, n_jobs=-1)
+cv_results_hgbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
 
 # %%
 print("Histogram Gradient Boosting Decision Tree")

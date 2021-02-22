@@ -30,7 +30,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
 target = adult_census[target_name]
-data = adult_census.drop(columns=[target_name, "fnlwgt"])
+data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
 
 from sklearn.model_selection import train_test_split
 
@@ -52,9 +52,6 @@ from sklearn.compose import make_column_selector as selector
 categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
-categories = [data[column].unique()
-              for column in data[categorical_columns]]
-
 numerical_columns_selector = selector(dtype_exclude=object)
 numerical_columns = numerical_columns_selector(data)
 
@@ -62,15 +59,14 @@ numerical_columns = numerical_columns_selector(data)
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
-categorical_processor = OneHotEncoder(categories=categories,
-                                      drop="if_binary")
+categorical_processor = OneHotEncoder(handle_unknown="ignore")
 numerical_processor = StandardScaler()
 
 # %% [markdown]
 # Subsequently, create a `ColumnTransformer` to redirect the specific columns
 # a preprocessing pipeline.
-# %%
 
+# %%
 from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer(
@@ -80,8 +76,8 @@ preprocessor = ColumnTransformer(
 
 # %% [markdown]
 # Finally, concatenate the preprocessing pipeline with a logistic regression.
-# %%
 
+# %%
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 

@@ -101,6 +101,18 @@ model.fit(data, target)
 # ```
 
 # %% [markdown]
+# ```{tip}
+# In the notebook, we will use the following terminology:
+#
+# * predictor: it corresponds to a classifier or a regressor
+# * predictive model or model: it corresponds to a succession of steps made of
+#   some preprocessing steps followed ended by a predictor. Sometimes, no
+#   preprocessing is required.
+# * estimator: it corresponds to any scikit-learn object, transformer,
+#   classifier, or regressor.
+# ```
+
+# %% [markdown]
 # Let's use our model to make some predictions using the same dataset. For
 # the sake of simplicity, we will look at the five first predicted targets.
 

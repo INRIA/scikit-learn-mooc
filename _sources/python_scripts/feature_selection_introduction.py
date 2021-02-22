@@ -168,7 +168,7 @@ for idx, pipeline in enumerate(cv_results_with_selection["estimator"]):
 # harder.
 #
 # Therefore, we could come with a much more complicated procedure that could
-# fine-tune (via cross-validation) the number of selected features and change
+# tune (via cross-validation) the number of selected features and change
 # the way feature is selected (e.g. using a machine-learning model). However,
 # going towards these solutions alienates the feature selection's primary
 # purpose to get a significant train/test speed-up. Also, if the primary goal

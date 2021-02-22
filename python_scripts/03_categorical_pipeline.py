@@ -132,27 +132,25 @@ education_column = data_categorical[["education"]]
 
 encoder = OrdinalEncoder()
 education_encoded = encoder.fit_transform(education_column)
-
-# %% [markdown]
-# We can visually check the encoding obtained.
-
-# %%
-import seaborn as sns
-sns.set_context("talk")
-
-education_encoded_df = pd.DataFrame(
-    education_encoded[:10], columns=education_column.columns)
-ax = sns.heatmap(education_encoded_df, annot=True, cmap="tab20", cbar=False)
-ax.set_ylabel("Sample index")
-_ = ax.set_title("Ordinal encoding of 'education' column")
+education_encoded
 
 # %% [markdown]
 # We see that each category in `"education"` has been replaced by a numeric
-# value. Now, we can check the encoding applied on all categorical features.
+# value. We could check the mapping between the categories and the numerical
+# values by checking the fitted attribute `categories_`.
+
+# %%
+encoder.categories_
+
+# %% [markdown]
+#  Now, we can check the encoding applied on all categorical features.
 
 # %%
 data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
+
+# %%
+encoder.categories_
 
 # %%
 print(
@@ -217,17 +215,17 @@ from sklearn.preprocessing import OneHotEncoder
 
 encoder = OneHotEncoder(sparse=False)
 education_encoded = encoder.fit_transform(education_column)
+education_encoded
 
 # %% [markdown]
-# As in the previous section, we will visually check the encoding.
+# We see that encoding a single feature will give a NumPy array full of zeros
+# and ones. We can get a better understanding using the associated feature
+# names resulting from the transformation.
 
 # %%
-education_encoded_df = pd.DataFrame(
-    education_encoded[:10],
-    columns=encoder.get_feature_names(education_column.columns))
-ax = sns.heatmap(education_encoded_df, annot=True, cmap="RdBu", cbar=False)
-ax.set_ylabel("Sample index")
-_ = ax.set_title("Ordinal encoding of 'education' column")
+feature_names = encoder.get_feature_names(input_features=["education"])
+education_encoded = pd.DataFrame(education_encoded, columns=feature_names)
+education_encoded
 
 # %% [markdown]
 # As we can see, each category (unique value) became a column; the encoding
@@ -307,7 +305,7 @@ model = make_pipeline(
     OneHotEncoder(categories=categories, drop="if_binary"),
     LogisticRegression(max_iter=500))
 
-# %% {markdown}
+# %% [markdown]
 # ```{note}
 # Here, we need to increase the number of maximum iteration to obtain a fully
 # converged `LogisticRegression` and silence a `ConvergenceWarning`. In the

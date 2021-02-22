@@ -57,7 +57,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # We will use a decision tree regressor that we expect to overfit and thus not
 # generalize to unseen data. We will use a `ShuffleSplit` cross-validation to
-# check the performance of our model.
+# check the statistical performance of our model.
 #
 # Let's first define our model
 
@@ -86,12 +86,12 @@ print(f"The mean R2 is: "
       f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
 
 # %% [markdown]
-# Surprisingly, we get outstanding performance. We will investigate and find
-# the reason for such good results with a model that is expected to fail. We
-# previously mentioned that `ShuffleSplit` is an iterative cross-validation
-# scheme that shuffles data and split. We will simplify this procedure with a
-# single split and plot the prediction. We can use `train_test_split` for this
-# purpose.
+# Surprisingly, we get outstanding statistical performance. We will investigate
+# and find the reason for such good results with a model that is expected to
+# fail. We previously mentioned that `ShuffleSplit` is an iterative
+# cross-validation scheme that shuffles data and split. We will simplify this
+# procedure with a single split and plot the prediction. We can use
+# `train_test_split` for this purpose.
 
 # %%
 regressor.fit(data_train, target_train)
@@ -100,7 +100,7 @@ target_predicted = regressor.predict(data_test)
 target_predicted = pd.Series(target_predicted, index=target_test.index)
 
 # %% [markdown]
-# Let's check the performance of our model on this split.
+# Let's check the statistical performance of our model on this split.
 
 # %%
 from sklearn.metrics import r2_score
@@ -160,7 +160,7 @@ _ = plt.legend()
 # %% [markdown]
 # We see that our model cannot predict anything because it doesn't have samples
 # around the testing sample. Let's check how we could have made a proper
-# cross-validation scheme to get a reasonable performance estimate.
+# cross-validation scheme to get a reasonable statistical performance estimate.
 #
 # One solution would be to group the samples into time blocks, e.g. by quarter,
 # and predict each group's information by using information from the other

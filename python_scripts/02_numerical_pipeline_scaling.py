@@ -26,8 +26,8 @@
 # * an example of preprocessing, namely the **scaling numerical variables**;
 # * using a scikit-learn **pipeline** to chain preprocessing and model
 #   training;
-# * assessing the performance of our model via **cross-validation** instead of
-#   a single train-test split.
+# * assessing the statistical performance of our model via **cross-validation**
+#   instead of a single train-test split.
 #
 # ## Data preparation
 #
@@ -185,7 +185,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 
 # %% [markdown]
 # We see that scaling the data before to train the logistic regression was
-# beneficial in terms of processing performance. Indeed, the number of
+# beneficial in terms of computational performance. Indeed, the number of
 # iterations decreased as well as the training time. The statistical
 # performance did not change since both models converged.
 #
@@ -209,8 +209,8 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating
 # this random splitting into training and testing sets and aggregating the
-# model performance. By repeating the experiment, one can get an estimate of
-# the variability of the model performance.
+# model statistical performance. By repeating the experiment, one can get an
+# estimate of the variability of the model statistical performance.
 #
 # ```{note}
 # We will go into details regarding cross-validation in the upcoming module
@@ -282,4 +282,4 @@ print(f"The mean cross-validation accuracy is: "
 #
 # * seen the importance of **scaling numerical variables**;
 # * used a **pipeline** to chain scaling and logistic regression training;
-# * assessed the performance of our model via **cross-validation**.
+# * assessed the statistical performance of our model via **cross-validation**.

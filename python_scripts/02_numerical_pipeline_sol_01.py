@@ -26,8 +26,8 @@
 # Use a `DummyClassifier` and do a train-test split to evaluate
 # its accuracy on the test set. This
 # [link](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
-# shows a few examples of how to evaluate the performance of these baseline
-# models.
+# shows a few examples of how to evaluate the statistical performance of these
+# baseline models.
 
 # %%
 import pandas as pd
@@ -64,7 +64,8 @@ data_numeric_train, data_numeric_test, target_train, target_test = \
 
 # %% [markdown]
 # We will first create a dummy classifier which will always predict the
-# high revenue class class, i.e. `" >50K"`, and check the performance.
+# high revenue class class, i.e. `" >50K"`, and check the statistical
+# performance.
 
 # %%
 from sklearn.dummy import DummyClassifier
@@ -78,8 +79,8 @@ print(f"Accuracy of a model predicting only high revenue: {score:.3f}")
 
 # %% [markdown]
 # We clearly see that the score is below 0.5 which might be surprising at
-# first. We will now check the performance of a model which always predict the
-# low revenue class, i.e. `" <=50K"`.
+# first. We will now check the statistical performance of a model which always
+# predict the low revenue class, i.e. `" <=50K"`.
 
 # %%
 class_to_predict = " <=50K"

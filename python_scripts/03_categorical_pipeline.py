@@ -266,7 +266,7 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 #
 # We can now integrate this encoder inside a machine learning pipeline like we
 # did with numerical data: let's train a linear classifier on the encoded data
-# and check the performance of this machine learning pipeline using
+# and check the statistical performance of this machine learning pipeline using
 # cross-validation.
 #
 # Before we create the pipeline, we have to linger on the `native-country`.
@@ -317,8 +317,8 @@ model = make_pipeline(
 # ```
 
 # %% [markdown]
-# Finally, we can check the model's performance only using the categorical
-# columns.
+# Finally, we can check the model's statistical performance only using the
+# categorical columns.
 
 # %%
 from sklearn.model_selection import cross_validate

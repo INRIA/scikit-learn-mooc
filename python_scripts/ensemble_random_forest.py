@@ -40,10 +40,10 @@ bagging = BaggingRegressor(base_estimator=tree, n_estimators=100,
 scores_random_forest = cross_val_score(random_forest, data, target)
 scores_bagging = cross_val_score(bagging, data, target)
 
-print(f"Performance of random forest: "
+print(f"Statistical performance of random forest: "
       f"{scores_random_forest.mean():.3f} +/- "
       f"{scores_random_forest.std():.3f}")
-print(f"Performance of bagging: "
+print(f"Statistical performance of bagging: "
       f"{scores_bagging.mean():.3f} +/- {scores_bagging.std():.3f}")
 
 # %% [markdown]

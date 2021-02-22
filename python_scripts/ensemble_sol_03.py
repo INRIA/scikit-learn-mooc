@@ -106,6 +106,6 @@ _ = plt.title("Validation curve for RandomForest regressor")
 
 # %% [markdown]
 # In contrary to the AdaBoost regressor, we can see that increasing the number
-# trees in the forest will increase the performance of the random forest.
-# In fact, a random forest has less chance to suffer from overfitting than
-# AdaBoost when increasing the number of estimators.
+# trees in the forest will increase the statistical performance of the random
+# forest. In fact, a random forest has less chance to suffer from overfitting
+# than AdaBoost when increasing the number of estimators.

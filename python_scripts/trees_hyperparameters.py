@@ -163,8 +163,8 @@ plt.subplots_adjust(wspace=0.3)
 # The `max_depth` hyperparameter controls the overall complexity of the tree.
 # This parameter is adequate under the assumption that a tree is built is
 # symmetric. However, there is not guarantee that a tree will be symmetric.
-# Indeed, optimal performance could be reached by growing some of the branches
-# deeper than some others.
+# Indeed, optimal statistical performance could be reached by growing some of
+# the branches deeper than some others.
 #
 # We will built a dataset where we will illustrate this asymmetry. We will
 # generate a dataset composed of 2 subsets: one subset where a clear separation

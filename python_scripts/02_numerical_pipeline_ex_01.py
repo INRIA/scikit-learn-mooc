@@ -15,9 +15,9 @@
 # %% [markdown]
 # # 📝 Exercise 01
 #
-# The goal of this exercise is to compare the performance of our classifier
-# (81% accuracy) to some baseline classifiers that would ignore the input data
-# and instead make constant predictions.
+# The goal of this exercise is to compare the statistical performance of our
+# classifier (81% accuracy) to some baseline classifiers that would ignore the
+# input data and instead make constant predictions.
 #
 # - What would be the score of a model that always predicts `' >50K'`?
 # - What would be the score of a model that always predicts `' <= 50K'`?
@@ -26,8 +26,8 @@
 # Use a `DummyClassifier` and do a train-test split to evaluate
 # its accuracy on the test set. This
 # [link](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
-# shows a few examples of how to evaluate the performance of these baseline
-# models.
+# shows a few examples of how to evaluate the statistical performance of these
+# baseline models.
 
 # %%
 import pandas as pd

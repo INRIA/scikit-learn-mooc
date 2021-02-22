@@ -27,7 +27,7 @@ target = blood_transfusion["Class"]
 # Write your code here.
 
 # %% [markdown]
-# Evaluate the performance of your model by cross-validation with a
+# Evaluate the statistical performance of your model by cross-validation with a
 # `ShuffleSplit` scheme.
 
 # %%

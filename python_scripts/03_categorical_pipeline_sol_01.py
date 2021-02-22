@@ -26,14 +26,8 @@
 # `OneHotEncoder` or to some other baseline score.
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
-# prediction time, we need to pre-compute the list of all possible categories
-# ahead of time:
-#
-# ```python
-# categories = [data[column].unique()
-#               for column in data[categorical_columns]]
-# OrdinalEncoder(categories=categories)
-# ```
+# prediction time, you can set the `handle_unknown` and `unknown_value`
+# parameters.
 
 # %%
 import pandas as pd
@@ -56,16 +50,6 @@ categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %% [markdown]
-# As we saw in the lecture notebook, one of the column has rare categories.
-# Thus, we can make sure to not run into trouble in the cross-validation by
-# specifying the known categories in advance.
-
-# %%
-categories = [
-    data[column].unique() for column in data[categorical_columns]]
-categories
-
-# %% [markdown]
 # Now, let's make our predictive pipeline by encoding categories with an
 # ordinal encoder before to feed a logistic regression.
 
@@ -76,7 +60,7 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
 
 model = make_pipeline(
-    OrdinalEncoder(categories=categories),
+    OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
     LogisticRegression(max_iter=500))
 cv_results = cross_validate(model, data_categorical, target)
 scores = cv_results["test_score"]
@@ -111,7 +95,7 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 from sklearn.preprocessing import OneHotEncoder
 
 model = make_pipeline(
-    OneHotEncoder(categories=categories, drop="if_binary"),
+    OneHotEncoder(handle_unknown="ignore"),
     LogisticRegression(max_iter=500))
 cv_results = cross_validate(model, data_categorical, target)
 scores = cv_results["test_score"]

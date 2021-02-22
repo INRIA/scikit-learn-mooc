@@ -26,14 +26,8 @@
 # `OneHotEncoder` or to some other baseline score.
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
-# prediction time, we need to pre-compute the list of all possible categories
-# ahead of time:
-#
-# ```python
-# categories = [data[column].unique()
-#               for column in data[categorical_columns]]
-# OrdinalEncoder(categories=categories)
-# ```
+# prediction time, you can set the `handle_unknown` and `unknown_value`
+# parameters.
 
 # %%
 import pandas as pd

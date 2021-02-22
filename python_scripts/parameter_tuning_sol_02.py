@@ -32,7 +32,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
 target = adult_census[target_name]
-data = adult_census.drop(columns=[target_name, "fnlwgt"])
+data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
 
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, train_size=0.2, random_state=42)

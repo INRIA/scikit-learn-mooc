@@ -6,16 +6,17 @@ Open the dataset `house_prices.csv` with the following command:
 
 ```py
 import pandas as pd
-data = pd.read_csv("../datasets/house_prices.csv", na_values="?")
-data = data.drop(columns="Id")
+ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
+ames_housing = ames_housing.drop(columns="Id")
 
 target_name = "SalePrice"
-X, y = data.drop(columns=target_name), data[target_name]
-y = (y > 200_000).astype(int)
+data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
+target = (target > 200_000).astype(int)
 ```
 
-`data` is a pandas dataframe. The column "SalePrice" contains the target
-variable. Note that we instructed pandas to treat the character "?" as a marker for cells with missing values also known as "null" values.
+`ames_housing` is a pandas dataframe. The column "SalePrice" contains the
+target variable. Note that we instructed pandas to treat the character "?" as a
+marker for cells with missing values also known as "null" values.
 
 Furthermore, we ignore the column named "Id" because unique identifiers are
 usually useless in the context of predictive modeling.
@@ -26,12 +27,14 @@ house is expensive. "Expensive" is defined as a sale price greater than
 $200,000.
 
 ```{admonition} Question
-Use the `data.info()` command to examine the columns of the dataframe. The dataset contains:
-_Select several answers_
+Use the `data.info()` command to examine the columns of the dataframe.
+The dataset contains:
 
 - a) numerical features
 - b) categorical features
 - c) missing data
+
+_Select several answers_
 ```
 
 +++
@@ -39,11 +42,12 @@ _Select several answers_
 ```{admonition} Question
 How many features are available to predict whether or not an house is
 expensive?
-_Select a single answer_
 
 - a) 79
 - b) 80
 - c) 81
+
+_Select a single answer_
 ```
 
 +++
@@ -67,8 +71,8 @@ as shown in a previous notebook.
 
 +++
 
-Refer to the [dataset description](https://www.openml.org/d/42165) regarding the
-meaning of the dataset.
+Refer to the [dataset description](https://www.openml.org/d/42165) regarding
+the meaning of the dataset.
 
 ```{admonition} Question
 Among the following columns, which columns express a quantitative numerical
@@ -98,8 +102,8 @@ numerical_features = [
 ```
 
 Now create a predictive model that uses these numerical columns as input data.
-Your predictive model should be a pipeline composed of a standard scaler, a mean
-imputer (cf.
+Your predictive model should be a pipeline composed of a standard scaler, a
+mean imputer (cf.
 [`sklearn.impute.SimpleImputer(strategy="mean")`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html))
 and a logistic regression classifier.
 

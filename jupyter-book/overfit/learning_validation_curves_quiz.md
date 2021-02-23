@@ -60,6 +60,6 @@ Polynomial models with a high degree parameter:
 ```{admonition} Question
 One can always reach zero test error by:
 
-- a) training models on a training set with a higher number of parameter
-- b) choosing the model parameters to find the best overfitting/underfitting tradeoff
+- a) choosing the model parameters to find the best overfitting/underfitting tradeoff
+- b) day-dreaming ;)
 ```

@@ -3,12 +3,12 @@
 ```{admonition} Question
 What does `CV` stand for in `GridSearchCV` and why?
 
-- a) cross-validation: once we found the best parameters we estimate the model
+- a) cross-validation : once we found the best parameters we estimate the model
      performance through cross-validation on the full data
 - b) circular values: we do a permutation of all the possible parameter value combinations
-- c) cross-validation: for each parameter set, the score is computed by
+- c) cross-validation : for each parameter set, the score is computed by
      cross-validation on the training data
-- d) contribution value: we estimate how much each parameter contributes to the
+- d) contribution value : we estimate how much each parameter contributes to the
      model generalization performance
 ```
 

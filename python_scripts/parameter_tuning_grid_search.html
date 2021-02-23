@@ -1182,7 +1182,7 @@ optimize hyperparameters using a grid-search approach.</p>
 <p>Let us reload the dataset as we did previously:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
 
 <span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1191,7 +1191,7 @@ optimize hyperparameters using a grid-search approach.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1201,9 +1201,25 @@ optimize hyperparameters using a grid-search approach.</p>
 <p>We extract the column containing the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 <span class="n">target</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0         &lt;=50K
+1         &lt;=50K
+2          &gt;50K
+3          &gt;50K
+4         &lt;=50K
+          ...  
+48837     &lt;=50K
+48838      &gt;50K
+48839     &lt;=50K
+48840     &lt;=50K
+48841      &gt;50K
+Name: class, Length: 48842, dtype: object
 </pre></div>
 </div>
 </div>
@@ -1213,16 +1229,128 @@ which is a censurs weighting and the <code class="docutils literal notranslate">
 duplicates the information in another column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>workclass</th>
+      <th>education</th>
+      <th>marital-status</th>
+      <th>occupation</th>
+      <th>relationship</th>
+      <th>race</th>
+      <th>sex</th>
+      <th>capital-gain</th>
+      <th>capital-loss</th>
+      <th>hours-per-week</th>
+      <th>native-country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>Private</td>
+      <td>11th</td>
+      <td>Never-married</td>
+      <td>Machine-op-inspct</td>
+      <td>Own-child</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>Private</td>
+      <td>HS-grad</td>
+      <td>Married-civ-spouse</td>
+      <td>Farming-fishing</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>28</td>
+      <td>Local-gov</td>
+      <td>Assoc-acdm</td>
+      <td>Married-civ-spouse</td>
+      <td>Protective-serv</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>44</td>
+      <td>Private</td>
+      <td>Some-college</td>
+      <td>Married-civ-spouse</td>
+      <td>Machine-op-inspct</td>
+      <td>Husband</td>
+      <td>Black</td>
+      <td>Male</td>
+      <td>7688</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18</td>
+      <td>?</td>
+      <td>Some-college</td>
+      <td>Never-married</td>
+      <td>?</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>30</td>
+      <td>United-States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Once the dataset is loaded, we split it into a training and testing sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -1241,7 +1369,7 @@ representations.</p>
 <p>First we select all the categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
 
 <span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
 <span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -1252,7 +1380,7 @@ representations.</p>
 <p>Then we build our ordinal encoder, giving it the known categories.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
                                           <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
@@ -1264,7 +1392,7 @@ representations.</p>
 and apply to them the ordinal encoder.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
     <span class="p">(</span><span class="s1">&#39;cat-preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
@@ -1277,7 +1405,7 @@ and apply to them the ordinal encoder.</p>
 predict whether or not a person earns more than 50 k$ a year.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for the moment this line is required to import HistGradientBoostingClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for the moment this line is required to import HistGradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
@@ -1290,6 +1418,26 @@ predict whether or not a person earns more than 50 k$ a year.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ae822efa-4c28-45c5-96c9-cb4608e2bc50" type="checkbox" ><label class="sk-toggleable__label" for="ae822efa-4c28-45c5-96c9-cb4608e2bc50">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('preprocessor',
+                 ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                                   transformers=[('cat-preprocessor',
+                                                  OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                                 unknown_value=-1),
+                                                  ['workclass', 'education',
+                                                   'marital-status',
+                                                   'occupation', 'relationship',
+                                                   'race', 'sex',
+                                                   'native-country'])])),
+                ('classifier',
+                 HistGradientBoostingClassifier(max_leaf_nodes=4,
+                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="e4d6bdc0-0cda-4379-8996-21b82ad05e0b" type="checkbox" ><label class="sk-toggleable__label" for="e4d6bdc0-0cda-4379-8996-21b82ad05e0b">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                  transformers=[('cat-preprocessor',
+                                 OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                unknown_value=-1),
+                                 ['workclass', 'education', 'marital-status',
+                                  'occupation', 'relationship', 'race', 'sex',
+                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1d7c87de-a09d-4c9d-9cd9-b6cf8750e389" type="checkbox" ><label class="sk-toggleable__label" for="1d7c87de-a09d-4c9d-9cd9-b6cf8750e389">cat-preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="91d38e91-a7db-482a-9c03-e9a98f3376c2" type="checkbox" ><label class="sk-toggleable__label" for="91d38e91-a7db-482a-9c03-e9a98f3376c2">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="810cb708-6a93-4b9d-a0af-905f032b3156" type="checkbox" ><label class="sk-toggleable__label" for="810cb708-6a93-4b9d-a0af-905f032b3156">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="7a166742-b2bd-47b2-8445-3f4d762103c6" type="checkbox" ><label class="sk-toggleable__label" for="7a166742-b2bd-47b2-8445-3f4d762103c6">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8a3acba5-2b1b-4e9a-ad90-c23053db4d38" type="checkbox" ><label class="sk-toggleable__label" for="8a3acba5-2b1b-4e9a-ad90-c23053db4d38">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 </div>
 <div class="section" id="tuning-using-a-grid-search">
@@ -1302,7 +1450,7 @@ Since the grid-search will be costly, we will only explore the combination
 learning-rate and the maximum number of nodes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
@@ -1314,15 +1462,52 @@ learning-rate and the maximum number of nodes.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.7 s, sys: 197 ms, total: 1.9 s
+Wall time: 14.1 s
+</pre></div>
+</div>
+<div class="output text_html"><style>div.sk-top-container {color: black;background-color: white;}div.sk-toggleable {background-color: white;}label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.2em 0.3em;box-sizing: border-box;text-align: center;}div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}div.sk-estimator {font-family: monospace;background-color: #f0f8ff;margin: 0.25em 0.25em;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;}div.sk-estimator:hover {background-color: #d4ebff;}div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;}div.sk-item {z-index: 1;}div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}div.sk-parallel-item:only-child::after {width: 0;}div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0.2em;box-sizing: border-box;padding-bottom: 0.1em;background-color: white;position: relative;}div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}div.sk-label-container {position: relative;z-index: 2;text-align: center;}div.sk-container {display: inline-block;position: relative;}</style><div class="sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="926fa36e-3f36-4e4a-8c3d-4ef671782f6a" type="checkbox" ><label class="sk-toggleable__label" for="926fa36e-3f36-4e4a-8c3d-4ef671782f6a">GridSearchCV</label><div class="sk-toggleable__content"><pre>GridSearchCV(cv=2,
+             estimator=Pipeline(steps=[('preprocessor',
+                                        ColumnTransformer(remainder='passthrough',
+                                                          sparse_threshold=0,
+                                                          transformers=[('cat-preprocessor',
+                                                                         OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                                                        unknown_value=-1),
+                                                                         ['workclass',
+                                                                          'education',
+                                                                          'marital-status',
+                                                                          'occupation',
+                                                                          'relationship',
+                                                                          'race',
+                                                                          'sex',
+                                                                          'native-country'])])),
+                                       ('classifier',
+                                        HistGradientBoostingClassifier(max_leaf_nodes=4,
+                                                                       random_state=42))]),
+             n_jobs=4,
+             param_grid={'classifier__learning_rate': (0.05, 0.1, 0.5, 1, 5),
+                         'classifier__max_leaf_nodes': (3, 10, 30, 100)})</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="75bf6393-1d35-4180-9f1d-699b049fcf4e" type="checkbox" ><label class="sk-toggleable__label" for="75bf6393-1d35-4180-9f1d-699b049fcf4e">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                  transformers=[('cat-preprocessor',
+                                 OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                unknown_value=-1),
+                                 ['workclass', 'education', 'marital-status',
+                                  'occupation', 'relationship', 'race', 'sex',
+                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="5b6175e6-2095-436b-837f-7f3de52e1b20" type="checkbox" ><label class="sk-toggleable__label" for="5b6175e6-2095-436b-837f-7f3de52e1b20">cat-preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1d971ed3-87fc-405a-8384-37ecee1a5ecc" type="checkbox" ><label class="sk-toggleable__label" for="1d971ed3-87fc-405a-8384-37ecee1a5ecc">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8c63018b-8a86-4169-98d0-efd6d56fa2c2" type="checkbox" ><label class="sk-toggleable__label" for="8c63018b-8a86-4169-98d0-efd6d56fa2c2">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="fca0a0a6-5ff3-41e8-ae93-16d2c3aac1b0" type="checkbox" ><label class="sk-toggleable__label" for="fca0a0a6-5ff3-41e8-ae93-16d2c3aac1b0">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="399721ce-8c49-4c86-bb31-d8964256d1f7" type="checkbox" ><label class="sk-toggleable__label" for="399721ce-8c49-4c86-bb31-d8964256d1f7">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
 </div>
 <p>Finally, we will check the accuracy of our model using the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="sa">f</span><span class="s2">&quot;The test accuracy score of the grid-searched pipeline is: &quot;</span>
     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the grid-searched pipeline is: 0.88
 </pre></div>
 </div>
 </div>
@@ -1350,7 +1535,12 @@ the best parameters found during <code class="docutils literal notranslate"><spa
 parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -1359,8 +1549,13 @@ parameters.</p>
 attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best set of parameters is: &quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best set of parameters is: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best set of parameters is: {&#39;classifier__learning_rate&#39;: 0.1, &#39;classifier__max_leaf_nodes&#39;: 30}
 </pre></div>
 </div>
 </div>
@@ -1373,18 +1568,130 @@ best parameters “by hand” through a double for loop.</p>
 from these results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
     <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">cv_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean_fit_time</th>
+      <th>std_fit_time</th>
+      <th>mean_score_time</th>
+      <th>std_score_time</th>
+      <th>param_classifier__learning_rate</th>
+      <th>param_classifier__max_leaf_nodes</th>
+      <th>params</th>
+      <th>split0_test_score</th>
+      <th>split1_test_score</th>
+      <th>mean_test_score</th>
+      <th>std_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6</th>
+      <td>1.193126</td>
+      <td>0.093479</td>
+      <td>0.493907</td>
+      <td>0.028072</td>
+      <td>0.1</td>
+      <td>30</td>
+      <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
+      <td>0.868912</td>
+      <td>0.867213</td>
+      <td>0.868063</td>
+      <td>0.000850</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.360636</td>
+      <td>0.028885</td>
+      <td>0.583476</td>
+      <td>0.003023</td>
+      <td>0.05</td>
+      <td>30</td>
+      <td>{'classifier__learning_rate': 0.05, 'classifie...</td>
+      <td>0.868530</td>
+      <td>0.866667</td>
+      <td>0.867598</td>
+      <td>0.000932</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.436876</td>
+      <td>0.027628</td>
+      <td>0.238047</td>
+      <td>0.001940</td>
+      <td>0.5</td>
+      <td>30</td>
+      <td>{'classifier__learning_rate': 0.5, 'classifier...</td>
+      <td>0.867056</td>
+      <td>0.865902</td>
+      <td>0.866479</td>
+      <td>0.000577</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.886606</td>
+      <td>0.006809</td>
+      <td>0.467558</td>
+      <td>0.005208</td>
+      <td>0.1</td>
+      <td>10</td>
+      <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
+      <td>0.866783</td>
+      <td>0.866066</td>
+      <td>0.866425</td>
+      <td>0.000359</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.624018</td>
+      <td>0.007296</td>
+      <td>0.327449</td>
+      <td>0.000224</td>
+      <td>0.5</td>
+      <td>3</td>
+      <td>{'classifier__learning_rate': 0.5, 'classifier...</td>
+      <td>0.864872</td>
+      <td>0.866776</td>
+      <td>0.865824</td>
+      <td>0.000952</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Let us focus on the most interesting columns and shorten the parameter
 names to remove the <code class="docutils literal notranslate"><span class="pre">&quot;param_classifier__&quot;</span></code> prefix for readability:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
 <span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span>
     <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
@@ -1395,7 +1702,7 @@ names to remove the <code class="docutils literal notranslate"><span class="pre"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
     <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">param_name</span>
@@ -1406,6 +1713,196 @@ names to remove the <code class="docutils literal notranslate"><span class="pre"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>learning_rate</th>
+      <th>max_leaf_nodes</th>
+      <th>mean_test_score</th>
+      <th>std_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6</th>
+      <td>0.1</td>
+      <td>30</td>
+      <td>0.868063</td>
+      <td>0.000850</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.05</td>
+      <td>30</td>
+      <td>0.867598</td>
+      <td>0.000932</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.5</td>
+      <td>30</td>
+      <td>0.866479</td>
+      <td>0.000577</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.1</td>
+      <td>10</td>
+      <td>0.866425</td>
+      <td>0.000359</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.5</td>
+      <td>3</td>
+      <td>0.865824</td>
+      <td>0.000952</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.5</td>
+      <td>10</td>
+      <td>0.865824</td>
+      <td>0.000031</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.05</td>
+      <td>100</td>
+      <td>0.865797</td>
+      <td>0.001259</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.1</td>
+      <td>100</td>
+      <td>0.864732</td>
+      <td>0.000795</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.05</td>
+      <td>10</td>
+      <td>0.862029</td>
+      <td>0.000222</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.5</td>
+      <td>100</td>
+      <td>0.859491</td>
+      <td>0.001069</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1</td>
+      <td>10</td>
+      <td>0.858863</td>
+      <td>0.004036</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>3</td>
+      <td>0.857389</td>
+      <td>0.003545</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.1</td>
+      <td>3</td>
+      <td>0.853266</td>
+      <td>0.000515</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>30</td>
+      <td>0.851028</td>
+      <td>0.002707</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>100</td>
+      <td>0.835194</td>
+      <td>0.004609</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.05</td>
+      <td>3</td>
+      <td>0.827196</td>
+      <td>0.000214</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>5</td>
+      <td>100</td>
+      <td>0.727579</td>
+      <td>0.055780</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>5</td>
+      <td>30</td>
+      <td>0.638062</td>
+      <td>0.144696</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>5</td>
+      <td>10</td>
+      <td>0.527527</td>
+      <td>0.175411</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>5</td>
+      <td>3</td>
+      <td>0.283476</td>
+      <td>0.003775</td>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>With only 2 parameters, we might want to visualize the grid-search as a
 heatmap. We need to transform our <code class="docutils literal notranslate"><span class="pre">cv_results</span></code> into a dataframe where:</p>
@@ -1416,7 +1913,7 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pivoted_cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pivoted_cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
     <span class="n">values</span><span class="o">=</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">],</span>
     <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">])</span>
 
@@ -1424,11 +1921,82 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>max_leaf_nodes</th>
+      <th>3</th>
+      <th>10</th>
+      <th>30</th>
+      <th>100</th>
+    </tr>
+    <tr>
+      <th>learning_rate</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0.05</th>
+      <td>0.827196</td>
+      <td>0.862029</td>
+      <td>0.867598</td>
+      <td>0.865797</td>
+    </tr>
+    <tr>
+      <th>0.10</th>
+      <td>0.853266</td>
+      <td>0.866425</td>
+      <td>0.868063</td>
+      <td>0.864732</td>
+    </tr>
+    <tr>
+      <th>0.50</th>
+      <td>0.865824</td>
+      <td>0.865824</td>
+      <td>0.866479</td>
+      <td>0.859491</td>
+    </tr>
+    <tr>
+      <th>1.00</th>
+      <td>0.857389</td>
+      <td>0.858863</td>
+      <td>0.851028</td>
+      <td>0.835194</td>
+    </tr>
+    <tr>
+      <th>5.00</th>
+      <td>0.283476</td>
+      <td>0.527527</td>
+      <td>0.638062</td>
+      <td>0.727579</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>We can use a heatmap representation to show the above dataframe visually.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pivoted_cv_results</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
@@ -1436,6 +2004,9 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/parameter_tuning_grid_search_35_0.png" src="../_images/parameter_tuning_grid_search_35_0.png" />
 </div>
 </div>
 <p>The above tables highlights the following things:</p>

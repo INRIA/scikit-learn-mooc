@@ -6,7 +6,7 @@ By default, a bagging predictor draws:
 - a) subsamples with replacement over samples
 - b) subsamples with replacement over features
 - c) subsamples without replacement over samples
-- c) subsamples without replacement over features
+- d) subsamples without replacement over features
 ```
 
 +++

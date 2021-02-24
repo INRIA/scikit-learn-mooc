@@ -21,7 +21,7 @@ Histogram gradient boosting is an accelerated gradient boosting algorithm that:
 +++
 
 ```{admonition} Question
-AdaBoost will not overfit when increasing the number of predictor
+AdaBoost will not overfit when increasing the number of predictors
 
 - a) true
 - b) false

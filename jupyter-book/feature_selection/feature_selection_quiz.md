@@ -6,6 +6,8 @@ What is the main advantage of using feature selection?
 - a) speeding-up the training of an algorithm
 - b) fine tuning the model's performance
 - c) remove noisy features
+
+_Select a single answer_
 ```
 
 +++

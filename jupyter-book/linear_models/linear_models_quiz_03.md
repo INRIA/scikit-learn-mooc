@@ -44,7 +44,7 @@ Scaling the data before fitting a model:
 +++
 
 ```{admonition} Question
-The effect of an l2-regularization is to:
+The effect of an l2-regularization (as done in ridge) is to:
 
 - a) shrink all weights towards zero
 - b) make all weights equal

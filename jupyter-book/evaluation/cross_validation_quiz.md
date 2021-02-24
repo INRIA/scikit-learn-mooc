@@ -33,7 +33,7 @@ cross-validation strategy we should **not** use?
 +++
 
 ```{admonition} Question
-How to evaluate and fine-tune the parameters' model jointly?
+How to evaluate and tune the hyperparameters' model?
 
 - a) Fit the model on the train set, set the parameters using the test set, and
   evaluate the model on the same test set

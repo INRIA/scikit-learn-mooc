@@ -7,9 +7,8 @@ What does `CV` stand for in `GridSearchCV` and why?
      performance through cross-validation on the full data
 - b) circular values: we do a permutation of all the possible parameter value
      combinations
-- c) cross-validation: for each parameter set, a model is trained on some
-    training data and the score is computed on some testing data. The training
-    and testing sets are defined by the cross-validation strategy
+- c) cross-validation: the generalization performance of each parameter set is
+     evaluated by using an internal cross-validation procedure
 - d) contribution value: we estimate how much each parameter contributes to the
      model generalization performance
 ```
@@ -23,7 +22,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
+from sklearn.datasets import load_iris
 
+X, y = load_iris(return_X_y=True)
 pipeline = Pipeline([
     ('scaler', StandardScaler()),
     ('classifier', LogisticRegression())
@@ -36,12 +37,13 @@ param_grid = ...  # complete this line in your answer
 model = GridSearchCV(
     pipeline,
     param_grid=param_grid
-})
+).fit(X, y)
+model.best_params_
 ```
 
 How should the `param_grid` variable be defined:
 - a) `param_grid = {'logisticregression__C': [0.1, 1, 10]}`
-- b) `param_grid = {classifier__C': [0.1, 1, 10]}`
+- b) `param_grid = {'classifier__C': [0.1, 1, 10]}`
 - c) `param_grid = {'classifier__C': 0.1, 'classifier__C': 1, 'classifier__C': 10}`
 - d) `param_grid = {'C': [0.1, 1, 10]}`
 ````
@@ -94,15 +96,19 @@ fig = px.parallel_coordinates(
 fig.show()
 ```
 
-Select the worst performing models (for instance models with a
-"mean_test_score" lower than 0.7): what do have all these models in common:
+```{note}
+We **transformed most axis values by taking a log10 or log2** to
+spread the active ranges and improve the readability of the plot.
+```
+Select bad performing models, that is models with a `mean_test_score`
+lower than 0.8. What do have all these models in common?
 
 - a) too large `l2_regularization`
 - b) too small `l2_regularization`
 - c) too large `learning_rate`
-- d) too low `learning_rate`
+- d) too small `learning_rate`
 - e) too large `max_bins`
-- f) too large `max_bins`
+- f) too small `max_bins`
 
 _Select a single answer_
 ````

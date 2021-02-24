@@ -1209,9 +1209,8 @@
 performance through cross-validation on the full data</p></li>
 <li><p>b) circular values: we do a permutation of all the possible parameter value
 combinations</p></li>
-<li><p>c) cross-validation: for each parameter set, a model is trained on some
-training data and the score is computed on some testing data. The training
-and testing sets are defined by the cross-validation strategy</p></li>
+<li><p>c) cross-validation: the generalization performance of each parameter set is
+evaluated by using an internal cross-validation procedure</p></li>
 <li><p>d) contribution value: we estimate how much each parameter contributes to the
 model generalization performance</p></li>
 </ul>
@@ -1223,7 +1222,9 @@ model generalization performance</p></li>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
 
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
     <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
     <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
@@ -1235,13 +1236,14 @@ model generalization performance</p></li>
 <span class="n">model</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
     <span class="n">pipeline</span><span class="p">,</span>
     <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span>
-<span class="p">})</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">best_params_</span>
 </pre></div>
 </div>
 <p>How should the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> variable be defined:</p>
 <ul class="simple">
 <li><p>a) <code class="docutils literal notranslate"><span class="pre">param_grid</span> <span class="pre">=</span> <span class="pre">{'logisticregression__C':</span> <span class="pre">[0.1,</span> <span class="pre">1,</span> <span class="pre">10]}</span></code></p></li>
-<li><p>b) <code class="docutils literal notranslate"><span class="pre">param_grid</span> <span class="pre">=</span> <span class="pre">{classifier__C':</span> <span class="pre">[0.1,</span> <span class="pre">1,</span> <span class="pre">10]}</span></code></p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">param_grid</span> <span class="pre">=</span> <span class="pre">{'classifier__C':</span> <span class="pre">[0.1,</span> <span class="pre">1,</span> <span class="pre">10]}</span></code></p></li>
 <li><p>c) <code class="docutils literal notranslate"><span class="pre">param_grid</span> <span class="pre">=</span> <span class="pre">{'classifier__C':</span> <span class="pre">0.1,</span> <span class="pre">'classifier__C':</span> <span class="pre">1,</span> <span class="pre">'classifier__C':</span> <span class="pre">10}</span></code></p></li>
 <li><p>d) <code class="docutils literal notranslate"><span class="pre">param_grid</span> <span class="pre">=</span> <span class="pre">{'C':</span> <span class="pre">[0.1,</span> <span class="pre">1,</span> <span class="pre">10]}</span></code></p></li>
 </ul>
@@ -1291,15 +1293,20 @@ notebook:</p>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Select the worst performing models (for instance models with a
-“mean_test_score” lower than 0.7): what do have all these models in common:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We <strong>transformed most axis values by taking a log10 or log2</strong> to
+spread the active ranges and improve the readability of the plot.</p>
+</div>
+<p>Select bad performing models, that is models with a <code class="docutils literal notranslate"><span class="pre">mean_test_score</span></code>
+lower than 0.8. What do have all these models in common?</p>
 <ul class="simple">
 <li><p>a) too large <code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code></p></li>
 <li><p>b) too small <code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code></p></li>
 <li><p>c) too large <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></li>
-<li><p>d) too low <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></li>
+<li><p>d) too small <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></li>
 <li><p>e) too large <code class="docutils literal notranslate"><span class="pre">max_bins</span></code></p></li>
-<li><p>f) too large <code class="docutils literal notranslate"><span class="pre">max_bins</span></code></p></li>
+<li><p>f) too small <code class="docutils literal notranslate"><span class="pre">max_bins</span></code></p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>

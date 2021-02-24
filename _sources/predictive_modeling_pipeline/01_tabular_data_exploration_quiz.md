@@ -1,7 +1,7 @@
 # ✅ Quiz
 
 ```{admonition} Question
-The pandas library allows us to:
+We used the pandas library to:
 
 - a) load data from CSV files
 - b) filter and transform tabular data
@@ -14,7 +14,7 @@ The pandas library allows us to:
 +++
 
 ```{admonition} Question
-How is organized a tabular dataset ?
+How is organized a tabular dataset?
 
 - a) a column represents a sample and a row represents a feature
 - b) a column represents a feature and a row represents a sample

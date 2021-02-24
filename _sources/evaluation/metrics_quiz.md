@@ -36,7 +36,7 @@ When errors are used in the function `cross_validate` in scikit-learn, one
 should:
 
 - a) pass a callable that reverse the sign of the error
-- b) create a scorer using `make_scorer` and reverse the sign
+- b) create a scorer using `make_scorer` and pass the parameter `greater_is_better=False`
 - c) pass a string with the name of the metric which should start with the
   prefix `neg_`
 ```

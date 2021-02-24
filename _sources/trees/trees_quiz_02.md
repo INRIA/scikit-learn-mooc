@@ -2,7 +2,7 @@
 
 ```{admonition} Question
 When fitting a decision tree regressor in scikit-learn, the predicted values at
-a node corresponds to:
+a leaf corresponds to:
 
 - a) the median of the training samples at this node
 - b) the mean of the training samples at this node
@@ -22,7 +22,7 @@ Decision trees are capable of:
 +++
 
 ```{admonition} Question
-The decision function of a tree regressor corresponds to:
+The predictions of a tree regressor corresponds to:
 
 - a) a piecewise-linear function
 - b) a piecewise-constant function

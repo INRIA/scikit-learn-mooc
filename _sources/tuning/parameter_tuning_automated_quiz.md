@@ -94,8 +94,7 @@ fig.show()
 ```
 
 Select the worst performing models (for instance models with a
-"mean_test_score" lower than 0.7): what do have all these models in common
-(choose one):
+"mean_test_score" lower than 0.7): what do have all these models in common:
 
 - a) too large `l2_regularization`
 - b) too small `l2_regularization`
@@ -103,6 +102,8 @@ Select the worst performing models (for instance models with a
 - d) too low `learning_rate`
 - e) too large `max_bins`
 - f) too large `max_bins`
+
+_Select a single answer_
 ````
 
 +++
@@ -110,12 +111,14 @@ Select the worst performing models (for instance models with a
 ```{admonition} Question
 Using the above plot, identify ranges of values for hyperparameter that
 always prevent the model to reach a test score higher than 0.86, irrespective
-of the other values (check the affirmative statement):
+of the other values:
 
 - a) too large `l2_regularization`
 - b) too small `l2_regularization`
 - c) too large `learning_rate`
 - d) too low `learning_rate`
 - e) too large `max_bins`
-- f) too large `max_bins`
+- f) too low `max_bins`
+
+_Select several answers_
 ```

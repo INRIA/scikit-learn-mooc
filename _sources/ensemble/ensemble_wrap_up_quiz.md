@@ -143,7 +143,7 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Is the balanced accuracy of the `BalancedBaggingClassifier is
+Is the balanced accuracy of the `BalancedBaggingClassifier` is
 _choose an answer_ than an `HistGradientBoostingClassifier` alone?
 
 - a) Worse

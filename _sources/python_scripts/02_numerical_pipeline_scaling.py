@@ -110,14 +110,6 @@ data_train.describe()
 # * Many models such as logistic regression use a numerical solver (based on
 #   gradient descent) to find their optimal parameters. This solver converges
 #   faster when the features are scaled.
-#
-# * predictors using Euclidean distance, for instance k-nearest-neighbors,
-#   should have normalized features so that each one contributes equally to the
-#   distance computation;
-# * predictors using gradient-descent based algorithms, for instance
-#   logistic regression, to find optimal parameters work better and faster;
-# * predictors using regularization, for instance logistic regression,
-#   require normalized features to properly apply the weights.
 # ```
 #
 # Whether or not a machine learning model requires scaling the features depends

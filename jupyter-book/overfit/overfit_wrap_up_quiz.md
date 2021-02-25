@@ -20,25 +20,28 @@ target variable.
 Select the correct answers from the following proposals.
 
 - a) The problem to be solved is a regression problem
-- b) The problem to be solved is a classification problem
-- c) The target distribution is normally distributed
-- d) The target distribution is skewed
-- e) The ratio of the class counts in balanced (~50% - ~50% of samples belong
-  to each class)
-- d) The ratio of the class counts is imbalanced (~75% - ~25% of samples belong
-  to each class, respectively)
+- b) The problem to be solved is a binary classification problem
+  (exactly 2 possible classes)
+- c) The problem to be solved is a multiclass classification problem
+  (more than 2 possible classes)
+- d) The proportions of the class counts are balanced: there are approximately
+  the same number of rows for each class
+- e) The proportions of the class counts are imbalanced: some classes have more
+  than twice as many rows than others)
 
 _Select several answers_
 
-Hint: `target.unique()`, `target.hist(), and `target.value_counts() are methods
+Hint: `target.unique()`, and `target.value_counts() are methods
 that are helpful to answer to this question.
 ```
 
 +++
 
 ```{admonition} Question
-Using a `sklearn.dummy.DummyClassifier`, what is the average of the accuracy
-scores obtained by performing a 10-fold cross-validation.
+Using a
+[`sklearn.dummy.DummyClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
+and `the strategy `"most_frequent"`, what is the average of the accuracy scores
+obtained by performing a 10-fold cross-validation.
 
 - a) ~25%
 - b) ~50%
@@ -63,18 +66,18 @@ _Select a single answer_
 
 +++
 
-We will use a `KNearestNeighborsClassifier` for the remaining of the exercise.
+We will use a `KNeighborsClassifier` for the remainder of this quiz.
 
 ```{admonition} Question
 Why is it relevant to add a preprocessing step to scale the data using a
 `StandardScaler` when working with a `KNearestNeighborsClassifier`?
 
-- a) xxx
+- a) faster to compute the list of neighbors on scaled data
 - b) k-nearest neighbors is based on computing some distances. Features need
   to be normalized to contribute approximately equally to the distance
   computation.
 - c) This is irrelevant. One could use k-nearest neighbors without normalizing
-  the dataset.
+  the dataset and get a very similar cross-validation score.
 
 _Select a single answer_
 ```
@@ -82,8 +85,8 @@ _Select a single answer_
 +++
 
 Create a scikit-learn pipeline where a `StandardScaler` will be used to scale
-the data followed by a `KNearestNeighborsClassifier`. Use the default
-hyperparameter
+the data followed by a `KNeighborsClassifier`. Use the default
+hyperparameter.
 
 ```{admonition} Question
 Inspect the parameters of the created pipeline. What is the value of K, the
@@ -97,8 +100,8 @@ number of neighbors considered when predicting with the k-nearest neighbors.
 
 _Select a single answer_
 
-Hint: You can use `model.get_params()` to get the parameters that can be set
-in a scikit-learn estimator.
+Hint: You can use model.get_params() to get the parameters of a scikit-learn
+estimator.
 ```
 
 +++
@@ -113,6 +116,10 @@ answer.
 - c) The model clearly overfits
 
 _Select a single answer_
+
+Hint: compute the average test score and the average train score and compare
+them. Make sure to pass `return_train_score=True` to the `cross_validate`
+function to also compute the train score.
 ```
 
 +++
@@ -127,9 +134,8 @@ param_range = [1, 2, 5, 10, 20, 50, 100, 200, 500]
 Also, use a 20-fold cross-validation and compute the balanced accuracy score
 instead of the default accuracy score (check the `scoring` parameter). Finally,
 plot the average train and test scores for the different value of the
-hyperparameter. Also, plot the a confidence interval based on the standard
-deviation of the train and test scores. We recall that the name of the
-parameter can be found using `model.get_params()`.
+hyperparameter. We recall that the name of the parameter can be found using
+`model.get_params()`.
 
 ```{admonition} Question
 Select the true affirmations stated below:
@@ -140,9 +146,9 @@ Select the true affirmations stated below:
 - d) The model overfits for a range of `n_neighbors` values between 1 to 10
 - e) The model overfits for a range of `n_neighbors` values between 10 to 100
 - f) The model overfits for a range of `n_neighbors` values between 100 to 500
-- g) The model generalizes for a range of `n_neighbors` values between 1 to 10
-- h) The model generalizes for a range of `n_neighbors` values between 10 to 100
-- j) The model generalizes for a range of `n_neighbors` values between 100 to 500
+- g) The model best generalizes for a range of `n_neighbors` values between 1 to 10
+- h) The model best generalizes for a range of `n_neighbors` values between 10 to 100
+- j) The model best generalizes for a range of `n_neighbors` values between 100 to 500
 
 _Select several answers_
 ```

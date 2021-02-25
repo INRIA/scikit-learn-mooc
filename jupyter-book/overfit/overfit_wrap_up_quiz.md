@@ -31,7 +31,7 @@ Select the correct answers from the following proposals.
 
 _Select several answers_
 
-Hint: `target.unique()`, and `target.value_counts() are methods
+Hint: `target.unique()`, and `target.value_counts()` are methods
 that are helpful to answer to this question.
 ```
 

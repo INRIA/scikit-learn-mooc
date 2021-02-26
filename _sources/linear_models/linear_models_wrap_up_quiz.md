@@ -30,16 +30,14 @@ numerical_features = [
 data_numerical = data[numerical_features]
 ```
 
-Start by fitting a linear regression. Use a 10-Fold cross-validation and pass
-the argument `return_estimator=True` to access to all estimators fitted for
-each fold. As we saw in the different notebook, you will have to use a
-`StandardScaler` to scale the data before passing it to the regressor. Also,
-some missing data are present in the different columns. You can use a
-`SimpleImputer` with the default parameters to impute missing data.
-
-To answer to the following questions, fit a linear regression via a 10-fold
-cross-validation. Pass the option `return_estimator=True` since we will check
-the coefficients of linear regression fitted on each fold.
+Start by fitting a linear regression (`sklearn.linear_model.LinearRegression`).
+Use a 10-fold cross-validation and pass the argument `return_estimator=True` in
+`sklearn.model_selection.cross_validate` to access all fitted estimators fitted
+on each fold. As we saw in the previous notebooks, you will have to use a
+`sklearn.preprocessing.StandardScaler` to scale the data before passing it to
+the regressor. Also, some missing data are present in the different columns.
+You can use a `sklearn.impute.SimpleImputer` with the default parameters to
+impute missing data.
 
 ```{admonition} Question
 What magnitude of the extremum weight values for all features:
@@ -53,8 +51,8 @@ _Select a single answer_
 
 +++
 
-Repeat the same experiment by fitting a ridge regressor with the default
-parameter.
+Repeat the same experiment by fitting a ridge regressor
+(`sklearn.linear_model.Rigdge`) with the default parameter.
 
 ```{admonition} Question
 What magnitude of the extremum weight values for all features?
@@ -110,9 +108,10 @@ _Select a single answer_
 +++
 
 Now, we will search for the regularization strength that will maximize the
-statistical performance of our predictive model. Fit a `RidgeCV` instead of
-a `Ridge` regressor pass `alphas=np.logspace(-1, 3, num=30)` to explore the
-effect of changing the regularization strength.
+statistical performance of our predictive model. Fit a
+[`sklearn.linear_model.RidgeCV`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html)
+instead of a `Ridge` regressor pass `alphas=np.logspace(-1, 3, num=30)` to
+explore the effect of changing the regularization strength.
 
 ```{admonition} Question
 Is there major differences regarding the most important weights?
@@ -141,7 +140,8 @@ _Select a single answer_
 +++
 
 Now, we will tackle a classification problem instead of a regression problem.
-Load the Adult Census dataset with the following snippet of code.
+Load the Adult Census dataset with the following snippet of code and we will
+work only with **numerical features**.
 
 ```py
 adult_census = pd.read_csv("../datasets/adult-census.csv")
@@ -175,9 +175,10 @@ Hint: you can use `df.info()` to get information regarding each column.
 
 +++
 
-Fit a `LogisticRegression` classifier using a 10-fold cross-validation to
-assess the performance. Since we are dealing with a linear model, do not forget
-to scale the data with a `StandardScaler` before training the model.
+Fit a `sklearn.linear_model.LogisticRegression` classifier using a 10-fold
+cross-validation to assess the performance. Since we are dealing with a linear
+model, do not forget to scale the data with a `StandardScaler` before training
+the model.
 
 ```{admonition} Question
 In average, how much the logistic regression is better/worse/similar to a dummy
@@ -205,8 +206,8 @@ _Select a single answer_
 
 +++
 
-Now, we will work with both numerical and categorical data. You can load
-Adult Census with the following snippet:
+Now, we will work with **both numerical and categorical features**. You can
+load Adult Census with the following snippet:
 
 ```py
 adult_census = pd.read_csv("../datasets/adult-census.csv")

@@ -1219,9 +1219,10 @@
 labels that our model should predict.</p>
 <p>For all the questions below, make a cross-validation evaluation using a
 10-fold cross-validation strategy.</p>
-<p>Evaluate the performance of a <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> that always predict the most
-frequent class seen during the training. Be aware that you can pass a list
-of score to compute in <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> by setting the parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code>.</p>
+<p>Evaluate the performance of a <code class="docutils literal notranslate"><span class="pre">sklearn.dummy.DummyClassifier</span></code> that always
+predict the most frequent class seen during the training. Be aware that you can
+pass a list of score to compute in <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> by
+setting the parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code>.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>What the accuracy of this dummy classifier?</p>
@@ -1242,8 +1243,8 @@ of score to compute in <code class="docutils literal notranslate"><span class="p
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Replace the <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> by a <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> and check the
-statistical performance to answer the question below.</p>
+<p>Replace the <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> by a <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeClassifier</span></code> and
+check the statistical performance to answer the question below.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>Is a single decision classifier better than a dummy classifier (at least an
@@ -1254,7 +1255,8 @@ increase of 4%) in terms of balanced accuracy?</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Evaluate the performance of a <code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> using 300 trees.</p>
+<p>Evaluate the performance of a <code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code> using
+300 trees.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>Is random forest better than a dummy classifier (at least an increase of 4%)
@@ -1265,9 +1267,9 @@ in terms of balanced accuracy?</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Compare a <code class="docutils literal notranslate"><span class="pre">GradientBoostingClassifier</span></code> and a <code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> with both
-300 trees. Evaluate both models with a 10-fold cross-validation and repeat the
-experiment 10 times.</p>
+<p>Compare a <code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.GradientBoostingClassifier</span></code> and a
+<code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code> with both 300 trees. Evaluate both
+models with a 10-fold cross-validation and repeat the experiment 10 times.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>In average, is the gradient boosting better than the random forest?</p>
@@ -1278,8 +1280,17 @@ experiment 10 times.</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Evaluate the performance of a <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>. Enable
-early-stopping and add as many trees as needed.</p>
+<p>Evaluate the performance of a
+<code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.HistGradientBoostingClassifier</span></code>. Enable early-stopping and
+add as many trees as needed.</p>
+<p><strong>Note</strong>: Be aware that you need a specific import when importing the
+<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="c1"># explicitly require this experimental feature</span>
+<span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>
+<span class="c1"># now you can import normally from ensemble</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+</pre></div>
+</div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>Is histogram gradient boosting a better classifier?</p>
@@ -1306,9 +1317,25 @@ worse than the random forest</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Use imbalanced-learn and the class <code class="docutils literal notranslate"><span class="pre">BalancedBaggingClassifier</span></code>. Provide the
-previous histogram gradient boosting as a base estimator and train this bagging
-classifier with 50 estimators.</p>
+<p><a class="reference external" href="https://imbalanced-learn.org/stable/">Imbalanced-learn</a> is an open-source
+library relying on scikit-learn and provides methods to deal with
+classification with imbalanced classes.</p>
+<p>Here, we will be using the class
+<a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.ensemble.BalancedBaggingClassifier.html"><code class="docutils literal notranslate"><span class="pre">imblearn.ensemble.BalancedBaggingClassifier</span></code></a>
+to alleviate the issue of class imbalance.</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">BalancedBaggingClassifier</span></code> and pass an
+<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> as a <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code>. Fix the hyperparameter
+<code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> to 50.</p>
+<p><strong>Note</strong>: In case that imbalanced-learn is not available on your laptop, you
+can install it via PyPI or conda-forge channel. Thus in a notebook, you can
+install using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">imbalanced</span><span class="o">-</span><span class="n">learn</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!conda install imbalannced-learn -c conda-forge
+</pre></div>
+</div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>What is a <a class="reference external" href="https://imbalanced-learn.org/stable/ensemble.html#bagging"><code class="docutils literal notranslate"><span class="pre">BalancedBaggingClassifier</span></code></a>?</p>
@@ -1316,8 +1343,8 @@ classifier with 50 estimators.</p>
 <li><p>a) Is a classifier that make sure that each tree leaves belong to the same
 depth level</p></li>
 <li><p>b) Is a classifier that explicitly maximizes the balanced accuracy score</p></li>
-<li><p>c) Equivalent to a <code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code> with a resampling of each bootstrap
-sample to contain a many samples from each class.</p></li>
+<li><p>c) Equivalent to a <code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.BaggingClassifier</span></code> with a resampling of
+each bootstrap sample to contain a many samples from each class.</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>

@@ -1230,15 +1230,14 @@ below:</p>
 <span class="n">data_numerical</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_features</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Start by fitting a linear regression. Use a 10-Fold cross-validation and pass
-the argument <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> to access to all estimators fitted for
-each fold. As we saw in the different notebook, you will have to use a
-<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> to scale the data before passing it to the regressor. Also,
-some missing data are present in the different columns. You can use a
-<code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code> with the default parameters to impute missing data.</p>
-<p>To answer to the following questions, fit a linear regression via a 10-fold
-cross-validation. Pass the option <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> since we will check
-the coefficients of linear regression fitted on each fold.</p>
+<p>Start by fitting a linear regression (<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code>).
+Use a 10-fold cross-validation and pass the argument <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> in
+<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> to access all fitted estimators fitted
+on each fold. As we saw in the previous notebooks, you will have to use a
+<code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code> to scale the data before passing it to
+the regressor. Also, some missing data are present in the different columns.
+You can use a <code class="docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code> with the default parameters to
+impute missing data.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>What magnitude of the extremum weight values for all features:</p>
@@ -1249,8 +1248,8 @@ the coefficients of linear regression fitted on each fold.</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Repeat the same experiment by fitting a ridge regressor with the default
-parameter.</p>
+<p>Repeat the same experiment by fitting a ridge regressor
+(<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.Rigdge</span></code>) with the default parameter.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>What magnitude of the extremum weight values for all features?</p>
@@ -1296,9 +1295,10 @@ weight?</p>
 <p><em>Select a single answer</em></p>
 </div>
 <p>Now, we will search for the regularization strength that will maximize the
-statistical performance of our predictive model. Fit a <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> instead of
-a <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> regressor pass <code class="docutils literal notranslate"><span class="pre">alphas=np.logspace(-1,</span> <span class="pre">3,</span> <span class="pre">num=30)</span></code> to explore the
-effect of changing the regularization strength.</p>
+statistical performance of our predictive model. Fit a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html"><code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.RidgeCV</span></code></a>
+instead of a <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> regressor pass <code class="docutils literal notranslate"><span class="pre">alphas=np.logspace(-1,</span> <span class="pre">3,</span> <span class="pre">num=30)</span></code> to
+explore the effect of changing the regularization strength.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>Is there major differences regarding the most important weights?</p>
@@ -1321,7 +1321,8 @@ effect of changing the regularization strength.</p>
 <p><em>Select a single answer</em></p>
 </div>
 <p>Now, we will tackle a classification problem instead of a regression problem.
-Load the Adult Census dataset with the following snippet of code.</p>
+Load the Adult Census dataset with the following snippet of code and we will
+work only with <strong>numerical features</strong>.</p>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">([</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;floating&quot;</span><span class="p">])</span>
@@ -1348,9 +1349,10 @@ Load the Adult Census dataset with the following snippet of code.</p>
 <p><em>Select a single answer</em></p>
 <p>Hint: you can use <code class="docutils literal notranslate"><span class="pre">df.info()</span></code> to get information regarding each column.</p>
 </div>
-<p>Fit a <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> classifier using a 10-fold cross-validation to
-assess the performance. Since we are dealing with a linear model, do not forget
-to scale the data with a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> before training the model.</p>
+<p>Fit a <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression</span></code> classifier using a 10-fold
+cross-validation to assess the performance. Since we are dealing with a linear
+model, do not forget to scale the data with a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> before training
+the model.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>In average, how much the logistic regression is better/worse/similar to a dummy
@@ -1373,8 +1375,8 @@ classifier that would predict the most frequent class?</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Now, we will work with both numerical and categorical data. You can load
-Adult Census with the following snippet:</p>
+<p>Now, we will work with <strong>both numerical and categorical features</strong>. You can
+load Adult Census with the following snippet:</p>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;fnlwgt&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>

@@ -1232,13 +1232,16 @@ below:</p>
 <span class="n">data_numerical</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_features</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Compare the statistical performance of a decision tree and a linear regression.
-Create two predictive models and evaluate them by 10-Fold cross-validation.</p>
-<p>Note that missing values should be handle with a scikit-learn <code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code>
-and the default strategy. Be also aware that the linear model requires to scale
-the data. You can use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>.</p>
-<p>Use the default parameter for both <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> and
-<code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code>.</p>
+<p>We will compare the statistical performance of a decision tree and a linear
+regression. For this purpose, we will create two separate predictive models
+and evaluate them by 10-fold cross-validation.</p>
+<p>Thus, use <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code> to create the model. Use the default
+parameters for both models.</p>
+<p><strong>Note</strong>: missing values should be handle with a scikit-learn
+<code class="docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code> and the default strategy (<code class="docutils literal notranslate"><span class="pre">&quot;mean&quot;</span></code>). Be also
+aware that a linear model requires to scale the data. You can use a
+<code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code>.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>Is the decision tree model better in terms of <span class="math notranslate nohighlight">\(R^2\)</span> score than the linear
@@ -1250,11 +1253,13 @@ regression?</p>
 <p><em>Select a single answer</em></p>
 </div>
 <p>Instead of using the default parameter for decision tree regressor, we will
-optimize the depth of the tree. Using a grid-search with a 10-fold cross-validation, answer to the questions below. Vary the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> from
-1 level up to 15 levels.</p>
+optimize the depth of the tree. Using a grid-search
+(<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.GridSearchCV</span></code>) with a 10-fold cross-validation,
+answer to the questions below. Vary the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> from 1
+level up to 15 levels.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What the optimal tree depth for the current problem?</p>
+<p>What is the optimal tree depth for the current problem?</p>
 <ul class="simple">
 <li><p>a) The optimal depth is ranging from 3 to 5</p></li>
 <li><p>b) The optimal depth is ranging from 5 to 8</p></li>
@@ -1273,10 +1278,11 @@ optimize the depth of the tree. Using a grid-search with a 10-fold cross-validat
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Instead of using only the numerical value mentioned above, use the entire
-dataset available in <code class="docutils literal notranslate"><span class="pre">data</span></code>. Create a preprocessor by dealing separately with
-the numerical and categorical columns. For the sake of simplicity, we will
-define the categorical columns as the columns with an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p>
+<p>Instead of using only the numerical dataset (which was the variable
+<code class="docutils literal notranslate"><span class="pre">data_numerical</span></code>), use the entire dataset available in the variable <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<p>Create a preprocessor by dealing separately with the numerical and categorical
+columns. For the sake of simplicity, we will define the categorical columns as
+the columns with an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p>
 <p><strong>Do not optimize the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter for this exercise.</strong></p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>

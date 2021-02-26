@@ -41,13 +41,18 @@ that are helpful to answer to this question.
 Using a
 [`sklearn.dummy.DummyClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
 and `the strategy `"most_frequent"`, what is the average of the accuracy scores
-obtained by performing a 10-fold cross-validation.
+obtained by performing a 10-fold cross-validation?
 
 - a) ~25%
 - b) ~50%
 - c) ~75%
 
 _Select a single answer_
+
+Hint: You can check the documentation of `sklearn.model_selection.cross_val_score`
+[here](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html)
+and `sklearn.model_selection.cross_validate`
+[here](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html).
 ```
 
 +++
@@ -66,7 +71,9 @@ _Select a single answer_
 
 +++
 
-We will use a `KNeighborsClassifier` for the remainder of this quiz.
+We will use a
+[`sklearn.neighbors.KNeighborsClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)
+for the remainder of this quiz.
 
 ```{admonition} Question
 Why is it relevant to add a preprocessing step to scale the data using a
@@ -84,9 +91,10 @@ _Select a single answer_
 
 +++
 
-Create a scikit-learn pipeline where a `StandardScaler` will be used to scale
-the data followed by a `KNeighborsClassifier`. Use the default
-hyperparameter.
+Create a scikit-learn pipeline (using
+[`sklearn.pipeline.make_pipeline`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html))
+where a `StandardScaler` will be used to scale the data followed by a
+`KNeighborsClassifier`. Use the default hyperparameters.
 
 ```{admonition} Question
 Inspect the parameters of the created pipeline. What is the value of K, the
@@ -100,7 +108,7 @@ number of neighbors considered when predicting with the k-nearest neighbors.
 
 _Select a single answer_
 
-Hint: You can use model.get_params() to get the parameters of a scikit-learn
+Hint: You can use `model.get_params()` to get the parameters of a scikit-learn
 estimator.
 ```
 
@@ -131,7 +139,7 @@ test score using a validation curve. You can use the following parameter range:
 param_range = [1, 2, 5, 10, 20, 50, 100, 200, 500]
 ```
 
-Also, use a 20-fold cross-validation and compute the balanced accuracy score
+Also, use a 5-fold cross-validation and compute the balanced accuracy score
 instead of the default accuracy score (check the `scoring` parameter). Finally,
 plot the average train and test scores for the different value of the
 hyperparameter. We recall that the name of the parameter can be found using

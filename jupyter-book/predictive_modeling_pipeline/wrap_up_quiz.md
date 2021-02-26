@@ -105,7 +105,7 @@ Now create a predictive model that uses these numerical columns as input data.
 Your predictive model should be a pipeline composed of a standard scaler, a
 mean imputer (cf.
 [`sklearn.impute.SimpleImputer(strategy="mean")`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html))
-and a logistic regression classifier.
+and a [`sklearn.linear_model.LogisticRegression`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html).
 
 ```{admonition} Question
 What is the accuracy score obtained by 5-fold cross-validation of this
@@ -125,7 +125,7 @@ can process both the numerical and categorical features together as follows:
 
 - numerical features should be processed as previously;
 - the left-out columns should be treated as categorical variables using a
-  one-hot encoder;
+  [`sklearn.preprocessing.OneHotEncoder`]https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html();
 - prior to one-hot encoding, insert the
   `sklearn.impute.SimpleImputer(strategy="most_frequent")` transformer to
   replace missing values by the most-frequent value in each column.

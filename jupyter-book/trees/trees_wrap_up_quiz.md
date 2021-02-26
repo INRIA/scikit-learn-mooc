@@ -30,15 +30,18 @@ numerical_features = [
 data_numerical = data[numerical_features]
 ```
 
-Compare the statistical performance of a decision tree and a linear regression.
-Create two predictive models and evaluate them by 10-Fold cross-validation.
+We will compare the statistical performance of a decision tree and a linear
+regression. For this purpose, we will create two separate predictive models
+and evaluate them by 10-fold cross-validation.
 
-Note that missing values should be handle with a scikit-learn `SimpleImputer`
-and the default strategy. Be also aware that the linear model requires to scale
-the data. You can use a `StandardScaler`.
+Thus, use `sklearn.linear_model.LinearRegression` and
+`sklearn.tree.DecisionTreeRegressor` to create the model. Use the default
+parameters for both models.
 
-Use the default parameter for both `LinearRegression` and
-`DecisionTreeRegressor`.
+**Note**: missing values should be handle with a scikit-learn
+`sklearn.impute.SimpleImputer` and the default strategy (`"mean"`). Be also
+aware that a linear model requires to scale the data. You can use a
+`sklearn.preprocessing.StandardScaler`.
 
 ```{admonition} Question
 Is the decision tree model better in terms of $R^2$ score than the linear
@@ -53,11 +56,13 @@ _Select a single answer_
 +++
 
 Instead of using the default parameter for decision tree regressor, we will
-optimize the depth of the tree. Using a grid-search with a 10-fold cross-validation, answer to the questions below. Vary the `max_depth` from
-1 level up to 15 levels.
+optimize the depth of the tree. Using a grid-search
+(`sklearn.model_selection.GridSearchCV`) with a 10-fold cross-validation,
+answer to the questions below. Vary the `max_depth` from 1
+level up to 15 levels.
 
 ```{admonition} Question
-What the optimal tree depth for the current problem?
+What is the optimal tree depth for the current problem?
 
 - a) The optimal depth is ranging from 3 to 5
 - b) The optimal depth is ranging from 5 to 8
@@ -81,10 +86,12 @@ _Select a single answer_
 
 +++
 
-Instead of using only the numerical value mentioned above, use the entire
-dataset available in `data`. Create a preprocessor by dealing separately with
-the numerical and categorical columns. For the sake of simplicity, we will
-define the categorical columns as the columns with an `object` data type.
+Instead of using only the numerical dataset (which was the variable
+`data_numerical`), use the entire dataset available in the variable `data`.
+
+Create a preprocessor by dealing separately with the numerical and categorical
+columns. For the sake of simplicity, we will define the categorical columns as
+the columns with an `object` data type.
 
 **Do not optimize the `max_depth` parameter for this exercise.**
 

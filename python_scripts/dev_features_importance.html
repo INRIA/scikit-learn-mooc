@@ -1242,6 +1242,16 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sign-of-coefficients">
+       Sign of coefficients
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#scale-of-coefficients">
+       Scale of coefficients
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#checking-the-variability-of-the-coefficients">
        Checking the variability of the coefficients
       </a>
@@ -1530,6 +1540,26 @@ the coefficient learnt</p>
 <img alt="../_images/dev_features_importance_16_0.png" src="../_images/dev_features_importance_16_0.png" />
 </div>
 </div>
+<div class="section" id="sign-of-coefficients">
+<h3>Sign of coefficients<a class="headerlink" href="#sign-of-coefficients" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-a-surprising-association admonition">
+<p class="admonition-title">A surprising association?</p>
+<p><strong>Why is the coefficient associated to <code class="docutils literal notranslate"><span class="pre">AveRooms</span></code> negative?</strong> Does the
+price of a house decrease with the number of rooms?</p>
+</div>
+<p>The coefficients of a linear model are a <em>conditional</em> association:
+they quantify the variation of a the output (the price) when the given
+feature is varied, <strong>keeping all other features constant</strong>. We should
+not interpret them as a <em>marginal</em> association, characterizing the link
+between the two quantities ignoring all the rest.</p>
+<p>The coefficient associated to <code class="docutils literal notranslate"><span class="pre">AveRooms</span></code> is negative because the number
+of rooms is strongly correlated with the number of bedrooms,
+<code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code>. What we are seeing here is that for houses with the same
+number of bedrooms, when there are more rooms (hence non-bedroom rooms),
+the house is worth comparatively less.</p>
+</div>
+<div class="section" id="scale-of-coefficients">
+<h3>Scale of coefficients<a class="headerlink" href="#scale-of-coefficients" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code> have the higher coefficient. However, we can’t compare the
 magnitude of these coefficients directly, since they are not scaled. Indeed,
 <code class="docutils literal notranslate"><span class="pre">Population</span></code> is an integer which can be thousands, while <code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code> is
@@ -1612,6 +1642,7 @@ dependencies. An increase of the <code class="docutils literal notranslate"><spa
 price when all other features remain constant. On the contrary, an increase
 of the average rooms will induce an decrease of the price when all other
 features remain constant.</p>
+</div>
 <div class="section" id="checking-the-variability-of-the-coefficients">
 <h3>Checking the variability of the coefficients<a class="headerlink" href="#checking-the-variability-of-the-coefficients" title="Permalink to this headline">¶</a></h3>
 <p>We can check the coefficient variability through cross-validation: it is a
@@ -1648,7 +1679,11 @@ caution.</p>
   warnings.warn(msg, UserWarning)
 /opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 80.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
   warnings.warn(msg, UserWarning)
-/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 56.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 48.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+  warnings.warn(msg, UserWarning)
+/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 76.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
+  warnings.warn(msg, UserWarning)
+/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 44.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
   warnings.warn(msg, UserWarning)
 </pre></div>
 </div>
@@ -1735,8 +1770,8 @@ Let’s investigate the built-in <code class="docutils literal notranslate"><spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9749035713838695
-model score on testing data: 0.8210631989878343
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9747849204191015
+model score on testing data: 0.8209323045668057
 </pre></div>
 </div>
 </div>
@@ -1800,8 +1835,8 @@ the feature importance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9745334249783428
-model score on testing data: 0.8204909902377268
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9748629981888071
+model score on testing data: 0.8208235587889559
 </pre></div>
 </div>
 </div>
@@ -1882,7 +1917,7 @@ inspect the mean and the standard deviation of the feature importance</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.834 +/- 0.00753
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.826 +/- 0.00804
 </pre></div>
 </div>
 </div>

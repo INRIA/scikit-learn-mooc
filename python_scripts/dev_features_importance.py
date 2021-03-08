@@ -132,7 +132,30 @@ plt.title('Ridge model')
 plt.axvline(x=0, color='.5')
 plt.subplots_adjust(left=.3)
 
+
 # %% [markdown]
+#
+# ### Sign of coefficients
+#
+# ```{admonition} A surprising association?
+# **Why is the coefficient associated to `AveRooms` negative?** Does the
+# price of a house decrease with the number of rooms?
+# ```
+#
+# The coefficients of a linear model are a *conditional* association:
+# they quantify the variation of a the output (the price) when the given
+# feature is varied, **keeping all other features constant**. We should
+# not interpret them as a *marginal* association, characterizing the link
+# between the two quantities ignoring all the rest.
+#
+# The coefficient associated to `AveRooms` is negative because the number
+# of rooms is strongly correlated with the number of bedrooms,
+# `AveBedrms`. What we are seeing here is that for houses with the same
+# number of bedrooms, when there are more rooms (hence non-bedroom rooms),
+# the house is worth comparatively less.
+#
+# ### Scale of coefficients
+#
 # The `AveBedrms` have the higher coefficient. However, we can't compare the
 # magnitude of these coefficients directly, since they are not scaled. Indeed,
 # `Population` is an integer which can be thousands, while `AveBedrms` is

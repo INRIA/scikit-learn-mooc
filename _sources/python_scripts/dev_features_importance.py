@@ -265,9 +265,10 @@ plt.subplots_adjust(left=.3)
 # ### Linear models with sparse coefficients (Lasso)
 
 # %% [markdown]
-# In order to illustrate that associations extracted depend on the
-# models, we consider feature selection with a L1 penalty. Let us fit a Lasso
-# model with a strong regularization parameters `alpha`
+# In it important to keep in mind that the associations extracted depend
+# on the model. To illustrate this point we consider a Lasso model, that
+# performs feature selection with a L1 penalty. Let us fit a Lasso model
+# with a strong regularization parameters `alpha`
 
 # %%
 from sklearn.linear_model import Lasso

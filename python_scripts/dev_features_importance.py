@@ -89,6 +89,9 @@ _ = sns.pairplot(
 # %% [markdown]
 # We see in the upper right plot that the median income seems to be positively
 # correlated to the median house price (the target).
+#
+# We can also see that the average number of rooms `AveRooms` is very
+# correlated to the average number of bedrooms `AveBedrms`.
 
 # %% [markdown]
 # ## 1. Linear model inspection

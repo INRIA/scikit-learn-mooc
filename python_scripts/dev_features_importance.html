@@ -1336,7 +1336,22 @@ the median income of people in the neighborhoods (block).</p>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To speed up the computation, we take the first 10000 samples</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="mi">10000</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="mi">10000</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1481,7 +1496,7 @@ this notebook</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_10_0.png" src="../_images/dev_features_importance_10_0.png" />
+<img alt="../_images/dev_features_importance_13_0.png" src="../_images/dev_features_importance_13_0.png" />
 </div>
 </div>
 <p>We see in the upper right plot that the median income seems to be positively
@@ -1513,8 +1528,8 @@ dependence).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079742666117236
-model score on testing data: 0.6021994317861668
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6013466091658213
+model score on testing data: 0.5975758277560741
 </pre></div>
 </div>
 </div>
@@ -1539,7 +1554,7 @@ the coefficient learnt</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_16_0.png" src="../_images/dev_features_importance_16_0.png" />
+<img alt="../_images/dev_features_importance_19_0.png" src="../_images/dev_features_importance_19_0.png" />
 </div>
 </div>
 <div class="section" id="sign-of-coefficients">
@@ -1591,7 +1606,7 @@ features.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 100.0)
 </pre></div>
 </div>
-<img alt="../_images/dev_features_importance_19_1.png" src="../_images/dev_features_importance_19_1.png" />
+<img alt="../_images/dev_features_importance_22_1.png" src="../_images/dev_features_importance_22_1.png" />
 </div>
 </div>
 <p>So before any interpretation, we need to scale each column (removing the mean
@@ -1611,8 +1626,8 @@ and scaling the variance to 1).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079822261145086
-model score on testing data: 0.6015989882627983
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6013157556102935
+model score on testing data: 0.5972410717953784
 </pre></div>
 </div>
 </div>
@@ -1632,7 +1647,7 @@ model score on testing data: 0.6015989882627983
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_22_0.png" src="../_images/dev_features_importance_22_0.png" />
+<img alt="../_images/dev_features_importance_25_0.png" src="../_images/dev_features_importance_25_0.png" />
 </div>
 </div>
 <p>Now that the coefficients have been scaled, we can safely compare them.</p>
@@ -1676,7 +1691,7 @@ caution.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_26_0.png" src="../_images/dev_features_importance_26_0.png" />
+<img alt="../_images/dev_features_importance_29_0.png" src="../_images/dev_features_importance_29_0.png" />
 </div>
 </div>
 <p>Every coefficient looks pretty stable, which mean that different Ridge model
@@ -1692,7 +1707,7 @@ with a strong regularization parameters <code class="docutils literal notranslat
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=.</span><span class="mi">03</span><span class="p">))</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=.</span><span class="mi">015</span><span class="p">))</span>
 
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
@@ -1702,8 +1717,8 @@ with a strong regularization parameters <code class="docutils literal notranslat
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.5763890661962303
-model score on testing data: 0.5889171161357425
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.5899811014945939
+model score on testing data: 0.5769786920519312
 </pre></div>
 </div>
 </div>
@@ -1723,7 +1738,7 @@ model score on testing data: 0.5889171161357425
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_31_0.png" src="../_images/dev_features_importance_31_0.png" />
+<img alt="../_images/dev_features_importance_34_0.png" src="../_images/dev_features_importance_34_0.png" />
 </div>
 </div>
 <p>Here the model score is a bit lower, because of the strong regularization.
@@ -1734,6 +1749,7 @@ variables to make its prediction.</p>
 partly arbitary: choosing one does not mean that the other is not
 important for prediction. <strong>Avoid over-interpreting models, as they are
 imperfect</strong>.</p>
+<p>As above, we can look at the variability of the coefficients:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_model</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
@@ -1746,7 +1762,6 @@ imperfect</strong>.</p>
    <span class="n">columns</span><span class="o">=</span><span class="n">X_with_rnd_feat</span><span class="o">.</span><span class="n">columns</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="c1">#sns.boxplot(data=coefs, orient=&#39;h&#39;, color=&#39;k&#39;, alpha=0.5)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">coefs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Coefficient importance&#39;</span><span class="p">)</span>
@@ -1756,9 +1771,14 @@ imperfect</strong>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_33_0.png" src="../_images/dev_features_importance_33_0.png" />
+<img alt="../_images/dev_features_importance_36_0.png" src="../_images/dev_features_importance_36_0.png" />
 </div>
 </div>
+<p>We can see that both the coefficients associated to <code class="docutils literal notranslate"><span class="pre">AveRooms</span></code> and
+<code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code> have a strong variability and that they can both be non
+zero. Given that they are strongly correlated, the model can pick one
+or the other to predict well. This choice is a bit arbitary, and must
+not be over-interpreted.</p>
 </div>
 <div class="section" id="lessons-learned">
 <h3>Lessons learned<a class="headerlink" href="#lessons-learned" title="Permalink to this headline">¶</a></h3>
@@ -1791,8 +1811,8 @@ Let’s investigate the built-in <code class="docutils literal notranslate"><spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9748079669685931
-model score on testing data: 0.8206452914357288
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9799944626698484
+model score on testing data: 0.8475028753632465
 </pre></div>
 </div>
 </div>
@@ -1821,7 +1841,7 @@ reduction of the criterion brought by that feature.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_40_0.png" src="../_images/dev_features_importance_40_0.png" />
+<img alt="../_images/dev_features_importance_44_0.png" src="../_images/dev_features_importance_44_0.png" />
 </div>
 </div>
 <p>Median income is still the most important feature.</p>
@@ -1856,14 +1876,15 @@ the feature importance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9746275127472669
-model score on testing data: 0.8178746354057913
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9794791531667487
+model score on testing data: 0.8478632556441549
 </pre></div>
 </div>
 </div>
 </div>
-<p>The score on the test set is .81, so feature importance shall be relevant
-here for this model.</p>
+<p>As the model gives a good prediction, it has captured well the link
+between X and y. Hence, it is reasonnable to interpret what it has
+captured from the data.</p>
 <div class="section" id="id1">
 <h3>Feature importance<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>Lets compute the feature importance for a given feature, say the <code class="docutils literal notranslate"><span class="pre">MedInc</span></code>
@@ -1914,7 +1935,7 @@ remain the same, thus the feature importance will be close to 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is0.846
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is0.675
 </pre></div>
 </div>
 </div>
@@ -1938,7 +1959,7 @@ inspect the mean and the standard deviation of the feature importance</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.842 +/- 0.0081
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.667 +/- 0.00876
 </pre></div>
 </div>
 </div>
@@ -1999,7 +2020,7 @@ We can now compute the feature permutation importance for all the features</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_55_0.png" src="../_images/dev_features_importance_55_0.png" />
+<img alt="../_images/dev_features_importance_59_0.png" src="../_images/dev_features_importance_59_0.png" />
 </div>
 </div>
 <p>We see again that the feature <code class="docutils literal notranslate"><span class="pre">MedInc</span></code>, <code class="docutils literal notranslate"><span class="pre">Latitude</span></code> and <code class="docutils literal notranslate"><span class="pre">Longitude</span></code> are very

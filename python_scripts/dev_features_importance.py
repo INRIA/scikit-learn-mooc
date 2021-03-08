@@ -37,6 +37,15 @@ from sklearn.datasets import fetch_california_housing
 import pandas as pd
 
 X, y = fetch_california_housing(as_frame=True, return_X_y=True)
+
+# %% [markdown]
+# To speed up the computation, we take the first 10000 samples
+
+# %%
+X = X[:10000]
+y = y[:10000]
+
+# %%
 X.head()
 
 # %% [markdown]
@@ -273,7 +282,7 @@ plt.subplots_adjust(left=.3)
 # %%
 from sklearn.linear_model import Lasso
 
-model = make_pipeline(StandardScaler(), Lasso(alpha=.03))
+model = make_pipeline(StandardScaler(), Lasso(alpha=.015))
 
 model.fit(X_train, y_train)
 
@@ -301,6 +310,8 @@ plt.subplots_adjust(left=.3)
 # partly arbitary: choosing one does not mean that the other is not
 # important for prediction. **Avoid over-interpreting models, as they are
 # imperfect**.
+#
+# As above, we can look at the variability of the coefficients:
 
 # %%
 cv_model = cross_validate(
@@ -313,12 +324,18 @@ coefs = pd.DataFrame(
    columns=X_with_rnd_feat.columns
 )
 plt.figure(figsize=(9, 7))
-#sns.boxplot(data=coefs, orient='h', color='k', alpha=0.5)
 sns.boxplot(data=coefs, orient='h', color='cyan', saturation=0.5)
 plt.axvline(x=0, color='.5')
 plt.xlabel('Coefficient importance')
 plt.title('Coefficient importance and its variability')
 plt.subplots_adjust(left=.3)
+
+# %% [markdown]
+# We can see that both the coefficients associated to `AveRooms` and
+# `AveBedrms` have a strong variability and that they can both be non
+# zero. Given that they are strongly correlated, the model can pick one
+# or the other to predict well. This choice is a bit arbitary, and must
+# not be over-interpreted.
 
 # %% [markdown]
 # ### Lessons learned
@@ -402,8 +419,9 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
 
 
 # %% [markdown]
-# The score on the test set is .81, so feature importance shall be relevant
-# here for this model.
+# As the model gives a good prediction, it has captured well the link
+# between X and y. Hence, it is reasonnable to interpret what it has
+# captured from the data.
 
 # %% [markdown]
 # ### Feature importance

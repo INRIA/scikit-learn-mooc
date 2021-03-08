@@ -139,7 +139,7 @@ plt.subplots_adjust(left=.3)
 #
 # ```{admonition} A surprising association?
 # **Why is the coefficient associated to `AveRooms` negative?** Does the
-# price of a house decrease with the number of rooms?
+# price of houses decreases with the number of rooms?
 # ```
 #
 # The coefficients of a linear model are a *conditional* association:
@@ -150,9 +150,9 @@ plt.subplots_adjust(left=.3)
 #
 # The coefficient associated to `AveRooms` is negative because the number
 # of rooms is strongly correlated with the number of bedrooms,
-# `AveBedrms`. What we are seeing here is that for houses with the same
-# number of bedrooms, when there are more rooms (hence non-bedroom rooms),
-# the house is worth comparatively less.
+# `AveBedrms`. What we are seeing here is that for districts where the houses
+# have the same number of bedrooms on average, when there are more rooms
+# (hence non-bedroom rooms), the houses are worth comparatively less.
 #
 # ### Scale of coefficients
 #

@@ -83,7 +83,7 @@ import seaborn as sns
 train_dataset = X_train.copy()
 train_dataset.insert(0, "MedHouseVal", y_train)
 _ = sns.pairplot(
-    train_dataset[['MedHouseVal', 'Latitude', 'AveRooms', 'MedInc']],
+    train_dataset[['MedHouseVal', 'Latitude', 'AveRooms', 'AveBedrms', 'MedInc']],
     kind='reg', diag_kind='kde', plot_kws={'scatter_kws': {'alpha': 0.1}})
 
 # %% [markdown]

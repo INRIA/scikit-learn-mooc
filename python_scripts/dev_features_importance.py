@@ -263,7 +263,8 @@ plt.subplots_adjust(left=.3)
 # ### Linear models with sparse coefficients (Lasso)
 
 # %% [markdown]
-# In order to illustrate feature selection with a L1 penalty, let's fit a Lasso
+# In order to illustrate that associations extracted depend on the
+# models, we consider feature selection with a L1 penalty. Let us fit a Lasso
 # model with a strong regularization parameters `alpha`
 
 # %%

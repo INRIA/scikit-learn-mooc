@@ -251,8 +251,7 @@ coefs = pd.DataFrame(
    columns=X_with_rnd_feat.columns
 )
 plt.figure(figsize=(9, 7))
-sns.swarmplot(data=coefs, orient='h', color='k', alpha=0.5)
-# sns.boxplot(data=coefs, orient='h', color='cyan', saturation=0.5)
+sns.boxplot(data=coefs, orient='h', color='cyan', saturation=0.5)
 plt.axvline(x=0, color='.5')
 plt.xlabel('Coefficient importance')
 plt.title('Coefficient importance and its variability')
@@ -273,7 +272,7 @@ plt.subplots_adjust(left=.3)
 # %%
 from sklearn.linear_model import Lasso
 
-model = make_pipeline(StandardScaler(), Lasso(alpha=.04))
+model = make_pipeline(StandardScaler(), Lasso(alpha=.03))
 
 model.fit(X_train, y_train)
 
@@ -293,8 +292,32 @@ plt.subplots_adjust(left=.3)
 
 # %% [markdown]
 # Here the model score is a bit lower, because of the strong regularization.
-# However, it has selectioned only 5 non negative coefficients to make its
-# prediction.
+# However, it has zeroed out 3 coefficients, selecting a small number of
+# variables to make its prediction.
+#
+# We can see that out of the two correlated features `AveRooms` and
+# `AveBedrms`, the model has selected one. Note that this choice is
+# partly arbitary: choosing one does not mean that the other is not
+# important for prediction. **Avoid over-interpreting models, as they are
+# imperfect**.
+
+# %%
+cv_model = cross_validate(
+   model, X_with_rnd_feat, y, cv=RepeatedKFold(n_splits=5, n_repeats=5),
+   return_estimator=True, n_jobs=-1
+)
+coefs = pd.DataFrame(
+   [model[1].coef_
+    for model in cv_model['estimator']],
+   columns=X_with_rnd_feat.columns
+)
+plt.figure(figsize=(9, 7))
+#sns.boxplot(data=coefs, orient='h', color='k', alpha=0.5)
+sns.boxplot(data=coefs, orient='h', color='cyan', saturation=0.5)
+plt.axvline(x=0, color='.5')
+plt.xlabel('Coefficient importance')
+plt.title('Coefficient importance and its variability')
+plt.subplots_adjust(left=.3)
 
 # %% [markdown]
 # ### Lessons learned

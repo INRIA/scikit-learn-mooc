@@ -1513,8 +1513,8 @@ dependence).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079742666128887
-model score on testing data: 0.6021994321242656
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079742666117236
+model score on testing data: 0.6021994317861668
 </pre></div>
 </div>
 </div>
@@ -1611,8 +1611,8 @@ and scaling the variance to 1).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079822261145087
-model score on testing data: 0.6015989882628027
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6079822261145086
+model score on testing data: 0.6015989882627983
 </pre></div>
 </div>
 </div>
@@ -1667,8 +1667,7 @@ caution.</p>
    <span class="n">columns</span><span class="o">=</span><span class="n">X_with_rnd_feat</span><span class="o">.</span><span class="n">columns</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">coefs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="c1"># sns.boxplot(data=coefs, orient=&#39;h&#39;, color=&#39;cyan&#39;, saturation=0.5)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">coefs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Coefficient importance&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Coefficient importance and its variability&#39;</span><span class="p">)</span>
@@ -1677,19 +1676,7 @@ caution.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 56.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
-  warnings.warn(msg, UserWarning)
-/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 80.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
-  warnings.warn(msg, UserWarning)
-/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 48.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
-  warnings.warn(msg, UserWarning)
-/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 36.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
-  warnings.warn(msg, UserWarning)
-/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/categorical.py:1296: UserWarning: 52.0% of the points cannot be placed; you may want to decrease the size of the markers or use stripplot.
-  warnings.warn(msg, UserWarning)
-</pre></div>
-</div>
-<img alt="../_images/dev_features_importance_26_1.png" src="../_images/dev_features_importance_26_1.png" />
+<img alt="../_images/dev_features_importance_26_0.png" src="../_images/dev_features_importance_26_0.png" />
 </div>
 </div>
 <p>Every coefficient looks pretty stable, which mean that different Ridge model
@@ -1704,7 +1691,7 @@ model with a strong regularization parameters <code class="docutils literal notr
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=.</span><span class="mi">04</span><span class="p">))</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=.</span><span class="mi">03</span><span class="p">))</span>
 
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
@@ -1714,8 +1701,8 @@ model with a strong regularization parameters <code class="docutils literal notr
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.5599556353946507
-model score on testing data: 0.5733210993165778
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.5763890661962303
+model score on testing data: 0.5889171161357425
 </pre></div>
 </div>
 </div>
@@ -1739,8 +1726,38 @@ model score on testing data: 0.5733210993165778
 </div>
 </div>
 <p>Here the model score is a bit lower, because of the strong regularization.
-However, it has selectioned only 5 non negative coefficients to make its
-prediction.</p>
+However, it has zeroed out 3 coefficients, selecting a small number of
+variables to make its prediction.</p>
+<p>We can see that out of the two correlated features <code class="docutils literal notranslate"><span class="pre">AveRooms</span></code> and
+<code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code>, the model has selected one. Note that this choice is
+partly arbitary: choosing one does not mean that the other is not
+important for prediction. <strong>Avoid over-interpreting models, as they are
+imperfect</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_model</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+   <span class="n">model</span><span class="p">,</span> <span class="n">X_with_rnd_feat</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">RepeatedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+   <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+   <span class="p">[</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">cv_model</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]],</span>
+   <span class="n">columns</span><span class="o">=</span><span class="n">X_with_rnd_feat</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="c1">#sns.boxplot(data=coefs, orient=&#39;h&#39;, color=&#39;k&#39;, alpha=0.5)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">coefs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Coefficient importance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Coefficient importance and its variability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=.</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/dev_features_importance_33_0.png" src="../_images/dev_features_importance_33_0.png" />
+</div>
+</div>
 </div>
 <div class="section" id="lessons-learned">
 <h3>Lessons learned<a class="headerlink" href="#lessons-learned" title="Permalink to this headline">¶</a></h3>
@@ -1773,8 +1790,8 @@ Let’s investigate the built-in <code class="docutils literal notranslate"><spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9747984320659123
-model score on testing data: 0.8193300609112825
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9748079669685931
+model score on testing data: 0.8206452914357288
 </pre></div>
 </div>
 </div>
@@ -1803,7 +1820,7 @@ reduction of the criterion brought by that feature.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_39_0.png" src="../_images/dev_features_importance_39_0.png" />
+<img alt="../_images/dev_features_importance_40_0.png" src="../_images/dev_features_importance_40_0.png" />
 </div>
 </div>
 <p>Median income is still the most important feature.</p>
@@ -1838,8 +1855,8 @@ the feature importance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9745014999218756
-model score on testing data: 0.8205497491320902
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9746275127472669
+model score on testing data: 0.8178746354057913
 </pre></div>
 </div>
 </div>
@@ -1896,7 +1913,7 @@ remain the same, thus the feature importance will be close to 0.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is0.836
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is0.846
 </pre></div>
 </div>
 </div>
@@ -1920,7 +1937,7 @@ inspect the mean and the standard deviation of the feature importance</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.826 +/- 0.00855
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.842 +/- 0.0081
 </pre></div>
 </div>
 </div>
@@ -1981,7 +1998,7 @@ We can now compute the feature permutation importance for all the features</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/dev_features_importance_54_0.png" src="../_images/dev_features_importance_54_0.png" />
+<img alt="../_images/dev_features_importance_55_0.png" src="../_images/dev_features_importance_55_0.png" />
 </div>
 </div>
 <p>We see again that the feature <code class="docutils literal notranslate"><span class="pre">MedInc</span></code>, <code class="docutils literal notranslate"><span class="pre">Latitude</span></code> and <code class="docutils literal notranslate"><span class="pre">Longitude</span></code> are very

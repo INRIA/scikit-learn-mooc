@@ -19,7 +19,7 @@
 # features used by a given model. We will look at:
 #
 # 1. interpreting the coefficients in a linear model;
-# 2. the attribute `feature_importances_` in RandomForrest;
+# 2. the attribute `feature_importances_` in RandomForest;
 # 3. `permutation feature importance`, which is an inspection technique that
 #    can be used for any fitted model.
 
@@ -288,7 +288,7 @@ plt.subplots_adjust(left=.3)
 # ## 2. RandomForest `feature_importances_`
 #
 # On some algorithms, there pre-exist some feature importance method,
-# inherently built within the model. It is the case in RandomForrest models.
+# inherently built within the model. It is the case in RandomForest models.
 # Let's investigate the built-in `feature_importances_` attribute.
 
 # %%

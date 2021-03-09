@@ -23,6 +23,7 @@
 from sklearn.datasets import fetch_california_housing
 
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 
 # %%
 from sklearn.model_selection import cross_val_score

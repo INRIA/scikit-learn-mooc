@@ -187,7 +187,7 @@ print(f"Recall score: {recall:.3f}")
 #
 # ## The issue of class imbalance
 # At this stage, we could ask ourself a reasonable question. While the accuracy
-# did not look bad (i.e. 77%), the F1 score is relatively low (i.e. 21%).
+# did not look bad (i.e. 77%), the recall score is relatively low (i.e. 12%).
 #
 # As we mentioned, precision and recall only focuses on samples predicted to be
 # positive, while accuracy takes both into account. In addition, we did not
@@ -276,17 +276,18 @@ from sklearn.metrics import plot_precision_recall_curve
 
 disp = plot_precision_recall_curve(
     classifier, data_test, target_test, pos_label='donated',
-    marker="x"
+    marker="+"
 )
+_ = disp.ax_.set_title("Precision-recall curve")
 
 # %% [markdown]
-# On this curve, each blue dot corresponds to a level of probability which we
+# On this curve, each blue cross corresponds to a level of probability which we
 # used as a decision threshold. We can see that, by varying this decision
 # threshold, we get different precision vs. recall values.
 #
 # A perfect classifier would have a precision of 1 for all recall values. A
 # metric characterizing the curve is linked to the area under the curve (AUC)
-# and is named average precision. With an ideal classifier, the average
+# and is named average precision (AP). With an ideal classifier, the average
 # precision would be 1.
 #
 # The precision and recall metric focuses on the positive class, however, one
@@ -302,8 +303,13 @@ disp = plot_precision_recall_curve(
 # %%
 from sklearn.metrics import plot_roc_curve
 
-plot_roc_curve(classifier, data_test, target_test, pos_label='donated',
-               marker="x")
+disp = plot_roc_curve(
+    classifier, data_test, target_test, pos_label='donated',
+    marker="+")
+disp.ax_.plot([0, 1], [0, 1], color="tab:orange", linestyle="--",
+              label="Chance level (AUC = 0.5)")
+disp.ax_.legend()
+_ = disp.ax_.set_title("ROC AUC curve")
 
 # %% [markdown]
 # This curve was built using the same principle as the precision-recall curve:
@@ -312,7 +318,7 @@ plot_roc_curve(classifier, data_test, target_test, pos_label='donated',
 # area under the ROC (ROC-AUC) to characterize the statistical performance of
 # our classifier. However, it is important to observe that the lower bound of
 # the ROC-AUC is 0.5. Indeed, we show the statistical performance of a dummy
-# classifier (the green dashed line) to show that even the worst statistical
+# classifier (the orange dashed line) to show that even the worst statistical
 # performance obtained will be above this line.
 #
 # ## Link between confusion matrix, precision-recall curve and ROC curve
@@ -324,7 +330,6 @@ plot_roc_curve(classifier, data_test, target_test, pos_label='donated',
 import matplotlib.pyplot as plt
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import average_precision_score
-
 
 
 def plot_pr_curve(classifier, X_test, y_test, pos_label,

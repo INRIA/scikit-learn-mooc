@@ -94,7 +94,6 @@ scores_sample_sizes = pd.DataFrame(
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 sns.displot(scores_sample_sizes, kind="kde")
 plt.xlabel("Mean absolute error (k$)")

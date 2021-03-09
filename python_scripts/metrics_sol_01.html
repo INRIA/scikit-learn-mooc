@@ -1253,7 +1253,7 @@ score). Check its documentation to learn how to do that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.627 +/- 0.147
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.621 +/- 0.139
 </pre></div>
 </div>
 </div>
@@ -1268,7 +1268,7 @@ score). Check its documentation to learn how to do that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.514 +/- 0.108
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.516 +/- 0.099
 </pre></div>
 </div>
 </div>
@@ -1533,7 +1533,7 @@ in the <code class="docutils literal notranslate"><span class="pre">cross_val_sc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.248 +/- 0.179
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.257 +/- 0.164
 </pre></div>
 </div>
 </div>
@@ -1556,14 +1556,14 @@ for both metrics using a box plot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00530648, 0.00412202, 0.00368285, 0.00435853, 0.00431013,
-        0.00505137, 0.0048275 , 0.00432181, 0.00500178, 0.00446105]),
- &#39;score_time&#39;: array([0.00329804, 0.00293279, 0.00368834, 0.00366759, 0.00297236,
-        0.00372386, 0.00368786, 0.00353909, 0.00413799, 0.00397086]),
- &#39;test_accuracy&#39;: array([0.30666667, 0.53333333, 0.77333333, 0.56      , 0.58666667,
-        0.64      , 0.70666667, 0.77333333, 0.64864865, 0.75675676]),
- &#39;test_balanced_accuracy&#39;: array([0.42982456, 0.48391813, 0.66081871, 0.40643275, 0.40497076,
-        0.42105263, 0.55994152, 0.73684211, 0.48297214, 0.51186791])}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00416541, 0.00411034, 0.00432801, 0.00410724, 0.00408077,
+        0.00420308, 0.00400424, 0.00405383, 0.00403571, 0.00403333]),
+ &#39;score_time&#39;: array([0.0028739 , 0.00283527, 0.00277877, 0.00278044, 0.00274849,
+        0.00276947, 0.00272822, 0.00271463, 0.002738  , 0.0027225 ]),
+ &#39;test_accuracy&#39;: array([0.29333333, 0.50666667, 0.74666667, 0.56      , 0.56      ,
+        0.68      , 0.70666667, 0.77333333, 0.67567568, 0.75675676]),
+ &#39;test_balanced_accuracy&#39;: array([0.42105263, 0.46637427, 0.62426901, 0.40643275, 0.3874269 ,
+        0.44736842, 0.55994152, 0.73684211, 0.52115583, 0.51186791])}
 </pre></div>
 </div>
 </div>
@@ -1571,22 +1571,14 @@ for both metrics using a box plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
-<span class="c1"># Define the style of the box style</span>
-<span class="n">boxplot_property</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;vert&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;whis&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;patch_artist&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;widths&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
-    <span class="s2">&quot;boxprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-    <span class="s2">&quot;medianprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-    <span class="s2">&quot;whiskerprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-    <span class="s2">&quot;capprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-<span class="p">}</span>
+
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
 
 <span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">[</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">],</span> <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_balanced_accuracy&quot;</span><span class="p">]],</span>
     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;Balanced accuracy&quot;</span><span class="p">]</span>
 <span class="p">)</span><span class="o">.</span><span class="n">T</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="o">**</span><span class="n">boxplot_property</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Computation of multiple scores using cross_validate&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

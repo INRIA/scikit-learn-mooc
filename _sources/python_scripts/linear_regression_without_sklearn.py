@@ -19,7 +19,6 @@ penguins.head()
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"

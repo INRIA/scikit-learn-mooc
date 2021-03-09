@@ -47,7 +47,6 @@ cv_results = pd.DataFrame(cv_results)
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 scores = pd.DataFrame()
 scores[["train error", "test error"]] = -cv_results[

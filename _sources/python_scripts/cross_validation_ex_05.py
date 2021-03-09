@@ -52,10 +52,6 @@ stocks = generate_random_stock_market()
 stocks.head()
 
 # %%
-import seaborn as sns
-
-sns.set_context("talk")
-
 ax = stocks.plot()
 ax.set_ylabel("Stock value")
 _ = ax.set_title("Stock values over time")

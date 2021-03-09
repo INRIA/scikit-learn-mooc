@@ -87,7 +87,6 @@ final_test_scores = pd.concat(
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 sns.displot(final_test_scores, kind="kde")
 _ = plt.xlabel("Accuracy (%)")

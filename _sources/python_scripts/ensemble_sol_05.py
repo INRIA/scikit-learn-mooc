@@ -107,7 +107,6 @@ inner_cv_results.columns = inner_cv_results.columns.to_flat_index()
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 ax = sns.boxplot(
     data=inner_cv_results, orient="h", color="tab:blue", whis=100)

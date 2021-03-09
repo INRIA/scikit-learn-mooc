@@ -32,7 +32,6 @@ data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 _ = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)")
 

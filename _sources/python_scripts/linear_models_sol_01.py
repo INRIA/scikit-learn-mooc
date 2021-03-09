@@ -51,7 +51,6 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 weights = [-40, 45, 90]
 intercepts = [15000, -5000, -14000]

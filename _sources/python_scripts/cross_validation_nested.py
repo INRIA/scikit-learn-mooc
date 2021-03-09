@@ -138,19 +138,9 @@ all_scores = {
 all_scores = pd.DataFrame(all_scores)
 
 # %%
-import seaborn as sns
-sns.set_context("talk")
-# Define the style of the box style
-boxplot_property = {
-    "vert": False, "whis": 100, "patch_artist": True, "widths": 0.3,
-    "boxprops": dict(linewidth=3, color='black', alpha=0.9),
-    "medianprops": dict(linewidth=2.5, color='black', alpha=0.9),
-    "whiskerprops": dict(linewidth=3, color='black', alpha=0.9),
-    "capprops": dict(linewidth=3, color='black', alpha=0.9),
-}
 
-
-ax = all_scores.plot.box(**boxplot_property)
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+ax = all_scores.plot.box(color=color, vert=False)
 ax.set_xlabel("Accuracy")
 _ = ax.set_title("Comparison of mean accuracy obtained on the test sets with\n"
                  "and without nested cross-validation")

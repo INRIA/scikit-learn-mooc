@@ -66,7 +66,6 @@ all_scores = pd.DataFrame(
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 sns.kdeplot(data=all_scores)
 plt.xlim([0.8, 1.0])

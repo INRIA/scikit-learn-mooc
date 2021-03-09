@@ -142,7 +142,6 @@ predicted_actual = pd.DataFrame(predicted_actual)
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 ax = sns.scatterplot(
     data=predicted_actual, x="True values (k$)", y="Predicted values (k$)")

@@ -71,8 +71,8 @@ adult_census.head()  # Print the first few lines of our dataframe
 
 # %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which
-# we want to predict). The two possible classes are `<= 50K` (low-revenue) and
-# `> 50K` (high-revenue). The resulting prediction problem is therefore a
+# we want to predict). The two possible classes are `<=50K` (low-revenue) and
+# `>50K` (high-revenue). The resulting prediction problem is therefore a
 # binary classification problem, while we will use the other columns as input
 # variables for our model.
 
@@ -220,11 +220,11 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # class:
 #
 # * if you are young (less than 25 year-old roughly), you are in the
-#   `<= 50K` class;
+#   `<=50K` class;
 # * if you are old (more than 70 year-old roughly), you are in the
-#   `<= 50K` class;
+#   `<=50K` class;
 # * if you work part-time (less than 40 hours roughly) you are in the
-#   `<= 50K` class.
+#   `<=50K` class.
 #
 # These hand-written rules could work reasonably well without the need for any
 # machine learning. Note however that it is not very easy to create rules for

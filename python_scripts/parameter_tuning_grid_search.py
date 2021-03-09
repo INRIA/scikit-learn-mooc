@@ -228,7 +228,6 @@ pivoted_cv_results
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 ax = sns.heatmap(pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7,
                  vmax=0.9)

@@ -79,7 +79,6 @@ logistic_regression = make_pipeline(
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 _, axs = plt.subplots(ncols=4, sharey=True, sharex=True, figsize=(16, 4))
 

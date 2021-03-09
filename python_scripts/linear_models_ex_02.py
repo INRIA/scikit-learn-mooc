@@ -26,10 +26,8 @@ noise = rng.randn(n_sample) * .3
 target = data ** 3 - 0.5 * data ** 2 + noise
 
 # %%
-import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-sns.set_context("talk")
 
 full_data = pd.DataFrame({"data": data, "target": target})
 _ = sns.scatterplot(data=full_data, x="data", y="target")

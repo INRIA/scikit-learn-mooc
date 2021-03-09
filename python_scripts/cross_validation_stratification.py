@@ -62,7 +62,6 @@ print(f"The average accuracy is "
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 ax = target.plot()
 ax.set_xlabel("Sample index")

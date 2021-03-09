@@ -24,7 +24,6 @@ target_column = "Species"
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 _ = sns.pairplot(data=penguins, hue="Species", height=3.3)
 

@@ -51,10 +51,9 @@ print(f"Mean absolute error on testing set: "
 # %%
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
 
 weights = pd.DataFrame(
     [est.coef_ for est in cv_results["estimator"]], columns=data.columns)
-weights.plot.box(vert=False)
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+weights.plot.box(color=color, vert=False)
 _ = plt.title("Value of linear regression coefficients")

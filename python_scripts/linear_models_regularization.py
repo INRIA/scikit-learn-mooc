@@ -74,25 +74,14 @@ print(f"R2 score of linear regresion model on the train set:\n"
 # %%
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
 
-# Define the style in the boxplot
-boxplot_property = {
-    "vert": False, "whis": 100, "patch_artist": True, "widths": 0.3,
-    "boxprops": dict(linewidth=3, color='black', alpha=0.9),
-    "medianprops": dict(linewidth=2.5, color='black', alpha=0.9),
-    "whiskerprops": dict(linewidth=3, color='black', alpha=0.9),
-    "capprops": dict(linewidth=3, color='black', alpha=0.9),
-}
-
-# %%
 weights_linear_regression = pd.DataFrame(
     [est[-1].coef_ for est in cv_results["estimator"]],
     columns=cv_results["estimator"][0][0].get_feature_names(
         input_features=data.columns))
 _, ax = plt.subplots(figsize=(6, 16))
-weights_linear_regression.plot.box(ax=ax, **boxplot_property)
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+weights_linear_regression.plot.box(ax=ax, color=color, vert=False)
 _ = ax.set_title("Linear regression coefficients")
 
 # %% [markdown]
@@ -131,8 +120,8 @@ weights_ridge = pd.DataFrame(
 
 # %%
 _, axs = plt.subplots(ncols=2, figsize=(12, 16))
-weights_linear_regression.plot.box(ax=axs[0], **boxplot_property)
-weights_ridge.plot.box(ax=axs[1], **boxplot_property)
+weights_linear_regression.plot.box(ax=axs[0], color=color, vert=False)
+weights_ridge.plot.box(ax=axs[1], color=color, vert=False)
 axs[1].set_yticklabels([""] * len(weights_ridge.columns))
 axs[0].set_title("Linear regression weights")
 _ = axs[1].set_title("Ridge weights")

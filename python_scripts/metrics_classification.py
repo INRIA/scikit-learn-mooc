@@ -19,9 +19,6 @@ target = blood_transfusion["Class"]
 # Let's start by checking the classes present in the target vector `target`.
 
 # %%
-import seaborn as sns
-sns.set_context("talk")
-
 ax = target.value_counts().plot(kind="barh")
 ax.set_xlabel("Number of samples")
 _ = ax.set_title("Number of samples per classes present\n in the target")

@@ -69,7 +69,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # %%
 import seaborn as sns
 from sklearn.tree import DecisionTreeClassifier
-sns.set_context("talk")
 
 tree = DecisionTreeClassifier(max_depth=2)
 tree.fit(data_train, target_train)

@@ -48,8 +48,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-sns.set_context("talk")
-
 data_ranges = pd.DataFrame(
     np.linspace(data.iloc[:, 0].min(), data.iloc[:, 0].max(), num=300),
     columns=data.columns,

@@ -103,24 +103,14 @@ cv_results = pd.concat(
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
 
-# Define the style of the box style
-boxplot_property = {
-    "vert": False, "whis": 100, "patch_artist": True, "widths": 0.3,
-    "boxprops": dict(linewidth=3, color='black', alpha=0.9),
-    "medianprops": dict(linewidth=2.5, color='black', alpha=0.9),
-    "whiskerprops": dict(linewidth=3, color='black', alpha=0.9),
-    "capprops": dict(linewidth=3, color='black', alpha=0.9),
-}
-
-cv_results["fit_time"].plot.box(**boxplot_property)
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+cv_results["fit_time"].plot.box(color=color, vert=False)
 plt.xlabel("Elapsed time (s)")
 _ = plt.title("Time to fit the model")
 
 # %%
-cv_results["score_time"].plot.box(**boxplot_property)
+cv_results["score_time"].plot.box(color=color, vert=False)
 plt.xlabel("Elapsed time (s)")
 _ = plt.title("Time to make prediction")
 
@@ -132,7 +122,7 @@ _ = plt.title("Time to make prediction")
 # terms of metrics remain the same. Let's check the testing score.
 
 # %%
-cv_results["test_score"].plot.box(**boxplot_property)
+cv_results["test_score"].plot.box(color=color, vert=False)
 plt.xlabel("Accuracy score")
 _ = plt.title("Test score via cross-validation")
 

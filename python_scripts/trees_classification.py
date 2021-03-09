@@ -77,7 +77,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # %%
 import seaborn as sns
 from sklearn.linear_model import LogisticRegression
-sns.set_context("talk")
 
 # create a palette to be used in the scatterplot
 palette = ["tab:red", "tab:blue", "black"]

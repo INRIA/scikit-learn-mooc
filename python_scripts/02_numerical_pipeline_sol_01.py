@@ -20,7 +20,7 @@
 # and instead make constant predictions.
 #
 # - What would be the score of a model that always predicts `' >50K'`?
-# - What would be the score of a model that always predicts `' <= 50K'`?
+# - What would be the score of a model that always predicts `' <=50K'`?
 # - Is 81% or 82% accuracy a good score for this problem?
 #
 # Use a `DummyClassifier` and do a train-test split to evaluate

@@ -12,8 +12,8 @@ non-linear link with the target?
 +++
 
 ```{admonition} Question
-Fitting a linear regression where `X` has `n_features` columns and the target is binary, what is the
-respective type of `coef_` and `intercept_`?
+Fitting a linear regression where `X` has `n_features` columns and the target
+is continuous, what is the respective type/shape of `coef_` and `intercept_`?
 
 - a) it is not possible to fit a linear regression in dimension higher than 2
 - b) array of shape (1, `n_features`) and a float

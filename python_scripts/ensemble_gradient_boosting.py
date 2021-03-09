@@ -220,6 +220,7 @@ from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import cross_validate
 
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 
 # %%
 from sklearn.ensemble import GradientBoostingRegressor

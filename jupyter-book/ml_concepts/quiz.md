@@ -1,8 +1,14 @@
 # ✅ Quiz
 
 Given a case study: pricing apartments based on a real estate website. We have
-the record of thousand house descriptions with their price. But for some house
-the price is not mentioned, and we want to predict it.
+the record of thousand house descriptions with their price. Typically, an
+example of a house description is the following:
+
+"Great for entertaining: spacious, updated 2 bedroom, 1 bathroom apartment in
+Lakeview, 97630. The house will be available from May 1st. Close to nightlife
+with private backyard. Price ~$1,000,000."
+
+However, the price is not mentioned for some house, and we want to predict it.
 
 ```{admonition} Question
 What kind of problem is it?
@@ -28,9 +34,9 @@ What are the features?
 ```{admonition} Question
 What is the target variable?
 
-- a) The text description is the target
+- a) the full text description is the target
 - b) the price of the house is the target
-- c) the house with no price mentioned are the target
+- c) only house description with no price mentioned are the target
 ```
 
 +++

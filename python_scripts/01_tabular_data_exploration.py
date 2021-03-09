@@ -71,8 +71,8 @@ adult_census.head()  # Print the first few lines of our dataframe
 
 # %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which
-# we want to predict). The two possible classes are `<= 50K` (low-revenue) and
-# `> 50K` (high-revenue). The resulting prediction problem is therefore a
+# we want to predict). The two possible classes are `<=50K` (low-revenue) and
+# `>50K` (high-revenue). The resulting prediction problem is therefore a
 # binary classification problem, while we will use the other columns as input
 # variables for our model.
 
@@ -114,12 +114,19 @@ adult_census = adult_census[all_columns]
 # be representative of the full census database.
 
 # %% [markdown]
-# We can check the number of samples and the number of features available in
+# We can check the number of samples and the number of columns available in
 # the dataset:
 
 # %%
 print(f"The dataset contains {adult_census.shape[0]} samples and "
-      f"{adult_census.shape[1]} features")
+      f"{adult_census.shape[1]} columns")
+
+# %% [markdown]
+# We can compute the number of features by counting the number of columns and
+# subtract 1, since of the column is the target.
+
+# %%
+print(f"The dataset contains {adult_census.shape[1] - 1} features.")
 
 # %% [markdown]
 # ## Visual inspection of the data
@@ -220,11 +227,11 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # class:
 #
 # * if you are young (less than 25 year-old roughly), you are in the
-#   `<= 50K` class;
+#   `<=50K` class;
 # * if you are old (more than 70 year-old roughly), you are in the
-#   `<= 50K` class;
+#   `<=50K` class;
 # * if you work part-time (less than 40 hours roughly) you are in the
-#   `<= 50K` class.
+#   `<=50K` class.
 #
 # These hand-written rules could work reasonably well without the need for any
 # machine learning. Note however that it is not very easy to create rules for

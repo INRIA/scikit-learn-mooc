@@ -114,12 +114,19 @@ adult_census = adult_census[all_columns]
 # be representative of the full census database.
 
 # %% [markdown]
-# We can check the number of samples and the number of features available in
+# We can check the number of samples and the number of columns available in
 # the dataset:
 
 # %%
 print(f"The dataset contains {adult_census.shape[0]} samples and "
-      f"{adult_census.shape[1]} features")
+      f"{adult_census.shape[1]} columns")
+
+# %% [markdown]
+# We can compute the number of features by counting the number of columns and
+# subtract 1, since of the column is the target.
+
+# %%
+print(f"The dataset contains {adult_census.shape[1] - 1} features.")
 
 # %% [markdown]
 # ## Visual inspection of the data

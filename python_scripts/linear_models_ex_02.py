@@ -61,6 +61,14 @@ def f(data, weight=0, intercept=0):
 # %% [markdown]
 # Train a linear regression model and plot both the data and the predictions
 # of the model. Compute the mean squared error with this model.
+#
+# ```{warning}
+# In scikit-learn, by convention `data` (also called `X` in the scikit-learn
+# documentation) should be a 2D matrix of shape `(n_samples, n_features)`.
+# If `data` is a 1D vector, you need to reshape it into a matrix with a
+# single column if the vector represents a feature or a single row if the
+# vector represents a sample.
+# ```
 
 # %%
 from sklearn.linear_model import LinearRegression

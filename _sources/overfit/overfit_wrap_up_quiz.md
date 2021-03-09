@@ -40,7 +40,7 @@ that are helpful to answer to this question.
 ```{admonition} Question
 Using a
 [`sklearn.dummy.DummyClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
-and `the strategy `"most_frequent"`, what is the average of the accuracy scores
+and the strategy `"most_frequent"`, what is the average of the accuracy scores
 obtained by performing a 10-fold cross-validation?
 
 - a) ~25%

@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.37f24b989f4638ff9c27c22dc7559d4f.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -1220,7 +1220,8 @@
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
         <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
+            <i class="fas fa-list"></i>
+            Contents
         </div>
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
@@ -1437,8 +1438,8 @@ refer to columns are “feature”, “variable”, “attribute”, or “covar
 </div></div></div>
 </div>
 <p>The column named <strong>class</strong> is our target variable (i.e., the variable which
-we want to predict). The two possible classes are <code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> (low-revenue) and
-<code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">50K</span></code> (high-revenue). The resulting prediction problem is therefore a
+we want to predict). The two possible classes are <code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> (low-revenue) and
+<code class="docutils literal notranslate"><span class="pre">&gt;50K</span></code> (high-revenue). The resulting prediction problem is therefore a
 binary classification problem, while we will use the other columns as input
 variables for our model.</p>
 <div class="cell docutils container">
@@ -1487,17 +1488,31 @@ finite number of values, for example <code class="docutils literal notranslate">
 <p>Note that for simplicity, we have ignored the “fnlwgt” (final weight) column
 that was crafted by the creators of the dataset when sampling the dataset to
 be representative of the full census database.</p>
-<p>We can check the number of samples and the number of features available in
+<p>We can check the number of samples and the number of columns available in
 the dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset contains 48842 samples and 14 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset contains 48842 samples and 14 columns
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can compute the number of features by counting the number of columns and
+subtract 1, since of the column is the target.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> features.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset contains 13 features.
 </pre></div>
 </div>
 </div>
@@ -1529,7 +1544,7 @@ works for features containing numerical values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_tabular_data_exploration_16_0.png" src="../_images/01_tabular_data_exploration_16_0.png" />
+<img alt="../_images/01_tabular_data_exploration_18_0.png" src="../_images/01_tabular_data_exploration_18_0.png" />
 </div>
 </div>
 <div class="admonition tip">
@@ -2000,18 +2015,18 @@ the off-diagonal can reveal interesting interactions between variables.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/01_tabular_data_exploration_26_0.png" src="../_images/01_tabular_data_exploration_26_0.png" />
+<img alt="../_images/01_tabular_data_exploration_28_0.png" src="../_images/01_tabular_data_exploration_28_0.png" />
 </div>
 </div>
 <p>By looking at the data you could infer some hand-written rules to predict the
 class:</p>
 <ul class="simple">
 <li><p>if you are young (less than 25 year-old roughly), you are in the
-<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class;</p></li>
+<code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> class;</p></li>
 <li><p>if you are old (more than 70 year-old roughly), you are in the
-<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class;</p></li>
+<code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> class;</p></li>
 <li><p>if you work part-time (less than 40 hours roughly) you are in the
-<code class="docutils literal notranslate"><span class="pre">&lt;=</span> <span class="pre">50K</span></code> class.</p></li>
+<code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> class.</p></li>
 </ul>
 <p>These hand-written rules could work reasonably well without the need for any
 machine learning. Note however that it is not very easy to create rules for

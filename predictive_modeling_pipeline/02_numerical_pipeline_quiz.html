@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.37f24b989f4638ff9c27c22dc7559d4f.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -1225,21 +1225,27 @@
 <p class="admonition-title">Question</p>
 <p>The generalization performance of a scikit-learn model can be evaluated by:</p>
 <ul class="simple">
-<li><p>a) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model on the training set, <code class="docutils literal notranslate"><span class="pre">predict</span></code> on the test set to get the predictions, and compute the score by passing the predictions and the true target values to some metric function</p></li>
-<li><p>b) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model on the training set, <code class="docutils literal notranslate"><span class="pre">score</span></code> to compute the score on the test set</p></li>
-<li><p>c) calling <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> by passing the model and the data</p></li>
+<li><p>a) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model on the training set, <code class="docutils literal notranslate"><span class="pre">predict</span></code> on the
+test set to get the predictions, and compute the score by passing the
+predictions and the true target values to some metric function</p></li>
+<li><p>b) calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> to train the model on the training set, <code class="docutils literal notranslate"><span class="pre">score</span></code> to compute
+the score on the test set</p></li>
+<li><p>c) calling <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> by passing the model and the data</p></li>
 </ul>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>When calling <code class="docutils literal notranslate"><span class="pre">cross_val_score(estimator,</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">cv=5)</span></code>, the following happens:</p>
+<p>When calling <code class="docutils literal notranslate"><span class="pre">cross_validate(estimator,</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">cv=5)</span></code>, the following happens:</p>
 <ul class="simple">
-<li><p>a) X and y are internally split five times with non-overlapping test sets</p></li>
-<li><p>b) <code class="docutils literal notranslate"><span class="pre">estimator.fit</span></code> is called 5 times on the full X and y</p></li>
+<li><p>a) <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are internally split five times with non-overlapping test sets</p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">estimator.fit</span></code> is called 5 times on the full <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code></p></li>
 <li><p>c) <code class="docutils literal notranslate"><span class="pre">estimator.fit</span></code> is called 5 times, each time on a different training set</p></li>
-<li><p>d) 5 scores, computed on the 5 train sets, are returned</p></li>
-<li><p>e) 5 scores, computed on the 5 test sets, are returned</p></li>
-<li><p>f) the average of 5 scores is returned</p></li>
+<li><p>d) a Python dictionary is returned containing a key/value containing a NumPy
+array with 5 scores computed on the train sets</p></li>
+<li><p>e) a Python dictionary is returned containing a key/value containing a NumPy
+array with 5 scores computed on the test sets</p></li>
+<li><p>f) a single floating number corresponding to the average of 5 scores on the
+test sets is returned</p></li>
 <li><p>g) the 5 trained estimators are returned</p></li>
 </ul>
 </div>

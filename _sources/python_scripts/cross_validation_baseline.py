@@ -18,6 +18,7 @@
 from sklearn.datasets import fetch_california_housing
 
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 
 # %% [markdown]
 # ```{caution}

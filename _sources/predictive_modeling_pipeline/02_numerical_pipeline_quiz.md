@@ -13,22 +13,28 @@ Why do we need two sets: a train set and a test set?
 ```{admonition} Question
 The generalization performance of a scikit-learn model can be evaluated by:
 
-- a) calling `fit` to train the model on the training set, `predict` on the test set to get the predictions, and compute the score by passing the predictions and the true target values to some metric function
-- b) calling `fit` to train the model on the training set, `score` to compute the score on the test set
-- c) calling `cross_val_score` by passing the model and the data
+- a) calling `fit` to train the model on the training set, `predict` on the
+  test set to get the predictions, and compute the score by passing the
+  predictions and the true target values to some metric function
+- b) calling `fit` to train the model on the training set, `score` to compute
+  the score on the test set
+- c) calling `cross_validate` by passing the model and the data
 ```
 
 +++
 
 ```{admonition} Question
-When calling `cross_val_score(estimator, X, y, cv=5)`, the following happens:
+When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
 
-- a) X and y are internally split five times with non-overlapping test sets
-- b) `estimator.fit` is called 5 times on the full X and y
+- a) `X` and `y` are internally split five times with non-overlapping test sets
+- b) `estimator.fit` is called 5 times on the full `X` and `y`
 - c) `estimator.fit` is called 5 times, each time on a different training set
-- d) 5 scores, computed on the 5 train sets, are returned
-- e) 5 scores, computed on the 5 test sets, are returned
-- f) the average of 5 scores is returned
+- d) a Python dictionary is returned containing a key/value containing a NumPy
+  array with 5 scores computed on the train sets
+- e) a Python dictionary is returned containing a key/value containing a NumPy
+  array with 5 scores computed on the test sets
+- f) a single floating number corresponding to the average of 5 scores on the
+  test sets is returned
 - g) the 5 trained estimators are returned
 ```
 

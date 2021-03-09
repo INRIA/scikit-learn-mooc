@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.37f24b989f4638ff9c27c22dc7559d4f.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -1233,8 +1233,24 @@ samples in the dataset using a learning curve.</p></li>
 </div>
 </div>
 </div>
-<p>Create a machine learning pipeline which will standardize the data and then
-use a support vector machine with an RBF kernel</p>
+<p>We will use a support vector machine classifier (SVM). In its most simple
+form, a SVM classifier is a linear classifier behaving similarly to a
+logistic regression. Indeed, the optimization used to find the optimal
+weights of the linear model are different but we don’t need to know these
+details for the exercise.</p>
+<p>Also, this classifier can become more flexible/expressive by using a
+so-called kernel. The model becomes non-linear. Again, no requirement
+regarding the mathematics is required to accomplish this exercise.</p>
+<p>We will use an RBF kernel where a parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> allows to tune the
+flexibility of the model.</p>
+<p>First let’s create a predictive pipeline made of:</p>
+<ul class="simple">
+<li><p>a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"><code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code></a>
+with default parameter;</p></li>
+<li><p>a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html"><code class="docutils literal notranslate"><span class="pre">sklearn.svm.SVC</span></code></a>
+where the parameter <code class="docutils literal notranslate"><span class="pre">kernel</span></code> could be set to <code class="docutils literal notranslate"><span class="pre">&quot;rbf&quot;</span></code>. Note that this is the
+default.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1243,7 +1259,11 @@ use a support vector machine with an RBF kernel</p>
 </div>
 </div>
 <p>Evaluate the statistical performance of your model by cross-validation with a
-<code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> scheme.</p>
+<code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> scheme. Thus, you can use
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code></a>
+and pass a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ShuffleSplit</span></code></a>
+to the <code class="docutils literal notranslate"><span class="pre">cv</span></code> parameter. Only fix the <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code> in the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
+and let the other parameters to the default.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1251,11 +1271,17 @@ use a support vector machine with an RBF kernel</p>
 </div>
 </div>
 </div>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameter controlling under/over-fitting
-in support vector machine with an RBF kernel.
-Compute the validation curve to evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code>.
-You can vary its value between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a
-logarithmic scale.</p>
+<p>As previously mentioned, the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameter
+controlling under/over-fitting in support vector machine with an RBF kernel.</p>
+<p>Compute the validation curve
+(using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a>)
+to evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can vary its value
+between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale.
+Thus, you can use <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
+<p>Since we are manipulating a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> the parameter name will be set to
+<code class="docutils literal notranslate"><span class="pre">svc__gamma</span></code> instead of only <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can retrieve the parameter name
+using <code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into details regarding
+accessing and setting hyperparameter in the next section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1272,9 +1298,9 @@ logarithmic scale.</p>
 </div>
 </div>
 <p>Now, you can perform an analysis to check whether adding new samples to the
-dataset could help our model to better generalize.
-Compute the learning curve by computing the train and test scores for
-different training dataset size.
+dataset could help our model to better generalize. Compute the learning curve
+(using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.learning_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.learning_curve</span></code></a>)
+by computing the train and test scores for different training dataset size.
 Plot the train and test scores with respect to the number of samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

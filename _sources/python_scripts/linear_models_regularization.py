@@ -19,6 +19,7 @@
 from sklearn.datasets import fetch_california_housing
 
 data, target = fetch_california_housing(as_frame=True, return_X_y=True)
+target *= 100  # rescale the target in k$
 data.head()
 
 # %% [markdown]

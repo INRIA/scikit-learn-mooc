@@ -125,7 +125,7 @@ can process both the numerical and categorical features together as follows:
 
 - numerical features should be processed as previously;
 - the left-out columns should be treated as categorical variables using a
-  [`sklearn.preprocessing.OneHotEncoder`]https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html();
+  [`sklearn.preprocessing.OneHotEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html);
 - prior to one-hot encoding, insert the
   `sklearn.impute.SimpleImputer(strategy="most_frequent")` transformer to
   replace missing values by the most-frequent value in each column.

@@ -147,17 +147,9 @@ print(f"The dataset contains {adult_census.shape[1] - 1} features.")
 # works for features containing numerical values:
 
 # %%
-import seaborn as sns
-sns.set_context("talk")
-
 _ = adult_census.hist(figsize=(20, 14))
 
 # %% [markdown]
-# ```{tip}
-# In the code cell, we are using `sns.set_context` to globally change
-# the rendering of the figure with larger fonts and line. We will use this
-# call in all notebooks.
-# ```
 # ```{tip}
 # In the cell, we are calling the following pattern: `_ = func()`. It assigns
 # the output of `func()` into the variable called `_`. By convention, in Python
@@ -215,6 +207,8 @@ pd.crosstab(index=adult_census['education'],
 # the off-diagonal can reveal interesting interactions between variables.
 
 # %%
+import seaborn as sns
+
 n_samples_to_plot = 5000
 columns = ['age', 'education-num', 'hours-per-week']
 _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,

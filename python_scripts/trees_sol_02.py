@@ -57,7 +57,6 @@ target_predicted_tree = tree.predict(data_test)
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
@@ -92,9 +91,6 @@ target_predicted_linear_regression = linear_regression.predict(data_test)
 target_predicted_tree = tree.predict(data_test)
 
 # %%
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
 ax.plot(data_test, target_predicted_linear_regression, linewidth=4,

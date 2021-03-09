@@ -41,8 +41,6 @@ train_scores, test_scores = validation_curve(
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
 
 train_scores_mean = np.mean(train_scores, axis=1)
 train_scores_std = np.std(train_scores, axis=1)

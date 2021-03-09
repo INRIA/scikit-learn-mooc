@@ -80,7 +80,6 @@ range_features = {"Feature #0": (-5, 5), "Feature #1": (-5, 5)}
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 _, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
 

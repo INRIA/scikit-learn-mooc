@@ -39,7 +39,6 @@ def generate_data(n_samples=50):
 
 # %%
 import seaborn as sns
-sns.set_context("talk")
 
 data_train, data_test, target_train = generate_data(n_samples=50)
 _ = sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",

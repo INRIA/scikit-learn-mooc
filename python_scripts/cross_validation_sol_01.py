@@ -99,8 +99,6 @@ train_scores, test_scores = validation_curve(
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
 
 _, ax = plt.subplots()
 

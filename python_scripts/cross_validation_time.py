@@ -30,8 +30,6 @@ quotes = pd.DataFrame(quotes)
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_context("talk")
 
 _, ax = plt.subplots(figsize=(10, 7))
 quotes.plot(ax=ax)

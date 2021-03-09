@@ -62,7 +62,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # %%
 import seaborn as sns
 from sklearn.tree import DecisionTreeClassifier
-sns.set_context("talk")
 
 palette = ["tab:red", "tab:blue", "black"]
 

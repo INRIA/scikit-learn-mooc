@@ -229,8 +229,6 @@ len(cv_results)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.set_context("talk")  # Set Seaborn's plotting style to "talk" mode.
-
 sns.displot(cv_results["test_error"], kde=True, bins=10)
 _ = plt.xlabel("Mean absolute error (k$)")
 

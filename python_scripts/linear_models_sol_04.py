@@ -28,11 +28,7 @@ data, target, coef = make_regression(
 # used to generate the dataset. Let's plot this information.
 
 # %%
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
-
-sns.set_context("poster")
 
 feature_names = [f"Features {i}" for i in range(data.shape[1])]
 coef = pd.Series(coef, index=feature_names)

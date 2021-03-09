@@ -93,7 +93,6 @@ final_errors = pd.concat([errors_regressor, errors_dummy, errors_permutation],
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 sns.displot(final_errors, kind="kde")
 _ = plt.xlabel("Mean absolute error (k$)")

@@ -49,7 +49,6 @@ penguins.head()
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 _, axs = plt.subplots(ncols=3, figsize=(16, 4))
 

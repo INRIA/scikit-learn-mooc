@@ -36,9 +36,7 @@ import pandas as pd
 full_data = pd.DataFrame({"data": data, "target": target})
 
 # %%
-import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_context("talk")
 
 _ = sns.scatterplot(data=full_data, x="data", y="target")
 

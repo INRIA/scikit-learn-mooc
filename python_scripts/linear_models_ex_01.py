@@ -75,9 +75,9 @@ def goodness_fit_measure(true_values, predictions):
 # %%
 # Uncomment the code below.
 # for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
-#     y_pred = linear_model_flipper_mass(X, weight, intercept)
+#     target_predicted = linear_model_flipper_mass(data, weight, intercept)
 #     print(f"Model #{model_idx}:")
 #     print(f"{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)")
-#     print(f"Error: {goodness_fit_measure(y, y_pred):.3f}\n")
+#     print(f"Error: {goodness_fit_measure(target, target_predicted):.3f}\n")
 
 # %%

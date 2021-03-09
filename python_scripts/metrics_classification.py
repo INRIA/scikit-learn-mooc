@@ -306,9 +306,9 @@ from sklearn.metrics import plot_roc_curve
 disp = plot_roc_curve(
     classifier, data_test, target_test, pos_label='donated',
     marker="+")
-disp.ax_.plot([0, 1], [0, 1], color="tab:orange", linestyle="--",
-              label="Chance level (AUC = 0.5)")
-disp.ax_.legend()
+disp = plot_roc_curve(
+    dummy_classifier, data_test, target_test, pos_label='donated',
+    color="tab:orange", linestyle="--", ax=disp.ax_)
 _ = disp.ax_.set_title("ROC AUC curve")
 
 # %% [markdown]

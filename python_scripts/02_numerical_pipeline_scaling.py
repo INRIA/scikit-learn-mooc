@@ -207,6 +207,7 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 # `fit` and `predict` (and additionally `predict_proba`, `decision_function`,
 # or `score`).
 
+# %%
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start

@@ -240,7 +240,8 @@ predicted_target[:5]
 # will output the predicted target by calling its method `predict`.
 #
 # As a shorthand, we can check the score of the full predictive pipeline
-# calling the method `model.score`
+# calling the method `model.score`. Thus, let's check the computational and
+# statistical performance of such a predictive pipeline.
 
 # %%
 model_name = model.__class__.__name__

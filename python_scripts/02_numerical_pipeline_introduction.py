@@ -95,7 +95,7 @@ model = KNeighborsClassifier()
 model.fit(data, target)
 
 # %% [markdown]
-# The diagram belows represent the learning stage when calling `model.fit`.
+# The diagram belows represent the learning mechanism when calling `model.fit`.
 #
 # ![Predictor fit diagram](../figures/api_diagram-predictor.fit.svg)
 #
@@ -130,6 +130,17 @@ model.fit(data, target)
 # %%
 target_predicted = model.predict(data)
 target_predicted[:5]
+
+# %% [markdown]
+# The diagram belows illustrates a simplified version of the mechanism used
+# to predict targets.
+#
+# ![Predictor predict diagram](../figures/api_diagram-predictor.predict.svg)
+#
+# The model uses the internal parameters (learned during `fit`) together
+# with the provided `data` to output the predicted target. As for `fit`, the
+# function to combine the `data` and the internal parameters will be specific
+# to the predictive model.
 
 # %% [markdown]
 # Indeed, we can compare these predictions to the actual data...
@@ -210,6 +221,16 @@ model_name = model.__class__.__name__
 
 print(f"The test accuracy using a {model_name} is "
       f"{accuracy:.3f}")
+
+# %% [markdown]
+# Let's check the underlying mechanism when calling the `score` method of a
+# predictor:
+#
+# ![Predictor score diagram](../figures/api_diagram-predictor.score.svg)
+#
+# To compute the score, the predictor first computes the predictions (using
+# the `predict` method) and then uses a scoring function to compare the
+# true target `y` and the predictions. Finally, the score is returned.
 
 # %% [markdown]
 # If we compare with the accuracy obtained by wrongly evaluating the model

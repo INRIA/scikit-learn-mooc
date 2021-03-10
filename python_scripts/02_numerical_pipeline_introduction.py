@@ -95,6 +95,16 @@ model = KNeighborsClassifier()
 model.fit(data, target)
 
 # %% [markdown]
+# The diagram belows represent the learning stage when calling `model.fit`.
+#
+# ![Predictor fit diagram](../figures/api_diagram-predictor.fit.svg)
+#
+# Indeed, the model uses `data` and `target` to compute a set of internal
+# parameters. These parameters are computed with a so-called "algorithm".
+# The algorithm and the set of internal parameters are specific to each
+# predictor.
+
+# %% [markdown]
 # ```{caution}
 # Here and later, we use the name `data` and `target` to be explicit. In
 # scikit-learn, documentation `data` is commonly named `X` and `target` is

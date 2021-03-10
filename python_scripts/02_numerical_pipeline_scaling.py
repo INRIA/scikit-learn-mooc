@@ -135,7 +135,7 @@ scaler.fit(data_train)
 # %% [markdown]
 # We can represent the `fit` mechanism as follows:
 #
-# ![Transformer fit diagram](../figures/api_diagram-tranformer.fit.svg)
+# ![Transformer fit diagram](../figures/api_diagram-transformer.fit.svg)
 #
 # Given the training set, the scaler will compute the mean and standard
 # deviation for each feature and store them as internal parameters.

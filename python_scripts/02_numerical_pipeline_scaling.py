@@ -133,18 +133,19 @@ scaler = StandardScaler()
 scaler.fit(data_train)
 
 # %% [markdown]
-# We can represent the `fit` mechanism as follows:
+# The `fit` method is identical to what a predictor is doing.
 #
 # ![Transformer fit diagram](../figures/api_diagram-transformer.fit.svg)
 #
-# Given the training set, the scaler will compute the mean and standard
-# deviation for each feature and store them as internal parameters.
+# The scaler uses a learning algorithm. In this case, the algorithm needs to
+# compute the mean and standard deviation for each feature and store them into
+# some NumPy arrays. Here, these statistics are the model states.
 #
 # ```{note}
-# Note that the internal parameters are the mean and the standard deviation.
-# However, these statistics are specific to the `StandardScaler`. Other
+# The fact that the model states of this scaler are arrays of means and
+# standard deviations is specific to the `StandardScaler`. Other
 # scikit-learn transformers will compute different statistics and store them
-# as internal parameters, in the same fashion.
+# as model states, in the same fashion.
 # ```
 #
 # We can inspect the computed means and standard deviations.
@@ -157,24 +158,29 @@ scaler.scale_
 
 # %% [markdown]
 # Scaling the data is equivalent to subtract the means and divide by the
-# standard deviations previously computed. This operation is done by calling
-# the `transform` method.
+# standard deviations previously computed. This operation is defining our
+# transformation function and is as well specific to each transformer. We can
+# operate this transformation function by calling the method `transform`.
 
 # %%
 data_train_scaled = scaler.transform(data_train)
 data_train_scaled
 
 # %% [markdown]
-# We can represent this mechanism with the following diagram:
+# Let's illustrate the internal mechanism of the `transform` method and put it
+# to perspective with what we already saw with the predictor.
 #
 # ![Transformer transform diagram](../figures/api_diagram-transformer.transform.svg)
 #
-# The model applies a given transformation on the provided `data` and the
-# internal parameters learned during `fit`.
+# The `transform` method for the transformer is similar to the `predict` method
+# for the predictor. It uses a predefined function, called a **transformation
+# function**, and uses the model states and the input data. However, instead of
+# outputing predictions, the job of the `transform` method is to output a
+# transformed version of the input data.
 
 # %% [markdown]
-# The method `fit_transform` is a shorthand method to call successively `fit`
-# and then `transform`.
+# Finally, the method `fit_transform` is a shorthand method to call
+# successively `fit` and then `transform`.
 #
 # ![Transformer fit_transform diagram](../figures/api_diagram-transformer.fit_transform.svg)
 
@@ -220,7 +226,7 @@ elapsed_time = time.time() - start
 #
 # When calling `model.fit`, the method `fit_transform` from each underlying
 # transformer in the pipeline will be called to: (i) learn their internal
-# parameters and (ii) transform the training data. Finally, the preprocessed
+# model states and (ii) transform the training data. Finally, the preprocessed
 # data are provided to train the predictor.
 #
 # To predict the targets given a test set, one uses the `predict` method.
@@ -236,7 +242,7 @@ predicted_target[:5]
 #
 # The method `transform` of each transformer is called to preprocess the data.
 # Note that there is no need to call the `fit` method for these transformers
-# because we are using the internal parameters computed when calling
+# because we are using the internal model states computed when calling
 # `model.fit`. The preprocessed data is then provided to the predictor that
 # will output the predicted target by calling its method `predict`.
 #

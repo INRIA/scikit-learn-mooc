@@ -95,14 +95,18 @@ model = KNeighborsClassifier()
 model.fit(data, target)
 
 # %% [markdown]
-# The diagram belows represent the learning mechanism when calling `model.fit`.
+# Learning can be represented as follows:
 #
 # ![Predictor fit diagram](../figures/api_diagram-predictor.fit.svg)
 #
-# Indeed, the model uses `data` and `target` to compute a set of internal
-# parameters. These parameters are computed with a so-called "algorithm".
-# The algorithm and the set of internal parameters are specific to each
-# predictor.
+# The method `fit` is composed of two elements: (i) a **learning algorithm**
+# and (ii) some **model states**. The learning algorithm takes the training
+# data and training target as input and set the model states. These model
+# states will be used later to either predict (for classifier and regressor) or
+# transform data (for transformers).
+#
+# Both the learning algorithm and the type of model states are specific to each
+# type of models.
 
 # %% [markdown]
 # ```{caution}
@@ -124,23 +128,26 @@ model.fit(data, target)
 # ```
 
 # %% [markdown]
-# Let's use our model to make some predictions using the same dataset. For
-# the sake of simplicity, we will look at the five first predicted targets.
+# Let's use our model to make some predictions using the same dataset.
 
 # %%
 target_predicted = model.predict(data)
-target_predicted[:5]
 
 # %% [markdown]
-# The diagram belows illustrates a simplified version of the mechanism used
-# to predict targets.
+# We can illustrate the prediction mechanism as follows:
 #
 # ![Predictor predict diagram](../figures/api_diagram-predictor.predict.svg)
 #
-# The model uses the internal parameters (learned during `fit`) together
-# with the provided `data` to output the predicted target. As for `fit`, the
-# function to combine the `data` and the internal parameters will be specific
-# to the predictive model.
+# To predict, a model uses a **prediction function** that will use the input
+# data together with the model states. As for the learning algorithm and the
+# model states, the prediction function is specific for each type of model.
+
+# %% [markdown]
+# Let's now have a look at the predictions computed. For the sake of
+# simplicity, we will look at the five first predicted targets.
+
+# %%
+target_predicted[:5]
 
 # %% [markdown]
 # Indeed, we can compare these predictions to the actual data...
@@ -223,8 +230,7 @@ print(f"The test accuracy using a {model_name} is "
       f"{accuracy:.3f}")
 
 # %% [markdown]
-# Let's check the underlying mechanism when calling the `score` method of a
-# predictor:
+# Let's check the underlying mechanism when the `score` method is called:
 #
 # ![Predictor score diagram](../figures/api_diagram-predictor.score.svg)
 #

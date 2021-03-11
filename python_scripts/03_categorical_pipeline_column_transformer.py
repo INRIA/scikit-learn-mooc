@@ -113,7 +113,7 @@ preprocessor = ColumnTransformer([
 # The `ColumnTransformer` will be a transformer that should do the following
 # steps:
 #
-# * **split the columns(()) of the original dataset based on the column names
+# * **split the columns** of the original dataset based on the column names
 #   or indices provided. Thus, we will obtain as many subsets as the number of
 #   transformers in the `ColumnTransformer`;
 # * **transform each subset of data**. Indeed, each subset that has been

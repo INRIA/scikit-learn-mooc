@@ -93,9 +93,8 @@ scores_sample_sizes = pd.DataFrame(
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
 
-sns.displot(scores_sample_sizes, kind="kde")
+scores_sample_sizes.plot.kde()
 plt.xlabel("Mean absolute error (k$)")
 _ = plt.title("Testing errors distribution \n"
               "by varying the sample size")
@@ -128,24 +127,16 @@ train_errors, test_errors = -train_scores, -test_scores
 # Now, we can plot the curve curve.
 
 # %%
-_, ax = plt.subplots()
+plt.errorbar(train_size, train_errors.mean(axis=1),
+             yerr=3 * train_errors.std(axis=1), label="Training error")
+plt.errorbar(train_size, test_errors.mean(axis=1),
+             yerr=3 * test_errors.std(axis=1), label="Testing error")
+plt.legend()
 
-error_type = ["training error", "Testing error"]
-errors = [train_errors, test_errors]
-
-for name, err in zip(error_type, errors):
-    ax.plot(train_size, err.mean(axis=1), linestyle="-.", label=name,
-            alpha=0.8)
-    ax.fill_between(train_size, err.mean(axis=1) - err.std(axis=1),
-                    err.mean(axis=1) + err.std(axis=1),
-                    alpha=0.5, label=f"std. dev. {name.lower()}")
-
-ax.set_xticks(train_size)
-ax.set_xscale("log")
-ax.set_xlabel("Number of samples in the training set")
-ax.set_ylabel("Mean absolute error (k$)")
-ax.set_title("Learning curve for decision tree")
-_ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.xscale("log")
+plt.xlabel("Number of samples in the training set")
+plt.ylabel("Mean absolute error (k$)")
+_ = plt.title("Learning curve for decision tree")
 
 # %% [markdown]
 # We see that the more samples we add to the training set on this learning

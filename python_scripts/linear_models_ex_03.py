@@ -29,7 +29,10 @@ data.head()
 #   (MAE) as metric. Ensure to return the fitted estimators;
 # * compute mean and std of the MAE in thousands of dollars (k$);
 # * show the values of the coefficients for each feature using a boxplot by
-#   inspecting the fitted model returned from the cross-validation.
+#   inspecting the fitted model returned from the cross-validation. Hint: you
+#   use the function
+#   [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
+#   to plot a box plot.
 
 # %%
 # Write your code here.: make the exercise

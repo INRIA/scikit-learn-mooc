@@ -95,6 +95,20 @@ model = KNeighborsClassifier()
 model.fit(data, target)
 
 # %% [markdown]
+# Learning can be represented as follows:
+#
+# ![Predictor fit diagram](../figures/api_diagram-predictor.fit.svg)
+#
+# The method `fit` is composed of two elements: (i) a **learning algorithm**
+# and (ii) some **model states**. The learning algorithm takes the training
+# data and training target as input and set the model states. These model
+# states will be used later to either predict (for classifier and regressor) or
+# transform data (for transformers).
+#
+# Both the learning algorithm and the type of model states are specific to each
+# type of models.
+
+# %% [markdown]
 # ```{caution}
 # Here and later, we use the name `data` and `target` to be explicit. In
 # scikit-learn, documentation `data` is commonly named `X` and `target` is
@@ -114,11 +128,25 @@ model.fit(data, target)
 # ```
 
 # %% [markdown]
-# Let's use our model to make some predictions using the same dataset. For
-# the sake of simplicity, we will look at the five first predicted targets.
+# Let's use our model to make some predictions using the same dataset.
 
 # %%
 target_predicted = model.predict(data)
+
+# %% [markdown]
+# We can illustrate the prediction mechanism as follows:
+#
+# ![Predictor predict diagram](../figures/api_diagram-predictor.predict.svg)
+#
+# To predict, a model uses a **prediction function** that will use the input
+# data together with the model states. As for the learning algorithm and the
+# model states, the prediction function is specific for each type of model.
+
+# %% [markdown]
+# Let's now have a look at the predictions computed. For the sake of
+# simplicity, we will look at the five first predicted targets.
+
+# %%
 target_predicted[:5]
 
 # %% [markdown]
@@ -200,6 +228,15 @@ model_name = model.__class__.__name__
 
 print(f"The test accuracy using a {model_name} is "
       f"{accuracy:.3f}")
+
+# %% [markdown]
+# Let's check the underlying mechanism when the `score` method is called:
+#
+# ![Predictor score diagram](../figures/api_diagram-predictor.score.svg)
+#
+# To compute the score, the predictor first computes the predictions (using
+# the `predict` method) and then uses a scoring function to compare the
+# true target `y` and the predictions. Finally, the score is returned.
 
 # %% [markdown]
 # If we compare with the accuracy obtained by wrongly evaluating the model

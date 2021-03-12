@@ -120,11 +120,71 @@ data_train.describe()
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer shifts and scales each feature
 # individually so that they all have a 0-mean and a unit standard deviation.
+#
+# We will investigate different steps used in scikit-learn to achieve such a
+# transformation of the data.
+#
+# First, one needs to call the method `fit`.
 
 # %%
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
+scaler.fit(data_train)
+
+# %% [markdown]
+# The `fit` method is identical to what a predictor is doing.
+#
+# ![Transformer fit diagram](../figures/api_diagram-transformer.fit.svg)
+#
+# The scaler uses a learning algorithm. In this case, the algorithm needs to
+# compute the mean and standard deviation for each feature and store them into
+# some NumPy arrays. Here, these statistics are the model states.
+#
+# ```{note}
+# The fact that the model states of this scaler are arrays of means and
+# standard deviations is specific to the `StandardScaler`. Other
+# scikit-learn transformers will compute different statistics and store them
+# as model states, in the same fashion.
+# ```
+#
+# We can inspect the computed means and standard deviations.
+
+# %%
+scaler.mean_
+
+# %%
+scaler.scale_
+
+# %% [markdown]
+# Scaling the data is equivalent to subtract the means and divide by the
+# standard deviations previously computed. This operation is defining our
+# transformation function and is as well specific to each transformer. We can
+# operate this transformation function by calling the method `transform`.
+
+# %%
+data_train_scaled = scaler.transform(data_train)
+data_train_scaled
+
+# %% [markdown]
+# Let's illustrate the internal mechanism of the `transform` method and put it
+# to perspective with what we already saw with the predictor.
+#
+# ![Transformer transform diagram](../figures/api_diagram-transformer.transform.svg)
+#
+# The `transform` method for the transformer is similar to the `predict` method
+# for the predictor. It uses a predefined function, called a **transformation
+# function**, and uses the model states and the input data. However, instead of
+# outputing predictions, the job of the `transform` method is to output a
+# transformed version of the input data.
+
+# %% [markdown]
+# Finally, the method `fit_transform` is a shorthand method to call
+# successively `fit` and then `transform`.
+#
+# ![Transformer fit_transform diagram](../figures/api_diagram-transformer.fit_transform.svg)
+
+# %%
 data_train_scaled = scaler.fit_transform(data_train)
 data_train_scaled
 
@@ -147,9 +207,48 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(StandardScaler(), LogisticRegression())
+
+# %% [markdown]
+# This predictive pipeline exposes the same methods as the ending predictor:
+# `fit` and `predict` (and additionally `predict_proba`, `decision_function`,
+# or `score`).
+
+# %%
 start = time.time()
 model.fit(data_train, target_train)
 elapsed_time = time.time() - start
+
+# %% [markdown]
+# We can represent the internal mechanism of a pipeline when calling `fit`
+# by the following diagram:
+#
+# ![pipeline fit diagram](../figures/api_diagram-pipeline.fit.svg)
+#
+# When calling `model.fit`, the method `fit_transform` from each underlying
+# transformer in the pipeline will be called to: (i) learn their internal
+# model states and (ii) transform the training data. Finally, the preprocessed
+# data are provided to train the predictor.
+#
+# To predict the targets given a test set, one uses the `predict` method.
+
+# %%
+predicted_target = model.predict(data_test)
+predicted_target[:5]
+
+# %% [markdown]
+# Let's show the underlying mechanism:
+#
+# ![pipeline predict diagram](../figures/api_diagram-pipeline.predict.svg)
+#
+# The method `transform` of each transformer is called to preprocess the data.
+# Note that there is no need to call the `fit` method for these transformers
+# because we are using the internal model states computed when calling
+# `model.fit`. The preprocessed data is then provided to the predictor that
+# will output the predicted target by calling its method `predict`.
+#
+# As a shorthand, we can check the score of the full predictive pipeline
+# calling the method `model.score`. Thus, let's check the computational and
+# statistical performance of such a predictive pipeline.
 
 # %%
 model_name = model.__class__.__name__

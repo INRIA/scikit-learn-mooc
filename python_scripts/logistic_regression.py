@@ -27,6 +27,7 @@ import matplotlib.pyplot as plt
 
 for feature_name in culmen_columns:
     plt.figure()
+    # plot the histogram for each specie
     penguins.groupby("Species")[feature_name].plot.hist(
         alpha=0.5, density=True, legend=True)
     plt.xlabel(feature_name)

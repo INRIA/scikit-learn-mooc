@@ -24,13 +24,16 @@ feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 data, target = penguins[[feature_names]], penguins[target_name]
 
-_ = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
+ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
+ax.set_title("Flipper length in function of the body mass")
 
 # %% [markdown]
 # ```{tip}
 # The function `scatterplot` from searborn take as input the full dataframe
 # and the parameter `x` and `y` allows to specify the name of the columns to
-# be plotted.
+# be plotted. Note that this function returns a matplotlib axis
+# (named `ax` in the example above) that can be further used to add element on
+# the same matplotlib axis (such as a title).
 # ```
 
 # %% [markdown]

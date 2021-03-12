@@ -300,7 +300,7 @@ print(f"R2 score of ridge model on the train set:\n"
 # %%
 mse_alphas = [est[-1].cv_values_.mean(axis=0)
               for est in cv_results["estimator"]]
-cv_alphas = pd.DataFrame(mse_alphas,columns=alphas)
+cv_alphas = pd.DataFrame(mse_alphas, columns=alphas)
 cv_alphas
 
 # %%

@@ -105,7 +105,32 @@ preprocessor = ColumnTransformer([
     ('standard-scaler', numerical_preprocessor, numerical_columns)])
 
 # %% [markdown]
-# Finally, we define a pipeline to stack this "preprocessor" with our
+# We can take a minute to represent graphically the structure of a
+# `ColumnTransformer`:
+#
+# ![columntransformer diagram](../figures/api_diagram-columntransformer.svg)
+#
+# The `ColumnTransformer` will be a transformer that should do the following
+# steps:
+#
+# * **split the columns** of the original dataset based on the column names
+#   or indices provided. Thus, we will obtain as many subsets as the number of
+#   transformers in the `ColumnTransformer`;
+# * **transform each subset of data**. Indeed, each subset that has been
+#   created will is affected a specific transformer. Each transformer will
+#   internally call `fit_transform` or `transform`. Thus, the output of this
+#   transformation will be a set of transformed dataset.
+# * **concatenate all transformed dataset**. Once all input data transformed by
+#   their respective transformers, all datasets are concatenated and provided
+#   as an output.
+#
+# Thus, a `ColumnTransformer` is just another transformer: it get some input
+# data and will output some transformed data. However, columns will be
+# transformed differently depending on how a user defines the relationship
+# between columns and transformers.
+#
+# Now, that we know that our `preprocessor` can be seen as any scikit-learn
+# transformer, we define a pipeline to stack our `preprocessor` with our
 # classifier (logistic regression).
 
 # %%

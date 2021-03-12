@@ -1356,7 +1356,29 @@ with their respective columns.</p>
 </div>
 </div>
 </div>
-<p>Finally, we define a pipeline to stack this “preprocessor” with our
+<p>We can take a minute to represent graphically the structure of a
+<code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>:</p>
+<p><img alt="columntransformer diagram" src="../_images/api_diagram-columntransformer.svg" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> will be a transformer that should do the following
+steps:</p>
+<ul class="simple">
+<li><p><strong>split the columns</strong> of the original dataset based on the column names
+or indices provided. Thus, we will obtain as many subsets as the number of
+transformers in the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>;</p></li>
+<li><p><strong>transform each subset of data</strong>. Indeed, each subset that has been
+created will is affected a specific transformer. Each transformer will
+internally call <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> or <code class="docutils literal notranslate"><span class="pre">transform</span></code>. Thus, the output of this
+transformation will be a set of transformed dataset.</p></li>
+<li><p><strong>concatenate all transformed dataset</strong>. Once all input data transformed by
+their respective transformers, all datasets are concatenated and provided
+as an output.</p></li>
+</ul>
+<p>Thus, a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> is just another transformer: it get some input
+data and will output some transformed data. However, columns will be
+transformed differently depending on how a user defines the relationship
+between columns and transformers.</p>
+<p>Now, that we know that our <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> can be seen as any scikit-learn
+transformer, we define a pipeline to stack our <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> with our
 classifier (logistic regression).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

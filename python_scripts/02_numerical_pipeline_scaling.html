@@ -1449,12 +1449,98 @@ do not need such preprocessing (but will not suffer from it).</p>
 <p>We show how to apply such normalization using a scikit-learn transformer
 called <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. This transformer shifts and scales each feature
 individually so that they all have a 0-mean and a unit standard deviation.</p>
+<p>We will investigate different steps used in scikit-learn to achieve such a
+transformation of the data.</p>
+<p>First, one needs to call the method <code class="docutils literal notranslate"><span class="pre">fit</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">data_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>StandardScaler()
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is identical to what a predictor is doing.</p>
+<p><img alt="Transformer fit diagram" src="../_images/api_diagram-transformer.fit.svg" /></p>
+<p>The scaler uses a learning algorithm. In this case, the algorithm needs to
+compute the mean and standard deviation for each feature and store them into
+some NumPy arrays. Here, these statistics are the model states.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The fact that the model states of this scaler are arrays of means and
+standard deviations is specific to the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. Other
+scikit-learn transformers will compute different statistics and store them
+as model states, in the same fashion.</p>
+</div>
+<p>We can inspect the computed means and standard deviations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span><span class="o">.</span><span class="n">mean_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  38.64235211, 1087.07772106,   89.6653108 ,   40.43124676])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span><span class="o">.</span><span class="n">scale_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  13.72556083, 7522.59025606,  407.10461772,   12.42378265])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Scaling the data is equivalent to subtract the means and divide by the
+standard deviations previously computed. This operation is defining our
+transformation function and is as well specific to each transformer. We can
+operate this transformation function by calling the method <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+<span class="n">data_train_scaled</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.17177061, -0.14450843,  5.71188483, -2.28845333],
+       [ 0.02605707, -0.14450843, -0.22025127, -0.27618374],
+       [-0.33822677, -0.14450843, -0.22025127,  0.77019645],
+       ...,
+       [-0.77536738, -0.14450843, -0.22025127, -0.03471139],
+       [ 0.53605445, -0.14450843, -0.22025127, -0.03471139],
+       [ 1.48319243, -0.14450843, -0.22025127, -2.69090725]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s illustrate the internal mechanism of the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method and put it
+to perspective with what we already saw with the predictor.</p>
+<p><img alt="Transformer transform diagram" src="../_images/api_diagram-transformer.transform.svg" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">transform</span></code> method for the transformer is similar to the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method
+for the predictor. It uses a predefined function, called a <strong>transformation
+function</strong>, and uses the model states and the input data. However, instead of
+outputing predictions, the job of the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method is to output a
+transformed version of the input data.</p>
+<p>Finally, the method <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> is a shorthand method to call
+successively <code class="docutils literal notranslate"><span class="pre">fit</span></code> and then <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>
+<p><img alt="Transformer fit_transform diagram" src="../_images/api_diagram-transformer.fit_transform.svg" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
 <span class="n">data_train_scaled</span>
 </pre></div>
 </div>
@@ -1578,13 +1664,53 @@ a name at steps based on the name of the classes.</p>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This predictive pipeline exposes the same methods as the ending predictor:
+<code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">predict</span></code> (and additionally <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code>, <code class="docutils literal notranslate"><span class="pre">decision_function</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">score</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>We can represent the internal mechanism of a pipeline when calling <code class="docutils literal notranslate"><span class="pre">fit</span></code>
+by the following diagram:</p>
+<p><img alt="pipeline fit diagram" src="../_images/api_diagram-pipeline.fit.svg" /></p>
+<p>When calling <code class="docutils literal notranslate"><span class="pre">model.fit</span></code>, the method <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> from each underlying
+transformer in the pipeline will be called to: (i) learn their internal
+model states and (ii) transform the training data. Finally, the preprocessed
+data are provided to train the predictor.</p>
+<p>To predict the targets given a test set, one uses the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_target</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">predicted_target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s show the underlying mechanism:</p>
+<p><img alt="pipeline predict diagram" src="../_images/api_diagram-pipeline.predict.svg" /></p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">transform</span></code> of each transformer is called to preprocess the data.
+Note that there is no need to call the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method for these transformers
+because we are using the internal model states computed when calling
+<code class="docutils literal notranslate"><span class="pre">model.fit</span></code>. The preprocessed data is then provided to the predictor that
+will output the predicted target by calling its method <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
+<p>As a shorthand, we can check the score of the full predictive pipeline
+calling the method <code class="docutils literal notranslate"><span class="pre">model.score</span></code>. Thus, let’s check the computational and
+statistical performance of such a predictive pipeline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
@@ -1596,7 +1722,7 @@ a name at steps based on the name of the classes.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.103 seconds in 12 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.094 seconds in 12 iterations
 </pre></div>
 </div>
 </div>
@@ -1624,7 +1750,7 @@ the previous notebook which was not scaling feature.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.253 seconds in 59 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.198 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
@@ -1675,12 +1801,12 @@ defines the splitting strategy.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.03 s, sys: 331 ms, total: 1.36 s
-Wall time: 714 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 979 ms, sys: 323 ms, total: 1.3 s
+Wall time: 678 ms
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.10243225, 0.10214663, 0.11144948, 0.10248113, 0.10377359]),
- &#39;score_time&#39;: array([0.02028704, 0.02327037, 0.02210426, 0.02523565, 0.02304125]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.10209513, 0.09793091, 0.10040474, 0.09778929, 0.09761977]),
+ &#39;score_time&#39;: array([0.0212431 , 0.02087426, 0.02093577, 0.02074242, 0.02065611]),
  &#39;test_score&#39;: array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])}
 </pre></div>
 </div>

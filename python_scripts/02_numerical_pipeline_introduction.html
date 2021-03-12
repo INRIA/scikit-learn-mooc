@@ -1522,6 +1522,15 @@ notebook, we will introduce better models.</p>
 </div>
 </div>
 </div>
+<p>Learning can be represented as follows:</p>
+<p><img alt="Predictor fit diagram" src="../_images/api_diagram-predictor.fit.svg" /></p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">fit</span></code> is composed of two elements: (i) a <strong>learning algorithm</strong>
+and (ii) some <strong>model states</strong>. The learning algorithm takes the training
+data and training target as input and set the model states. These model
+states will be used later to either predict (for classifier and regressor) or
+transform data (for transformers).</p>
+<p>Both the learning algorithm and the type of model states are specific to each
+type of models.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
 <p>Here and later, we use the name <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> to be explicit. In
@@ -1540,12 +1549,24 @@ preprocessing is required.</p></li>
 classifier, or regressor.</p></li>
 </ul>
 </div>
-<p>Let’s use our model to make some predictions using the same dataset. For
-the sake of simplicity, we will look at the five first predicted targets.</p>
+<p>Let’s use our model to make some predictions using the same dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can illustrate the prediction mechanism as follows:</p>
+<p><img alt="Predictor predict diagram" src="../_images/api_diagram-predictor.predict.svg" /></p>
+<p>To predict, a model uses a <strong>prediction function</strong> that will use the input
+data together with the model states. As for the learning algorithm and the
+model states, the prediction function is specific for each type of model.</p>
+<p>Let’s now have a look at the predictions computed. For the sake of
+simplicity, we will look at the five first predicted targets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1690,6 +1711,11 @@ this method returns their performance metric.</p>
 </div>
 </div>
 </div>
+<p>Let’s check the underlying mechanism when the <code class="docutils literal notranslate"><span class="pre">score</span></code> method is called:</p>
+<p><img alt="Predictor score diagram" src="../_images/api_diagram-predictor.score.svg" /></p>
+<p>To compute the score, the predictor first computes the predictions (using
+the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method) and then uses a scoring function to compare the
+true target <code class="docutils literal notranslate"><span class="pre">y</span></code> and the predictions. Finally, the score is returned.</p>
 <p>If we compare with the accuracy obtained by wrongly evaluating the model
 on the training set, we find that this evaluation was indeed optimistic
 compared to the score obtained on an held-out test set.</p>

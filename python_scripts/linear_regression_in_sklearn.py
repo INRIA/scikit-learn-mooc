@@ -26,7 +26,6 @@ feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 data, target = penguins[[feature_names]], penguins[target_name]
 
-
 # %%
 from sklearn.linear_model import LinearRegression
 
@@ -52,14 +51,17 @@ intercept_body_mass
 
 # %%
 import numpy as np
+
+flipper_length_range = np.linspace(data.min(), data.max(), num=300)
+predicted_body_mass = (
+    weight_flipper_length * flipper_length_range + intercept_body_mass)
+
+# %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-flipper_length_range = np.linspace(data.min(), data.max(), num=300)
-sns.scatterplot(x=data[feature_names], y=target)
-plt.plot(flipper_length_range,
-         weight_flipper_length * flipper_length_range + intercept_body_mass,
-         linewidth=4)
+sns.scatterplot(x=data[feature_names], y=target, color="black", alpha=0.5)
+plt.plot(flipper_length_range, predicted_body_mass)
 _ = plt.title("Model using LinearRegression from scikit-learn")
 
 # %% [markdown]

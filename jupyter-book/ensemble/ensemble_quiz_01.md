@@ -3,8 +3,8 @@
 ```{admonition} Question
 By default, a
 [`BaggingClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html)
-or [`BaggingRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingRegressor.html),
-by default, draws:
+or [`BaggingRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingRegressor.html)
+draws:
 
 - a) subsamples with replacement over samples
 - b) subsamples with replacement over features

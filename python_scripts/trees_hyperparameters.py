@@ -95,6 +95,8 @@ def plot_regression(model, X, y, ax=None):
 # and over-fitted decision tree. Let's build a shallow tree and then a deeper
 # tree, for both classification and regression, to understand the impact of the
 # parameter.
+#
+# We can first set the `max_depth` parameter value to a very low value.
 
 # %%
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
@@ -103,27 +105,36 @@ max_depth = 2
 tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
-fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
+# %%
 plot_classification(tree_clf, data_clf[data_clf_columns],
-                    data_clf[target_clf_column], ax=axs[0])
-plot_regression(tree_reg, data_reg[data_reg_columns],
-                data_reg[target_reg_column], ax=axs[1])
-fig.suptitle(f"Shallow tree with a max-depth of {max_depth}")
-plt.subplots_adjust(wspace=0.3)
+                    data_clf[target_clf_column])
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+_ = plt.title(f"Shallow classification tree with max-depth of {max_depth}")
 
+# %%
+plot_regression(tree_reg, data_reg[data_reg_columns],
+                data_reg[target_reg_column])
+_ = plt.title(f"Shallow regression tree with max-depth of {max_depth}")
+
+# %% [markdown]
+# Now, let's increase the `max_depth` parameter value to check the difference
+# by observing the decision function.
 
 # %%
 max_depth = 30
 tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
-fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
+# %%
 plot_classification(tree_clf, data_clf[data_clf_columns],
-                    data_clf[target_clf_column], ax=axs[0])
+                    data_clf[target_clf_column])
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+_ = plt.title(f"Deep classification tree with max-depth of {max_depth}")
+
+# %%
 plot_regression(tree_reg, data_reg[data_reg_columns],
-                data_reg[target_reg_column], ax=axs[1])
-fig.suptitle(f"Deep tree with a max-depth of {max_depth}")
-plt.subplots_adjust(wspace=0.3)
+                data_reg[target_reg_column])
+_ = plt.title(f"Deep regression tree with max-depth of {max_depth}")
 
 # %% [markdown]
 # For both classification and regression setting, we observe that
@@ -141,16 +152,17 @@ tree_clf = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid)
 tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid)
 
 # %%
-fig, axs = plt.subplots(ncols=2, figsize=(12, 5))
 plot_classification(tree_clf, data_clf[data_clf_columns],
-                    data_clf[target_clf_column], ax=axs[0])
+                    data_clf[target_clf_column])
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+_ = plt.title(f"Optimal depth found via CV: "
+              f"{tree_clf.best_params_['max_depth']}")
+
+# %%
 plot_regression(tree_reg, data_reg[data_reg_columns],
-                data_reg[target_reg_column], ax=axs[1])
-axs[0].set_title(f"Optimal depth found via CV: "
-                 f"{tree_clf.best_params_['max_depth']}")
-axs[1].set_title(f"Optimal depth found via CV: "
-                 f"{tree_reg.best_params_['max_depth']}")
-plt.subplots_adjust(wspace=0.3)
+                data_reg[target_reg_column])
+_ = plt.title(f"Optimal depth found via CV: "
+              f"{tree_reg.best_params_['max_depth']}")
 
 # %% [markdown]
 # With this example, we see that there is not a single value that is optimal
@@ -173,16 +185,15 @@ plt.subplots_adjust(wspace=0.3)
 # subset.
 
 # %%
-from sklearn.datasets import make_classification, make_blobs
+from sklearn.datasets import make_blobs
 
 data_clf_columns = ["Feature #0", "Feature #1"]
 target_clf_column = "Class"
 
-# X_1, y_1 = make_classification(
-#     n_samples=300, n_features=2, n_classes=2, n_clusters_per_class=1,
-#     n_informative=2, n_redundant=0, class_sep=0.2, random_state=0)
+# Blobs that will be interlaced
 X_1, y_1 = make_blobs(
     n_samples=300, centers=[[0, 0], [-1, -1]], random_state=0)
+# Blobs that will be easily separated
 X_2, y_2 = make_blobs(
     n_samples=300, centers=[[3, 6], [7, 0]], random_state=0)
 
@@ -194,9 +205,9 @@ data_clf = pd.DataFrame(
 data_clf[target_clf_column] = data_clf[target_clf_column].astype(np.int32)
 
 # %%
-_ = sns.scatterplot(
-    x=data_clf_columns[0], y=data_clf_columns[1], hue=target_clf_column,
-    data=data_clf, palette=["tab:red", "tab:blue"])
+sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
+                hue=target_clf_column, palette=["tab:red", "tab:blue"])
+_ = plt.title("Synthetic dataset")
 
 # %% [markdown]
 # We will first train a shallow decision tree with `max_depth=2`. We would
@@ -204,10 +215,11 @@ _ = sns.scatterplot(
 # separate.
 
 # %%
-_, ax = plt.subplots()
-tree_clf = DecisionTreeClassifier(max_depth=2)
-_ = plot_classification(tree_clf, data_clf[data_clf_columns],
-                        data_clf[target_clf_column], ax=ax)
+max_depth = 2
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column])
+_ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %% [markdown]
 # As expected, we see that the blue blob on the right and the red blob on the
@@ -229,10 +241,11 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 # increase the depth to check how the tree will grow.
 
 # %%
-_, ax = plt.subplots()
-tree_clf = DecisionTreeClassifier(max_depth=6)
-_ = plot_classification(tree_clf, data_clf[data_clf_columns],
-                        data_clf[target_clf_column], ax=ax)
+max_depth = 6
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column])
+_ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %%
 _, ax = plt.subplots(figsize=(11, 7))
@@ -250,10 +263,12 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 # of `min_samples_leaf`.
 
 # %%
-_, ax = plt.subplots()
-tree_clf = DecisionTreeClassifier(min_samples_leaf=60)
-_ = plot_classification(tree_clf, data_clf[data_clf_columns],
-                        data_clf[target_clf_column], ax=ax)
+min_samples_leaf = 60
+tree_clf = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf)
+plot_classification(tree_clf, data_clf[data_clf_columns],
+                    data_clf[target_clf_column])
+_ = plt.title(
+    f"Decision tree with leaf having at least {min_samples_leaf} samples")
 
 # %%
 _, ax = plt.subplots(figsize=(10, 7))

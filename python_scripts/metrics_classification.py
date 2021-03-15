@@ -19,9 +19,11 @@ target = blood_transfusion["Class"]
 # Let's start by checking the classes present in the target vector `target`.
 
 # %%
-ax = target.value_counts().plot(kind="barh")
-ax.set_xlabel("Number of samples")
-_ = ax.set_title("Number of samples per classes present\n in the target")
+import matplotlib.pyplot as plt
+
+target.value_counts().plot.barh()
+plt.xlabel("Number of samples")
+_ = plt.title("Number of samples per classes present\n in the target")
 
 # %% [markdown]
 # We can see that the vector `target` contains two classes corresponding to
@@ -192,9 +194,9 @@ print(f"Recall score: {recall:.3f}")
 # training set.
 
 # %%
-ax = target_train.value_counts(normalize=True).plot(kind="barh")
-ax.set_xlabel("Class frequency")
-_ = ax.set_title("Class frequency in the training set")
+target_train.value_counts(normalize=True).plot.barh()
+plt.xlabel("Class frequency")
+_ = plt.title("Class frequency in the training set")
 
 # %% [markdown]
 # We observe that the positive class, `'donated'`, comprises only 24% of the
@@ -278,6 +280,14 @@ disp = plot_precision_recall_curve(
 _ = disp.ax_.set_title("Precision-recall curve")
 
 # %% [markdown]
+# ```{tip}
+# Scikit-learn will return a display containing all plotting element. Notably,
+# displays will expose a matplotlib axis, named `ax_`, that can be used to add
+# new element on the axis.
+# You can refer to the documentation to have more information regarding the
+# [visualizations in scikit-learn](https://scikit-learn.org/stable/visualizations.html#visualizations)
+# ```
+#
 # On this curve, each blue cross corresponds to a level of probability which we
 # used as a decision threshold. We can see that, by varying this decision
 # threshold, we get different precision vs. recall values.

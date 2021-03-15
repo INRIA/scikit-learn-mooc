@@ -75,19 +75,23 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # prediction from one class to another.
 
 # %%
-import seaborn as sns
 from sklearn.linear_model import LogisticRegression
-
-# create a palette to be used in the scatterplot
-palette = ["tab:red", "tab:blue", "black"]
 
 linear_model = LogisticRegression()
 linear_model.fit(data_train, target_train)
 
-_, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=penguins, palette=palette, ax=ax)
-_ = plot_decision_function(linear_model, range_features, ax=ax)
+# %%
+import seaborn as sns
+
+# create a palette to be used in the scatterplot
+palette = ["tab:red", "tab:blue", "black"]
+
+ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                     hue=target_column, palette=palette)
+plot_decision_function(linear_model, range_features, ax=ax)
+# put the legend outside the plot
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+_ = plt.title("Decision boundary using a logistic regression")
 
 # %% [markdown]
 # We see that the lines are a combination of the input features since they are
@@ -99,10 +103,9 @@ _ = plot_decision_function(linear_model, range_features, ax=ax)
 # such problem as it gives good accuracy.
 
 # %%
-model_name = linear_model.__class__.__name__
 linear_model.fit(data_train, target_train)
 test_score = linear_model.score(data_test, target_test)
-print(f"Accuracy of the {model_name}: {test_score:.2f}")
+print(f"Accuracy of the LogisticRegression: {test_score:.2f}")
 
 # %% [markdown]
 # Unlike linear models, decision trees are non-parametric models: they are not
@@ -119,10 +122,12 @@ from sklearn.tree import DecisionTreeClassifier
 tree = DecisionTreeClassifier(max_depth=1)
 tree.fit(data_train, target_train)
 
-_, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=penguins, palette=palette, ax=ax)
-_ = plot_decision_function(tree, range_features, ax=ax)
+# %%
+ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                     hue=target_column, palette=palette)
+plot_decision_function(tree, range_features, ax=ax)
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+_ = plt.title("Decision boundary using a decision tree")
 
 # %% [markdown]
 # The partitions found by the algorithm separates the data along the axis
@@ -136,6 +141,13 @@ from sklearn.tree import plot_tree
 _, ax = plt.subplots(figsize=(8, 6))
 _ = plot_tree(tree, feature_names=culmen_columns,
               class_names=tree.classes_, impurity=False, ax=ax)
+
+# %% [markdown]
+# ```{tip}
+# We are using the function `fig, ax = plt.subplots(figsize=(8, 6))` to create
+# a figure and an axis with a specific size. Then, we can pass the axis to the
+# `sklearn.tree.plot_tree` function such that the drawing happens in this axis.
+# ```
 
 # %% [markdown]
 # We see that the split was done the culmen length feature. The original
@@ -177,21 +189,26 @@ tree.predict([[0, 17]])
 # this partition.
 
 # %%
-y_proba = pd.Series(tree.predict_proba([[0, 17]])[0],
-                    index=tree.classes_)
-ax = y_proba.plot(kind="bar")
-ax.set_ylabel("Probability")
-_ = ax.set_title("Probability to belong to a penguin class")
+y_pred_proba = tree.predict_proba([[0, 17]])
+y_proba_class_0 = pd.Series(y_pred_proba[0], index=tree.classes_)
+
+# %%
+y_proba_class_0.plot.bar()
+plt.ylabel("Probability")
+_ = plt.title("Probability to belong to a penguin class")
 
 # %% [markdown]
 # We will manually compute the different probability directly from the tree
 # structure.
 
 # %%
+adelie_proba = 103 / 161
+chinstrap_proba = 52 / 161
+gentoo_proba = 6 / 161
 print(f"Probabilities for the different classes:\n"
-      f"Adelie: {103 / 161:.3f}\n"
-      f"Chinstrap: {52 / 161:.3f}\n"
-      f"Gentoo: {6 / 161:.3f}\n")
+      f"Adelie: {adelie_proba:.3f}\n"
+      f"Chinstrap: {chinstrap_proba:.3f}\n"
+      f"Gentoo: {gentoo_proba:.3f}\n")
 
 # %% [markdown]
 # It is also important to note that the culmen depth has been disregarded for
@@ -207,10 +224,9 @@ tree.predict_proba([[10000, 17]])
 # accuracy is low when compared to the linear model.
 
 # %%
-model_name = tree.__class__.__name__
 tree.fit(data_train, target_train)
 test_score = tree.score(data_test, target_test)
-print(f"Accuracy of the {model_name}: {test_score:.2f}")
+print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 
 # %% [markdown]
 # Indeed, it is not a surprise. We saw earlier that a single feature will not

@@ -29,7 +29,10 @@ data.head()
 #   (MAE) as metric. Ensure to return the fitted estimators;
 # * compute mean and std of the MAE in thousands of dollars (k$);
 # * show the values of the coefficients for each feature using a boxplot by
-#   inspecting the fitted model returned from the cross-validation.
+#   inspecting the fitted model returned from the cross-validation. Hint: you
+#   use the function
+#   [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
+#   to plot a box plot.
 
 # %%
 from sklearn.linear_model import LinearRegression
@@ -50,10 +53,13 @@ print(f"Mean absolute error on testing set: "
 
 # %%
 import pandas as pd
-import matplotlib.pyplot as plt
 
 weights = pd.DataFrame(
     [est.coef_ for est in cv_results["estimator"]], columns=data.columns)
+
+# %%
+import matplotlib.pyplot as plt
+
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
 weights.plot.box(color=color, vert=False)
 _ = plt.title("Value of linear regression coefficients")

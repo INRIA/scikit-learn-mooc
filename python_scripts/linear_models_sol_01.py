@@ -55,17 +55,16 @@ import seaborn as sns
 weights = [-40, 45, 90]
 intercepts = [15000, -5000, -14000]
 
-_, ax = plt.subplots()
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, ax=ax)
+ax = sns.scatterplot(data=penguins, x=feature_name, y=target_name,
+                     color="black", alpha=0.5)
 
+label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
 for weight, intercept in zip(weights, intercepts):
     predicted_body_mass = linear_model_flipper_mass(
         flipper_length_range, weight, intercept)
 
-    label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
     ax.plot(flipper_length_range, predicted_body_mass,
-            label=label.format(weight, intercept),
-            linewidth=4)
+            label=label.format(weight, intercept))
 _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.25), ncol=1)
 
 # %% [markdown]

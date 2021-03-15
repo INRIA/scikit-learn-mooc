@@ -59,8 +59,11 @@ def f(data, weight=0, intercept=0):
 
 
 # %%
+predictions = f(data, weight=1.2, intercept=-0.2)
+
+# %%
 ax = sns.scatterplot(data=full_data, x="data", y="target")
-_ = ax.plot(data, f(data, weight=1.2, intercept=-0.2), color="tab:orange")
+_ = ax.plot(data, predictions, color="tab:orange")
 
 # %%
 from sklearn.metrics import mean_squared_error
@@ -84,12 +87,16 @@ print(f"The MSE is {error}")
 from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
-data = data.reshape(-1, 1)
-linear_regression.fit(data, target)
-
-ax = sns.scatterplot(data=full_data, x="data", y="target")
-_ = ax.plot(data.ravel(), linear_regression.predict(data), color="tab:orange")
+data_2d = data.reshape(-1, 1)
+linear_regression.fit(data_2d, target)
 
 # %%
-error = mean_squared_error(target, linear_regression.predict(data))
+predictions = linear_regression.predict(data_2d)
+
+# %%
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+_ = ax.plot(data, predictions, color="tab:orange")
+
+# %%
+error = mean_squared_error(target, predictions)
 print(f"The MSE is {error}")

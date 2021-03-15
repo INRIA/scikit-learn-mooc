@@ -141,13 +141,14 @@ predicted_actual = {
 predicted_actual = pd.DataFrame(predicted_actual)
 
 # %%
+import matplotlib.pyplot as plt
 import seaborn as sns
 
-ax = sns.scatterplot(
-    data=predicted_actual, x="True values (k$)", y="Predicted values (k$)")
-ax.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
-ax.set_aspect('equal', 'box')
-_ = ax.legend()
+sns.scatterplot(data=predicted_actual,
+                x="True values (k$)", y="Predicted values (k$)")
+plt.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
+plt.axis('square')
+_ = plt.title("Regression using a model without \ntarget transformation")
 
 # %% [markdown]
 # On this plot, correct predictions would lie on the diagonal line. This plot
@@ -175,11 +176,14 @@ predicted_actual = {
     "True values (k$)": target_test, "Predicted values (k$)": target_predicted}
 predicted_actual = pd.DataFrame(predicted_actual)
 
-ax = sns.scatterplot(
-    data=predicted_actual, x="True values (k$)", y="Predicted values (k$)")
-ax.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
-ax.set_aspect('equal', 'box')
-_ = ax.legend()
+# %%
+sns.scatterplot(data=predicted_actual,
+                x="True values (k$)", y="Predicted values (k$)")
+plt.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
+plt.axis('square')
+plt.legend()
+_ = plt.title("Regression using a model that\n transform the target before "
+              "fitting")
 
 # %% [markdown]
 # Thus, once we transformed the target, we see that we corrected some of the

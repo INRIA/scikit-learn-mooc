@@ -103,17 +103,16 @@ for cv_idx, estimator in enumerate(results["estimator"]):
         columns={"mean_test_score": f"CV {cv_idx}"})
     inner_cv_results.append(search_cv_results)
 inner_cv_results = pd.concat(inner_cv_results, axis=1).T
-inner_cv_results.columns = inner_cv_results.columns.to_flat_index()
 
 # %%
-import seaborn as sns
+import matplotlib.pyplot as plt
 
-ax = sns.boxplot(
-    data=inner_cv_results, orient="h", color="tab:blue", whis=100)
-ax.set_xlabel("R2 score")
-ax.set_ylabel("Parameters")
-_ = ax.set_title("Inner CV results with parameters\n"
-                 "(max_depth, max_leaf_nodes, learning_rate)")
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+inner_cv_results.plot.box(vert=False, color=color)
+plt.xlabel("R2 score")
+plt.ylabel("Parameters")
+_ = plt.title("Inner CV results with parameters\n"
+              "(max_depth, max_leaf_nodes, learning_rate)")
 
 # %% [markdown]
 # We see that the first 4 ranked set of parameters are very close.

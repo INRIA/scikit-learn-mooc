@@ -24,7 +24,17 @@ feature_names = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 data, target = penguins[[feature_names]], penguins[target_name]
 
-_ = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
+ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
+ax.set_title("Flipper length in function of the body mass")
+
+# %% [markdown]
+# ```{tip}
+# The function `scatterplot` from searborn take as input the full dataframe
+# and the parameter `x` and `y` allows to specify the name of the columns to
+# be plotted. Note that this function returns a matplotlib axis
+# (named `ax` in the example above) that can be further used to add element on
+# the same matplotlib axis (such as a title).
+# ```
 
 # %% [markdown]
 # ```{caution}
@@ -74,11 +84,10 @@ predicted_body_mass = linear_model_flipper_mass(
 
 # %%
 label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
+
 ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
-ax.plot(flipper_length_range, predicted_body_mass,
-        label=label.format(weight_flipper_length, intercept_body_mass),
-        linewidth=4)
-_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
+ax.plot(flipper_length_range, predicted_body_mass, color="tab:orange")
+_ = ax.set_title(label.format(weight_flipper_length, intercept_body_mass))
 
 # %% [markdown]
 # The variable `weight_flipper_length` is a weight applied to the feature
@@ -101,13 +110,9 @@ predicted_body_mass = linear_model_flipper_mass(
 # We can now plot all samples and the linear model prediction.
 
 # %%
-label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
 ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
-ax.plot(flipper_length_range, predicted_body_mass,
-        label=label.format(weight_flipper_length, intercept_body_mass),
-        linewidth=4)
-_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
-
+ax.plot(flipper_length_range, predicted_body_mass, color="tab:orange")
+_ = ax.set_title(label.format(weight_flipper_length, intercept_body_mass))
 
 # %% [markdown]
 # In our case, this coefficient has a meaningful unit: g/mm.
@@ -143,12 +148,9 @@ predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
 # %%
-label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
 ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
-ax.plot(flipper_length_range, predicted_body_mass,
-        label=label.format(weight_flipper_length, intercept_body_mass),
-        linewidth=4)
-_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
+ax.plot(flipper_length_range, predicted_body_mass, color="tab:orange")
+_ = ax.set_title(label.format(weight_flipper_length, intercept_body_mass))
 
 # %% [markdown]
 # Otherwise, it will pass through the `intercept_body_mass` value:
@@ -161,12 +163,9 @@ predicted_body_mass = linear_model_flipper_mass(
     flipper_length_range, weight_flipper_length, intercept_body_mass)
 
 # %%
-label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
 ax = sns.scatterplot(data=penguins, x=feature_names, y=target_name)
-ax.plot(flipper_length_range, predicted_body_mass,
-        label=label.format(weight_flipper_length, intercept_body_mass),
-        linewidth=4)
-_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.2), ncol=1)
+ax.plot(flipper_length_range, predicted_body_mass, color="tab:orange")
+_ = ax.set_title(label.format(weight_flipper_length, intercept_body_mass))
 
 # %% [markdown]
 #  In this notebook, we have seen the parametrization of a linear regression

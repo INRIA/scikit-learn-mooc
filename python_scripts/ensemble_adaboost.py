@@ -68,19 +68,27 @@ palette = ["tab:red", "tab:blue", "black"]
 tree = DecisionTreeClassifier(max_depth=2, random_state=0)
 tree.fit(data, target)
 
-_, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=penguins, palette=palette, ax=ax)
-_ = plot_decision_function(tree, range_features, ax=ax)
+# %% [markdown]
+# We can predict on the same dataset and check which samples are misclassified.
 
-# find the misclassified samples
+# %%
 target_predicted = tree.predict(data)
 misclassified_samples_idx = np.flatnonzero(target != target_predicted)
+data_misclassified = data.iloc[misclassified_samples_idx]
 
-ax.plot(data.iloc[misclassified_samples_idx, 0],
-        data.iloc[misclassified_samples_idx, 1],
-        "+k", label="Misclassified samples")
-_ = ax.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
+# %%
+# plot the original dataset
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
+# plot the misclassified samples
+ax = sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
+                     y=culmen_columns[1], label="Misclassified samples",
+                     marker="+", s=150, color="k")
+plot_decision_function(tree, range_features, ax=ax)
+
+plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
+_ = plt.title("Decision tree predictions \nwith misclassified samples "
+              "highlighted")
 
 # %% [markdown]
 # We observe that several samples have been misclassified by the classifier.
@@ -104,15 +112,17 @@ sample_weight[misclassified_samples_idx] = 1
 tree = DecisionTreeClassifier(max_depth=2, random_state=0)
 tree.fit(data, target, sample_weight=sample_weight)
 
-_, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=penguins, palette=palette, ax=ax)
+# %%
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
+ax = sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
+                     y=culmen_columns[1],
+                     label="Previously misclassified samples",
+                     marker="+", s=150, color="k")
 plot_decision_function(tree, range_features, ax=ax)
 
-ax.plot(data.iloc[misclassified_samples_idx, 0],
-        data.iloc[misclassified_samples_idx, 1],
-        "+k", label="Previous misclassified samples")
-_ = ax.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
+plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
+_ = plt.title("Decision tree by changing sample weights")
 
 # %% [markdown]
 # We see that the decision function drastically changed. Qualitatively, we see
@@ -178,16 +188,20 @@ adaboost = AdaBoostClassifier(base_estimator=base_estimator,
                               random_state=0)
 adaboost.fit(data, target)
 
-_, axs = plt.subplots(ncols=3, figsize=(18, 6))
-
-for ax, tree in zip(axs, adaboost.estimators_):
-    sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
-                    hue=target_column, data=penguins,
-                    palette=palette, ax=ax)
+# %%
+for boosting_round, tree in enumerate(adaboost.estimators_):
+    plt.figure()
+    ax = sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
+                         hue=target_column, data=penguins,
+                         palette=palette)
     plot_decision_function(tree, range_features, ax=ax)
-plt.subplots_adjust(wspace=0.35)
+    plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
+    _ = plt.title(f"Decision tree trained at round {boosting_round}")
 
+# %%
 print(f"Weight of each classifier: {adaboost.estimator_weights_}")
+
+# %%
 print(f"Error of each classifier: {adaboost.estimator_errors_}")
 
 # %% [markdown]

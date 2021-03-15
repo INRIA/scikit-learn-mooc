@@ -61,13 +61,13 @@ print(f"The average accuracy is "
 # understand the issue.
 
 # %%
-import seaborn as sns
+import matplotlib.pyplot as plt
 
-ax = target.plot()
-ax.set_xlabel("Sample index")
-ax.set_ylabel("Class")
-ax.set_yticks(target.unique())
-_ = ax.set_title("Class value in target y")
+target.plot()
+plt.xlabel("Sample index")
+plt.ylabel("Class")
+plt.yticks(target.unique())
+_ = plt.title("Class value in target y")
 
 # %% [markdown]
 # We see that the target vector `target` is ordered. It will have some
@@ -75,51 +75,58 @@ _ = ax.set_title("Class value in target y")
 # illustrate the consequences, we will show the class count in each fold of the
 # cross-validation in the train and test set.
 #
-# For this matter, we'll create a function (as we will reuse it), which given a
-# cross-validation object and the data `data` and `target`, is returning a
-# dataframe with the class counts by folds and by split sets.
+# Let's compute the class counts for both the training and testing sets using
+# the `KFold` cross-validation, and plot these information in a bar plot.
+#
+# We will iterate given the number of split and check how many samples of each
+# are present in the training and testing set. We will store the information
+# into two distincts lists; one for the training set and one for the testing
+# set.
 
 # %%
-from collections import Counter
 import pandas as pd
 
+n_splits = 3
+cv = KFold(n_splits=n_splits)
 
-def compute_class_count_cv(cv, data, target):
-    class_probability = []
-    for cv_idx, (train_index, test_index) in enumerate(cv.split(data, target)):
-        # Compute the class probability for the training set
-        train_class = Counter(target[train_index])
-        class_probability += [
-            ["Train set", f"CV #{cv_idx}", klass, proportion]
-            for klass, proportion in train_class.items()
-        ]
-        # Compute the class probability for the test set
-        test_class = Counter(target[test_index])
-        class_probability += [
-            ["Test set", f"CV #{cv_idx}", klass, proportion]
-            for klass, proportion in test_class.items()
-        ]
+train_cv_counts = []
+test_cv_counts = []
+for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
+    target_train, target_test = target.iloc[train_idx], target.iloc[test_idx]
 
-    class_probability = pd.DataFrame(
-        class_probability, columns=["Set", "CV", "Class", "Count"])
-    return class_probability
-
+    train_cv_counts.append(target_train.value_counts())
+    test_cv_counts.append(target_test.value_counts())
 
 # %% [markdown]
-# Let's compute the statistics using the `KFold` cross-validation, and
-# plot these information in a bar plot.
+# To plot the information on a single figure, we will concatenate the
+# information regarding the fold within the same dataset.
 
 # %%
-kfold_class_count = compute_class_count_cv(cv, data, target)
-kfold_class_count
+train_cv_counts = pd.concat(train_cv_counts, axis=1,
+                            keys=[f"Fold #{idx}" for idx in range(n_splits)])
+train_cv_counts.index.name = "Class label"
+train_cv_counts
 
 # %%
-g = sns.FacetGrid(kfold_class_count, col="Set")
-g.map_dataframe(
-    sns.barplot, x="Class", y="Count", hue="CV", palette="tab10")
-g.set_axis_labels("Class", "Count")
-g.add_legend()
-_ = g.fig.suptitle("Class count with K-fold cross-validation", y=1.05)
+test_cv_counts = pd.concat(test_cv_counts, axis=1,
+                           keys=[f"Fold #{idx}" for idx in range(n_splits)])
+test_cv_counts.index.name = "Class label"
+test_cv_counts
+
+# %% [markdown]
+# Now we can represent graphically this information with bar plots.
+
+# %%
+train_cv_counts.plot.bar()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.ylabel("Count")
+_ = plt.title("Training set")
+
+# %%
+test_cv_counts.plot.bar()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.ylabel("Count")
+_ = plt.title("Test set")
 
 # %% [markdown]
 # We can confirm that in each fold, only two of the three classes are present
@@ -145,15 +152,31 @@ print(f"The average accuracy is "
 # model with a class distribution that we will encounter in production.
 
 # %%
-kfold_shuffled_class_count = compute_class_count_cv(cv, data, target)
+train_cv_counts = []
+test_cv_counts = []
+for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
+    target_train, target_test = target.iloc[train_idx], target.iloc[test_idx]
 
-g = sns.FacetGrid(kfold_shuffled_class_count, col="Set")
-g.map_dataframe(
-    sns.barplot, x="Class", y="Count", hue="CV", palette="tab10")
-g.set_axis_labels("Class", "Count")
-g.add_legend()
-_ = g.fig.suptitle(
-    "Class count with shuffled K-fold cross-validation", y=1.05)
+    train_cv_counts.append(target_train.value_counts())
+    test_cv_counts.append(target_test.value_counts())
+train_cv_counts = pd.concat(train_cv_counts, axis=1,
+                            keys=[f"Fold #{idx}" for idx in range(n_splits)])
+test_cv_counts = pd.concat(test_cv_counts, axis=1,
+                           keys=[f"Fold #{idx}" for idx in range(n_splits)])
+train_cv_counts.index.name = "Class label"
+test_cv_counts.index.name = "Class label"
+
+# %%
+train_cv_counts.plot.bar()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.ylabel("Count")
+_ = plt.title("Training set")
+
+# %%
+test_cv_counts.plot.bar()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.ylabel("Count")
+_ = plt.title("Test set")
 
 # %% [markdown]
 # We see that neither the training and testing sets have the same class
@@ -177,15 +200,31 @@ print(f"The average accuracy is "
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
 # %%
-stratified_kfold_class_count = compute_class_count_cv(cv, data, target)
+train_cv_counts = []
+test_cv_counts = []
+for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
+    target_train, target_test = target.iloc[train_idx], target.iloc[test_idx]
 
-g = sns.FacetGrid(stratified_kfold_class_count, col="Set")
-g.map_dataframe(
-    sns.barplot, x="Class", y="Count", hue="CV", palette="tab10")
-g.set_axis_labels("Class", "Count")
-g.add_legend()
-_ = g.fig.suptitle(
-    "Class count with stratifiedK-fold cross-validation", y=1.05)
+    train_cv_counts.append(target_train.value_counts())
+    test_cv_counts.append(target_test.value_counts())
+train_cv_counts = pd.concat(train_cv_counts, axis=1,
+                            keys=[f"Fold #{idx}" for idx in range(n_splits)])
+test_cv_counts = pd.concat(test_cv_counts, axis=1,
+                           keys=[f"Fold #{idx}" for idx in range(n_splits)])
+train_cv_counts.index.name = "Class label"
+test_cv_counts.index.name = "Class label"
+
+# %%
+train_cv_counts.plot.bar()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.ylabel("Count")
+_ = plt.title("Training set")
+
+# %%
+test_cv_counts.plot.bar()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.ylabel("Count")
+_ = plt.title("Test set")
 
 # %% [markdown]
 # In this case, we observe that the class counts are very close both in the

@@ -100,25 +100,17 @@ train_scores, test_scores = validation_curve(
 # %%
 import matplotlib.pyplot as plt
 
-_, ax = plt.subplots()
+# %%
+plt.errorbar(gammas, train_scores.mean(axis=1),
+             yerr=train_scores.std(axis=1), label='Training error')
+plt.errorbar(gammas, test_scores.mean(axis=1),
+             yerr=test_scores.std(axis=1), label='Testing error')
+plt.legend()
 
-for name, scores in zip(
-    ["Training score", "Testing score"], [train_scores, test_scores]
-):
-    ax.plot(
-        gammas, scores.mean(axis=1), linestyle="-.", label=name,
-        alpha=0.8)
-    ax.fill_between(
-        gammas, scores.mean(axis=1) - scores.std(axis=1),
-        scores.mean(axis=1) + scores.std(axis=1),
-        alpha=0.5, label=f"std. dev. {name.lower()}")
-
-ax.set_xticks(gammas)
-ax.set_xscale("log")
-ax.set_xlabel(r"Value of hyperparameter $\gamma$")
-ax.set_ylabel("Accuracy score")
-ax.set_title("Validation score of support vector machine")
-_ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.xscale("log")
+plt.xlabel(r"Value of hyperparameter $\gamma$")
+plt.ylabel("Accuracy score")
+_ = plt.title("Validation score of support vector machine")
 
 # %% [markdown]
 # Looking at the curve, we can clearly identify the over-fitting regime of
@@ -143,24 +135,15 @@ results = learning_curve(
 train_size, train_scores, test_scores = results[:3]
 
 # %%
-_, ax = plt.subplots()
+plt.errorbar(train_size, train_scores.mean(axis=1),
+             yerr=train_scores.std(axis=1), label='Training error')
+plt.errorbar(train_size, test_scores.mean(axis=1),
+             yerr=test_scores.std(axis=1), label='Testing error')
+plt.legend()
 
-for name, scores in zip(
-    ["Training score", "Testing score"], [train_scores, test_scores]
-):
-    ax.plot(
-        train_sizes, scores.mean(axis=1), linestyle="-.", label=name,
-        alpha=0.8)
-    ax.fill_between(
-        train_sizes, scores.mean(axis=1) - scores.std(axis=1),
-        scores.mean(axis=1) + scores.std(axis=1),
-        alpha=0.5, label=f"std. dev. {name.lower()}")
-
-ax.set_xticks(train_sizes)
-ax.set_xlabel("Number of samples in the training set")
-ax.set_ylabel("Accuracy")
-ax.set_title("Learning curve for support vector machine")
-_ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.xlabel("Number of samples in the training set")
+plt.ylabel("Accuracy")
+_ = plt.title("Learning curve for support vector machine")
 
 # %% [markdown]
 # We observe that adding new samples in the dataset does not improve the

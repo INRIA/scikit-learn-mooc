@@ -52,9 +52,12 @@ stocks = generate_random_stock_market()
 stocks.head()
 
 # %%
-ax = stocks.plot()
-ax.set_ylabel("Stock value")
-_ = ax.set_title("Stock values over time")
+import matplotlib.pyplot as plt
+
+stocks.plot()
+plt.ylabel("Stock value")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+_ = plt.title("Stock values over time")
 
 # %% [markdown]
 # Because the stocks are generated randomly, it is not possible for a

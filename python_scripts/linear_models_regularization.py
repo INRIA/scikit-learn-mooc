@@ -45,6 +45,8 @@ linear_regression = make_pipeline(PolynomialFeatures(degree=2),
 cv_results = cross_validate(linear_regression, data, target, cv=10,
                             return_train_score=True,
                             return_estimator=True)
+
+# %%
 test_score = cv_results["test_score"]
 print(f"R2 score of linear regresion model on the test set:\n"
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
@@ -69,20 +71,45 @@ print(f"R2 score of linear regresion model on the train set:\n"
 # Indeed, this is one of the danger when augmenting the number of features
 # with a `PolynomialFeatures` transformer. Our model will focus on some
 # specific features. We can check the weights of the model to have a
-# confirmation.
+# confirmation. Let's create a dataframe: the columns will contain the name
+# of the feature while the line the coefficients values stored by each model
+# during the cross-validation.
+#
+# Since we used a `PolynomialFeatures` to augment the data, we will create
+# feature names representative of the feature combination. Scikit-learn
+# provides a `get_feature_names` method for this purpose. First, let's get
+# the first fitted model from the cross-validation.
+
+# %%
+model_first_fold = cv_results["estimator"][0]
+
+# %% [markdown]
+# Now, we can access to the fitted `PolynomialFeatures` to generate the feature
+# names
+
+# %%
+feature_names = model_first_fold[0].get_feature_names(
+    input_features=data.columns)
+feature_names
+
+# %% [markdown]
+# Finally, we can create the dataframe containing all the information.
 
 # %%
 import pandas as pd
+
+coefs = [est[-1].coef_ for est in cv_results["estimator"]]
+weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
+
+# %% [markdown]
+# Now, let's use a box plot to see the coefficients variations.
+
+# %%
 import matplotlib.pyplot as plt
 
-weights_linear_regression = pd.DataFrame(
-    [est[-1].coef_ for est in cv_results["estimator"]],
-    columns=cv_results["estimator"][0][0].get_feature_names(
-        input_features=data.columns))
-_, ax = plt.subplots(figsize=(6, 16))
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
-weights_linear_regression.plot.box(ax=ax, color=color, vert=False)
-_ = ax.set_title("Linear regression coefficients")
+weights_linear_regression.plot.box(color=color, vert=False, figsize=(6, 16))
+_ = plt.title("Linear regression coefficients")
 
 # %% [markdown]
 # We can force the linear regression model to consider all features in a more
@@ -98,6 +125,8 @@ ridge = make_pipeline(PolynomialFeatures(degree=2),
 cv_results = cross_validate(ridge, data, target, cv=10,
                             return_train_score=True,
                             return_estimator=True)
+
+# %%
 test_score = cv_results["test_score"]
 print(f"R2 score of ridge model on the test set:\n"
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
@@ -113,22 +142,17 @@ print(f"R2 score of ridge model on the train set:\n"
 # ridge with the un-regularized linear regression.
 
 # %%
-weights_ridge = pd.DataFrame(
-    [est[-1].coef_ for est in cv_results["estimator"]],
-    columns=cv_results["estimator"][0][0].get_feature_names(
-        input_features=data.columns))
+coefs = [est[-1].coef_ for est in cv_results["estimator"]]
+weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-_, axs = plt.subplots(ncols=2, figsize=(12, 16))
-weights_linear_regression.plot.box(ax=axs[0], color=color, vert=False)
-weights_ridge.plot.box(ax=axs[1], color=color, vert=False)
-axs[1].set_yticklabels([""] * len(weights_ridge.columns))
-axs[0].set_title("Linear regression weights")
-_ = axs[1].set_title("Ridge weights")
+weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
+_ = plt.title("Ridge weights")
 
 # %% [markdown]
-# We see that the magnitude of the weights are shrunk towards zero in
-# comparison with the linear regression model.
+# By comparing the magnitude of the weights on this plot compared to the
+# previous plot, we see that the magnitude of the weights are shrunk towards
+# zero in comparison with the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization
@@ -136,16 +160,15 @@ _ = axs[1].set_title("Ridge weights")
 #
 # ## Scale your data!
 #
-# Regularization will add constraints on weights of the model.
-# We saw in the previous example that a ridge model will enforce
-# that all weights have a similar magnitude.
+# Regularization will add constraints on weights of the model. We saw in the
+# previous example that a ridge model will enforce that all weights have a
+# similar magnitude. Indeed, the larger alpha is, the larger this enforcement
+# will be.
 #
-# Indeed, the larger alpha is, the larger this enforcement will be.
-#
-# This procedure should make us think about feature rescaling.
-# Let's consider the case where features have an identical data dispersion:
-# if two features are found equally important by the model, they will be
-# affected similarly by regularization strength.
+# This procedure should make us think about feature rescaling. Let's consider
+# the case where features have an identical data dispersion: if two features
+# are found equally important by the model, they will be affected similarly by
+# regularization strength.
 #
 # Now, let's consider the scenario where features have completely different
 # data dispersion (for instance age in years and annual revenue in dollars).
@@ -174,6 +197,8 @@ ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
 cv_results = cross_validate(ridge, data, target, cv=10,
                             return_train_score=True,
                             return_estimator=True)
+
+# %%
 test_score = cv_results["test_score"]
 print(f"R2 score of ridge model on the test set:\n"
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
@@ -184,14 +209,31 @@ print(f"R2 score of ridge model on the train set:\n"
       f"{train_score.mean():.3f} +/- {train_score.std():.3f}")
 
 # %% [markdown]
-# As we can see in this example, using a pipeline simplifies the manual
-# handling.
+# We observe that scaling data has a positive impact on the test score and that
+# the test score is closer to the train score. It means that our model is less
+# overfitted and that we are getting closer to the best generalization sweet
+# spot.
 #
-# When creating the model, keeping the same `alpha` does not give good results.
-# It depends on the data provided. Therefore, it needs to be tuned for each
-# dataset.
+# Let's have an additional look to the different weights.
+
+# %%
+coefs = [est[-1].coef_ for est in cv_results["estimator"]]
+weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+
+# %%
+weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
+_ = plt.title("Ridge weights with data scaling")
+
+# %% [markdown]
+# Compare to the previous plots, we see that now all weight manitudes are
+# closer and that all weights are more equally contributing.
 #
-# In the next section, we will present the steps to tune this parameter.
+# In the previous analysis, we did not study if the parameter `alpha` will have
+# an effect on the performance. We chose the parameter beforehand and fix it
+# for the analysis.
+#
+# In the next section, we will check the impact of this hyperparameter and how
+# it should be tuned.
 #
 # ## Fine tuning the regularization parameter
 #
@@ -236,6 +278,8 @@ cv = ShuffleSplit(n_splits=5, random_state=1)
 cv_results = cross_validate(ridge, data, target, cv=cv,
                             return_train_score=True,
                             return_estimator=True, n_jobs=-1)
+
+# %%
 test_score = cv_results["test_score"]
 print(f"R2 score of ridge model with optimal alpha on the test set:\n"
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
@@ -254,15 +298,16 @@ print(f"R2 score of ridge model on the train set:\n"
 # We will plot the mean MSE for the different `alphas`.
 
 # %%
-cv_alphas = pd.DataFrame(
-    [est[-1].cv_values_.mean(axis=0) for est in cv_results["estimator"]],
-    columns=alphas)
+mse_alphas = [est[-1].cv_values_.mean(axis=0)
+              for est in cv_results["estimator"]]
+cv_alphas = pd.DataFrame(mse_alphas, columns=alphas)
+cv_alphas
 
-_, ax = plt.subplots()
-cv_alphas.mean(axis=0).plot(ax=ax, marker="+")
-ax.set_ylabel("Mean squared error\n (lower is better)")
-ax.set_xlabel("alpha")
-_ = ax.set_title("Error obtained by cross-validation")
+# %%
+cv_alphas.mean(axis=0).plot(marker="+")
+plt.ylabel("Mean squared error\n (lower is better)")
+plt.xlabel("alpha")
+_ = plt.title("Error obtained by cross-validation")
 
 # %% [markdown]
 # As we can see, regularization is just like salt in cooking: one must balance

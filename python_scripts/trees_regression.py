@@ -31,9 +31,11 @@ data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
                          columns=data_columns)
 
 # %%
+import matplotlib.pyplot as plt
 import seaborn as sns
 
-_ = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)")
+sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)")
+_ = plt.title("Illustration of the regression dataset used")
 
 # %% [markdown]
 # We will first illustrate the difference between a linear model and a decision
@@ -47,12 +49,12 @@ linear_model.fit(data_train, target_train)
 target_predicted = linear_model.predict(data_test)
 
 # %%
-import matplotlib.pyplot as plt
+sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+                color="black", alpha=0.5)
+plt.plot(data_test, target_predicted, label="Linear regression")
+plt.legend()
+_ = plt.title("Prediction function using a LinearRegression")
 
-ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
-                     color="black", alpha=0.5)
-ax.plot(data_test, target_predicted, linewidth=4, label="Linear regression")
-_ = plt.legend()
 
 # %% [markdown]
 # On the plot above, we see that a non-regularized `LinearRegression` is able
@@ -62,10 +64,11 @@ _ = plt.legend()
 # %%
 ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-ax.plot(data_test, target_predicted, linewidth=4, label="Linear regression")
-ax.plot(data_test[::3], target_predicted[::3], label="Test predictions",
-        color="tab:orange", marker=".", markersize=15, linestyle="")
-_ = plt.legend()
+plt.plot(data_test, target_predicted, label="Linear regression")
+plt.scatter(data_test[::3], target_predicted[::3], label="Test predictions",
+            color="tab:orange")
+plt.legend()
+_ = plt.title("Prediction function using a LinearRegression")
 
 # %% [markdown]
 # Contrary to linear models, decision trees are non-parametric models:
@@ -81,10 +84,11 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
-                     color="black", alpha=0.5)
-ax.plot(data_test, target_predicted, linewidth=4, label="Decision tree")
-_ = plt.legend()
+sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+                color="black", alpha=0.5)
+plt.plot(data_test, target_predicted, label="Decision tree")
+plt.legend()
+_ = plt.title("Prediction function using a DecisionTreeRegressor")
 
 # %% [markdown]
 # We see that the decision tree model does not have an *a priori* distribution
@@ -117,10 +121,11 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
-                     color="black", alpha=0.5)
-ax.plot(data_test, target_predicted, linewidth=4, label="Decision tree")
-_ = plt.legend()
+sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+                color="black", alpha=0.5)
+plt.plot(data_test, target_predicted, label="Decision tree")
+plt.legend()
+_ = plt.title("Prediction function using a DecisionTreeRegressor")
 
 # %% [markdown]
 # Increasing the depth of the tree will increase the number of partition and

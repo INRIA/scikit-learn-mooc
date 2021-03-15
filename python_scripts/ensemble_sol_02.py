@@ -43,27 +43,37 @@ print(f"Accuracy score: {forest.score(data_test, target_test):.3f}")
 # with the attribute `estimators_`.
 # ```
 
+# %% [markdown]
+# In a first cell, we will collect all the required predictions from the
+# different trees and forest.
+
+# %%
+import numpy as np
+
+data_ranges = pd.DataFrame(np.linspace(170, 235, num=300),
+                           columns=data.columns)
+tree_predictions = []
+for tree in forest.estimators_:
+    tree_predictions.append(tree.predict(data_ranges))
+
+forest_predictions = forest.predict(data_ranges)
+
+# %% [markdown]
+# Now, we can plot the predictions that we collected.
+
 # %%
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
 
-data_ranges = pd.DataFrame(
-    np.linspace(data.iloc[:, 0].min(), data.iloc[:, 0].max(), num=300),
-    columns=data.columns,
-)
+sns.scatterplot(data=penguins, x=feature_names[0], y=target_name,
+                color="black", alpha=0.5)
 
-_, ax = plt.subplots(figsize=(8, 6))
+# plot tree predictions
+for tree_idx, predictions in enumerate(tree_predictions):
+    plt.plot(data_ranges, predictions, label=f"Tree #{tree_idx}",
+             linestyle="--", alpha=0.8)
 
-sns.scatterplot(
-    data=penguins, x=feature_names[0], y=target_name, color="black", alpha=0.5
-)
-for tree_idx, tree in enumerate(forest.estimators_):
-    ax.plot(
-        data_ranges,
-        tree.predict(data_ranges),
-        label=f"Tree #{tree_idx}",
-        linestyle="--",
-    )
-ax.plot(data_ranges, forest.predict(data_ranges), label=f"Random forest")
-_ = ax.legend()
+plt.plot(data_ranges, forest_predictions, label=f"Random forest")
+plt.legend()
+
+# %%

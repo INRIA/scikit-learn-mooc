@@ -128,9 +128,9 @@ train_errors, test_errors = -train_scores, -test_scores
 
 # %%
 plt.errorbar(train_size, train_errors.mean(axis=1),
-             yerr=3 * train_errors.std(axis=1), label="Training error")
+             yerr=train_errors.std(axis=1), label="Training error")
 plt.errorbar(train_size, test_errors.mean(axis=1),
-             yerr=3 * test_errors.std(axis=1), label="Testing error")
+             yerr=test_errors.std(axis=1), label="Testing error")
 plt.legend()
 
 plt.xscale("log")

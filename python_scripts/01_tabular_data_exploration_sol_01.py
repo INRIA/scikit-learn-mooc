@@ -59,15 +59,17 @@ penguins["Species"].value_counts()
 penguins.hist()
 
 # %% [markdown]
-# Show features distribution for each class. Looking at this distributions, how
-# hard do you think it will be to classify the penguins only using "culmen
-# depth" and "culmen length"?
+# Show features distribution for each class.
 
 # %%
 import seaborn
 
 seaborn.pairplot(penguins, hue="Species")
-# %%
+
+# %% [markdown]
+# Looking at this distributions, how
+# hard do you think it will be to classify the penguins only using "culmen
+# depth" and "culmen length"?
 
 # %% [markdown]
 # Looking at the scatter-plot showing both "culmen length" and "culmen depth",

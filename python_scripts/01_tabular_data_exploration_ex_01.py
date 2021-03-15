@@ -36,7 +36,6 @@
 # %%
 # Write your code here.
 
-
 # %% [markdown]
 # How many samples of each species do you have?
 
@@ -52,11 +51,10 @@
 # %% [markdown]
 # Show features distribution for each class.
 
-
 # %%
 # Write your code here.
 
-# [markdown]
+# %% [markdown]
 # Looking at this distributions, how
 # hard do you think it will be to classify the penguins only using "culmen
 # depth" and "culmen length"?

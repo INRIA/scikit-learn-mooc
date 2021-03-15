@@ -126,7 +126,7 @@ _ = plt.title("Training set")
 test_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Training set")
+_ = plt.title("Test set")
 
 # %% [markdown]
 # We can confirm that in each fold, only two of the three classes are present
@@ -176,7 +176,7 @@ _ = plt.title("Training set")
 test_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Training set")
+_ = plt.title("Test set")
 
 # %% [markdown]
 # We see that neither the training and testing sets have the same class
@@ -224,7 +224,7 @@ _ = plt.title("Training set")
 test_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Training set")
+_ = plt.title("Test set")
 
 # %% [markdown]
 # In this case, we observe that the class counts are very close both in the

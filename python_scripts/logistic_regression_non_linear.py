@@ -152,7 +152,8 @@ _ = plt.title("Decision boundary of a linear model")
 
 # %% [markdown]
 # As expected, a linear separation cannot be used to separate the classes
-# properly.
+# properly: the model will under-fit as it will make errors even on
+# the training set.
 #
 # In the section about linear regression, we saw that we could use several
 # tricks to make a linear model more flexible by augmenting features or
@@ -188,7 +189,14 @@ _ = plt.title("Decision boundary with a model using an RBF kernel")
 
 # %% [markdown]
 # We observe something similar than in the previous case. The decision function
-# is more flexible and would be able the generalize.
+# is more flexible and does not underfit anymore.
 #
-# Thus, kernel trick or data augmentation are the tricks to make a linear
+# Thus, kernel trick or feature expansion are the tricks to make a linear
 # classifier more expressive, exactly as we saw in regression.
+#
+# Keep in mind that adding flexibility to a model can also risk increasing
+# overfitting by making the decision function to sensitive to individual
+# (possibly noisy) data points of the training set. Here we can observe that
+# the decision functions remain smooth enough to preserve good generalization.
+# If you are curious, you can try repeated the above experiment with
+# `gamma=100` and look at the decision functions.

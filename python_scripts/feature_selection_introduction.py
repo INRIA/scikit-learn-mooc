@@ -96,7 +96,9 @@ cv_results = pd.concat(
     [cv_results_without_selection, cv_results_with_selection],
     axis=1,
     keys=["Without feature selection", "With feature selection"],
-).swaplevel(axis="columns")
+)
+# swap the level of the multi-index of the columns
+cv_results = cv_results.swaplevel(axis="columns")
 
 # %% [markdown]
 # Let's first analyze the train and score time for each pipeline.

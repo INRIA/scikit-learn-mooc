@@ -19,8 +19,7 @@
 import pandas as pd
 import numpy as np
 
-# Create a random number generator that
-# will be used to set the randomness
+# Create a random number generator that will be used to set the randomness
 rng = np.random.RandomState(0)
 
 
@@ -41,14 +40,15 @@ def generate_data(n_samples=50):
     return data_train, data_test, target_train
 
 
+data_train, data_test, target_train = generate_data()
+
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-data_train, data_test, target_train = generate_data()
-
-_ = sns.scatterplot(x=data_train["Feature"], y=target_train,
-                    color="black", alpha=0.5)
+sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
+                alpha=0.5)
+plt.title("Synthetic regression dataset")
 
 # %% [markdown]
 # As we previously discussed, boosting will be based on assembling a sequence
@@ -64,21 +64,22 @@ tree.fit(data_train, target_train)
 target_train_predicted = tree.predict(data_train)
 target_test_predicted = tree.predict(data_test)
 
+# %%
 # plot the data
-_ = sns.scatterplot(x=data_train["Feature"], y=target_train,
-                    color="black", alpha=0.5)
+sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
+                alpha=0.5)
 # plot the predictions
 line_predictions = plt.plot(data_test, target_test_predicted, "--")
 
-for idx in range(len(target_train)):
-    # plot the residuals
-    lines_residuals = plt.plot([data_train.iloc[idx], data_train.iloc[idx]],
-                               [target_train.iloc[idx],
-                                target_train_predicted[idx]],
-                               color="red")
+# plot the residuals
+for value, true, predicted in zip(data_train["Feature"],
+                                  target_train,
+                                  target_train_predicted):
+    lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
-_ = plt.legend([line_predictions[0], lines_residuals[0]],
-               ["Fitted tree", "Residuals"])
+plt.legend([line_predictions[0], lines_residuals[0]],
+           ["Fitted tree", "Residuals"])
+_ = plt.title("Prediction function together \nwith errors on the training set")
 
 # %% [markdown]
 # ```{tip}
@@ -107,18 +108,19 @@ tree_residuals.fit(data_train, residuals)
 target_train_predicted_residuals = tree_residuals.predict(data_train)
 target_test_predicted_residuals = tree_residuals.predict(data_test)
 
-_ = sns.scatterplot(x=data_train["Feature"], y=residuals,
-                    color="black", alpha=0.5)
+# %%
+sns.scatterplot(x=data_train["Feature"], y=residuals, color="black", alpha=0.5)
 line_predictions = plt.plot(data_test, target_test_predicted_residuals, "--")
 
-for idx in range(len(target_train)):
-    lines_residuals = plt.plot([data_train.iloc[idx], data_train.iloc[idx]],
-                               [residuals[idx],
-                                target_train_predicted_residuals[idx]],
-                               color="red")
+# plot the residuals of the predicted residuals
+for value, true, predicted in zip(data_train["Feature"],
+                                  residuals,
+                                  target_train_predicted_residuals):
+    lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
-_ = plt.legend([line_predictions[0], lines_residuals[0]],
-               ["Fitted tree", "Residuals"])
+plt.legend([line_predictions[0], lines_residuals[0]],
+           ["Fitted tree", "Residuals"])
+_ = plt.title("Prediction of the previous residuals")
 
 # %% [markdown]
 # We see that this new tree only manages to fit some of the residuals. We will
@@ -132,40 +134,54 @@ target_true_residual = residuals.iloc[-1]
 
 # %% [markdown]
 # Let's plot the previous information and highlight our sample of interest.
+# Let's start by plotting the original data and the prediction of the first
+# decision tree.
 
 # %%
-_, axs = plt.subplots(ncols=2, figsize=(12, 6), sharex=True)
+# Plot the previous information:
+#   * the dataset
+#   * the predictions
+#   * the residuals
 
-# plot all samples
-sns.scatterplot(x=data_train["Feature"], y=target_train,
-                color="black", alpha=0.5, ax=axs[0])
-axs[0].plot(data_test, target_test_predicted, "--")
+sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
+                alpha=0.5)
+plt.plot(data_test, target_test_predicted, "--")
+for value, true, predicted in zip(data_train["Feature"],
+                                  target_train,
+                                  target_train_predicted):
+    lines_residuals = plt.plot([value, value], [true, predicted], color="red")
+
+# Highlight the sample of interest
+plt.scatter(data_max, target_true, label="Sample of interest",
+            color="tab:orange", s=200)
+plt.xlim([-0.5, 0])
+plt.legend()
+_ = plt.title("Tree predictions")
+
+# %% [markdown]
+# Now, let's plot the residuals information. We will plot the residuals
+# computed from the first decision tree and show the residual predictions.
+
+# %%
+# Plot the previous information:
+#   * the residuals committed by the first tree
+#   * the residual predictions
+#   * the residuals of the residual predictions
+
 sns.scatterplot(x=data_train["Feature"], y=residuals,
-                color="black", alpha=0.5, ax=axs[1])
+                color="black", alpha=0.5)
 plt.plot(data_test, target_test_predicted_residuals, "--")
+for value, true, predicted in zip(data_train["Feature"],
+                                  residuals,
+                                  target_train_predicted_residuals):
+    lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
-# plot the predictions of the trees
-for idx in range(len(target_train)):
-    axs[0].plot([data_train.iloc[idx], data_train.iloc[idx]],
-                [target_train.iloc[idx], target_train_predicted[idx]],
-                color="red")
-    axs[1].plot([data_train.iloc[idx], data_train.iloc[idx]],
-                [residuals[idx], target_train_predicted_residuals[idx]],
-                color="red")
-
-# plot the sample of interest
-axs[0].scatter(data_max, target_true, label="Sample of interest",
-               color="tab:orange", s=200)
-axs[1].scatter(data_max, target_true_residual, label="Sample of interest",
-               color="tab:orange", s=200)
-
-axs[0].set_xlim([-0.5, 0])
-axs[1].set_xlim([-0.5, 0])
-axs[0].set_title("Tree predictions")
-axs[1].set_title("Prediction of the residuals")
-axs[0].legend()
-axs[1].legend()
-plt.subplots_adjust(wspace=0.35)
+# Highlight the sample of interest
+plt.scatter(data_max, target_true_residual, label="Sample of interest",
+            color="tab:orange", s=200)
+plt.xlim([-0.5, 0])
+plt.legend()
+_ = plt.title("Prediction of the residuals")
 
 # %% [markdown]
 # For our sample of interest, our initial tree is making an error (small

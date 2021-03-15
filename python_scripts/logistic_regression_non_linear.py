@@ -46,52 +46,45 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
 
 # %% [markdown]
-# We will generate some synthetic data with special pattern which are known to
-# be non-linear.
+# We will generate a first dataset where the data are represented as two
+# interlaced half circle. This dataset is generated using the function
+# [`sklearn.datasets.make_moons`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html).
 
 # %%
 import pandas as pd
-from sklearn.datasets import (
-    make_moons, make_classification, make_gaussian_quantiles,
-)
+from sklearn.datasets import make_moons
 
-X_moons, y_moons = make_moons(n_samples=500, noise=.13, random_state=42)
-X_class, y_class = make_classification(
-    n_samples=500, n_features=2, n_redundant=0, n_informative=2,
-    random_state=2,
-)
-X_gauss, y_gauss = make_gaussian_quantiles(
-    n_samples=500, n_features=2, n_classes=2, random_state=42,
-)
+feature_names = ["Feature #0", "Features #1"]
+target_name = "class"
 
-datasets = [
-    [pd.DataFrame(X_moons, columns=["Feature #0", "Feature #1"]),
-     pd.Series(y_moons, name="class")],
-    [pd.DataFrame(X_class, columns=["Feature #0", "Feature #1"]),
-     pd.Series(y_class, name="class")],
-    [pd.DataFrame(X_gauss, columns=["Feature #0", "Feature #1"]),
-     pd.Series(y_gauss, name="class")],
-]
-range_features = {"Feature #0": (-5, 5), "Feature #1": (-5, 5)}
+X, y = make_moons(n_samples=100, noise=0.13, random_state=42)
+
+# We store both the data and target in a dataframe to ease plotting
+moons = pd.DataFrame(np.concatenate([X, y[:, np.newaxis]], axis=1),
+                     columns=feature_names + [target_name])
+data_moons, target_moons = moons[feature_names], moons[target_name]
+
+range_features_moons = {"Feature #0": (-2, 2.5), "Feature #1": (-2, 2)}
 
 # %% [markdown]
-# We will first visualize the different datasets.
+# Since the dataset contains only two features, we can make a scatter plot to
+# have a look at it.
 
 # %%
-import matplotlib.pyplot as plt
 import seaborn as sns
 
-_, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
-
-for ax, (data, target) in zip(axs, datasets):
-    sns.scatterplot(x=data.iloc[:, 0], y=data.iloc[:, 1], hue=target,
-                    palette=["tab:red", "tab:blue"], ax=ax)
+sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
+                hue=target_moons, palette=["tab:red", "tab:blue"])
+_ = plt.title("Illustration of the moons dataset")
 
 # %% [markdown]
-# Inspecting these three datasets, it is clear that a linear model cannot
-# separate the two classes. Now, we will train a SVC classifier where we will
-# use a linear kernel to show the limitation of such linear model on the
-# following dataset
+# From the intuitions that we got by studying linear model, it should be
+# obvious that a linear classifier will not be able to find a perfect decision
+# function to separate the two classes.
+#
+# Let's try to see what is the decision boundary of such a linear classifier.
+# We will create a predictive model by standardizing the dataset followed by
+# a linear support vector machine classifier.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -99,34 +92,103 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
 linear_model = make_pipeline(StandardScaler(), SVC(kernel="linear"))
-
-_, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
-for ax, (data, target) in zip(axs, datasets):
-    linear_model.fit(data, target)
-    plot_decision_function(linear_model, range_features, ax=ax)
-    sns.scatterplot(x=data.iloc[:, 0], y=data.iloc[:, 1], hue=target,
-                    palette=["tab:red", "tab:blue"], ax=ax)
-    ax.set_title(f"Accuracy: {linear_model.score(data, target):.3f}")
+linear_model.fit(data_moons, target_moons)
 
 # %% [markdown]
-# As expected, the linear model parametrization is not enough to adapt the
-# synthetic dataset.
-#
-# Now, we will fit an SVC with an RBF kernel that will handle the non-linearity
-# using the kernel trick.
+# ```{warning}
+# Be aware that we fit and will check the boundary decision of the classifier
+# on the same dataset without splitting the dataset into a training set and a
+# testing set. While this is a bad practice, we use it for the sake of
+# simplicity to depict the model behavior. Always use cross-validation when
+# you want to assess the statistical performance of a machine-learning model.
+# ```
+
+# %% [markdown]
+# Let's check the decision boundary of such a linear model on this dataset.
 
 # %%
-kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf"))
-
-_, axs = plt.subplots(ncols=3, sharey=True, figsize=(14, 4))
-for ax, (data, target) in zip(axs, datasets):
-    kernel_model.fit(data, target)
-    plot_decision_function(kernel_model, range_features, ax=ax)
-    sns.scatterplot(x=data.iloc[:, 0], y=data.iloc[:, 1], hue=target,
-                    palette=["tab:red", "tab:blue"], ax=ax)
-    ax.set_title(f"Accuracy: {kernel_model.score(data, target):.3f}")
+ax = sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
+                     hue=target_moons, palette=["tab:red", "tab:blue"])
+plot_decision_function(linear_model, range_features_moons, ax=ax)
+_ = plt.title("Decision boundary of a linear model")
 
 # %% [markdown]
-# In this later case, we can see that the accuracy is close to be perfect and
-# that the decision boundary is non-linear. Thus, kernel trick or data
-# augmentation are the tricks to make a linear classifier more expressive.
+# As expected, a linear decision boundary is not enough flexible to split the
+# two classes.
+#
+# To push this example to the limit, we will create another dataset where
+# samples of a class will be surrounded by samples from the other class.
+
+# %%
+from sklearn.datasets import make_gaussian_quantiles
+
+feature_names = ["Feature #0", "Features #1"]
+target_name = "class"
+
+X, y = make_gaussian_quantiles(
+    n_samples=100, n_features=2, n_classes=2, random_state=42)
+gauss = pd.DataFrame(np.concatenate([X, y[:, np.newaxis]], axis=1),
+                     columns=feature_names + [target_name])
+data_gauss, target_gauss = gauss[feature_names], gauss[target_name]
+
+range_features_gauss = {"Feature #0": (-4, 4), "Feature #1": (-4, 4)}
+
+# %%
+ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
+                     hue=target_gauss, palette=["tab:red", "tab:blue"])
+_ = plt.title("Illustration of the Gaussian quantiles dataset")
+
+# %% [markdown]
+# Here, this is even more obvious that a linear decision function is not
+# adapted. We can check what decision function, a linear support vector machine
+# will find.
+
+# %%
+linear_model.fit(data_gauss, target_gauss)
+ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
+                     hue=target_gauss, palette=["tab:red", "tab:blue"])
+plot_decision_function(linear_model, range_features_gauss, ax=ax)
+_ = plt.title("Decision boundary of a linear model")
+
+# %% [markdown]
+# As expected, a linear separation cannot be used to separate the classes
+# properly.
+#
+# In the section about linear regression, we saw that we could use several
+# tricks to make a linear model more flexible by augmenting features or
+# using a kernel. Here, we will use the later solution by using a radial basis
+# function (RBF) kernel together with a support vector machine classifier.
+#
+# We will repeat the two previous experiments and check the obtained decision
+# function.
+
+# %%
+kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf", gamma=5))
+
+# %%
+kernel_model.fit(data_moons, target_moons)
+ax = sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
+                     hue=target_moons, palette=["tab:red", "tab:blue"])
+plot_decision_function(kernel_model, range_features_moons, ax=ax)
+_ = plt.title("Decision boundary with a model using an RBF kernel")
+
+# %% [markdown]
+# We see that the decision boundary is not anymore a straight line. Indeed,
+# an area is defined around the red samples and we could imagine that this
+# classifier should be able to generalize on unseen data.
+#
+# Let's check the decision function on the second dataset.
+
+# %%
+kernel_model.fit(data_gauss, target_gauss)
+ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
+                     hue=target_gauss, palette=["tab:red", "tab:blue"])
+plot_decision_function(kernel_model, range_features_gauss, ax=ax)
+_ = plt.title("Decision boundary with a model using an RBF kernel")
+
+# %% [markdown]
+# We observe something similar than in the previous case. The decision function
+# is more flexible and would be able the generalize.
+#
+#Thus, kernel trick or data augmentation are the tricks to make a linear
+# classifier more expressive, exactly as we saw in regression.

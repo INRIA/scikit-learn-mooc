@@ -94,6 +94,7 @@ final_errors = pd.concat([errors_regressor, errors_dummy, errors_permutation],
 import matplotlib.pyplot as plt
 
 final_errors.plot.hist(bins=50, density=True, edgecolor="black")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.xlabel("Mean absolute error (k$)")
 _ = plt.title("Distribution of the testing errors")
 

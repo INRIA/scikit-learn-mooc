@@ -18,7 +18,7 @@
 # %% [markdown]
 # We will try to predict penguins species based on two of their body
 # measurements: culmen length and culmen depth.
-# 
+#
 # What are the features? What is the target?
 
 # %% [markdown]
@@ -30,9 +30,13 @@
 
 # %% [markdown]
 # Show a few samples of the data
+#
+# How many features are numerical? How many features are categorical?
 
 # %%
 # Write your code here.
+
+# %% [markdown]
 
 # %% [markdown]
 # How many samples of each species do you have?
@@ -47,9 +51,13 @@
 # Write your code here.
 
 # %% [markdown]
-# Show features distribution for each class. Looking at this distributions, how
-# hard do you think it will be to classify the penguins only using "culmen
-# depth" and "culmen length"?
+# Show features distribution for each class.
+
 
 # %%
 # Write your code here.
+
+# [markdown]
+# Looking at this distributions, how
+# hard do you think it will be to classify the penguins only using "culmen
+# depth" and "culmen length"?

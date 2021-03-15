@@ -18,7 +18,7 @@
 # %% [markdown]
 # We will try to predict penguins species based on two of their body
 # measurements: culmen length and culmen depth.
-# 
+#
 # What are the features? What is the target?
 
 # %% markdown
@@ -36,6 +36,12 @@ penguins = pd.read_csv("../datasets/penguins_classification.csv")
 
 # %% [markdown]
 # Show a few samples of the data
+#
+# How many features are numerical? How many features are categorical?
+
+# %% [markdown]
+# Both features, "culmen length" and "culmen depth" are numerical. There are no
+# no categorical features in this dataset.
 
 # %%
 penguins.head()
@@ -62,3 +68,13 @@ import seaborn
 
 seaborn.pairplot(penguins, hue="Species")
 # %%
+
+# %% [markdown]
+# Looking at the scatter-plot showing both "culmen length" and "culmen depth",
+# the species are reasonably well separated:
+# - low culmen length -> Adelie
+# - low culmen depth -> Gentoo
+# - high culmen depth and high culmen length -> Chinstrap
+#
+# There is some small overlap between the species, so we can expect a
+# statistical model to perform well on this dataset but not perfectly.

@@ -67,16 +67,20 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # decision boundary to see the benefit of increasing the depth.
 
 # %%
-import seaborn as sns
 from sklearn.tree import DecisionTreeClassifier
 
 tree = DecisionTreeClassifier(max_depth=2)
 tree.fit(data_train, target_train)
 
-_, ax = plt.subplots(figsize=(8, 6))
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=penguins, palette=["tab:red", "tab:blue", "black"], ax=ax)
-_ = plot_decision_function(tree, range_features, ax=ax)
+# %%
+import seaborn as sns
+
+palette = ["tab:red", "tab:blue", "black"]
+ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                     hue=target_column, palette=palette)
+plot_decision_function(tree, range_features, ax=ax)
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+_ = plt.title("Decision boundary using a logistic regression")
 
 # %% [markdown]
 # Did we make use of the feature "Culmen Length"?
@@ -97,9 +101,8 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # Compute the accuracy of the decision tree on the testing data.
 
 # %%
-model_name = tree.__class__.__name__
 test_score = tree.fit(data_train, target_train).score(data_test, target_test)
-print(f"Accuracy of the {model_name}: {test_score:.2f}")
+print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 
 # %% [markdown]
 # At this stage, we have the intuition that a decision tree is built by

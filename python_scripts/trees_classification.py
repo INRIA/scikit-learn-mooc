@@ -75,16 +75,17 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # prediction from one class to another.
 
 # %%
-import seaborn as sns
 from sklearn.linear_model import LogisticRegression
-
-# create a palette to be used in the scatterplot
-palette = ["tab:red", "tab:blue", "black"]
 
 linear_model = LogisticRegression()
 linear_model.fit(data_train, target_train)
 
 # %%
+import seaborn as sns
+
+# create a palette to be used in the scatterplot
+palette = ["tab:red", "tab:blue", "black"]
+
 ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
                      hue=target_column, palette=palette)
 plot_decision_function(linear_model, range_features, ax=ax)

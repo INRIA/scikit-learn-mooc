@@ -31,9 +31,10 @@ quotes = pd.DataFrame(quotes)
 # %%
 import matplotlib.pyplot as plt
 
-_, ax = plt.subplots(figsize=(10, 7))
-quotes.plot(ax=ax)
-_ = ax.set_ylabel("Quote value")
+quotes.plot()
+plt.ylabel("Quote value")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+_ = plt.title("Stock values over time")
 
 # %% [markdown]
 # We will repeat the experiment asked during the exercise. Instead of using
@@ -111,11 +112,13 @@ print(f"The R2 on this single split is: {test_score:.2f}")
 # We will plot the training, testing and prediction samples.
 
 # %%
-_, ax = plt.subplots(figsize=(10, 8))
-target_train.plot(ax=ax, label="Training")
-target_test.plot(ax=ax, label="Testing")
-target_predicted.plot(ax=ax, label="Prediction")
-_ = plt.legend()
+target_train.plot(label="Training")
+target_test.plot(label="Testing")
+target_predicted.plot(label="Prediction")
+
+plt.ylabel("Quote value")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+_ = plt.title("Model predictions using a ShuffleSplit strategy")
 
 # %% [markdown]
 # So in this context, it seems that the model predictions are following the
@@ -149,11 +152,13 @@ print(f"The R2 on this single split is: {test_score:.2f}")
 # check what we are predicting.
 
 # %%
-_, ax = plt.subplots(figsize=(10, 8))
-target_train.plot(ax=ax, label="Training")
-target_test.plot(ax=ax, label="Testing")
-target_predicted.plot(ax=ax, label="Prediction")
-_ = plt.legend()
+target_train.plot(label="Training")
+target_test.plot(label="Testing")
+target_predicted.plot(label="Prediction")
+
+plt.ylabel("Quote value")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+_ = plt.title("Model predictions using a split without shuffling")
 
 # %% [markdown]
 # We see that our model cannot predict anything because it doesn't have samples

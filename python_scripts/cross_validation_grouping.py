@@ -67,9 +67,11 @@ all_scores = pd.DataFrame(
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.kdeplot(data=all_scores)
+all_scores.plot.hist(bins=10, edgecolor="black", density=True, alpha=0.7)
 plt.xlim([0.8, 1.0])
-_ = plt.xlabel("Accuracy score")
+plt.xlabel("Accuracy score")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+_ = plt.title("Distribution of the test scores")
 
 # %% [markdown]
 # The cross-validation testing error that uses the shuffling has less
@@ -125,8 +127,6 @@ for group_id, lb, up in zip(count(), lower_bounds, upper_bounds):
 # We can check the grouping by plotting the indices linked to writer ids.
 
 # %%
-_, ax = plt.subplots(figsize=(6, 5))
-
 plt.plot(groups)
 plt.yticks(np.unique(groups))
 plt.xticks(writer_boundaries, rotation=90)
@@ -162,9 +162,11 @@ all_scores = pd.DataFrame(
 ).T
 
 # %%
-sns.kdeplot(data=all_scores)
+all_scores.plot.hist(bins=10, edgecolor="black", density=True, alpha=0.7)
 plt.xlim([0.8, 1.0])
-_ = plt.xlabel("Accuracy score")
+plt.xlabel("Accuracy score")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+_ = plt.title("Distribution of the test scores")
 
 # %% [markdown]
 # As a conclusion, it is really important to take any sample grouping pattern

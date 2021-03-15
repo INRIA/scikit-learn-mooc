@@ -132,7 +132,7 @@ _ = plt.title("Validation curve for decision tree")
 #
 # Be aware that looking at the mean errors is quite limiting. We should also
 # look at the standard deviation to assess the dispersion of the score. We
-# can repeat the same plot as before but this time, we will had some
+# can repeat the same plot as before but this time, we will add some
 # information to show the standard deviation of the errors as well.
 
 # %%

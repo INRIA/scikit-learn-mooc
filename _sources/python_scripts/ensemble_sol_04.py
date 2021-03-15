@@ -39,22 +39,10 @@ train_scores, test_scores = validation_curve(
 # %%
 import matplotlib.pyplot as plt
 
-train_scores_mean = np.mean(train_scores, axis=1)
-train_scores_std = np.std(train_scores, axis=1)
-test_scores_mean = np.mean(test_scores, axis=1)
-test_scores_std = np.std(test_scores, axis=1)
-
-plt.plot(param_range, train_scores_mean, label="Training score")
-plt.plot(param_range, test_scores_mean, label="Cross-validation score")
-
-plt.fill_between(param_range,
-                 train_scores_mean - train_scores_std,
-                 train_scores_mean + train_scores_std,
-                 alpha=0.3)
-plt.fill_between(param_range,
-                 test_scores_mean - test_scores_std,
-                 test_scores_mean + test_scores_std,
-                 alpha=0.3)
+plt.errorbar(param_range, train_scores.mean(axis=1),
+             yerr=train_scores.std(axis=1), label="Training score")
+plt.errorbar(param_range, test_scores.mean(axis=1),
+             yerr=test_scores.std(axis=1), label="Cross-validation score")
 
 plt.legend()
 plt.ylabel("$R^2$ score")

@@ -1263,7 +1263,7 @@ score). Check its documentation to learn how to do that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.621 +/- 0.139
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.623 +/- 0.132
 </pre></div>
 </div>
 </div>
@@ -1278,7 +1278,7 @@ score). Check its documentation to learn how to do that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.516 +/- 0.099
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.505 +/- 0.116
 </pre></div>
 </div>
 </div>
@@ -1543,7 +1543,7 @@ in the <code class="docutils literal notranslate"><span class="pre">cross_val_sc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.257 +/- 0.164
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.247 +/- 0.171
 </pre></div>
 </div>
 </div>
@@ -1566,14 +1566,14 @@ for both metrics using a box plot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00416541, 0.00411034, 0.00432801, 0.00410724, 0.00408077,
-        0.00420308, 0.00400424, 0.00405383, 0.00403571, 0.00403333]),
- &#39;score_time&#39;: array([0.0028739 , 0.00283527, 0.00277877, 0.00278044, 0.00274849,
-        0.00276947, 0.00272822, 0.00271463, 0.002738  , 0.0027225 ]),
- &#39;test_accuracy&#39;: array([0.29333333, 0.50666667, 0.74666667, 0.56      , 0.56      ,
-        0.68      , 0.70666667, 0.77333333, 0.67567568, 0.75675676]),
- &#39;test_balanced_accuracy&#39;: array([0.42105263, 0.46637427, 0.62426901, 0.40643275, 0.3874269 ,
-        0.44736842, 0.55994152, 0.73684211, 0.52115583, 0.51186791])}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00391126, 0.00396729, 0.00371766, 0.00418663, 0.00407648,
+        0.0042727 , 0.00369692, 0.00397396, 0.00409746, 0.00452161]),
+ &#39;score_time&#39;: array([0.00326228, 0.00350714, 0.00288749, 0.00303173, 0.00314474,
+        0.00289273, 0.00304866, 0.00298524, 0.00327492, 0.00336218]),
+ &#39;test_accuracy&#39;: array([0.29333333, 0.50666667, 0.76      , 0.56      , 0.64      ,
+        0.68      , 0.69333333, 0.76      , 0.64864865, 0.75675676]),
+ &#39;test_balanced_accuracy&#39;: array([0.42105263, 0.46637427, 0.63304094, 0.40643275, 0.45906433,
+        0.44736842, 0.55116959, 0.72807018, 0.48297214, 0.51186791])}
 </pre></div>
 </div>
 </div>
@@ -1588,13 +1588,21 @@ for both metrics using a box plot.</p>
     <span class="p">[</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">],</span> <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_balanced_accuracy&quot;</span><span class="p">]],</span>
     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;Balanced accuracy&quot;</span><span class="p">]</span>
 <span class="p">)</span><span class="o">.</span><span class="n">T</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Computation of multiple scores using cross_validate&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">metrics</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Computation of multiple scores using cross_validate&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/metrics_sol_01_16_0.png" src="../_images/metrics_sol_01_16_0.png" />
+<img alt="../_images/metrics_sol_01_17_0.png" src="../_images/metrics_sol_01_17_0.png" />
 </div>
 </div>
 </div>

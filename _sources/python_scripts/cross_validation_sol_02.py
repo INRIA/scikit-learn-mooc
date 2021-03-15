@@ -86,10 +86,11 @@ final_test_scores = pd.concat(
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
 
-sns.displot(final_test_scores, kind="kde")
-_ = plt.xlabel("Accuracy (%)")
+final_test_scores.plot.hist(bins=50, density=True, edgecolor="black")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.xlabel("Accuracy (%)")
+_ = plt.title("Distribution of the test scores")
 
 # %% [markdown]
 # We observe that the dummy classifier with the strategy `most_frequent` is
@@ -117,8 +118,10 @@ final_test_scores = pd.concat(
 )
 
 # %%
-sns.displot(final_test_scores, kind="kde")
-_ = plt.xlabel("Accuracy (%)")
+final_test_scores.plot.hist(bins=50, density=True, edgecolor="black")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.xlabel("Accuracy (%)")
+_ = plt.title("Distribution of the test scores")
 
 # %% [markdown]
 # We see that using `strategy="stratified"`, the results are much worse than

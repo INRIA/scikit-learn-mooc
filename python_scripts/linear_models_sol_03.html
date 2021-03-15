@@ -1339,7 +1339,10 @@ You will need to:</p>
 (MAE) as metric. Ensure to return the fitted estimators;</p></li>
 <li><p>compute mean and std of the MAE in thousands of dollars (k$);</p></li>
 <li><p>show the values of the coefficients for each feature using a boxplot by
-inspecting the fitted model returned from the cross-validation.</p></li>
+inspecting the fitted model returned from the cross-validation. Hint: you
+use the function
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html"><code class="docutils literal notranslate"><span class="pre">df.plot.box()</span></code></a>
+to plot a box plot.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1378,10 +1381,17 @@ inspecting the fitted model returned from the cross-validation.</p></li>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">[</span><span class="n">est</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
 <span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
 <span class="n">weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Value of linear regression coefficients&quot;</span><span class="p">)</span>
@@ -1389,7 +1399,7 @@ inspecting the fitted model returned from the cross-validation.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_sol_03_6_0.png" src="../_images/linear_models_sol_03_6_0.png" />
+<img alt="../_images/linear_models_sol_03_7_0.png" src="../_images/linear_models_sol_03_7_0.png" />
 </div>
 </div>
 </div>

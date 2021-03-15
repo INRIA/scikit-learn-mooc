@@ -111,5 +111,9 @@ metrics = pd.DataFrame(
     [scores["test_accuracy"], scores["test_balanced_accuracy"]],
     index=["Accuracy", "Balanced accuracy"]
 ).T
-ax = metrics.plot.box(vert=False, color=color)
-_ = ax.set_title("Computation of multiple scores using cross_validate")
+
+# %%
+import matplotlib.pyplot as plt
+
+metrics.plot.box(vert=False, color=color)
+_ = plt.title("Computation of multiple scores using cross_validate")

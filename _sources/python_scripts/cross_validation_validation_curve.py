@@ -45,14 +45,16 @@ cv_results = pd.DataFrame(cv_results)
 # We will select the train and test score and take the error instead.
 
 # %%
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 scores = pd.DataFrame()
 scores[["train error", "test error"]] = -cv_results[
     ["train_score", "test_score"]]
-sns.histplot(scores, bins=50)
-_ = plt.xlabel("Mean absolute error (k$)")
+
+# %%
+import matplotlib.pyplot as plt
+
+scores.plot.hist(bins=50, edgecolor="black", density=True)
+plt.xlabel("Mean absolute error (k$)")
+_ = plt.title("Train and test errors distribution via cross-validation")
 
 # %% [markdown]
 # By plotting the distribution of the training and testing errors, we
@@ -94,23 +96,13 @@ train_errors, test_errors = -train_scores, -test_scores
 # plotting the training and testing errors (as well as their deviations).
 
 # %%
-_, ax = plt.subplots()
+plt.plot(max_depth, train_errors.mean(axis=1), label="Training error")
+plt.plot(max_depth, test_errors.mean(axis=1), label="Testing error")
+plt.legend()
 
-error_type = ["Training error", "Testing error"]
-errors = [train_errors, test_errors]
-
-for name, err in zip(error_type, errors):
-    ax.plot(max_depth, err.mean(axis=1), linestyle="-.", label=name,
-            alpha=0.8)
-    ax.fill_between(max_depth, err.mean(axis=1) - err.std(axis=1),
-                    err.mean(axis=1) + err.std(axis=1), alpha=0.5,
-                    label=f"std. dev. {name.lower()}")
-
-ax.set_xticks(max_depth)
-ax.set_xlabel("Maximum depth of decision tree")
-ax.set_ylabel("Mean absolute error (k$)")
-ax.set_title("Validation curve for decision tree")
-_ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.xlabel("Maximum depth of decision tree")
+plt.ylabel("Mean absolute error (k$)")
+_ = plt.title("Validation curve for decision tree")
 
 # %% [markdown]
 # The validation curve can be divided into three areas:
@@ -138,10 +130,28 @@ _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 # testing error is minimal, and this is what really matters. This is the
 # best compromise we could reach by just tuning this parameter.
 #
+# Be aware that looking at the mean errors is quite limiting. We should also
+# look at the standard deviation to assess the dispersion of the score. We
+# can repeat the same plot as before but this time, we will add some
+# information to show the standard deviation of the errors as well.
+
+# %%
+plt.errorbar(max_depth, train_errors.mean(axis=1),
+             yerr=train_errors.std(axis=1), label='Training error')
+plt.errorbar(max_depth, test_errors.mean(axis=1),
+             yerr=test_errors.std(axis=1), label='Testing error')
+plt.legend()
+
+plt.xlabel("Maximum depth of decision tree")
+plt.ylabel("Mean absolute error (k$)")
+_ = plt.title("Validation curve for decision tree")
+
+# %% [markdown]
 # We were lucky that the variance of the errors was small compared to their
 # respective values, and therefore the conclusions above are quite clear. This
 # is not necessarily always the case.
-#
+
+# %% [markdown]
 # ## Summary:
 #
 # In this notebook, we saw:

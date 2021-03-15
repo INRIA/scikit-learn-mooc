@@ -1378,7 +1378,13 @@ model.</p>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">linear_regression</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                             <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score of linear regresion model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1416,25 +1422,104 @@ overfitted our training set.</p>
 <p>Indeed, this is one of the danger when augmenting the number of features
 with a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer. Our model will focus on some
 specific features. We can check the weights of the model to have a
-confirmation.</p>
+confirmation. Let’s create a dataframe: the columns will contain the name
+of the feature while the line the coefficients values stored by each model
+during the cross-validation.</p>
+<p>Since we used a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> to augment the data, we will create
+feature names representative of the feature combination. Scikit-learn
+provides a <code class="docutils literal notranslate"><span class="pre">get_feature_names</span></code> method for this purpose. First, let’s get
+the first fitted model from the cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="n">weights_linear_regression</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span>
-        <span class="n">input_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
-<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
-<span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Linear regression coefficients&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_first_fold</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we can access to the fitted <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> to generate the feature
+names</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">model_first_fold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span>
+    <span class="n">input_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">feature_names</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_regularization_7_0.png" src="../_images/linear_models_regularization_7_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;1&#39;,
+ &#39;MedInc&#39;,
+ &#39;HouseAge&#39;,
+ &#39;AveRooms&#39;,
+ &#39;AveBedrms&#39;,
+ &#39;Population&#39;,
+ &#39;AveOccup&#39;,
+ &#39;Latitude&#39;,
+ &#39;Longitude&#39;,
+ &#39;MedInc^2&#39;,
+ &#39;MedInc HouseAge&#39;,
+ &#39;MedInc AveRooms&#39;,
+ &#39;MedInc AveBedrms&#39;,
+ &#39;MedInc Population&#39;,
+ &#39;MedInc AveOccup&#39;,
+ &#39;MedInc Latitude&#39;,
+ &#39;MedInc Longitude&#39;,
+ &#39;HouseAge^2&#39;,
+ &#39;HouseAge AveRooms&#39;,
+ &#39;HouseAge AveBedrms&#39;,
+ &#39;HouseAge Population&#39;,
+ &#39;HouseAge AveOccup&#39;,
+ &#39;HouseAge Latitude&#39;,
+ &#39;HouseAge Longitude&#39;,
+ &#39;AveRooms^2&#39;,
+ &#39;AveRooms AveBedrms&#39;,
+ &#39;AveRooms Population&#39;,
+ &#39;AveRooms AveOccup&#39;,
+ &#39;AveRooms Latitude&#39;,
+ &#39;AveRooms Longitude&#39;,
+ &#39;AveBedrms^2&#39;,
+ &#39;AveBedrms Population&#39;,
+ &#39;AveBedrms AveOccup&#39;,
+ &#39;AveBedrms Latitude&#39;,
+ &#39;AveBedrms Longitude&#39;,
+ &#39;Population^2&#39;,
+ &#39;Population AveOccup&#39;,
+ &#39;Population Latitude&#39;,
+ &#39;Population Longitude&#39;,
+ &#39;AveOccup^2&#39;,
+ &#39;AveOccup Latitude&#39;,
+ &#39;AveOccup Longitude&#39;,
+ &#39;Latitude^2&#39;,
+ &#39;Latitude Longitude&#39;,
+ &#39;Longitude^2&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can create the dataframe containing all the information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_linear_regression</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s use a box plot to see the coefficients variations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear regression coefficients&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_models_regularization_14_0.png" src="../_images/linear_models_regularization_14_0.png" />
 </div>
 </div>
 <p>We can force the linear regression model to consider all features in a more
@@ -1450,9 +1535,6 @@ model which enforces such behavior.</p>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                             <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score of ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1465,11 +1547,11 @@ model which enforces such behavior.</p>
   overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:148: LinAlgWarning: Ill-conditioned matrix (rcond=2.67367e-17): result may not be accurate.
   overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:148: LinAlgWarning: Ill-conditioned matrix (rcond=3.5546e-17): result may not be accurate.
+  overwrite_a=True).T
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:148: LinAlgWarning: Ill-conditioned matrix (rcond=3.5546e-17): result may not be accurate.
-  overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:148: LinAlgWarning: Ill-conditioned matrix (rcond=2.75974e-17): result may not be accurate.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:148: LinAlgWarning: Ill-conditioned matrix (rcond=2.75974e-17): result may not be accurate.
   overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:148: LinAlgWarning: Ill-conditioned matrix (rcond=2.82401e-17): result may not be accurate.
   overwrite_a=True).T
@@ -1481,6 +1563,17 @@ model which enforces such behavior.</p>
   overwrite_a=True).T
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score of ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score of ridge model on the test set:
 0.282 +/- 0.644
 </pre></div>
@@ -1507,45 +1600,40 @@ our model is less overfitting. We can compare the values of the weights of
 ridge with the un-regularized linear regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span>
-        <span class="n">input_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
-<span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Linear regression weights&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Ridge weights&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_regularization_13_0.png" src="../_images/linear_models_regularization_13_0.png" />
+<img alt="../_images/linear_models_regularization_21_0.png" src="../_images/linear_models_regularization_21_0.png" />
 </div>
 </div>
-<p>We see that the magnitude of the weights are shrunk towards zero in
-comparison with the linear regression model.</p>
+<p>By comparing the magnitude of the weights on this plot compared to the
+previous plot, we see that the magnitude of the weights are shrunk towards
+zero in comparison with the linear regression model.</p>
 <p>However, in this example, we omitted two important aspects: (i) the need to
 scale the data and (ii) the need to search for the best regularization
 parameter.</p>
 </div>
 <div class="section" id="scale-your-data">
 <h2>Scale your data!<a class="headerlink" href="#scale-your-data" title="Permalink to this headline">¶</a></h2>
-<p>Regularization will add constraints on weights of the model.
-We saw in the previous example that a ridge model will enforce
-that all weights have a similar magnitude.</p>
-<p>Indeed, the larger alpha is, the larger this enforcement will be.</p>
-<p>This procedure should make us think about feature rescaling.
-Let’s consider the case where features have an identical data dispersion:
-if two features are found equally important by the model, they will be
-affected similarly by regularization strength.</p>
+<p>Regularization will add constraints on weights of the model. We saw in the
+previous example that a ridge model will enforce that all weights have a
+similar magnitude. Indeed, the larger alpha is, the larger this enforcement
+will be.</p>
+<p>This procedure should make us think about feature rescaling. Let’s consider
+the case where features have an identical data dispersion: if two features
+are found equally important by the model, they will be affected similarly by
+regularization strength.</p>
 <p>Now, let’s consider the scenario where features have completely different
 data dispersion (for instance age in years and annual revenue in dollars).
 If two features are as important, our model will boost the weights of
@@ -1570,7 +1658,13 @@ scaler will be placed just before the regressor.</p>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                             <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score of ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1598,12 +1692,37 @@ scaler will be placed just before the regressor.</p>
 </div>
 </div>
 </div>
-<p>As we can see in this example, using a pipeline simplifies the manual
-handling.</p>
-<p>When creating the model, keeping the same <code class="docutils literal notranslate"><span class="pre">alpha</span></code> does not give good results.
-It depends on the data provided. Therefore, it needs to be tuned for each
-dataset.</p>
-<p>In the next section, we will present the steps to tune this parameter.</p>
+<p>We observe that scaling data has a positive impact on the test score and that
+the test score is closer to the train score. It means that our model is less
+overfitted and that we are getting closer to the best generalization sweet
+spot.</p>
+<p>Let’s have an additional look to the different weights.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights with data scaling&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_models_regularization_28_0.png" src="../_images/linear_models_regularization_28_0.png" />
+</div>
+</div>
+<p>Compare to the previous plots, we see that now all weight manitudes are
+closer and that all weights are more equally contributing.</p>
+<p>In the previous analysis, we did not study if the parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> will have
+an effect on the performance. We chose the parameter beforehand and fix it
+for the analysis.</p>
+<p>In the next section, we will check the impact of this hyperparameter and how
+it should be tuned.</p>
 </div>
 <div class="section" id="fine-tuning-the-regularization-parameter">
 <h2>Fine tuning the regularization parameter<a class="headerlink" href="#fine-tuning-the-regularization-parameter" title="Permalink to this headline">¶</a></h2>
@@ -1648,7 +1767,13 @@ testing score.</p>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
                             <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                             <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score of ridge model with optimal alpha on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1683,20 +1808,185 @@ during cross-validation (by setting the parameter <code class="docutils literal 
 We will plot the mean MSE for the different <code class="docutils literal notranslate"><span class="pre">alphas</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cv_values_</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">alphas</span><span class="p">)</span>
-
-<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">cv_alphas</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Error obtained by cross-validation&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mse_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cv_values_</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mse_alphas</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">alphas</span><span class="p">)</span>
+<span class="n">cv_alphas</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_regularization_22_0.png" src="../_images/linear_models_regularization_22_0.png" />
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0.010000</th>
+      <th>0.012743</th>
+      <th>0.016238</th>
+      <th>0.020691</th>
+      <th>0.026367</th>
+      <th>0.033598</th>
+      <th>0.042813</th>
+      <th>0.054556</th>
+      <th>0.069519</th>
+      <th>0.088587</th>
+      <th>0.112884</th>
+      <th>0.143845</th>
+      <th>0.183298</th>
+      <th>0.233572</th>
+      <th>0.297635</th>
+      <th>0.379269</th>
+      <th>0.483293</th>
+      <th>0.615848</th>
+      <th>0.784760</th>
+      <th>1.000000</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7587.897141</td>
+      <td>7059.531216</td>
+      <td>6579.796667</td>
+      <td>6161.839629</td>
+      <td>5813.048345</td>
+      <td>5535.350138</td>
+      <td>5326.646369</td>
+      <td>5182.950517</td>
+      <td>5100.749049</td>
+      <td>5079.212663</td>
+      <td>5122.029454</td>
+      <td>5238.704149</td>
+      <td>5445.118890</td>
+      <td>5763.012259</td>
+      <td>6217.925433</td>
+      <td>6835.274126</td>
+      <td>7634.692137</td>
+      <td>8623.620241</td>
+      <td>9791.918443</td>
+      <td>11109.476019</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7079.341771</td>
+      <td>6696.622046</td>
+      <td>6329.022308</td>
+      <td>5987.727181</td>
+      <td>5681.306000</td>
+      <td>5415.171818</td>
+      <td>5191.880969</td>
+      <td>5012.209177</td>
+      <td>4876.780585</td>
+      <td>4787.974274</td>
+      <td>4751.851652</td>
+      <td>4779.853646</td>
+      <td>4889.937328</td>
+      <td>5106.656625</td>
+      <td>5459.549144</td>
+      <td>5979.280717</td>
+      <td>6691.530974</td>
+      <td>7609.581815</td>
+      <td>8727.609953</td>
+      <td>10017.092899</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>24857.406605</td>
+      <td>21448.284772</td>
+      <td>18293.478416</td>
+      <td>15481.009011</td>
+      <td>13067.031991</td>
+      <td>11071.457116</td>
+      <td>9480.437579</td>
+      <td>8254.431555</td>
+      <td>7338.963939</td>
+      <td>6675.026438</td>
+      <td>6207.024331</td>
+      <td>5887.541169</td>
+      <td>5679.263698</td>
+      <td>5554.913823</td>
+      <td>5496.051755</td>
+      <td>5491.367683</td>
+      <td>5534.775517</td>
+      <td>5623.398006</td>
+      <td>5755.456140</td>
+      <td>5928.154410</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7504.216958</td>
+      <td>7125.074257</td>
+      <td>6754.172985</td>
+      <td>6400.999897</td>
+      <td>6072.937966</td>
+      <td>5774.941819</td>
+      <td>5509.955509</td>
+      <td>5280.027720</td>
+      <td>5087.960263</td>
+      <td>4939.271829</td>
+      <td>4844.228092</td>
+      <td>4819.618117</td>
+      <td>4889.808854</td>
+      <td>5086.420585</td>
+      <td>5445.877349</td>
+      <td>6004.320850</td>
+      <td>6790.113763</td>
+      <td>7815.311733</td>
+      <td>9068.542918</td>
+      <td>10511.939341</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6999.938808</td>
+      <td>6598.898743</td>
+      <td>6215.363499</td>
+      <td>5861.328579</td>
+      <td>5546.025773</td>
+      <td>5275.377052</td>
+      <td>5052.349007</td>
+      <td>4878.140850</td>
+      <td>4753.964890</td>
+      <td>4683.117084</td>
+      <td>4673.049960</td>
+      <td>4737.162496</td>
+      <td>4895.935124</td>
+      <td>5176.863333</td>
+      <td>5612.500529</td>
+      <td>6236.037942</td>
+      <td>7074.449338</td>
+      <td>8140.303978</td>
+      <td>9424.471281</td>
+      <td>10892.352852</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Error obtained by cross-validation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_models_regularization_36_0.png" src="../_images/linear_models_regularization_36_0.png" />
 </div>
 </div>
 <p>As we can see, regularization is just like salt in cooking: one must balance

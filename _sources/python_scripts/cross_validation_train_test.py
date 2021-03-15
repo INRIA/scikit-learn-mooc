@@ -169,8 +169,8 @@ print(f"The testing error of our model is {score:.2f} k$")
 # - train a new model on the train set;
 # - evaluate the testing error on the test set.
 #
-# We repeat this procedure `n_splits` times. Using `n_splits=30` means that we
-# will train 30 models in total and all of them will be discarded: we just
+# We repeat this procedure `n_splits` times. Using `n_splits=40` means that we
+# will train 40 models in total and all of them will be discarded: we just
 # record their statistical performance on each variant of the test set.
 #
 # To evaluate the statistical performance of our regressor, we can use
@@ -180,7 +180,7 @@ print(f"The testing error of our model is {score:.2f} k$")
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import ShuffleSplit
 
-cv = ShuffleSplit(n_splits=30, test_size=0.2)
+cv = ShuffleSplit(n_splits=40, test_size=0.3, random_state=0)
 cv_results = cross_validate(
     regressor, data, target, cv=cv, scoring="neg_mean_absolute_error")
 
@@ -221,20 +221,20 @@ cv_results.head(10)
 len(cv_results)
 
 # %% [markdown]
-# We get 30 entries in our resulting dataframe because we performed 30 splits.
-# Therefore, we can show the testing error distribution and thus, have an
-# estimate of its variability.
+# We get 40 entries in our resulting dataframe because we performed 40
+# splits. Therefore, we can show the testing error distribution and thus, have
+# an estimate of its variability.
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
 
-sns.displot(cv_results["test_error"], kde=True, bins=10)
-_ = plt.xlabel("Mean absolute error (k$)")
+cv_results["test_error"].plot.hist(bins=10, edgecolor="black", density=True)
+plt.xlabel("Mean absolute error (k$)")
+_ = plt.title("Test error distribution")
 
 # %% [markdown]
-# We observe that the testing error is clustered around 45.5 k\$ and
-# ranges from 43 k\$ to 49 k\$.
+# We observe that the testing error is clustered around 47 k\$ and
+# ranges from 43 k\$ to 50 k\$.
 
 # %%
 print(f"The mean cross-validated testing error is: "
@@ -247,7 +247,7 @@ print(f"The standard deviation of the testing error is: "
 # %% [markdown]
 # Note that the standard deviation is much smaller than the mean: we could
 # summarize that our cross-validation estimate of the testing error is
-# 45.88 +/- 1.00 k\$.
+# 46.36 +/- 1.17 k\$.
 #
 # If we were to train a single model on the full dataset (without
 # cross-validation) and then had later access to an unlimited amount of test
@@ -260,8 +260,9 @@ print(f"The standard deviation of the testing error is: "
 # Let us plot the distribution of the target variable:
 
 # %%
-sns.displot(target, kde=True, bins=20)
-_ = plt.xlabel("Median House Value (k$)")
+target.plot.hist(bins=20, edgecolor="black", density=True)
+plt.xlabel("Median House Value (k$)")
+_ = plt.title("Target distribution")
 
 # %%
 print(f"The standard deviation of the target is: {target.std():.2f} k$")
@@ -279,7 +280,7 @@ print(f"The standard deviation of the target is: {target.std():.2f} k$")
 # generalization performance is good enough to make our prediction useful in
 # practice.
 #
-# We recall that our model makes, on average, an error around 45 k\$. With this
+# We recall that our model makes, on average, an error around 47 k\$. With this
 # information and looking at the target distribution, such an error might be
 # acceptable when predicting houses with a 500 k\$. However, it would be an
 # issue with a house with a value of 50 k\$. Thus, this indicates that our
@@ -288,7 +289,7 @@ print(f"The standard deviation of the target is: {target.std():.2f} k$")
 # We might instead choose a metric relative to the target value to predict: the
 # mean absolute percentage error would have been a much better choice.
 #
-# But in all cases, an error of 45 k\$ might be too large to automatically use
+# But in all cases, an error of 47 k\$ might be too large to automatically use
 # our model to tag house value without expert supervision.
 #
 # ## More detail regarding `cross_validate`

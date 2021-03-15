@@ -138,12 +138,13 @@ all_scores = {
 all_scores = pd.DataFrame(all_scores)
 
 # %%
+import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
-ax = all_scores.plot.box(color=color, vert=False)
-ax.set_xlabel("Accuracy")
-_ = ax.set_title("Comparison of mean accuracy obtained on the test sets with\n"
-                 "and without nested cross-validation")
+all_scores.plot.box(color=color, vert=False)
+plt.xlabel("Accuracy")
+_ = plt.title("Comparison of mean accuracy obtained on the test sets with\n"
+              "and without nested cross-validation")
 
 # %% [markdown]
 # We observe that the model's statistical performance with the nested

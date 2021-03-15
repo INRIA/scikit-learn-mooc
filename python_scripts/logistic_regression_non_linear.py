@@ -190,5 +190,5 @@ _ = plt.title("Decision boundary with a model using an RBF kernel")
 # We observe something similar than in the previous case. The decision function
 # is more flexible and would be able the generalize.
 #
-#Thus, kernel trick or data augmentation are the tricks to make a linear
+# Thus, kernel trick or data augmentation are the tricks to make a linear
 # classifier more expressive, exactly as we saw in regression.

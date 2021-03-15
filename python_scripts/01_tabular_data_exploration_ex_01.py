@@ -36,7 +36,6 @@
 # %%
 # Write your code here.
 
-# %% [markdown]
 
 # %% [markdown]
 # How many samples of each species do you have?

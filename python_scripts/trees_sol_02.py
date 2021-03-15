@@ -58,13 +58,13 @@ target_predicted_tree = tree.predict(data_test)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
-                     color="black", alpha=0.5)
-ax.plot(data_test, target_predicted_linear_regression, linewidth=4,
-        label="Linear regression")
-ax.plot(data_test, target_predicted_tree, linewidth=4,
-        label="Decision tree regression")
-_ = plt.legend()
+sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+                color="black", alpha=0.5)
+plt.plot(data_test, target_predicted_linear_regression,
+         label="Linear regression")
+plt.plot(data_test, target_predicted_tree, label="Decision tree")
+plt.legend()
+_ = plt.title("Prediction of linear model and a decision tree")
 
 # %% [markdown]
 # The predictions that we got were within the range of feature values seen
@@ -91,13 +91,13 @@ target_predicted_linear_regression = linear_regression.predict(data_test)
 target_predicted_tree = tree.predict(data_test)
 
 # %%
-ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
-                     color="black", alpha=0.5)
-ax.plot(data_test, target_predicted_linear_regression, linewidth=4,
-        label="Linear regression")
-ax.plot(data_test, target_predicted_tree, linewidth=4,
-        label="Decision tree regression")
-_ = plt.legend()
+sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+                color="black", alpha=0.5)
+plt.plot(data_test, target_predicted_linear_regression,
+         label="Linear regression")
+plt.plot(data_test, target_predicted_tree, label="Decision tree")
+plt.legend()
+_ = plt.title("Prediction of linear model and a decision tree")
 
 # %% [markdown]
 # The linear model will extrapolate using the fitted model for flipper lengths

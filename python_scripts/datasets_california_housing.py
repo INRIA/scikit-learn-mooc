@@ -148,10 +148,8 @@ _ = plt.title("Median house value depending of\n their spatial location")
 
 # %%
 columns_drop = ["Longitude", "Latitude"]
-sns.pairplot(
-    data=california_housing.frame.iloc[indices].drop(columns=columns_drop),
-    hue="MedHouseVal", palette="viridis")
-_ = plt.title("Pair of features plots")
+_ = sns.pairplot(data=california_housing.frame.iloc[indices].drop(
+    columns=columns_drop), hue="MedHouseVal", palette="viridis")
 
 # %% [markdown]
 # While it is always complicated to interpret a pairplot since there is a lot
@@ -194,7 +192,7 @@ coefs = pd.DataFrame(
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
 coefs.plot.box(vert=False, color=color)
 plt.axvline(x=0, ymin=-1, ymax=1, color="black", linestyle="--")
-plt.title("Coefficients of a Ridge model")
+_ = plt.title("Coefficients of Ridge models\n via cross-validation")
 
 # %% [markdown]
 # It seems that the three features that we earlier spotted are found important

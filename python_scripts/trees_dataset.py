@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Presentation of the datasets
+# # The penguins datasets
 #
 # Before we present tree-based models, we will make a quick presentation of the
 # [Palmer penguins dataset](https://allisonhorst.github.io/palmerpenguins/)

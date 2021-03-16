@@ -47,18 +47,10 @@ penguins.head()
 # samples distribution.
 
 # %%
-import matplotlib.pyplot as plt
 import seaborn as sns
 
-_, axs = plt.subplots(ncols=3, figsize=(16, 4))
-
-sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1], hue=target_column,
-                data=penguins, ax=axs[0])
-sns.kdeplot(data=penguins, x=culmen_columns[0], hue=target_column,
-            ax=axs[1])
-sns.kdeplot(data=penguins, x=culmen_columns[1], hue=target_column,
-            ax=axs[2])
-plt.subplots_adjust(wspace=0.4)
+pairplot_figure = sns.pairplot(penguins, hue="Species")
+pairplot_figure.fig.set_size_inches(9, 6.5)
 
 # %% [markdown]
 # First let's check the feature distributions by looking at the diagonal plots

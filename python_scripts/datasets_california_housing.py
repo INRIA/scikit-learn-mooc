@@ -162,3 +162,42 @@ _ = plt.title("Pair of features plots")
 # Thus, creating a predictive model, we could expect the longitude, latitude,
 # and the median income to be useful features to help at predicting the median
 # house values.
+#
+# If you are curious, we created a linear predictive model below and show the
+# values of the coefficients obtained via cross-validation
+
+# %%
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import RidgeCV
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import cross_validate
+
+alphas = np.logspace(-3, 1, num=30)
+model = make_pipeline(StandardScaler(), RidgeCV(alphas=alphas))
+cv_results = cross_validate(
+    model, california_housing.data, california_housing.target,
+    return_estimator=True, n_jobs=-1)
+
+# %%
+score = cv_results["test_score"]
+print(f"R2 score: {score.mean():.3f} +/- {score.std():.3f}")
+
+# %%
+import pandas as pd
+
+coefs = pd.DataFrame(
+    [est[-1].coef_ for est in cv_results["estimator"]],
+    columns=california_housing.feature_names
+)
+
+# %%
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+coefs.plot.box(vert=False, color=color)
+plt.axvline(x=0, ymin=-1, ymax=1, color="black", linestyle="--")
+plt.title("Coefficients of a Ridge model")
+
+# %% [markdown]
+# It seems that the three features that we earlier spotted are found important
+# by this model. But be careful regarding interpreting these coefficients.
+# We let you go into the module "Interpretation" to go in depth regarding such
+# experiment.

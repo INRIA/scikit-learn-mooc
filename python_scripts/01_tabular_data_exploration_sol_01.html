@@ -1243,14 +1243,8 @@
 their body measurements: culmen length and culmen depth. First we want to do
 some data exploration to get a feel for the data.</p>
 <p>What are the features? What is the target?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The features are &quot;culmen length&quot; and &quot;culmen depth&quot;.</span>
-<span class="c1"># The target is the penguin species.</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>The features are “culmen length” and “culmen depth”.
+The target is the penguin species.</p>
 <p>The data is located in <code class="docutils literal notranslate"><span class="pre">../datasets/penguins_classification.csv</span></code>, load it
 with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> into a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
 <div class="cell docutils container">
@@ -1352,16 +1346,12 @@ Name: Species, dtype: int64
 <p>Plot histograms for the numerical features</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">penguins</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:title={&#39;center&#39;:&#39;Culmen Length (mm)&#39;}&gt;,
-        &lt;AxesSubplot:title={&#39;center&#39;:&#39;Culmen Depth (mm)&#39;}&gt;]], dtype=object)
-</pre></div>
-</div>
-<img alt="../_images/01_tabular_data_exploration_sol_01_11_1.png" src="../_images/01_tabular_data_exploration_sol_01_11_1.png" />
+<img alt="../_images/01_tabular_data_exploration_sol_01_11_0.png" src="../_images/01_tabular_data_exploration_sol_01_11_0.png" />
 </div>
 </div>
 <p>Show features distribution for each class. Hint: use
@@ -1370,15 +1360,14 @@ Name: Species, dtype: int64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span>
 
-<span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span>
+<span class="n">pairplot_figure</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span>
+<span class="c1"># resize the figure to avoid overlapping x/y labels</span>
+<span class="n">pairplot_figure</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f520eeddc90&gt;
-</pre></div>
-</div>
-<img alt="../_images/01_tabular_data_exploration_sol_01_13_1.png" src="../_images/01_tabular_data_exploration_sol_01_13_1.png" />
+<img alt="../_images/01_tabular_data_exploration_sol_01_13_0.png" src="../_images/01_tabular_data_exploration_sol_01_13_0.png" />
 </div>
 </div>
 <p>Looking at these distributions, how hard do you think it will be to classify

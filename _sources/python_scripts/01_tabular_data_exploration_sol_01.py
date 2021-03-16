@@ -22,7 +22,7 @@
 #
 # What are the features? What is the target?
 
-# %% markdown
+# %% [markdown]
 # The features are "culmen length" and "culmen depth".
 # The target is the penguin species.
 
@@ -59,7 +59,7 @@ penguins["Species"].value_counts()
 # Plot histograms for the numerical features
 
 # %%
-penguins.hist()
+_ = penguins.hist(figsize=(8, 4), edgecolor="black")
 
 # %% [markdown]
 # Show features distribution for each class. Hint: use
@@ -68,7 +68,9 @@ penguins.hist()
 # %%
 import seaborn
 
-seaborn.pairplot(penguins, hue="Species")
+pairplot_figure = seaborn.pairplot(penguins, hue="Species")
+# resize the figure to avoid overlapping x/y labels
+pairplot_figure.fig.set_size_inches(10, 7)
 
 # %% [markdown]
 # Looking at these distributions, how hard do you think it will be to classify

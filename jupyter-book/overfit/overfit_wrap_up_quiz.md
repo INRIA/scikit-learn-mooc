@@ -60,7 +60,7 @@ and `sklearn.model_selection.cross_validate`
 ```{admonition} Question
 Repeat the previous experiment but compute the balanced accuracy instead of
 the accuracy score. Pass `scoring="balanced_accuracy"` when calling
-`cross_validate` or `cross_val_score` functions.
+`cross_validate` or `cross_val_score` functions?
 
 - a) ~25%
 - b) ~50%

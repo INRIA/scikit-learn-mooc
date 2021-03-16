@@ -110,7 +110,7 @@ lower than 0.8. What do have all these models in common?
 - e) too large `max_bins`
 - f) too small `max_bins`
 
-_Select a single answer_
+_Select several answers_
 ````
 
 +++

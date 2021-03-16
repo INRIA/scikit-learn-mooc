@@ -130,7 +130,7 @@ _ = plt.title("Median house value depending of\n their spatial location")
 import numpy as np
 
 rng = np.random.RandomState(0)
-indices = rng.choice(np.arange(california_housing.frame.shape[0]), size=1_000,
+indices = rng.choice(np.arange(california_housing.frame.shape[0]), size=500,
                      replace=False)
 
 # %%
@@ -144,12 +144,21 @@ _ = plt.title("Median house value depending of\n their spatial location")
 
 # %% [markdown]
 # We can make a final analysis by making a pair plot of all features and the
-# target but dropping the longitude and latitude.
+# target but dropping the longitude and latitude. We will quantize the target
+# such that we can create proper histogram.
 
 # %%
+import pandas as pd
+
+# Drop the unwanted columns
 columns_drop = ["Longitude", "Latitude"]
-_ = sns.pairplot(data=california_housing.frame.iloc[indices].drop(
-    columns=columns_drop), hue="MedHouseVal", palette="viridis")
+subset = california_housing.frame.iloc[indices].drop(columns=columns_drop)
+# Quantize the target and keep the midpoint for each interval
+subset["MedHouseVal"] = pd.qcut(subset["MedHouseVal"], 6, retbins=False)
+subset["MedHouseVal"] = subset["MedHouseVal"].apply(lambda x: x.mid)
+
+# %%
+_ = sns.pairplot(data=subset, hue="MedHouseVal", palette="viridis")
 
 # %% [markdown]
 # While it is always complicated to interpret a pairplot since there is a lot

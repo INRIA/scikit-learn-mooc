@@ -1,9 +1,9 @@
 # %% [markdown]
 # # The penguins datasets
 #
-# Before we present tree-based models, we will make a quick presentation of the
+# In this notebook, we make a quick presentation of the
 # [Palmer penguins dataset](https://allisonhorst.github.io/palmerpenguins/)
-# dataset. We will use this dataset for both classification and regression
+# dataset. We use this dataset for both classification and regression
 # problems by selecting a subset of the features to make our explanations
 # intuitive.
 #

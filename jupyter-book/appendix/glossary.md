@@ -2,8 +2,11 @@
 
 ## Terms encountered during the MOOC
 
-- **sample, instance, observation**: xxx
-- **feature, variable, attribute, covariate**: xxx
+**sample, instance, observation**
+&emsp;xxx
+
+**feature, variable, attribute, covariate**
+&emsp;xxx
 
 ## Additional terminology in scikit-learn
 

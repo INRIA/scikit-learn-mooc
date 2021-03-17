@@ -8,7 +8,7 @@ Load the dataset file named `penguins.csv` with the following command:
 import pandas as pd
 
 
-penguins = pd.read_csv("~/code/scikit-learn-mooc/datasets/penguins.csv")
+penguins = pd.read_csv("../datasets/penguins.csv")
 
 columns = ["Body Mass (g)", "Flipper Length (mm)", "Culmen Length (mm)"]
 target_name = "Species"

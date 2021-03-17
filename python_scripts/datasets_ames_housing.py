@@ -32,8 +32,6 @@ ames_housing.head()
 
 # %%
 data = ames_housing.drop(columns=["Id", "SalePrice"])
-
-# %%
 target = ames_housing["SalePrice"]
 
 # %% [markdown]
@@ -64,7 +62,7 @@ _ = plt.title("Distribution of the house price \nin Ames")
 # %%
 data.info()
 
-# %% [marking]
+# %% [markdown]
 # Looking at the dataframe general information, we can see that 79 features are
 # availables and that the dataset contains 1460 samples. However, some features
 # contains missing values. Also, the type of data is heterogeneous: both
@@ -74,8 +72,6 @@ data.info()
 
 # %%
 numerical_data = data.select_dtypes("number")
-
-# %%
 numerical_data.info()
 
 # %% [markdown]
@@ -101,8 +97,6 @@ plt.subplots_adjust(hspace=0.8, wspace=0.8)
 
 # %%
 string_data = data.select_dtypes(object)
-
-# %%
 string_data.info()
 
 # %% [markdown]

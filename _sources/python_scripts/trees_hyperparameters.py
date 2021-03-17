@@ -20,6 +20,12 @@ target_reg_column = "Body Mass (g)"
 data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 
 # %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
+# %% [markdown]
 # ## Create helper functions
 #
 # We will create two functions that will:

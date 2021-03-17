@@ -9,6 +9,12 @@
 # goal in this dataset is to predict the median house value in some district
 # in California based on demographic and geographic data.
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 from sklearn.datasets import fetch_california_housing
 

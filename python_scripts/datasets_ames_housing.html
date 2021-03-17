@@ -1,0 +1,1837 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Ames housing dataset &#8212; Scikit-learn course</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The blood transfusion dataset" href="datasets_blood_transfusion.html" />
+    <link rel="prev" title="The California housing dataset" href="datasets_california_housing.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn course</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Machine Learning Concepts
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/slides.html">
+   📰 Introducing machine-learning concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  The predictive modeling pipeline
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/predictive_modeling_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_index.html">
+   Tabular data exploration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration.html">
+     First look at our dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html">
+   Fitting a scikit-learn model on numerical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_introduction.html">
+     First model with scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_hands_on.html">
+     Working with numerical data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
+   Handling categorical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline.html">
+     Encoding of categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/predictive_modeling_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Selecting the best model
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../overfit/overfit_overfitting_underfitting_index.html">
+   Overfitting and underfitting
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/overfitting_vs_under_fitting_slides.html">
+     📰 Overfitting and Underfitting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_train_test.html">
+     The framework and why do we need it
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/overfitting_vs_under_fitting_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../overfit/overfit_validation_learning_curves_index.html">
+   Validation and learning curves
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/learning_validation_curves_slides.html">
+     📰 Comparing train and test errors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_validation_curve.html">
+     Overfit-generalization-underfit
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_learning_curve.html">
+     Effect of the sample size in cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/learning_validation_curves_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../overfit/overfit_bias_variance_index.html">
+   Bias versus variance trade-off
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/bias_vs_variance_slides.html">
+     📰 Bias versus Variance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/bias_vs_variance_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Hyperparameters tuning
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_manual_index.html">
+   Manual tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_manual.html">
+     Set and get hyperparameters in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_02.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_02.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../tuning/parameter_tuning_manual_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_automated_index.html">
+   Automated tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_grid_search.html">
+     Hyperparameters tuning by grid-search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_randomized_search.html">
+     Hyperparameters tuning by randomized-search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_nested.html">
+     Cross-validation and hyperparameters tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_03.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_03.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../tuning/parameter_tuning_automated_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_intuitions_index.html">
+   Intuitions on linear models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/slides.html">
+     📰 Intuitions on linear models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_00.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_regression_index.html">
+   Linear regression
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_regression_without_sklearn.html">
+     Linear regression without scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_regression_in_sklearn.html">
+     Linear regression using scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_non_linear_index.html">
+   Modelling with a non-linear relationship data-target
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_regression_non_linear_link.html">
+     Linear regression with non-linear link between data and target
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_03.html">
+     📝 Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_03.html">
+     📃 Solution for Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_regularization_index.html">
+   Regularization in linear model
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_regularization.html">
+     Regularization of linear regression model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_04.html">
+     📝 Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_04.html">
+     📃 Solution for Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_classification_index.html">
+   Linear model for classification
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="logistic_regression.html">
+     Linear model for classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_05.html">
+     📝 Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_05.html">
+     📃 Solution for Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="logistic_regression_non_linear.html">
+     Beyond linear separation in classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_04.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Decision tree models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_intuitions_index.html">
+   Intuitions on tree-based models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/slides.html">
+     📰 Intuitions on tree-based models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_00.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_classification_index.html">
+   Decision tree in classification
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_classification.html">
+     Build a classification decision tree
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_regression_index.html">
+   Decision tree in regression
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_regression.html">
+     Decision tree for regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_hyperparameters_index.html">
+   Hyperparameters of decision tree
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_hyperparameters.html">
+     Importance of decision tree hyperparameters on generalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Ensemble of models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_intuitions_index.html">
+   Intuitions on ensemble methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/slides.html">
+     📰 Intuitions on ensemble of tree-based models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_00.html">
+     ✅ Quiz
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_introduction.html">
+     Introductory example to ensemble models
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_bootstrap_index.html">
+   Ensemble method using bootstrapping
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_bagging.html">
+     Bagging
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_01.html">
+     📃 Solution of Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_random_forest.html">
+     Random forest
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_random_forest.html#midpoint-summary">
+     Midpoint summary
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_boosting_index.html">
+   Ensemble based on boosting
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_adaboost.html">
+     Adaptive Boosting (AdaBoost)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_03.html">
+     📝 Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_03.html">
+     📃 Solution for Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_gradient_boosting.html">
+     Gradient-boosting decision tree (GBDT)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_04.html">
+     📝 Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_04.html">
+     📃 Solution for Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_hist_gradient_boosting.html">
+     Speeding-up gradient-boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_hyperparameters_index.html">
+   Hyperparameters tuning with ensemble methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_hyperparameters.html">
+     Hyperparameters tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_05.html">
+     📝 Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_05.html">
+     📃 Solution for Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Evaluating model performance
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/evaluation_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/cross_validation_baseline_index.html">
+   Comparing a model with simple baselines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_baseline.html">
+     Comparing results with baseline and chance level
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/cross_validation_choices_index.html">
+   Choice of cross-validation
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_03.html">
+     📝 Introductory exercise regarding stratification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_stratification.html">
+     Stratification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_04.html">
+     📝 Introductory exercise for sample grouping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_grouping.html">
+     Sample grouping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_05.html">
+     📝 Introductory exercise for non i.i.d. data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_time.html">
+     Non i.i.d. data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cross_validation_nested.html">
+   Nested cross-validation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/cross_validation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/02_metrics.html">
+   Introduction of the evaluation metrics
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/metrics_classification_index.html">
+   Classification metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_classification.html">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/metrics_regression_index.html">
+   Regression metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_regression.html">
+     Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/metrics_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/evaluation_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  🚧 Feature selection
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_introduction.html">
+   Benefits of using feature selection
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../feature_selection/feature_selection_limitation_index.html">
+   Caveats of feature selection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="feature_selection_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="feature_selection_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="feature_selection_limitation_model.html">
+     Limitation of selecting feature using a model
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  🚧 Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../interpretation/interpretation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../appendix/datasets_intro.html">
+   Datasets description
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_dataset.html">
+     The penguins datasets
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../appendix/adult_census_description.html">
+     The adult census dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="datasets_california_housing.html">
+     The California housing dataset
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     The Ames housing dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="datasets_blood_transfusion.html">
+     The blood transfusion dataset
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/python_scripts/datasets_ames_housing.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.py</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/INRIA/scikit-learn-mooc"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/datasets_ames_housing.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/datasets_ames_housing.py"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-ames-housing-dataset">
+<h1>The Ames housing dataset<a class="headerlink" href="#the-ames-housing-dataset" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will quickly present the “Ames housing” dataset. We will
+see that this dataset is similar to the “California housing” dataset.
+However, it is more complex to handle: it contains missing data and both
+numerical and categorical features.</p>
+<p>This dataset is located in the <code class="docutils literal notranslate"><span class="pre">datasets</span></code> directory. It is stored in a comma
+separated value (CSV) file. As previously mentioned, we are aware that the
+dataset contains missing values. The character <code class="docutils literal notranslate"><span class="pre">&quot;?&quot;</span></code> is used as a missing
+value marker.</p>
+<p>We will open the dataset and specify the missing value marker such that they
+will be parsed by pandas when opening the file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can have a first look at the available columns in this dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>MSSubClass</th>
+      <th>MSZoning</th>
+      <th>LotFrontage</th>
+      <th>LotArea</th>
+      <th>Street</th>
+      <th>Alley</th>
+      <th>LotShape</th>
+      <th>LandContour</th>
+      <th>Utilities</th>
+      <th>...</th>
+      <th>PoolArea</th>
+      <th>PoolQC</th>
+      <th>Fence</th>
+      <th>MiscFeature</th>
+      <th>MiscVal</th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+      <th>SaleType</th>
+      <th>SaleCondition</th>
+      <th>SalePrice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>65.0</td>
+      <td>8450</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>208500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>20</td>
+      <td>RL</td>
+      <td>80.0</td>
+      <td>9600</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>5</td>
+      <td>2007</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>181500</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>68.0</td>
+      <td>11250</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>223500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>70</td>
+      <td>RL</td>
+      <td>60.0</td>
+      <td>9550</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Abnorml</td>
+      <td>140000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>84.0</td>
+      <td>14260</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>12</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>250000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 81 columns</p>
+</div></div></div>
+</div>
+<p>We see that the last column named <code class="docutils literal notranslate"><span class="pre">&quot;SalePrice&quot;</span></code> is indeed the target that we
+would like to predict. So we will split our dataset into two variables
+containing the data and the target.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">,</span> <span class="s2">&quot;SalePrice&quot;</span><span class="p">])</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s have a quick look at the target before to focus on the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    208500
+1    181500
+2    223500
+3    140000
+4    250000
+Name: SalePrice, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the target contains continuous value. It corresponds to the price
+of a house in $. We can have a look at the target distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">target</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;House price in $&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the house price </span><span class="se">\n</span><span class="s2">in Ames&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_ames_housing_9_0.png" src="../_images/datasets_ames_housing_9_0.png" />
+</div>
+</div>
+<p>We see that the distribution has a long tail. It means that most of the house
+are normally distributed but a couple of houses have a higher than normal
+value. It could be critical to take this peculiarity into account when
+designing a predictive model.</p>
+<p>Now, we can have a look at the available data that we could use to predict
+house prices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1460 entries, 0 to 1459
+Data columns (total 79 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   MSSubClass     1460 non-null   int64  
+ 1   MSZoning       1460 non-null   object 
+ 2   LotFrontage    1201 non-null   float64
+ 3   LotArea        1460 non-null   int64  
+ 4   Street         1460 non-null   object 
+ 5   Alley          91 non-null     object 
+ 6   LotShape       1460 non-null   object 
+ 7   LandContour    1460 non-null   object 
+ 8   Utilities      1460 non-null   object 
+ 9   LotConfig      1460 non-null   object 
+ 10  LandSlope      1460 non-null   object 
+ 11  Neighborhood   1460 non-null   object 
+ 12  Condition1     1460 non-null   object 
+ 13  Condition2     1460 non-null   object 
+ 14  BldgType       1460 non-null   object 
+ 15  HouseStyle     1460 non-null   object 
+ 16  OverallQual    1460 non-null   int64  
+ 17  OverallCond    1460 non-null   int64  
+ 18  YearBuilt      1460 non-null   int64  
+ 19  YearRemodAdd   1460 non-null   int64  
+ 20  RoofStyle      1460 non-null   object 
+ 21  RoofMatl       1460 non-null   object 
+ 22  Exterior1st    1460 non-null   object 
+ 23  Exterior2nd    1460 non-null   object 
+ 24  MasVnrType     1452 non-null   object 
+ 25  MasVnrArea     1452 non-null   float64
+ 26  ExterQual      1460 non-null   object 
+ 27  ExterCond      1460 non-null   object 
+ 28  Foundation     1460 non-null   object 
+ 29  BsmtQual       1423 non-null   object 
+ 30  BsmtCond       1423 non-null   object 
+ 31  BsmtExposure   1422 non-null   object 
+ 32  BsmtFinType1   1423 non-null   object 
+ 33  BsmtFinSF1     1460 non-null   int64  
+ 34  BsmtFinType2   1422 non-null   object 
+ 35  BsmtFinSF2     1460 non-null   int64  
+ 36  BsmtUnfSF      1460 non-null   int64  
+ 37  TotalBsmtSF    1460 non-null   int64  
+ 38  Heating        1460 non-null   object 
+ 39  HeatingQC      1460 non-null   object 
+ 40  CentralAir     1460 non-null   object 
+ 41  Electrical     1459 non-null   object 
+ 42  1stFlrSF       1460 non-null   int64  
+ 43  2ndFlrSF       1460 non-null   int64  
+ 44  LowQualFinSF   1460 non-null   int64  
+ 45  GrLivArea      1460 non-null   int64  
+ 46  BsmtFullBath   1460 non-null   int64  
+ 47  BsmtHalfBath   1460 non-null   int64  
+ 48  FullBath       1460 non-null   int64  
+ 49  HalfBath       1460 non-null   int64  
+ 50  BedroomAbvGr   1460 non-null   int64  
+ 51  KitchenAbvGr   1460 non-null   int64  
+ 52  KitchenQual    1460 non-null   object 
+ 53  TotRmsAbvGrd   1460 non-null   int64  
+ 54  Functional     1460 non-null   object 
+ 55  Fireplaces     1460 non-null   int64  
+ 56  FireplaceQu    770 non-null    object 
+ 57  GarageType     1379 non-null   object 
+ 58  GarageYrBlt    1379 non-null   float64
+ 59  GarageFinish   1379 non-null   object 
+ 60  GarageCars     1460 non-null   int64  
+ 61  GarageArea     1460 non-null   int64  
+ 62  GarageQual     1379 non-null   object 
+ 63  GarageCond     1379 non-null   object 
+ 64  PavedDrive     1460 non-null   object 
+ 65  WoodDeckSF     1460 non-null   int64  
+ 66  OpenPorchSF    1460 non-null   int64  
+ 67  EnclosedPorch  1460 non-null   int64  
+ 68  3SsnPorch      1460 non-null   int64  
+ 69  ScreenPorch    1460 non-null   int64  
+ 70  PoolArea       1460 non-null   int64  
+ 71  PoolQC         7 non-null      object 
+ 72  Fence          281 non-null    object 
+ 73  MiscFeature    54 non-null     object 
+ 74  MiscVal        1460 non-null   int64  
+ 75  MoSold         1460 non-null   int64  
+ 76  YrSold         1460 non-null   int64  
+ 77  SaleType       1460 non-null   object 
+ 78  SaleCondition  1460 non-null   object 
+dtypes: float64(3), int64(33), object(43)
+memory usage: 901.2+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at the dataframe general information, we can see that 79 features are
+availables and that the dataset contains 1460 samples. However, some features
+contains missing values. Also, the type of data is heterogeneous: both
+numerical and categorical data are available.</p>
+<p>First, we will have a look at the data represented with numbers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>
+<span class="n">numerical_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1460 entries, 0 to 1459
+Data columns (total 36 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   MSSubClass     1460 non-null   int64  
+ 1   LotFrontage    1201 non-null   float64
+ 2   LotArea        1460 non-null   int64  
+ 3   OverallQual    1460 non-null   int64  
+ 4   OverallCond    1460 non-null   int64  
+ 5   YearBuilt      1460 non-null   int64  
+ 6   YearRemodAdd   1460 non-null   int64  
+ 7   MasVnrArea     1452 non-null   float64
+ 8   BsmtFinSF1     1460 non-null   int64  
+ 9   BsmtFinSF2     1460 non-null   int64  
+ 10  BsmtUnfSF      1460 non-null   int64  
+ 11  TotalBsmtSF    1460 non-null   int64  
+ 12  1stFlrSF       1460 non-null   int64  
+ 13  2ndFlrSF       1460 non-null   int64  
+ 14  LowQualFinSF   1460 non-null   int64  
+ 15  GrLivArea      1460 non-null   int64  
+ 16  BsmtFullBath   1460 non-null   int64  
+ 17  BsmtHalfBath   1460 non-null   int64  
+ 18  FullBath       1460 non-null   int64  
+ 19  HalfBath       1460 non-null   int64  
+ 20  BedroomAbvGr   1460 non-null   int64  
+ 21  KitchenAbvGr   1460 non-null   int64  
+ 22  TotRmsAbvGrd   1460 non-null   int64  
+ 23  Fireplaces     1460 non-null   int64  
+ 24  GarageYrBlt    1379 non-null   float64
+ 25  GarageCars     1460 non-null   int64  
+ 26  GarageArea     1460 non-null   int64  
+ 27  WoodDeckSF     1460 non-null   int64  
+ 28  OpenPorchSF    1460 non-null   int64  
+ 29  EnclosedPorch  1460 non-null   int64  
+ 30  3SsnPorch      1460 non-null   int64  
+ 31  ScreenPorch    1460 non-null   int64  
+ 32  PoolArea       1460 non-null   int64  
+ 33  MiscVal        1460 non-null   int64  
+ 34  MoSold         1460 non-null   int64  
+ 35  YrSold         1460 non-null   int64  
+dtypes: float64(3), int64(33)
+memory usage: 410.8 KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the data are mainly represented with interger number. Let’s have
+a look at the histogram for all these features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_data</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">22</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_ames_housing_15_0.png" src="../_images/datasets_ames_housing_15_0.png" />
+</div>
+</div>
+<p>We see that some features have high picks for 0. It could be linked that this
+value was assigned when the the criterion did not apply, for instance the
+area of the swimming pool when no swimming pools are available.</p>
+<p>We also have some feature encoding some date (for instance year).</p>
+<p>These information are useful and should also be considered when designing a
+predictive model.</p>
+<p>Now, let’s have a look at the data encoded with strings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">string_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+<span class="n">string_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1460 entries, 0 to 1459
+Data columns (total 43 columns):
+ #   Column         Non-Null Count  Dtype 
+---  ------         --------------  ----- 
+ 0   MSZoning       1460 non-null   object
+ 1   Street         1460 non-null   object
+ 2   Alley          91 non-null     object
+ 3   LotShape       1460 non-null   object
+ 4   LandContour    1460 non-null   object
+ 5   Utilities      1460 non-null   object
+ 6   LotConfig      1460 non-null   object
+ 7   LandSlope      1460 non-null   object
+ 8   Neighborhood   1460 non-null   object
+ 9   Condition1     1460 non-null   object
+ 10  Condition2     1460 non-null   object
+ 11  BldgType       1460 non-null   object
+ 12  HouseStyle     1460 non-null   object
+ 13  RoofStyle      1460 non-null   object
+ 14  RoofMatl       1460 non-null   object
+ 15  Exterior1st    1460 non-null   object
+ 16  Exterior2nd    1460 non-null   object
+ 17  MasVnrType     1452 non-null   object
+ 18  ExterQual      1460 non-null   object
+ 19  ExterCond      1460 non-null   object
+ 20  Foundation     1460 non-null   object
+ 21  BsmtQual       1423 non-null   object
+ 22  BsmtCond       1423 non-null   object
+ 23  BsmtExposure   1422 non-null   object
+ 24  BsmtFinType1   1423 non-null   object
+ 25  BsmtFinType2   1422 non-null   object
+ 26  Heating        1460 non-null   object
+ 27  HeatingQC      1460 non-null   object
+ 28  CentralAir     1460 non-null   object
+ 29  Electrical     1459 non-null   object
+ 30  KitchenQual    1460 non-null   object
+ 31  Functional     1460 non-null   object
+ 32  FireplaceQu    770 non-null    object
+ 33  GarageType     1379 non-null   object
+ 34  GarageFinish   1379 non-null   object
+ 35  GarageQual     1379 non-null   object
+ 36  GarageCond     1379 non-null   object
+ 37  PavedDrive     1460 non-null   object
+ 38  PoolQC         7 non-null      object
+ 39  Fence          281 non-null    object
+ 40  MiscFeature    54 non-null     object
+ 41  SaleType       1460 non-null   object
+ 42  SaleCondition  1460 non-null   object
+dtypes: object(43)
+memory usage: 490.6+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>These features are categorical. We can make some bar plot to see categories
+count for each feature.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">zip_longest</span>
+
+<span class="n">n_string_features</span> <span class="o">=</span> <span class="n">string_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">n_string_features</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">4</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="n">ncols</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">feature_name</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">string_data</span><span class="p">,</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()):</span>
+    <span class="k">if</span> <span class="n">feature_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># do not show the axis</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="k">continue</span>
+
+    <span class="n">string_data</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">feature_name</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_ames_housing_19_0.png" src="../_images/datasets_ames_housing_19_0.png" />
+</div>
+</div>
+<p>Plotting this information allows us to answer to two questions:</p>
+<ul class="simple">
+<li><p>Is there few or many categories for a given features?</p></li>
+<li><p>Is there rare categories for some features?</p></li>
+</ul>
+<p>Knowing about these peculiarities would help at designing the predictive
+pipeline.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./python_scripts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="datasets_california_housing.html" title="previous page">The California housing dataset</a>
+    <a class='right-next' id="next-link" href="datasets_blood_transfusion.html" title="next page">The blood transfusion dataset</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

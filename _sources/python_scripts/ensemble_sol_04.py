@@ -17,8 +17,13 @@ from sklearn.model_selection import train_test_split
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5
-)
+    data, target, random_state=0, test_size=0.5)
+
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
 
 # %% [markdown]
 # Similarly to the previous exercise, create a gradient boosting decision tree

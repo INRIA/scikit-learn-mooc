@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Presentation of the datasets &#8212; Scikit-learn course</title>
+    <title>The penguins datasets &#8212; Scikit-learn course</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -60,8 +60,8 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Decision tree in classification" href="../trees/trees_classification_index.html" />
-    <link rel="prev" title="✅ Quiz" href="../trees/trees_quiz_00.html" />
+    <link rel="next" title="The adult census dataset" href="../appendix/adult_census_description.html" />
+    <link rel="prev" title="Datasets description" href="../appendix/datasets_intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -618,7 +618,7 @@
   Decision tree models
  </span>
 </p>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../trees/trees_module_intro.html">
    Module overview
@@ -642,11 +642,6 @@
   </ul>
   <i class="fas fa-chevron-down">
   </i>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Presentation of the datasets
-  </a>
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../trees/trees_classification_index.html">
@@ -1130,6 +1125,47 @@
   </a>
  </li>
 </ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../appendix/datasets_intro.html">
+   Datasets description
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     The penguins datasets
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../appendix/adult_census_description.html">
+     The adult census dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="datasets_california_housing.html">
+     The California housing dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="datasets_ames_housing.html">
+     The Ames housing dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="datasets_blood_transfusion.html">
+     The blood transfusion dataset
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
 
 </nav> <!-- To handle the deprecated key -->
 
@@ -1240,11 +1276,11 @@
         
               <div>
                 
-  <div class="section" id="presentation-of-the-datasets">
-<h1>Presentation of the datasets<a class="headerlink" href="#presentation-of-the-datasets" title="Permalink to this headline">¶</a></h1>
-<p>Before we present tree-based models, we will make a quick presentation of the
+  <div class="section" id="the-penguins-datasets">
+<h1>The penguins datasets<a class="headerlink" href="#the-penguins-datasets" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we make a quick presentation of the
 <a class="reference external" href="https://allisonhorst.github.io/palmerpenguins/">Palmer penguins dataset</a>
-dataset. We will use this dataset for both classification and regression
+dataset. We use this dataset for both classification and regression
 problems by selecting a subset of the features to make our explanations
 intuitive.</p>
 <div class="section" id="classification-dataset">
@@ -1344,18 +1380,10 @@ learn more about the penguins’ culmen with the illustration below:</p>
 samples distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-                <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-            <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-            <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">pairplot_figure</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span>
+<span class="n">pairplot_figure</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1433,8 +1461,8 @@ penguin.</p>
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../trees/trees_quiz_00.html" title="previous page">✅ Quiz</a>
-    <a class='right-next' id="next-link" href="../trees/trees_classification_index.html" title="next page">Decision tree in classification</a>
+    <a class='left-prev' id="prev-link" href="../appendix/datasets_intro.html" title="previous page">Datasets description</a>
+    <a class='right-next' id="next-link" href="../appendix/adult_census_description.html" title="next page">The adult census dataset</a>
 
         </div>
         

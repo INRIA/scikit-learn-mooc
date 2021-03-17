@@ -5,8 +5,14 @@
 # problems. We show differences with the decision trees previously presented in
 # a classification setting.
 #
-# First, we will load the regression dataset presented at the beginning of this
-# chapter.
+# First, we load the penguins dataset specifically for solving a regression
+# problem.
+
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
 
 # %%
 import pandas as pd

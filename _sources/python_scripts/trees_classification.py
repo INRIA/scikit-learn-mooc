@@ -4,6 +4,12 @@
 # We will illustrate how decision tree fit data with a simple classification
 # problem using the penguins dataset.
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 import pandas as pd
 

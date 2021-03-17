@@ -8,6 +8,12 @@
 # simplify our classification problem by selecting only 2 of the penguin
 # species to solve a binary classification problem.
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 import pandas as pd
 

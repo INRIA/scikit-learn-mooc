@@ -14,6 +14,12 @@
 # Therefore, we will conduct experiment to get the score of a model and the two
 # baselines. We will start by loading the California housing dataset.
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 from sklearn.datasets import fetch_california_housing
 

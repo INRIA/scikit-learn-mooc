@@ -1,0 +1,1918 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The California housing dataset &#8212; Scikit-learn course</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Ames housing dataset" href="datasets_ames_housing.html" />
+    <link rel="prev" title="The adult census dataset" href="../appendix/adult_census_description.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/scikit-learn-logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Scikit-learn course</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Machine Learning Concepts
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/slides.html">
+   📰 Introducing machine-learning concepts
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ml_concepts/quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  The predictive modeling pipeline
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/predictive_modeling_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_index.html">
+   Tabular data exploration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration.html">
+     First look at our dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="01_tabular_data_exploration_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/01_tabular_data_exploration_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html">
+   Fitting a scikit-learn model on numerical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_introduction.html">
+     First model with scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_hands_on.html">
+     Working with numerical data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_numerical_pipeline_scaling.html">
+     Preprocessing for numerical features
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/02_numerical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_index.html">
+   Handling categorical data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline.html">
+     Encoding of categorical variables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_column_transformer.html">
+     Using numerical and categorical variables together
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_categorical_pipeline_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../predictive_modeling_pipeline/03_categorical_pipeline_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../predictive_modeling_pipeline/predictive_modeling_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Selecting the best model
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../overfit/overfit_overfitting_underfitting_index.html">
+   Overfitting and underfitting
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/overfitting_vs_under_fitting_slides.html">
+     📰 Overfitting and Underfitting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_train_test.html">
+     The framework and why do we need it
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/overfitting_vs_under_fitting_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../overfit/overfit_validation_learning_curves_index.html">
+   Validation and learning curves
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/learning_validation_curves_slides.html">
+     📰 Comparing train and test errors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_validation_curve.html">
+     Overfit-generalization-underfit
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_learning_curve.html">
+     Effect of the sample size in cross-validation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/learning_validation_curves_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../overfit/overfit_bias_variance_index.html">
+   Bias versus variance trade-off
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/bias_vs_variance_slides.html">
+     📰 Bias versus Variance
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../overfit/bias_vs_variance_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overfit/overfit_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Hyperparameters tuning
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_manual_index.html">
+   Manual tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_manual.html">
+     Set and get hyperparameters in scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_02.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_02.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../tuning/parameter_tuning_manual_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../tuning/parameter_tuning_automated_index.html">
+   Automated tuning
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_grid_search.html">
+     Hyperparameters tuning by grid-search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_randomized_search.html">
+     Hyperparameters tuning by randomized-search
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_nested.html">
+     Cross-validation and hyperparameters tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_ex_03.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parameter_tuning_sol_03.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../tuning/parameter_tuning_automated_quiz.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tuning/parameter_tuning_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_intuitions_index.html">
+   Intuitions on linear models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/slides.html">
+     📰 Intuitions on linear models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_00.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_regression_index.html">
+   Linear regression
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_regression_without_sklearn.html">
+     Linear regression without scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_regression_in_sklearn.html">
+     Linear regression using scikit-learn
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_non_linear_index.html">
+   Modelling with a non-linear relationship data-target
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_regression_non_linear_link.html">
+     Linear regression with non-linear link between data and target
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_03.html">
+     📝 Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_03.html">
+     📃 Solution for Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_regularization_index.html">
+   Regularization in linear model
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_regularization.html">
+     Regularization of linear regression model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_04.html">
+     📝 Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_04.html">
+     📃 Solution for Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../linear_models/linear_models_classification_index.html">
+   Linear model for classification
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="logistic_regression.html">
+     Linear model for classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_ex_05.html">
+     📝 Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_models_sol_05.html">
+     📃 Solution for Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="logistic_regression_non_linear.html">
+     Beyond linear separation in classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../linear_models/linear_models_quiz_04.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../linear_models/linear_models_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Decision tree models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_intuitions_index.html">
+   Intuitions on tree-based models
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/slides.html">
+     📰 Intuitions on tree-based models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_00.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_classification_index.html">
+   Decision tree in classification
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_classification.html">
+     Build a classification decision tree
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_regression_index.html">
+   Decision tree in regression
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_regression.html">
+     Decision tree for regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../trees/trees_hyperparameters_index.html">
+   Hyperparameters of decision tree
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_hyperparameters.html">
+     Importance of decision tree hyperparameters on generalization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../trees/trees_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../trees/trees_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Ensemble of models
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_intuitions_index.html">
+   Intuitions on ensemble methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/slides.html">
+     📰 Intuitions on ensemble of tree-based models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_00.html">
+     ✅ Quiz
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_introduction.html">
+     Introductory example to ensemble models
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_bootstrap_index.html">
+   Ensemble method using bootstrapping
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_bagging.html">
+     Bagging
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_01.html">
+     📃 Solution of Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_random_forest.html">
+     Random forest
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_random_forest.html#midpoint-summary">
+     Midpoint summary
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_01.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_boosting_index.html">
+   Ensemble based on boosting
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_adaboost.html">
+     Adaptive Boosting (AdaBoost)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_03.html">
+     📝 Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_03.html">
+     📃 Solution for Exercise 03
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_gradient_boosting.html">
+     Gradient-boosting decision tree (GBDT)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_04.html">
+     📝 Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_04.html">
+     📃 Solution for Exercise 04
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_hist_gradient_boosting.html">
+     Speeding-up gradient-boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_02.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../ensemble/ensemble_hyperparameters_index.html">
+   Hyperparameters tuning with ensemble methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_hyperparameters.html">
+     Hyperparameters tuning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_ex_05.html">
+     📝 Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_sol_05.html">
+     📃 Solution for Exercise 05
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../ensemble/ensemble_quiz_03.html">
+     ✅ Quiz
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_wrap_up_quiz.html">
+   🏁 Wrap-up quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../ensemble/ensemble_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Evaluating model performance
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/evaluation_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/cross_validation_baseline_index.html">
+   Comparing a model with simple baselines
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_baseline.html">
+     Comparing results with baseline and chance level
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/cross_validation_choices_index.html">
+   Choice of cross-validation
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_03.html">
+     📝 Introductory exercise regarding stratification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_stratification.html">
+     Stratification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_04.html">
+     📝 Introductory exercise for sample grouping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_grouping.html">
+     Sample grouping
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_ex_05.html">
+     📝 Introductory exercise for non i.i.d. data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="cross_validation_time.html">
+     Non i.i.d. data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cross_validation_nested.html">
+   Nested cross-validation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/cross_validation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/02_metrics.html">
+   Introduction of the evaluation metrics
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/metrics_classification_index.html">
+   Classification metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_classification.html">
+     Classification
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../evaluation/metrics_regression_index.html">
+   Regression metrics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_regression.html">
+     Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_ex_02.html">
+     📝 Exercise 02
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="metrics_sol_02.html">
+     📃 Solution for Exercise 02
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/metrics_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../evaluation/evaluation_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  🚧 Feature selection
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_module_intro.html">
+   Module overview
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="feature_selection_introduction.html">
+   Benefits of using feature selection
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../feature_selection/feature_selection_limitation_index.html">
+   Caveats of feature selection
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="feature_selection_ex_01.html">
+     📝 Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="feature_selection_sol_01.html">
+     📃 Solution for Exercise 01
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="feature_selection_limitation_model.html">
+     Limitation of selecting feature using a model
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_module_take_away.html">
+   Main take-away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../feature_selection/feature_selection_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  🚧 Interpretation
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html">
+   Feature importance
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dev_features_importance.html#take-away">
+   Take Away
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../interpretation/interpretation_quiz.html">
+   ✅ Quiz
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="../appendix/datasets_intro.html">
+   Datasets description
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="trees_dataset.html">
+     The penguins datasets
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../appendix/adult_census_description.html">
+     The adult census dataset
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     The California housing dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="datasets_ames_housing.html">
+     The Ames housing dataset
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="datasets_blood_transfusion.html">
+     The blood transfusion dataset
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/python_scripts/datasets_california_housing.py"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.py</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/INRIA/scikit-learn-mooc"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/datasets_california_housing.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/master/python_scripts/datasets_california_housing.py"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-california-housing-dataset">
+<h1>The California housing dataset<a class="headerlink" href="#the-california-housing-dataset" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will quickly present the dataset known as the
+“California housing dataset”. This dataset can be fetched from internet using
+scikit-learn.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+
+<span class="n">california_housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can have a first look at the available description</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">california_housing</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.. _california_housing_dataset:
+
+California Housing dataset
+--------------------------
+
+**Data Set Characteristics:**
+
+    :Number of Instances: 20640
+
+    :Number of Attributes: 8 numeric, predictive attributes and the target
+
+    :Attribute Information:
+        - MedInc        median income in block
+        - HouseAge      median house age in block
+        - AveRooms      average number of rooms
+        - AveBedrms     average number of bedrooms
+        - Population    block population
+        - AveOccup      average house occupancy
+        - Latitude      house block latitude
+        - Longitude     house block longitude
+
+    :Missing Attribute Values: None
+
+This dataset was obtained from the StatLib repository.
+http://lib.stat.cmu.edu/datasets/
+
+The target variable is the median house value for California districts.
+
+This dataset was derived from the 1990 U.S. census, using one row per census
+block group. A block group is the smallest geographical unit for which the U.S.
+Census Bureau publishes sample data (a block group typically has a population
+of 600 to 3,000 people).
+
+It can be downloaded/loaded using the
+:func:`sklearn.datasets.fetch_california_housing` function.
+
+.. topic:: References
+
+    - Pace, R. Kelley and Ronald Barry, Sparse Spatial Autoregressions,
+      Statistics and Probability Letters, 33 (1997) 291-297
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s have an overview of the entire dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MedInc</th>
+      <th>HouseAge</th>
+      <th>AveRooms</th>
+      <th>AveBedrms</th>
+      <th>Population</th>
+      <th>AveOccup</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>MedHouseVal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8.3252</td>
+      <td>41.0</td>
+      <td>6.984127</td>
+      <td>1.023810</td>
+      <td>322.0</td>
+      <td>2.555556</td>
+      <td>37.88</td>
+      <td>-122.23</td>
+      <td>4.526</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8.3014</td>
+      <td>21.0</td>
+      <td>6.238137</td>
+      <td>0.971880</td>
+      <td>2401.0</td>
+      <td>2.109842</td>
+      <td>37.86</td>
+      <td>-122.22</td>
+      <td>3.585</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.2574</td>
+      <td>52.0</td>
+      <td>8.288136</td>
+      <td>1.073446</td>
+      <td>496.0</td>
+      <td>2.802260</td>
+      <td>37.85</td>
+      <td>-122.24</td>
+      <td>3.521</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.6431</td>
+      <td>52.0</td>
+      <td>5.817352</td>
+      <td>1.073059</td>
+      <td>558.0</td>
+      <td>2.547945</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+      <td>3.413</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.8462</td>
+      <td>52.0</td>
+      <td>6.281853</td>
+      <td>1.081081</td>
+      <td>565.0</td>
+      <td>2.181467</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+      <td>3.422</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>A written in the descritpion, the dataset contains aggregated data regarding
+each district in California. Let’s have a close look at the features that
+can be used by a predictive model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MedInc</th>
+      <th>HouseAge</th>
+      <th>AveRooms</th>
+      <th>AveBedrms</th>
+      <th>Population</th>
+      <th>AveOccup</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8.3252</td>
+      <td>41.0</td>
+      <td>6.984127</td>
+      <td>1.023810</td>
+      <td>322.0</td>
+      <td>2.555556</td>
+      <td>37.88</td>
+      <td>-122.23</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8.3014</td>
+      <td>21.0</td>
+      <td>6.238137</td>
+      <td>0.971880</td>
+      <td>2401.0</td>
+      <td>2.109842</td>
+      <td>37.86</td>
+      <td>-122.22</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.2574</td>
+      <td>52.0</td>
+      <td>8.288136</td>
+      <td>1.073446</td>
+      <td>496.0</td>
+      <td>2.802260</td>
+      <td>37.85</td>
+      <td>-122.24</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.6431</td>
+      <td>52.0</td>
+      <td>5.817352</td>
+      <td>1.073059</td>
+      <td>558.0</td>
+      <td>2.547945</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.8462</td>
+      <td>52.0</td>
+      <td>6.281853</td>
+      <td>1.081081</td>
+      <td>565.0</td>
+      <td>2.181467</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this dataset, we have information regarding the demography (income,
+population, house occupancy) in the districts, the location of the districts
+(latitude, longitude), and general information regarding the house in the
+districts (number of rooms, number of bedrooms, age of the house). Since
+these statistics are at the granularity of the district, they corresponds to
+averages or medians.</p>
+<p>Now, let’s have a look to the target to be predicted.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    4.526
+1    3.585
+2    3.521
+3    3.413
+4    3.422
+Name: MedHouseVal, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The target contains the median of the house value for each district.
+Therefore, this problem is a regression problem.</p>
+<p>We can now check more into details the data types and if the dataset contains
+any missing value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 20640 entries, 0 to 20639
+Data columns (total 9 columns):
+ #   Column       Non-Null Count  Dtype  
+---  ------       --------------  -----  
+ 0   MedInc       20640 non-null  float64
+ 1   HouseAge     20640 non-null  float64
+ 2   AveRooms     20640 non-null  float64
+ 3   AveBedrms    20640 non-null  float64
+ 4   Population   20640 non-null  float64
+ 5   AveOccup     20640 non-null  float64
+ 6   Latitude     20640 non-null  float64
+ 7   Longitude    20640 non-null  float64
+ 8   MedHouseVal  20640 non-null  float64
+dtypes: float64(9)
+memory usage: 1.4 MB
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that:</p>
+<ul class="simple">
+<li><p>the dataset contains 20,640 samples and 8 features;</p></li>
+<li><p>all features are numerical features encoded as floating number;</p></li>
+<li><p>there is no missing values.</p></li>
+</ul>
+<p>Let’s have a quick look at the distribution of these features by plotting
+their histograms.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_california_housing_13_0.png" src="../_images/datasets_california_housing_13_0.png" />
+</div>
+</div>
+<p>We can first focus on features for which their distributions would be more or
+less expected.</p>
+<p>The median income is a distribution with a long tail. It means that the
+salary of people is more or less normally distributed but there is some
+people getting a high salary.</p>
+<p>Regarding the average house age, the distribution is more or less uniform.</p>
+<p>The target distribution has a long tail as well. In addition, we have a
+threshold-effect for high-valued houses: all houses with a price above 5 are
+given the value 5.</p>
+<p>Focusing on the average rooms, average bedrooms, average occupation, and
+population, the range of the data is large with unnoticeable bin for the
+largest values. It means that there are very high and few values (maybe they
+could be considered as outliers?). We can see this specificity looking at the
+statistics for these features:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_of_interest</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AveRooms&quot;</span><span class="p">,</span> <span class="s2">&quot;AveBedrms&quot;</span><span class="p">,</span> <span class="s2">&quot;AveOccup&quot;</span><span class="p">,</span> <span class="s2">&quot;Population&quot;</span><span class="p">]</span>
+<span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="n">features_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AveRooms</th>
+      <th>AveBedrms</th>
+      <th>AveOccup</th>
+      <th>Population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>20640.000000</td>
+      <td>20640.000000</td>
+      <td>20640.000000</td>
+      <td>20640.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>5.429000</td>
+      <td>1.096675</td>
+      <td>3.070655</td>
+      <td>1425.476744</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>2.474173</td>
+      <td>0.473911</td>
+      <td>10.386050</td>
+      <td>1132.462122</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.846154</td>
+      <td>0.333333</td>
+      <td>0.692308</td>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>4.440716</td>
+      <td>1.006079</td>
+      <td>2.429741</td>
+      <td>787.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>5.229129</td>
+      <td>1.048780</td>
+      <td>2.818116</td>
+      <td>1166.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>6.052381</td>
+      <td>1.099526</td>
+      <td>3.282261</td>
+      <td>1725.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>141.909091</td>
+      <td>34.066667</td>
+      <td>1243.333333</td>
+      <td>35682.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For each of these features, comparing the <code class="docutils literal notranslate"><span class="pre">max</span></code> and <code class="docutils literal notranslate"><span class="pre">75%</span></code> values, we can see
+an huge difference. It confirms the intuitions that there are a couple of
+extreme values.</p>
+<p>Up to know, we discarded the longitude and latitude that carry geographical
+information. In short, the combination of this feature could help us to
+decide if there are locations associated with high-valued houses. Indeed,
+we could make a scatter plot where the x- and y-axis would be the latitude
+and longitude and the circle size and color would be linked with the house
+value in the district.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span>
+                <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">),</span>
+           <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Median house value depending of</span><span class="se">\n</span><span class="s2"> their spatial location&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_california_housing_17_0.png" src="../_images/datasets_california_housing_17_0.png" />
+</div>
+</div>
+<p>If you are not familiar with the state of California, it is interesting to
+notice that all datapoints show a graphical representation of this state.
+We note that the high-valued houses will be located on the cost, where the
+big cities from California are located: San Diego, Los Angeles, San Jose, or
+San Francisco.</p>
+<p>We can do a random subsampling to have less data points to plot but that
+could still allow us to see these specificities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                     <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span>
+                <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+           <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Median house value depending of</span><span class="se">\n</span><span class="s2"> their spatial location&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_california_housing_20_0.png" src="../_images/datasets_california_housing_20_0.png" />
+</div>
+</div>
+<p>We can make a final analysis by making a pair plot of all features and the
+target but dropping the longitude and latitude. We will quantize the target
+such that we can create proper histogram.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Drop the unwanted columns</span>
+<span class="n">columns_drop</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">]</span>
+<span class="n">subset</span> <span class="o">=</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns_drop</span><span class="p">)</span>
+<span class="c1"># Quantize the target and keep the midpoint for each interval</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">,</span> <span class="n">retbins</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">subset</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_california_housing_23_0.png" src="../_images/datasets_california_housing_23_0.png" />
+</div>
+</div>
+<p>While it is always complicated to interpret a pairplot since there is a lot
+of data, here we can get a couple of intuitions. We can confirm that some
+features have extreme values (outliers?). We can as well see that the median
+income is helpful to distinguish high-valued from low-valued houses.</p>
+<p>Thus, creating a predictive model, we could expect the longitude, latitude,
+and the median income to be useful features to help at predicting the median
+house values.</p>
+<p>If you are curious, we created a linear predictive model below and show the
+values of the coefficients obtained via cross-validation</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RidgeCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">RidgeCV</span><span class="p">(</span><span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">))</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+    <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score: </span><span class="si">{</span><span class="n">score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score: 0.553 +/- 0.062
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">california_housing</span><span class="o">.</span><span class="n">feature_names</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coefficients of Ridge models</span><span class="se">\n</span><span class="s2"> via cross-validation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/datasets_california_housing_28_0.png" src="../_images/datasets_california_housing_28_0.png" />
+</div>
+</div>
+<p>It seems that the three features that we earlier spotted are found important
+by this model. But be careful regarding interpreting these coefficients.
+We let you go into the module “Interpretation” to go in depth regarding such
+experiment.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./python_scripts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="../appendix/adult_census_description.html" title="previous page">The adult census dataset</a>
+    <a class='right-next' id="next-link" href="datasets_ames_housing.html" title="next page">The Ames housing dataset</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By scikit-learn developers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

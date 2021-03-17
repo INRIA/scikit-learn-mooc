@@ -20,6 +20,12 @@ target_column = "Body Mass (g)"
 data_train, target_train = penguins[data_columns], penguins[target_column]
 
 # %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
+# %% [markdown]
 # First, create two models, a linear regression model and a decision tree
 # regression model, and fit them on the training data. Limit the depth at
 # 3 levels for the decision tree.

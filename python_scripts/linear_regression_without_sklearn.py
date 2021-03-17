@@ -1,10 +1,15 @@
 # %% [markdown]
 # # Linear regression without scikit-learn
 #
-# In this notebook, we introduce linear regression.
-# Before presenting the available scikit-learn classes,
-# we will provide some insights with a simple example.
-# We will use a dataset that contains information about penguins.
+# In this notebook, we introduce linear regression. Before presenting the
+# available scikit-learn classes, we will provide some insights with a simple
+# example. We will use a dataset that contains information about penguins.
+
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
 
 # %%
 import pandas as pd

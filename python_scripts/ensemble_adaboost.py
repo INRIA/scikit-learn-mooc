@@ -21,6 +21,12 @@ range_features = {
     for feature_name in data.columns}
 
 # %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
+# %% [markdown]
 # In addition, we are also using the function used in the previous notebook
 # to plot the decision function of the tree.
 

@@ -14,6 +14,12 @@
 # each district. We will use all 8 features to predict the target, the median
 # house price.
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 from sklearn.datasets import fetch_california_housing
 

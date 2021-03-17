@@ -18,6 +18,12 @@ housing = fetch_california_housing(as_frame=True)
 data, target = housing.data, housing.target
 target *= 100  # rescale the target in k$
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 from sklearn.tree import DecisionTreeRegressor
 

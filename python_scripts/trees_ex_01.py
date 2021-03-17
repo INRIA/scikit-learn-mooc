@@ -19,6 +19,12 @@ penguins = pd.read_csv("../datasets/penguins_classification.csv")
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 from sklearn.model_selection import train_test_split
 

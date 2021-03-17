@@ -18,6 +18,12 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
 
 # %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
+# %% [markdown]
 # Create a random forest containing three trees. Train the forest and
 # check the statistical performance on the testing set.
 

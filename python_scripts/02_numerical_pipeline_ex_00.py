@@ -48,6 +48,12 @@ target = adult_census["class"]
 # Write your code here.
 
 # %% [markdown]
+# Fit this model on the data and target loaded above
+
+# %%
+# Write your code here.
+
+# %% [markdown]
 # Use your model to make predictions on the first 10 data points inside the
 # data. Do they match the actual target values?
 

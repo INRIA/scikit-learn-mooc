@@ -42,12 +42,21 @@ target = adult_census["class"]
 # website](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)
 
 # %% [markdown]
+# The default value for `n_neighbors` is 5
+
+# %% [markdown]
 # Create a `KNeighborsClassifier` model with `n_neighbors=50`
 
 # %%
 from sklearn.neighbors import KNeighborsClassifier
 
 model = KNeighborsClassifier(n_neighbors=50)
+
+# %% [markdown]
+# Fit this model on the data and target loaded above
+
+# %%
+model.fit(data, target)
 
 # %% [markdown]
 # Use your model to make predictions on the first 10 data points inside the

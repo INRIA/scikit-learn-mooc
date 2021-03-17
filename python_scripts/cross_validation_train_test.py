@@ -52,8 +52,10 @@ target *= 100
 target.head()
 
 # %% [markdown]
+# ```{note}
 # If you want a deeper overview regarding this dataset, you can refer to the
 # Appendix - Datasets description section at the end of this MOOC.
+# ```
 
 # %% [markdown]
 # ## Training error vs testing error

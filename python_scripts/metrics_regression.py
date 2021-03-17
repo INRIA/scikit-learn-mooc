@@ -24,6 +24,12 @@ data = data.select_dtypes(np.number)
 target /= 1000
 
 # %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
+# %% [markdown]
 # Let's start by splitting our dataset intro a train and test set.
 
 # %%

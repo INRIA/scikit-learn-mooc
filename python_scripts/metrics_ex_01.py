@@ -15,6 +15,12 @@ data = blood_transfusion.drop(columns="Class")
 target = blood_transfusion["Class"]
 
 # %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
+# %% [markdown]
 # First, create a decision tree classifier.
 
 # %%

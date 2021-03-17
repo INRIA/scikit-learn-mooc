@@ -48,7 +48,7 @@ import seaborn as sns
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-plt.title("Synthetic regression dataset")
+_ = plt.title("Synthetic regression dataset")
 
 # %% [markdown]
 # As we previously discussed, boosting will be based on assembling a sequence

@@ -52,6 +52,10 @@ target *= 100
 target.head()
 
 # %% [markdown]
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+
+# %% [markdown]
 # ## Training error vs testing error
 #
 # To solve this regression task, we will use a decision tree regressor.

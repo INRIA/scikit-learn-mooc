@@ -8,7 +8,13 @@
 # classifier and to find by yourself the effect of the parameter `C`.
 #
 # We will start by loading the dataset and create the helper function to show
-# the decision separation as in the previous code
+# the decision separation as in the previous code.
+
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
 
 # %%
 import pandas as pd

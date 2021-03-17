@@ -32,6 +32,12 @@ data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 
 # %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
+# %% [markdown]
 # We will make a quick benchmark of the original gradient boosting.
 
 # %%

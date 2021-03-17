@@ -12,6 +12,12 @@
 #
 # To make these experiments we will first load the blood transfusion dataset.
 
+# %% [markdown]
+# ```{note}
+# If you want a deeper overview regarding this dataset, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+# ```
+
 # %%
 import pandas as pd
 

@@ -64,7 +64,7 @@ data_numeric_train, data_numeric_test, target_train, target_test = \
 
 # %% [markdown]
 # We will first create a dummy classifier which will always predict the
-# high revenue class class, i.e. `" >50K"`, and check the statistical
+# high revenue class, i.e. `" >50K"`, and check the statistical
 # performance.
 
 # %%

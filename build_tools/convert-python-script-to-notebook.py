@@ -18,6 +18,7 @@ https://github.com/executablebooks/MyST-NB/issues/148#issuecomment-632407608
 """
 
 import sys
+import json
 
 from docutils.core import publish_from_doctree
 
@@ -27,10 +28,11 @@ from myst_parser.main import MdParserConfig, default_parser
 
 import jupytext
 
+
 # https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#directives
 # Docutils supports the following directives:
-# Admonitions: attention, caution, danger, error, hint, important, note, tip,
-# warning and the generic admonition
+# Admonitions: attention, caution, danger, error, hint, important, note,
+# tip, warning and the generic admonition
 all_admonitions = [
     "attention",
     "caution",
@@ -86,8 +88,7 @@ def admonition_html(doc):
     html_node = convert_to_html(doc, "div.admonition")
     bootstrap_class = sphinx_name_to_bootstrap[adm_node.tagname]
     html_node.attrs["class"] += [f"alert alert-{bootstrap_class}"]
-    html_node.select_one(
-        ".admonition-title").attrs["style"] = "font-weight: bold;"
+    html_node.select_one(".admonition-title").attrs["style"] = "font-weight: bold;"
 
     return str(html_node)
 
@@ -100,8 +101,7 @@ def replace_admonition_in_cell_source(cell_str):
     tokens = parser.parse(cell_str)
 
     admonition_tokens = [
-        t for t in tokens
-        if t.type == "fence" and t.info in all_directive_names
+        t for t in tokens if t.type == "fence" and t.info in all_directive_names
     ]
 
     cell_lines = cell_str.splitlines()
@@ -117,37 +117,72 @@ def replace_admonition_in_cell_source(cell_str):
     return new_cell_str
 
 
-def replace_admonition_in_nb(nb):
+def replace_admonitions(nb):
     """Replaces all admonitions by its generated HTML in a notebook object.
     """
-    # FIXME this would not work with advanced syntax for admonition with :::
-    # but we are not using it for now. We could parse all the markdowns cell, a
-    # bit wasteful, but probably good enough
-    cells_with_admonition = [
+    # FIXME this would not work with advanced syntax for admonition with
+    # ::: but we are not using it for now. We could parse all the markdowns
+    # cell, a bit wasteful, but probably good enough
+    cells_to_modify = [
         (i, c)
         for i, c in enumerate(nb["cells"])
         if c["cell_type"] == "markdown"
         and any(directive in c["source"] for directive in all_directive_names)
     ]
 
-    for i, c in cells_with_admonition:
+    for i, c in cells_to_modify:
         cell_src = c["source"]
         output_src = replace_admonition_in_cell_source(cell_src)
         nb.cells[i]["source"] = output_src
 
 
-def replace_admonition_in_filename(input_filename, output_filename):
-    """Converts .py file to .ipynb file where admonitions have been replaced by
-    their generated HTML.
+def replace_escaped_dollars(nb):
+    """Replace escaped dollar to make Jupyter notebook interfaces happy.
+
+    Jupyter interfaces wants \\$, JupyterBook wants \$. See
+    https://github.com/jupyterlab/jupyterlab/issues/8645 for more details.
     """
+    cells_to_modify = [
+        (i, c)
+        for i, c in enumerate(nb["cells"])
+        if c["cell_type"] == "markdown" and "\\$" in c["source"]
+    ]
+
+    for i, c in cells_to_modify:
+        cell_src = c["source"]
+        output_src = cell_src.replace("\\$", "\\\\$")
+        nb.cells[i]["source"] = output_src
+
+
+def write_without_cell_ids(nb, output_filename):
+    # In nbformat 5, markdown cells have ids, nbformat.write and consequently
+    # jupytext writes random cell ids when generating .ipynb from .py, creating
+    # unnecessary changes.
+    nb_content = jupytext.writes(nb, fmt=".ipynb")
+    nb = json.loads(nb_content)
+
+    for c in nb["cells"]:
+        del c["id"]
+
+    with open(output_filename, "w") as f:
+        json.dump(nb, f, indent=1)
+
+
+def process_filename(replace_func_list, input_filename, output_filename):
     nb = jupytext.read(input_filename)
 
-    replace_admonition_in_nb(nb)
+    for replace_func in replace_func_list:
+        replace_func(nb)
 
-    jupytext.write(nb, output_filename)
+    write_without_cell_ids(nb, output_filename)
 
 
 if __name__ == "__main__":
     input_filename = sys.argv[1]
     output_filename = sys.argv[2]
-    replace_admonition_in_filename(input_filename, output_filename)
+
+    notebook_processors = [
+        replace_admonitions,
+        replace_escaped_dollars,
+    ]
+    process_filename(notebook_processors, input_filename, output_filename)

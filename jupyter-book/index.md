@@ -30,10 +30,11 @@ The course is accessible without a strong technical background. The
 requirements for this course are:
 
 - basic knowledge of Python programming
-- basic knowledge of the NumPy and Pandas libraries
+- basic knowledge of the NumPy, Pandas and Matplotlib libraries
 
 Here are a few good reference links about these requirements:
 
 - [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html)
-- [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html)
+- [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/array_object.html)
 - [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
+- [Introduction to Matplotlib](https://sebastianraschka.com/blog/2020/numpy-intro.html#410-matplotlib)

@@ -82,7 +82,7 @@ Compare a `sklearn.ensemble.GradientBoostingClassifier` and a
 models with a 10-fold cross-validation and repeat the experiment 10 times.
 
 ```{admonition} Question
-In average, is the gradient boosting better than the random forest?
+On average, is the gradient boosting better than the random forest?
 
 - a) Yes
 - b) No
@@ -123,7 +123,7 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-With the early stopping activated, how many trees in average the
+With the early stopping activated, how many trees on average the
 `HistGradientBoostingClassifier` needed to converge?
 
 - a) ~30

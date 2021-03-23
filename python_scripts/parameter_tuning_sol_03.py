@@ -86,8 +86,8 @@ model = make_pipeline(preprocessor, LogisticRegression())
 # %% [markdown]
 # Use a `RandomizedSearchCV` to find the best set of hyperparameters by tuning
 # the following parameters for the `LogisticRegression` model:
-# - `C` with values ranging from 0.001 to 10. You can use a reciprocal
-#   distribution (i.e. `scipy.stats.reciprocal`);
+# - `C` with values ranging from 0.001 to 10. You can use a log-uniform
+#   distribution (i.e. `scipy.stats.loguniform`);
 # - `solver` with possible values being `"liblinear"` and `"lbfgs"`;
 # - `penalty` with possible values being `"l2"` and `"l1"`;
 #
@@ -105,10 +105,10 @@ model = make_pipeline(preprocessor, LogisticRegression())
 
 # %%
 from sklearn.model_selection import RandomizedSearchCV
-from scipy.stats import reciprocal
+from scipy.stats import loguniform
 
 param_distributions = {
-    "logisticregression__C": reciprocal(0.001, 10),
+    "logisticregression__C": loguniform(0.001, 10),
     "logisticregression__solver": ["liblinear", "lbfgs"],
     "logisticregression__penalty": ["l2", "l1"],
     "columntransformer__cat-preprocessor__drop": [None, "first"]

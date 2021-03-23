@@ -108,10 +108,9 @@ model
 # The `RandomizedSearchCV` class allows for such stochastic search. It is
 # used similarly to the `GridSearchCV` but the sampling distributions
 # need to be specified instead of the parameter values. For instance, we
-# will draw candidates using a log-uniform distribution also called
-# reciprocal distribution, because the parameters we are interested in
-# take positive values with a natural log scaling (.1 is as close to 1 as
-# 10 is).
+# will draw candidates using a log-uniform distribution because the parameters
+# we are interested in take positive values with a natural log scaling (.1 is
+# as close to 1 as 10 is).
 #
 # ```{note}
 # Random search (with `RandomizedSearchCV`) is typically beneficial compared
@@ -129,19 +128,19 @@ model
 #   histograms.
 #
 # ```{note}
-# The `reciprocal` function from SciPy returns a floating number. Since we
+# The `loguniform` function from SciPy returns a floating number. Since we
 # want to us this distribution to create integer, we will create a class that
 # will cast the floating number into an integer.
 # ```
 
 # %%
-from scipy.stats import reciprocal
+from scipy.stats import loguniform
 
 
-class reciprocal_int:
+class loguniform_int:
     """Integer valued version of the log-uniform distribution"""
     def __init__(self, a, b):
-        self._distribution = reciprocal(a, b)
+        self._distribution = loguniform(a, b)
 
     def rvs(self, *args, **kwargs):
         """Random variable sample"""
@@ -155,11 +154,11 @@ class reciprocal_int:
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
-    'classifier__l2_regularization': reciprocal(1e-6, 1e3),
-    'classifier__learning_rate': reciprocal(0.001, 10),
-    'classifier__max_leaf_nodes': reciprocal_int(2, 256),
-    'classifier__min_samples_leaf': reciprocal_int(1, 100),
-    'classifier__max_bins': reciprocal_int(2, 255)}
+    'classifier__l2_regularization': loguniform(1e-6, 1e3),
+    'classifier__learning_rate': loguniform(0.001, 10),
+    'classifier__max_leaf_nodes': loguniform_int(2, 256),
+    'classifier__min_samples_leaf': loguniform_int(1, 100),
+    'classifier__max_bins': loguniform_int(2, 255)}
 
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=10,

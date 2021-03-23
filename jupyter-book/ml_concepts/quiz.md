@@ -1,14 +1,16 @@
 # ✅ Quiz
 
 Given a case study: pricing apartments based on a real estate website. We have
-the record of thousand house descriptions with their price. Typically, an
-example of a house description is the following:
+thousands of house descriptions with their price. Typically, an example of a
+house description is the following:
 
 "Great for entertaining: spacious, updated 2 bedroom, 1 bathroom apartment in
 Lakeview, 97630. The house will be available from May 1st. Close to nightlife
 with private backyard. Price ~$1,000,000."
 
-However, the price is not mentioned for some house, and we want to predict it.
+We are interested in predicting house prices from their description. One
+potential use case for this would be, as a buyer, to find houses that are cheap
+compared to their market value.
 
 ```{admonition} Question
 What kind of problem is it?

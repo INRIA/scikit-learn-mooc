@@ -114,7 +114,7 @@ instead of a `Ridge` regressor pass `alphas=np.logspace(-1, 3, num=30)` to
 explore the effect of changing the regularization strength.
 
 ```{admonition} Question
-Is there major differences regarding the most important weights?
+Are there major differences regarding the most important weights?
 
 - a) Yes, the weights order is completely different
 - b) No, the weights order is very similar
@@ -163,7 +163,7 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Is there any missing values in this dataset?
+Are there missing values in this dataset?
 
 - a) Yes
 - b) No
@@ -181,7 +181,7 @@ model, do not forget to scale the data with a `StandardScaler` before training
 the model.
 
 ```{admonition} Question
-In average, how much the logistic regression is better/worse/similar to a dummy
+On average, how much better/worse/similar is the logistic regression  to a dummy
 classifier that would predict the most frequent class?
 
 - a) Worse than a dummy classifier by ~4%
@@ -216,7 +216,7 @@ data = adult_census.drop(columns=["class", "fnlwgt", "education-num"])
 ```
 
 ```{admonition} Question
-Is there any missing values in this dataset?
+Are there missing values in this dataset?
 
 - a) Yes
 - b) No
@@ -233,7 +233,7 @@ the numerical data should be scaled, and the predictor used should be a
 logistic regression classifier.
 
 ```{admonition} Question
-In average, what is the improvement of using the categorical features?
+On average, what is the improvement of using the categorical features?
 
 - a) It gives similar results
 - b) It improves the statistical performance by 2.5%
@@ -278,7 +278,7 @@ What is the effect of decreasing the `C` parameter on the coefficients?
 - b) increasing the magnitude of the weights
 - c) reducing the weights' variance
 - d) increasing the weights' variance
-- e) do not have any influence on the weights' variance
+- e) it has no influence on the weights' variance
 
 _Select several answers_
 ```

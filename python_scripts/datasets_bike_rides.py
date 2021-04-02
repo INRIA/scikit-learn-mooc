@@ -70,8 +70,8 @@ cycling.info()
 # the energy spent during a ride. For instance, riding at a higher power
 # requires more energy and thus, you need to provide resources to create this
 # energy. With human, this resource is food. For our soup blender, this
-# resource can be uranium, petrol, gaz, coil, etc. Our body serves as a power
-# plant to transform the resources into energy.
+# resource can be uranium, petrol, natural gas, coal, etc. Our body serves as a
+# power plant to transform the resources into energy.
 #
 # The issue with measuring power is linked to the cost of the sensor: a cycling
 # power meter. The cost of such sensor vary from $400 to $1000. Thus, our

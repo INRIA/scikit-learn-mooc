@@ -57,8 +57,6 @@ In scikit-learn jargon: an object that has a `fit` method. The reasons for the
 name estimator is that once the `fit` method is called on a model, the
 parameters are learned (or estimated) from the data.
 
-## example regression dataset
-
 ## feature, variable, attribute, descriptor, covariate
 
 A quality describing an observation (e.g. color, size, weight)
@@ -150,7 +148,6 @@ regression problems are:
 - predicting house prices from their descriptions (number of rooms, surface,
   location, etc ...)
 - predicting the age of patients from their MRI scans
-
 
 TODO
 
@@ -274,4 +271,3 @@ For generic machine learning terms:
 
 For more advanced scikit-learn related terminology:
 - scikit-learn glossary: https://scikit-learn.org/stable/glossary.html
-

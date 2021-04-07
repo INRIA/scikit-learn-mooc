@@ -15,34 +15,34 @@ data, target = cycling.drop(columns=target_name), cycling[target_name]
 data.head()
 ```
 
-A thorough discussion regarding this dataset is given in the annex. We can
-recall what is the data science problem that one wants to solve using this
-dataset. The idea is to use measurements from cheap sensors (GPS, heart-rate
-monitor, etc.) in order to predict a cyclist power. Power can indeed be
-recorded via a cycling power meter device, but this device is rather expensive.
+A detailed description of this dataset is given in the appendix. As a reminder,
+the problem we are trying to solve with this dataset is to use measurements
+from cheap sensors (GPS, heart-rate monitor, etc.) in order to predict a
+cyclist power. Power can indeed be recorded via a cycling power meter device,
+but this device is rather expensive.
 
-We want to develop a predictive model to predict power from other data.
-However, instead of using blindly machine learning, we will introduce some
-flavor of classic mechanics: the Newton's second law.
+Instead of using blindly machine learning, we will first introduce some flavor of
+classic mechanics: the Newton's second law.
 
 $P_{meca} = (\frac{1}{2} \rho . SC_x . V_{a}^{2} + C_r . mg . \cos \alpha + mg . \sin \alpha + ma) V_d$
 
 where $\rho$ is the air density in kg.m$^{-3}$, $S$ is frontal surface of the
 cyclist in m$^{2}$, $C_x$ is the drag coefficient, $V_a$ is the air speed in
 m.s$^{-1}$, $C_r$ is the rolling coefficient, $m$ is the mass of the rider and
-bicycle in kg, $g$ is the gravitational constant which is equal to 9.81
-m.s$^{-2}$, $\alpha$ is the slope in radian, $V_d$ is the rider speed in
-m.s$^{-1}$, and $a$ is the rider acceleration in m.s$^{-2}$.
+bicycle in kg, $g$ is the standard acceleration due to gravity which is equal
+to 9.81 m.s$^{-2}$, $\alpha$ is the slope in radian, $V_d$ is the rider speed
+in m.s$^{-1}$, and $a$ is the rider acceleration in m.s$^{-2}$.
 
 This equation might look a bit complex at first but we can explain with words
-what are the different terms within the parenthesis. The first term is the
-power that a cyclist is required to produce to fight wind. The second term is
-the power that a cyclist is required to produce to fight the rolling resistance
-created by the tires on the floor. Then, the third term is the power that a
-cyclist is required to produce to go up a hill (if the slope is positive; if
-the slope is negative the cyclist does not need to produce any power to go
-forward). Finally, the last term is the power that a cyclist is required to
-change is speed (i.e. acceleration).
+what the different terms within the parenthesis are:
+- the first term is the power that a cyclist is required to produce to fight wind
+- the second term is the power that a cyclist is required to produce to fight
+  the rolling resistance created by the tires on the floor
+- the third term is the power that a cyclist is required to produce to go up a hill if the
+  slope is positive. If the slope is negative the cyclist does not need to
+  produce any power to go forward
+- the fourth and last term is the power that a cyclist requires to change his
+  speed (i.e. acceleration).
 
 We can simplify the model above by using the data that we have at hand. It
 would look like the following.
@@ -57,18 +57,19 @@ such a model as part of this exercise. Thus, you need to:
   speed multiplied by the sine of the angle of the slope, and the speed
   multiplied by the acceleration. To compute the angle of the slope, you need
   to take the arc tangent of the slope (`alpha = np.arctan(slope)`). In
-  addition, we can limit ourself to positive acceleration only by clipping to
-  0 the negative acceleration values (it would correspond to some power
-  created by the braking that we are not modeling here).
+  addition, we can limit ourself to positive acceleration only by clipping to 0
+  the negative acceleration values (they would correspond to some power created
+  by the braking that we are not modeling here).
 - using the new data matrix, create a linear predictive model based on a
   [`sklearn.preprocessing.StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
   and a
   [`sklearn.linear_model.RidgeCV`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html);
-- use a [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
+- use a
+  [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
   cross-validation strategy with only 4 splits (`n_splits=4`) to evaluate the
   statistical performance of the model. Use the mean absolute error (MAE) as a
   statistical performance metric. Also, pass the parameter
-  `return_estimator=True` and `return_train_score=True` to answer to the
+  `return_estimator=True` and `return_train_score=True` to answer the
   subsequent questions. Be aware that the `ShuffleSplit` strategy is a naive
   strategy and we will investigate the consequence of making this choice in the
   subsequent questions.
@@ -95,8 +96,8 @@ Hint: it is possible to replace the negative acceleration values by 0 using
 ```{admonition} Question
 Given the model
 $P_{meca} = \beta_{1} V_{d}^{3} + \beta_{2} V_{d} + \beta_{3} \sin(\alpha) V_{d} + \beta_{4} a V_{d}$
-that you programmed, inspect the weights of the linear models fitted during
-cross-validation and select the right affirmations.
+that you created, inspect the weights of the linear models fitted during
+cross-validation and select the correct statements:
 
 - a) $\beta_{1} < \beta_{2} < \beta_{3}$
 - b) $\beta_{3} < \beta_{1} < \beta_{2}$
@@ -139,7 +140,7 @@ _Select a single answer_
 ```{admonition} Question
 Comparing both the linear model and the histogram gradient boosting model and
 taking into consideration the train and test MAE obtained via cross-validation,
-select the right affirmations:
+select the correct statements:
 
 - a) the statistical performance of the histogram gradient-boosting model is
   limited by its underfitting
@@ -188,19 +189,19 @@ Hint: You can access to the date and time of a `DatetimeIndex` using
 +++
 
 Instead of using the naive `ShuffleSplit` strategy, we will use a strategy that
-takes into account the group defined by each individual date. It
-corresponds to a bike ride. We would like to have a cross-validation strategy
-that should evaluate the capacity of our model to predict on a completely
-new bike ride. Therefore, the test samples should be independent from other
-rides. Therefore, we can use a `LeaveOneGroupOut` strategy: at each iteration
-of the cross-validation, we will keep a bike ride for the evaluation and use
-all other bike rides to train our model.
+takes into account the group defined by each individual date. It corresponds to
+a bike ride. We would like to have a cross-validation strategy that evaluates
+the capacity of our model to predict on a completely new bike ride: the samples
+in the validation set should only come from rides not present in the training
+set. Therefore, we can use a `LeaveOneGroupOut` strategy: at each iteration of
+the cross-validation, we will keep a bike ride for the evaluation and use all
+other bike rides to train our model.
 
 Thus, you concretely need to:
 
-- create a variable called `group` that is a 1D numpy arrray containing the
+- create a variable called `group` that is a 1D numpy array containing the
   index of each ride present in the dataframe. Therefore, the length of `group`
-  will be equal to the number of samples in `data`. If we were having 2 bike
+  will be equal to the number of samples in `data`. If we had 2 bike
   rides, we would expect the indices 0 and 1 in `group` to differentiate the
   bike ride. You can use
   [`pd.factorize`](https://pandas.pydata.org/docs/reference/api/pandas.factorize.html)
@@ -214,7 +215,7 @@ Thus, you concretely need to:
 ```{admonition} Question
 Using the previous evaluations (with both `ShuffleSplit` and
 `LeaveOneGroupOut`) and looking at the train and test errors for both models,
-select the right affirmations:
+select the correct statements:
 
 - a) the statistical performance of the gradient-boosting model is
   limited by its underfitting
@@ -233,16 +234,14 @@ _Select several answers_
 ```{admonition} Question
 Using the previous evaluations (with both `ShuffleSplit` and
 `LeaveOneGroupOut`) and looking at the train and test errors for both models,
-select the right affirmations:
+select the correct statements:
 
 - a) `ShuffleSplit` is giving over-optimistic results for the linear model
 - b) `LeaveOneGroupOut` is giving over-optimistic results for the linear model
 - c) both cross-validation strategies are equivalent for the linear model
-- d) `ShuffleSplit` is giving over-optimistic results for the histogram
-  gradient boosting
-- e) `LeaveOneGroupOut` is giving over-optimistic results for the
-  gradient-boosting
-- f) both cross-validation strategies are equivalent for the gradient-boosting
+- d) `ShuffleSplit` is giving over-optimistic results for the gradient-boosting model
+- e) `LeaveOneGroupOut` is giving over-optimistic results for the gradient-boosting model
+- f) both cross-validation strategies are equivalent for the gradient-boosting model
 
 _Select several answer_
 ```
@@ -251,7 +250,7 @@ _Select several answer_
 
 ```{admonition} Question
 Compare more precisely the errors estimated through cross-validation and select
-the right affirmation:
+the correct statement:
 
 - a) in general, the standard deviation of the train and test errors increased
   using the `LeaveOneGroupOut` cross-validation
@@ -288,7 +287,7 @@ Make a scatter plot where on the x-axis, you will plot the measured powers
 (predicted target). Do two separated plots for each model.
 
 ```{admonition} Question
-By analysing the plots, select the right affirmations:
+By analysing the plots, select the correct statements:
 
 - a) the linear regressor tends to under-predict samples with high power
 - b) the linear regressor tends to over-predict samples with high power
@@ -322,7 +321,7 @@ of the test data. Draw on the same plot the true targets and the predictions
 of each model.
 
 ```{admonition} Question
-By using the previous plot, select the right affirmations:
+By using the previous plot, select the correct statements:
 
 - a) the linear model is more accurate than the histogram gradient boosting
   regressor

@@ -18,6 +18,10 @@
     document.querySelector('.prev-next-bottom').remove();
     document.querySelector('.footer').remove();
     document.querySelector('#main-content').querySelector('.col-md-9').className = 'col-12';
+
+    var style=document.createElement('style');
+    style.appendChild(document.createTextNode('hypothesis-sidebar, hypothesis-notebook, hypothesis-adder{display:none!important;}'));
+    document.getElementsByTagName('head')[0].appendChild(style);
   }
 
   document.addEventListener("DOMContentLoaded", function() {

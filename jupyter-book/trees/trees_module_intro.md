@@ -34,4 +34,4 @@ The objective in the module are the following:
 
 <!-- Give the investment in time -->
 
-The estimated time to go through this module is about 2 hours 15.
+The estimated time to go through this module is about 3 hours.

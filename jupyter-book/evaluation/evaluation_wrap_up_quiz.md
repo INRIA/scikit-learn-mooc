@@ -56,7 +56,9 @@ such a model as part of this exercise. Thus, you need to:
 - create a new data matrix containing the cube of the speed, the speed, the
   speed multiplied by the sine of the angle of the slope, and the speed
   multiplied by the acceleration. To compute the angle of the slope, you need
-  to take the arc tangent of the slope (`alpha = np.arctan(slope)`);
+  to take the arc tangent of the slope (`alpha = np.arctan(slope)`). In
+  addition, we can limit ourself to positive acceleration only by clipping to
+  0 the negative acceleration values.
 - using the new data matrix, create a linear predictive model based on a
   [`sklearn.preprocessing.StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
   and a
@@ -81,8 +83,10 @@ cross-validation is closest to:
 
 _Select a single answer_
 
-Hint: pass `scoring="neg_mean_absolute_error"` to the `cross_validation
+Hint: pass `scoring="neg_mean_absolute_error"` to the `cross_validate`
 function to compute the (negative of) the requested metric.
+Hint: it is possible to replace the negative acceleration values by 0 using
+`data["acceleration"].clip(lower=0)`
 ```
 
 +++
@@ -108,7 +112,9 @@ _Select several answers_
 +++
 
 Now, we will create a predictive model that uses all available sensor
-measurements such as cadence and heart-rate. Also, we will use a non-linear
+measurements such as cadence (the speed at which a cyclist turns pedals
+measured in rotation per minute) and heart-rate (the number of beat per minute
+of the heart of the cyclist while exercising). Also, we will use a non-linear
 regressor, a
 [`sklearn.ensemble.HistGradientBoostingRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html).
 Fix the number of maximum iterations to 1000 (`max_iter=1_000`) and activate
@@ -145,8 +151,8 @@ select the right affirmations:
 
 _Select several answers_
 
-Hint: look at the values of the train_score and the test_score collected in the
-dictionaries returned by the cross_validate function.
+Hint: look at the values of the `train_score` and the `test_score` collected
+in the dictionaries returned by the `cross_validate` function.
 ```
 
 +++
@@ -209,29 +215,49 @@ Using the previous evaluations (with both `ShuffleSplit` and
 `LeaveOneGroupOut`) and looking at the train and test errors for both models,
 select the right affirmations:
 
-- a) the statistical performance of the histogram gradient-boosting model is
+- a) the statistical performance of the gradient-boosting model is
   limited by its underfitting
-- b) the statistical performance of the histogram gradient-boosting model is
+- b) the statistical performance of the gradient-boosting model is
   limited by its overfitting
 - c) the statistical performance of the linear model is limited by its
   underfitting
 - d) the statistical performance of the linear model is limited by its
   overfitting
-- e) `ShuffleSplit` is giving over-optimistic results for the linear model
-- f) `LeaveOneGroupOut` is giving over-optimistic results for the linear model
-- g) both cross-validation strategies are equivalent for the linear model
-- h) `ShuffleSplit` is giving over-optimistic results for the histogram
-  gradient boosting
-- i) `LeaveOneGroupOut` is giving over-optimistic results for the histogram
-  gradient boosting
-- j) both cross-validation strategies are equivalent for the histogram
-  gradient-boosting
-- k) in general, the standard deviation of the train and test errors increased
-  using the `LeaveOneGroupOut` cross-validation
-- l) in general, the standard deviation of the train and test errors decreased
-  using the `LeaveOneGroupOut` cross-validation
 
 _Select several answers_
+```
+
++++
+
+```{admonition} Question
+Using the previous evaluations (with both `ShuffleSplit` and
+`LeaveOneGroupOut`) and looking at the train and test errors for both models,
+select the right affirmations:
+
+- a) `ShuffleSplit` is giving over-optimistic results for the linear model
+- b) `LeaveOneGroupOut` is giving over-optimistic results for the linear model
+- c) both cross-validation strategies are equivalent for the linear model
+- d) `ShuffleSplit` is giving over-optimistic results for the histogram
+  gradient boosting
+- e) `LeaveOneGroupOut` is giving over-optimistic results for the
+  gradient-boosting
+- f) both cross-validation strategies are equivalent for the gradient-boosting
+
+_Select several answer_
+```
+
++++
+
+```{admonition} Question
+Compare more precisely the errors estimated through cross-validation and select
+the right affirmation:
+
+- a) in general, the standard deviation of the train and test errors increased
+  using the `LeaveOneGroupOut` cross-validation
+- b) in general, the standard deviation of the train and test errors decreased
+  using the `LeaveOneGroupOut` cross-validation
+
+_Select a single answer_
 ```
 
 +++
@@ -243,13 +269,19 @@ the predictions of the models for this test ride. To do so, we can reuse the
 ```py
 cv = LeaveOneGroupOut()
 train_indices, test_indices = list(cv.split(data, target, groups=groups))[0]
-data_train, data_test = data.iloc[train_indices], data.iloc[test_indices]
+
+data_linear_model_train = data_linear_model.iloc[train_indices]
+data_linear_model_test = data_linear_model.iloc[test_indices]
+
+data_train = data.iloc[train_indices]
+data_test = data.iloc[test_indices]
+
 target_train = target.iloc[train_indices]
 target_test = target.iloc[test_indices]
 ```
 
 Now, fit both the linear model and the histogram gradient boosting regressor
-models on the training data and collect the prediction on the testing data.
+models on the training data and collect the predictions on the testing data.
 Make a scatter plot where on the x-axis, you will plot the measured powers
 (true target) and on the y-axis, you will plot the predicted powers
 (predicted target). Do two separated plots for each model.
@@ -273,19 +305,20 @@ _Select several answers_
 
 +++
 
-Store in the same pandas dataframe the true target and the predictions of each
-model. You can give meaningful column name for each of the target (true and
-predicted). Then, select a slice of the data corresponding to a range of a
-given hour: from 5.00 pm to 5.05 pm. You can achieve such selection with the
-following:
+Now select a portion of the testing data using the following code:
 
 ```python
 time_slice = slice("2020-08-18 17:00:00", "2020-08-18 17:05:00")
-target_dataframe.loc[time_slice, :]
+
+data_test_linear_model_subset = data_linear_model_test[time_slice]
+data_test_subset = data_test[time_slice]
+target_test_subset = target_test[time_slice]
 ```
 
-Plot the different true targets and predictions to answer to the following
-question:
+It allows to select data from 5.00 pm until 5.05 pm. Used the previous fitted
+models (linear and gradient-boosting regressor) to predict on this portion
+of the test data. Draw on the same plot the true targets and the predictions
+of each model.
 
 ```{admonition} Question
 By using the previous plot, select the right affirmations:

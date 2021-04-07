@@ -58,7 +58,8 @@ such a model as part of this exercise. Thus, you need to:
   multiplied by the acceleration. To compute the angle of the slope, you need
   to take the arc tangent of the slope (`alpha = np.arctan(slope)`). In
   addition, we can limit ourself to positive acceleration only by clipping to
-  0 the negative acceleration values.
+  0 the negative acceleration values (it would correspond to some power
+  created by the braking that we are not modeling here).
 - using the new data matrix, create a linear predictive model based on a
   [`sklearn.preprocessing.StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
   and a
@@ -73,7 +74,7 @@ such a model as part of this exercise. Thus, you need to:
   subsequent questions.
 
 ```{admonition} Question
-On average, what is the Mean Absolute Error on the test sets obtained through
+On average, the Mean Absolute Error on the test sets obtained through
 cross-validation is closest to:
 
 - a) 20 Watts
@@ -122,7 +123,7 @@ the early stopping (`early_stopping=True`). Repeat the previous evaluation
 using this regressor.
 
 ```{admonition} Question
-On average, what is the Mean Absolute Error on the test sets obtained through
+On average, the Mean Absolute Error on the test sets obtained through
 cross-validation is closest to:
 
 - a) 20 Watts

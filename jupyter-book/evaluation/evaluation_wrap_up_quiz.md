@@ -4,7 +4,7 @@
 
 Open the dataset `bike_rides.csv` with the following commands:
 
-```py
+```python
 import pandas as pd
 
 cycling = pd.read_csv("../datasets/bike_rides.csv", index_col=0,
@@ -266,7 +266,7 @@ Now, we will go in details by picking a single ride for the testing and analyse
 the predictions of the models for this test ride. To do so, we can reuse the
 `LeaveOneGroupOut` cross-validation object in the following manner:
 
-```py
+```python
 cv = LeaveOneGroupOut()
 train_indices, test_indices = list(cv.split(data, target, groups=groups))[0]
 

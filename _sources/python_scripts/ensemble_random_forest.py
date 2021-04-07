@@ -83,7 +83,7 @@ print(f"Statistical performance of bagging: "
 #   and (0.31, 0.69), the aggregation probability is (0.33, 0.67) and the
 #   second class would be predicted.
 #
-# # Midpoint summary
+# ## Summary
 #
 # We saw in this section two algorithms that use bootstrap samples to create
 # an ensemble of classifiers or regressors. These algorithms train several

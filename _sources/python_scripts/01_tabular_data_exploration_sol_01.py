@@ -16,7 +16,7 @@
 # # 📃 Solution for Exercise 01
 
 # %% [markdown]
-# Imagine we are interested by predicting penguins species based on two of
+# Imagine we are interested in predicting penguins species based on two of
 # their body measurements: culmen length and culmen depth. First we want to do
 # some data exploration to get a feel for the data.
 #

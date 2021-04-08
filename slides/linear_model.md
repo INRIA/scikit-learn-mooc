@@ -4,9 +4,9 @@ class: titlepage
 
 # Linear Model
 
-This lesson covers the linear models.
+For classification and regression.
 
-These are basic models, easy to understand and fast to train.
+Simple models, easy to understand and fast to train.
 
 <img src="../figures/scikit-learn-logo.svg">
 
@@ -28,63 +28,84 @@ settings.
 
 
 ---
-# An example: Adult census
+class: split-60
+# An example: estimating housing prices
 
-.very-small[
-
-| Age | Workclass | Education    | Marital-status     | Occupation         | Relationship | Race  | Sex  | Capital-gain | Hours-per-week | Native-country | Salary |
-| --- | --------- | ------------ | ------------------ | ------------------ | ------------ | ----- | ---- | ------------ | -------------- | -------------- | ----- |
-| 25  | Private   | 11th         | Never-married      | Machine-op-inspct  | Own-child    | Black | Male | 0            | 40             | United-States  | $45k |
-| 38  | Private   | HS-grad      | Married-civ-spouse | Farming-fishing    | Husband     | White  | Male | 0            | 50             | United-States   | $40k |
-| 28  | Local-gov | Assoc-acdm   | Married-civ-spouse | Protective-serv    | Husband      | White | Male | 0            | 40             | United-States   | $60k  |
+.column1.data-table[
+| Gr_Liv_Area | Year_Built | Full_Bath | Sale_Price |
+| ----------- | ---------- | --------- | ---------- |
+|        1656 |       1960 |         1 |      215.0 |
+|         896 |       1961 |         1 |      105.0 |
+|        1329 |       1958 |         1 |      172.0 |
+|        2110 |       1968 |         2 |      244.0 |
+|        1629 |       1997 |         2 |      189.9 |
 ]
 
-.shift-left[Salary = *0.4 x* Education + *0.2 x* Hours-per-week + *0.1 x* Age +...]
+.column2[
+### Linear approximation of Sale_Price:
+
+```
+Sale_Price =       0.1 * Gr_Liv_Area
+              +    1.1 * Year_Built
+              -    8.9 * Full_Bath
+              - 2200.0
+```
+]
 
 ???
 
-Let us consider a variant of the adult census data that we saw
-previously: instead of having 2 categories, *< $50k* and *>= $50k*, the
-target "Salary" contains the exact value of the salary for each person.
-Thus, the target is continuous, so we are dealing with a regression problem
-instead of a classification problem.
+The goal is to estimate a safe prices from numerical features characterizing
+recently sold houses in a given city. The target is continuous, so we are
+dealing with a regression problem instead of a classification problem.
 
-The linear model assumes that the salary can be explained as a linear
-combination of the features (explanatory variable), for instance 0.4 x
-Education + 0.2 x Hours-per-week + 0.1 x Age.
+The linear model assumes that the sale price (here expressed in thousands of
+dollars) can be approximated by a linear combination of the features
+(explanatory variables) + a final offset (also known as the intercept).
 
+The learning procedure consists in estimating best possible values of the
+coefficients of the linear combinations to minimize the average prediction
+error.
 
 ---
+class: split-40
 # Linear regression
 
-Predict the value of the target **y**  
-given some observation **X**
+Predict the value of the target **y** given some observation **x**
 
-.shift-down.pull-left.shift-left[<img src="../figures/linear_data.svg" width="100%">]
+.column1[
+<img src="../figures/linear_data.svg" width="100%">
+]
 
 ???
 
 For illustration purpose, let's consider a 1-dimensional observations:
-explaining the salary as a function of a single feature, for instance the
-education level (the number of years of study).
+explaining the price as a function of a single feature, for instance the ground
+living area.
 
 ---
+class: split-40
 # Linear regression
 
 A linear model is a ramp "as close as possible" to all samples.
 The blue curve shows the predictions for any possible **x**
 
-.shift-down.pull-left.shift-left[<img src="../figures/linear_fit.svg" width="100%">]
+.column1[
+<img src="../figures/linear_fit.svg" width="100%">
+]
 
+.column2[
 ```python
 from sklearn.linear_model import LinearRegression
+
+
 linear_regression = LinearRegression()
 linear_regression.fit(x, y)
 ```
+]
 
 ???
 
-We learn a linear function to predict *y*. Here, the salary is expressed
+We learn a linear function to predict *y*. Here, the price is expressed
 as a constant multiplied by the number of years of study.
 
 Learning this function consists in finding the straight line which is
@@ -94,21 +115,27 @@ The corresponding model can then be used to make predictions for any
 possible **x**, as displayed by the blue line.
 
 ---
+class: split-40
 # Linear regression
 
 The slope is chosen to minimize the distance between the prediction and the
 data points
 
-.shift-down.pull-left.shift-left[<img src="../figures/linear_fit_red.svg" width="100%">]
+.column1[
+<img src="../figures/linear_fit_red.svg" width="100%">
+]
 
-
+.column2[
 ```python
 from sklearn.linear_model import LinearRegression
+
+
 linear_regression = LinearRegression()
 linear_regression.fit(x, y)
 
 y_pred = linear_regression.predict(X)
 ```
+]
 
 ???
 
@@ -123,11 +150,24 @@ Fortunately, scikit-learn has an estimator, the `LinearRegression`
 object, that computes this for us.
 
 ---
+class: split-60
 # Linear regression with several variables
 
-.pull-left.shift-left[<img src="../figures/lin_reg_3D.svg" width="130%">]
+.column1[
+<img src="../figures/lin_reg_3D.svg" width="100%">
+]
 
+.column2[
 The mental picture needs to be extended to several dimensions.
+
+For instance, in 2D:
+
+```
+Sale_Price =       0.1 * Gr_Liv_Area
+              +    1.1 * Year_Built
+              - 2209.0
+```
+]
 
 ???
 
@@ -136,31 +176,38 @@ dimensions. However, the idea is the same: a linear model tries to
 minimize the error between the predictions and the data points.
 The predictions now form a plane.
 
-Often, the data have many features, and thus many dimensions. It is no
-longer possible to visualize the fitting with a simple figure.
+Often, the data have many features, and thus many dimensions. It is common to
+build models with hundreds of variables. It is no longer possible to visualize
+the fitting with a simple figure.
+
+For some applications in biology such as Genetics for instance practitioners
+use hundreds of thousands of input variables. 
 
 ---
+class: split-30
 # For classification: logistic regression
 
 For **classification**, we use a logistic regression model
 
-**y** is binary, either +1 or -1
+**y** is binary, either 0 or 1
 
-.shift-left.pull-left[<img src="../figures/categorical.svg" width="100%">]
+.column1[
+<img src="../figures/categorical.svg" width="100%">
+]
 
-
+.column2[
  ```python
 from sklearn.linear_model import LogisticRegression
+
+
 log_reg = LogisticRegression()
+
  ```
+]
 
 ???
-In our `adult_census` dataset, we do not have continuous values for salary but
-only whether the salary is higher than $50K. This problem is, therefore,
-a classification problem.
-
 The prediction target, **y**, is binary. It can be represented by either
-+1 or -1. However, a straight line is not suited to try to explain
+0 or 1. However, a straight line is not suited to try to explain
 such binary target.
 
 Hence, dedicated linear models for classification are needed. *Logistic
@@ -169,42 +216,49 @@ not regression as the name would wrongly suggest.
 
 
 ---
+class: split-30
 # For classification: logistic regression
 
-The output is now modelled as a form of a step function, which is adjusted on
-the data
+The output of the model is interpreted of the probability of
+y being 1 for a given x.
 
-.shift-left.pull-left[<img src="../figures/logistic_color.svg" width="100%">]
+.column1[
+<img src="../figures/logistic_color.svg" width="100%">
+]
 
-
+.column2[
  ```python
 from sklearn.linear_model import LogisticRegression
+
+
 log_reg = LogisticRegression()
 log_reg.fit(X, y)
  ```
-
+]
 
 ???
 
 With logistic regression, the output is modelled using a form of soft
 step function, adjusted to the data. This function is called a logistic
-function. Using a soft, graduate shift between *y = -1* and *y = +1* is
+function. Using a soft, graduate shift between *y = 0* and *y = 1* is
 useful to capture the grey zone, where the value of *x* does not
-completely tell us whether the target value is -1 or +1.
+completely tell us whether the target value is 0 or 1.
 
 In scikit-learn, this is done with the `LogisticRegression` object.
 
 ---
+class: split-50
 # Logistic regression in 2 dimensions
 
-**X** is 2-dimensional
-**y** is the color
+**X** is 2-dimensional, **y** is represented by the color
 
-.shift-up.shift-left.pull-left[<img src="../figures/logistic_3D.svg" width="110%">]
-.shift-right-more.pull-right[
-    <img src="../figures/logistic_2D.svg" width="100%">
+.column1[
+<img src="../figures/logistic_3D.svg" />
 ]
- 
+
+.column2[
+<img src="../figures/logistic_2D.svg" />
+]
 
 ???
 
@@ -233,15 +287,23 @@ This last visualization is commonly used in machine learning.
 
 * A linear model can also overfit
 
-
-&nbsp;Salary = *0.4 x* Education + *0.2 x* Hours-per-week + *0.1 x* Age
-.red[&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; + *0.2 x* Zodiac_sign + *0.3 x* Wear_red_socks + ...]
+.larger[
+```
+Sale_Price =      0.1 * Gr_Liv_Area
+             +    1.1 * Year_Built
+             -    8.9 * Full_Bath
+             +    2.5 * Zodiac_sign_first_owner_is_capricorn
+             -    1.5 * Zodiac_sign_first_owner_is_taurus
+             ...
+             - 2200.0
+```
+]
 
 .small[]
 
 **Regularization** is needed to control model complexity.
 The most common way is to push the coefficients toward
-small values. Such model is called *Ridge*.
+small values. Such a model is called *ridge regression*.
 
 .pull-left[
  ```python
@@ -256,10 +318,10 @@ If we have too many parameters in regard to the number of samples, the
 linear model can overfit: it assigns non-zero weights to associations by
 chance.
 
-As described in a previous lecture, the problem with overfit is that the
-model learns a decision function that is too complicated: here the
-non-zero associations to unrelated factors such as wearing red socks. As
-a consequence, the model generalizes poorly.
+As described in a previous lecture, the problem with overfit is that the model
+learns a decision function that is too complicated: here the non-zero
+associations to unrelated factors such as the Zodiac sign of the first owner.
+As a consequence, the model generalizes poorly.
 
 The solution is to regularize the model: to foster less complex
 solutions. For this purpose, a linear model can be regularized by
@@ -358,7 +420,7 @@ of regularization is always useful.
 ---
 # Regularization in logistic regression
 
-.small[The parameter *C* controls the complexity of the model, and in practice, whether the model focuses on data close to the boundary.]
+.small[The parameter *C* controls the complexity of the model, high C value → more flexibility.]
 
 .shift-up-less.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="90%">]
 .shift-up-less.pull-right[<img src="../figures/logistic_2D_C1.svg" width="90%">]

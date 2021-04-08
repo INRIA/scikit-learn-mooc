@@ -62,8 +62,8 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # statistics, the terms commonly used to refer to rows are "sample",
 # "instance", or "observation".
 #
-# The columns represents a type of information collected. In the field of
-# machined learning and descriptive statistics, the terms commonly used to
+# The columns represent a type of information collected. In the field of
+# machine learning and descriptive statistics, the terms commonly used to
 # refer to columns are "feature", "variable", "attribute", or "covariate".
 
 # %%
@@ -188,7 +188,7 @@ pd.crosstab(index=adult_census['education'],
             columns=adult_census['education-num'])
 
 # %% [markdown]
-# This shows that `education` and `education-num` gives you the same
+# This shows that `education` and `education-num` give you the same
 # information. For example, `education-num=2` is equivalent to
 # `education='1st-4th'`. In practice that means we can remove `education-num`
 # without losing information. Note that having redundant (or highly correlated)
@@ -246,7 +246,7 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 
 # %% [markdown]
 # The plot below shows the rules of a simple model, called decision tree.
-# We will explain how this model works in a latter notebook, for now let us
+# We will explain how this model works in a later notebook, for now let us
 # just consider the model predictions when trained on this dataset:
 #
 # ![](../figures/simple_decision_tree_adult_census.png)

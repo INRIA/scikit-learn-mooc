@@ -272,10 +272,10 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 #   `low-income` is very close to 0.5 which means the model is not sure at all
 #   about its prediction.
 #
-# It is interesting to see that a simple model create rules similar to the ones
-# that we could have created by hand. Note that machine learning is really
+# It is interesting to see that a simple model creates rules similar to the
+# ones that we could have created by hand. Note that machine learning is really
 # interesting when creating rules by hand is not straightforward, for example
-# because we are in high dimension (many features) or because there is no
+# because we are in high dimension (many features) or because there is are no
 # simple and obvious rules that separate the two classes as in the top-right
 # region
 

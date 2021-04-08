@@ -271,7 +271,7 @@ manager during his annual review, which is not in our database.
 
 <img src="../figures/people.svg" style="position: absolute; right: 1ex; top: 1ex; width: 200px">
 
-- store all known individual .small[(the census)]
+- store all known individuals .small[(the census)]
 - given a new individual, predict the income of its closest match in our database
 
 ???

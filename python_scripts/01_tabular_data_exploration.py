@@ -58,11 +58,11 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # structured data composed of 2 dimensions. This type of data are also referred
 # as tabular data.
 #
-# The rows represents a record. In the field of machine learning or descriptive
+# Each row represents a record. In the field of machine learning or descriptive
 # statistics, the terms commonly used to refer to rows are "sample",
 # "instance", or "observation".
 #
-# The columns represent a type of information collected. In the field of
+# Each column represent a type of information collected. In the field of
 # machine learning and descriptive statistics, the terms commonly used to
 # refer to columns are "feature", "variable", "attribute", or "covariate".
 

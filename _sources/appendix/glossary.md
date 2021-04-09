@@ -1,5 +1,16 @@
 # Glossary
 
+```{warning}
+This is work in progress. If you are following the beta, you should probably not
+review the glossary.
+
+If you are trying to use the glossary, some external glossaries are provided
+[at the bottom of this page](#other-useful-glossaries).
+
+While the work on the glossary is going on, there is a chance that some content
+may still be useful.
+```
+
 This glossary is supposed to describe the main terms used in this course. For
 terms that you can not find here, we added useful glossaries at the bottom of
 this page.

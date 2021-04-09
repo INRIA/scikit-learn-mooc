@@ -8,7 +8,7 @@
 # Cross-validation is a powerful tool to evaluate the statistical performance
 # of a model. It is also used to select the best model from a pool of models.
 # This pool of models can be the same family of predictor but with different
-# parameters. In this case, we call this procedure **hyperparameters tuning**.
+# parameters. In this case, we call this procedure **hyperparameter tuning**.
 #
 # We could also imagine that we would like to choose among heterogeneous models
 # that will similarly use the cross-validation.

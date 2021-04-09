@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Cross-validation and hyperparameters tuning
+# # Cross-validation and hyperparameter tuning
 #
 # In the previous notebooks, we saw two approaches to tune hyperparameters:
 # via grid-search and randomized-search.

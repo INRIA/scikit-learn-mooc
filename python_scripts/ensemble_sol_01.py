@@ -82,6 +82,6 @@ print(f"Basic R2 score of the bagging regressor:\n"
 
 # %% [markdown]
 # We see that the predictor provided by the bagging regressor does not need
-# much hyperparameters tuning compared to a single decision tree. We see that
+# much hyperparameter tuning compared to a single decision tree. We see that
 # the bagging regressor provides a predictor for which fine tuning is not as
 # important as in the case of fitting a single decision tree.

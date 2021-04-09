@@ -5,7 +5,7 @@ This is work in progress. If you are following the beta, you should probably not
 review the glossary.
 
 If you are trying to use the glossary, some external glossaries are provided
-[at the bottom of this page](#other-useful-glossaries).
+at the bottom of this page.
 
 While the work on the glossary is going on, there is a chance that some content
 may still be useful.

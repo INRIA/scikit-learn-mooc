@@ -247,7 +247,7 @@ _ = plt.title("Ridge weights with data scaling")
 # The default parameter will not lead to the optimal model. Therefore, we need
 # to tune the `alpha` parameter.
 #
-# Model hyperparameters tuning should be done with care. Indeed, we want to
+# Model hyperparameter tuning should be done with care. Indeed, we want to
 # find an optimal parameter that maximizes some metrics. Thus, it requires both
 # a training set and testing set.
 #

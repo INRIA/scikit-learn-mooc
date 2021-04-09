@@ -1,4 +1,4 @@
-# Hyperparameters tuning with ensemble methods
+# Hyperparameter tuning with ensemble methods
 
 ```{tableofcontents}
 

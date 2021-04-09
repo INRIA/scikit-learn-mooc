@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Hyperparameters tuning by grid-search
+# # Hyperparameter tuning by grid-search
 #
 # In the previous notebook, we saw that hyperparameters can affect the
 # statistical performance of a model. In this notebook, we will show how to

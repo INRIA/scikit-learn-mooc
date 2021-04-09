@@ -160,7 +160,7 @@ _ = adult_census.hist(figsize=(20, 14))
 #
 # We can already make a few comments about some of the variables:
 #
-# * `age`: there are not that many points for 'age > 70'. The dataset
+# * `age`: there are not that many points for `age > 70`. The dataset
 #   description does indicate that retired people have been filtered out
 #   (`hours-per-week > 0`);
 # * `education-num`: peak at 10 and 13, hard to tell what it corresponds to
@@ -276,7 +276,7 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # It is interesting to see that a simple model creates rules similar to the
 # ones that we could have created by hand. Note that machine learning is really
 # interesting when creating rules by hand is not straightforward, for example
-# because we are in high dimension (many features) or because there is are no
+# because we are in high dimension (many features) or because there are no
 # simple and obvious rules that separate the two classes as in the top-right
 # region
 

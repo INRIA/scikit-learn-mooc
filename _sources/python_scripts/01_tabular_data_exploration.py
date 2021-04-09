@@ -154,8 +154,8 @@ _ = adult_census.hist(figsize=(20, 14))
 # In the previous cell, we used the following pattern: `_ = func()`. We do this
 # to avoid showing the output of `func()` which in this case is not that
 # useful. We actually assign the output of `func()` into the variable `_`
-# (called underscore). By convention, in Python the undescore serves as a
-# "garbage" variable to store results that we are not interested in.
+# (called underscore). By convention, in Python the underscore variable is used
+# as a "garbage" variable to store results that we are not interested in.
 # ```
 #
 # We can already make a few comments about some of the variables:

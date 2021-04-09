@@ -3,12 +3,14 @@
 ## Tabular data exploration
 
 - [First look at our dataset](./notebooks/01_tabular_data_exploration.ipynb)
+- [Exercise 01](./notebooks/01_tabular_data_exploration_ex_01.ipynb)
 
 ## Fitting a scikit-learn model on numerical data
 
 - [First model with scikit-learn](./notebooks/02_numerical_pipeline_introduction.ipynb)
--  [Working with numerical data](./notebooks/02_numerical_pipeline_hands_on.ipynb)
-- [Exercise 01](./notebooks/02_numerical_pipeline_ex_01.ipynb)
+- [Exercise 01](./notebooks/02_numerical_pipeline_ex_00.ipynb)
+- [Working with numerical data](./notebooks/02_numerical_pipeline_hands_on.ipynb)
+- [Exercise 02](./notebooks/02_numerical_pipeline_ex_01.ipynb)
 - [Preprocessing for numerical features](./notebooks/02_numerical_pipeline_scaling.ipynb)
 
 ## Handling categorical data
@@ -27,5 +29,6 @@
 
 ## Automated tuning
 
-- [Automated hyperparameters tuning in scikit-learn](./notebooks/parameter_tuning_automated.ipynb)
+- [Automated hyperparameters tuning in scikit-learn with `GridSearchCV`](./notebooks/parameter_tuning_grid_search.ipynb)
+- [Automated hyperparameters tuning in scikit-learn with `RandomizedSearchCV`](./notebooks/parameter_tuning_randomized_search.ipynb)
 - [Exercise 02](./notebooks/parameter_tuning_ex_03.ipynb)

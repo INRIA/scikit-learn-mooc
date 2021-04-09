@@ -29,6 +29,6 @@
 
 ## Automated tuning
 
-- [Automated hyperparameters tuning in scikit-learn with `GridSearchCV`](./notebooks/parameter_tuning_grid_search.ipynb)
-- [Automated hyperparameters tuning in scikit-learn with `RandomizedSearchCV`](./notebooks/parameter_tuning_randomized_search.ipynb)
+- [Hyperparameters tuning by grid-search](./notebooks/parameter_tuning_grid_search.ipynb)
+- [Hyperparameters tuning by randomized-search](./notebooks/parameter_tuning_randomized_search.ipynb)
 - [Exercise 02](./notebooks/parameter_tuning_ex_03.ipynb)

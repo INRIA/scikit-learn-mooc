@@ -29,6 +29,6 @@
 
 ## Automated tuning
 
-- [hyperparameter tuning by grid-search](./notebooks/parameter_tuning_grid_search.ipynb)
-- [hyperparameter tuning by randomized-search](./notebooks/parameter_tuning_randomized_search.ipynb)
+- [Hyperparameter tuning by grid-search](./notebooks/parameter_tuning_grid_search.ipynb)
+- [Hyperparameter tuning by randomized-search](./notebooks/parameter_tuning_randomized_search.ipynb)
 - [Exercise 02](./notebooks/parameter_tuning_ex_03.ipynb)

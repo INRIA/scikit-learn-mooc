@@ -20,7 +20,7 @@
 - [Using numerical and categorical variables together](./notebooks/03_categorical_pipeline_column_transformer.ipynb)
 - [Exercise 02](./notebooks/03_categorical_pipeline_ex_02.ipynb)
 
-# hyperparameter tuning
+# Hyperparameter tuning
 
 ## Manual tuning
 

@@ -213,7 +213,7 @@ print(f"Accuracy of logistic regression: {accuracy:.3f}")
 # we will go into details regarding cross-validation.
 # ```
 #
-# Now the real question is: is this statitical performance relevant of a good
+# Now the real question is: is this statistical performance relevant of a good
 # predictive model? Find out by solving the next exercise!.
 #
 # In this notebook, we learned:

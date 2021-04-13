@@ -183,7 +183,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```{note}
 # In short, these models find a set of weights to combine each column in the
 # data matrix to predict the target. For instance, the model can come up with
-# rules such as `0.1 * age + 3.3 * hours-per-week - 15.1 > 0.5` means that
+# rules such as `0.1 * age + 3.3 * hours-per-week - 15.1 > 0` means that
 # `high-income` is predicted.
 # ```
 #

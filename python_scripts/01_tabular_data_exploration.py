@@ -31,11 +31,14 @@
 # We will use data from the "Current Population adult_census" from 1994 that we
 # downloaded from [OpenML](http://openml.org/).
 #
-# We use pandas to read this dataset.
+# The dataset is available as a CSV (Comma-Separated Values) file and we will
+# use pandas to read it.
 #
 # ```{note}
 # [Pandas](https://pandas.pydata.org/) is a Python library used for
-# manipulating 1 and 2 dimensional structured data.
+# manipulating 1 and 2 dimensional structured data. If you have never used
+# pandas, we recommend you look at this
+# [tutorial](https://pandas.pydata.org/docs/user_guide/10min.html).
 # ```
 
 # %%

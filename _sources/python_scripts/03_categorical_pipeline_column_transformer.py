@@ -216,7 +216,8 @@ cv_results
 
 # %%
 scores = cv_results["test_score"]
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # The compound model has a higher predictive accuracy than the two models that

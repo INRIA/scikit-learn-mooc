@@ -1,7 +1,7 @@
 # ✅ Quiz
 
 ```{admonition} Question
-How are represented categorical variables?
+How are categorical variables represented?
 
 - a) categorical feature is only represented by non-numerical data
 - b) categorical feature represents a finite number of values called categories
@@ -33,7 +33,7 @@ One-hot encoding will:
 
 ```{admonition} Question
 
-Assume we have a datasets where each line describes a company. Which of the
+Assume we have a dataset where each line describes a company. Which of the
 following columns should be considered as a meaningful numerical feature to
 train a machine learning model to classify companies:
 

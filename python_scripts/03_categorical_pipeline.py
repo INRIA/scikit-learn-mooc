@@ -82,7 +82,7 @@ data["education-num"].value_counts()
 # When considering categorical columns, we should include these columns.
 # However, we also saw earlier that `"education-num"` and `"education"`
 # represent the exact same information. Therefore, we can get rid of one of the
-# two. Because in this notebook we will use `"education"` because it represents
+# two. In this notebook we will use `"education"` because it represents
 # the original data.
 #
 # ## Select features based on their data type
@@ -167,7 +167,7 @@ print(
 # ```
 #
 # However, be careful when applying this encoding strategy:
-# using this integer representation lead downstream predictive models
+# using this integer representation leads downstream predictive models
 # to assume that the values are ordered (0 < 1 < 2 < 3... for instance).
 #
 # By default, `OrdinalEncoder` uses a lexicographical strategy to map string
@@ -194,7 +194,7 @@ print(
 #
 # ## Encoding nominal categories (without assuming any order)
 #
-# `OneHotEncoder` is an alternative encoder that prevent the dowstream
+# `OneHotEncoder` is an alternative encoder that prevents the downstream
 # models to make a false assumption about the ordering of categories. For a
 # given feature, it will create as many new columns as there are possible
 # categories. For a given sample, the value of the column corresponding to the
@@ -244,7 +244,7 @@ data_encoded[:5]
 
 # %%
 print(
-    f"The dataset encoded contains {data_encoded.shape[1]} features")
+    f"The encoded dataset contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
 # Let's wrap this NumPy array in a dataframe with informative column names as
@@ -276,12 +276,12 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 data["native-country"].value_counts()
 
 # %% [markdown]
-# We see that the `Holand-Netherlands` category is occuring rarely. This will
+# We see that the `Holand-Netherlands` category is occurring rarely. This will
 # be a problem during cross-validation: if the sample ends up in the test set
 # during splitting then the classifier would not have seen the category during
 # training and will not be able to encode it.
 #
-# In scikit-learn, there is two solutions to bypass this issue:
+# In scikit-learn, there are two solutions to bypass this issue:
 #
 # * list all the possible categories and provide it to the encoder via the
 #   keyword argument `categories`;
@@ -309,11 +309,11 @@ model = make_pipeline(
 
 # %% [markdown]
 # ```{note}
-# Here, we need to increase the number of maximum iteration to obtain a fully
+# Here, we need to increase the maximum number of iterations to obtain a fully
 # converged `LogisticRegression` and silence a `ConvergenceWarning`. Contrary
-# to the numerical features, the one-hot encoded categorical feature are all on
-# the same scale (values are 0 or 1), so they would not benefit from scaling.
-# In this case, increasing `max_iter` is the right thing to do.
+# to the numerical features, the one-hot encoded categorical features are all
+# on the same scale (values are 0 or 1), so they would not benefit from
+# scaling. In this case, increasing `max_iter` is the right thing to do.
 # ```
 
 # %% [markdown]

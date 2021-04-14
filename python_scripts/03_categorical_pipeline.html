@@ -1514,7 +1514,7 @@ Name: education-num, dtype: int64
 <p>When considering categorical columns, we should include these columns.
 However, we also saw earlier that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>
 represent the exact same information. Therefore, we can get rid of one of the
-two. Because in this notebook we will use <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> because it represents
+two. In this notebook we will use <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> because it represents
 the original data.</p>
 </div>
 <div class="section" id="select-features-based-on-their-data-type">
@@ -1790,7 +1790,7 @@ encoding is the same.</p>
 feature, which gave the feature <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>.</p>
 </div>
 <p>However, be careful when applying this encoding strategy:
-using this integer representation lead downstream predictive models
+using this integer representation leads downstream predictive models
 to assume that the values are ordered (0 &lt; 1 &lt; 2 &lt; 3… for instance).</p>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> uses a lexicographical strategy to map string
 category labels to integers. This strategy is arbitrary and often
@@ -1814,7 +1814,7 @@ impacted by misordered categories while decision trees model will not be.</p>
 </div>
 <div class="section" id="encoding-nominal-categories-without-assuming-any-order">
 <h2>Encoding nominal categories (without assuming any order)<a class="headerlink" href="#encoding-nominal-categories-without-assuming-any-order" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is an alternative encoder that prevent the dowstream
+<p><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is an alternative encoder that prevents the downstream
 models to make a false assumption about the ordering of categories. For a
 given feature, it will create as many new columns as there are possible
 categories. For a given sample, the value of the column corresponding to the
@@ -2266,12 +2266,12 @@ returned, for each sample, a 1 to specify which category it belongs to.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The dataset encoded contains </span><span class="si">{</span><span class="n">data_encoded</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+    <span class="sa">f</span><span class="s2">&quot;The encoded dataset contains </span><span class="si">{</span><span class="n">data_encoded</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dataset encoded contains 102 features
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The encoded dataset contains 102 features
 </pre></div>
 </div>
 </div>
@@ -2505,12 +2505,12 @@ Let’s recall some statistics regarding this column.</p>
  Ecuador                          45
  France                           38
  Ireland                          37
- Hong                             30
  Thailand                         30
+ Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
- Yugoslavia                       23
  Outlying-US(Guam-USVI-etc)       23
+ Yugoslavia                       23
  Laos                             23
  Scotland                         21
  Honduras                         20
@@ -2521,11 +2521,11 @@ Name: native-country, dtype: int64
 </div>
 </div>
 </div>
-<p>We see that the <code class="docutils literal notranslate"><span class="pre">Holand-Netherlands</span></code> category is occuring rarely. This will
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">Holand-Netherlands</span></code> category is occurring rarely. This will
 be a problem during cross-validation: if the sample ends up in the test set
 during splitting then the classifier would not have seen the category during
 training and will not be able to encode it.</p>
-<p>In scikit-learn, there is two solutions to bypass this issue:</p>
+<p>In scikit-learn, there are two solutions to bypass this issue:</p>
 <ul class="simple">
 <li><p>list all the possible categories and provide it to the encoder via the
 keyword argument <code class="docutils literal notranslate"><span class="pre">categories</span></code>;</p></li>
@@ -2553,11 +2553,11 @@ keyword argument <code class="docutils literal notranslate"><span class="pre">ca
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Here, we need to increase the number of maximum iteration to obtain a fully
+<p>Here, we need to increase the maximum number of iterations to obtain a fully
 converged <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> and silence a <code class="docutils literal notranslate"><span class="pre">ConvergenceWarning</span></code>. Contrary
-to the numerical features, the one-hot encoded categorical feature are all on
-the same scale (values are 0 or 1), so they would not benefit from scaling.
-In this case, increasing <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> is the right thing to do.</p>
+to the numerical features, the one-hot encoded categorical features are all
+on the same scale (values are 0 or 1), so they would not benefit from
+scaling. In this case, increasing <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> is the right thing to do.</p>
 </div>
 <p>Finally, we can check the model’s statistical performance only using the
 categorical columns.</p>
@@ -2570,8 +2570,8 @@ categorical columns.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.99143314, 0.99967837, 0.89983392, 0.97257161, 0.94426537]),
- &#39;score_time&#39;: array([0.03260255, 0.02884746, 0.03055215, 0.03125882, 0.03046703]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.00118184, 0.98228741, 0.91081524, 0.98563385, 0.95638704]),
+ &#39;score_time&#39;: array([0.03795528, 0.03780222, 0.03770256, 0.03945041, 0.03767824]),
  &#39;test_score&#39;: array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])}
 </pre></div>
 </div>

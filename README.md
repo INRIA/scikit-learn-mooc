@@ -1,6 +1,10 @@
 # scikit-learn course
 
-Browse the course online: https://inria.github.io/scikit-learn-mooc
+**NOTE**: this repo is still a work in progress. The official MOOC will soon be hosted on the
+https://fun-mooc.fr/ platform which is free and does not use the student data for any other
+purpose than improving the educational material.
+
+The static version of the course can be browsed online: https://inria.github.io/scikit-learn-mooc
 
 ## Course description
 

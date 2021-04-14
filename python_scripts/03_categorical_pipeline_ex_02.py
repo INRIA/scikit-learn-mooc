@@ -96,7 +96,7 @@ print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
 #
 # Hint: `HistGradientBoostingClassifier` does not yet support sparse input
 # data. You might want to use
-# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use a
+# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use of a
 # dense representation as a workaround.
 
 # %%

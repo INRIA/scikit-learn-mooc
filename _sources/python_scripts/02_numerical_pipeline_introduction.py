@@ -121,7 +121,7 @@ model.fit(data, target)
 #
 # * predictor: it corresponds to a classifier or a regressor
 # * predictive model or model: it corresponds to a succession of steps made of
-#   some preprocessing steps followed ended by a predictor. Sometimes, no
+#   some preprocessing steps followed by a predictor. Sometimes, no
 #   preprocessing is required.
 # * estimator: it corresponds to any scikit-learn object, transformer,
 #   classifier, or regressor.

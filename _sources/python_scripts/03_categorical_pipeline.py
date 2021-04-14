@@ -310,10 +310,10 @@ model = make_pipeline(
 # %% [markdown]
 # ```{note}
 # Here, we need to increase the number of maximum iteration to obtain a fully
-# converged `LogisticRegression` and silence a `ConvergenceWarning`. In the
-# contrary to numerical features, the one-hot encoded categorical feature do
-# not suffer from large variations and therefore increasing `max_iter` is the
-# right thing to do.
+# converged `LogisticRegression` and silence a `ConvergenceWarning`. Contrary
+# to the numerical features, the one-hot encoded categorical feature are all on
+# the same scale (values are 0 or 1), so they would not benefit from scaling.
+# In this case, increasing `max_iter` is the right thing to do.
 # ```
 
 # %% [markdown]

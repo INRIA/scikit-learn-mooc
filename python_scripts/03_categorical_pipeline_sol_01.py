@@ -63,11 +63,10 @@ model = make_pipeline(
     OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
     LogisticRegression(max_iter=500))
 cv_results = cross_validate(model, data_categorical, target)
-scores = cv_results["test_score"]
-print(f"The different scores obtained are: \n{scores}")
 
-# %%
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+scores = cv_results["test_score"]
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # Using an arbitrary mapping from string labels to integers as done here causes
@@ -84,8 +83,8 @@ from sklearn.dummy import DummyClassifier
 cv_results = cross_validate(DummyClassifier(strategy="most_frequent"),
                             data_categorical, target)
 scores = cv_results["test_score"]
-print(f"The different scores obtained are: \n{scores}")
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # By comparison, a categorical encoding that does not assume any ordering in
@@ -99,5 +98,5 @@ model = make_pipeline(
     LogisticRegression(max_iter=500))
 cv_results = cross_validate(model, data_categorical, target)
 scores = cv_results["test_score"]
-print(f"The different scores obtained are: \n{scores}")
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")

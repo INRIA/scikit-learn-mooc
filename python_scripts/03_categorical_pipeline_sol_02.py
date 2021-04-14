@@ -72,8 +72,8 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 cv_results = cross_validate(model, data, target)
 scores = cv_results["test_score"]
-print(f"The different scores obtained are: \n{scores}")
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # ## Scaling numerical features
@@ -91,8 +91,8 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 cv_results = cross_validate(model, data, target)
 scores = cv_results["test_score"]
-print(f"The different scores obtained are: \n{scores}")
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # ### Analysis
@@ -131,8 +131,8 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 cv_results = cross_validate(model, data, target)
 scores = cv_results["test_score"]
-print(f"The different scores obtained are: \n{scores}")
-print(f"The accuracy is: {scores.mean():.3f} +- {scores.std():.3f}")
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
 # ### Analysis

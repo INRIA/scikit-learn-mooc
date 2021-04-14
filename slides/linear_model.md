@@ -155,8 +155,6 @@ log_reg = LogisticRegression()
  ```
 
 ???
-FIXME title might appear in two lines on some browser.
-
 In our `adult_census` dataset, we do not have continuous values for salary but
 only whether the salary is higher than $50K. This problem is, therefore,
 a classification problem.

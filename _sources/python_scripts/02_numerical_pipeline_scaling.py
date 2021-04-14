@@ -97,7 +97,7 @@ data_train.describe()
 
 # %% [markdown]
 # We see that the dataset's features span across different ranges. Some
-# algorithms have some assumptions regarding the feature distrbutions and
+# algorithms have some assumptions regarding the feature distributions and
 # usually normalizing features will be helpful to address this assumptions.
 #
 # ```{tip}

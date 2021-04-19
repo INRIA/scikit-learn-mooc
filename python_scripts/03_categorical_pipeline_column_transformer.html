@@ -1454,27 +1454,19 @@ with their respective columns.</p>
 <p>We can take a minute to represent graphically the structure of a
 <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>:</p>
 <p><img alt="columntransformer diagram" src="../_images/api_diagram-columntransformer.svg" /></p>
-<p>The <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> will be a transformer that should do the following
-steps:</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> does the following:</p>
 <ul class="simple">
-<li><p><strong>split the columns</strong> of the original dataset based on the column names
-or indices provided. Thus, we will obtain as many subsets as the number of
-transformers in the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>;</p></li>
-<li><p><strong>transform each subset of data</strong>. Indeed, each subset that has been
-created will is affected a specific transformer. Each transformer will
-internally call <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> or <code class="docutils literal notranslate"><span class="pre">transform</span></code>. Thus, the output of this
-transformation will be a set of transformed dataset.</p></li>
-<li><p><strong>concatenate all transformed dataset</strong>. Once all input data transformed by
-their respective transformers, all datasets are concatenated and provided
-as an output.</p></li>
+<li><p>It <strong>splits the columns</strong> of the original dataset based on the column names
+or indices provided. We will obtain as many subsets as the number of
+transformers passed into the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>.</p></li>
+<li><p>It <strong>transforms each subsets</strong>. A specific transformer is applied to
+each subset: it will internally call <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> or <code class="docutils literal notranslate"><span class="pre">transform</span></code>. The
+output of this step is a set of transformed datasets.</p></li>
+<li><p>It then <strong>concatenate the transformed datasets</strong> into a single dataset.</p></li>
 </ul>
-<p>Thus, a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> is just another transformer: it get some input
-data and will output some transformed data. However, columns will be
-transformed differently depending on how a user defines the relationship
-between columns and transformers.</p>
-<p>Now, that we know that our <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> can be seen as any scikit-learn
-transformer, we define a pipeline to stack our <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> with our
-classifier (logistic regression).</p>
+<p>The important thing is that <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> is like any other
+scikit-learn transformer. In particular it can be combined with a classifier
+in a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -1521,9 +1513,9 @@ view of the pipelines.</p>
 <p>The final model is more complex than the previous models but still follows
 the same API (the same set of methods that can be called by the user):</p>
 <ul class="simple">
-<li><p>the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to preprocess the data then train the
-classifier;</p></li>
-<li><p>the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method make predictions on new data;</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to preprocess the data and then train the
+classifier of the preprocessed data;</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method makes predictions on new data;</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">score</span></code> method is used to predict on the test data and compare the
 predictions to the expected test labels to compute the accuracy.</p></li>
 </ul>
@@ -1828,8 +1820,8 @@ datascience practitioners who work with tabular data.</p>
 categorical and numerical variables;</p></li>
 <li><p>used a pipeline to chain the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> preprocessing and
 logistic regresssion fitting;</p></li>
-<li><p>seen that <strong>gradient boosting methods</strong> can outperforms the basic linear
-approach.</p></li>
+<li><p>seen that <strong>gradient boosting methods</strong> can outperform <strong>linear
+models</strong>.</p></li>
 </ul>
 </div>
 </div>

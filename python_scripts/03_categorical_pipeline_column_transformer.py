@@ -110,28 +110,19 @@ preprocessor = ColumnTransformer([
 #
 # ![columntransformer diagram](../figures/api_diagram-columntransformer.svg)
 #
-# The `ColumnTransformer` will be a transformer that should do the following
-# steps:
+# A `ColumnTransformer` does the following:
 #
-# * **split the columns** of the original dataset based on the column names
-#   or indices provided. Thus, we will obtain as many subsets as the number of
-#   transformers in the `ColumnTransformer`;
-# * **transform each subset of data**. Indeed, each subset that has been
-#   created will is affected a specific transformer. Each transformer will
-#   internally call `fit_transform` or `transform`. Thus, the output of this
-#   transformation will be a set of transformed dataset.
-# * **concatenate all transformed dataset**. Once all input data transformed by
-#   their respective transformers, all datasets are concatenated and provided
-#   as an output.
-#
-# Thus, a `ColumnTransformer` is just another transformer: it get some input
-# data and will output some transformed data. However, columns will be
-# transformed differently depending on how a user defines the relationship
-# between columns and transformers.
-#
-# Now, that we know that our `preprocessor` can be seen as any scikit-learn
-# transformer, we define a pipeline to stack our `preprocessor` with our
-# classifier (logistic regression).
+# * It **splits the columns** of the original dataset based on the column names
+#   or indices provided. We will obtain as many subsets as the number of
+#   transformers passed into the `ColumnTransformer`.
+# * It **transforms each subsets**. A specific transformer is applied to
+#   each subset: it will internally call `fit_transform` or `transform`. The
+#   output of this step is a set of transformed datasets.
+# * It then **concatenate the transformed datasets** into a single dataset.
+
+# The important thing is that `ColumnTransformer` is like any other
+# scikit-learn transformer. In particular it can be combined with a classifier
+# in a `Pipeline`:
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -152,9 +143,9 @@ model
 # The final model is more complex than the previous models but still follows
 # the same API (the same set of methods that can be called by the user):
 #
-# - the `fit` method is called to preprocess the data then train the
-#   classifier;
-# - the `predict` method make predictions on new data;
+# - the `fit` method is called to preprocess the data and then train the
+#   classifier of the preprocessed data;
+# - the `predict` method makes predictions on new data;
 # - the `score` method is used to predict on the test data and compare the
 #   predictions to the expected test labels to compute the accuracy.
 #
@@ -280,5 +271,5 @@ model.score(data_test, target_test)
 #   categorical and numerical variables;
 # * used a pipeline to chain the `ColumnTransformer` preprocessing and
 #   logistic regresssion fitting;
-# * seen that **gradient boosting methods** can outperforms the basic linear
-#   approach.
+# * seen that **gradient boosting methods** can outperform **linear
+#   models**.

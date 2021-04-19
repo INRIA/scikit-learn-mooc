@@ -134,14 +134,14 @@ data["education-num"].value_counts().sort_index()
 # %% [markdown]
 # This feature is indeed a nominal categorical feature. We exclude it from
 # our analysis since particular attention is required when dealing with
-# categorical features. This topic will be discussed in depth in the subsequent
+# categorical features. This topic will be discussed in depth in a subsequent
 # notebook.
 #
 # In addition, we decide to ignore the column `"fnlwgt"`. This decision is not
 # linked with the feature being numerical or categorical. Indeed, this feature
-# is derived from a combination other features, as mentioned in the description
-# of the dataset. Thus, we will only focus on the original data collected
-# during the survey.
+# is derived from a combination of other features, as mentioned in the
+# description of the dataset. Thus, we will only focus on the original data
+# collected during the survey.
 #
 # Now, we can select the subset of numerical columns and store them inside a
 # new dataframe.
@@ -172,8 +172,10 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # ```{tip}
-# `random_state` parameter allows to get a deterministic results even if we
-# use some random process (i.e. data shuffling).
+# In scikit-learn setting the `random_state` parameter allows to get
+# deterministic results when we use a random number generator. In the
+# `train_test_split` case the randomness comes from shuffling the data, which
+# decides how the dataset is split into a train and a test set).
 # ```
 #
 # In the previous notebook, we used a k-nearest neighbors predictor. While this
@@ -216,9 +218,10 @@ print(f"Accuracy of logistic regression: {accuracy:.3f}")
 # Now the real question is: is this statistical performance relevant of a good
 # predictive model? Find out by solving the next exercise!.
 #
-# In this notebook, we learned:
+# In this notebook, we learned to:
 #
 # * identify numerical data in a heterogeneous dataset;
 # * select the subset of columns corresponding to numerical data;
-# * use scikit-learn helper to separate data into train-test sets;
-# * train and evaluate a more complex scikit-learn model.
+# * use the scikit-learn `train_test_split` function to separate data into
+#   a train and a test set;
+# * train and evaluate a logistic regression model.

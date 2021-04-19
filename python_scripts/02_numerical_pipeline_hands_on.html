@@ -2053,24 +2053,41 @@ deterministic results when we use a random number generator. In the
 <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> case the randomness comes from shuffling the data, which
 decides how the dataset is split into a train and a test set).</p>
 </div>
-<p>In the previous notebook, we used a k-nearest neighbors predictor. While this
-model is really intuitive to understand, it is not widely used.
-Here, we will make a predictive model belonging to the linear models family.</p>
+<p>In the previous notebook, we used a k-nearest neighbors model. While this
+model is intuitive to understand, it is not widely used in practice. Now, we
+will use a more useful model, called a logistic regression, which belongs to
+the linear models family.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In short, these models find a set of weights to combine each column in the
-data matrix to predict the target. For instance, the model can come up with
-rules such as <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">*</span> <span class="pre">age</span> <span class="pre">+</span> <span class="pre">3.3</span> <span class="pre">*</span> <span class="pre">hours-per-week</span> <span class="pre">-</span> <span class="pre">15.1</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> means that
-<code class="docutils literal notranslate"><span class="pre">high-income</span></code> is predicted.</p>
+<p>In short, linear models find a set of weights to combine features linearly
+and predict the target. For instance, the model can come up with a rule such
+as:</p>
+<ul class="simple">
+<li><p>if <code class="docutils literal notranslate"><span class="pre">0.1</span> <span class="pre">*</span> <span class="pre">age</span> <span class="pre">+</span> <span class="pre">3.3</span> <span class="pre">*</span> <span class="pre">hours-per-week</span> <span class="pre">-</span> <span class="pre">15.1</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>, predict <code class="docutils literal notranslate"><span class="pre">high-income</span></code></p></li>
+<li><p>otherwise predict <code class="docutils literal notranslate"><span class="pre">low-income</span></code></p></li>
+</ul>
+<p>Linear models, and in particular the logistic regression, will be covered in
+more details in the “Linear models” module later in this course. For now the
+focus is to use this logistic regression model in scikit-learn rather than
+understand how it works in details.</p>
 </div>
-<p>Thus, as we are trying to predict a qualitative property,
-we will use a logistic regression classifier.</p>
+<p>To create a logistic regression model in scikit-learn you can do:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that the model has been created, you can use it exactly the same way as
+we used the k-nearest neighbors model in the previous notebook. In
+particular, we can use the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method to train the model using the training
+data and labels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2080,8 +2097,8 @@ we will use a logistic regression classifier.</p>
 </div>
 </div>
 </div>
-<p>We can now check the statistical performance of the model using the test set
-which we left out until now.</p>
+<p>We can also use the <code class="docutils literal notranslate"><span class="pre">score</span></code> method to check the model statistical performance
+on the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
@@ -2103,7 +2120,7 @@ methods <code class="docutils literal notranslate"><span class="pre">fit</span><
 we will go into details regarding cross-validation.</p>
 </div>
 <p>Now the real question is: is this statistical performance relevant of a good
-predictive model? Find out by solving the next exercise!.</p>
+predictive model? Find out by solving the next exercise!</p>
 <p>In this notebook, we learned to:</p>
 <ul class="simple">
 <li><p>identify numerical data in a heterogeneous dataset;</p></li>

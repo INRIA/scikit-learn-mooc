@@ -43,11 +43,11 @@ When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
 ```{admonition} Question
 The `StandardScaler` transformer:
 
-- a) transform the features so that they have similar ranges
-- b) transform the features to lie in the [0.0, 1.0] range
-- c) transform positive-only features into negative or positive values
+- a) transforms the features so that they have similar ranges
+- b) transforms the features to lie in the [0.0, 1.0] range
+- c) transforms positive-only features into negative or positive values
 - d) can help logistic regression converge faster (fewer iterations)
-- e) deal with the problem of missing values
+- e) deals with the problem of missing values
 ```
 
 +++

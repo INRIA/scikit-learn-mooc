@@ -178,29 +178,43 @@ data_train, data_test, target_train, target_test = train_test_split(
 # decides how the dataset is split into a train and a test set).
 # ```
 #
-# In the previous notebook, we used a k-nearest neighbors predictor. While this
-# model is really intuitive to understand, it is not widely used.
-# Here, we will make a predictive model belonging to the linear models family.
+# In the previous notebook, we used a k-nearest neighbors model. While this
+# model is intuitive to understand, it is not widely used in practice. Now, we
+# will use a more useful model, called a logistic regression, which belongs to
+# the linear models family.
 #
 # ```{note}
-# In short, these models find a set of weights to combine each column in the
-# data matrix to predict the target. For instance, the model can come up with
-# rules such as `0.1 * age + 3.3 * hours-per-week - 15.1 > 0` means that
-# `high-income` is predicted.
+# In short, linear models find a set of weights to combine features linearly
+# and predict the target. For instance, the model can come up with a rule such
+# as:
+# * if `0.1 * age + 3.3 * hours-per-week - 15.1 > 0`, predict `high-income`
+# * otherwise predict `low-income`
+#
+# Linear models, and in particular the logistic regression, will be covered in
+# more details in the "Linear models" module later in this course. For now the
+# focus is to use this logistic regression model in scikit-learn rather than
+# understand how it works in details.
 # ```
 #
-# Thus, as we are trying to predict a qualitative property,
-# we will use a logistic regression classifier.
+# To create a logistic regression model in scikit-learn you can do:
 
 # %%
 from sklearn.linear_model import LogisticRegression
 
 model = LogisticRegression()
+
+# %% [markdown]
+# Now that the model has been created, you can use it exactly the same way as
+# we used the k-nearest neighbors model in the previous notebook. In
+# particular, we can use the `fit` method to train the model using the training
+# data and labels:
+
+# %%
 model.fit(data_train, target_train)
 
 # %% [markdown]
-# We can now check the statistical performance of the model using the test set
-# which we left out until now.
+# We can also use the `score` method to check the model statistical performance
+# on the test set.
 
 # %%
 accuracy = model.score(data_test, target_test)
@@ -216,7 +230,7 @@ print(f"Accuracy of logistic regression: {accuracy:.3f}")
 # ```
 #
 # Now the real question is: is this statistical performance relevant of a good
-# predictive model? Find out by solving the next exercise!.
+# predictive model? Find out by solving the next exercise!
 #
 # In this notebook, we learned to:
 #

@@ -58,19 +58,24 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # ## The variables (columns) in the dataset
 #
 # The data are stored in a pandas dataframe. A dataframe is a type of
-# structured data composed of 2 dimensions. This type of data are also referred
+# structured data composed of 2 dimensions. This type of data is also referred
 # as tabular data.
 #
-# Each row represents a record. In the field of machine learning or descriptive
-# statistics, the terms commonly used to refer to rows are "sample",
-# "instance", or "observation".
+# Each row represents a sample. In the field of machine learning or descriptive
+# statistics, commonly used equivalent terms are "record", "instance", or
+# "observation".
 #
-# Each column represent a type of information collected. In the field of
-# machine learning and descriptive statistics, the terms commonly used to
-# refer to columns are "feature", "variable", "attribute", or "covariate".
+# Each column represents a type of information that has been collected and is
+# called a feature. In the field of machine learning and descriptive
+# statistics, commonly used equivalent terms are "variable", "attribute", or
+# "covariate".
+
+# %% [markdown]
+# A quick way to inspect the dataframe is to show the first few lines with the
+# `head` method:
 
 # %%
-adult_census.head()  # Print the first few lines of our dataframe
+adult_census.head()
 
 # %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which
@@ -126,7 +131,7 @@ print(f"The dataset contains {adult_census.shape[0]} samples and "
 
 # %% [markdown]
 # We can compute the number of features by counting the number of columns and
-# subtract 1, since of the column is the target.
+# subtract 1, since one of the columns is the target.
 
 # %%
 print(f"The dataset contains {adult_census.shape[1] - 1} features.")
@@ -206,9 +211,10 @@ pd.crosstab(index=adult_census['education'],
 
 # %% [markdown]
 # Another way to inspect the data is to do a `pairplot` and show how each
-# variable differs according to our target, `class`. Plots along the diagonal
-# show the distribution of individual variables for each `class`. The plots on
-# the off-diagonal can reveal interesting interactions between variables.
+# variable differs according to our target, i.e. `class`. Plots along the
+# diagonal show the distribution of individual variables for each `class`. The
+# plots on the off-diagonal can reveal interesting interactions between
+# variables.
 
 # %%
 import seaborn as sns
@@ -239,30 +245,43 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # dimensions), whereas machine learning models can build models in
 # high-dimensional spaces.
 #
+# ```{note}
+# In a machine-learning setting, a model automatically creates the "rules" from
+# the data in order to make predictions on new unseen data.
+# ```
+#
 # Another thing worth mentioning in this plot: if you are young (less than 25
 # year-old roughly) or old (more than 70 year-old roughly) you tend to work
 # less. This is a non-linear relationship between age and hours per week.
 # Linear machine learning models can only capture linear interactions, so this
 # may be a factor when deciding which model to chose.
-#
-# In a machine-learning setting, an algorithm automatically create the "rules"
-# in order to make predictions on new data.
 
 # %% [markdown]
-# The plot below shows the rules of a simple model, called decision tree.
-# We will explain how this model works in a later notebook, for now let us
-# just consider the model predictions when trained on this dataset:
+#
+# ## An example of machine learning model decision rules
+#
+# The plot below shows the rules of a simple model, called decision tree. This
+# model has been trained using the `age` and `hours-per-week` features, so that
+# we can have a nice graphical representation of its decision rules in two
+# dimensions. We will explain how this model works in a later notebook, for now
+# let us just consider the model predictions when trained on this dataset:
 #
 # ![](../figures/simple_decision_tree_adult_census.png)
 #
-# The background color in each area represents the probability of the class
-# `high-income` as estimated by the model. Values towards 0 (dark blue)
-# indicates that the model predicts `low-income` with a high probability.
-# Values towards 1 (dark orange) indicates that the model predicts
-# `high-income` with a high probability. Values towards 0.5 (white) indicates
-# that the model is not very sure about its prediction.
+# The data points (circles) show the distribution of `hours-per-week` and `age`
+# in the dataset. Blue points mean `low-income` and orange points mean
+# `high-income`. This part of the plot is the same as the bottom-left plot in
+# the pairplot above.
 #
-# Looking at the plot here is what we can gather:
+# What is new in this plot is that we have added the model decision rules as
+# background colors. The background color in each area represents the
+# probability of the class `high-income` as estimated by the model. Values
+# towards 0 (dark blue) indicates that the model predicts `low-income` with a
+# high probability. Values towards 1 (dark orange) indicates that the model
+# predicts `high-income` with a high probability. Values towards 0.5 (white)
+# indicates that the model is not very sure about its prediction.
+#
+# Looking at the plot, here is what we can gather:
 #
 # * In the region `age < 28.5` (left region) the prediction is `low-income`.
 #   The dark blue color indicates that the model is quite sure about its

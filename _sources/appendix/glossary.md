@@ -245,9 +245,9 @@ The dataset used to train the model.
 
 <https://scikit-learn.org/stable/glossary.html#term-transformer>
 
-An estimator (i.e. an object that has a `fit` method) supporting `transform`
-and/or `fit_transform`. Examples for transformers are `StandardScaler` or
-`ColumnTransformer**
+An [estimator](#estimator) (i.e. an object that has a `fit` method) supporting
+`transform` and/or `fit_transform`. Examples for transformers are
+`StandardScaler` or `ColumnTransformer**
 
 ### underfitting
 

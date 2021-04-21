@@ -1,0 +1,76 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
+    record_timing=False,
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/nbclient/client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/asyncio/base_events.py", line 587, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/nbclient/client.py", line 554, in async_execute
+    cell, index, execution_count=self.code_cells_executed + 1
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/nbclient/client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax.plot(data, target_predicted, color="tab:orange")
+_ = ax.set_title(f"Mean squared error = {mse:.2f}")
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m<ipython-input-14-be3295bc21d8>[0m in [0;36m<module>[0;34m[0m
+[0;32m----> 1[0;31m [0max[0m [0;34m=[0m [0msns[0m[0;34m.[0m[0mscatterplot[0m[0;34m([0m[0mdata[0m[0;34m=[0m[0mfull_data[0m[0;34m,[0m [0mx[0m[0;34m=[0m[0;34m"data"[0m[0;34m,[0m [0my[0m[0;34m=[0m[0;34m"target"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      2[0m [0max[0m[0;34m.[0m[0mplot[0m[0;34m([0m[0mdata[0m[0;34m,[0m [0mtarget_predicted[0m[0;34m,[0m [0mcolor[0m[0;34m=[0m[0;34m"tab:orange"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0m_[0m [0;34m=[0m [0max[0m[0;34m.[0m[0mset_title[0m[0;34m([0m[0;34mf"Mean squared error = {mse:.2f}"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/_decorators.py[0m in [0;36minner_f[0;34m(*args, **kwargs)[0m
+[1;32m     44[0m             )
+[1;32m     45[0m         [0mkwargs[0m[0;34m.[0m[0mupdate[0m[0;34m([0m[0;34m{[0m[0mk[0m[0;34m:[0m [0marg[0m [0;32mfor[0m [0mk[0m[0;34m,[0m [0marg[0m [0;32min[0m [0mzip[0m[0;34m([0m[0msig[0m[0;34m.[0m[0mparameters[0m[0;34m,[0m [0margs[0m[0;34m)[0m[0;34m}[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 46[0;31m         [0;32mreturn[0m [0mf[0m[0;34m([0m[0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     47[0m     [0;32mreturn[0m [0minner_f[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     48[0m [0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/relational.py[0m in [0;36mscatterplot[0;34m(x, y, hue, style, size, data, palette, hue_order, hue_norm, sizes, size_order, size_norm, markers, style_order, x_bins, y_bins, units, estimator, ci, n_boot, alpha, x_jitter, y_jitter, legend, ax, **kwargs)[0m
+[1;32m    803[0m         [0mx_bins[0m[0;34m=[0m[0mx_bins[0m[0;34m,[0m [0my_bins[0m[0;34m=[0m[0my_bins[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    804[0m         [0mestimator[0m[0;34m=[0m[0mestimator[0m[0;34m,[0m [0mci[0m[0;34m=[0m[0mci[0m[0;34m,[0m [0mn_boot[0m[0;34m=[0m[0mn_boot[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 805[0;31m         [0malpha[0m[0;34m=[0m[0malpha[0m[0;34m,[0m [0mx_jitter[0m[0;34m=[0m[0mx_jitter[0m[0;34m,[0m [0my_jitter[0m[0;34m=[0m[0my_jitter[0m[0;34m,[0m [0mlegend[0m[0;34m=[0m[0mlegend[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    806[0m     )
+[1;32m    807[0m [0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/relational.py[0m in [0;36m__init__[0;34m(self, data, variables, x_bins, y_bins, estimator, ci, n_boot, alpha, x_jitter, y_jitter, legend)[0m
+[1;32m    585[0m         )
+[1;32m    586[0m [0;34m[0m[0m
+[0;32m--> 587[0;31m         [0msuper[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0m__init__[0m[0;34m([0m[0mdata[0m[0;34m=[0m[0mdata[0m[0;34m,[0m [0mvariables[0m[0;34m=[0m[0mvariables[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    588[0m [0;34m[0m[0m
+[1;32m    589[0m         [0mself[0m[0;34m.[0m[0malpha[0m [0;34m=[0m [0malpha[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/_core.py[0m in [0;36m__init__[0;34m(self, data, variables)[0m
+[1;32m    602[0m     [0;32mdef[0m [0m__init__[0m[0;34m([0m[0mself[0m[0;34m,[0m [0mdata[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m [0mvariables[0m[0;34m=[0m[0;34m{[0m[0;34m}[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    603[0m [0;34m[0m[0m
+[0;32m--> 604[0;31m         [0mself[0m[0;34m.[0m[0massign_variables[0m[0;34m([0m[0mdata[0m[0;34m,[0m [0mvariables[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    605[0m [0;34m[0m[0m
+[1;32m    606[0m         [0;32mfor[0m [0mvar[0m[0;34m,[0m [0mcls[0m [0;32min[0m [0mself[0m[0;34m.[0m[0m_semantic_mappings[0m[0;34m.[0m[0mitems[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/_core.py[0m in [0;36massign_variables[0;34m(self, data, variables)[0m
+[1;32m    666[0m             [0mself[0m[0;34m.[0m[0minput_format[0m [0;34m=[0m [0;34m"long"[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    667[0m             plot_data, variables = self._assign_variables_longform(
+[0;32m--> 668[0;31m                 [0mdata[0m[0;34m,[0m [0;34m**[0m[0mvariables[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    669[0m             )
+[1;32m    670[0m [0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/seaborn/_core.py[0m in [0;36m_assign_variables_longform[0;34m(self, data, **kwargs)[0m
+[1;32m    900[0m [0;34m[0m[0m
+[1;32m    901[0m                 [0merr[0m [0;34m=[0m [0;34mf"Could not interpret value `{val}` for parameter `{key}`"[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 902[0;31m                 [0;32mraise[0m [0mValueError[0m[0;34m([0m[0merr[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    903[0m [0;34m[0m[0m
+[1;32m    904[0m             [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: Could not interpret value `data` for parameter `x`
+ValueError: Could not interpret value `data` for parameter `x`
+

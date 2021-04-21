@@ -351,19 +351,20 @@ plt.savefig("logistic_2D.svg", facecolor="none", edgecolor="none")
 
 # %%
 # 3D logistic
-
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+import style_figs
 from sklearn.datasets import make_blobs
 
 # make 3-class dataset for classification
 centers = [[-5, 0], [3, 1]]  # , [5, -1]]
-X, y = make_blobs(n_samples=1000, centers=centers, random_state=40)
+X, y = make_blobs(n_samples=1000, centers=centers, cluster_std=1.5,
+                  random_state=40)
 transformation = [[0.4, 0.2], [-0.4, 1.2]]
 X = np.dot(X, transformation)
 
-multi_class = "multinomial"
-clf = linear_model.LogisticRegression(
-    solver="sag", max_iter=100, random_state=42, multi_class=multi_class
-).fit(X, y)
+clf = linear_model.LogisticRegression(C=1e-2).fit(X, y)
 
 # create a mesh to plot in
 h = 0.02  # step size in the mesh
@@ -383,14 +384,14 @@ ax = fig.gca(projection="3d", facecolor="none", zticks=[])
 
 style_figs.light_axis()
 
-ax.plot_surface(xx, yy, -Z, cmap=plt.cm.BrBG_r, linewidths=1, alpha=0.5)
+ax.plot_surface(xx, yy, 1 - Z, cmap=plt.cm.BrBG_r, linewidths=1, alpha=0.5)
 
 
 # Plot also the training points
-colors = ["C0", "C1"]
-for i, color in zip(clf.classes_, colors):
-    idx = np.where(y == i)
-    ax.scatter(X[idx, 0], X[idx, 1], y[idx], c=color, edgecolor="black", s=20)
+# colors = ["C0", "C1"]
+# for i, color in zip(clf.classes_, colors):
+#     idx = np.where(y == i)
+#     ax.scatter(X[idx, 0], X[idx, 1], 1., c=color, edgecolor="black", s=20)
 
 style_figs.light_axis()
 plt.ylabel("x2", size=16, weight=600)
@@ -489,7 +490,7 @@ plt.figure(figsize=(4, 3))
 plt.contour(xx, yy, Z, cmap=plt.cm.BrBG_r)
 # plt.title("Decision surface of LogisticRegression (%s)" % multi_class)
 plt.axis("tight")
-style_figs.light_axis()
+# style_figs.light_axis()
 
 
 # Plot also the training points

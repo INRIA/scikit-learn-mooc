@@ -253,11 +253,10 @@ class: split-50
 **X** is 2-dimensional, **y** is represented by the color
 
 .column1[
-<img src="../figures/logistic_3D.svg" />
-]
-
-.column2[
 <img src="../figures/logistic_2D.svg" />
+]
+.column2[
+<img src="../figures/logistic_3D.svg" />
 ]
 
 ???
@@ -265,21 +264,20 @@ class: split-50
 If the data has two features, it is convenient to represent it
 differently.
 
-Here, *X* has two dimension *x1* and *x2*.
+Here, `X` has two dimensions `x1` and `x2`.
 
-The figure on the left shows a representation similar to before: the
-features now appear as two dimensions, and the target to predict is in
-the third dimension. The soft step defining the prediction is now a
-surface.
+The data points are represented as dots, the input features now appear as two
+dimensions that give the location of the data point in a 2D plane.
+The target is to predict the color of the data points that represent the class
+membership.
 
-A more synthetic visualization is visible on the figure on the right: the
-two axes correspond to *x1* and *x2*. The data points are represented as dots,
-with the two different colors corresponding to two different values of
-the target label y. The model predictions appear as straight lines,
-separating the two cloud of points *y=-1* and *y=+1*, which correspond to
-the surface on the left.
+2D surface that represent the probability to belong to the red class `y = 1`
+at The decision function learned by logistic regression is represented by the
+soft any given position in the `(x1, x2)` space.
 
-This last visualization is commonly used in machine learning.
+For more common machine learning use cases, we typically have much more than
+two input features. We can try generalize this mental picture to higher
+dimensional spaces but they can no longer be represented graphically.
 
 ---
 # Model complexity
@@ -298,8 +296,6 @@ Sale_Price =      0.1 * Gr_Liv_Area
              - 2200.0
 ```
 ]
-
-.small[]
 
 **Regularization** is needed to control model complexity.
 The most common way is to push the coefficients toward

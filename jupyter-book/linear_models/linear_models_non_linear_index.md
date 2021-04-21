@@ -1,4 +1,4 @@
-# Modelling with a non-linear relationship data-target
+# Modelling non-linear features-target relationship
 
 ```{tableofcontents}
 

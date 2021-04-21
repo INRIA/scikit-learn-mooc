@@ -388,10 +388,10 @@ ax.plot_surface(xx, yy, 1 - Z, cmap=plt.cm.BrBG_r, linewidths=1, alpha=0.5)
 
 
 # Plot also the training points
-colors = ["C0", "C1"]
-for i, color in zip(clf.classes_, colors):
-    idx = np.where(y == i)
-    ax.scatter(X[idx, 0], X[idx, 1], 0.5, c=color, edgecolor="black", s=20)
+# colors = ["C0", "C1"]
+# for i, color in zip(clf.classes_, colors):
+#     idx = np.where(y == i)
+#     ax.scatter(X[idx, 0], X[idx, 1], 1., c=color, edgecolor="black", s=20)
 
 style_figs.light_axis()
 plt.ylabel("x2", size=16, weight=600)
@@ -490,7 +490,7 @@ plt.figure(figsize=(4, 3))
 plt.contour(xx, yy, Z, cmap=plt.cm.BrBG_r)
 # plt.title("Decision surface of LogisticRegression (%s)" % multi_class)
 plt.axis("tight")
-style_figs.light_axis()
+# style_figs.light_axis()
 
 
 # Plot also the training points

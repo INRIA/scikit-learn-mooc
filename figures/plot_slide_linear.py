@@ -242,19 +242,18 @@ plt.savefig(
 # Categorical
 
 
-xmin, xmax = -5, 5
 n_samples = 100
 np.random.seed(0)
 X = np.random.normal(size=n_samples)
-y = (X > 0).astype(np.float)
-X[X > 0] *= 4
+y = (X > 0).astype(np.int32)
+X[X > 0] *= 2
 X += 0.3 * np.random.normal(size=n_samples)
 
 X_train = X[:, np.newaxis]
 y_train = y
 
 # Create linear regression object
-regr = linear_model.LogisticRegression(C=1e5)
+regr = linear_model.LogisticRegression(C=1)
 
 # Train the model using the training sets
 regr.fit(X_train, y_train)
@@ -269,7 +268,7 @@ plt.ylabel("y", size=20, weight=600)
 plt.xlabel("x", size=20, weight=600)
 plt.scatter(X_train, y_train, s=70, zorder=20, c=y, edgecolor="k", cmap=plt.cm.Paired)
 
-plt.xlim(-3, 10)
+plt.xlim(-3, 5)
 plt.savefig("categorical.svg", facecolor="none", edgecolor="none")
 
 
@@ -281,17 +280,16 @@ def model(x):
 
 
 X_test = np.linspace(-4, 10, 300)
-loss = model(X_test * regr.coef_ + regr.intercept_).ravel()
+y_proba = model(X_test * regr.coef_ + regr.intercept_).ravel()
 
 plt.axes([0.1, 0.1, 0.9, 0.9])
-plt.plot(X_test, loss, color="k", linewidth=3)
+plt.plot(X_test, y_proba, color="k", linewidth=3)
 
-plt.xlim(-3, 10)
+plt.xlim(-3, 5)
+
 # pl.savefig('logistic.pdf', facecolor='k', edgecolor='k')
 
 plt.scatter(X.ravel(), y, c=y, zorder=25, s=70, edgecolor="k", cmap=plt.cm.Paired)
-
-plt.xlim(-3, 10)
 
 style_figs.light_axis()
 

@@ -241,8 +241,9 @@ log_reg.fit(X, y)
 With logistic regression, the output is modelled using a form of soft
 step function, adjusted to the data. This function is called a logistic
 function. Using a soft, graduate shift between *y = 0* and *y = 1* is
-useful to capture the grey zone, where the value of *x* does not
-completely tell us whether the target value is 0 or 1.
+useful to capture the grey zone, where the value of *x* is not enough
+to decide whether the target value is 0 (blue) or 1 (red) with high
+confidence.
 
 In scikit-learn, this is done with the `LogisticRegression` object.
 

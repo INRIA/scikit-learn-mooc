@@ -27,7 +27,7 @@ interpreting their predictions.
 <p class="title">Follow the MOOC</p>
 <div class="container">
 <div class="row">
-<div class="col-lg">
+<div class="col-xl">
 This document is a work in progress. You can
 <a
 href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">register to the "Machine learning in Python with scikit-learn MOOC"</a>, based on

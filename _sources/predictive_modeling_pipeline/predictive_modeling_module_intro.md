@@ -20,15 +20,16 @@ numerical and categorical data.
 The required technical skills to carry on this module are:
 
 - basic knowledge of Python programming
-- basic knowledge of NumPy and Pandas libraries
+- some prior experience with the NumPy, pandas and Matplotlib libraries is
+  recommended but not required
 
 <!-- Point to resources to learning these skills -->
 
-Here are a few good reference links about these requirements:
-
+For a quick introduction on these requirements, you can use the following resources:
 - [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html)
-- [Introduction to NumPy](https://scipy-lectures.org/intro/numpy/index.html)
+- [Introduction to NumPy](https://sebastianraschka.com/blog/2020/numpy-intro.html)
 - [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
+- [Introduction to Matplotlib](https://sebastianraschka.com/blog/2020/numpy-intro.html#410-matplotlib)
 
 ## Objectives and time schedule
 

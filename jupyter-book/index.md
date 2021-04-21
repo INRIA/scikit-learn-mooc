@@ -29,15 +29,15 @@ interpreting their predictions.
 <div class="row">
 <div class="col-sm">
 This document is a work in progress. You can
-[register](https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn)
-to the "Machine learning in Python with scikit-learn MOOC", based on
+<a
+href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">register to the "Machine learning in Python with scikit-learn MOOC"</a>, based on
 this document. Note: you will be able to register now but the MOOC itself will
 start on May 18 2021.
 </br>
 The MOOC is free and the platform does not use the student data for any other purpose than improving
 the educational material.
 </div>
-<div class="col-sm-3">
+<div class="col-sm-4">
 <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
 <img src="figures/mooc_computer.jpg" style="width:100%">
 </a>

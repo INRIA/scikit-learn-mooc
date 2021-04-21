@@ -12,10 +12,10 @@ These are robust models for both regression and classification.
 <img src="../figures/scikit-learn-logo.svg">
 
 ???
-Decision trees are built as a set of rules for both 
+Decision trees are built as a set of rules for both
 classification and regression problems.
 
-These are the building blocks for more elaborate model such 
+These are the building blocks for more elaborate model such
 as *random forest* and *gradient boosting trees*, as we will see.
 
 ---
@@ -27,13 +27,71 @@ as *random forest* and *gradient boosting trees*, as we will see.
 
 ---
 
-# Bagging
+# Bagging for classification
+
+.pull-left[<img src="../figures/bagging0.svg" width="100%">]
+.pull-right[<img src="../figures/bagging.svg" width="120%">]
+
+.width65.shift-up-less.centered[
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+```
+
+]
+
+???
+Here we have a classification task: separating circles from squares.
+
+---
+
+# Bagging for classification
+
+.pull-left[<img src="../figures/bagging0.svg" width="100%">]
+.pull-right[<img src="../figures/bagging_line.svg" width="120%">]
+
+.pull-right[<img src="../figures/bagging_trees.svg" width="120%">]
+
+.width65.shift-up-less.centered[
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+```
+
+]
+
+???
+
+---
+
+# Bagging for classification
+
+.pull-left[<img src="../figures/bagging0_cross.svg" width="100%">]
+.pull-right[<img src="../figures/bagging_cross.svg" width="120%">]
+
+.pull-right[<img src="../figures/bagging_trees_predict.svg" width="120%">]
+
+.pull-right[<img src="../figures/bagging_vote.svg" width="120%">]
+
+.width65.shift-up-less.centered[
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+```
+
+]
+
+???
+
+---
+
+# Bagging for regression
 
 <img src="../figures/bagging_reg_data.svg" width="50%">
 
 ---
 
-# Bagging
+# Bagging for regression
 
 .shift-up-less[
 <img src="../figures/bagging_reg_grey.svg" width="120%">
@@ -45,7 +103,7 @@ as *random forest* and *gradient boosting trees*, as we will see.
 
 ---
 
-# Bagging
+# Bagging for regression
 
 .shift-up-less[
 <img src="../figures/bagging_reg_grey_fitted.svg" width="120%">
@@ -60,7 +118,7 @@ as *random forest* and *gradient boosting trees*, as we will see.
 
 ---
 
-# Bagging
+# Bagging for regression
 
 .shift-up-less[
 <img src="../figures/bagging_reg_grey_fitted.svg" width="120%">
@@ -90,143 +148,19 @@ When we have to classify a new point, we will aggregate the prediction of every 
 
 ---
 
-# Bagging trees: random forests
-
-.pull-left[<img src="../figures/bagging0.svg" width="100%">]
-.pull-right[<img src="../figures/bagging.svg" width="120%">]
-
-.width65.shift-up-less.centered[
-
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-
-]
-
-???
-Here we have a classification task: separating circles from squares.
-
----
-
-# Bagging trees: random forests
-
-.pull-left[<img src="../figures/bagging0.svg" width="100%">]
-.pull-right[<img src="../figures/bagging_line.svg" width="120%">]
-
-.pull-right[<img src="../figures/bagging_trees.svg" width="120%">]
-
-.width65.shift-up-less.centered[
-
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-
-]
-
-???
-
----
-
-# Bagging trees: random forests
-
-.pull-left[<img src="../figures/bagging0_cross.svg" width="100%">]
-.pull-right[<img src="../figures/bagging_cross.svg" width="120%">]
-
-.pull-right[<img src="../figures/bagging_trees_predict.svg" width="120%">]
-
-.pull-right[<img src="../figures/bagging_vote.svg" width="120%">]
-
-.width65.shift-up-less.centered[
-
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-
-]
-
-???
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter1.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter_sized1.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter_orange1.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter2.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter_sized2.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter_orange2.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter3.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter_sized3.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter_orange3.svg" width="95%">
-
----
-
-# Boosting
-
-<img src="../figures/boosting/boosting_iter4.svg" width="95%">
-
----
-
-# Boosting
-
-.pull-left[<img src="../figures/boosting0.svg" width="100%">]
-
----
-
-# Boosting
+# Boosting for classification
 
 .pull-left[<img src="../figures/boosting1.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees1.svg" width="100%">]
 
 ???
-A first shallow tree starts to separate circles from squares. 
-Mistakes done by this first tree model shall be corrected 
+A first shallow tree starts to separate circles from squares.
+Mistakes done by this first tree model shall be corrected
 by a second tree model.
 
 ---
 
-# Boosting
+# Boosting for classification
 
 .pull-left[<img src="../figures/boosting2.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees2.svg" width="100%">]
@@ -235,18 +169,18 @@ by a second tree model.
 
 ```python
 from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate = .1)
+clf = HistGradientBoostingClassifier(learning_rate=.1)
 ```
 
 ]
 
 ???
-So now, the second tree refines the first tree. 
+So now, the second tree refines the first tree.
 The final model is a weighted sum of these two trees.
 
 ---
 
-# Boosting
+# Boosting for classification
 
 .pull-left[<img src="../figures/boosting3.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
@@ -255,18 +189,89 @@ The final model is a weighted sum of these two trees.
 
 ```python
 from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate = .1)
+clf = HistGradientBoostingClassifier(learning_rate=.1)
 ```
 
 ]
 
 ???
-We could continue to refining our ensemble model. 
+We could continue to refining our ensemble model.
 At each step we focus on mistakes of the previous model.
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter1.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter_sized1.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter_orange1.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter2.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter_sized2.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter_orange2.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter3.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter_sized3.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter_orange3.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+<img src="../figures/boosting/boosting_iter4.svg" width="95%">
+
+---
+
+# Boosting for regression
+
+.pull-left[<img src="../figures/boosting0.svg" width="100%">]
 
 ---
 
 # Take away
 
-- `boosting` fits sequentially shallow trees
-- `bagging` fits simultaneously deep trees
+- **bagging** and **random forest** fits simultaneously deep trees. Each
+  individual tree overfits but averaging the individual tree predictions fight
+  overfitting.
+- **boosting** fits sequentially shallow trees. Each individual tree underfits but
+- **gradient boosting** tend to perform slightly better than **bagging** and
+  **random forest** in general but hyperparameter tuning is a bit harder to get
+  right for **gradient boosting** than for **random forest**.

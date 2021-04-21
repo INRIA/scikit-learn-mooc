@@ -27,7 +27,7 @@ interpreting their predictions.
 <p class="title">Follow the MOOC</p>
 <div class="container">
 <div class="row">
-<div class="col-sm">
+<div class="col-lg">
 This document is a work in progress. You can
 <a
 href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">register to the "Machine learning in Python with scikit-learn MOOC"</a>, based on
@@ -37,7 +37,7 @@ start on May 18 2021.
 The MOOC is free and the platform does not use the student data for any other purpose than improving
 the educational material.
 </div>
-<div class="col-sm-4">
+<div class="col-lg-5">
 <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
 <img src="figures/mooc_computer.jpg" style="width:100%">
 </a>

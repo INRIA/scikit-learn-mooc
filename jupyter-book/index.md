@@ -56,8 +56,11 @@ requirements for this course are:
 - some prior experience with the NumPy, pandas and Matplotlib libraries is
   recommended but not required.
 
-For a quick introduction on these requirements, you can use the following resources:
+For a quick introduction on these requirements, you can go through these
+[course materials](http://swcarpentry.github.io/python-novice-gapminder/)
+or use the following resources:
 - [Introduction to Python](https://scipy-lectures.org/intro/language/python_language.html)
 - [Introduction to NumPy](https://sebastianraschka.com/blog/2020/numpy-intro.html)
 - [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
 - [Introduction to Matplotlib](https://sebastianraschka.com/blog/2020/numpy-intro.html#410-matplotlib)
+

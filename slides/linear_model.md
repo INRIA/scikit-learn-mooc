@@ -187,9 +187,8 @@ use hundreds of thousands of input variables.
 class: split-30
 # For classification: logistic regression
 
-For **classification**, we use a logistic regression model
-
-**y** is binary, either 0 or 1
+For **classification**, we use a logistic regression model: **y** is either 0
+(blue) or 1 (red)
 
 .column1[
 <img src="../figures/categorical.svg" width="100%">
@@ -220,7 +219,7 @@ class: split-30
 # For classification: logistic regression
 
 The output of the model is interpreted of the probability of
-y being 1 for a given x.
+y being 1 (red) for a given x.
 
 .column1[
 <img src="../figures/logistic_color.svg" width="100%">
@@ -331,7 +330,7 @@ regularization. This parameter is named *alpha*. The larger the value of
 *alpha*, the greater the bias, and thus the smaller the coefficients.
 
 ---
-# Bias-variance tradeoff in Ridge
+# Bias-variance tradeoff in Ridge regression
 
 
 .column1[
@@ -348,7 +347,7 @@ With 2 data points, a non-biased linear model fits perfectly the data.
 
 
 ---
-# Bias-variance tradeoff in Ridge
+# Bias-variance tradeoff in Ridge regression
 
 
 .pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
@@ -369,7 +368,7 @@ The ridge displays much less variance. However, it systematically
 under-estimates the coefficient. It displays a **biased** behavior.
 
 ---
-# Bias-variance tradeoff in Ridge
+# Bias-variance tradeoff in Ridge regression
 
 .split-3columns[
 .column[
@@ -504,25 +503,28 @@ Linearly separable
 
 Linear models work well if the classes are linearly separable.
 
-However, sometimes, the best decision boundary to separate classes is not 
-well approximated by a line.
+However, sometimes, the best decision boundary to separate classes is not well
+approximated by a straight line.
 
 In such a situation, we can either use non-linear models, or perform
-transformations on the data, known as feature augmentation. We will 
-cover these in other lessons.
+transformations on the data, to engineer new features. We will cover these in
+other lessons.
 
 ---
 .center[
 # Take home messages: Linear models
 ]
 
-* Good and understandable baselines for:
+* Fase and understandable baselines for:
  - regression: linear regression + regularization = Ridge
  - classification: logistic regression
 
-* Fast to train
+* Can underfit when: `n_features << n_samples`
+  →&nbsp;engineering new features can help!
 
-* Most useful when: `n_features > n_samples`
+* Hard to beat when `n_features` is large
+
+* Regularization helpful in this case
 
 ???
 

@@ -337,9 +337,11 @@ regularization. This parameter is named *alpha*. The larger the value of
 # Bias-variance tradeoff in Ridge
 
 
-.pull-left.shift-left[<img src="../figures/lin_reg_2_points.svg" width="110%">]
+.column1[
+<img src="../figures/lin_reg_2_points.svg" width="110%">
 
-.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Low bias, high variance]
+Low bias, high variance
+]
 
 ???
 
@@ -372,21 +374,26 @@ under-estimates the coefficient. It displays a **biased** behavior.
 ---
 # Bias-variance tradeoff in Ridge
 
+.split-3columns[
+.column[
+<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="100%">
 
-<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="32%">
-<img src="../figures/lin_reg_2_points_best_ridge_grey.svg" width="32%">
-<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="32%">
-
-.shift-up-less[
-Too much variance &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Too much bias
+.center[Too much variance]
 ]
+.column[
+<img src="../figures/lin_reg_2_points_best_ridge_grey.svg" width="100%">
 
-.shift-up-less[
-&nbsp; &nbsp; Small alpha &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-Large alpha
+.center[Best tradeoff]
+]
+.column[
+<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="100%">
+
+.center[Too much bias]
+]
+]
+.split-50[
+.column1[.center[*Small alpha*]]
+.column2[.center[*Large alpha*]]
 ]
 
 .width65.shift-up-less.centered[
@@ -479,14 +486,22 @@ either one class versus every individual class, or one class versus all the
 other classes.
 
 ---
+class: split-50
 # Linear models are not suited to all data
 
 
-.shift-left.pull-left[<img src="../figures/lin_separable.svg" width="100%">]
-.pull-right[<img src="../figures/lin_not_separable.svg" width="100%">]
+.column1[
+<img src="../figures/lin_separable.svg">
 
-.pull-left.shift-left[Linearly separable]
-.pull-right[*Not* linearly separable]
+Linearly separable    
+]
+
+.column2[
+<img src="../figures/lin_not_separable.svg">
+
+**Not** linearly separable →&nbsp;Underfitting
+]
+
 
 ???
 
@@ -510,8 +525,7 @@ cover these in other lessons.
 
 * Fast to train
 
-* Better when *nb of features* > *nb of samples*
-
+* Most useful when: `n_features > n_samples`
 
 ???
 

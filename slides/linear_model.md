@@ -218,7 +218,7 @@ not regression as the name would wrongly suggest.
 class: split-30
 # For classification: logistic regression
 
-The output of the model is interpreted of the probability of
+The output of the model is interpreted as the probability of
 y being 1 (red) for a given x.
 
 .column1[

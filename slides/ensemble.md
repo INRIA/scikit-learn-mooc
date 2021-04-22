@@ -150,6 +150,12 @@ When we have to classify a new point, we will aggregate the prediction of every 
 
 # Boosting for classification
 
+.pull-left[<img src="../figures/boosting0.svg" width="100%">]
+
+---
+
+# Boosting for classification
+
 .pull-left[<img src="../figures/boosting1.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees1.svg" width="100%">]
 
@@ -177,12 +183,6 @@ clf = HistGradientBoostingClassifier(learning_rate=.1)
 ???
 So now, the second tree refines the first tree.
 The final model is a weighted sum of these two trees.
-
----
-
-# Boosting for regression
-
-.pull-left[<img src="../figures/boosting0.svg" width="100%">]
 
 ---
 
@@ -275,4 +275,4 @@ At each step we focus on mistakes of the previous model.
   + each individual tree underfits
   + sequentially adding trees reduces overfitting
 - **gradient boosting** tend to perform slightly better than **bagging** and
-  **random forest** and furthermore and shallow trees predict faster.
+  **random forest** and furthermore shallow trees predict faster.

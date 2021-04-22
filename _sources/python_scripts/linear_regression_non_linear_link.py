@@ -142,7 +142,7 @@ target_predicted = linear_regression.predict(data_expanded)
 mse = mean_squared_error(target, target_predicted)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="data", y="target")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
 ax.plot(data, target_predicted, color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
@@ -275,5 +275,3 @@ mse = mean_squared_error(target, target_predicted)
 ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
 ax.plot(data, target_predicted, color="tab:orange")
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
-
-# %%

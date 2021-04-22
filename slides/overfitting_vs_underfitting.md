@@ -70,7 +70,7 @@ tradeoffs.
 
     - Sample a value of the input *x*
 
-    - Transform if with a 9th-degree polynomial
+    - Transform it with a 9th-degree polynomial
 
     - Add some noise to get the output *y*
 

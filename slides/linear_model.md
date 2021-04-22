@@ -70,7 +70,7 @@ error.
 class: split-40
 # Linear regression
 
-Predict the value of the target **y** given some observation **x**
+Predict the value of the target `y` given some observation `x`
 
 .column1[
 <img src="../figures/linear_data.svg" width="100%">
@@ -87,7 +87,7 @@ class: split-40
 # Linear regression
 
 A linear model is a ramp "as close as possible" to all samples.
-The blue curve shows the predictions for any possible **x**
+The blue curve shows the predictions for any possible `x`
 
 .column1[
 <img src="../figures/linear_fit.svg" width="100%">
@@ -99,7 +99,7 @@ from sklearn.linear_model import LinearRegression
 
 
 linear_regression = LinearRegression()
-linear_regression.fit(x, y)
+linear_regression.fit(X, y)
 ```
 ]
 
@@ -112,7 +112,7 @@ Learning this function consists in finding the straight line which is
 as close as possible as all the data points. 
 
 The corresponding model can then be used to make predictions for any
-possible **x**, as displayed by the blue line.
+possible `x`, as displayed by the blue line.
 
 ---
 class: split-40
@@ -131,9 +131,9 @@ from sklearn.linear_model import LinearRegression
 
 
 linear_regression = LinearRegression()
-linear_regression.fit(x, y)
+linear_regression.fit(X, y)
 
-y_pred = linear_regression.predict(X)
+y_pred = linear_regression.predict(X_new)
 ```
 ]
 
@@ -187,7 +187,7 @@ use hundreds of thousands of input variables.
 class: split-30
 # For classification: logistic regression
 
-For **classification**, we use a logistic regression model: **y** is either 0
+For **classification**, we use a logistic regression model: `y` is either 0
 (blue) or 1 (red)
 
 .column1[
@@ -205,7 +205,7 @@ log_reg = LogisticRegression()
 ]
 
 ???
-The prediction target, **y**, is binary. It can be represented by either
+The prediction target, `y`, is binary. It can be represented by either
 0 or 1. However, a straight line is not suited to try to explain
 such binary target.
 
@@ -250,7 +250,7 @@ In scikit-learn, this is done with the `LogisticRegression` object.
 class: split-50
 # Logistic regression in 2 dimensions
 
-**X** is 2-dimensional, **y** is represented by the color
+`X` is 2-dimensional, `y` is represented by the color
 
 .column1[
 <img src="../figures/logistic_2D.svg" />
@@ -271,13 +271,89 @@ dimensions that give the location of the data point in a 2D plane.
 The target is to predict the color of the data points that represent the class
 membership.
 
-2D surface that represent the probability to belong to the red class `y = 1`
-at The decision function learned by logistic regression is represented by the
-soft any given position in the `(x1, x2)` space.
+2D surface that represent the probability to belong to the red class `y = 1` at
+a given location `x`. The decision function learned by logistic regression is
+represented by the soft any given position in the `(x1, x2)` space.
 
-For more common machine learning use cases, we typically have much more than
-two input features. We can try generalize this mental picture to higher
-dimensional spaces but they can no longer be represented graphically.
+This `(x1, x2)` space is called the feature space. Logistic regression is a
+models that internally computes a weighted sum of the values of the input
+features (similarly to linear regression). As a result, the shape of the
+decision boundary between regions assigned different classes is a straight
+line.
+
+The models assigns probability close to 0.5 for features close to the decision
+boundary. For points far away from the decision boundary, the model confidently
+predict values very close to 0 or 1 on each side.
+
+For common machine learning use cases, we typically have many more than
+two input features. Unfortunately it's not really possible to graphically
+represent the decision boundary of a logistic regression model in high
+dimensional space.
+
+---
+class: split-50
+# Logistic regression & multiclass classification
+
+.column1[
+  <img src="../figures/multinomial.svg" width="100%">
+]
+.column2[
+- `y` in {0, 1, 2}
+- `y` in {blue, orange, green}
+
+For a given input ``x``:
+  - predict one probability per class
+  - probabilities sum to 1
+]
+???
+
+So far, we have considered the case where the output `y` is binary.
+When there is more than 2 classes to choose from.
+
+The `LogisticRegression` estimator can natural be extended to support
+multiclass classification.
+
+Instead of predicting one number which can be interpreted as the probability of
+`x` being assigned class 1, the model nows predicts 3 numbers: the
+probabilities of `x` being either assigned class 0 (blue), 1 (orange) or 2
+(green). Those three numbers must sum to 1.
+
+The "true" value of `y` is one of those 3 possibilities. The class labels are
+exclusive.
+
+Agains the trained models finds a way to define regions of the feature space,
+one for each class. The shape of the decision boundary are (segments) of
+straight lines because Logistic Regression internally builds a linear
+combination of the input features: it is a linear model.
+
+---
+class: split-50
+# Linear models are not suited to all data
+
+.column1[
+<img src="../figures/lin_separable.svg">
+
+Linearly separable
+]
+
+.column2[
+<img src="../figures/lin_not_separable.svg">
+
+**Not** linearly separable →&nbsp;Underfitting
+]
+
+
+???
+
+Linear models work well if the classes are linearly separable.
+
+However, sometimes, the best decision boundary to separate classes is not well
+approximated by a straight line.
+
+In such a situation, we can either use non-linear models, or perform
+transformations on the data, to engineer new features. We will cover these in
+other lessons.
+
 
 ---
 # Model complexity
@@ -304,7 +380,7 @@ small values. Such a model is called *ridge regression*.
 .pull-left[
  ```python
 from sklearn.linear_model import Ridge
-ridge = Ridge(alpha=1)
+ridge = Ridge(alpha=1).fit(X, y)
  ```
 ]
 
@@ -452,63 +528,6 @@ On the contrary, for a low value of *C*, the model considers all the points.
 As with Ridge, the tradeoff controlled by the choice of *C* depends on
 the dataset and should be tuned for each set. This tuning can be done in
 scikit-learn using the `LogisticRegressionCV` object.
-
-
----
-# Logistic regression for multiclass
-
-Logistic regression can be adapted to **y** containing multiple classes.
-There are several options:
-
-.shift-left.pull-left[<img src="../figures/multinomial.svg" width="100%">]
-.pull-right[
-* Multinomial
-* One versus One
-* One versus Rest
-]
-???
-
-So far, we have considered the case where the output **y** is binary.
-When there is more than 2 classes to choose from, more than one decision
-boundary is needed.
-
-The `LogisticRegression` estimator has strategies to deal transparently
-with such settings, known as multiclass settings.
-
-For instance, the "multinomial" is a natural extension of the logistic,
-using a function with several soft steps. There are also **One versus One**
-and **One versus Rest** approaches that learn decisions discriminating 
-either one class versus every individual class, or one class versus all the 
-other classes.
-
----
-class: split-50
-# Linear models are not suited to all data
-
-
-.column1[
-<img src="../figures/lin_separable.svg">
-
-Linearly separable    
-]
-
-.column2[
-<img src="../figures/lin_not_separable.svg">
-
-**Not** linearly separable →&nbsp;Underfitting
-]
-
-
-???
-
-Linear models work well if the classes are linearly separable.
-
-However, sometimes, the best decision boundary to separate classes is not well
-approximated by a straight line.
-
-In such a situation, we can either use non-linear models, or perform
-transformations on the data, to engineer new features. We will cover these in
-other lessons.
 
 ---
 .center[

@@ -180,6 +180,12 @@ The final model is a weighted sum of these two trees.
 
 ---
 
+# Boosting for regression
+
+.pull-left[<img src="../figures/boosting0.svg" width="100%">]
+
+---
+
 # Boosting for classification
 
 .pull-left[<img src="../figures/boosting3.svg" width="100%">]
@@ -260,18 +266,13 @@ At each step we focus on mistakes of the previous model.
 
 ---
 
-# Boosting for regression
-
-.pull-left[<img src="../figures/boosting0.svg" width="100%">]
-
----
-
 # Take away
 
-- **bagging** and **random forest** fits simultaneously deep trees. Each
-  individual tree overfits but averaging the individual tree predictions fight
-  overfitting.
-- **boosting** fits sequentially shallow trees. Each individual tree underfits but
+- **bagging** and **random forest** independently fits deep trees
+  + each individual tree overfits
+  + averaging the individual tree predictions fights overfitting
+- **boosting** fits sequentially shallow trees
+  + each individual tree underfits
+  + sequentially adding trees reduces overfitting
 - **gradient boosting** tend to perform slightly better than **bagging** and
-  **random forest** in general but hyperparameter tuning is a bit harder to get
-  right for **gradient boosting** than for **random forest**.
+  **random forest** and furthermore and shallow trees predict faster.

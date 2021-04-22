@@ -354,188 +354,13 @@ In such a situation, we can either use non-linear models, or perform
 transformations on the data, to engineer new features. We will cover these in
 other lessons.
 
-
----
-# Model complexity
-
-
-* A linear model can also overfit
-
-.larger[
-```
-Sale_Price =      0.1 * Gr_Liv_Area
-             +    1.1 * Year_Built
-             -    8.9 * Full_Bath
-             +    2.5 * Zodiac_sign_first_owner_is_capricorn
-             -    1.5 * Zodiac_sign_first_owner_is_taurus
-             ...
-             - 2200.0
-```
-]
-
-**Regularization** is needed to control model complexity.
-The most common way is to push the coefficients toward
-small values. Such a model is called *ridge regression*.
-
-.pull-left[
- ```python
-from sklearn.linear_model import Ridge
-ridge = Ridge(alpha=1).fit(X, y)
- ```
-]
-
-???
-
-If we have too many parameters in regard to the number of samples, the
-linear model can overfit: it assigns non-zero weights to associations by
-chance.
-
-As described in a previous lecture, the problem with overfit is that the model
-learns a decision function that is too complicated: here the non-zero
-associations to unrelated factors such as the Zodiac sign of the first owner.
-As a consequence, the model generalizes poorly.
-
-The solution is to regularize the model: to foster less complex
-solutions. For this purpose, a linear model can be regularized by
-slightly biasing to choose smaller weights for almost a similar fit.
-
-The `Ridge` estimator does this in scikit-learn.
-
-This model comes with a complexity parameter that controls the amount of
-regularization. This parameter is named *alpha*. The larger the value of
-*alpha*, the greater the bias, and thus the smaller the coefficients.
-
----
-# Bias-variance tradeoff in Ridge regression
-
-
-.column1[
-<img src="../figures/lin_reg_2_points.svg" width="110%">
-
-Low bias, high variance
-]
-
-???
-
-Let's illustrate the ridge's bias-variance tradeoff.
-
-With 2 data points, a non-biased linear model fits perfectly the data.
-
-
----
-# Bias-variance tradeoff in Ridge regression
-
-
-.pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
-.pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
-
-.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Low bias, high variance]
-.pull-right[&nbsp; &nbsp; &nbsp; High bias, low variance]
-???
-
-When there is noise in the data, the non-biased linear model captures
-and amplifies this noise. As a result, it displays a lot of *variance* 
-in its predictions.
-
-On the right, we have a ridge estimator with a large value of *alpha*,
-regularizing the coefficients by shrinking them to zero.
-
-The ridge displays much less variance. However, it systematically
-under-estimates the coefficient. It displays a **biased** behavior.
-
----
-# Bias-variance tradeoff in Ridge regression
-
-.split-3columns[
-.column[
-<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="100%">
-
-.center[Too much variance]
-]
-.column[
-<img src="../figures/lin_reg_2_points_best_ridge_grey.svg" width="100%">
-
-.center[Best tradeoff]
-]
-.column[
-<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="100%">
-
-.center[Too much bias]
-]
-]
-.split-50[
-.column1[.center[*Small alpha*]]
-.column2[.center[*Large alpha*]]
-]
-
-.width65.shift-up-less.centered[
- ```python
-from sklearn.linear_model import RidgeCV
- ```
-]
-
-
-???
-
-This is a typical example of bias/variance tradeoff: non-regularized
-estimator are not biased, but they can display a lot of variance.
-Highly-regularized models have little variance, but high bias.
-
-This bias is not necessarily a bad thing: what matters is choosing the
-tradeoff between bias and variance that leads to the best prediction
-performance. For a specific dataset there is a sweet spot corresponding
-to the highest complexity that the data can support, depending on the
-amount of noise and observations available.
-
-Given new data points, beyond our two initial measures, the sweep spot
-minimizes the error. For the specific case of the `Ridge` estimator, in
-scikit-learn, the best value of *alpha* can be automatically found
-using the `RidgeCV` object.
-
-Note that, in general, for prediction, it is always better to prefer
-`Ridge` over a `LinearRegression` object. Using at least a small amount
-of regularization is always useful.
-
----
-# Regularization in logistic regression
-
-.small[The parameter *C* controls the complexity of the model, high C value → more flexibility.]
-
-.shift-up-less.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="90%">]
-.shift-up-less.pull-right[<img src="../figures/logistic_2D_C1.svg" width="90%">]
-.shift-up.pull-left.shift-left[&nbsp;&nbsp;Small C]
-.shift-up.pull-right[&nbsp;&nbsp;Large C]
-
-.width65.shift-up-less.centered[
- ```python
-from sklearn.linear_model import LogisticRegressionCV
- ```
-]
-
-???
-
-For classification, logistic regression also comes with regularization.
-
-
-In scikit-learn, this regularization is controlled by a parameter called
-*C*, which has a slightly different behavior than *alpha* in the Ridge
-estimator.
-
-For a large value of *C*, the model puts more emphasis on the data points
-close to the frontier.
-On the contrary, for a low value of *C*, the model considers all the points.
-
-As with Ridge, the tradeoff controlled by the choice of *C* depends on
-the dataset and should be tuned for each set. This tuning can be done in
-scikit-learn using the `LogisticRegressionCV` object.
-
 ---
 .center[
 # Take home messages on linear models
 ]
 
 * Simple and fast baselines for:
- - **regression**: linear regression + regularization = Ridge
+ - **regression**: linear regression
  - **classification**: logistic regression
 
 --
@@ -574,3 +399,305 @@ Linear models are particularly useful when the number of features is larger
 than the number of samples: more complex model can typically struggle more than
 regularized linear models in this regime for no added improvement in predictive
 performance.
+
+
+---
+class: titlepage
+
+.header[MOOC Machine learning with scikit-learn]
+
+# Regularized Linear Models
+
+How to avoid overfitting?
+
+<img src="../figures/scikit-learn-logo.svg">
+
+---
+# Do linear models overfit?
+
+- Linear models are simpler than alternatives
+--
+
+- → they tend to overfit less than alternatives
+--
+
+- They even often underfit when:
+  - `n_features` is small (e.g. less than 10 features)
+  - the problem is not linearly separable
+
+--
+
+But...
+
+---
+# Linear models can also overfit!
+
+Possible causes:
+
+- `n_samples << n_features`
+- Many uninformative features
+
+
+--
+Example for linear regression:
+
+.larger[
+```
+Sale_Price =      0.1 * Gr_Liv_Area
+             +    1.1 * Year_Built
+             -    8.9 * Full_Bath
+             +    2.5 * Zodiac_sign_first_owner_is_capricorn
+             -    1.5 * Zodiac_sign_first_owner_is_taurus
+             ...
+             - 2200.0
+```
+]
+
+???
+
+Fitting linear models with thousands of unrelated features can make linear
+models easily overfit any data.
+
+One solution would be to filter-out useless features:
+
+- it's somewhat possible using automated [feature selection methods](
+    https://scikit-learn.org/stable/modules/feature_selection.html)
+
+- but this is not always easy to tell if a given decision should be included or
+  not
+
+---
+class: split-50
+# Regularization can reduce overfitting
+
+.column1[
+Unregularized regression:
+
+```python
+from sklearn.linear_model \
+    import LinearRegression
+
+model = LinearRegression().fit(X, y)
+ ```
+]
+
+--
+
+.column2[
+Ridge regression:
+
+```python
+from sklearn.linear_model import Ridge
+
+model = Ridge(alpha=0.01).fit(X, y)
+```
+]
+
+--
+.nocolumn[
+**Ridge regression** pulls the coefficients towards 0.
+]
+
+--
+.nocolumn[
+Large `alpha` → more regularization
+]
+
+
+--
+.nocolumn[
+**Recommendation**: always use `Ridge` with a good `alpha`!
+]
+
+???
+
+If we have too many parameters in regard to the number of samples, the
+linear model can overfit: it assigns non-zero weights to associations by
+chance.
+
+As described in a previous lecture, the problem with overfit is that the model
+learns a decision function that is too complicated: here the non-zero
+associations to unrelated factors such as the Zodiac sign of the first owner.
+As a consequence, the model generalizes poorly.
+
+The solution is to regularize the model: to foster less complex
+solutions. For this purpose, a linear model can be regularized by
+slightly biasing to choose smaller weights for almost a similar fit.
+
+The `Ridge` estimator does this in scikit-learn.
+
+This model comes with a complexity parameter that controls the amount of
+regularization. This parameter is named `alpha`. The larger the value of
+`alpha`, the greater the bias, and thus the smaller the coefficients.
+
+---
+# Bias-variance tradeoff in Ridge regression
+
+
+.pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
+.pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
+
+.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Low bias, high variance]
+.pull-right[&nbsp; &nbsp; &nbsp; High bias, low variance]
+???
+Let's illustrate the ridge's bias-variance tradeoff.
+
+With 2 data points, a non-biased linear model fits perfectly the data.
+
+When there is noise in the data, the non-biased linear model captures this
+noise if there is few training samples. As a result, it displays a lot of
+*variance* in its predictions: retraining on another training set with the same
+number of data point would yield a very different prediction function.
+
+On the right, we have a ridge estimator with a large value of `alpha`,
+regularizing the coefficients by shrinking them to zero.
+
+The ridge displays much less variance. However, it systematically
+under-estimates the coefficient. It displays a **biased** behavior.
+
+---
+# Bias-variance tradeoff in Ridge regression
+
+.split-3columns[
+.column[
+<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="100%">
+
+.center[Too much variance]
+]
+.column[
+<img src="../figures/lin_reg_2_points_best_ridge_grey.svg" width="100%">
+
+.center[Best tradeoff]
+]
+.column[
+<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="100%">
+
+.center[Too much bias]
+]
+]
+.split-50[
+.column1[.center[*Small alpha*]]
+.column2[.center[*Large alpha*]]
+]
+
+???
+
+This is a typical example of bias/variance tradeoff: non-regularized
+estimator are not biased, but they can display a lot of variance.
+Highly-regularized models have little variance, but high bias.
+
+This bias is not necessarily a bad thing: what matters is choosing the
+tradeoff between bias and variance that leads to the best prediction
+performance. For a specific dataset there is a sweet spot corresponding
+to the highest complexity that the data can support, depending on the
+amount of noise and observations available.
+
+Given new data points, beyond our two initial measures, the sweep spot
+minimizes the error. For the specific case of the `Ridge` estimator, in
+scikit-learn, the best value of `alpha` can be automatically found
+using the `RidgeCV` object.
+
+Note that, in general, for prediction, it is always better to prefer
+`Ridge` over a `LinearRegression` object. Using at least a small amount
+of regularization is always useful.
+
+
+---
+class: split-50
+# Automated tuning for regularization
+
+.column1[
+ ```python
+from sklearn.linear_model \
+    import Ridge
+from sklearn.model_selection \
+    import GridSearchCV
+
+
+param_grid = {
+    "alphas": [0.001, 0.1, 1, 10, 1000],
+}
+model = GridSearchCV(Ridge(), param_grid)
+model.fit(X, y)
+
+print(model.best_parameters_)
+```
+]
+
+--
+.column2[
+ ```python
+from sklearn.linear_model import RidgeCV
+
+
+model = RidgeCV(
+    alphas=[0.001, 0.1, 1, 10, 1000]
+)
+model.fit(X, y)
+
+print(model.alpha_)
+```
+
+Almost as fast as fitting a single `Ridge` model!
+]
+
+---
+# Regularization in logistic regression
+
+.small[The parameter `C` controls the complexity of the model, high C value → more flexibility.]
+
+.shift-up-less.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="90%">]
+.shift-up-less.pull-right[<img src="../figures/logistic_2D_C1.svg" width="90%">]
+.shift-up.pull-left.shift-left[&nbsp;&nbsp;Small `C`]
+.shift-up.pull-right[&nbsp;&nbsp;Large `C`]
+
+.width65.shift-up-less.centered[
+ ```python
+from sklearn.linear_model import LogisticRegressionCV
+ ```
+]
+
+???
+
+For classification, logistic regression also comes with regularization.
+
+
+In scikit-learn, this regularization is controlled by a parameter called
+`C`, which has a slightly different behavior than `alpha` in the Ridge
+estimator.
+
+For a large value of `C`, the model puts more emphasis on the data points
+close to the frontier.
+On the contrary, for a low value of `C`, the model considers all the points.
+
+As with Ridge, the tradeoff controlled by the choice of `C` depends on
+the dataset and should be tuned for each set. This tuning can be done in
+scikit-learn using the `LogisticRegressionCV` object.
+
+---
+.center[
+# Take home messages on linear models
+]
+
+* Can overfit when:
+
+ - `n_samples` is too small and `n_features` is large
+ -  In particular with non-informative features
+
+--
+* Regularization for **regression**:
+ - linear regression → ridge regression
+ - large `alpha` parameter → strong regularization
+
+--
+* Regularization **classification**:
+ - logistic regression regularized by default
+ - small `C` parameter → strong regularizations
+
+???
+
+Always use regularization when fitting linear models: you can tune the
+regularization parameter using cross-validation.
+
+In particular for Ridge regression `RidgeCV` is efficient fast at tuning
+`alpha` automatically.

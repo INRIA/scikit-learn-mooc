@@ -512,18 +512,21 @@ other lessons.
 
 ---
 .center[
-# Take home messages: Linear models
+# Take home messages on linear models
 ]
 
-* Fase and understandable baselines for:
- - regression: linear regression + regularization = Ridge
- - classification: logistic regression
+* Simple and fast baselines for:
+ - **regression**: linear regression + regularization = Ridge
+ - **classification**: logistic regression
 
+--
 * Can underfit when: `n_features << n_samples`
   →&nbsp;engineering new features can help!
 
+--
 * Hard to beat when `n_features` is large
 
+--
 * Regularization helpful in this case
 
 ???
@@ -534,12 +537,21 @@ They form good baselines that can be easily understood. A later lesson
 will cover in details the intuitive interpretations of linear-model
 coefficients.
 
+Linear models are fast to train and fast to predict, and hence convenient to
+interactively design predict models but also more efficient to deploy in
+production at scale and on energy limited hardware (mobile phones).
+
 For regression, a good choice is typically to use a Ridge regression,
 which adds a simple regularization.
 
-For classification, a good choice is to use a logistic regression
+For classification, a good choice is to use a logistic regression. The
+scikit-learn implementation is regularized by default.
 
-These models are fast to train, and hence facilitate work.
+When linear models underfit (on non-linearly separable data), it is often
+possible to engineer new features to mitigate the problem. We will see
+examples of this strategy in the next exercises and notebooks.
 
-In addition, they are particularly useful when the number of features is
-larger than the number of samples.
+Linear models are particularly useful when the number of features is larger
+than the number of samples: more complex model can typically struggle more than
+regularized linear models in this regime for no added improvement in predictive
+performance.

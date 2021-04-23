@@ -137,7 +137,7 @@ _ = plt.title("Decision boundary using a decision tree")
 
 # %% [markdown]
 # The partitions found by the algorithm separates the data along the axis
-# "Culmen Length", discarding the feature "Culmen Depth". Thus, it highlights
+# "Culmen Depth", discarding the feature "Culmen Length". Thus, it highlights
 # that a decision tree does not use a combination of feature when making a
 # split. We can look more in depth at the tree structure.
 
@@ -156,8 +156,8 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # ```
 
 # %% [markdown]
-# We see that the split was done the culmen length feature. The original
-# dataset was subdivided into 2 sets based on the culmen length
+# We see that the split was done the culmen depth feature. The original
+# dataset was subdivided into 2 sets based on the culmen depth
 # (inferior or superior to 16.45 mm).
 #
 # This partition of the dataset minimizes the class diversities in each
@@ -172,7 +172,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # represented class is the Gentoo species.
 #
 # Let's see how our tree would work as a predictor. Let's start to see the
-# class predicted when the culmen length is inferior to the threshold.
+# class predicted when the culmen depth is inferior to the threshold.
 
 # %%
 tree.predict([[0, 15]])
@@ -190,9 +190,9 @@ tree.predict([[0, 17]])
 # Thus, we can conclude that a decision tree classifier will predict the most
 # represented class within a partition.
 #
-# Since that during the training, we have a count of samples in each partition,
-# we can also compute the probability of belonging to a specific class within
-# this partition.
+# During the training, we have a count of samples in each partition, we can
+# also compute the probability of belonging to a specific class within this
+# partition.
 
 # %%
 y_pred_proba = tree.predict_proba([[0, 17]])
@@ -217,7 +217,7 @@ print(f"Probabilities for the different classes:\n"
       f"Gentoo: {gentoo_proba:.3f}\n")
 
 # %% [markdown]
-# It is also important to note that the culmen depth has been disregarded for
+# It is also important to note that the culmen length has been disregarded for
 # the moment. It means that whatever the value given, it will not be used
 # during the prediction.
 

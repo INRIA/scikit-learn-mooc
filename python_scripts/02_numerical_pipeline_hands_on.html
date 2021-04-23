@@ -1430,6 +1430,8 @@ a pandas dataframe.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="c1"># drop the duplicated column `&quot;education-num&quot;` as stated in the first notebook</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;education-num&quot;</span><span class="p">)</span>
 <span class="n">adult_census</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1456,7 +1458,6 @@ a pandas dataframe.</p>
       <th>age</th>
       <th>workclass</th>
       <th>education</th>
-      <th>education-num</th>
       <th>marital-status</th>
       <th>occupation</th>
       <th>relationship</th>
@@ -1475,7 +1476,6 @@ a pandas dataframe.</p>
       <td>25</td>
       <td>Private</td>
       <td>11th</td>
-      <td>7</td>
       <td>Never-married</td>
       <td>Machine-op-inspct</td>
       <td>Own-child</td>
@@ -1492,7 +1492,6 @@ a pandas dataframe.</p>
       <td>38</td>
       <td>Private</td>
       <td>HS-grad</td>
-      <td>9</td>
       <td>Married-civ-spouse</td>
       <td>Farming-fishing</td>
       <td>Husband</td>
@@ -1509,7 +1508,6 @@ a pandas dataframe.</p>
       <td>28</td>
       <td>Local-gov</td>
       <td>Assoc-acdm</td>
-      <td>12</td>
       <td>Married-civ-spouse</td>
       <td>Protective-serv</td>
       <td>Husband</td>
@@ -1526,7 +1524,6 @@ a pandas dataframe.</p>
       <td>44</td>
       <td>Private</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Married-civ-spouse</td>
       <td>Machine-op-inspct</td>
       <td>Husband</td>
@@ -1543,7 +1540,6 @@ a pandas dataframe.</p>
       <td>18</td>
       <td>?</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Never-married</td>
       <td>?</td>
       <td>Own-child</td>
@@ -1596,7 +1592,6 @@ procedure in the previous notebook.</p>
       <th>age</th>
       <th>workclass</th>
       <th>education</th>
-      <th>education-num</th>
       <th>marital-status</th>
       <th>occupation</th>
       <th>relationship</th>
@@ -1614,7 +1609,6 @@ procedure in the previous notebook.</p>
       <td>25</td>
       <td>Private</td>
       <td>11th</td>
-      <td>7</td>
       <td>Never-married</td>
       <td>Machine-op-inspct</td>
       <td>Own-child</td>
@@ -1630,7 +1624,6 @@ procedure in the previous notebook.</p>
       <td>38</td>
       <td>Private</td>
       <td>HS-grad</td>
-      <td>9</td>
       <td>Married-civ-spouse</td>
       <td>Farming-fishing</td>
       <td>Husband</td>
@@ -1646,7 +1639,6 @@ procedure in the previous notebook.</p>
       <td>28</td>
       <td>Local-gov</td>
       <td>Assoc-acdm</td>
-      <td>12</td>
       <td>Married-civ-spouse</td>
       <td>Protective-serv</td>
       <td>Husband</td>
@@ -1662,7 +1654,6 @@ procedure in the previous notebook.</p>
       <td>44</td>
       <td>Private</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Married-civ-spouse</td>
       <td>Machine-op-inspct</td>
       <td>Husband</td>
@@ -1678,7 +1669,6 @@ procedure in the previous notebook.</p>
       <td>18</td>
       <td>?</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Never-married</td>
       <td>?</td>
       <td>Own-child</td>
@@ -1751,7 +1741,6 @@ numbers and you will need to identify these features.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                int64
 workclass         object
 education         object
-education-num      int64
 marital-status    object
 occupation        object
 relationship      object
@@ -1811,7 +1800,6 @@ meaning of the <code class="docutils literal notranslate"><span class="pre">obje
       <th>age</th>
       <th>workclass</th>
       <th>education</th>
-      <th>education-num</th>
       <th>marital-status</th>
       <th>occupation</th>
       <th>relationship</th>
@@ -1829,7 +1817,6 @@ meaning of the <code class="docutils literal notranslate"><span class="pre">obje
       <td>25</td>
       <td>Private</td>
       <td>11th</td>
-      <td>7</td>
       <td>Never-married</td>
       <td>Machine-op-inspct</td>
       <td>Own-child</td>
@@ -1845,7 +1832,6 @@ meaning of the <code class="docutils literal notranslate"><span class="pre">obje
       <td>38</td>
       <td>Private</td>
       <td>HS-grad</td>
-      <td>9</td>
       <td>Married-civ-spouse</td>
       <td>Farming-fishing</td>
       <td>Husband</td>
@@ -1861,7 +1847,6 @@ meaning of the <code class="docutils literal notranslate"><span class="pre">obje
       <td>28</td>
       <td>Local-gov</td>
       <td>Assoc-acdm</td>
-      <td>12</td>
       <td>Married-civ-spouse</td>
       <td>Protective-serv</td>
       <td>Husband</td>
@@ -1877,7 +1862,6 @@ meaning of the <code class="docutils literal notranslate"><span class="pre">obje
       <td>44</td>
       <td>Private</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Married-civ-spouse</td>
       <td>Machine-op-inspct</td>
       <td>Husband</td>
@@ -1893,7 +1877,6 @@ meaning of the <code class="docutils literal notranslate"><span class="pre">obje
       <td>18</td>
       <td>?</td>
       <td>Some-college</td>
-      <td>10</td>
       <td>Never-married</td>
       <td>?</td>
       <td>Own-child</td>
@@ -1914,9 +1897,7 @@ will see later how to handle those. We can select the columns containing
 integers and check their content.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
 <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1941,7 +1922,6 @@ integers and check their content.</p>
     <tr style="text-align: right;">
       <th></th>
       <th>age</th>
-      <th>education-num</th>
       <th>capital-gain</th>
       <th>capital-loss</th>
       <th>hours-per-week</th>
@@ -1951,7 +1931,6 @@ integers and check their content.</p>
     <tr>
       <th>0</th>
       <td>25</td>
-      <td>7</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
@@ -1959,7 +1938,6 @@ integers and check their content.</p>
     <tr>
       <th>1</th>
       <td>38</td>
-      <td>9</td>
       <td>0</td>
       <td>0</td>
       <td>50</td>
@@ -1967,7 +1945,6 @@ integers and check their content.</p>
     <tr>
       <th>2</th>
       <td>28</td>
-      <td>12</td>
       <td>0</td>
       <td>0</td>
       <td>40</td>
@@ -1975,7 +1952,6 @@ integers and check their content.</p>
     <tr>
       <th>3</th>
       <td>44</td>
-      <td>10</td>
       <td>7688</td>
       <td>0</td>
       <td>40</td>
@@ -1983,7 +1959,6 @@ integers and check their content.</p>
     <tr>
       <th>4</th>
       <td>18</td>
-      <td>10</td>
       <td>0</td>
       <td>0</td>
       <td>30</td>
@@ -2022,51 +1997,10 @@ Name: age, dtype: float64
 <p>We could extend our analysis and we will find that <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;capital-loss&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> are also representing quantitative
 data.</p>
-<p>However, the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> is different. It corresponds to the
-educational stage that is not necessarily the number of years studied, and
-thus not a quantitative measurement. This feature is a categorical feature
-already encoded with discrete numerical values. To see this specificity, we
-will look at the count for each educational stage:</p>
+<p>Now, we store the subset of numerical columns in a new dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1        83
-2       247
-3       509
-4       955
-5       756
-6      1389
-7      1812
-8       657
-9     15784
-10    10878
-11     2061
-12     1601
-13     8025
-14     2657
-15      834
-16      594
-Name: education-num, dtype: int64
-</pre></div>
-</div>
-</div>
-</div>
-<p>This feature is indeed a nominal categorical feature. We exclude it from
-our analysis since particular attention is required when dealing with
-categorical features. This topic will be discussed in depth in a subsequent
-notebook.</p>
-<p>Now, we can select the subset of numerical columns and store them inside a
-new dataframe.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
-
-<span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>

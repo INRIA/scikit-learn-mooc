@@ -1444,6 +1444,8 @@ categorical data.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="c1"># drop the duplicated column `&quot;education-num&quot;` as stated in the first notebook</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;education-num&quot;</span><span class="p">)</span>
 
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
@@ -1538,7 +1540,6 @@ the answer lies in the columns’ data type:</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>age                int64
 workclass         object
 education         object
-education-num      int64
 marital-status    object
 occupation        object
 relationship      object
@@ -1555,42 +1556,6 @@ dtype: object
 </div>
 <p>If we look at the <code class="docutils literal notranslate"><span class="pre">&quot;native-country&quot;</span></code> column, we observe its data type is
 <code class="docutils literal notranslate"><span class="pre">object</span></code>, meaning it contains string values.</p>
-<p>Sometimes, categorical columns could also be encoded with integers. In such
-case, looking at the data type will not be enough. In a previous notebook,
-we saw it is the case with the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>9     15784
-10    10878
-13     8025
-14     2657
-11     2061
-7      1812
-12     1601
-6      1389
-4       955
-15      834
-5       756
-8       657
-16      594
-3       509
-2       247
-1        83
-Name: education-num, dtype: int64
-</pre></div>
-</div>
-</div>
-</div>
-<p>When considering categorical columns, we should include these columns.
-However, we also saw earlier that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>
-represent the exact same information. Therefore, we can get rid of one of the
-two. In this notebook we will use <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> because it represents
-the original data.</p>
 </div>
 <div class="section" id="select-features-based-on-their-data-type">
 <h2>Select features based on their data type<a class="headerlink" href="#select-features-based-on-their-data-type" title="Permalink to this headline">¶</a></h2>
@@ -1859,11 +1824,6 @@ values by checking the fitted attribute <code class="docutils literal notranslat
 <p>We see that the categories have been encoded for each feature (column)
 independently. We also note that the number of features before and after the
 encoding is the same.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>This encoding was used by the dataset’s publishers on the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>
-feature, which gave the feature <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>.</p>
-</div>
 <p>However, be careful when applying this encoding strategy:
 using this integer representation leads downstream predictive models
 to assume that the values are ordered (0 &lt; 1 &lt; 2 &lt; 3… for instance).</p>
@@ -2580,13 +2540,13 @@ Let’s recall some statistics regarding this column.</p>
  Ecuador                          45
  France                           38
  Ireland                          37
- Hong                             30
  Thailand                         30
+ Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
  Yugoslavia                       23
- Outlying-US(Guam-USVI-etc)       23
  Laos                             23
+ Outlying-US(Guam-USVI-etc)       23
  Scotland                         21
  Honduras                         20
  Hungary                          19
@@ -2645,8 +2605,8 @@ categorical columns.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.9623456 , 0.96028876, 0.89924812, 0.95612836, 0.93087697]),
- &#39;score_time&#39;: array([0.03731465, 0.03761768, 0.03650975, 0.03645635, 0.03607941]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.11648297, 1.13122153, 1.0302422 , 1.10437703, 1.06971383]),
+ &#39;score_time&#39;: array([0.04242682, 0.03946829, 0.03654385, 0.03783083, 0.03372812]),
  &#39;test_score&#39;: array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])}
 </pre></div>
 </div>

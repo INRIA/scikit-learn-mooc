@@ -510,7 +510,7 @@ Large `alpha` → more regularization
 
 --
 .nocolumn[
-**Recommendation**: always use `Ridge` with a good `alpha`!
+**Recommendation**: always use `Ridge` with a carefully tuned `alpha`!
 ]
 
 ???
@@ -648,7 +648,7 @@ Almost as fast as fitting a single `Ridge` model!
 ---
 # Regularization in logistic regression
 
-.small[The parameter `C` controls the complexity of the model, high C value → more flexibility.]
+The parameter `C` controls the complexity of the model: high&nbsp;C&nbsp;value&nbsp;→&nbsp;weaker regularization.
 
 .shift-up-less.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="90%">]
 .shift-up-less.pull-right[<img src="../figures/logistic_2D_C1.svg" width="90%">]

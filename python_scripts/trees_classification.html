@@ -1557,7 +1557,7 @@ tree make a single split to partition the feature space.</p>
 </div>
 </div>
 <p>The partitions found by the algorithm separates the data along the axis
-“Culmen Length”, discarding the feature “Culmen Depth”. Thus, it highlights
+“Culmen Depth”, discarding the feature “Culmen Length”. Thus, it highlights
 that a decision tree does not use a combination of feature when making a
 split. We can look more in depth at the tree structure.</p>
 <div class="cell docutils container">
@@ -1580,8 +1580,8 @@ split. We can look more in depth at the tree structure.</p>
 a figure and an axis with a specific size. Then, we can pass the axis to the
 <code class="docutils literal notranslate"><span class="pre">sklearn.tree.plot_tree</span></code> function such that the drawing happens in this axis.</p>
 </div>
-<p>We see that the split was done the culmen length feature. The original
-dataset was subdivided into 2 sets based on the culmen length
+<p>We see that the split was done the culmen depth feature. The original
+dataset was subdivided into 2 sets based on the culmen depth
 (inferior or superior to 16.45 mm).</p>
 <p>This partition of the dataset minimizes the class diversities in each
 sub-partitions. This measure is also known as a <strong>criterion</strong>,
@@ -1593,7 +1593,7 @@ samples and 6 Gentoo samples. We can make similar interpretation for the
 partition defined by a threshold inferior to 16.45mm. In this case, the most
 represented class is the Gentoo species.</p>
 <p>Let’s see how our tree would work as a predictor. Let’s start to see the
-class predicted when the culmen length is inferior to the threshold.</p>
+class predicted when the culmen depth is inferior to the threshold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">]])</span>
@@ -1623,9 +1623,9 @@ depth superior to the threshold.</p>
 <p>In this case, the tree predicts the Adelie specie.</p>
 <p>Thus, we can conclude that a decision tree classifier will predict the most
 represented class within a partition.</p>
-<p>Since that during the training, we have a count of samples in each partition,
-we can also compute the probability of belonging to a specific class within
-this partition.</p>
+<p>During the training, we have a count of samples in each partition, we can
+also compute the probability of belonging to a specific class within this
+partition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">17</span><span class="p">]])</span>
@@ -1669,7 +1669,7 @@ Gentoo: 0.037
 </div>
 </div>
 </div>
-<p>It is also important to note that the culmen depth has been disregarded for
+<p>It is also important to note that the culmen length has been disregarded for
 the moment. It means that whatever the value given, it will not be used
 during the prediction.</p>
 <div class="cell docutils container">

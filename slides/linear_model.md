@@ -86,8 +86,7 @@ living area.
 class: split-40
 # Linear regression
 
-A linear model is a ramp "as close as possible" to all samples.
-The blue curve shows the predictions for any possible `x`
+Fit a prediction line as close as possible to all training points.
 
 .column1[
 <img src="../figures/linear_fit.svg" width="100%">
@@ -133,21 +132,28 @@ from sklearn.linear_model import LinearRegression
 linear_regression = LinearRegression()
 linear_regression.fit(X, y)
 
-y_pred = linear_regression.predict(X_new)
+y_pred = linear_regression.predict(X)
+```
+]
+--
+.column2[
+```python
+import numpy as np
+
+
+error = np.sum(y - y_pred) ** 2)
 ```
 ]
 
 ???
 
-The slope of the line is chosen to minimize the distance between the
-prediction and the data points. This distance constitutes an error
-for each sample shown as the red bar on the figure.
+The best fit is represented by the blue line which minimizes the sum of the
+square differences between the predicted values and the values of the target
+variable represented by the red segments.
 
-The best fit is the blue line which minimizes the sum of the square of
-those red lines.
-
-Fortunately, scikit-learn has an estimator, the `LinearRegression`
-object, that computes this for us.
+This minimization happens when we call the `fit` method of the
+`LinearRegression` class. The result is the automated tuning of the slope and
+intercept coefficient of the linear model.
 
 ---
 class: split-60

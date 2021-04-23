@@ -2,7 +2,7 @@ class: titlepage
 
 .header[MOOC Machine learning with scikit-learn]
 
-# Linear Model
+# Linear Models
 
 For classification and regression.
 
@@ -23,7 +23,7 @@ settings.
 # Outline
 
 * What is a linear model?
-* Linear model for regression & classification
+* Linear models for regression & classification
 * How to avoid overfitting?
 
 
@@ -54,7 +54,7 @@ Sale_Price =       0.1 * Gr_Liv_Area
 
 ???
 
-The goal is to estimate a safe prices from numerical features characterizing
+The goal is to estimate sale prices from numerical features characterizing
 recently sold houses in a given city. The target is continuous, so we are
 dealing with a regression problem instead of a classification problem.
 
@@ -237,7 +237,7 @@ log_reg.fit(X, y)
 
 ???
 
-With logistic regression, the output is modelled using a form of soft
+With logistic regression, the output is modeled using a form of soft
 step function, adjusted to the data. This function is called a logistic
 function. Using a soft, graduate shift between *y = 0* and *y = 1* is
 useful to capture the grey zone, where the value of *x* is not enough
@@ -692,7 +692,7 @@ scikit-learn using the `LogisticRegressionCV` object.
 --
 * Regularization **classification**:
  - logistic regression regularized by default
- - small `C` parameter → strong regularizations
+ - small `C` parameter → strong regularization
 
 ???
 

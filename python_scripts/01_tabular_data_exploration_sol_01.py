@@ -76,7 +76,8 @@ pairplot_figure = seaborn.pairplot(penguins, hue="Species")
 # of each subfigure.
 
 # %%
-pairplot_figure = seaborn.pairplot(penguins, hue="Species", height=4)
+pairplot_figure = seaborn.pairplot(
+    penguins, hue="Species", height=4)
 
 # %% [markdown]
 # Looking at these distributions, how hard do you think it will be to classify

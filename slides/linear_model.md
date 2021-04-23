@@ -104,7 +104,7 @@ linear_regression.fit(X, y)
 
 ???
 
-We learn a linear function to predict *y*. Here, the price is expressed
+We learn a linear function to predict `y`. Here, the price is expressed
 as a constant multiplied by the number of years of study.
 
 Learning this function consists in finding the straight line which is
@@ -131,8 +131,6 @@ from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
 linear_regression.fit(X, y)
-
-y_pred = linear_regression.predict(X)
 ```
 ]
 --
@@ -140,8 +138,8 @@ y_pred = linear_regression.predict(X)
 ```python
 import numpy as np
 
-
-error = np.sum(y - y_pred) ** 2)
+y_pred = linear_regression.predict(X)
+squared_error = np.sum(y - y_pred) ** 2)
 ```
 ]
 
@@ -339,7 +337,7 @@ class: split-50
 .column1[
 <img src="../figures/lin_separable.svg">
 
-Linearly separable
+*Almost* linearly separable
 ]
 
 .column2[
@@ -351,14 +349,14 @@ Linearly separable
 
 ???
 
-Linear models work well if the classes are linearly separable.
+Linear models work well if the classes are (almost) linearly separable.
 
 However, sometimes, the best decision boundary to separate classes is not well
 approximated by a straight line.
 
 In such a situation, we can either use non-linear models, or perform
 transformations on the data, to engineer new features. We will cover these in
-other lessons.
+a the following notebooks.
 
 ---
 .center[
@@ -375,9 +373,6 @@ other lessons.
 
 --
 * Hard to beat when `n_features` is large
-
---
-* Regularization helpful in this case
 
 ???
 
@@ -403,8 +398,11 @@ examples of this strategy in the next exercises and notebooks.
 
 Linear models are particularly useful when the number of features is larger
 than the number of samples: more complex model can typically struggle more than
-regularized linear models in this regime for no added improvement in predictive
+linear models in this regime for no added improvement in predictive
 performance.
+
+Howerver in high dimensions, we need to use regularized linear models which
+will introduce in the next presentation.
 
 
 ---
@@ -452,8 +450,8 @@ Example for linear regression:
 Sale_Price =      0.1 * Gr_Liv_Area
              +    1.1 * Year_Built
              -    8.9 * Full_Bath
-             +    2.5 * Zodiac_sign_first_owner_is_capricorn
-             -    1.5 * Zodiac_sign_first_owner_is_taurus
+             +    2.5 * First_Owner_Is_Born_In_January
+             -    1.5 * First_Owner_Is_Born_In_February
              ...
              - 2200.0
 ```

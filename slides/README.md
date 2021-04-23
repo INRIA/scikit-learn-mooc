@@ -16,7 +16,7 @@ Useful when working on the slides:
 python -m http.server
 
 # open your browser with the right port (from previous command) using the right md file
-firefox http://localhost:8000/slides/index.html?file=../slides/ml_concepts.md
+firefox 'http://localhost:8000/slides/index.html?file=../slides/ml_concepts.md'
 ```
 
 # Export

@@ -137,111 +137,101 @@ for i in range(len(X)):
 
 plt.savefig("../figures/lin_reg_3D.svg", facecolor="none", edgecolor="none")
 
-# %%
-# Ridge variance
-# from http://scipy-lectures.org/packages/scikit-learn/index.html#bias-variance-trade-off-illustration-on-a-simple-regression-problem
-X = np.c_[0.5, 1].T
-y = [0.5, 1]
-X_test = np.c_[0, 2].T
 
+# %%
+import numpy as np
+from sklearn.model_selection import train_test_split
+
+
+rng = np.random.RandomState(42)
+x_all = rng.randn(150) * 5
+y_all = 1 * x_all + 5 * rng.randn(len(x_all))
+X_all = x_all[:, None]
+xlims = x_all.min() - 2, x_all.max() + 2
+ylims = y_all.min() - 2, y_all.max() + 2
+
+X_test = np.linspace(x_all.min(), x_all.max(), 100)[:, None]
+
+train_size = 5
+colors = plt.cm.tab10(np.arange(10))
+
+training_sets = []
+for i, color in zip(range(6), colors):
+    X_train, _, y_train, _ = train_test_split(
+        X_all, y_all, train_size=train_size, random_state=rng)
+    training_sets.append((X_train, y_train, color))
+
+# %%
+
+for alpha in [0, 50., 500.]:
+    plt.figure(figsize=(4, 3))
+    plt.axes([0.1, 0.1, 0.9, 0.9])
+    style_figs.light_axis()
+    plt.xlim(xlims)
+    plt.ylim(ylims)
+    plt.ylabel("y", size=22, weight=600)
+    plt.xlabel("x", size=22, weight=600)
+    plt.plot(X_all.ravel(), y_all, "o", markersize=15, c=".5", alpha=0.2)
+    for X_train, y_train, color in training_sets:
+        regr = linear_model.Ridge(alpha=alpha)
+        regr.fit(X_train, y_train)
+        plt.plot(X_test, regr.predict(X_test), linewidth=1.5, c=color)
+        plt.savefig(f"ridge_alpha_{int(alpha)}.svg",
+                    facecolor="none", edgecolor="none")
+
+
+# %%
+plt.figure(figsize=(4, 3))
+plt.axes([0.1, 0.1, 0.9, 0.9])
+style_figs.light_axis()
+plt.xlim(xlims)
+plt.ylim(ylims)
+plt.ylabel("y", size=22, weight=600)
+plt.xlabel("x", size=22, weight=600)
+# plt.plot(X_all.ravel(), y_all, "o", markersize=15, c=".5", alpha=0.2)
+X_train, y_train, color = next(iter(training_sets))
+plt.plot(X_train.ravel(), y_train, "o", c=color, markersize=15)
 regr = linear_model.LinearRegression()
-regr.fit(X, y)
-
-plt.figure(figsize=(4, 3))
-plt.axes([0.1, 0.1, 0.9, 0.9])
-style_figs.light_axis()
-plt.ylabel("y", size=22, weight=600)
-plt.xlabel("x", size=22, weight=600)
-plt.plot(X, y, "o", markersize=15)
-plt.plot(X_test, regr.predict(X_test), linewidth=1.5)
-plt.savefig("../figures/lin_reg_2_points.svg", facecolor="none", edgecolor="none")
+regr.fit(X_train, y_train)
+plt.plot(X_test, regr.predict(X_test), linewidth=1.5, c=color)
+plt.savefig("linreg_noreg_0_nogrey.svg", facecolor="none", edgecolor="none")
 
 
 # %%
-def add_grey_points():
-    np.random.seed(2)
-    x_new = 0.5 * np.random.normal(size=500) + 0.85
-    y_new = -0.1 + x_new + 1.5 * np.random.normal(loc=0, scale=0.1, size=x_new.shape)
-    plt.scatter(x_new, y_new, s=70, c=".5", alpha=0.3)
-
-
-# %%
-plt.figure(figsize=(4, 3))
-np.random.seed(0)
-plt.axes([0.1, 0.1, 0.9, 0.9])
-style_figs.light_axis()
-plt.ylabel("y", size=22, weight=600)
-plt.xlabel("x", size=22, weight=600)
-plt.xlim((0, 2))
-plt.ylim((0, 2))
-for _ in range(5):
-    noisy_X = X + np.random.normal(loc=0, scale=0.1, size=X.shape)
-    plt.plot(noisy_X, y, "o", markersize=10)
-    regr.fit(noisy_X, y)
-    plt.plot(X_test, regr.predict(X_test), linewidth=1.5)
-plt.savefig(
-    "../figures/lin_reg_2_points_no_penalty.svg", facecolor="none", edgecolor="none"
-)
-add_grey_points()
-plt.savefig(
-    "../figures/lin_reg_2_points_no_penalty_grey.svg",
-    facecolor="none",
-    edgecolor="none",
-)
+for i, (X_train, y_train, color) in enumerate(training_sets):
+    plt.figure(figsize=(4, 3))
+    plt.axes([0.1, 0.1, 0.9, 0.9])
+    style_figs.light_axis()
+    plt.xlim(xlims)
+    plt.ylim(ylims)
+    plt.ylabel("y", size=22, weight=600)
+    plt.xlabel("x", size=22, weight=600)
+    plt.plot(X_all.ravel(), y_all, "o", markersize=15, c=".5", alpha=0.2)
+    plt.plot(X_train.ravel(), y_train, "o", c=color, markersize=15)
+    regr = linear_model.LinearRegression()
+    regr.fit(X_train, y_train)
+    plt.plot(X_test, regr.predict(X_test), linewidth=1.5, c=color)
+    plt.savefig(f"linreg_noreg_{i}.svg", facecolor="none", edgecolor="none")
 
 # %%
 plt.figure(figsize=(4, 3))
-regr = linear_model.Ridge(alpha=0.05)
 plt.axes([0.1, 0.1, 0.9, 0.9])
 style_figs.light_axis()
+plt.xlim(xlims)
+plt.ylim(ylims)
 plt.ylabel("y", size=22, weight=600)
 plt.xlabel("x", size=22, weight=600)
-np.random.seed(0)
-plt.xlim((0, 2))
-plt.ylim((0, 2))
-for _ in range(5):
-    noisy_X = X + np.random.normal(loc=0, scale=0.1, size=X.shape)
-    plt.plot(noisy_X, y, "o", markersize=10)
-    regr.fit(noisy_X, y)
-    plt.plot(X_test, regr.predict(X_test), linewidth=1.5)
+plt.plot(X_all.ravel(), y_all, "o", markersize=15, c=".5", alpha=0.2)
+X_train, y_train, color = next(iter(training_sets))
+plt.plot(X_train.ravel(), y_train, "o", c=color, markersize=15)
 
-plt.savefig("../figures/lin_reg_2_points_ridge.svg", facecolor="none", edgecolor="none")
-add_grey_points()
-plt.savefig(
-    "../figures/lin_reg_2_points_ridge_grey.svg", facecolor="none", edgecolor="none"
-)
-
-# %%
-plt.figure(figsize=(4, 3))
-regr = linear_model.Ridge(alpha=0.02)
-plt.axes([0.1, 0.1, 0.9, 0.9])
-style_figs.light_axis()
-plt.ylabel("y", size=22, weight=600)
-plt.xlabel("x", size=22, weight=600)
-np.random.seed(0)
-plt.xlim((0, 2))
-plt.ylim((0, 2))
-for _ in range(5):
-    noisy_X = X + np.random.normal(loc=0, scale=0.1, size=X.shape)
-    plt.plot(noisy_X, y, "o", markersize=10)
-    regr.fit(noisy_X, y)
-    plt.plot(X_test, regr.predict(X_test), linewidth=1.5)
-
-plt.savefig(
-    "../figures/lin_reg_2_points_best_ridge.svg", facecolor="none", edgecolor="none"
-)
-add_grey_points()
-plt.savefig(
-    "../figures/lin_reg_2_points_best_ridge_grey.svg",
-    facecolor="none",
-    edgecolor="none",
-)
-
+regr = linear_model.Ridge(alpha=50)
+regr.fit(X_train, y_train)
+plt.plot(X_test, regr.predict(X_test), linewidth=1.5, c=color)
+plt.savefig("ridge_0_withreg.svg", facecolor="none", edgecolor="none")
 
 # %%
 # Categorical
-
-
 n_samples = 100
 np.random.seed(0)
 X = np.random.normal(size=n_samples)

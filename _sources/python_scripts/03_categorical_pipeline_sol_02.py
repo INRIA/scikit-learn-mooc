@@ -33,7 +33,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # %%
 target_name = "class"
 target = adult_census[target_name]
-data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
+data = adult_census.drop(columns=[target_name, "education-num"])
 
 # %% [markdown]
 # As in the previous notebooks, we use the utility `make_column_selector`

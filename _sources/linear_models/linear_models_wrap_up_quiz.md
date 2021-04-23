@@ -147,7 +147,7 @@ work only with **numerical features**.
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 target = adult_census["class"]
 data = adult_census.select_dtypes(["integer", "floating"])
-data = data.drop(columns=["fnlwgt", "education-num"])
+data = data.drop(columns=["education-num"])
 ```
 
 ```{admonition} Question
@@ -212,7 +212,7 @@ load Adult Census with the following snippet:
 ```py
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 target = adult_census["class"]
-data = adult_census.drop(columns=["class", "fnlwgt", "education-num"])
+data = adult_census.drop(columns=["class", "education-num"])
 ```
 
 ```{admonition} Question

@@ -36,12 +36,11 @@ target = adult_census[target_name]
 target
 
 # %% [markdown]
-# We drop from our data the target name, and well as the `"fnlwgt"` column
-# which is a censurs weighting and the `"education-num"` column, which
-# duplicates the information in another column.
+# We drop from our data the target and the `"education-num"` column which
+# duplicates the information with `"education"` columns.
 
 # %%
-data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
+data = adult_census.drop(columns=[target_name, "education-num"])
 data.head()
 
 # %% [markdown]

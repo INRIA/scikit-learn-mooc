@@ -526,18 +526,21 @@ Large `alpha` → more regularization
 
 ???
 
-If we have too many parameters in regard to the number of samples, the
-linear model can overfit: it assigns non-zero weights to associations by
-chance.
+If we have too many parameters in regard to the number of samples, the linear
+model can overfit: it assigns non-zero weights to features that are correlated
+with the target variable purely by chance.
 
-As described in a previous lecture, the problem with overfit is that the model
-learns a decision function that is too complicated: here the non-zero
-associations to unrelated factors such as the Zodiac sign of the first owner.
-As a consequence, the model generalizes poorly.
+As described in a previous lecture, the problem with overfitting is that the
+model learns a decision function that is too sensitive to training set specitic
+details: here the non-zero associations to unrelated factors such as the birth
+date of the first owner of the house. As a consequence, the model generalizes
+poorly.
 
-The solution is to regularize the model: to foster less complex
-solutions. For this purpose, a linear model can be regularized by
-slightly biasing to choose smaller weights for almost a similar fit.
+The solution is to regularize the model: to foster less complex solutions. For
+this purpose, a linear model can be regularized by slightly biasing to choose
+smaller weights for almost a similar fit. This way the coefficient of the
+features be very close to zero, unless they are really required by the model to
+reduce a comparatively large fraction of the training error.
 
 The `Ridge` estimator does this in scikit-learn.
 
@@ -546,59 +549,111 @@ regularization. This parameter is named `alpha`. The larger the value of
 `alpha`, the greater the bias, and thus the smaller the coefficients.
 
 ---
+class: split-40
+# Regularization on a simple example
+
+.column1[
+.center[<img src="../figures/linreg_noreg_0_nogrey.svg" width="100%">]
+]
+.column2[
+Small training set
+
+Fit a linear model without regularization
+]
+
+???
+
+To build an intuition on Ridge regression (regularized linear regression), let
+us consider again a minimal case with a single input feature and a small
+training set with just a few data points.
+
+---
+class: split-40
+# Regularization on a simple example
+
+
+.column1[
+.center[<img src="../figures/linreg_noreg_0.svg" width="100%">]
+]
+.column2[
+Small training set
+
+Fit a linear model without regularization
+
+Training points sampled at random
+
+Can overfit if the data is noisy!
+]
+
+
+---
+# Regularization on a simple example
+
+
+<img src="../figures/linreg_noreg_0.svg" width="32%">
+--
+<img src="../figures/linreg_noreg_1.svg" width="32%">
+--
+<img src="../figures/linreg_noreg_2.svg" width="32%">
+<img src="../figures/linreg_noreg_3.svg" width="32%">
+<img src="../figures/linreg_noreg_4.svg" width="32%">
+<img src="../figures/linreg_noreg_5.svg" width="32%">
+
+???
+
+Let's observe how the slope of the model fitted without regularization could be
+impacted if instead of the blue training set we had trained our linear
+regression model was trained on alternative training sets with the same size
+sampled at random from the same data distribution.
+
+---
+class: split-50
 # Bias-variance tradeoff in Ridge regression
 
+.column1[
+.center[<img src="../figures/linreg_noreg_0.svg" width="50%">]
 
-.pull-left.shift-left[<img src="../figures/lin_reg_2_points_no_penalty.svg" width="110%">]
-.pull-right[<img src="../figures/lin_reg_2_points_ridge.svg" width="110%">]
+`LinearRegression` (no&nbsp;regularization)
 
-.pull-left.shift-left[&nbsp; &nbsp; &nbsp; Low bias, high variance]
-.pull-right[&nbsp; &nbsp; &nbsp; High bias, low variance]
-???
-Let's illustrate the ridge's bias-variance tradeoff.
+High variance, no bias.
+]
+.column2[
+.center[<img src="../figures/ridge_0_withreg.svg" width="50%">]
 
-With 2 data points, a non-biased linear model fits perfectly the data.
+`Ridge` regression (regularized)
 
-When there is noise in the data, the non-biased linear model captures this
-noise if there is few training samples. As a result, it displays a lot of
-*variance* in its predictions: retraining on another training set with the same
-number of data point would yield a very different prediction function.
-
-On the right, we have a ridge estimator with a large value of `alpha`,
-regularizing the coefficients by shrinking them to zero.
-
-The ridge displays much less variance. However, it systematically
-under-estimates the coefficient. It displays a **biased** behavior.
+Lower variance, but biased!
+]
 
 ---
 # Bias-variance tradeoff in Ridge regression
 
 .split-3columns[
 .column[
-<img src="../figures/lin_reg_2_points_no_penalty_grey.svg" width="100%">
+<img src="../figures/ridge_alpha_0.svg" width="100%">
 
 .center[Too much variance]
+
+.center[`alpha` too small]
 ]
 .column[
-<img src="../figures/lin_reg_2_points_best_ridge_grey.svg" width="100%">
+<img src="../figures/ridge_alpha_50.svg" width="100%">
 
 .center[Best tradeoff]
 ]
 .column[
-<img src="../figures/lin_reg_2_points_ridge_grey.svg" width="100%">
+<img src="../figures/ridge_alpha_500.svg" width="100%">
 
 .center[Too much bias]
+
+.center[`alpha` too large]
 ]
-]
-.split-50[
-.column1[.center[*Small alpha*]]
-.column2[.center[*Large alpha*]]
 ]
 
 ???
 
 This is a typical example of bias/variance tradeoff: non-regularized
-estimator are not biased, but they can display a lot of variance.
+estimators are not biased, but they can display a lot of variance.
 Highly-regularized models have little variance, but high bias.
 
 This bias is not necessarily a bad thing: what matters is choosing the
@@ -659,18 +714,16 @@ Almost as fast as fitting a single `Ridge` model!
 ---
 # Regularization in logistic regression
 
-The parameter `C` controls the complexity of the model: high&nbsp;C&nbsp;value&nbsp;→&nbsp;weaker regularization.
+`LogisticRegression(C=1)` is regularized by default!
+
+--
+
+High&nbsp;C&nbsp;value&nbsp;→&nbsp;weaker regularization.
 
 .shift-up-less.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="90%">]
 .shift-up-less.pull-right[<img src="../figures/logistic_2D_C1.svg" width="90%">]
 .shift-up.pull-left.shift-left[&nbsp;&nbsp;Small `C`]
 .shift-up.pull-right[&nbsp;&nbsp;Large `C`]
-
-.width65.shift-up-less.centered[
- ```python
-from sklearn.linear_model import LogisticRegressionCV
- ```
-]
 
 ???
 

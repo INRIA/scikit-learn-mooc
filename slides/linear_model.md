@@ -76,6 +76,17 @@ Predict the value of the target `y` given some observation `x`
 <img src="../figures/linear_data.svg" width="100%">
 ]
 
+.column2[
+### Linear approximation of Sale_Price:
+
+```
+Sale_Price =       0.1 * Gr_Liv_Area
+              +    1.1 * Year_Built
+              -    8.9 * Full_Bath
+              - 2200.0
+```
+]
+
 ???
 
 For illustration purpose, let's consider a 1-dimensional observations:

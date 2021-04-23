@@ -7,10 +7,10 @@ In the previous notebook, we used pandas and specifically
 - a) load a comma-separated values file
 - b) load a dataset already included in the pandas package
 - c) load a file only containing the survey features
-- d) load a file only containing the class of our classification problem:
+- d) load a file only containing the target of our classification problem:
   whether or not a person has a low or high income salary
-- e) load a file containing both the feature and the class for our datascience
-  project
+- e) load a file containing both the features and the target for our classification
+  problem
 
 _Select multiple answers_
 ```
@@ -21,7 +21,7 @@ _Select multiple answers_
 
 In the previous notebook, we used:
 
-- a) pandas to manipulate (filter and transform) data
+- a) pandas to manipulate data
 - b) pandas and seaborn to visually inspect the dataset
 - b) numpy and scipy to perform numerical inspection (for instance using
   `scipy.optimize.minimize`)

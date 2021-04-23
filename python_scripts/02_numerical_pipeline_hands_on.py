@@ -100,13 +100,13 @@ data.head()
 # %%
 numerical_columns = [
     "age", "education-num", "capital-gain", "capital-loss",
-    "hours-per-week", "fnlwgt"]
+    "hours-per-week"]
 data[numerical_columns].head()
 
 # %% [markdown]
 # Now that we limited the dataset to numerical columns only,
-# we can analyse these numbers to figure out what they represent.
-# Discarding `"fnlwgt"` for the moment, we can identify two types of usage.
+# we can analyse these numbers to figure out what they represent. We can
+# identify two types of usage.
 #
 # The first column, `"age"`, is self-explanatory. We can note that the values
 # are continuous, meaning they can take up any number in a given range. Let's
@@ -119,8 +119,8 @@ data["age"].describe()
 # We can see the age varies between 17 and 90 years.
 #
 # We could extend our analysis and we will find that `"capital-gain"`,
-# `"capital-loss"`, `"hours-per-week"` and `"fnlwgt"` are also representing
-# quantitative data.
+# `"capital-loss"`, and `"hours-per-week"` are also representing quantitative
+# data.
 #
 # However, the column `"education-num"` is different. It corresponds to the
 # educational stage that is not necessarily the number of years studied, and
@@ -136,12 +136,6 @@ data["education-num"].value_counts().sort_index()
 # our analysis since particular attention is required when dealing with
 # categorical features. This topic will be discussed in depth in a subsequent
 # notebook.
-#
-# In addition, we decide to ignore the column `"fnlwgt"`. This decision is not
-# linked with the feature being numerical or categorical. Indeed, this feature
-# is derived from a combination of other features, as mentioned in the
-# description of the dataset. Thus, we will only focus on the original data
-# collected during the survey.
 #
 # Now, we can select the subset of numerical columns and store them inside a
 # new dataframe.

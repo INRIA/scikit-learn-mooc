@@ -117,11 +117,6 @@ all_columns = numerical_columns + categorical_columns + [
 adult_census = adult_census[all_columns]
 
 # %% [markdown]
-# Note that for simplicity, we have ignored the "fnlwgt" (final weight) column
-# that was crafted by the creators of the dataset when sampling the dataset to
-# be representative of the full census database.
-
-# %% [markdown]
 # We can check the number of samples and the number of columns available in
 # the dataset:
 

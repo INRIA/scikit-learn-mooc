@@ -30,8 +30,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 target_name = "class"
 target = adult_census[target_name]
-data = adult_census.drop(columns=[target_name, "fnlwgt", "education-num"])
-
+data = adult_census.drop(columns=[target_name, "education-num"])
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(

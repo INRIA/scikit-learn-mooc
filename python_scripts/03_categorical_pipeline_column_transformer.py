@@ -26,6 +26,8 @@
 import pandas as pd
 
 adult_census = pd.read_csv("../datasets/adult-census.csv")
+# drop the duplicated column `"education-num"` as stated in the first notebook
+adult_census = adult_census.drop(columns="education-num")
 
 target_name = "class"
 target = adult_census[target_name]
@@ -38,14 +40,6 @@ data = adult_census.drop(columns=[target_name])
 # scikit-learn documentation, `data` is commonly named `X` and `target` is
 # commonly called `y`.
 # ```
-
-# %% [markdown]
-# We recall that both `"education-num"` and `"education"` contain the same
-# information. In the previous notebook, we dropped `"education-num"` and
-# used `"education"` instead; we will do the same processing here.
-
-# %%
-data = data.drop(columns="education-num")
 
 # %% [markdown]
 # ## Selection based on data types

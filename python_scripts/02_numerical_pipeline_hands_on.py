@@ -27,6 +27,8 @@
 import pandas as pd
 
 adult_census = pd.read_csv("../datasets/adult-census.csv")
+# drop the duplicated column `"education-num"` as stated in the first notebook
+adult_census = adult_census.drop(columns="education-num")
 adult_census.head()
 
 # %% [markdown]
@@ -98,9 +100,7 @@ data.head()
 # integers and check their content.
 
 # %%
-numerical_columns = [
-    "age", "education-num", "capital-gain", "capital-loss",
-    "hours-per-week"]
+numerical_columns = ["age", "capital-gain", "capital-loss", "hours-per-week"]
 data[numerical_columns].head()
 
 # %% [markdown]
@@ -122,28 +122,9 @@ data["age"].describe()
 # `"capital-loss"`, and `"hours-per-week"` are also representing quantitative
 # data.
 #
-# However, the column `"education-num"` is different. It corresponds to the
-# educational stage that is not necessarily the number of years studied, and
-# thus not a quantitative measurement. This feature is a categorical feature
-# already encoded with discrete numerical values. To see this specificity, we
-# will look at the count for each educational stage:
+# Now, we store the subset of numerical columns in a new dataframe.
 
 # %%
-data["education-num"].value_counts().sort_index()
-
-# %% [markdown]
-# This feature is indeed a nominal categorical feature. We exclude it from
-# our analysis since particular attention is required when dealing with
-# categorical features. This topic will be discussed in depth in a subsequent
-# notebook.
-#
-# Now, we can select the subset of numerical columns and store them inside a
-# new dataframe.
-
-# %%
-numerical_columns = [
-    "age", "capital-gain", "capital-loss", "hours-per-week"]
-
 data_numeric = data[numerical_columns]
 
 # %% [markdown]

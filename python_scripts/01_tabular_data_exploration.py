@@ -28,8 +28,11 @@
 # %% [markdown]
 # ## Loading the adult census dataset
 #
-# We will use data from the "Current Population adult_census" from 1994 that we
-# downloaded from [OpenML](http://openml.org/).
+# We will use data from the 1994 US census that we downloaded from
+# [OpenML](http://openml.org/).
+#
+# You can look at the OpenML webpage to learn more about this dataset:
+# <http://www.openml.org/d/1590>
 #
 # The dataset is available as a CSV (Comma-Separated Values) file and we will
 # use pandas to read it.
@@ -47,9 +50,6 @@ import pandas as pd
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We can look at the OpenML webpage to learn more about this dataset:
-# <http://www.openml.org/d/1590>
-#
 # The goal with this data is to predict whether a person earns over 50K a year
 # from heterogeneous data such as age, employment, education, family
 # information, etc.

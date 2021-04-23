@@ -45,7 +45,7 @@ data.head()
 
 # %% [markdown]
 # To simplify future visualization, let's transform the prices from the
-# dollar ($) range to the thousand dollars (k$) range.
+# dollar (\$) range to the thousand dollars (k\$) range.
 
 # %%
 target *= 100

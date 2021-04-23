@@ -86,8 +86,7 @@ living area.
 class: split-40
 # Linear regression
 
-A linear model is a ramp "as close as possible" to all samples.
-The blue curve shows the predictions for any possible `x`
+Fit a prediction line as close as possible to all training points.
 
 .column1[
 <img src="../figures/linear_fit.svg" width="100%">
@@ -105,7 +104,7 @@ linear_regression.fit(X, y)
 
 ???
 
-We learn a linear function to predict *y*. Here, the price is expressed
+We learn a linear function to predict `y`. Here, the price is expressed
 as a constant multiplied by the number of years of study.
 
 Learning this function consists in finding the straight line which is
@@ -132,22 +131,27 @@ from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
 linear_regression.fit(X, y)
+```
+]
+--
+.column2[
+```python
+import numpy as np
 
-y_pred = linear_regression.predict(X_new)
+y_pred = linear_regression.predict(X)
+squared_error = np.sum(y - y_pred) ** 2)
 ```
 ]
 
 ???
 
-The slope of the line is chosen to minimize the distance between the
-prediction and the data points. This distance constitutes an error
-for each sample shown as the red bar on the figure.
+The best fit is represented by the blue line which minimizes the sum of the
+square differences between the predicted values and the values of the target
+variable represented by the red segments.
 
-The best fit is the blue line which minimizes the sum of the square of
-those red lines.
-
-Fortunately, scikit-learn has an estimator, the `LinearRegression`
-object, that computes this for us.
+This minimization happens when we call the `fit` method of the
+`LinearRegression` class. The result is the automated tuning of the slope and
+intercept coefficient of the linear model.
 
 ---
 class: split-60
@@ -333,7 +337,7 @@ class: split-50
 .column1[
 <img src="../figures/lin_separable.svg">
 
-Linearly separable
+*Almost* linearly separable
 ]
 
 .column2[
@@ -345,14 +349,14 @@ Linearly separable
 
 ???
 
-Linear models work well if the classes are linearly separable.
+Linear models work well if the classes are (almost) linearly separable.
 
 However, sometimes, the best decision boundary to separate classes is not well
 approximated by a straight line.
 
 In such a situation, we can either use non-linear models, or perform
 transformations on the data, to engineer new features. We will cover these in
-other lessons.
+a the following notebooks.
 
 ---
 .center[
@@ -369,9 +373,6 @@ other lessons.
 
 --
 * Hard to beat when `n_features` is large
-
---
-* Regularization helpful in this case
 
 ???
 
@@ -397,8 +398,11 @@ examples of this strategy in the next exercises and notebooks.
 
 Linear models are particularly useful when the number of features is larger
 than the number of samples: more complex model can typically struggle more than
-regularized linear models in this regime for no added improvement in predictive
+linear models in this regime for no added improvement in predictive
 performance.
+
+Howerver in high dimensions, we need to use regularized linear models which
+will introduce in the next presentation.
 
 
 ---
@@ -446,8 +450,8 @@ Example for linear regression:
 Sale_Price =      0.1 * Gr_Liv_Area
              +    1.1 * Year_Built
              -    8.9 * Full_Bath
-             +    2.5 * Zodiac_sign_first_owner_is_capricorn
-             -    1.5 * Zodiac_sign_first_owner_is_taurus
+             +    2.5 * First_Owner_Is_Born_In_January
+             -    1.5 * First_Owner_Is_Born_In_February
              ...
              - 2200.0
 ```
@@ -506,7 +510,7 @@ Large `alpha` → more regularization
 
 --
 .nocolumn[
-**Recommendation**: always use `Ridge` with a good `alpha`!
+**Recommendation**: always use `Ridge` with a carefully tuned `alpha`!
 ]
 
 ???
@@ -644,7 +648,7 @@ Almost as fast as fitting a single `Ridge` model!
 ---
 # Regularization in logistic regression
 
-.small[The parameter `C` controls the complexity of the model, high C value → more flexibility.]
+The parameter `C` controls the complexity of the model: high&nbsp;C&nbsp;value&nbsp;→&nbsp;weaker regularization.
 
 .shift-up-less.shift-left.pull-left[<img src="../figures/logistic_2D_C0.001.svg" width="90%">]
 .shift-up-less.pull-right[<img src="../figures/logistic_2D_C1.svg" width="90%">]

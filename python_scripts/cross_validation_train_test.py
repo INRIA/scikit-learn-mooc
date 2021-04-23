@@ -202,9 +202,18 @@ cv_results.head()
 
 # %% [markdown]
 # ```{tip}
-# By convention, scikit-learn model evaluation tools always use a convention
-# where "higher is better", this explains we used
-# `scoring="neg_mean_absolute_error"` (meaning "negative mean absolute error").
+# A score is a metric for which higher values mean better results. On the
+# contrary, an error is a metric for which lower values mean better results.
+# The parameter `scoring` in `cross_validate` always expect a function that is
+# a score.
+#
+# To make it easy, all error metrics in scikit-learn, like
+# `mean_absolute_error`, can be transformed into a score to be used in
+# `cross_validate`. To do so, you need to pass a string of the error metric
+# with an additional `neg_` string at the front to the parameter `scoring`;
+# for instance `scoring="neg_mean_absolute_error"`. In this case, the negative
+# of the mean absolute error will be computed which would be equivalent to a
+# score.
 # ```
 #
 # Let us revert the negation to get the actual error:

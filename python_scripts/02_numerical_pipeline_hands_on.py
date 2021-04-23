@@ -143,7 +143,7 @@ data_numeric = data[numerical_columns]
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data_numeric, target, random_state=42)
+    data_numeric, target, random_state=42, test_size=0.25)
 
 # %% [markdown]
 # ```{tip}
@@ -152,7 +152,24 @@ data_train, data_test, target_train, target_test = train_test_split(
 # `train_test_split` case the randomness comes from shuffling the data, which
 # decides how the dataset is split into a train and a test set).
 # ```
-#
+
+# %% [markdown]
+# When calling the function `train_test_split`, we specified that we would like
+# to have 25% of samples in the testing set while the remaining samples (75%)
+# will be available in the training set. We can check quickly if we got
+# what we expected.
+
+# %%
+print(f"Number of samples in testing: {data_test.shape[0]} => "
+      f"{data_test.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
+      f" original set")
+
+# %%
+print(f"Number of samples in training: {data_train.shape[0]} => "
+      f"{data_train.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
+      f" original set")
+
+# %% [markdown]
 # In the previous notebook, we used a k-nearest neighbors model. While this
 # model is intuitive to understand, it is not widely used in practice. Now, we
 # will use a more useful model, called a logistic regression, which belongs to
@@ -196,14 +213,6 @@ accuracy = model.score(data_test, target_test)
 print(f"Accuracy of logistic regression: {accuracy:.3f}")
 
 # %% [markdown]
-#
-# ```{caution}
-# Be aware you should use cross-validation instead of `train_test_split` in
-# practice. We used a single split, to highlight the scikit-learn API and the
-# methods `fit`, `predict`, and `score`. In the module "Select the best model"
-# we will go into details regarding cross-validation.
-# ```
-#
 # Now the real question is: is this statistical performance relevant of a good
 # predictive model? Find out by solving the next exercise!
 #

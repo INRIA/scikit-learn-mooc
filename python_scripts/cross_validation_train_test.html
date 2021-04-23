@@ -1855,9 +1855,17 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>By convention, scikit-learn model evaluation tools always use a convention
-where “higher is better”, this explains we used
-<code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_absolute_error&quot;</span></code> (meaning “negative mean absolute error”).</p>
+<p>A score is a metric for which higher values mean better results. On the
+contrary, an error is a metric for which lower values mean better results.
+The parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code> in <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> always expect a function that is
+a score.</p>
+<p>To make it easy, all error metrics in scikit-learn, like
+<code class="docutils literal notranslate"><span class="pre">mean_absolute_error</span></code>, can be transformed into a score to be used in
+<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>. To do so, you need to pass a string of the error metric
+with an additional <code class="docutils literal notranslate"><span class="pre">neg_</span></code> string at the front to the parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code>;
+for instance <code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_absolute_error&quot;</span></code>. In this case, the negative
+of the mean absolute error will be computed which would be equivalent to a
+score.</p>
 </div>
 <p>Let us revert the negation to get the actual error:</p>
 <div class="cell docutils container">

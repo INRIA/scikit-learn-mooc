@@ -27,6 +27,8 @@
 import pandas as pd
 
 adult_census = pd.read_csv("../datasets/adult-census.csv")
+# drop the duplicated column `"education-num"` as stated in the first notebook
+adult_census = adult_census.drop(columns="education-num")
 
 target_name = "class"
 target = adult_census[target_name]
@@ -70,20 +72,6 @@ data.dtypes
 # %% [markdown]
 # If we look at the `"native-country"` column, we observe its data type is
 # `object`, meaning it contains string values.
-#
-# Sometimes, categorical columns could also be encoded with integers. In such
-# case, looking at the data type will not be enough. In a previous notebook,
-# we saw it is the case with the column `"education-num"`.
-
-# %%
-data["education-num"].value_counts()
-
-# %% [markdown]
-# When considering categorical columns, we should include these columns.
-# However, we also saw earlier that `"education-num"` and `"education"`
-# represent the exact same information. Therefore, we can get rid of one of the
-# two. In this notebook we will use `"education"` because it represents
-# the original data.
 #
 # ## Select features based on their data type
 #
@@ -160,11 +148,6 @@ print(
 # We see that the categories have been encoded for each feature (column)
 # independently. We also note that the number of features before and after the
 # encoding is the same.
-#
-# ```{tip}
-# This encoding was used by the dataset's publishers on the `"education"`
-# feature, which gave the feature `"education-num"`.
-# ```
 #
 # However, be careful when applying this encoding strategy:
 # using this integer representation leads downstream predictive models

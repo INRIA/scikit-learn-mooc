@@ -59,7 +59,7 @@ penguins["Species"].value_counts()
 # Plot histograms for the numerical features
 
 # %%
-_ = penguins.hist(figsize=(8, 4), edgecolor="black")
+_ = penguins.hist(figsize=(8, 4))
 
 # %% [markdown]
 # Show features distribution for each class. Hint: use
@@ -69,8 +69,14 @@ _ = penguins.hist(figsize=(8, 4), edgecolor="black")
 import seaborn
 
 pairplot_figure = seaborn.pairplot(penguins, hue="Species")
-# resize the figure to avoid overlapping x/y labels
-pairplot_figure.fig.set_size_inches(10, 7)
+
+# %% [markdown]
+# We observe that the labels on the axis are overlapping. Even if it is not
+# the priority of this notebook, one can tweak the by increasing the height
+# of each subfigure.
+
+# %%
+pairplot_figure = seaborn.pairplot(penguins, hue="Species", height=4)
 
 # %% [markdown]
 # Looking at these distributions, how hard do you think it will be to classify

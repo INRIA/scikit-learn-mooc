@@ -1508,17 +1508,12 @@ Name: Species, dtype: int64
 <p>Plot histograms for the numerical features</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages/pandas/plotting/_matplotlib/tools.py:400: MatplotlibDeprecationWarning: 
-The is_first_col function was deprecated in Matplotlib 3.4 and will be removed two minor releases later. Use ax.get_subplotspec().is_first_col() instead.
-  if ax.is_first_col():
-</pre></div>
-</div>
-<img alt="../_images/01_tabular_data_exploration_sol_01_11_1.png" src="../_images/01_tabular_data_exploration_sol_01_11_1.png" />
+<img alt="../_images/01_tabular_data_exploration_sol_01_11_0.png" src="../_images/01_tabular_data_exploration_sol_01_11_0.png" />
 </div>
 </div>
 <p>Show features distribution for each class. Hint: use
@@ -1528,13 +1523,24 @@ The is_first_col function was deprecated in Matplotlib 3.4 and will be removed t
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span>
 
 <span class="n">pairplot_figure</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span>
-<span class="c1"># resize the figure to avoid overlapping x/y labels</span>
-<span class="n">pairplot_figure</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="../_images/01_tabular_data_exploration_sol_01_13_0.png" src="../_images/01_tabular_data_exploration_sol_01_13_0.png" />
+</div>
+</div>
+<p>We observe that the labels on the axis are overlapping. Even if it is not
+the priority of this notebook, one can tweak the by increasing the height
+of each subfigure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairplot_figure</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_tabular_data_exploration_sol_01_15_0.png" src="../_images/01_tabular_data_exploration_sol_01_15_0.png" />
 </div>
 </div>
 <p>Looking at these distributions, how hard do you think it will be to classify

@@ -23,8 +23,9 @@ settings.
 # Outline
 
 * What is a linear model?
-* Linear models for regression & classification
-* How to avoid overfitting?
+* For regression: linear regression
+* For classification: logistic regression
+* Non linearly separable data
 
 
 ---
@@ -40,6 +41,8 @@ class: split-60
 |        2110 |       1968 |         2 |      244.0 |
 |        1629 |       1997 |         2 |      189.9 |
 ]
+
+--
 
 .column2[
 ### Linear approximation of Sale_Price:
@@ -81,8 +84,6 @@ Predict the value of the target `y` given some observation `x`
 
 ```
 Sale_Price =       0.1 * Gr_Liv_Area
-              +    1.1 * Year_Built
-              -    8.9 * Full_Bath
               - 2200.0
 ```
 ]
@@ -90,7 +91,7 @@ Sale_Price =       0.1 * Gr_Liv_Area
 ???
 
 For illustration purpose, let's consider a 1-dimensional observations:
-explaining the price as a function of a single feature, for instance the ground
+explaining the price as a function of a single feature, for instance the gross
 living area.
 
 ---
@@ -116,7 +117,7 @@ linear_regression.fit(X, y)
 ???
 
 We learn a linear function to predict `y`. Here, the price is expressed
-as a constant multiplied by the number of years of study.
+as a constant multiplied by the area plus an intercept.
 
 Learning this function consists in finding the straight line which is
 as close as possible as all the data points. 
@@ -351,6 +352,8 @@ class: split-50
 *Almost* linearly separable
 ]
 
+--
+
 .column2[
 <img src="../figures/lin_not_separable.svg">
 
@@ -526,9 +529,10 @@ Large `alpha` → more regularization
 
 ???
 
-If we have too many parameters in regard to the number of samples, the linear
-model can overfit: it assigns non-zero weights to features that are correlated
-with the target variable purely by chance.
+If we have too many input features with regards to the number of samples, the
+linear model can overfit: it assigns non-zero weights to features that are
+correlated with the target variable purely by chance on the training set and
+this correlation would not generalize to future test data.
 
 As described in a previous lecture, the problem with overfitting is that the
 model learns a decision function that is too sensitive to training set specitic
@@ -537,16 +541,16 @@ date of the first owner of the house. As a consequence, the model generalizes
 poorly.
 
 The solution is to regularize the model: to foster less complex solutions. For
-this purpose, a linear model can be regularized by slightly biasing to choose
-smaller weights for almost a similar fit. This way the coefficient of the
-features be very close to zero, unless they are really required by the model to
+this purpose, a linear model can be regularized by slightly biasing it to
+choose smaller weights for an almost similar fit. This forces the coefficients
+of the features to be very close to zero, unless they are really required to
 reduce a comparatively large fraction of the training error.
 
 The `Ridge` estimator does this in scikit-learn.
 
 This model comes with a complexity parameter that controls the amount of
 regularization. This parameter is named `alpha`. The larger the value of
-`alpha`, the greater the bias, and thus the smaller the coefficients.
+`alpha`, the greater the regularization, and thus the smaller the coefficients.
 
 ---
 class: split-40
@@ -602,9 +606,11 @@ Can overfit if the data is noisy!
 ???
 
 Let's observe how the slope of the model fitted without regularization could be
-impacted if instead of the blue training set we had trained our linear
-regression model was trained on alternative training sets with the same size
-sampled at random from the same data distribution.
+impacted if our linear regression model was trained on alternative training
+sets (with the same size) sampled at random from the same data distribution.
+
+This re-sampling of the training set can be simulated when following the
+cross-validation procedure for instance.
 
 ---
 class: split-50
@@ -617,6 +623,9 @@ class: split-50
 
 High variance, no bias.
 ]
+
+--
+
 .column2[
 .center[<img src="../figures/ridge_0_withreg.svg" width="50%">]
 
@@ -626,9 +635,9 @@ Lower variance, but biased!
 ]
 
 ---
+class: split-3columns
 # Bias-variance tradeoff in Ridge regression
 
-.split-3columns[
 .column[
 <img src="../figures/ridge_alpha_0.svg" width="100%">
 
@@ -636,18 +645,23 @@ Lower variance, but biased!
 
 .center[`alpha` too small]
 ]
+
+--
+
 .column[
 <img src="../figures/ridge_alpha_50.svg" width="100%">
 
 .center[Best tradeoff]
 ]
+
+--
+
 .column[
 <img src="../figures/ridge_alpha_500.svg" width="100%">
 
 .center[Too much bias]
 
 .center[`alpha` too large]
-]
 ]
 
 ???
@@ -710,6 +724,18 @@ print(model.alpha_)
 
 Almost as fast as fitting a single `Ridge` model!
 ]
+
+???
+
+It is possible to use cross-validation and the grid search procedure to tune
+the value of alpha for a given problem.
+
+But for ridge regression it's also possible to use the `RidgeCV` class that can
+run a very efficient internal tuning procedure that can be significantly faster
+than running a traditional grid search.
+
+The selected value for the parameter `alpha` is stored as the atttribute
+`model.alpha_` after calling fit.
 
 ---
 # Regularization in logistic regression

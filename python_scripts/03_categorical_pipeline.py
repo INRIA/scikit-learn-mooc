@@ -274,7 +274,7 @@ data["native-country"].value_counts()
 
 # %% [markdown]
 # ```{tip}
-# Be aware the the `OrdinalEncoder` exposes as well a parameter
+# Be aware the `OrdinalEncoder` exposes as well a parameter
 # `handle_unknown`. It can be set to `use_encoded_value` and by setting
 # `unknown_value` to handle rare categories.
 # ```

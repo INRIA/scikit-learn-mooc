@@ -46,7 +46,7 @@ regressor = DecisionTreeRegressor()
 # It gives information regarding the benefit of adding new training samples
 # to improve a model's statistical performance.
 #
-# Let's compute the the learning curve for a decision tree and vary the
+# Let's compute the learning curve for a decision tree and vary the
 # proportion of the training set from 10% to 100%.
 
 # %%

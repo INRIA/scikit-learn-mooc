@@ -43,6 +43,34 @@ If you want to generate a single notebook, you can do something like this:
 $ make notebooks/02_numerical_pipeline_scaling.ipynb
 ```
 
+## API diagrams
+
+We are using app.diagrams.net to create and update some diagrams in `figures`,
+notably the API ones.
+
+To edit the diagrams:
+https://app.diagrams.net/#HINRIA%2Fscikit-learn-mooc%2Fmaster%2Ffigures%2Fapi_diagram.drawio
+
+All the diagrams are in the same project, you can use the tabs at the bottom
+(Google-sheet style).
+
+Then each SVG needs to be exported individually (there could well be a better
+way, update this doc if you find it): `File -> Export As -> SVG`
+
+New modal (SVG): Click Export
+
+New modal (Save as):
+- make sure the export SVG name is correct
+- click Github and select (each time sorry ...) the github project, branch and
+  folder
+- At the end it will ask you this file already exists do you want to override
+  it: say yes
+- I think it asks you to tweak the commit message if you want
+
+Once you have done this, the SVG should have been updated in the github repo.
+Make sure the github svg looks the way you want:
+https://github.com/INRIA/scikit-learn-mooc/tree/master/figures
+
 ## Direct binder links to OVH, GESIS and GKE to trigger and cache builds
 
 

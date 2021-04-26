@@ -476,7 +476,7 @@ def plot_confusion_matrix_with_threshold(classifier, X_test, y_test, pos_label,
 
 # %%
 def plot_pr_roc(threshold):
-    # FIXME: we could optimize the plotting by only updating the the
+    # FIXME: we could optimize the plotting by only updating the
     fig, axs = plt.subplots(ncols=3, figsize=(21, 6))
     plot_pr_curve(
         classifier, data_test, target_test, pos_label="donated",

@@ -85,7 +85,7 @@ plt.subplots_adjust(hspace=0.8, wspace=0.8)
 
 # %% [markdown]
 # We see that some features have high picks for 0. It could be linked that this
-# value was assigned when the the criterion did not apply, for instance the
+# value was assigned when the criterion did not apply, for instance the
 # area of the swimming pool when no swimming pools are available.
 #
 # We also have some feature encoding some date (for instance year).

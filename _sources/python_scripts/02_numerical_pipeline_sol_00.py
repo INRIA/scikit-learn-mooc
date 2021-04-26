@@ -20,7 +20,7 @@
 # particular the `.fit/.predict/.score` API.
 
 # %% [markdown]
-# Let's load the the adult census dataset with only numerical variables
+# Let's load the adult census dataset with only numerical variables
 
 # %%
 import pandas as pd

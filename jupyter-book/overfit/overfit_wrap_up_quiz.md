@@ -156,7 +156,7 @@ Select the true affirmations stated below:
 - f) The model overfits for a range of `n_neighbors` values between 100 to 500
 - g) The model best generalizes for a range of `n_neighbors` values between 1 to 10
 - h) The model best generalizes for a range of `n_neighbors` values between 10 to 100
-- j) The model best generalizes for a range of `n_neighbors` values between 100 to 500
+- i) The model best generalizes for a range of `n_neighbors` values between 100 to 500
 
 _Select several answers_
 ```

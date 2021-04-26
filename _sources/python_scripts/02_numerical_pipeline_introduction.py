@@ -119,11 +119,11 @@ model.fit(data, target)
 # ```{tip}
 # In the notebook, we will use the following terminology:
 #
-# * predictor: it corresponds to a classifier or a regressor
-# * predictive model or model: it corresponds to a succession of steps made of
+# * a predictor corresponds to a classifier or a regressor
+# * a predictive model (or model) corresponds to a succession of steps made of
 #   some preprocessing steps followed by a predictor. Sometimes, no
 #   preprocessing is required.
-# * estimator: it corresponds to any scikit-learn object, transformer,
+# * an estimator corresponds to any scikit-learn object, transformer,
 #   classifier, or regressor.
 # ```
 
@@ -143,7 +143,7 @@ target_predicted = model.predict(data)
 # model states, the prediction function is specific for each type of model.
 
 # %% [markdown]
-# Let's now have a look at the predictions computed. For the sake of
+# Let's now have a look at the computed predictions. For the sake of
 # simplicity, we will look at the five first predicted targets.
 
 # %%
@@ -166,7 +166,7 @@ print(f"Number of correct prediction: "
       f"{(target[:5] == target_predicted[:5]).sum()} / 5")
 
 # %% [markdown]
-# Here, we see that our model does a mistake when predicting for the first
+# Here, we see that our model makes a mistake when predicting for the first
 # sample.
 #
 # To get a better assessment, we can compute the average success rate.
@@ -186,9 +186,9 @@ print(f"Number of correct prediction: "
 # It is harder to conclude on never-seen instances than on already seen ones.
 #
 # Correct evaluation is easily done by leaving out a subset of the data when
-# training the model and using it after for model evaluation.
-# The data used to fit a model is called training data while the one used
-# to assess a model is called testing data.
+# training the model and using it afterwards for model evaluation.
+# The data used to fit a model is called training data while the data used to
+# assess a model is called testing data.
 #
 # We can load more data, which was actually left-out from the original data
 # set.
@@ -243,9 +243,9 @@ print(f"The test accuracy using a {model_name} is "
 # on the training set, we find that this evaluation was indeed optimistic
 # compared to the score obtained on an held-out test set.
 #
-# It shows the importance to always test the statistical performance of
+# It shows the importance to always testing the statistical performance of
 # predictive models on a different set than the one used to train these models.
-# We will come back more into details regarding how predictive models should be
+# We will discuss later in more details how predictive models should be
 # evaluated.
 
 # %% [markdown]

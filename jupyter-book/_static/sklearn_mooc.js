@@ -17,7 +17,10 @@
     document.querySelector('.topbar').remove();
     document.querySelector('.prev-next-bottom').remove();
     document.querySelector('.footer').remove();
-    document.querySelector('.remove-from-content-only').remove();
+    var elementsToRemove = document.querySelectorAll('.remove-from-content-only');
+    elementsToRemove.forEach(
+      function(el) { el.remove(); }
+    );
     document.querySelector('#main-content').querySelector('.col-md-9').className = 'col-12';
 
     var style=document.createElement('style');

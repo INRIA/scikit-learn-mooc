@@ -23,8 +23,9 @@ settings.
 # Outline
 
 * What is a linear model?
-* Linear models for regression & classification
-* How to avoid overfitting?
+* For regression: linear regression
+* For classification: logistic regression
+* Non linearly separable data
 
 
 ---

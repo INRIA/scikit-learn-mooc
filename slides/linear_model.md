@@ -151,7 +151,7 @@ linear_regression.fit(X, y)
 import numpy as np
 
 y_pred = linear_regression.predict(X)
-squared_error = np.sum(y - y_pred) ** 2)
+squared_error = np.sum((y - y_pred) ** 2)
 ```
 ]
 

@@ -201,7 +201,7 @@ clf = HistGradientBoostingClassifier(learning_rate=.1)
 ]
 
 ???
-We could continue to refining our ensemble model.
+We could continue to refine our ensemble model.
 At each step we focus on mistakes of the previous model.
 
 ---
@@ -268,10 +268,10 @@ At each step we focus on mistakes of the previous model.
 
 # Take away
 
-- **bagging** and **random forest** independently fits deep trees
+- **bagging** and **random forest** independently fit deep trees
   + each individual tree overfits
   + averaging the individual tree predictions fights overfitting
-- **boosting** fits sequentially shallow trees
+- **gradient boosting** fits sequentially shallow trees
   + each individual tree underfits
   + sequentially adding trees reduces overfitting
 - **gradient boosting** tend to perform slightly better than **bagging** and

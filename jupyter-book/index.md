@@ -3,9 +3,12 @@
 ## Course presentation
 
 ```{admonition} Welcome!
+:class: remove-from-content-only
+
 The goal of this course is to teach machine learning with scikit-learn to
 beginners, even without a strong technical background.
 ```
+
 Predictive modeling brings value to a vast variety of data, in business
 intelligence, health, industrial processes and scientific discoveries. It is a
 pillar of modern data science. In this field, scikit-learn is a central tool:
@@ -23,29 +26,29 @@ step of the design of a predictive modeling pipeline: from choices in data
 preprocessing, to choosing models, gaining insights on their failure modes and
 interpreting their predictions.
 
-<div class="admonition tip remove-from-content-only" name="html-admonition">
-<p class="title">Follow the MOOC</p>
-<div class="container">
-<div class="row">
-<div class="col-xl">
-This document is a work in progress. You can
-<a
-href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">register to the "Machine learning in Python with scikit-learn MOOC"</a>, based on
-this document. Note: you will be able to register now but the MOOC itself will
-start on May 18 2021.
-</br>
-The MOOC is free and the platform does not use the student data for any other purpose than improving
-the educational material.
-</div>
-<div class="col-lg-5">
-<a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
-<img src="figures/mooc_computer.jpg" style="width:100%">
-</a>
-</div>
-</div>
-</div>
-</div>
+```{admonition} Follow the MOOC
+:class: remove-from-content-only tip
 
+<div class="container">
+  <div class="row">
+    <div class="col-xl">
+      This document is a work in progress. You can
+      <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
+        register to the "Machine learning in Python with scikit-learn MOOC"
+      </a>,
+      based on this document. Note: you will be able to register now but the MOOC itself will
+      start on May 18 2021.</br>
+      The MOOC is free and the platform does not use the student data for any other purpose
+      than improving the educational material.
+    </div>
+    <div class="col-lg-5">
+      <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
+        <img src="figures/mooc_computer.jpg" style="width:100%">
+      </a>
+    </div>
+  </div>
+</div>
+```
 
 ## Prerequisites
 

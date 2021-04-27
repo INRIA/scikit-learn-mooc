@@ -15,15 +15,11 @@
 # %% [markdown]
 # # Preprocessing for numerical features
 #
-# In this notebook, we present how to build predictive models on tabular
-# datasets, with only numerical features. By contrast, with the previous
-# notebook, we will select the numerical features from the original dataset
-# instead to read an external file where the selection has been done
-# beforehand.
+# In this notebook, we will still use only numerical features.
+
+# We will introduce these new aspects:
 #
-# In particular we will highlight:
-#
-# * an example of preprocessing, namely the **scaling numerical variables**;
+# * an example of preprocessing, namely **scaling numerical variables**;
 # * using a scikit-learn **pipeline** to chain preprocessing and model
 #   training;
 # * assessing the statistical performance of our model via **cross-validation**
@@ -303,15 +299,26 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # model statistical performance. By repeating the experiment, one can get an
 # estimate of the variability of the model statistical performance.
 #
+# The next figure shows how the dataset is partitioned into train and test
+# samples at each iteration the cross-validation procedure.
+#
+# ![Cross-validation diagram](../figures/cross_validation_diagram.png)
+#
 # ```{note}
-# We will go into details regarding cross-validation in the upcoming module
-# "Selecting the best model".
+# This figure shows a particular cross-validation strategy named K-fold. There
+# are a variety of different cross-validation strategies. Some of these aspects
+# will be covered in more details in future notebooks.
 # ```
 #
-# The function `cross_validate` allows for such experimental protocol by
-# providing the model, the data, and the target. Since there exists several
-# cross-validation strategies, `cross_validate` takes a parameter `cv` which
-# defines the splitting strategy.
+# For each cross-validation split, the procedure trains a model on all the red
+# samples and evaluate the score of the model on the blue samples.
+# Cross-validation is therefore computationally intensive because it requires
+# training several models instead of one.
+#
+# In scikit-learn, the function `cross_validate` allows to do cross-validation
+# and you need to pass it the model, the data, and the target. Since there
+# exists several cross-validation strategies, `cross_validate` takes a
+# parameter `cv` which defines the splitting strategy.
 
 # %%
 # %%time
@@ -327,9 +334,21 @@ cv_result
 # to predict with the model on the testing data for each fold, and (iii) the
 # default score on the testing data for each fold.
 #
-# Additional can be returned, for instance training scores or the fitted models
-# per fold, by passing additional parameters. We will give more details about
-# these features in a subsequent notebook.
+# Setting `cv=5` created 5 distinct splits to get 5 variations for the training
+# and testing sets. Each training set is used to fit one model which is then
+# scored on the matching test set. This strategy is called K-fold
+# cross-validation where `K` corresponds to the number of splits.
+#
+# Note that by default the `cross_validate` function above discards the 5
+# models that were trained on the different overlapping subset of the dataset.
+# The goal of cross-validation is not to train a model, but rather to estimate
+# approximately the generalization performance of a model that would have been
+# trained to the full training set, along with an estimate of the variability
+# (uncertainty on the generalization accuracy).
+#
+# You can pass additional parameters to `cross_validate` to get more
+# information, for instance training scores. These features will be covered in
+# a future notebook.
 #
 # Let's extract the test scores for the dictionary and compute the mean
 # accuracy and the variation of the accuracy across folds.
@@ -340,33 +359,17 @@ print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# Note that by computing the standard-deviation of the cross-validation scores
-# we can get an idea of the uncertainty of our estimation of the predictive
-# performance of the model: in the above results, only the first 2 decimals
-# seem to be trustworthy. Using a single train / test split would not allow us
-# to know anything about the level of uncertainty of the accuracy of the model.
+# Note that by computing the standard-deviation of the cross-validation scores,
+# we can estimate the uncertainty of our model statistical performance. This is
+# the main advantage of cross-validation and can be crucial in practice, for
+# example when comparing different models to figure out whether one is better
+# than the other or whether the statistical performance differences are within
+# the uncertainty.
 #
-# Setting `cv=5` created 5 distinct splits to get 5 variations for the training
-# and testing sets. Each training set is used to fit one model which is then
-# scored on the matching test set. This strategy is called K-fold
-# cross-validation where `K` corresponds to the number of splits.
-#
-# The figure helps visualize how the dataset is partitioned into train and test
-# samples at each iteration of the cross-validation procedure:
-#
-# ![Cross-validation diagram](../figures/cross_validation_diagram.png)
-#
-# For each cross-validation split, the procedure trains a model on the
-# concatenation of the red samples and evaluate the score of the model by using
-# the blue samples. Cross-validation is therefore computationally intensive
-# because it requires training several models instead of one.
-#
-# Note that by default the `cross_validate` function above discards the 5
-# models that were trained on the different overlapping subset of the dataset.
-# The goal of cross-validation is not to train a model, but rather to estimate
-# approximately the generalization performance of a model that would have been
-# trained to the full training set, along with an estimate of the variability
-# (uncertainty on the generalization accuracy).
+# In this particular case, only the first 2 decimals seem to be trustworthy. If
+# you go up in this notebook, you can check that the performance we get
+# with cross-validation is compatible with the one from a single train-test
+# split.
 
 # %% [markdown]
 # In this notebook we have:

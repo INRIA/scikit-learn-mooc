@@ -1424,14 +1424,10 @@
                 
   <div class="section" id="preprocessing-for-numerical-features">
 <h1>Preprocessing for numerical features<a class="headerlink" href="#preprocessing-for-numerical-features" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we present how to build predictive models on tabular
-datasets, with only numerical features. By contrast, with the previous
-notebook, we will select the numerical features from the original dataset
-instead to read an external file where the selection has been done
-beforehand.</p>
-<p>In particular we will highlight:</p>
+<p>In this notebook, we will still use only numerical features.</p>
+<p>We will introduce these new aspects:</p>
 <ul class="simple">
-<li><p>an example of preprocessing, namely the <strong>scaling numerical variables</strong>;</p></li>
+<li><p>an example of preprocessing, namely <strong>scaling numerical variables</strong>;</p></li>
 <li><p>using a scikit-learn <strong>pipeline</strong> to chain preprocessing and model
 training;</p></li>
 <li><p>assessing the statistical performance of our model via <strong>cross-validation</strong>
@@ -1950,15 +1946,23 @@ information regarding the confidence of the results obtained.</p>
 this random splitting into training and testing sets and aggregating the
 model statistical performance. By repeating the experiment, one can get an
 estimate of the variability of the model statistical performance.</p>
+<p>The next figure shows how the dataset is partitioned into train and test
+samples at each iteration the cross-validation procedure.</p>
+<p><img alt="Cross-validation diagram" src="../_images/cross_validation_diagram.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>We will go into details regarding cross-validation in the upcoming module
-“Selecting the best model”.</p>
+<p>This figure shows a particular cross-validation strategy named K-fold. There
+are a variety of different cross-validation strategies. Some of these aspects
+will be covered in more details in future notebooks.</p>
 </div>
-<p>The function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> allows for such experimental protocol by
-providing the model, the data, and the target. Since there exists several
-cross-validation strategies, <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> takes a parameter <code class="docutils literal notranslate"><span class="pre">cv</span></code> which
-defines the splitting strategy.</p>
+<p>For each cross-validation split, the procedure trains a model on all the red
+samples and evaluate the score of the model on the blue samples.
+Cross-validation is therefore computationally intensive because it requires
+training several models instead of one.</p>
+<p>In scikit-learn, the function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> allows to do cross-validation
+and you need to pass it the model, the data, and the target. Since there
+exists several cross-validation strategies, <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> takes a
+parameter <code class="docutils literal notranslate"><span class="pre">cv</span></code> which defines the splitting strategy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
@@ -1986,9 +1990,19 @@ Wall time: 702 ms
 time to train the model on the training data for each fold, (ii) the time
 to predict with the model on the testing data for each fold, and (iii) the
 default score on the testing data for each fold.</p>
-<p>Additional can be returned, for instance training scores or the fitted models
-per fold, by passing additional parameters. We will give more details about
-these features in a subsequent notebook.</p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">cv=5</span></code> created 5 distinct splits to get 5 variations for the training
+and testing sets. Each training set is used to fit one model which is then
+scored on the matching test set. This strategy is called K-fold
+cross-validation where <code class="docutils literal notranslate"><span class="pre">K</span></code> corresponds to the number of splits.</p>
+<p>Note that by default the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function above discards the 5
+models that were trained on the different overlapping subset of the dataset.
+The goal of cross-validation is not to train a model, but rather to estimate
+approximately the generalization performance of a model that would have been
+trained to the full training set, along with an estimate of the variability
+(uncertainty on the generalization accuracy).</p>
+<p>You can pass additional parameters to <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> to get more
+information, for instance training scores. These features will be covered in
+a future notebook.</p>
 <p>Let’s extract the test scores for the dictionary and compute the mean
 accuracy and the variation of the accuracy across folds.</p>
 <div class="cell docutils container">
@@ -2005,28 +2019,16 @@ accuracy and the variation of the accuracy across folds.</p>
 </div>
 </div>
 </div>
-<p>Note that by computing the standard-deviation of the cross-validation scores
-we can get an idea of the uncertainty of our estimation of the predictive
-performance of the model: in the above results, only the first 2 decimals
-seem to be trustworthy. Using a single train / test split would not allow us
-to know anything about the level of uncertainty of the accuracy of the model.</p>
-<p>Setting <code class="docutils literal notranslate"><span class="pre">cv=5</span></code> created 5 distinct splits to get 5 variations for the training
-and testing sets. Each training set is used to fit one model which is then
-scored on the matching test set. This strategy is called K-fold
-cross-validation where <code class="docutils literal notranslate"><span class="pre">K</span></code> corresponds to the number of splits.</p>
-<p>The figure helps visualize how the dataset is partitioned into train and test
-samples at each iteration of the cross-validation procedure:</p>
-<p><img alt="Cross-validation diagram" src="../_images/cross_validation_diagram.png" /></p>
-<p>For each cross-validation split, the procedure trains a model on the
-concatenation of the red samples and evaluate the score of the model by using
-the blue samples. Cross-validation is therefore computationally intensive
-because it requires training several models instead of one.</p>
-<p>Note that by default the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function above discards the 5
-models that were trained on the different overlapping subset of the dataset.
-The goal of cross-validation is not to train a model, but rather to estimate
-approximately the generalization performance of a model that would have been
-trained to the full training set, along with an estimate of the variability
-(uncertainty on the generalization accuracy).</p>
+<p>Note that by computing the standard-deviation of the cross-validation scores,
+we can estimate the uncertainty of our model statistical performance. This is
+the main advantage of cross-validation and can be crucial in practice, for
+example when comparing different models to figure out whether one is better
+than the other or whether the statistical performance differences are within
+the uncertainty.</p>
+<p>In this particular case, only the first 2 decimals seem to be trustworthy. If
+you go up in this notebook, you can check that the performance we get
+with cross-validation is compatible with the one from a single train-test
+split.</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
 <li><p>seen the importance of <strong>scaling numerical variables</strong>;</p></li>

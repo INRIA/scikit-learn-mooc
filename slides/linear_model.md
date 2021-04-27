@@ -699,7 +699,7 @@ from sklearn.model_selection \
 
 
 param_grid = {
-    "alphas": [0.001, 0.1, 1, 10, 1000],
+    "alpha": [0.001, 0.1, 1, 10, 1000],
 }
 model = GridSearchCV(Ridge(), param_grid)
 model.fit(X, y)

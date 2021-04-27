@@ -2,7 +2,9 @@
 
 all: ml_concepts.html overfitting_vs_underfitting.html \
      learning_validation_curves.html bias_vs_variance.html \
-	 linear_model.html trees.html
+     linear_models.html regularized_linear_models.html trees.html \
+     ensemble.html
+
 
 %.html: %.md custom.css
 	# HTMLArk is to embed images and css

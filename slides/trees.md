@@ -21,15 +21,13 @@ as _random forest_ and _gradient boosting trees_, as we will see.
 # Outline
 
 - What is a decision tree?
-- For classification & regression
+- Training trees for classification & regression
 - Impact of the tree depth on overfitting
 
 ---
 class: center, middle
 
 # What is a decision tree?
-
-How does it build classification and regression models?
 
 ???
 
@@ -50,6 +48,11 @@ In this example, if a new point has to be classified:
 - we will first check the age feature, if it is lower than 28.5, we shall classify it as "low income".
 
 - Otherwise, depending on the hours per week feature, we will classify it as low or high income.
+
+---
+class: center, middle
+
+# Growing a classification tree
 
 ---
 class: split-50
@@ -114,6 +117,11 @@ class: split-50
 In this example, after two splits, we obtain pure leaves.
 i.e. in each leaf, there is only one class.
 The max depth here is equal to 2. We do not need to go deeper.
+
+---
+class: center, middle
+
+# Growing a regression tree
 
 ---
 # Regression with a decision tree

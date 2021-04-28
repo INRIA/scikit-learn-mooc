@@ -2,15 +2,14 @@ class: titlepage
 
 .header[MOOC Machine learning with scikit-learn]
 
-# Tree-based models
+# Decision Trees
 
-This lesson covers decision trees.
-
-These are models for both regression and classification.
+For regression and classification.
 
 <img src="../figures/scikit-learn-logo.svg">
 
 ???
+
 Decision tree are built as a set of rules for both
 classification and regression problems.
 
@@ -23,6 +22,7 @@ as _random forest_ and _gradient boosting trees_, as we will see.
 
 - What is a decision tree?
 - For classification & regression
+- Impact of the tree depth on overfitting
 
 ---
 
@@ -30,7 +30,7 @@ class: center, middle
 
 # What is a decision tree?
 
-How does it build classification and regression models ?
+How does it build classification and regression models?
 
 ???
 
@@ -72,6 +72,7 @@ That will be defined precisely in the following notebook.
 .pull-right[<img src="../figures/tree_blue_orange2.svg" width="100%">]
 
 ???
+
 We can incrementally expand any leaf to refine the decision function.
 At each step, the leaf focuses on a smaller subregion of the space.
 
@@ -119,28 +120,61 @@ However, it can also overfit.
 Controlling the depth here allows to control the overfitting.
 
 ---
-
+class: split-3columns
 # Tree: underfit / overfit tradeoff
 
-<img src="../figures/dt_underfit.svg" width="32%">
-<img src="../figures/dt_fit.svg" width="32%">
-<img src="../figures/dt_overfit.svg" width="32%">
-
-.shift-up-less[
-&nbsp; &nbsp; Underfit &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Best tradeoff &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Overfit
+.column[
+<img src="../figures/dt_underfit.svg" width="100%">
 ]
 
-.shift-up-less[
-&nbsp; &nbsp; Small depth &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-Large depth
+--
+
+.column[
+<img src="../figures/dt_fit.svg" width="100%">
+]
+
+--
+
+.column[
+<img src="../figures/dt_overfit.svg" width="100%">
+]
+
+--
+
+.column[
+.center[Underfitting]
+
+.center.small[`max_depth` too small]
+]
+
+.column[
+.center[Best trade-off]
+]
+
+.column[
+.center[Overfitting]
+
+.center.small[`max_depth` too large]
 ]
 
 ---
 
-# Take away
+# Take home messages
 
-- Successive binary rule considering a single feature;
-- `max_depth` controls the trade-off between underfitting and overfitting.
+- Sequence of simple decision rules:
+
+  one feature and one threshold at a time
+
+--
+
+- No scaling required for numerical features
+
+--
+
+- `max_depth` controls the trade-off between underfitting and overfitting
+
+--
+
+- Mostly useful as a building block for ensemble models
+  - Random Forests
+  - Gradient Boosting Decision Trees

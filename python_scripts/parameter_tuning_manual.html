@@ -1394,7 +1394,7 @@
                 
   <div class="section" id="set-and-get-hyperparameters-in-scikit-learn">
 <h1>Set and get hyperparameters in scikit-learn<a class="headerlink" href="#set-and-get-hyperparameters-in-scikit-learn" title="Permalink to this headline">¶</a></h1>
-<p>This notebook shows how one can get and set the value of hyperparameter in
+<p>This notebook shows how one can get and set the value of a hyperparameter in
 a scikit-learn estimator. We recall that hyperparameters refer to the
 parameter that will control the learning process.</p>
 <p>They should not be confused with the fitted parameters, resulting from the
@@ -1535,14 +1535,12 @@ cross-validation.</p>
 </div>
 </div>
 </div>
-<p>We created a model with the default <code class="docutils literal notranslate"><span class="pre">C</span></code> value that is equal to 1. We saw in
-the previous exercise that we will be interested to set the value of an
-hyperparameter. One possibility is to set the parameter when we create the
-model instance. However, we might be interested to set the value of the
-parameter after the instance is created.</p>
-<p>Actually scikit-learn estimators have a <code class="docutils literal notranslate"><span class="pre">set_params</span></code> method that allows you
-to change the parameter of a model after it has been created. For example, we
-can set <code class="docutils literal notranslate"><span class="pre">C=1e-3</span></code> and fit and evaluate the model:</p>
+<p>We created a model with the default <code class="docutils literal notranslate"><span class="pre">C</span></code> value that is equal to 1. If we
+wanted to use a different <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter we could have done so when we created
+the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> object with something like <code class="docutils literal notranslate"><span class="pre">LogisticRegression(C=1e-3)</span></code>.</p>
+<p>We can also change the parameter of a model after it has been created with
+the <code class="docutils literal notranslate"><span class="pre">set_params</span></code> method, which is available for all scikit-learn estimators.
+For example, we can set <code class="docutils literal notranslate"><span class="pre">C=1e-3</span></code>, fit and evaluate the model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__C</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>

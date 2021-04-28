@@ -1412,11 +1412,6 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-fitting-with-preprocessing">
-   Model fitting with preprocessing
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model-evaluation-using-cross-validation">
    Model evaluation using cross-validation
   </a>
@@ -1491,26 +1486,19 @@ notebook.</p>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># ## Model fitting with preprocessing</span>
+<span class="c1">#</span>
+<span class="c1"># A range of preprocessing algorithms in scikit-learn allow us to transform</span>
+<span class="c1"># the input data before training a model. In our case, we will standardize the</span>
+<span class="c1"># data and then train a new logistic regression model on that new version of</span>
+<span class="c1"># the dataset.</span>
+<span class="c1">#</span>
+<span class="c1"># Let&#39;s start by printing some statistics about the training data.</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="admonition caution">
-<p class="admonition-title">Caution</p>
-<p>Be aware that we are using a single train-test split instead of a
-cross-validation to present the scikit-learn transformers API. We are not
-interested in evaluating the statistical performance of the predictive model.
-For this latest purpose, it would be required to evaluate via
-cross-validation.</p>
-</div>
-</div>
-<div class="section" id="model-fitting-with-preprocessing">
-<h2>Model fitting with preprocessing<a class="headerlink" href="#model-fitting-with-preprocessing" title="Permalink to this headline">¶</a></h2>
-<p>A range of preprocessing algorithms in scikit-learn allow us to transform
-the input data before training a model. In our case, we will standardize the
-data and then train a new logistic regression model on that new version of
-the dataset.</p>
-<p>Let’s start by printing some statistics about the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1604,8 +1592,8 @@ the dataset.</p>
 </div></div></div>
 </div>
 <p>We see that the dataset’s features span across different ranges. Some
-algorithms have some assumptions regarding the feature distributions and
-usually normalizing features will be helpful to address this assumptions.</p>
+algorithms make some assumptions regarding the feature distributions and
+usually normalizing features will be helpful to address these assumptions.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Here are some reasons for scaling features:</p>
@@ -1680,10 +1668,10 @@ as model states, in the same fashion.</p>
 </div>
 </div>
 </div>
-<p>Scaling the data is equivalent to subtract the means and divide by the
-standard deviations previously computed. This operation is defining our
-transformation function and is as well specific to each transformer. We can
-operate this transformation function by calling the method <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>
+<p>Scaling the data is equivalent to subtracting the means and dividing by the
+standard deviations previously computed. This operation defines our
+transformation function and is specific to each transformer. We can apply
+this transformation by calling the method <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
@@ -1844,7 +1832,7 @@ a name at steps based on the name of the classes.</p>
 </div>
 </div>
 </div>
-<p>This predictive pipeline exposes the same methods as the ending predictor:
+<p>This predictive pipeline exposes the same methods as the final predictor:
 <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">predict</span></code> (and additionally <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code>, <code class="docutils literal notranslate"><span class="pre">decision_function</span></code>,
 or <code class="docutils literal notranslate"><span class="pre">score</span></code>).</p>
 <div class="cell docutils container">
@@ -1898,13 +1886,13 @@ statistical performance of such a predictive pipeline.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.101 seconds in 12 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.082 seconds in 12 iterations
 </pre></div>
 </div>
 </div>
 </div>
 <p>We could compare this predictive model with the predictive model used in
-the previous notebook which was not scaling feature.</p>
+the previous notebook which did not scale features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
@@ -1926,30 +1914,30 @@ the previous notebook which was not scaling feature.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.220 seconds in 59 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.172 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
 </div>
-<p>We see that scaling the data before to train the logistic regression was
+<p>We see that scaling the data before training the logistic regression was
 beneficial in terms of computational performance. Indeed, the number of
 iterations decreased as well as the training time. The statistical
 performance did not change since both models converged.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Working with non-scaled data will potentially force the algorithm to iterate
-more as we showed in the example above. There is also catastrophic scenario
+more as we showed in the example above. There is also a catastrophic scenario
 where the number of required iterations are more than the maximum number of
 iterations allowed by the predictor (controlled by the <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>) parameter.
-Therefore, before to increase <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>, make sure that the data are well
+Therefore, before increasing <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>, make sure that the data are well
 scaled.</p>
 </div>
 </div>
 <div class="section" id="model-evaluation-using-cross-validation">
 <h2>Model evaluation using cross-validation<a class="headerlink" href="#model-evaluation-using-cross-validation" title="Permalink to this headline">¶</a></h2>
 <p>In the previous example, we split the original data into a training set and a
-testing set. This strategy has several issues: in the setting where the
-amount of data is limited, the subset used to train or test will be small.
+testing set. This strategy has several issues: in a setting where the
+amount of data is small, the subset used to train or test will be small.
 Moreover, if the splitting was done in a random manner, we do not have
 information regarding the confidence of the results obtained.</p>
 <p>Instead, we can use cross-validation. Cross-validation consists of repeating
@@ -1985,12 +1973,12 @@ parameter <code class="docutils literal notranslate"><span class="pre">cv</span>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1 s, sys: 339 ms, total: 1.34 s
-Wall time: 702 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 808 ms, sys: 293 ms, total: 1.1 s
+Wall time: 577 ms
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.1030581 , 0.10596299, 0.10561705, 0.10061812, 0.1000154 ]),
- &#39;score_time&#39;: array([0.02142096, 0.02236462, 0.02127123, 0.02104878, 0.02094531]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.08703113, 0.08440685, 0.08618665, 0.08325791, 0.08319974]),
+ &#39;score_time&#39;: array([0.01750064, 0.01771212, 0.01754284, 0.01731801, 0.01738977]),
  &#39;test_score&#39;: array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])}
 </pre></div>
 </div>

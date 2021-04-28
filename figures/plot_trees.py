@@ -94,6 +94,10 @@ plt.figure(figsize=(10, 10))
 tree.plot_tree(dtr_4_leafs, filled=True, impurity=False)
 
 # %%
+# Tree structures:
+# https://docs.google.com/drawings/d/1JKcv7GkT9eZUyXtiZVi3vgfKwH3HykTYOjgpcvHSWg4/edit?usp=sharing
+# https://docs.google.com/drawings/d/1X2vDL7vs5DXXz8ahlQ_hk1wxGmcIEeqC_wF2EtXCdJ8/edit?usp=sharing
+# https://docs.google.com/drawings/d/1ZFWR6LQySNHZIJV0ryaDH4RadKwikNwxz-cfbfJ1FjU/edit?usp=sharing
 import style_figs
 
 # Predict

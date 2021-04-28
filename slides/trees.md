@@ -139,6 +139,7 @@ class: split-50
 # Regression with a decision tree
 
 .column1[
+<img src="../figures/tree_regression_structure1.svg" width="100%">
 ]
 .column2[
 <img src="../figures/tree_regression2.svg" width="100%">
@@ -169,6 +170,7 @@ class: split-50
 # Regression with a decision tree
 
 .column1[
+<img src="../figures/tree_regression_structure2.svg" width="100%">
 ]
 .column2[
 <img src="../figures/tree_regression3.svg" width="100%">
@@ -183,6 +185,7 @@ class: split-50
 # Regression with a decision tree
 
 .column1[
+<img src="../figures/tree_regression_structure3.svg" width="100%">
 ]
 .column2[
 <img src="../figures/tree_regression4.svg" width="100%">

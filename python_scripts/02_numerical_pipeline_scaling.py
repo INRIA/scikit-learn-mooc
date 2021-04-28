@@ -69,16 +69,6 @@ from sklearn.model_selection import train_test_split
 data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
-# %% [markdown]
-#
-# ```{caution}
-# Be aware that we are using a single train-test split instead of a
-# cross-validation to present the scikit-learn transformers API. We are not
-# interested in evaluating the statistical performance of the predictive model.
-# For this latest purpose, it would be required to evaluate via
-# cross-validation.
-# ```
-
 # ## Model fitting with preprocessing
 #
 # A range of preprocessing algorithms in scikit-learn allow us to transform
@@ -93,8 +83,8 @@ data_train.describe()
 
 # %% [markdown]
 # We see that the dataset's features span across different ranges. Some
-# algorithms have some assumptions regarding the feature distributions and
-# usually normalizing features will be helpful to address this assumptions.
+# algorithms make some assumptions regarding the feature distributions and
+# usually normalizing features will be helpful to address these assumptions.
 #
 # ```{tip}
 # Here are some reasons for scaling features:
@@ -153,10 +143,10 @@ scaler.mean_
 scaler.scale_
 
 # %% [markdown]
-# Scaling the data is equivalent to subtract the means and divide by the
-# standard deviations previously computed. This operation is defining our
-# transformation function and is as well specific to each transformer. We can
-# operate this transformation function by calling the method `transform`.
+# Scaling the data is equivalent to subtracting the means and dividing by the
+# standard deviations previously computed. This operation defines our
+# transformation function and is specific to each transformer. We can apply
+# this transformation by calling the method `transform`.
 
 # %%
 data_train_scaled = scaler.transform(data_train)
@@ -205,7 +195,7 @@ from sklearn.pipeline import make_pipeline
 model = make_pipeline(StandardScaler(), LogisticRegression())
 
 # %% [markdown]
-# This predictive pipeline exposes the same methods as the ending predictor:
+# This predictive pipeline exposes the same methods as the final predictor:
 # `fit` and `predict` (and additionally `predict_proba`, `decision_function`,
 # or `score`).
 
@@ -255,7 +245,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 
 # %% [markdown]
 # We could compare this predictive model with the predictive model used in
-# the previous notebook which was not scaling feature.
+# the previous notebook which did not scale features.
 
 # %%
 model = LogisticRegression()
@@ -271,17 +261,17 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
       f"in {model.n_iter_[0]} iterations")
 
 # %% [markdown]
-# We see that scaling the data before to train the logistic regression was
+# We see that scaling the data before training the logistic regression was
 # beneficial in terms of computational performance. Indeed, the number of
 # iterations decreased as well as the training time. The statistical
 # performance did not change since both models converged.
 #
 # ```{warning}
 # Working with non-scaled data will potentially force the algorithm to iterate
-# more as we showed in the example above. There is also catastrophic scenario
+# more as we showed in the example above. There is also a catastrophic scenario
 # where the number of required iterations are more than the maximum number of
 # iterations allowed by the predictor (controlled by the `max_iter`) parameter.
-# Therefore, before to increase `max_iter`, make sure that the data are well
+# Therefore, before increasing `max_iter`, make sure that the data are well
 # scaled.
 # ```
 
@@ -289,8 +279,8 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # ## Model evaluation using cross-validation
 #
 # In the previous example, we split the original data into a training set and a
-# testing set. This strategy has several issues: in the setting where the
-# amount of data is limited, the subset used to train or test will be small.
+# testing set. This strategy has several issues: in a setting where the
+# amount of data is small, the subset used to train or test will be small.
 # Moreover, if the splitting was done in a random manner, we do not have
 # information regarding the confidence of the results obtained.
 #

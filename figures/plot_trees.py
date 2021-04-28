@@ -13,17 +13,14 @@
 # ---
 
 # %%
-import numpy as np
-import pandas as pd
-
-import matplotlib.pyplot as plt
-import style_figs
-
-
-# %%
 # graph tree intro : https://docs.google.com/drawings/d/1gbYLXWpubn5CPudGKPMhETyLwDcvKS2yLiAzF1nIgFo/edit?usp=sharing
 
 # %%
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import style_figs
+
 dataset = pd.read_csv("../datasets/penguins.csv").dropna(subset=["Body Mass (g)"])
 dataset = dataset[[spe[:3] != "Chi" for spe in dataset["Species"]]]
 color = ["C0" if (x[0] == "A") else "C1" for x in dataset["Species"]]
@@ -66,87 +63,116 @@ plt.savefig("tree2D_3split.svg", bbox_inches="tight")
 # %% [markdown]
 # # Regression
 
-# %%
-
+# %% 
+# Progressive growing of regression trees with max_leaf_nodes
+import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeRegressor
+
 
 # Create a random dataset
 rng = np.random.RandomState(1)
-X = np.sort(5 * rng.rand(80, 1), axis=0)
-y = np.sin(X).ravel()
-y[::5] += 3 * (0.5 - rng.rand(16))
+X = rng.uniform(0, 5, size=60)[:, None]
+y = np.sin(X).ravel() + 0.3 * rng.normal(size=len(X))
 
 # Fit regression model
-regr_1 = DecisionTreeRegressor(max_depth=2)
-regr_2 = DecisionTreeRegressor(max_depth=5)
-regr_1.fit(X, y)
-regr_2.fit(X, y)
+dtr_2_leafs = DecisionTreeRegressor(max_leaf_nodes=2).fit(X, y)
+dtr_3_leafs = DecisionTreeRegressor(max_leaf_nodes=3).fit(X, y)
+dtr_4_leafs = DecisionTreeRegressor(max_leaf_nodes=4).fit(X, y)  # max_depth=2
+
+# %% Experimenting with automated ploting
+from sklearn import tree
+
+
+plt.figure(figsize=(8, 8))
+tree.plot_tree(dtr_2_leafs, filled=True, impurity=False)
+
+plt.figure(figsize=(8, 8))
+tree.plot_tree(dtr_3_leafs, filled=True, impurity=False)
+
+plt.figure(figsize=(10, 10))
+tree.plot_tree(dtr_4_leafs, filled=True, impurity=False)
+
+# %%
+import style_figs
 
 # Predict
-X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
-y_1 = regr_1.predict(X_test)
-y_2 = regr_2.predict(X_test)
+X_test = np.linspace(0.0, 5.0, 300)[:, np.newaxis]
+y_2_leafs = dtr_2_leafs.predict(X_test)
+y_3_leafs = dtr_3_leafs.predict(X_test)
+y_4_leafs = dtr_4_leafs.predict(X_test)
 
 # Plot the results
-plt.figure(figsize=(4, 3))
-ax = plt.axes([0.1, 0.1, 1.5, 0.9])
-# plt.axis('tight')
-style_figs.light_axis()
+def update_legend(ax, bbox_to_anchor=(0.5, 0.5, 0.5, 0.5)):
+    handles, labels = ax.get_legend_handles_labels()
 
-# plt.xlim((0,7))
+    def sort_key(args):
+        label, _ = args
+        if "data" in label:
+            return "0"  # move first
+        else:
+            return label
+
+    labels, handles = zip(*sorted(zip(labels, handles), key=sort_key))
+    ax.legend(handles, labels, loc="upper right",
+              bbox_to_anchor=bbox_to_anchor)
+
+
+plt.figure(figsize=(4, 4))
+ax = plt.axes([0.1, 0.1, 1.5, 0.9])
+plt.xlim((-0.2, 5))
+plt.ylim((-1.5, 4))
 plt.ylabel("y", size=16, weight=600)
 plt.xlabel("x", size=16, weight=600)
-plt.xlim((0, 5))
-
-plt.scatter(X, y, s=40, edgecolor="black", c="k", label="data               ")
-plt.legend(loc=1, bbox_to_anchor=(0.8, 0.5, 0.5, 0.5))
+style_figs.light_axis()
+plt.scatter(X, y, s=40, edgecolor="black", c="k", label="training data")
+update_legend(ax)
 plt.savefig(
     "tree_regression1.svg", facecolor="none", edgecolor="none", bbox_inches="tight"
 )
-plt.plot(
-    X_test + 0.05 * np.ones(X_test.shape), y_1, color="C0", label="depth=2", linewidth=4
-)
-# sort both labels and handles by labels
-handles, labels = ax.get_legend_handles_labels()
-labels, handles = zip(*sorted(zip(labels, handles), key=lambda t: t[0]))
-ax.legend(handles, labels, loc=1, bbox_to_anchor=(0.8, 0.5, 0.5, 0.5))
-plt.savefig(
-    "tree_regression2.svg", facecolor="none", edgecolor="none", bbox_inches="tight"
-)
 
-plt.plot(X_test, y_2, color="C1", label="depth=5", linewidth=4)
-# sort both labels and handles by labels
-handles, labels = ax.get_legend_handles_labels()
-labels, handles = zip(*sorted(zip(labels, handles), key=lambda t: t[0]))
-ax.legend(handles, labels, loc=1, bbox_to_anchor=(0.8, 0.5, 0.5, 0.5))
+predictions = [
+    (y_2_leafs, "C0", "1 split  / 2 leaves"),
+    (y_3_leafs, "C1", "2 split  / 3 leaves"),
+    (y_4_leafs, "C2", "3 split  / 4 leaves"),
+]
 
-plt.savefig(
-    "tree_regression3.svg", facecolor="none", edgecolor="none", bbox_inches="tight"
-)
+for n_trees in range(1, len(predictions) + 1):
+    plt.figure(figsize=(4, 4))
+    ax = plt.axes([0.1, 0.1, 1.5, 0.9])
+    plt.xlim((-0.2, 5))
+    plt.ylim((-1.5, 4))
+    plt.ylabel("y", size=16, weight=600)
+    plt.xlabel("x", size=16, weight=600)
+    style_figs.light_axis()
+    plt.scatter(X, y, s=40, edgecolor="black", c="k", label="training data")
+    for i in range(n_trees):
+        preds, color, label = predictions[i]
+        plt.plot(X_test.ravel(), preds, color=color, label=label, linewidth=4)
+    update_legend(ax)
+    plt.savefig(
+        f"tree_regression{n_trees + 1}.svg", facecolor="none",
+        edgecolor="none", bbox_inches="tight"
+    )
 
 # %%
 # Decision tree underfit / overfit
-
-from sklearn.ensemble import RandomForestRegressor
-
 # Create the dataset
-rng = np.random.RandomState(1)
-X = np.linspace(0, 6, 100)[:, np.newaxis]
-noise = rng.normal(0, 0.4, X.shape[0])
+from sklearn.model_selection import train_test_split
 
-y_true = np.sin(X).ravel() + np.sin(6 * X).ravel()
+
+rng = np.random.RandomState(1)
+X = rng.uniform(0, 6, size=500)[:, np.newaxis]
+y_true = np.sin(X).ravel()
+noise = rng.normal(0, 0.3, X.shape[0])
 y = y_true + noise
 
-new_X = np.linspace(0, 6, 400)[:, np.newaxis]
-new_noise = rng.normal(0, 0.3, new_X.shape[0])
-new_y = np.sin(new_X).ravel() + np.sin(6 * new_X).ravel() + new_noise
+X, new_X, y, new_y = train_test_split(X, y, train_size=50, random_state=0)
+X_test = np.linspace(0, 6, 500)[:, np.newaxis]
 
-# Plot
-l_max_depth = [4, 6, 10]
-l_n_est = [1, 20, 300]
-
-for idx, col, label in zip(
-    [0, 1, 2], ["C0", "C1", "C2"], ["underfit", "fit", "overfit"]
+for idx, col, label, max_leaf_nodes in zip(
+    [0, 1, 2], ["C0", "C1", "C2"], ["underfit", "fit", "overfit"],
+    [3, 10, None]
 ):
 
     plt.figure(figsize=(4, 3))
@@ -156,15 +182,12 @@ for idx, col, label in zip(
     plt.xlabel("x", size=22, weight=600)
 
     plt.scatter(X, y, color="k")
-    # plt.plot(X, y_true, color = 'k', label = 'y_true')
     plt.scatter(new_X, new_y, color="lightgrey", alpha=0.5, s=14, edgecolor="grey")
 
-    #     reg = RandomForestRegressor(n_estimators = l_n_est[idx], max_depth = 5)
-    reg = DecisionTreeRegressor(max_depth=l_max_depth[idx])
+    reg = DecisionTreeRegressor(max_leaf_nodes=max_leaf_nodes)
     reg.fit(X, y)
-    y_pred = reg.predict(X)
-    plt.plot(X, y_pred, color=col)
-    #     plt.savefig(f'../figures/rf_{label}.svg', facecolor='none', edgecolor='none')
+    y_pred = reg.predict(X_test)
+    plt.plot(X_test, y_pred, color=col)
     plt.savefig(f"../figures/dt_{label}.svg", facecolor="none", edgecolor="none")
 
 

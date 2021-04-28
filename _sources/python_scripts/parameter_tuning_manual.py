@@ -106,7 +106,7 @@ for parameter in model.get_params():
 model.get_params()['classifier__C']
 
 # %% [markdown]
-# We can vary systematically the value of C to see if there is an optimal
+# We can systematically vary the value of C to see if there is an optimal
 # value.
 
 # %%

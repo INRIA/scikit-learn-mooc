@@ -277,9 +277,9 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # performance did not change since both models converged.
 #
 # ```{warning}
-# Working with non-scaled will potentially force the algorithm to iterate
+# Working with non-scaled data will potentially force the algorithm to iterate
 # more as we showed in the example above. There is also catastrophic scenario
-# where the number of iterations required are more than the maximum number of
+# where the number of required iterations are more than the maximum number of
 # iterations allowed by the predictor (controlled by the `max_iter`) parameter.
 # Therefore, before to increase `max_iter`, make sure that the data are well
 # scaled.

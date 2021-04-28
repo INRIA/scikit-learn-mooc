@@ -1,7 +1,7 @@
 # %% [markdown]
 # # Set and get hyperparameters in scikit-learn
 #
-# This notebook shows how one can get and set the value of hyperparameter in
+# This notebook shows how one can get and set the value of a hyperparameter in
 # a scikit-learn estimator. We recall that hyperparameters refer to the
 # parameter that will control the learning process.
 #
@@ -68,15 +68,13 @@ print(f"Accuracy score via cross-validation:\n"
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# We created a model with the default `C` value that is equal to 1. We saw in
-# the previous exercise that we will be interested to set the value of an
-# hyperparameter. One possibility is to set the parameter when we create the
-# model instance. However, we might be interested to set the value of the
-# parameter after the instance is created.
+# We created a model with the default `C` value that is equal to 1. If we
+# wanted to use a different `C` parameter we could have done so when we created
+# the `LogisticRegression` object with something like `LogisticRegression(C=1e-3)`.
 #
-# Actually scikit-learn estimators have a `set_params` method that allows you
-# to change the parameter of a model after it has been created. For example, we
-# can set `C=1e-3` and fit and evaluate the model:
+# We can also change the parameter of a model after it has been created with
+# the `set_params` method, which is available for all scikit-learn estimators.
+# For example, we can set `C=1e-3`, fit and evaluate the model:
 
 # %%
 model.set_params(classifier__C=1e-3)

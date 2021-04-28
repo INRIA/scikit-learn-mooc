@@ -78,7 +78,7 @@ model = Pipeline([
 model
 
 # %% [markdown]
-# ## Include an hyperparameter search within a cross-validation
+# ## Include a hyperparameter search within a cross-validation
 #
 # As mentioned earlier, using a single train-test split during the grid-search
 # does not give any information regarding the different sources of variations:

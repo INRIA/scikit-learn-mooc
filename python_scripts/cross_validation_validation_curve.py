@@ -164,5 +164,5 @@ _ = plt.title("Validation curve for decision tree")
 #
 # * how to identify whether a model is generalizing, overfitting, or
 #   underfitting;
-# * how to check influence of an hyperparameter on the tradeoff
+# * how to check influence of a hyperparameter on the tradeoff
 #   underfit/overfit.

@@ -40,7 +40,7 @@ regressor = DecisionTreeRegressor()
 #
 # Therefore, we can vary the number of samples in the training set and repeat
 # the experiment. The training and testing scores can be plotted similarly to
-# the validation curve, but instead of varying an hyperparameter, we vary the
+# the validation curve, but instead of varying a hyperparameter, we vary the
 # number of training samples. This curve is called the **learning curve**.
 #
 # It gives information regarding the benefit of adding new training samples

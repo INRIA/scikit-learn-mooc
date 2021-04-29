@@ -251,10 +251,12 @@ print(f"The test accuracy using a {model_name} is "
 # %% [markdown]
 # ```{note}
 # In this MOOC, we will refer to **statistical performance** of a model when
-# referring to the score or error obtained by comparing the prediction of a
-# model and the true targets. We will refer to **computational performance** of
-# a predictive model when accessing the computational costs of training or
-# scoring of a predictive model.
+# referring to the test score or test error obtained by comparing the
+# prediction of a model and the true targets. Equivalent terms for
+# **statistical performance** are predictive performance and generalization
+# performance. We will refer to **computational performance** of a predictive
+# model when accessing the computational costs of training a predictive model
+# or using it to make predictions.
 # ```
 
 # %% [markdown]

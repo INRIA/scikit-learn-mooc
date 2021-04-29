@@ -195,6 +195,10 @@ Note: "instance" is also used in a object-oriented meaning in this course. For
 example, if we define `clf = KNeighborsClassifier()`, we say that `clf` is an
 instance of the `KNeighborsClassifier` class.
 
+### statistical performance / generalization performance / predictive performance
+
+The performance of a model on the test data.
+
 ### supervised learning
 
 TODO Talk about the general settings that we are trying to predict the target

@@ -204,16 +204,19 @@ for idx, col, label, max_leaf_nodes in zip(
 
 # %%
 # Bagging regression
-
+import numpy as np
+import matplotlib.pyplot as plt
+import style_figs
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import BaggingRegressor
 
 # Create the dataset
 rng = np.random.RandomState(1)
-X = np.linspace(0, 3, 100)[:, np.newaxis]
+X = rng.uniform(0, 6, size=100)[:, np.newaxis]
 noise = rng.normal(0, 0.4, X.shape[0])
-
-y_true = np.sin(X).ravel() + np.sin(6 * X).ravel()
+y_true = np.sin(X).ravel()
 y = y_true + noise
+X_test = np.linspace(X.min(), X.max(), 300)[:, np.newaxis]
 
 # plot data
 plt.figure(figsize=(4, 3))
@@ -236,11 +239,11 @@ def plot_subsample_bagging(seed=0, line_col="C0", plot_reg=False):
         )
     )
     reg.fit(X[indice_subsample], y[indice_subsample])
-    y_pred = reg.predict(X[indice_subsample])
+    y_pred = reg.predict(X_test)
     plt.scatter(X, y, color="white", edgecolor="k")
     plt.scatter(X[indice_subsample], y[indice_subsample], color="black", edgecolor="k")
     if plot_reg:
-        plt.plot(X[indice_subsample], y_pred, color=line_col)
+        plt.plot(X_test.ravel(), y_pred, color=line_col)
 
 
 # Plot 7 grey bagging
@@ -277,11 +280,10 @@ plt.ylabel("y", size=22, weight=600)
 plt.xlabel("x", size=22, weight=600)
 plt.scatter(X, y, color="grey", edgecolor="k")
 
-reg = BaggingRegressor(n_estimators=10)
-# reg = RandomForestRegressor() # same fig
+reg = BaggingRegressor(max_samples=10, n_estimators=1000)
 reg.fit(X, y)
-y_pred = reg.predict(X)
-plt.plot(X, y_pred, color="C0")
+y_pred = reg.predict(X_test)
+plt.plot(X_test.ravel(), y_pred, color="C0")
 plt.savefig("../figures/bagging_reg_blue.svg", facecolor="none", edgecolor="none")
 
 
@@ -448,6 +450,9 @@ plt.savefig("bagging0_cross.svg", facecolor="none", edgecolor="none")
 
 # %%
 # Create the dataset
+import numpy as np
+import matplotlib.pyplot as plt
+
 rng = np.random.RandomState(1)
 X = np.linspace(0, 3, 100)[:, np.newaxis]
 noise = rng.normal(0, 0.2, X.shape[0])

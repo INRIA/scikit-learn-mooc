@@ -287,7 +287,7 @@ makes it possible to perfectly classify all the training set data points.
 **Gradient Boosting**
 .small[`sklearn.ensemble.HistGradientBoostingClassifier`]
 - Each base model predicts the **negative error** of previous models
-- `sklearn` use decisition trees as the base model
+- `sklearn` use decision trees as the base model
 
 
 ???

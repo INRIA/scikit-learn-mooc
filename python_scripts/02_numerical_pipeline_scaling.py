@@ -127,9 +127,9 @@ scaler.fit(data_train)
 #
 # ![Transformer fit diagram](../figures/api_diagram-transformer.fit.svg)
 #
-# The scaler uses a learning algorithm. In this case, the algorithm needs to
-# compute the mean and standard deviation for each feature and store them into
-# some NumPy arrays. Here, these statistics are the model states.
+# In this case, the algorithm needs to compute the mean and standard deviation
+# for each feature and store them into some NumPy arrays. Here, these
+# statistics are the model states.
 #
 # ```{note}
 # The fact that the model states of this scaler are arrays of means and
@@ -147,10 +147,19 @@ scaler.mean_
 scaler.scale_
 
 # %% [markdown]
-# Scaling the data is equivalent to subtracting the means and dividing by the
-# standard deviations previously computed. This operation defines our
-# transformation function and is specific to each transformer. We can apply
-# this transformation by calling the method `transform`.
+# ```{note}
+# scikit-learn convention: if an attribute is learned from the data, its name
+# ends with an underscore (i.e. `_`), as in `mean_` and `scale_` for the
+# `StandardScaler`.
+# ```
+
+# %% [markdown]
+# Scaling the data is applied to each feature individually (i.e. each column in
+# the data matrix). For each feature, we subtract its mean and divide by its
+# standard deviation.
+#
+# Once we have called the `fit` method, we can perform data transformation by
+# calling the method `transform`.
 
 # %%
 data_train_scaled = scaler.transform(data_train)
@@ -158,14 +167,14 @@ data_train_scaled
 
 # %% [markdown]
 # Let's illustrate the internal mechanism of the `transform` method and put it
-# to perspective with what we already saw with the predictor.
+# to perspective with what we already saw with predictors.
 #
 # ![Transformer transform diagram](../figures/api_diagram-transformer.transform.svg)
 #
-# The `transform` method for the transformer is similar to the `predict` method
-# for the predictor. It uses a predefined function, called a **transformation
+# The `transform` method for transformers is similar to the `predict` method
+# for predictors. It uses a predefined function, called a **transformation
 # function**, and uses the model states and the input data. However, instead of
-# outputing predictions, the job of the `transform` method is to output a
+# outputting predictions, the job of the `transform` method is to output a
 # transformed version of the input data.
 
 # %% [markdown]

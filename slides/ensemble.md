@@ -4,26 +4,20 @@ class: titlepage
 
 # Ensemble of tree-based models
 
-This lesson covers models based on the aggregation of decision trees.
-They are known as gradient-boosting and random forest
+Combine many decision trees into powerful models!
 
-These are robust models for both regression and classification.
+Gradient-boosting and random forests
+
+For classification and regression
 
 <img src="../figures/scikit-learn-logo.svg">
-
-???
-Decision trees are built as a set of rules for both
-classification and regression problems.
-
-These are the building blocks for more elaborate model such
-as *random forest* and *gradient boosting trees*, as we will see.
 
 ---
 
 # Outline
 
-- Bagging
-- Boosting
+- Bagging and Random Forests
+- Boosting and Gradient Boosting
 
 ---
 
@@ -31,14 +25,6 @@ as *random forest* and *gradient boosting trees*, as we will see.
 
 .pull-left[<img src="../figures/bagging0.svg" width="100%">]
 .pull-right[<img src="../figures/bagging.svg" width="120%">]
-
-.width65.shift-up-less.centered[
-
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-
-]
 
 ???
 Here we have a classification task: separating circles from squares.
@@ -52,13 +38,6 @@ Here we have a classification task: separating circles from squares.
 
 .pull-right[<img src="../figures/bagging_trees.svg" width="120%">]
 
-.width65.shift-up-less.centered[
-
-```python
-from sklearn.ensemble import RandomForestClassifier
-```
-
-]
 
 ???
 
@@ -73,15 +52,30 @@ from sklearn.ensemble import RandomForestClassifier
 
 .pull-right[<img src="../figures/bagging_vote.svg" width="120%">]
 
+--
 .width65.shift-up-less.centered[
-
 ```python
+from sklearn.ensemble import BaggingClassifier
 from sklearn.ensemble import RandomForestClassifier
 ```
-
 ]
 
-???
+---
+
+# Bagging for classification
+
+.pull-left[<img src="../figures/bagging0_cross.svg" width="100%">]
+.pull-right[<img src="../figures/bagging_cross.svg" width="120%">]
+
+.pull-right[<img src="../figures/bagging_trees_predict.svg" width="120%">]
+
+.width65.shift-up-less.centered[
+```python
+from sklearn.ensemble import BaggingClassifier
+from sklearn.ensemble import RandomForestClassifier
+```
+]
+
 
 ---
 
@@ -90,64 +84,85 @@ from sklearn.ensemble import RandomForestClassifier
 <img src="../figures/bagging_reg_data.svg" width="50%">
 
 ---
-
+class: split-50
 # Bagging for regression
 
 .shift-up-less[
 <img src="../figures/bagging_reg_grey.svg" width="120%">
 ]
-.pull-left[
 
+.column1[
 - Select multiple random subsets of the data
-  ]
+]
 
 ---
-
+class: split-50
 # Bagging for regression
 
 .shift-up-less[
 <img src="../figures/bagging_reg_grey_fitted.svg" width="120%">
 ]
 
-.pull-left[
-
+.column1[
 - Select multiple random subsets of the data
-
 - Fit one model on each
-  ]
+]
 
 ---
-
+class: split-50
 # Bagging for regression
 
 .shift-up-less[
 <img src="../figures/bagging_reg_grey_fitted.svg" width="120%">
 ]
 
-.pull-left[
-
+.column1[
 - Select multiple random subsets of the data
-
 - Fit one model on each
-
 - Average predictions
-  ]
+]
 
-.pull-right[
-<img src="../figures/bagging_reg_blue.svg" width="80%">
+.column2.center[
+<img src="../figures/bagging_reg_blue.svg" width="70%">
 ]
 
 ???
 
-In bagging, we will construct deep trees in parallel.
+In bagging, we will construct deep trees independently of one another.
 
-Each tree will be fitted on a sub-sampling from the initial data.
-i.e. we will only consider a random part of the data to build each model.
+Each tree will be fitted on a sub-sampling from the initial data. i.e. we will
+only consider a random part of the data to build each model.
 
-When we have to classify a new point, we will aggregate the prediction of every model by a voting scheme.
+When we have to classify a new point, we will aggregate the predictions of all
+models in the ensemble with a voting scheme.
+
+Each deep tree overfits, but voting makes it possible to cancel out some of the
+training set noise. The ensemble overfits less than the individual models.
 
 ---
+# Bagging versus Random Forests
 
+**Bagging** is a general strategy
+- Can work with any base model (linear, trees...)
+
+--
+
+**Random Forests** are bagged *randomized* decision trees
+- At each split: a random subset of features are selected
+--
+
+- The best split is taken among the restricted subset
+
+--
+- Extra randomization decorrelates the prediction errors
+
+--
+- Uncorrelated errors make bagging work better
+
+???
+
+
+---
 # Boosting for classification
 
 .pull-left[<img src="../figures/boosting0.svg" width="100%">]
@@ -165,7 +180,6 @@ Mistakes done by this first tree model shall be corrected
 by a second tree model.
 
 ---
-
 # Boosting for classification
 
 .pull-left[<img src="../figures/boosting2.svg" width="100%">]
@@ -185,7 +199,6 @@ So now, the second tree refines the first tree.
 The final model is a weighted sum of these two trees.
 
 ---
-
 # Boosting for classification
 
 .pull-left[<img src="../figures/boosting3.svg" width="100%">]
@@ -266,13 +279,65 @@ At each step we focus on mistakes of the previous model.
 
 ---
 
+# Boosting vs Gradient Boosting
+
+**Traditional Boosting** .small[`sklearn.ensemble.AdaBoostClassifier`]
+- Mispredicted **samples are re-weighted** at each step
+- Can use any base model that supports `sample_weight`
+
+--
+
+**Gradient Boosting** .small[`sklearn.ensemble.HistGradientBoostingClassifier`]
+- Each base model predicts the **negative error** of previous models
+- `sklearn` use decisition trees as the base model
+
+
+???
+
+In practice, gradient boosting is more flexible thanks to the use of cost
+functions and tend to exhibits better predictive performance than traditional
+boosting.
+
+---
+# Gradient Boosting and binned features
+
+- `sklearn.ensemble.GradientBoostingClassifier`
+  - Implementation of the traditional (exact) method 
+  - Fine for small data sets
+  - Too slow for `n_samples` > 10,000
+
+--
+
+- `sklearn.ensemble.HistGradientBoostingClassifier`
+  - Discretize numerical features (256 levels)
+  - Efficient multi core implementation
+  - **Much, much faster** when `n_samples` is large
+
+???
+Like traditional decision trees `GradientBoostingClassifier` and
+`GradientBoostingRegressor` internally rely on sorting the features values
+which as an `n * log(n)` time complexity and is therefore not suitable for
+large training set.
+
+`HistGradientBoostingClassifier` and `HistGradientBoostingRegressor` use
+histograms to approximate feature sorting to find the best feature split
+thresholds and can therefore be trained efficiently on datasets with hundreds
+of features and tens of millions of data points.
+
+Futhermore they can benefit from running on machines with many CPU cores very
+efficiently.
+
+---
+
 # Take away
 
-- **bagging** and **random forest** independently fit deep trees
+- **Bagging** and **random forests** independently fit deep trees
   + each individual tree overfits
-  + averaging the individual tree predictions fights overfitting
-- **gradient boosting** fits sequentially shallow trees
+  + averaging the tree predictions **reduces overfitting**
+
+- (Gradient) **boosting** fits shallower trees sequentially
   + each individual tree underfits
-  + sequentially adding trees reduces overfitting
-- **gradient boosting** tend to perform slightly better than **bagging** and
+  + sequentially adding trees **reduces overfitting**
+
+- **Gradient boosting** tends to perform slightly better than **bagging** and
   **random forest** and furthermore shallow trees predict faster.

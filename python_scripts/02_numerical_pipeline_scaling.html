@@ -1637,9 +1637,9 @@ predictors. The main difference is that the former has a single argument (the
 data matrix), whereas the latter has two arguments (the data matrix and the
 target).</p>
 <p><img alt="Transformer fit diagram" src="../_images/api_diagram-transformer.fit.svg" /></p>
-<p>The scaler uses a learning algorithm. In this case, the algorithm needs to
-compute the mean and standard deviation for each feature and store them into
-some NumPy arrays. Here, these statistics are the model states.</p>
+<p>In this case, the algorithm needs to compute the mean and standard deviation
+for each feature and store them into some NumPy arrays. Here, these
+statistics are the model states.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The fact that the model states of this scaler are arrays of means and
@@ -1672,10 +1672,17 @@ as model states, in the same fashion.</p>
 </div>
 </div>
 </div>
-<p>Scaling the data is equivalent to subtracting the means and dividing by the
-standard deviations previously computed. This operation defines our
-transformation function and is specific to each transformer. We can apply
-this transformation by calling the method <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>scikit-learn convention: if an attribute is learned from the data, its name
+ends with an underscore (i.e. <code class="docutils literal notranslate"><span class="pre">_</span></code>), as in <code class="docutils literal notranslate"><span class="pre">mean_</span></code> and <code class="docutils literal notranslate"><span class="pre">scale_</span></code> for the
+<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>.</p>
+</div>
+<p>Scaling the data is applied to each feature individually (i.e. each column in
+the data matrix). For each feature, we subtract its mean and divide by its
+standard deviation.</p>
+<p>Once we have called the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method, we can perform data transformation by
+calling the method <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
@@ -1696,12 +1703,12 @@ this transformation by calling the method <code class="docutils literal notransl
 </div>
 </div>
 <p>Let’s illustrate the internal mechanism of the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method and put it
-to perspective with what we already saw with the predictor.</p>
+to perspective with what we already saw with predictors.</p>
 <p><img alt="Transformer transform diagram" src="../_images/api_diagram-transformer.transform.svg" /></p>
-<p>The <code class="docutils literal notranslate"><span class="pre">transform</span></code> method for the transformer is similar to the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method
-for the predictor. It uses a predefined function, called a <strong>transformation
+<p>The <code class="docutils literal notranslate"><span class="pre">transform</span></code> method for transformers is similar to the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method
+for predictors. It uses a predefined function, called a <strong>transformation
 function</strong>, and uses the model states and the input data. However, instead of
-outputing predictions, the job of the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method is to output a
+outputting predictions, the job of the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method is to output a
 transformed version of the input data.</p>
 <p>Finally, the method <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> is a shorthand method to call
 successively <code class="docutils literal notranslate"><span class="pre">fit</span></code> and then <code class="docutils literal notranslate"><span class="pre">transform</span></code>.</p>

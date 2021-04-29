@@ -161,6 +161,14 @@ training set noise. The ensemble overfits less than the individual models.
 
 ???
 
+It's fine to use deep trees (`max_depth=None`) in random forests because of the
+reduced overfitting effect of prediction averaging.
+
+The more trees the better, typical to use 100 trees or more.
+
+Diminishing returns when increasing the number of trees.
+
+More trees: longer to fit, slower to predict and bigger models to deploy.
 
 ---
 # Boosting for classification
@@ -185,15 +193,6 @@ by a second tree model.
 .pull-left[<img src="../figures/boosting2.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees2.svg" width="100%">]
 
-.width65.shift-up-less.centered[
-
-```python
-from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate=.1)
-```
-
-]
-
 ???
 So now, the second tree refines the first tree.
 The final model is a weighted sum of these two trees.
@@ -204,18 +203,15 @@ The final model is a weighted sum of these two trees.
 .pull-left[<img src="../figures/boosting3.svg" width="100%">]
 .pull-right[<img src="../figures/boosting_trees3.svg" width="100%">]
 
-.width65.shift-up-less.centered[
-
-```python
-from sklearn.ensemble import HistGradientBoostingClassifier
-clf = HistGradientBoostingClassifier(learning_rate=.1)
-```
-
-]
-
 ???
-We could continue to refine our ensemble model.
-At each step we focus on mistakes of the previous model.
+
+Ensembling via boosting makes it possible to progressively refine the
+predictions of the previous model.
+
+At each step we focus on mistakes of the previous model to correct them.
+
+Even if the first models are underfitting (shallow trees), adding more trees
+makes it possible to perfectly classify all the training set data points.
 
 ---
 
@@ -281,13 +277,15 @@ At each step we focus on mistakes of the previous model.
 
 # Boosting vs Gradient Boosting
 
-**Traditional Boosting** .small[`sklearn.ensemble.AdaBoostClassifier`]
+**Traditional Boosting**
+.small[`sklearn.ensemble.AdaBoostClassifier`]
 - Mispredicted **samples are re-weighted** at each step
-- Can use any base model that supports `sample_weight`
+- Can use any base model that accepts `sample_weight`
 
 --
 
-**Gradient Boosting** .small[`sklearn.ensemble.HistGradientBoostingClassifier`]
+**Gradient Boosting**
+.small[`sklearn.ensemble.HistGradientBoostingClassifier`]
 - Each base model predicts the **negative error** of previous models
 - `sklearn` use decisition trees as the base model
 
@@ -331,13 +329,13 @@ efficiently.
 
 # Take away
 
-- **Bagging** and **random forests** independently fit deep trees
-  + each individual tree overfits
+- **Bagging** and **random forests** fit trees **independently**
+  + each **deep tree overfits** individually
   + averaging the tree predictions **reduces overfitting**
 
-- (Gradient) **boosting** fits shallower trees sequentially
-  + each individual tree underfits
-  + sequentially adding trees **reduces overfitting**
+- (Gradient) **boosting** fits trees **sequentially**
+  + each **shallow tree underfits** individually
+  + sequentially adding trees **reduces underfitting**
 
 - **Gradient boosting** tends to perform slightly better than **bagging** and
   **random forest** and furthermore shallow trees predict faster.

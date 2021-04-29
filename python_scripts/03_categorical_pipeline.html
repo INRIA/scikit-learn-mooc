@@ -1867,12 +1867,6 @@ category will be set to <code class="docutils literal notranslate"><span class="
 will be set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 <p>We will start by encoding a single feature (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>) to illustrate
 how the encoding works.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We will pass the argument <code class="docutils literal notranslate"><span class="pre">sparse=False</span></code> to the <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> which will
-avoid obtaining a sparse matrix, which is less efficient but easier to
-inspect results for didactic purposes.</p>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
@@ -1880,6 +1874,17 @@ inspect results for didactic purposes.</p>
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
 <span class="n">education_encoded</span>
+
+<span class="c1"># [markdown]</span>
+<span class="c1"># ```{note}</span>
+<span class="c1"># `sparse=False` is used in the `OneHotEncoder` for didactic purposes, namely</span>
+<span class="c1"># easier visualisation of the data.</span>
+<span class="c1">#</span>
+<span class="c1"># sparse matrices are efficient data structures when most of your matrix</span>
+<span class="c1"># elements are zero. They won&#39;t be covered in details in this course. If you</span>
+<span class="c1"># want more details about them, you can look at</span>
+<span class="c1"># [this](https://scipy-lectures.org/advanced/scipy_sparse/introduction.html#why-sparse-matrices).</span>
+<span class="c1"># ```</span>
 </pre></div>
 </div>
 </div>
@@ -2550,8 +2555,8 @@ Let’s recall some statistics regarding this column.</p>
  Ecuador                          45
  France                           38
  Ireland                          37
- Thailand                         30
  Hong                             30
+ Thailand                         30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
  Yugoslavia                       23
@@ -2615,8 +2620,8 @@ categorical columns.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.11648297, 1.13122153, 1.0302422 , 1.10437703, 1.06971383]),
- &#39;score_time&#39;: array([0.04242682, 0.03946829, 0.03654385, 0.03783083, 0.03372812]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.95517015, 0.98488617, 0.88348651, 0.94834566, 0.93537378]),
+ &#39;score_time&#39;: array([0.03422236, 0.03315306, 0.03345609, 0.0359242 , 0.03354192]),
  &#39;test_score&#39;: array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])}
 </pre></div>
 </div>

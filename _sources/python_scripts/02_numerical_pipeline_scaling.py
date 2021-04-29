@@ -110,7 +110,8 @@ data_train.describe()
 # We will investigate different steps used in scikit-learn to achieve such a
 # transformation of the data.
 #
-# First, one needs to call the method `fit`.
+# First, one needs to call the method `fit` in order to learn the scaling from
+# the data.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -119,7 +120,10 @@ scaler = StandardScaler()
 scaler.fit(data_train)
 
 # %% [markdown]
-# The `fit` method is identical to what a predictor is doing.
+# The `fit` method for transformers is similar to the `fit` method for
+# predictors. The main difference is that the former has a single argument (the
+# data matrix), whereas the latter has two arguments (the data matrix and the
+# target).
 #
 # ![Transformer fit diagram](../figures/api_diagram-transformer.fit.svg)
 #

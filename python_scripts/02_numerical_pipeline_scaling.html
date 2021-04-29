@@ -1615,7 +1615,8 @@ called <code class="docutils literal notranslate"><span class="pre">StandardScal
 individually so that they all have a 0-mean and a unit standard deviation.</p>
 <p>We will investigate different steps used in scikit-learn to achieve such a
 transformation of the data.</p>
-<p>First, one needs to call the method <code class="docutils literal notranslate"><span class="pre">fit</span></code>.</p>
+<p>First, one needs to call the method <code class="docutils literal notranslate"><span class="pre">fit</span></code> in order to learn the scaling from
+the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
@@ -1631,7 +1632,10 @@ transformation of the data.</p>
 </div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is identical to what a predictor is doing.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method for transformers is similar to the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method for
+predictors. The main difference is that the former has a single argument (the
+data matrix), whereas the latter has two arguments (the data matrix and the
+target).</p>
 <p><img alt="Transformer fit diagram" src="../_images/api_diagram-transformer.fit.svg" /></p>
 <p>The scaler uses a learning algorithm. In this case, the algorithm needs to
 compute the mean and standard deviation for each feature and store them into

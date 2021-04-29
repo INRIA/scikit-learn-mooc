@@ -186,12 +186,6 @@ print(
 #
 # We will start by encoding a single feature (e.g. `"education"`) to illustrate
 # how the encoding works.
-#
-# ```{note}
-# We will pass the argument `sparse=False` to the `OneHotEncoder` which will
-# avoid obtaining a sparse matrix, which is less efficient but easier to
-# inspect results for didactic purposes.
-# ```
 
 # %%
 from sklearn.preprocessing import OneHotEncoder
@@ -199,6 +193,17 @@ from sklearn.preprocessing import OneHotEncoder
 encoder = OneHotEncoder(sparse=False)
 education_encoded = encoder.fit_transform(education_column)
 education_encoded
+
+# [markdown]
+# ```{note}
+# `sparse=False` is used in the `OneHotEncoder` for didactic purposes, namely
+# easier visualisation of the data.
+#
+# sparse matrices are efficient data structures when most of your matrix
+# elements are zero. They won't be covered in details in this course. If you
+# want more details about them, you can look at
+# [this](https://scipy-lectures.org/advanced/scipy_sparse/introduction.html#why-sparse-matrices).
+# ```
 
 # %% [markdown]
 # We see that encoding a single feature will give a NumPy array full of zeros

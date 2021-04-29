@@ -1832,20 +1832,14 @@ used numerical and categorical variables in isolation.</p>
 <p><strong>Linear models</strong> are nice because they are usually cheap to train,
 <strong>small</strong> to deploy, <strong>fast</strong> to predict and give a <strong>good baseline</strong>.</p>
 <p>However, it is often useful to check whether more complex models such as an
-ensemble of decision trees can lead to higher predictive performance. In this
-section we will use such a model called <strong>gradient-boosting trees</strong> and
-evaluate its statistical performance. More precisely, the scikit-learn model
-we will use is called <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>. Note that boosting
-models will be covered in more details in a future module.</p>
-<p>For tree-based models, the handling of numerical and categorical variables is
-simpler than for linear models:</p>
-<ul class="simple">
-<li><p>we do <strong>not need to scale the numerical features</strong></p></li>
-<li><p>using an <strong>ordinal encoding for the categorical variables</strong> is fine even if
-the encoding results in an arbitrary ordering</p></li>
-</ul>
-<p>Therefore, for <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>, the preprocessing pipeline
-is slightly simpler than the one we saw earlier for the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>:</p>
+ensemble of decision trees can lead to higher predictive performance.</p>
+<p>In the following cell we try a scalable implementation of the <strong>Gradient
+Boosting Machine</strong> algorithm. For this class of models, we know that contrary
+to linear models, it is <strong>useless to scale the numerical features</strong> and
+furthermore it is both safe and significantly more computationally efficient
+to use an arbitrary <strong>integer encoding for the categorical variables</strong> even
+if the ordering is arbitrary. Therefore we adapt the preprocessing pipeline
+as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_hist_gradient_boosting</span>

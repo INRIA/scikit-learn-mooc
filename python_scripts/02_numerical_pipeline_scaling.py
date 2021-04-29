@@ -332,10 +332,10 @@ cv_result = cross_validate(model, data_numeric, target, cv=5)
 cv_result
 
 # %% [markdown]
-# The output of `cross_validate` contains by default three entries: (i) the
-# time to train the model on the training data for each fold, (ii) the time
-# to predict with the model on the testing data for each fold, and (iii) the
-# default score on the testing data for each fold.
+# The output of `cross_validate` is a Python dictionary, which by default
+# contains three entries: (i) the time to train the model on the training data
+# for each fold, (ii) the time to predict with the model on the testing data
+# for each fold, and (iii) the default score on the testing data for each fold.
 #
 # Setting `cv=5` created 5 distinct splits to get 5 variations for the training
 # and testing sets. Each training set is used to fit one model which is then
@@ -353,8 +353,8 @@ cv_result
 # information, for instance training scores. These features will be covered in
 # a future notebook.
 #
-# Let's extract the test scores for the dictionary and compute the mean
-# accuracy and the variation of the accuracy across folds.
+# Let's extract the test scores from the `cv_result` dictionary and compute
+# the mean accuracy and the variation of the accuracy across folds.
 
 # %%
 scores = cv_result["test_score"]

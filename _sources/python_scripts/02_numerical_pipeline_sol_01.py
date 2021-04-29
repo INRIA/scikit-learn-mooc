@@ -15,9 +15,10 @@
 # %% [markdown]
 # # 📃 Solution for Exercise 01
 #
-# The goal of this exercise is to compare the performance of our classifier
-# (81% accuracy) to some baseline classifiers that would ignore the input data
-# and instead make constant predictions.
+# The goal of this exercise is to compare the performance of our classifier in
+# the previous notebook (roughly 81% accuracy with `LogisticRegression`) to
+# some simple baseline classifiers. The simplest baseline classifier is one
+# that always predicts the same class, irrespective of the input data.
 #
 # - What would be the score of a model that always predicts `' >50K'`?
 # - What would be the score of a model that always predicts `' <=50K'`?
@@ -115,6 +116,7 @@ score = most_freq_revenue_clf.score(data_numeric_test, target_test)
 print(f"Accuracy of a model predicting the most frequent class: {score:.3f}")
 
 # %% [markdown]
-# So 81% accuracy is significantly better than 76% which is the score of a
-# baseline model that would always predict the most frequent class which is the
-# low revenue class: `" <=50K"`.
+# So the `LogisticRegression` accuracy (roughly 81%) seems better than the
+# `DummyClassifier` accuracy (roughly 76%). In a way it is a bit reassuring,
+# using a machine learning model gives you a better performance than always
+# predicting the majority class, i.e. the low income class `" <=50K"`.

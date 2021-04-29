@@ -215,15 +215,20 @@ print("The mean cross-validation accuracy is: "
 # **small** to deploy, **fast** to predict and give a **good baseline**.
 #
 # However, it is often useful to check whether more complex models such as an
-# ensemble of decision trees can lead to higher predictive performance.
+# ensemble of decision trees can lead to higher predictive performance. In this
+# section we will use such a model called **gradient-boosting trees** and
+# evaluate its statistical performance. More precisely, the scikit-learn model
+# we will use is called `HistGradientBoostingClassifier`. Note that boosting
+# models will be covered in more details in a future module.
 #
-# In the following cell we try a scalable implementation of the **Gradient
-# Boosting Machine** algorithm. For this class of models, we know that contrary
-# to linear models, it is **useless to scale the numerical features** and
-# furthermore it is both safe and significantly more computationally efficient
-# to use an arbitrary **integer encoding for the categorical variables** even
-# if the ordering is arbitrary. Therefore we adapt the preprocessing pipeline
-# as follows:
+# For tree-based models, the handling of numerical and categorical variables is
+# simpler than for linear models:
+# * we do **not need to scale the numerical features**
+# * using an **ordinal encoding for the categorical variables** is fine even if
+#   the encoding results in an arbitrary ordering
+#
+# Therefore, for `HistGradientBoostingClassifier`, the preprocessing pipeline
+# is slightly simpler than the one we saw earlier for the `LogisticRegression`:
 
 # %%
 from sklearn.experimental import enable_hist_gradient_boosting

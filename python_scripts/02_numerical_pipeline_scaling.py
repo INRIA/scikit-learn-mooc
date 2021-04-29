@@ -342,9 +342,9 @@ cv_result
 # scored on the matching test set. This strategy is called K-fold
 # cross-validation where `K` corresponds to the number of splits.
 #
-# Note that by default the `cross_validate` function above discards the 5
-# models that were trained on the different overlapping subset of the dataset.
-# The goal of cross-validation is not to train a model, but rather to estimate
+# Note that by default the `cross_validate` function discards the 5 models that
+# were trained on the different overlapping subset of the dataset. The goal of
+# cross-validation is not to train a model, but rather to estimate
 # approximately the generalization performance of a model that would have been
 # trained to the full training set, along with an estimate of the variability
 # (uncertainty on the generalization accuracy).

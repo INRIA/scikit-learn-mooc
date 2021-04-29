@@ -1995,10 +1995,10 @@ Wall time: 577 ms
 </div>
 </div>
 </div>
-<p>The output of <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> contains by default three entries: (i) the
-time to train the model on the training data for each fold, (ii) the time
-to predict with the model on the testing data for each fold, and (iii) the
-default score on the testing data for each fold.</p>
+<p>The output of <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> is a Python dictionary, which by default
+contains three entries: (i) the time to train the model on the training data
+for each fold, (ii) the time to predict with the model on the testing data
+for each fold, and (iii) the default score on the testing data for each fold.</p>
 <p>Setting <code class="docutils literal notranslate"><span class="pre">cv=5</span></code> created 5 distinct splits to get 5 variations for the training
 and testing sets. Each training set is used to fit one model which is then
 scored on the matching test set. This strategy is called K-fold
@@ -2012,8 +2012,8 @@ trained to the full training set, along with an estimate of the variability
 <p>You can pass additional parameters to <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> to get more
 information, for instance training scores. These features will be covered in
 a future notebook.</p>
-<p>Let’s extract the test scores for the dictionary and compute the mean
-accuracy and the variation of the accuracy across folds.</p>
+<p>Let’s extract the test scores from the <code class="docutils literal notranslate"><span class="pre">cv_result</span></code> dictionary and compute
+the mean accuracy and the variation of the accuracy across folds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cv_result</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>

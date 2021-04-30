@@ -255,13 +255,9 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 #
 # ## An example of machine learning model decision rules
 #
-# The plot below shows the rules of a simple model, called decision tree. This
-# model has been trained using the `age` and `hours-per-week` features, so that
-# we can have a nice graphical representation of its decision rules in two
-# dimensions. We will explain how this model works in a later notebook, for now
-# let us just consider the model predictions when trained on this dataset:
-#
-# ![](../figures/simple_decision_tree_adult_census.png)
+# We will take a subset of only two features such that we can represent
+# graphically some manual decisions. Let's select the `age` and
+# `hours-per-week` features.
 
 # %%
 import matplotlib.pyplot as plt
@@ -282,7 +278,7 @@ plt.axhline(
 
 plt.annotate("<=50K", (17, 25), rotation=90, fontsize=35)
 plt.annotate("<=50K", (35, 20), fontsize=35)
-_ = plt.annotate("?", (50, 60), fontsize=35)
+_ = plt.annotate("???", (45, 60), fontsize=35)
 
 # %% [markdown]
 # The data points (circles) show the distribution of `hours-per-week` and `age`
@@ -290,34 +286,23 @@ _ = plt.annotate("?", (50, 60), fontsize=35)
 # `high-income`. This part of the plot is the same as the bottom-left plot in
 # the pairplot above.
 #
-# What is new in this plot is that we have added the model decision rules as
-# background colors. The background color in each area represents the
-# probability of the class `high-income` as estimated by the model. Values
-# towards 0 (dark blue) indicates that the model predicts `low-income` with a
-# high probability. Values towards 1 (dark orange) indicates that the model
-# predicts `high-income` with a high probability. Values towards 0.5 (white)
-# indicates that the model is not very sure about its prediction.
-#
-# Looking at the plot, here is what we can gather:
+# Looking at the plot, we can define the following rules:
 #
 # * In the region `age < 28.5` (left region) the prediction is `low-income`.
-#   The dark blue color indicates that the model is quite sure about its
-#   prediction.
+#   Indeed, there are many blue samples and we cannot see any orange samples.
 # * In the region `age > 28.5 AND hours-per-week < 40.5`
-#   (bottom-right region), the prediction is `low-income`. Note that the blue
-#   is a bit lighter that for the left region which means that the algorithm is
-#   not as certain in this region.
+#   (bottom-right region), the prediction is `low-income`. Indeed, there are
+#   many blue samples and few orange samples.
 # * In the region `age > 28.5 AND hours-per-week > 40.5` (top-right region),
-#   the prediction is `low-income`. However the probability of the class
-#   `low-income` is very close to 0.5 which means the model is not sure at all
-#   about its prediction.
+#   we see as many blue samples as orange samples. Indeed, it is complicated
+#   to predict a specific class in this case.
 #
-# It is interesting to see that a simple model creates rules similar to the
-# ones that we could have created by hand. Note that machine learning is really
-# interesting when creating rules by hand is not straightforward, for example
-# because we are in high dimension (many features) or because there are no
-# simple and obvious rules that separate the two classes as in the top-right
-# region
+# It is interesting to note that some machine learning model will work
+# similarly to what we did: they are known as decision tree models. Note that
+# machine learning is really interesting when creating rules by hand is not
+# straightforward, for example because we are in high dimension (many features)
+# or because there are no simple and obvious rules that separate the two
+# classes as in the top-right region
 
 # %% [markdown]
 #

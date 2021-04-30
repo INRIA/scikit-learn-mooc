@@ -262,7 +262,29 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # let us just consider the model predictions when trained on this dataset:
 #
 # ![](../figures/simple_decision_tree_adult_census.png)
-#
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+
+ax = sns.scatterplot(
+    x="age", y="hours-per-week", data=adult_census[:n_samples_to_plot],
+    hue="class", alpha=0.5,
+)
+
+age_limit = 28.5
+plt.axvline(x=age_limit, ymin=0, ymax=1, color="black", linestyle="--")
+
+hours_per_week_limit = 40.5
+plt.axhline(
+    y=hours_per_week_limit, xmin=0.2, xmax=1, color="black", linestyle="--"
+)
+
+plt.annotate("<=50K", (17, 25), rotation=90, fontsize=35)
+plt.annotate("<=50K", (35, 20), fontsize=35)
+_ = plt.annotate("?", (50, 60), fontsize=35)
+
+# %% [markdown]
 # The data points (circles) show the distribution of `hours-per-week` and `age`
 # in the dataset. Blue points mean `low-income` and orange points mean
 # `high-income`. This part of the plot is the same as the bottom-left plot in

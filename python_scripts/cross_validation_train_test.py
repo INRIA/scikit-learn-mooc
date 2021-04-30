@@ -93,7 +93,7 @@ print(f"On average, our regressor makes an error of {score:.2f} k$")
 # error**.
 #
 # ```{note}
-# In this MOOC, we will use consistently the term "training error".
+# In this MOOC, we will consistently use the term "training error".
 # ```
 #
 # We trained a predictive model to minimize the training error but our aim is
@@ -103,7 +103,7 @@ print(f"On average, our regressor makes an error of {score:.2f} k$")
 # **testing error**.
 #
 # ```{note}
-# In this MOOC, we will use consistently the term "testing error".
+# In this MOOC, we will consistently use the term "testing error".
 # ```
 #
 # Thus, the most basic evaluation involves:

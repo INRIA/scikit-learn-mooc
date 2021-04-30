@@ -1518,7 +1518,6 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
       <th></th>
       <th>age</th>
       <th>workclass</th>
-      <th>fnlwgt</th>
       <th>education</th>
       <th>education-num</th>
       <th>marital-status</th>
@@ -1538,7 +1537,6 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
       <th>0</th>
       <td>25</td>
       <td>Private</td>
-      <td>226802</td>
       <td>11th</td>
       <td>7</td>
       <td>Never-married</td>
@@ -1556,7 +1554,6 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
       <th>1</th>
       <td>38</td>
       <td>Private</td>
-      <td>89814</td>
       <td>HS-grad</td>
       <td>9</td>
       <td>Married-civ-spouse</td>
@@ -1574,7 +1571,6 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
       <th>2</th>
       <td>28</td>
       <td>Local-gov</td>
-      <td>336951</td>
       <td>Assoc-acdm</td>
       <td>12</td>
       <td>Married-civ-spouse</td>
@@ -1592,7 +1588,6 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
       <th>3</th>
       <td>44</td>
       <td>Private</td>
-      <td>160323</td>
       <td>Some-college</td>
       <td>10</td>
       <td>Married-civ-spouse</td>
@@ -1610,7 +1605,6 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
       <th>4</th>
       <td>18</td>
       <td>?</td>
-      <td>103497</td>
       <td>Some-college</td>
       <td>10</td>
       <td>Never-married</td>
@@ -2178,7 +2172,8 @@ columns can be a problem for machine learning algorithms.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In the upcoming notebooks, we will only keep the <code class="docutils literal notranslate"><span class="pre">education</span></code> variable,
-excluding the <code class="docutils literal notranslate"><span class="pre">education-num</span></code> variable.</p>
+excluding the <code class="docutils literal notranslate"><span class="pre">education-num</span></code> variable since the latter is redundant with the
+former.</p>
 </div>
 <p>Another way to inspect the data is to do a <code class="docutils literal notranslate"><span class="pre">pairplot</span></code> and show how each
 variable differs according to our target, i.e. <code class="docutils literal notranslate"><span class="pre">class</span></code>. Plots along the
@@ -2189,6 +2184,8 @@ variables.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
+<span class="c1"># We will plot a subset of the data to keep the plot readable and make the</span>
+<span class="c1"># plotting faster</span>
 <span class="n">n_samples_to_plot</span> <span class="o">=</span> <span class="mi">5000</span>
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;education-num&#39;</span><span class="p">,</span> <span class="s1">&#39;hours-per-week&#39;</span><span class="p">]</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span> <span class="nb">vars</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>

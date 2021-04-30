@@ -201,7 +201,8 @@ pd.crosstab(index=adult_census['education'],
 # %% [markdown]
 # ```{note}
 # In the upcoming notebooks, we will only keep the `education` variable,
-# excluding the `education-num` variable.
+# excluding the `education-num` variable since the latter is redundant with the
+# former.
 # ```
 
 # %% [markdown]
@@ -214,6 +215,8 @@ pd.crosstab(index=adult_census['education'],
 # %%
 import seaborn as sns
 
+# We will plot a subset of the data to keep the plot readable and make the
+# plotting faster
 n_samples_to_plot = 5000
 columns = ['age', 'education-num', 'hours-per-week']
 _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,

@@ -79,10 +79,9 @@ print(f"The dataset contains {data.shape[0]} samples and "
 # ## Fit a model and make predictions
 #
 # We will build a classification model using the "K-nearest neighbors"
-# strategy. A K-nearest neighors is a naive model: to predict the target for a
-# new sample, the model will look at the target of the `k` nearest samples
-# of this sample provided during training, and will output the most likely
-# target.
+# strategy. To predict the target of a new sample, a k-nearest neighbors takes
+# into account its `k` closest samples in the training set and predicts the
+# majority target of these samples.
 #
 # The `fit` method is called to train the model from the input
 # (features) and target data.

@@ -76,7 +76,7 @@ train_size, train_scores, test_scores = results[:3]
 train_errors, test_errors = -train_scores, -test_scores
 
 # %% [markdown]
-# Now, we can plot the curve curve.
+# Now, we can plot the curve.
 
 # %%
 import matplotlib.pyplot as plt

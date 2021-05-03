@@ -189,13 +189,16 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # samples will be used. This is the base of the support vector machine
 # algorithm.
 #
-# The mathematical definition of kernel-based support vector machines is beyond
-# the scope of this course. We encourage interested readers to have a look at
-# the scikit-learn [documentation on
+# The mathematical definition of "kernels" and "support vector machines" is
+# beyond the scope of this course. We encourage interested readers with a
+# mathematical training to have a look at the scikit-learn [documentation on
 # SVMs](https://scikit-learn.org/stable/modules/svm.html) for more details.
 #
-# For the rest of us, let's just develop some intuitions on their expressive
-# power by trying them on the same dataset:
+# For the rest of us, let us just develop some intuitions on the relative
+# expressive power of support vector machines with linear and non-linear
+# kernels by fitting them on the same dataset.
+#
+# First, consider a support vector machine with a linear kernel:
 
 # %%
 from sklearn.svm import SVR
@@ -212,12 +215,16 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 #
-# The estimator can be configured to use a non-linear kernel. Then, it can
+# The predictions of our SVR with a linear kernel are all aligned on a straight
+# line. `SVR(kernel="linear")` is indeed yet another example of a linear model.
+#
+# The estimator can also be configured to use a non-linear kernel. Then, it can
 # learn a prediction function that computes non-linear interaction between
-# samples to predict and selected samples from the training set.
+# samples for which we want to make a prediction and selected samples from the
+# training set.
 #
 # The result is another kind of non-linear regression model with a similar
-# expressivity are our previous polynomial regression pipeline:
+# expressivity as our previous polynomial regression pipeline:
 
 # %%
 svr = SVR(kernel="poly", degree=3)

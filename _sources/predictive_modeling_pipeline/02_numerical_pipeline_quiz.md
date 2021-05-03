@@ -42,13 +42,13 @@ When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
 
 We define a 2-dimensional dataset represented graphically as follows:
 
-![Original dataset]("../figures/numerical_pipeline_quiz_scaler_original.png")
+![Original dataset]("../../figures/numerical_pipeline_quiz_scaler_original.png")
 
 ```{admonition} Question
 If we process the dataset using a `StandardScaler` with the default parameters,
 which of the following results do you expect:
 
-![Preprocessed datasets]("../figures/numerical_pipeline_quiz_scaler_preprocessing.png")
+![Preprocessed datasets]("../../figures/numerical_pipeline_quiz_scaler_preprocessing.png")
 
 - a) Preprocessing A
 - b) Preprocessing B

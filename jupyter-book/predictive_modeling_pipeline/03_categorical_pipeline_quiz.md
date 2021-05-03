@@ -25,7 +25,7 @@ One-hot encoding will:
 
 - a) encode a single string-encoded column into a single integer coded column
 - b) transform a numerical variable into a categorical variable
-- c) create one additional column for each possible categories
+- c) create one additional column for each possible category
 - d) transform string variable onto numerical representation
 ```
 

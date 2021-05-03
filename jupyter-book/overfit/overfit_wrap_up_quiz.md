@@ -24,9 +24,7 @@ Select the correct answers from the following proposals.
   (exactly 2 possible classes)
 - c) The problem to be solved is a multiclass classification problem
   (more than 2 possible classes)
-- d) The proportions of the class counts are balanced: there are approximately
-  the same number of rows for each class
-- e) The proportions of the class counts are imbalanced: some classes have more
+- d) The proportions of the class counts are imbalanced: some classes have more
   than twice as many rows than others)
 
 _Select several answers_

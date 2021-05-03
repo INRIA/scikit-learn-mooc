@@ -1416,7 +1416,7 @@ previous exercise.</p>
 <span class="n">len_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_max</span> <span class="o">-</span> <span class="n">data_min</span><span class="p">)</span>
 <span class="c1"># sort the data to make plotting easier later</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span> <span class="o">*</span> <span class="n">len_data</span> <span class="o">-</span> <span class="n">len_data</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span> <span class="o">*</span> <span class="o">.</span><span class="mi">3</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span> <span class="o">*</span> <span class="mf">.3</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">noise</span>
 </pre></div>
 </div>
@@ -1654,12 +1654,14 @@ features.</p>
 emphasized, a weight will be assign by sample instead. However, not all
 samples will be used. This is the base of the support vector machine
 algorithm.</p>
-<p>The mathematical definition of kernel-based support vector machines is beyond
-the scope of this course. We encourage interested readers to have a look at
-the scikit-learn <a class="reference external" href="https://scikit-learn.org/stable/modules/svm.html">documentation on
+<p>The mathematical definition of “kernels” and “support vector machines” is
+beyond the scope of this course. We encourage interested readers with a
+mathematical training to have a look at the scikit-learn <a class="reference external" href="https://scikit-learn.org/stable/modules/svm.html">documentation on
 SVMs</a> for more details.</p>
-<p>For the rest of us, let’s just develop some intuitions on their expressive
-power by trying them on the same dataset:</p>
+<p>For the rest of us, let us just develop some intuitions on the relative
+expressive power of support vector machines with linear and non-linear
+kernels by fitting them on the same dataset.</p>
+<p>First, consider a support vector machine with a linear kernel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
@@ -1684,11 +1686,14 @@ power by trying them on the same dataset:</p>
 <img alt="../_images/linear_regression_non_linear_link_25_0.png" src="../_images/linear_regression_non_linear_link_25_0.png" />
 </div>
 </div>
-<p>The estimator can be configured to use a non-linear kernel. Then, it can
+<p>The predictions of our SVR with a linear kernel are all aligned on a straight
+line. <code class="docutils literal notranslate"><span class="pre">SVR(kernel=&quot;linear&quot;)</span></code> is indeed yet another example of a linear model.</p>
+<p>The estimator can also be configured to use a non-linear kernel. Then, it can
 learn a prediction function that computes non-linear interaction between
-samples to predict and selected samples from the training set.</p>
+samples for which we want to make a prediction and selected samples from the
+training set.</p>
 <p>The result is another kind of non-linear regression model with a similar
-expressivity are our previous polynomial regression pipeline:</p>
+expressivity as our previous polynomial regression pipeline:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svr</span> <span class="o">=</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>

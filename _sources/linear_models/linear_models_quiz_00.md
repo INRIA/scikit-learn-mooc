@@ -24,3 +24,13 @@ Which of the following estimators can solve linear regression problems?
 
 _Select several answers_
 ```
+
++++
+
+```{admonition} Question
+Is it possible to get a perfect fit (zero prediction error on the training set)
+with a linear classifier on a non-linearly separable dataset?
+
+- a) yes
+- b) no
+```

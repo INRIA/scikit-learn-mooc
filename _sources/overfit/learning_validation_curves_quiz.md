@@ -12,7 +12,7 @@ A model is overfitting when:
 +++
 
 ```{admonition} Question
-Assuming that we have a data with little noise, a model is underfitting when:
+Assuming that we have a dataset with little noise, a model is underfitting when:
 
 - a) both the train and test errors are high
 - b) train error is low but test error is high

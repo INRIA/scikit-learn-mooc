@@ -19,14 +19,3 @@ is continuous, what is the respective type/shape of `coef_` and `intercept_`?
 - b) array of shape (1, `n_features`) and a float
 - c) array of shape (1, `n_features`) and an array of shape (1,)
 ```
-
-+++
-
-```{admonition} Question
-Is it possible to get a perfect fit with a linear model on a dataset where the
-data have a non-linear link with the target?
-
-- a) yes
-- b) no
-- c) it depends on the non-linear link between the data and the target
-```

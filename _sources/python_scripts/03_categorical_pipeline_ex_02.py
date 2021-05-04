@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📝 Exercise 02
+# # 📝 Exercise M1.05
 #
 # The goal of this exercise is to evaluate the impact of feature preprocessing
 # on a pipeline that uses a decision-tree-based classifier instead of logistic

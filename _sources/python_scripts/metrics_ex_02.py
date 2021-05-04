@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 02
+# # 📝 Exercise M7.03
 #
 # As with the classification metrics exercise, we will evaluate the regression
 # metrics within a cross-validation framework to get familiar with the syntax.

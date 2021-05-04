@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📝 Exercise 00
+# # 📝 Exercise M1.02
 #
 # The goal of this exercise is to fit a similar model as in the previous
 # notebook to get familiar with manipulating scikit-learn objects and in

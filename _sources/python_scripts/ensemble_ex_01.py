@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 01
+# # 📝 Exercise M6.01
 #
 # The aim of this notebook is to investigate if we can tune the hyperparameters
 # of a bagging regressor and evaluate the gain obtained.

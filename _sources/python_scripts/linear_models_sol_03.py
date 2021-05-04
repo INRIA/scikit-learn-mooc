@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📃 Solution for Exercise 03
+# # 📃 Solution for Exercise M4.03
 #
 # In all previous notebooks, we only used a single feature in `data`. But we
 # have already shown that we could add new features to make the model more

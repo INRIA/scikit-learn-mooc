@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 01
+# # 📝 Exercise M4.01
 #
 # The aim of this exercise is two-fold:
 #

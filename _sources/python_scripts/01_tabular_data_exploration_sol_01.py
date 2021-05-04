@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📃 Solution for Exercise 01
+# # 📃 Solution for Exercise M1.01
 
 # %% [markdown]
 # Imagine we are interested in predicting penguins species based on two of

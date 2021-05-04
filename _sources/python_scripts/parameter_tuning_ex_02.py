@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📝 Exercise 01
+# # 📝 Exercise M3.01
 #
 # The goal is to write an exhaustive search to find the best parameters
 # combination maximizing the model statistical performance.

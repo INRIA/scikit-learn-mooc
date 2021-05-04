@@ -70,7 +70,7 @@ Evaluate the pipeline using 10-fold cross-validation using the
 Use `sklearn.model_selection.cross_validate` with
 `scoring="balanced_accuracy"`.
 Use `model.get_params()` to list the parameters of the pipeline and use
-`model.set_params(param_name=param_value)` to updated them.
+`model.set_params(param_name=param_value)` to update them.
 
 - a) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.9 and 1.0
 - b) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.8 and 0.9

@@ -83,7 +83,7 @@ from sklearn.linear_model import LogisticRegression
 model = make_pipeline(preprocessor, LogisticRegression())
 
 # %% [markdown]
-# Use a `RandomizedSearchCV` to find the best set of hyperparameters by tuning
+# Use `RandomizedSearchCV` with `n_iter=20` to find the best set of hyperparameters by tuning
 # the following parameters of the `model`:
 #
 # - the parameter `C` of the `LogisticRegression` with values ranging from
@@ -114,10 +114,15 @@ model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 
 # %% [markdown]
-# So the best hyperparameters give a model where the data are scaled but not
-# centered and the final model is regularized. As a complementary answer will
-# will investigate if there is a link regarding the hyperparameters values
-# (or a combination of such) and the mean test accuracy.
+# So the best hyperparameters give a model where the features are scaled but not
+# centered and the final model is regularized.
+#
+# Getting the best parameter combinations is the main outcome of the
+# hyper-parameter optimization procedure. However it is also interesting
+# to assess the sensitivity of the best models to the choice of those
+# parameters. The following code, not required to answer the quiz question
+# shows how to conduct such an analysis for this this pipeline using a
+# parallel coordinate plot.
 #
 # We could use `cv_results = model_random_search.cv_results_` to make a
 # parallel coordinate plot as we did in the previous notebook (you are more
@@ -156,7 +161,7 @@ cv_results = cv_results[column_name_mapping.values()].sort_values(
 # %%
 column_scaler = ["centering", "scaling"]
 cv_results[column_scaler] = cv_results[column_scaler].astype(np.int64)
-cv_results['log C'] = np.log(cv_results['C'])
+cv_results['log C'] = np.log10(cv_results['C'])
 
 # %%
 import plotly.express as px
@@ -179,8 +184,9 @@ fig.show()
 #
 # - scaling the data is important. All the best performing models are scaling
 #   the data;
-# - centering the data does not have an impact. Both approaches, centering and
-#   not centering, lead to good models;
-# - using some regularization is important. Best performing models always use
-#   some regularization with `C > 0.05` (i.e. ~-3 in the plot because
-#   `np.log(0.05)` is almost equal to -3).
+# - centering the data does not have a strong impact. Both approaches, centering and
+#   not centering, can lead to good models;
+# - using some regularization is fine but using too much is a problem. Recall
+#    that a smaller value of C means a stronger regularization. In particular
+#    no pipeline with C lower than 0.001 can be found among the best
+#    models.

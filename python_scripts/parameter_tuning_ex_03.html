@@ -1470,22 +1470,17 @@ a preprocessing pipeline.</p>
 </div>
 </div>
 </div>
-<p>Make your random search</p>
 <p>Use a <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> to find the best set of hyperparameters by tuning
-the following parameters for the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> model:</p>
+the following parameters of the <code class="docutils literal notranslate"><span class="pre">model</span></code>:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">C</span></code> with values ranging from 0.001 to 10. You can use a log-uniform
-distribution (i.e. <code class="docutils literal notranslate"><span class="pre">scipy.stats.loguniform</span></code>);</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">solver</span></code> with possible values being <code class="docutils literal notranslate"><span class="pre">&quot;liblinear&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;lbfgs&quot;</span></code>;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">penalty</span></code> with possible values being <code class="docutils literal notranslate"><span class="pre">&quot;l2&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;l1&quot;</span></code>;</p></li>
+<li><p>the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code> of the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> with values ranging from
+0.001 to 10. You can use a log-uniform distribution
+(i.e. <code class="docutils literal notranslate"><span class="pre">scipy.stats.loguniform</span></code>);</p></li>
+<li><p>the parameter <code class="docutils literal notranslate"><span class="pre">with_mean</span></code> of the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> with possible values
+<code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>;</p></li>
+<li><p>the parameter <code class="docutils literal notranslate"><span class="pre">with_std</span></code> of the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> with possible values
+<code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
-<p>In addition, try several preprocessing strategies with the <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>
-by always (or not) dropping the first column when encoding the categorical
-data.</p>
-<p>Notes: some combinations of the hyperparameters proposed above are invalid.
-You can make the parameter search accept such failures by setting
-<code class="docutils literal notranslate"><span class="pre">error_score</span></code> to <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>. The warning messages give more details on which
-parameter combinations but the computation will proceed.</p>
 <p>Once the computation has completed, print the best combination of parameters
 stored in the <code class="docutils literal notranslate"><span class="pre">best_params_</span></code> attribute.</p>
 </div>

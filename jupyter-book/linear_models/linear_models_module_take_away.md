@@ -6,13 +6,19 @@
 
 In this module, we saw that:
 
-- a linear model has a specific parametrization defined by some weights and an
-  intercept;
-- linear models require data scaling before being trained;
-- regularization can be used to fight over-fitting;
-- the regularization parameter needs to be fine-tuned for each application;
-- linear models can be used with data presenting non-linear links but require
-  extra work such as the use of data augmentation or kernel trick.
+- the predictions of a linear model depend on a weighted sum of the values of
+  the input features added to an intercept parameter;
+- fitting a linear model consists in adjusting both the weight coefficients and
+  the intercept to minimize the prediction errors on the training set;
+- to train linear models successfully it is often required to scale the input
+  features approximately to the same dynamic range;
+- regularization can be used to reduce over-fitting: weight coefficients are
+  constrained to stay small when fitting;
+- the regularization hyperparameter needs to be fine-tuned by cross-validation
+  for each new machine learning problem and dataset;
+- linear models can be used on problems where the target variable is not
+  linearly related to the input features but this requires extra feature
+  engineering work to transform the data in order to avoid under-fitting.
 
 ## To go further
 

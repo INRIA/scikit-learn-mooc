@@ -24,9 +24,7 @@ Select the correct answers from the following proposals.
   (exactly 2 possible classes)
 - c) The problem to be solved is a multiclass classification problem
   (more than 2 possible classes)
-- d) The proportions of the class counts are balanced: there are approximately
-  the same number of rows for each class
-- e) The proportions of the class counts are imbalanced: some classes have more
+- d) The proportions of the class counts are imbalanced: some classes have more
   than twice as many rows than others)
 
 _Select several answers_
@@ -151,12 +149,24 @@ Select the true affirmations stated below:
 - a) The model underfits for a range of `n_neighbors` values between 1 to 10
 - b) The model underfits for a range of `n_neighbors` values between 10 to 100
 - c) The model underfits for a range of `n_neighbors` values between 100 to 500
-- d) The model overfits for a range of `n_neighbors` values between 1 to 10
-- e) The model overfits for a range of `n_neighbors` values between 10 to 100
-- f) The model overfits for a range of `n_neighbors` values between 100 to 500
-- g) The model best generalizes for a range of `n_neighbors` values between 1 to 10
-- h) The model best generalizes for a range of `n_neighbors` values between 10 to 100
-- i) The model best generalizes for a range of `n_neighbors` values between 100 to 500
+```
 
-_Select several answers_
++++
+
+```{admonition} Question
+Select the true affirmations stated below:
+
+- a) The model overfits for a range of `n_neighbors` values between 1 to 10
+- b) The model overfits for a range of `n_neighbors` values between 10 to 100
+- c) The model overfits for a range of `n_neighbors` values between 100 to 500
+```
+
++++
+
+```{admonition} Question
+Select the true affirmations stated below:
+
+- a) The model best generalizes for a range of `n_neighbors` values between 1 to 10
+- b) The model best generalizes for a range of `n_neighbors` values between 10 to 100
+- c) The model best generalizes for a range of `n_neighbors` values between 100 to 500
 ```

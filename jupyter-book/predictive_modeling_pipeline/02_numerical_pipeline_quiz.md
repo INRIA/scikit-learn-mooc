@@ -40,14 +40,36 @@ When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
 
 +++
 
+We define a 2-dimensional dataset represented graphically as follows:
+
+![Original dataset](../../figures/numerical_pipeline_quiz_scaler_original.png)
+
 ```{admonition} Question
-The `StandardScaler` transformer:
+If we process the dataset using a `StandardScaler` with the default parameters,
+which of the following results do you expect:
+
+![Preprocessed datasets](../../figures/numerical_pipeline_quiz_scaler_preprocessing.png)
+
+- a) Preprocessing A
+- b) Preprocessing B
+- c) Preprocessing C
+- d) Preprocessing D
+
+_Select a single answer_
+```
+
++++
+
+```{admonition} Question
+A `StandardScaler` transformer with the default parameter will:
 
 - a) transforms the features so that they have similar ranges
 - b) transforms the features to lie in the [0.0, 1.0] range
 - c) transforms positive-only features into negative or positive values
 - d) can help logistic regression converge faster (fewer iterations)
-- e) deals with the problem of missing values
+
+Hint: look at the plots and the answers of the previous question to eliminate
+some of the wrong answers.
 ```
 
 +++
@@ -64,10 +86,11 @@ Cross-validation allows us to:
 +++
 
 ```{admonition} Question
-`make_pipeline` (as well as `Pipeline`) is used to:
+`make_pipeline` (as well as `Pipeline`):
 
-- a) run cross-validation
-- b) combine one or several transformers and a predictor
-- c) try several models at the same time
-- d) avoid over-fitting
+- a) runs a cross-validation using the transformers and predictor given as
+  parameters
+- b) combines one or several transformers and a predictor
+- c) tries several models at the same time
+- d) plots feature histogram automatically
 ```

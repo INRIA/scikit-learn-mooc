@@ -40,7 +40,7 @@ You can use a `sklearn.impute.SimpleImputer` with the default parameters to
 impute missing data.
 
 ```{admonition} Question
-What magnitude of the extremum weight values for all features:
+What is the order of magnitude of the extremum weight values over all the features:
 
 - a) 1e4
 - b) 1e6
@@ -52,7 +52,7 @@ _Select a single answer_
 +++
 
 Repeat the same experiment by fitting a ridge regressor
-(`sklearn.linear_model.Rigdge`) with the default parameter.
+(`sklearn.linear_model.Ridge`) with the default parameter.
 
 ```{admonition} Question
 What magnitude of the extremum weight values for all features?
@@ -124,10 +124,11 @@ _Select a single answer_
 
 +++
 
-Check the parameter `alpha_` of the different ridge regressor
+Check the parameter `alpha_` (the regularization strength) for the different
+ridge regressors obtained on each fold.
 
 ```{admonition} Question
-In general what is the optimal l2 penalty strength?
+In which range does `alpha_` fall into for most folds?
 
 - a) between 0.1 and 1
 - b) between 1 and 10

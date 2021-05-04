@@ -35,6 +35,7 @@ in m.s$^{-1}$, and $a$ is the rider acceleration in m.s$^{-2}$.
 
 This equation might look a bit complex at first but we can explain with words
 what the different terms within the parenthesis are:
+
 - the first term is the power that a cyclist is required to produce to fight wind
 - the second term is the power that a cyclist is required to produce to fight
   the rolling resistance created by the tires on the floor
@@ -73,6 +74,19 @@ such a model as part of this exercise. Thus, you need to:
   subsequent questions. Be aware that the `ShuffleSplit` strategy is a naive
   strategy and we will investigate the consequence of making this choice in the
   subsequent questions.
+
+```{admonition} Question
+What is the mean value of the column containing the information of
+$\sin(\alpha) V_{d}$?
+
+- a) about -3
+- b) about -0.3
+- c) about -0.03
+- d) about -0.003
+
+```
+
++++
 
 ```{admonition} Question
 On average, the Mean Absolute Error on the test sets obtained through

@@ -79,7 +79,11 @@ print(f"The dataset contains {data.shape[0]} samples and "
 # ## Fit a model and make predictions
 #
 # We will build a classification model using the "K-nearest neighbors"
-# strategy. The `fit` method is called to train the model from the input
+# strategy. To predict the target of a new sample, a k-nearest neighbors takes
+# into account its `k` closest samples in the training set and predicts the
+# majority target of these samples.
+#
+# The `fit` method is called to train the model from the input
 # (features) and target data.
 #
 # ```{caution}

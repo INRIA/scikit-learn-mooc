@@ -130,6 +130,20 @@ can process both the numerical and categorical features together as follows:
   `sklearn.impute.SimpleImputer(strategy="most_frequent")` transformer to
   replace missing values by the most-frequent value in each column.
 
+Be aware that you can pass a `Pipeline` as a transformer in a
+`ColumnTransformer`. We give a succinct example where we use a
+`ColumnTransformer` to select the numerical columns and process them (i.e.
+scale and impute). We additionally show that we can create a final model
+combining this preprocessor with a classifier.
+
+```python
+scaler_imputer_transformer = make_pipeline(StandardScaler(), SimpleImputer())
+preprocessor = ColumnTransformer(transformers=[
+    ("num-preprocessor", scaler_imputer_transformer, numerical_features)
+])
+model = make_pipeline(preprocessor, LogisticRegression())
+```
+
 Let us now define a substantial improvement or deterioration as an increase or
 decrease of the mean generalization score of at least three times the standard
 deviation of the cross-validated generalization score.

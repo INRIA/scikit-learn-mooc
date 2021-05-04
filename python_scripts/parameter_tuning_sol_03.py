@@ -141,7 +141,7 @@ column_name_mapping = {
 }
 
 cv_results = cv_results.rename(columns=column_name_mapping)
-cv_results = cv_results[column_name_mapping.keys()].sort_values(
+cv_results = cv_results[column_name_mapping.values()].sort_values(
     "mean test accuracy", ascending=False)
 
 # %% [markdown]

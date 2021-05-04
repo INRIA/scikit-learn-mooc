@@ -226,50 +226,40 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # %% [markdown]
 # ## Creating decision rules by hand
 #
-# By looking at the data you could infer some hand-written rules to predict the
-# class:
+# By looking at the previous plot, we could infer some hand-written rules to
+# whether or not a person has a high- or low-income. For instance, we could
+# focus on the combination of `hours-per-week` and `age` features.
+
+# %%
+_ = sns.scatterplot(
+    x="age", y="hours-per-week", data=adult_census[:n_samples_to_plot],
+    hue="class", alpha=0.5,
+)
+
+# %% [markdown]
+# The data points (circles) show the distribution of `hours-per-week` and `age`
+# in the dataset. Blue points mean low-income and orange points mean
+# high-income. This part of the plot is the same as the bottom-left plot in
+# the pairplot above.
 #
-# * if you are young (less than 25 year-old roughly), you are in the
-#   `<=50K` class;
-# * if you are old (more than 70 year-old roughly), you are in the
-#   `<=50K` class;
-# * if you work part-time (less than 40 hours roughly) you are in the
-#   `<=50K` class.
-#
-# These hand-written rules could work reasonably well without the need for any
-# machine learning. Note however that it is not very easy to create rules for
-# the region `40 < hours-per-week < 60` and `30 < age < 70`. We can hope that
-# machine learning can help in this region. Also note that visualization can
-# help creating hand-written rules but is limited to 2 dimensions (maybe 3
-# dimensions), whereas machine learning models can build models in
-# high-dimensional spaces.
-#
-# ```{note}
-# In a machine-learning setting, a model automatically creates the "rules" from
-# the data in order to make predictions on new unseen data.
-# ```
-#
-# Another thing worth mentioning in this plot: if you are young (less than 25
-# year-old roughly) or old (more than 70 year-old roughly) you tend to work
-# less. This is a non-linear relationship between age and hours per week.
-# Linear machine learning models can only capture linear interactions, so this
-# may be a factor when deciding which model to chose.
+# In this plot, we can try to find regions that mainly contains a single class
+# such that we can easily decide what class one should predict. Let's define
+# two such rules that we depict below.
 
 # %%
 import matplotlib.pyplot as plt
-import numpy as np
 
 ax = sns.scatterplot(
     x="age", y="hours-per-week", data=adult_census[:n_samples_to_plot],
     hue="class", alpha=0.5,
 )
 
-age_limit = 25
+age_limit = 27
 plt.axvline(x=age_limit, ymin=0, ymax=1, color="black", linestyle="--")
 
 hours_per_week_limit = 40
 plt.axhline(
-    y=hours_per_week_limit, xmin=0.2, xmax=1, color="black", linestyle="--"
+    y=hours_per_week_limit, xmin=0.18, xmax=1, color="black", linestyle="--"
 )
 
 plt.annotate("<=50K", (17, 25), rotation=90, fontsize=35)
@@ -277,28 +267,26 @@ plt.annotate("<=50K", (35, 20), fontsize=35)
 _ = plt.annotate("???", (45, 60), fontsize=35)
 
 # %% [markdown]
-# The data points (circles) show the distribution of `hours-per-week` and `age`
-# in the dataset. Blue points mean `low-income` and orange points mean
-# `high-income`. This part of the plot is the same as the bottom-left plot in
-# the pairplot above.
-#
 # Looking at the plot, we can define the following rules:
 #
-# * In the region `age < 28.5` (left region) the prediction is `low-income`.
+# * In the region `age < 27` (left region) the prediction is low-income.
 #   Indeed, there are many blue samples and we cannot see any orange samples.
-# * In the region `age > 28.5 AND hours-per-week < 40.5`
-#   (bottom-right region), the prediction is `low-income`. Indeed, there are
+# * In the region `age > 27 AND hours-per-week < 40`
+#   (bottom-right region), the prediction is low-income. Indeed, there are
 #   many blue samples and few orange samples.
-# * In the region `age > 28.5 AND hours-per-week > 40.5` (top-right region),
+# * In the region `age > 27 AND hours-per-week > 40` (top-right region),
 #   we see as many blue samples as orange samples. Indeed, it is complicated
 #   to predict a specific class in this case.
 #
-# It is interesting to note that some machine learning model will work
+# It is interesting to note that some machine learning models will work
 # similarly to what we did: they are known as decision tree models. Note that
 # machine learning is really interesting when creating rules by hand is not
 # straightforward, for example because we are in high dimension (many features)
 # or because there are no simple and obvious rules that separate the two
 # classes as in the top-right region
+#
+# In conclusion, in a machine-learning setting, a model automatically creates
+# the "rules" from the data in order to make predictions on new unseen data.
 
 # %% [markdown]
 #

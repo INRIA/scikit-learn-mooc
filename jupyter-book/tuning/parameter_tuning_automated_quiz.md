@@ -128,8 +128,8 @@ on the `mean_test_score` axis of the parallel coordinate plot.
 
 Identify ranges of values for hyperparameter that always prevent the model to
 reach a test score higher than 0.85, irrespective of the other values. In other
-words, which hyperparameter values are never used to get a good model
-(i.e. with `mean_test_score higher than 0.85).
+words, which hyperparameters values are never used to get a good model
+(i.e. with `mean_test_score` higher than 0.85).
 
 - a) too large `l2_regularization`
 - b) too small `l2_regularization`

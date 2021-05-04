@@ -43,7 +43,9 @@ full_data = pd.DataFrame({"input_feature": data, "target": target})
 # %%
 import seaborn as sns
 
-_ = sns.scatterplot(data=full_data, x="input_feature", y="target")
+_ = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                    color="black", alpha=0.5)
+
 # %% [markdown]
 # We will highlight the limitations of fitting a linear regression model as
 # done in the previous exercise.
@@ -73,8 +75,9 @@ target_predicted = linear_regression.predict(data)
 mse = mean_squared_error(target, target_predicted)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -112,8 +115,9 @@ target_predicted = tree.predict(data)
 mse = mean_squared_error(target, target_predicted)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -142,8 +146,9 @@ target_predicted = linear_regression.predict(data_expanded)
 mse = mean_squared_error(target, target_predicted)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -173,8 +178,9 @@ target_predicted = polynomial_regression.predict(data)
 mse = mean_squared_error(target, target_predicted)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -209,8 +215,9 @@ target_predicted = svr.predict(data)
 mse = mean_squared_error(target, target_predicted)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -264,8 +271,9 @@ binned_regression.fit(data, target)
 target_predicted = binned_regression.predict(data)
 mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %%
@@ -279,6 +287,7 @@ nystroem_regression.fit(data, target)
 target_predicted = nystroem_regression.predict(data)
 mse = mean_squared_error(target, target_predicted)
 
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")

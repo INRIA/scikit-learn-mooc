@@ -30,7 +30,8 @@ import pandas as pd
 import seaborn as sns
 
 full_data = pd.DataFrame({"data": data, "target": target})
-_ = sns.scatterplot(data=full_data, x="data", y="target")
+_ = sns.scatterplot(data=full_data, x="data", y="target", color="black",
+                    alpha=0.5)
 
 # %% [markdown]
 # We observe that the link between the data `data` and vector `target` is

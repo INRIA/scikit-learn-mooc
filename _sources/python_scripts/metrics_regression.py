@@ -151,8 +151,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 sns.scatterplot(data=predicted_actual,
-                x="True values (k$)", y="Predicted values (k$)")
-plt.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
+                x="True values (k$)", y="Predicted values (k$)",
+                color="black", alpha=0.5)
+plt.axline((0, 0), slope=1, label="Perfect fit")
 plt.axis('square')
 _ = plt.title("Regression using a model without \ntarget transformation")
 
@@ -184,8 +185,9 @@ predicted_actual = pd.DataFrame(predicted_actual)
 
 # %%
 sns.scatterplot(data=predicted_actual,
-                x="True values (k$)", y="Predicted values (k$)")
-plt.axline((0, 0), slope=1, color="tab:orange", label="Perfect fit")
+                x="True values (k$)", y="Predicted values (k$)",
+                color="black", alpha=0.5)
+plt.axline((0, 0), slope=1, label="Perfect fit")
 plt.axis('square')
 plt.legend()
 _ = plt.title("Regression using a model that\n transform the target before "

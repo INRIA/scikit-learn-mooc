@@ -38,7 +38,8 @@ full_data = pd.DataFrame({"data": data, "target": target})
 # %%
 import seaborn as sns
 
-_ = sns.scatterplot(data=full_data, x="data", y="target")
+_ = sns.scatterplot(data=full_data, x="data", y="target", color="black",
+                    alpha=0.5)
 
 # %% [markdown]
 # We observe that the link between the data `data` and vector `target` is
@@ -62,8 +63,9 @@ def f(data, weight=0, intercept=0):
 predictions = f(data, weight=1.2, intercept=-0.2)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="data", y="target")
-_ = ax.plot(data, predictions, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target", color="black",
+                     alpha=0.5)
+_ = ax.plot(data, predictions)
 
 # %%
 from sklearn.metrics import mean_squared_error
@@ -94,8 +96,9 @@ linear_regression.fit(data_2d, target)
 predictions = linear_regression.predict(data_2d)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="data", y="target")
-_ = ax.plot(data, predictions, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="data", y="target", color="black",
+                     alpha=0.5)
+_ = ax.plot(data, predictions)
 
 # %%
 error = mean_squared_error(target, predictions)

@@ -13,11 +13,13 @@ _Select several answers_
 +++
 
 ```{admonition} Question
-Which aspects of a decision tree controls its complexity?
+A given split node in a decision tree classifier makes:
 
-- a) The number of features evaluated to make a split
-- b) The type of purity measure used
-- c) The depth of a decision tree
+- a) a binary decision considering a single feature at a time
+- b) a binary decision considering a combination of all the input features
+- c) multiple binary decisions considering a single feature
+- d) a binary decision considering a non-linear combination of all input
+  features
 
 _Select a single answer_
 ```
@@ -25,13 +27,12 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-A given split node in a decision tree classifier will make:
+Which aspect of the decision tree learning procedure is most typically used to
+control the underfitting/overfitting trade-off?
 
-- a) a binary decision considering a single feature at a time
-- b) a binary decision considering a combination of all the input features
-- c) multiple binary decisions considering a single feature
-- d) a binary decision considering a non-linear combination of all input
-  features
+- a) The number of children of a split node
+- b) The magnitude of the weight coefficients
+- c) The maximum depth of the decision tree
 
 _Select a single answer_
 ```

@@ -150,10 +150,10 @@ cv_results = cv_results[column_name_mapping.values()].sort_values(
     "mean test accuracy", ascending=False)
 
 # %% [markdown]
-# In addition, the parallel coordinate plot from `plotly` expect all data to be
-# numeric. Thus, we convert the boolean indicator informing whether or not the
-# data were centered or scaled into an integer, where True is mapped to 1 and
-# False is mapped to 0.
+# In addition, the parallel coordinate plot from `plotly` expects all data to
+# be numeric. Thus, we convert the boolean indicator informing whether or not
+# the data were centered or scaled into an integer, where True is mapped to 1
+# and False is mapped to 0.
 #
 # We also take the logarithm of the `C` values to span the data on a broader
 # range for a better visualization.

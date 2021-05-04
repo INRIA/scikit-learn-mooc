@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📝 Exercise 02
+# # 📝 Exercise M3.02
 #
 # The goal is to find the best set of hyperparameters which maximize the
 # statistical performance on a training set.

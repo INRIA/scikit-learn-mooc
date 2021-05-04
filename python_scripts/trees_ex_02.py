@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 02
+# # 📝 Exercise M5.02
 #
 # The aim of this exercise is to find out whether a decision tree
 # model is able to extrapolate.

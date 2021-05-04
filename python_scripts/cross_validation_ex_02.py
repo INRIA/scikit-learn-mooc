@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 02
+# # 📝 Exercise M7.01
 #
 # This notebook aims at building baseline classifiers, which we'll use to
 # compare our predictive model. Besides, we will check the differences with

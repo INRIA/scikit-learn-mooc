@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📃 Solution for Exercise 01
+# # 📃 Solution for Exercise M1.04
 #
 # The goal of this exercise is to evaluate the impact of using an arbitrary
 # integer encoding for categorical variables along with a linear

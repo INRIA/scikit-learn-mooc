@@ -66,7 +66,11 @@ model = Pipeline(steps=[
 ```{admonition} Question
 
 Evaluate the pipeline using 10-fold cross-validation using the
-`balanced-accuracy` scoring metric to choose the correct statements:
+`balanced-accuracy` scoring metric to choose the correct statements.
+Use `sklearn.model_selection.cross_validate` with
+`scoring="balanced_accuracy"`.
+Use `model.get_params()` to list the parameters of the pipeline and use
+`model.set_params(param_name=param_value)` to updated them.
 
 - a) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.9 and 1.0
 - b) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.8 and 0.9
@@ -76,11 +80,6 @@ Evaluate the pipeline using 10-fold cross-validation using the
      raw features (with `n_neighbors=5`)
 
 _Select several answers_
-
-Hint: Use `sklearn.model_selection.cross_validate` with
-`scoring="balanced_accuracy"`. Use `model.get_params()` to list the parameters
-of the pipeline and use `model.set_params(param_name=param_value)` to updated
-them.
 ```
 
 +++
@@ -110,7 +109,6 @@ details about those method, please feel free to read them up in the
 [preprocessing
 chapter](https://scikit-learn.org/stable/modules/preprocessing.html) of the
 scikit-learn user guide but this is not required to answer the quiz questions.
-
 
 ```{admonition} Question
 

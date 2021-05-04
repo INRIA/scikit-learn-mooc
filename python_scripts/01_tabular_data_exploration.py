@@ -224,6 +224,7 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
                  height=3, diag_kind='hist', diag_kws={'bins': 30})
 
 # %% [markdown]
+# ## Creating decision rules by hand
 #
 # By looking at the data you could infer some hand-written rules to predict the
 # class:
@@ -254,14 +255,6 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # Linear machine learning models can only capture linear interactions, so this
 # may be a factor when deciding which model to chose.
 
-# %% [markdown]
-#
-# ## An example of machine learning model decision rules
-#
-# We will take a subset of only two features such that we can represent
-# graphically some manual decisions. Let's select the `age` and
-# `hours-per-week` features.
-
 # %%
 import matplotlib.pyplot as plt
 import numpy as np
@@ -271,10 +264,10 @@ ax = sns.scatterplot(
     hue="class", alpha=0.5,
 )
 
-age_limit = 28.5
+age_limit = 25
 plt.axvline(x=age_limit, ymin=0, ymax=1, color="black", linestyle="--")
 
-hours_per_week_limit = 40.5
+hours_per_week_limit = 40
 plt.axhline(
     y=hours_per_week_limit, xmin=0.2, xmax=1, color="black", linestyle="--"
 )

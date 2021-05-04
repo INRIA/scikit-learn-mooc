@@ -25,12 +25,12 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-A decision tree classifier will
+A given split node in a decision tree classifier will make:
 
-- a) create a binary decision considering a single feature
-- b) create a binary decision considering a combination of all input features
-- c) create multiple decisions considering a single feature
-- d) create a binary decision considering a non-linear combination of all input
+- a) a binary decision considering a single feature at a time
+- b) a binary decision considering a combination of all the input features
+- c) multiple binary decisions considering a single feature
+- d) a binary decision considering a non-linear combination of all input
   features
 
 _Select a single answer_

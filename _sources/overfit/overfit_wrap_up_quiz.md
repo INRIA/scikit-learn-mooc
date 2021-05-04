@@ -149,12 +149,24 @@ Select the true affirmations stated below:
 - a) The model underfits for a range of `n_neighbors` values between 1 to 10
 - b) The model underfits for a range of `n_neighbors` values between 10 to 100
 - c) The model underfits for a range of `n_neighbors` values between 100 to 500
-- d) The model overfits for a range of `n_neighbors` values between 1 to 10
-- e) The model overfits for a range of `n_neighbors` values between 10 to 100
-- f) The model overfits for a range of `n_neighbors` values between 100 to 500
-- g) The model best generalizes for a range of `n_neighbors` values between 1 to 10
-- h) The model best generalizes for a range of `n_neighbors` values between 10 to 100
-- i) The model best generalizes for a range of `n_neighbors` values between 100 to 500
+```
 
-_Select several answers_
++++
+
+```{admonition} Question
+Select the true affirmations stated below:
+
+- a) The model overfits for a range of `n_neighbors` values between 1 to 10
+- b) The model overfits for a range of `n_neighbors` values between 10 to 100
+- c) The model overfits for a range of `n_neighbors` values between 100 to 500
+```
+
++++
+
+```{admonition} Question
+Select the true affirmations stated below:
+
+- a) The model best generalizes for a range of `n_neighbors` values between 1 to 10
+- b) The model best generalizes for a range of `n_neighbors` values between 10 to 100
+- c) The model best generalizes for a range of `n_neighbors` values between 100 to 500
 ```

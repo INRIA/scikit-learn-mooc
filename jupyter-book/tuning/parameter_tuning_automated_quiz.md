@@ -64,9 +64,9 @@ Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 
 +++
 
-````{admonition} Question
 We will load the results from the randomized-search performed in the previous
 notebook:
+
 ```py
 import numpy as np
 import pandas as pd
@@ -100,8 +100,14 @@ fig.show()
 We **transformed most axis values by taking a log10 or log2** to
 spread the active ranges and improve the readability of the plot.
 ```
-Select bad performing models, that is models with a `mean_test_score`
-lower than 0.8. What do have all these models in common?
+
+```{admonition} Question
+In the parallel coordinate plot shown above, select the bad performing models.
+We define bad performing models as the models with a `mean_test_score` below
+0.8. You can select the range [0.0, 0.8] by clicking and holding on the
+`mean_test_score` axis of the parallel coordinate plot.
+
+What do have all these models in common?
 
 - a) too large `l2_regularization`
 - b) too small `l2_regularization`
@@ -111,14 +117,19 @@ lower than 0.8. What do have all these models in common?
 - f) too small `max_bins`
 
 _Select several answers_
-````
+```
 
 +++
 
 ```{admonition} Question
-Using the above plot, identify ranges of values for hyperparameter that
-always prevent the model to reach a test score higher than 0.86, irrespective
-of the other values:
+In the parallel coordinate plot shown above, select the models with a score
+higher than 0.85. You can select the range [0.85, max] by clicking and holding
+on the `mean_test_score` axis of the parallel coordinate plot.
+
+Identify ranges of values for hyperparameter that always prevent the model to
+reach a test score higher than 0.85, irrespective of the other values. In other
+words, which hyperparameter values are never used to get a good model
+(i.e. with `mean_test_score higher than 0.85).
 
 - a) too large `l2_regularization`
 - b) too small `l2_regularization`

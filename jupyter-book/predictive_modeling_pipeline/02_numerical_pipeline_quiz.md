@@ -86,10 +86,11 @@ Cross-validation allows us to:
 +++
 
 ```{admonition} Question
-`make_pipeline` (as well as `Pipeline`) is used to:
+`make_pipeline` (as well as `Pipeline`):
 
-- a) run cross-validation
-- b) combine one or several transformers and a predictor
-- c) try several models at the same time
-- d) avoid over-fitting
+- a) runs a cross-validation using the transformers and predictor given as
+  parameters
+- b) combines one or several transformers and a predictor
+- c) tries several models at the same time
+- d) plots feature histogram automatically
 ```

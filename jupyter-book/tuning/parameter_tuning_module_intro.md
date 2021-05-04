@@ -9,11 +9,11 @@ evaluate a predictive model. However, we did not change on the models'
 parameters that can be given when creating an instance. Indeed, we used the
 default values chosen by scikit-learn.
 
-This parameters are called **hyperparameters**: they are parameters that are
+These parameters are called **hyperparameters**: they are parameters
 used to control the learning process, for instance the parameter `k` of the
 k-nearest neighbors. They should not be confused with the other parameters that
-are inferred during the training process and defined the model itself, for
-instance `coef_` for the linear models.
+are inferred during the training process. These parameters define the model
+itself, for instance `coef_` for the linear models.
 
 In this module, we will first show that the hyperparameters have an impact on
 the performance of the model and that default values are not necessarily the

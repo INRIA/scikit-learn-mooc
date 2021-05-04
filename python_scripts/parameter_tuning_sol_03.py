@@ -83,8 +83,8 @@ from sklearn.linear_model import LogisticRegression
 model = make_pipeline(preprocessor, LogisticRegression())
 
 # %% [markdown]
-# Use `RandomizedSearchCV` with `n_iter=20` to find the best set of hyperparameters by tuning
-# the following parameters of the `model`:
+# Use `RandomizedSearchCV` with `n_iter=20` to find the best set of
+# hyperparameters by tuning the following parameters of the `model`:
 #
 # - the parameter `C` of the `LogisticRegression` with values ranging from
 #   0.001 to 10. You can use a log-uniform distribution
@@ -114,8 +114,8 @@ model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 
 # %% [markdown]
-# So the best hyperparameters give a model where the features are scaled but not
-# centered and the final model is regularized.
+# So the best hyperparameters give a model where the features are scaled but
+# not centered and the final model is regularized.
 #
 # Getting the best parameter combinations is the main outcome of the
 # hyper-parameter optimization procedure. However it is also interesting
@@ -184,9 +184,9 @@ fig.show()
 #
 # - scaling the data is important. All the best performing models are scaling
 #   the data;
-# - centering the data does not have a strong impact. Both approaches, centering and
-#   not centering, can lead to good models;
+# - centering the data does not have a strong impact. Both approaches,
+#   centering and not centering, can lead to good models;
 # - using some regularization is fine but using too much is a problem. Recall
-#    that a smaller value of C means a stronger regularization. In particular
-#    no pipeline with C lower than 0.001 can be found among the best
-#    models.
+#   that a smaller value of C means a stronger regularization. In particular
+#   no pipeline with C lower than 0.001 can be found among the best
+#   models.

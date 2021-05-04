@@ -3,13 +3,12 @@
 ```{admonition} Question
 A model that is underfitting:
 
-- a) is too complex
-- b) is too constrained
-- c) lacks flexibility
-- d) focuses on noisy details of the training set too much
-- e) cannot find the repeatable structure of the training set
-- f) is fast to train
-- g) often makes prediction errors, even on training samples
+- a) is too complex and thus highly flexible
+- b) is too constrained and thus limited by its expressivity
+- c) often makes prediction errors, even on training samples
+- d) focuses too much on noisy details of the training set
+
+_Select several answers_
 ```
 
 +++
@@ -17,11 +16,10 @@ A model that is underfitting:
 ```{admonition} Question
 A model that is overfitting:
 
-- a) is too complex
-- b) is too constrained
-- c) lacks flexibility
-- d) focuses on noisy details of the training set too much
-- e) cannot find the repeatable structure of the training set
-- f) is fast to train
-- g) often makes prediction errors, even on training samples
+- a) is too complex and thus highly flexible
+- b) is too constrained and thus limited by its expressivity
+- c) often makes prediction errors, even on training samples
+- d) focuses too much on noisy details of the training set
+
+_Select several answers_
 ```

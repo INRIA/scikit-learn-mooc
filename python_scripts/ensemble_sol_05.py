@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📃 Solution for Exercise 05
+# # 📃 Solution for Exercise M6.05
 #
 # The aim of the exercise is to get familiar with the histogram
 # gradient-boosting in scikit-learn. Besides, we will use this model within

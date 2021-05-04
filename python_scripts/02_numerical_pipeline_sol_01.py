@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📃 Solution for Exercise 01
+# # 📃 Solution for Exercise M1.03
 #
 # The goal of this exercise is to compare the performance of our classifier in
 # the previous notebook (roughly 81% accuracy with `LogisticRegression`) to

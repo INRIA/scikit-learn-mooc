@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 03
+# # 📝 Exercise M6.03
 #
 # This exercise aims at verifying if AdaBoost can over-fit.
 # We will make a grid-search and check the scores by varying the

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 04
+# # 📝 Exercise M4.04
 #
 # In the previous notebook, we saw the effect of applying some regularization
 # on the coefficient of a linear model.

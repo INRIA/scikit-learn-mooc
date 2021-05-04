@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # 📝 Exercise 01
+# # 📝 Exercise M1.03
 #
 # The goal of this exercise is to compare the statistical performance of our
 # classifier (81% accuracy) to some baseline classifiers that would ignore the

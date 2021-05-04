@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📝 Exercise 01
+# # 📝 Exercise M5.01
 #
 # In the previous notebook, we showed how a tree with a depth of 1 level was
 # working. The aim of this exercise is to repeat part of the previous

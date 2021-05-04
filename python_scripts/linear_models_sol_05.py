@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📃 Solution for Exercise 05
+# # 📃 Solution for Exercise M4.05
 # In the previous notebook, we presented a non-penalized logistic regression
 # classifier. This classifier accepts a parameter `penalty` to add a
 # regularization. The regularization strength is set using the parameter `C`.

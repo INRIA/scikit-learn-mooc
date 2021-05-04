@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📃 Solution for Exercise 01
+# # 📃 Solution for Exercise M7.02
 #
 # We presented different classification metrics in the previous notebook.
 # However, we did not use it with a cross-validation. This exercise aims at

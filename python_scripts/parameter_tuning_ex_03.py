@@ -68,23 +68,16 @@ from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
 # %% [markdown]
-# Make your random search
-#
 # Use a `RandomizedSearchCV` to find the best set of hyperparameters by tuning
-# the following parameters for the `LogisticRegression` model:
-# - `C` with values ranging from 0.001 to 10. You can use a log-uniform
-#   distribution (i.e. `scipy.stats.loguniform`);
-# - `solver` with possible values being `"liblinear"` and `"lbfgs"`;
-# - `penalty` with possible values being `"l2"` and `"l1"`;
+# the following parameters of the `model`:
 #
-# In addition, try several preprocessing strategies with the `OneHotEncoder`
-# by always (or not) dropping the first column when encoding the categorical
-# data.
-#
-# Notes: some combinations of the hyperparameters proposed above are invalid.
-# You can make the parameter search accept such failures by setting
-# `error_score` to `np.nan`. The warning messages give more details on which
-# parameter combinations but the computation will proceed.
+# - the parameter `C` of the `LogisticRegression` with values ranging from
+#   0.001 to 10. You can use a log-uniform distribution
+#   (i.e. `scipy.stats.loguniform`);
+# - the parameter `with_mean` of the `StandardScaler` with possible values
+#   `True` or `False`;
+# - the parameter `with_std` of the `StandardScaler` with possible values
+#   `True` or `False`.
 #
 # Once the computation has completed, print the best combination of parameters
 # stored in the `best_params_` attribute.

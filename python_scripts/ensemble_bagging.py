@@ -347,7 +347,7 @@ _ = plt.title("Bagged polynomial regression")
 #
 # The predictions of this bagged polynomial regression model looks
 # qualitatively better than the bagged trees. This is somewhat expected since
-# the base models better reflect our knowldge of the true data generating
+# the base model better reflects our knowldege of the true data generating
 # process.
 #
 # Again the different shades induced by the overlapping blue lines let us

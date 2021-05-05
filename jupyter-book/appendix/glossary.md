@@ -19,7 +19,7 @@ this page.
 
 ### classification
 
-type of problems where the goal is to predict a target that can take finite set
+Type of problems where the goal is to predict a target that can take finite set
 of values.
 
 Example of classification problems are:
@@ -37,14 +37,28 @@ classification. This the case for the medical and spam use cases above.
 When the predicted label can have at least three values, it is called
 multi-class classification. This is the case for the Iris use case above.
 
-TODO basically the idea is to use all the terms on a given example. This is
-simpler than explaining each term individually. for features, samples,
-prediction, decision rule
+Below, we illustrate an example of binary classification.
+
+![img](https://inria.github.io/scikit-learn-mooc/figures/lin_separable.svg)
+
+The data provided by the user contains 2 features, represented by the x- and
+y-axis. This is a binary classification problem because the target contains
+only 2 labels, here encoded by colors with blue and orange data points. Thus,
+each data points represent a sample and the entire set was used to train a
+linear model. The decision rule learned is thus the black dotted line. This
+decision rule is used to predict the label of a new sample according the its
+position with respect to the line: a sample lying on the left of the line will
+be predicted as a blue sample while a sample lying on the right of the line
+will be predicted as an orange sample. Here, we have a linear classifier
+because the decision rule is defined as a line (it is called an hyperplane
+in higher dimension). However, the shape of the decision rule will depend on
+the model fitted.
 
 ### classifier
 
-a model used for classification. For example in scikit-learn
-`LogisticRegression` or `HistGradientBosstingClassifier` are classifier
+A model used for classification. These models handle targets that contains
+discrete values such as `0`/`1` or `cat`/`dog`. For example in scikit-learn
+`LogisticRegression` or `HistGradientBoostingClassifier` are classifier
 classes.
 
 Note: for historic reasons the `LogisticRegression` name is confusing.
@@ -54,8 +68,14 @@ Note: for historic reasons the `LogisticRegression` name is confusing.
 
 A procedure to estimate how well a model will generalize to new data. The main
 idea behind this is to train a model on a dataset (called train set) and
-evaluate its performance on a separate dataset (called test set). See
-[this](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation)
+evaluate its performance on a separate dataset (called test set).
+
+This train/evaluate performance is repeated several times on different train
+and test sets to get an estimate of the statistical model performance
+uncertainties.
+
+See
+[this scikit-learn documentation](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation)
 for more details.
 
 ### data matrix, input data
@@ -72,7 +92,8 @@ parameters are learned (or estimated) from the data.
 
 ### feature, variable, attribute, descriptor, covariate
 
-A quality describing an observation (e.g. color, size, weight)
+A quantity describing an observation (e.g. color, size, weight). You can see a
+features as a quantity measured during the dataset collection.
 
 For example, in the Iris dataset, features might include petal length and petal
 width.
@@ -81,36 +102,44 @@ width.
 
 Aspects of model configuration that are not learnt from data. For example when
 using a k-nearest neighbor approach, the number of neighbors to use is a
-hyper-parameter.
+hyperparameter.
 
 When trying to train a polynomial model (say of degree between 1 and 10 for
 example) to 1 dimensional data, the degree of the polynomial is a
-hyper-parameter.
+hyperparameter.
 
-TODO Say something about validation that basically validation is used to find
-the best hyperparameters ???
+Hyperparameters will impact the statistical and computational performance
+of a model. Indeed, hyperparameters of a model are usually inspected with
+regard to their impact on the model performance and tuned to maximize model
+performance (usually statistical performance). It is called hyperparameters
+tuning and involve grid-search and randomized-search involving model evaluation
+on some validation sets.
 
 ### infer/inference
 
-TODO we only mention it in the intro slides in a statistical meaning, we
-probably use it in the notebook as a verb.
+This term might have different meaning in machine-learning and statistical
+inference.
 
-mention statistical meaning vs machine-learning usage (from google glossary
-below:)
+In machine-learning and more generally in this MOOC, we refer to inference the
+process of making predictions by applying a trained model to unlabeled data. In
+other words, inference is equivalent to predict the target of unseen data using
+a fitted model.
 
-In machine learning, often refers to the process of making predictions by
-applying the trained model to unlabeled examples. In statistics, inference
-refers to the process of fitting the parameters of a distribution conditioned
-on some observed data. (See the Wikipedia article on statistical inference.)
+In statistic inference, the notion of left-out/unseen data is not tight to
+the definition. Indeed, inference refers to the process of fitting the
+parameters of a distribution conditioned on some observed data. You can check
+the Wikipedia article on
+[statistical inference](https://en.wikipedia.org/wiki/Statistical_inference)
+for more details.
 
 ### learned parameters
 
-In scikit-learn the convetion is that learned parameters finish with `\_` at
+In scikit-learn the convention is that learned parameters finish with `\_` at
 the end in scikit-learn (they are called attributes in scikit-learn glossary,
 never used this and confusing with attributes = features). They are only
 available after `fit` has been called.
 
-watch out parameters can also be used as a general Python meaning, as in
+Watch out parameters can also be used as a general Python meaning, as in
 passing a parameter to a function or a class
 
 ### meta-estimator
@@ -120,7 +149,7 @@ Examples of meta-estimators include `Pipeline` and `GridSearchCV`.
 
 ### model
 
-generic term that refers to something that can learn prediction rules from the
+Generic term that refers to something that can learn prediction rules from the
 data.
 
 ### overfitting
@@ -147,21 +176,23 @@ does your model predict for `x = 10` we can use `y = 2*10 - 5 = 15`.
 
 ### regression
 
-problem the goal is to predict a target that is continuous. Example of
-regression problems are:
+The goal is to predict a target that is continuous (contrary to discrete target
+for classification problems). Example of regression problems are:
 
 - predicting house prices from their descriptions (number of rooms, surface,
   location, etc ...)
 - predicting the age of patients from their MRI scans
 
-TODO
+Below, we illustrate an example of regression.
 
-Reuse https://inria.github.io/scikit-learn-mooc/figures/linear_fit.svg or
-linear regression 1d e.g. with Penguin example???
+![img](https://inria.github.io/scikit-learn-mooc/figures/dt_fit.svg)
 
-basically the idea is to use all the terms on a given example. This is simpler
-than explaining each term individually. for features, samples, prediction,
-decision rule
+The data provided by the user contains 1 feature called `x` and we want to
+predict the continuous target `y`. Each black data points are samples used to
+train a model. The model here is a decision tree and thus the decision rule
+is defined as a piecewise constant function represented by the orange line.
+To predict the target for a new sample for a given value of the x-axis, the
+model will output the corresponding `y` value lying on the orange line.
 
 ### regressor
 
@@ -176,7 +207,7 @@ towards zero. This can be useful to combat overfitting.
 
 ### sample, instance, observation
 
-a data point in a dataset.
+A data point in a dataset.
 
 In the 2d data matrix, a sample is a row.
 
@@ -199,7 +230,8 @@ given the features. reuse the phrasing from the intro.
 `y = f(X)` y is the target, `X` is the data matrix, `f` is the model we are
 trying to learn from the data.
 
-A simple example in a 1d linear regression, we are trying to learn the model `y = a*x + b`. The coefficients `a` and `b` are learned from the data, i.e.
+A simple example in a 1d linear regression, we are trying to learn the model
+`y = a*x + b`. The coefficients `a` and `b` are learned from the data, i.e.
 adjusted so that the model fits the data as well as possible.
 
 ### target, label, annotation

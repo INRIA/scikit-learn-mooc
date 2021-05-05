@@ -226,10 +226,9 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # %% [markdown]
 # ## Creating decision rules by hand
 #
-# By looking at the previous plots, we could infer some hand-written rules
-# helping at assigning to whether or not a person has a high- or low-income.
-# For instance, we could focus on the combination of `hours-per-week` and `age`
-# features.
+# By looking at the previous plots, we could create some hand-written rules
+# that predicts whether someone has a high- or low-income. For instance, we
+# could focus on the combination of the `hours-per-week` and `age` features.
 
 # %%
 _ = sns.scatterplot(
@@ -244,8 +243,8 @@ _ = sns.scatterplot(
 # the pairplot above.
 #
 # In this plot, we can try to find regions that mainly contains a single class
-# such that we can easily decide what class one should predict. Let's define
-# two such rules that we depict below.
+# such that we can easily decide what class one should predict. We could come
+# up with hand-written rules as shown in this plot:
 
 # %%
 import matplotlib.pyplot as plt
@@ -268,32 +267,30 @@ plt.annotate("<=50K", (35, 20), fontsize=35)
 _ = plt.annotate("???", (45, 60), fontsize=35)
 
 # %% [markdown]
-# Looking at the plot, we can define the following rules that isolate best
-# a single class (low-income or high-income). We can limit ourself to only
-# two thresholds. One arbitrary possibility would be:
-#
 # * In the region `age < 27` (left region) the prediction is low-income.
-#   Indeed, there are many blue samples and we cannot see any orange samples.
+#   Indeed, there are many blue points and we cannot see any orange points.
 # * In the region `age > 27 AND hours-per-week < 40`
 #   (bottom-right region), the prediction is low-income. Indeed, there are
-#   many blue samples and few orange samples.
+#   many blue points and only a few orange points.
 # * In the region `age > 27 AND hours-per-week > 40` (top-right region),
-#   we see as many blue samples as orange samples. Indeed, it is complicated
-#   to predict a specific class in this case.
+#   we see a mix of blue points and orange points. It seems complicated to
+#   chose which class we should predict in this region.
 #
 # It is interesting to note that some machine learning models will work
 # similarly to what we did: they are known as decision tree models. The two
-# thresholds chosen by hand are arbitrary or we chose them after inspecting the
-# pairplot; a decision tree will chose the "best" splits based on data without
-# human intervention or inspection.
+# thresholds that we chose (27 years and 40 hours) are somewhat arbitrary, i.e.
+# we chose them by only looking at the pairplot. In contrast, a decision tree
+# will chose the "best" splits based on data without human intervention or
+# inspection. Decision trees will be covered in more details in a future module.
 #
 # Note that machine learning is really interesting when creating rules by hand
 # is not straightforward, for example because we are in high dimension (many
 # features) or because there are no simple and obvious rules that separate the
-# two classes as in the top-right region
+# two classes as in the top-right region of the previous plot.
 #
-# In conclusion, in a machine-learning setting, a model automatically creates
-# the "rules" from the data in order to make predictions on new unseen data.
+# To sum up, the important thing to remember is that in a machine-learning
+# setting, a model automatically creates the "rules" from the data in order to
+# make predictions on new unseen data.
 
 # %% [markdown]
 #

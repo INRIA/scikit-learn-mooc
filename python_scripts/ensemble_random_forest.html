@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Random forest &#8212; Scikit-learn course</title>
+    <title>Random forests &#8212; Scikit-learn course</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -864,7 +864,7 @@
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Random forest
+     Random forests
     </a>
    </li>
    <li class="toctree-l2">
@@ -1390,13 +1390,13 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#classifiers-details">
-   Classifiers details
+  <a class="reference internal nav-link" href="#a-look-at-random-forests">
+   A look at random forests
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#summary">
-   Summary
+  <a class="reference internal nav-link" href="#details-about-default-hyperparameters">
+   Details about default hyperparameters
   </a>
  </li>
 </ul>
@@ -1410,28 +1410,37 @@
         
               <div>
                 
-  <div class="section" id="random-forest">
-<h1>Random forest<a class="headerlink" href="#random-forest" title="Permalink to this headline">¶</a></h1>
-<p>In this notebook, we will present the random forest models and
-show the differences with the bagging classifiers.</p>
+  <div class="section" id="random-forests">
+<h1>Random forests<a class="headerlink" href="#random-forests" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook, we will present the random forest models and show the
+differences with the bagging ensembles.</p>
 <p>Random forests are a popular model in machine learning. They are a
 modification of the bagging algorithm. In bagging, any classifier or
 regressor can be used. In random forests, the base classifier or regressor
-must be a decision tree. In our previous example, we used a decision tree but
-we could have used a linear model as the regressor for our bagging algorithm.</p>
-<p>In addition, random forests are different from bagging when used with
-classifiers: when searching for the best split, only a subset of the original
-features are used. By default, this subset of features is equal to the square
-root of the total number of features. In regression, the total number of
-available features will be used.</p>
-<p>We will illustrate the usage of a random forest and compare it with the
-bagging regressor on the “California housing” dataset.</p>
+is always a decision tree.</p>
+<p>Random forests have another particularity: when training a tree, the search
+for the best split is done only on a subset of the original features taken at
+random. The random subsets are different for each split node. The goal is to
+inject additional randomization into the learning procedure to try to
+decorrelate the prediction errors of the individual trees.</p>
+<p>Therefore, random forests are using <strong>randomization on both axes of the data
+matrix</strong>:</p>
+<ul class="simple">
+<li><p>by <strong>bootstrapping samples</strong> for <strong>each tree</strong> in the forest;</p></li>
+<li><p>randomly selecting a <strong>subset of features</strong> at <strong>each node</strong> of the tree.</p></li>
+</ul>
+<div class="section" id="a-look-at-random-forests">
+<h2>A look at random forests<a class="headerlink" href="#a-look-at-random-forests" title="Permalink to this headline">¶</a></h2>
+<p>We will illustrate the usage of a random forest classifier on the adult
+census dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1441,71 +1450,191 @@ bagging regressor on the “California housing” dataset.</p>
 <p>If you want a deeper overview regarding this dataset, you can refer to the
 Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
+<p>The adult census contains some categorical data and we encode the categorical
+features using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> since tree-based models can work very
+efficiently with such a naive representation of categorical variables.</p>
+<p>Since there are rare categories in this dataset we need to specifically
+encode unknown categories at prediction time in order to be able to use
+cross-validation. Otherwise some rare categories could only be present on the
+validation side of the cross-validation split and the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> would
+raise an error when calling the its <code class="docutils literal notranslate"><span class="pre">transform</span></code> method with the data points
+of the validation set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_transformer</span><span class="p">,</span> <span class="n">make_column_selector</span>
+
+<span class="n">categorical_encoder</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
+    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">categorical_encoder</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will first give a simple example where we will train a single decision
+tree classifier and check its statistical performance via cross-validation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
-<span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                                      <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">scores_tree</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-                           <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">scores_random_forest</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">random_forest</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-<span class="n">scores_bagging</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">bagging</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Statistical performance of random forest: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_random_forest</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_random_forest</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Statistical performance of bagging: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_bagging</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores_bagging</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree classifier: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_tree</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores_tree</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical performance of random forest: 0.657 +/- 0.073
-Statistical performance of bagging: 0.650 +/- 0.080
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decision tree classifier: 0.820 +/- 0.006
 </pre></div>
 </div>
 </div>
 </div>
-<p>Notice that we don’t need to provide a <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> parameter to
-<code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code>: it is always a tree classifier. Also note that the
-scores are almost identical. This is because our problem is a regression
-problem and therefore, the number of features used in random forest and
-bagging is the same.</p>
-<p>For classification problems, we would need to pass a tree model instance
-with the parameter <code class="docutils literal notranslate"><span class="pre">max_features=&quot;sqrt&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">BaggingRegressor</span></code> if we wanted
-it to have the same behaviour as the random forest classifier.</p>
-<div class="section" id="classifiers-details">
-<h2>Classifiers details<a class="headerlink" href="#classifiers-details" title="Permalink to this headline">¶</a></h2>
-<p>Until now, we have focused on regression problems. There are some
-differences between regression and classification.</p>
-<p>First, the <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> should be chosen depending on the problem that
-needs to be solved: use a classifier for a classification problem and a
-regressor for a regression problem.</p>
-<p>Secondly, the aggregation method is different:</p>
-<ul class="simple">
-<li><p>in regression, the average prediction is computed. For instance, if
-three learners predict 0.4, 0.3 and 0.31, the aggregation will output 0.33;</p></li>
-<li><p>while in classification, the class which highest probability (after
-averaging the predicted probabilities) is predicted. For instance, if three
-learners predict (for two classes) the probability (0.4, 0.6), (0.3, 0.7)
-and (0.31, 0.69), the aggregation probability is (0.33, 0.67) and the
-second class would be predicted.</p></li>
-</ul>
+<p>Similarly to what was done in the previous notebook, we construct a
+<code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code> with a decision tree classifier as base model. In
+addition, we need to specify how many models do we want to combine. Note that
+we also need to preprocess the data and thus use a scikit-learn pipeline.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingClassifier</span>
+
+<span class="n">bagged_trees</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">preprocessor</span><span class="p">,</span>
+    <span class="n">BaggingClassifier</span><span class="p">(</span>
+        <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="summary">
-<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
-<p>We saw in this section two algorithms that use bootstrap samples to create
-an ensemble of classifiers or regressors. These algorithms train several
-learners on different bootstrap samples. The predictions are then
-aggregated. This operation can be done in a very efficient manner since the
-training of each learner can be done in parallel.</p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores_bagged_trees</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">bagged_trees</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bagged decision tree classifier: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_bagged_trees</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores_bagged_trees</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bagged decision tree classifier: 0.846 +/- 0.005
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the generalization performance of the bagged trees is already much
+better than the performance of a single tree.</p>
+<p>Now, we will use a random forest. You will observe that we do not need to
+specify any <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> because the estimator is forced to be a decision
+tree. Thus, we just specify the desired number of trees in the forest.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">random_forest</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">preprocessor</span><span class="p">,</span>
+    <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores_random_forest</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">random_forest</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random forest classifier: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_random_forest</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_random_forest</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random forest classifier: 0.851 +/- 0.004
+</pre></div>
+</div>
+</div>
+</div>
+<p>It seems that the random forest is performing slightly better than the bagged
+trees possibly due to the randomized selection of the features which
+decorrelates the prediction errors of individual trees and as a consequence
+make the averaging step more efficient at reducing overfitting.</p>
+</div>
+<div class="section" id="details-about-default-hyperparameters">
+<h2>Details about default hyperparameters<a class="headerlink" href="#details-about-default-hyperparameters" title="Permalink to this headline">¶</a></h2>
+<p>For random forests, it is possible to control the amount of randomness for
+each split by setting the value of <code class="docutils literal notranslate"><span class="pre">max_features</span></code> hyperparameter:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_feature=0.5</span></code> means that 50% of the features are considered at each
+split;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_features=1.0</span></code> means that all features are considered at each split
+which effectively disables feature subsampling.</p></li>
+</ul>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code> disables feature subsampling while
+<code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code> uses <code class="docutils literal notranslate"><span class="pre">max_features=np.sqrt(n_features)</span></code>. These
+default values reflect good practices given in the scientific literature.</p>
+<p>However, <code class="docutils literal notranslate"><span class="pre">max_features</span></code> is one of the hyperparameters to consider when tuning
+a random forest:</p>
+<ul class="simple">
+<li><p>too much randomness in the trees can lead to underfitted base models and
+can be detrimental for the ensemble as a whole,</p></li>
+<li><p>too few randomness in the trees leads to more correlation of the prediction
+errors and as a result reduce the benefits of the averaging step in terms
+of overfitting control.</p></li>
+</ul>
+<p>In scikit-learn, the bagging classes also expose a <code class="docutils literal notranslate"><span class="pre">max_features</span></code> parameter.
+However, <code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code> and <code class="docutils literal notranslate"><span class="pre">BaggingRegressor</span></code> are agnostic with respect
+to their base model and therefore random feature subsampling can only happen
+once before fitting each base model instead of several times per base model
+as is the case when adding splits to a given tree.</p>
+<p>We summarize these details in the following table:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Ensemble model class</p></th>
+<th class="head"><p>Base model class</p></th>
+<th class="head"><p>Default value for <code class="docutils literal notranslate"><span class="pre">max_features</span></code></p></th>
+<th class="head"><p>Features subsampling strategy</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code></p></td>
+<td><p>User specified (flexible)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">n_features</span></code> (no subsampling)</p></td>
+<td><p>Model level</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RandomForestClassifier</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sqrt(n_features)</span></code></p></td>
+<td><p>Tree node level</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BaggingRegressor</span></code></p></td>
+<td><p>User specified (flexible)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">n_features</span></code> (no subsampling)</p></td>
+<td><p>Model level</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">n_features</span></code> (no subsampling)</p></td>
+<td><p>Tree node level</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 

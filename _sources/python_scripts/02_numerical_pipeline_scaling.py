@@ -292,18 +292,23 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # ## Model evaluation using cross-validation
 #
 # In the previous example, we split the original data into a training set and a
-# testing set. This strategy has several issues: in a setting where the
-# amount of data is small, the subset used to train or test will be small.
-# Moreover, if the splitting was done in a random manner, we do not have
-# information regarding the confidence of the results obtained.
+# testing set. This strategy has several issues: in a setting where the amount
+# of data is small, the subset used to train or test will be small. Besides, a
+# single split does not give information regarding the confidence of the
+# results obtained.
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating
-# this random splitting into training and testing sets and aggregating the
-# model statistical performance. By repeating the experiment, one can get an
-# estimate of the variability of the model statistical performance.
+# the procedure such that the training and testing sets are different each
+# time. Statistical performance metrics are collected for each repetition and
+# then aggregated. As a result we can get an estimate of the variability of the
+# model statistical performance.
 #
-# The next figure shows how the dataset is partitioned into train and test
-# samples at each iteration the cross-validation procedure.
+# Note that there exists several cross-validation strategies, each of them
+# defines how to repeat the experiment. In this section, we will use the K-fold
+# strategy: the entire dataset is split into `K` partitions. The experiment
+# `fit`/`score` is repeated `K` times where at each iteration `K - 1`
+# partitions are used to fit the model and `1` partition is used to score. The
+# figure below illustrates this K-fold strategy.
 #
 # ![Cross-validation diagram](../figures/cross_validation_diagram.png)
 #

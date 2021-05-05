@@ -1947,16 +1947,21 @@ scaled.</p>
 <div class="section" id="model-evaluation-using-cross-validation">
 <h2>Model evaluation using cross-validation<a class="headerlink" href="#model-evaluation-using-cross-validation" title="Permalink to this headline">¶</a></h2>
 <p>In the previous example, we split the original data into a training set and a
-testing set. This strategy has several issues: in a setting where the
-amount of data is small, the subset used to train or test will be small.
-Moreover, if the splitting was done in a random manner, we do not have
-information regarding the confidence of the results obtained.</p>
+testing set. This strategy has several issues: in a setting where the amount
+of data is small, the subset used to train or test will be small. Besides, a
+single split does not give information regarding the confidence of the
+results obtained.</p>
 <p>Instead, we can use cross-validation. Cross-validation consists of repeating
-this random splitting into training and testing sets and aggregating the
-model statistical performance. By repeating the experiment, one can get an
-estimate of the variability of the model statistical performance.</p>
-<p>The next figure shows how the dataset is partitioned into train and test
-samples at each iteration the cross-validation procedure.</p>
+the procedure such that the training and testing sets are different each
+time. Statistical performance metrics are collected for each repetition and
+then aggregated. As a result we can get an estimate of the variability of the
+model statistical performance.</p>
+<p>Note that there exists several cross-validation strategies, each of them
+defines how to repeat the experiment. In this section, we will use the K-fold
+strategy: the entire dataset is split into <code class="docutils literal notranslate"><span class="pre">K</span></code> partitions. The experiment
+<code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">score</span></code> is repeated <code class="docutils literal notranslate"><span class="pre">K</span></code> times where at each iteration <code class="docutils literal notranslate"><span class="pre">K</span> <span class="pre">-</span> <span class="pre">1</span></code>
+partitions are used to fit the model and <code class="docutils literal notranslate"><span class="pre">1</span></code> partition is used to score. The
+figure below illustrates this K-fold strategy.</p>
 <p><img alt="Cross-validation diagram" src="../_images/cross_validation_diagram.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

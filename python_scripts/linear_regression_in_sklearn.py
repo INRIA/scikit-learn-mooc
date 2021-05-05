@@ -72,22 +72,40 @@ _ = plt.title("Model using LinearRegression from scikit-learn")
 
 # %% [markdown]
 # In the solution of the previous exercise, we implemented a function to
-# compute the error of the model. Instead of using it, we will import the
-# metric directly from scikit-learn.
+# compute the goodness of fit of a model. Indeed, we mentioned two metrics: (i)
+# the mean squared error and (ii) the mean absolute error. These metrics are
+# implemented in scikit-learn and we do not need to use our own implementation.
+#
+# We can first compute the mean squared error.
 
 # %%
 from sklearn.metrics import mean_squared_error
 
 inferred_body_mass = linear_regression.predict(data)
 model_error = mean_squared_error(target, inferred_body_mass)
-print(f"The error of the optimal model is {model_error:.2f}")
+print(f"The mean squared error of the optimal model is {model_error:.2f}")
 
 # %% [markdown]
-# ```{important}
-# Indeed, fitting a `LinearRegression` on the train dataset is equivalent of
-# finding the `coef_` and `intercept_` (i.e. finding the model) that minimize
-# the mean squared error on these training data.
-# ```
+# A linear regression model fitted on a training set is the model minimizes the
+# mean squared error on this set. It means that there is not any other linear
+# models (i.e. other set of parameters `coef_` and `intercept_`) for which the
+# mean squared error will be lower than the one that we computed above.
+#
+# However, the mean squared error is difficult to interpret. The mean absolute
+# error is more intuitive since it provides an error in the same unit than the
+# one of the target.
+
+# %%
+from sklearn.metrics import mean_absolute_error
+
+model_error = mean_absolute_error(target, inferred_body_mass)
+print(f"The mean absolute error of the optimal model is {model_error:.2f} g")
+
+# %% [markdown]
+# A mean absolute error of 313 means that in average, our model make an error
+# of +/- 313 grams when predicting the body mass of a penguin given its flipper
+# length.
+
 
 # %% [markdown]
 # In this notebook, you saw how to train a linear regression model using

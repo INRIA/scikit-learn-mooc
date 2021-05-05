@@ -226,9 +226,10 @@ _ = sns.pairplot(data=adult_census[:n_samples_to_plot], vars=columns,
 # %% [markdown]
 # ## Creating decision rules by hand
 #
-# By looking at the previous plot, we could infer some hand-written rules to
-# whether or not a person has a high- or low-income. For instance, we could
-# focus on the combination of `hours-per-week` and `age` features.
+# By looking at the previous plots, we could infer some hand-written rules
+# helping at assigning to whether or not a person has a high- or low-income.
+# For instance, we could focus on the combination of `hours-per-week` and `age`
+# features.
 
 # %%
 _ = sns.scatterplot(

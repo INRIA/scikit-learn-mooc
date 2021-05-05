@@ -300,6 +300,24 @@ polynomial_regressor = make_pipeline(
     PolynomialFeatures(degree=4),
     Ridge(alpha=1e-10),
 )
+
+# %% [markdown]
+#
+# This pipeline first scales the data to the 0-1 range with `MinMaxScaler`.
+# Then it extracts degree-4 polynomial features. The resulting features will
+# all stay in the 0-1 range by construction: if `x` lies in the 0-1 range then
+# `x ** n` also lies in the 0-1 range for any value of `n`.
+#
+# Then the pipeline feeds the resulting non-linear features to a regularized
+# linear regression model for the final prediction of the target variable.
+#
+# Note that we intentionally use a small value for the regularization parameter
+# `alpha` as we expect the bagging ensemble to work well with slightly overfit
+# base models.
+#
+# The ensemble itself is simply built by passing the resulting pipeline as the
+# `base_estimator` parameter of the `BaggingRegressor` class:
+
 bagging = BaggingRegressor(
     base_estimator=polynomial_regressor,
     n_estimators=100,

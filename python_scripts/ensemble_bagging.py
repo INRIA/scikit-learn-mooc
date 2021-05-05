@@ -337,7 +337,8 @@ for i, regressor in enumerate(bagging.estimators_):
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-plt.plot(data_test, bagging.predict(data_test),
+bagging_predictions = bagging.predict(data_test)
+plt.plot(data_test, bagging_predictions,
          color="tab:orange", label="Predictions of ensemble")
 plt.ylim(target_train.min(), target_train.max())
 plt.legend()

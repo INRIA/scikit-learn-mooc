@@ -298,11 +298,11 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # results obtained.
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating
-# the experiments such that the training and testing sets are different each
-# time. Thus, statistical performance are aggregated at each repetition and we
+# the procedure such that the training and testing sets are different each
+# time. Statistical performance metrics are collected for each repetition and then aggregated.  # As a result we
 # can get an estimate of the variability of the model statistical performance.
 #
-# Note that it exists several cross-validation strategies, each of them defines
+# Note that there exists several cross-validation strategies, each of them defines
 # how to repeat the experiment. In this section, we will use the K-fold
 # strategy: the entire dataset is split into `K` partitions. The experiment
 # `fit`/`score` is repeated `K` times where at each iteration `K - 1`

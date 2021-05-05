@@ -170,8 +170,8 @@ for bootstrap_idx in range(n_bootstraps):
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 for tree_idx, tree in enumerate(bag_of_trees):
-    target_predicted = tree.predict(data_test)
-    plt.plot(data_test, target_predicted, linestyle="--", alpha=0.8,
+    tree_predictions = tree.predict(data_test)
+    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.8,
              label=f"Tree #{tree_idx} predictions")
 
 plt.legend()
@@ -196,10 +196,10 @@ sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
 
 bag_predictions = []
 for tree_idx, tree in enumerate(bag_of_trees):
-    target_predicted = tree.predict(data_test)
-    plt.plot(data_test, target_predicted, linestyle="--", alpha=0.8,
+    tree_predictions = tree.predict(data_test)
+    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.8,
              label=f"Tree #{tree_idx} predictions")
-    bag_predictions.append(target_predicted)
+    bag_predictions.append(tree_predictions)
 
 bag_predictions = np.mean(bag_predictions, axis=0)
 plt.plot(data_test, bag_predictions, label="Averaged predictions",
@@ -240,8 +240,10 @@ _ = bagged_trees.fit(data_train, target_train)
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-target_predicted = bagged_trees.predict(data_test)
-plt.plot(data_test, target_predicted)
+
+bagged_trees_predictions = bagged_trees.predict(data_test)
+plt.plot(data_test, bagged_trees_predictions)
+
 _ = plt.title("Predictions from a bagging classifier")
 
 # %% [markdown]
@@ -257,15 +259,15 @@ _ = plt.title("Predictions from a bagging classifier")
 # %%
 for tree_idx, tree in enumerate(bagged_trees.estimators_):
     label = "Predictions of individual trees" if tree_idx == 0 else None
-    target_tree_predicted = tree.predict(data_test)
-    plt.plot(data_test, target_tree_predicted, linestyle="--", alpha=0.1,
+    tree_predictions = tree.predict(data_test)
+    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.1,
              color="tab:blue", label=label)
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 
-target_bagged_trees_predicted = bagged_trees.predict(data_test)
-plt.plot(data_test, target_bagged_trees_predicted,
+bagged_trees_predictions = bagged_trees.predict(data_test)
+plt.plot(data_test, bagged_trees_predictions,
          color="tab:orange", label="Predictions of ensemble")
 _ = plt.legend()
 
@@ -308,9 +310,9 @@ _ = bagging.fit(data_train, target_train)
 
 # %%
 for i, regressor in enumerate(bagging.estimators_):
-    target_regressor_predicted = regressor.predict(data_test)
+    regressor_predictions = regressor.predict(data_test)
     base_model_line = plt.plot(
-        data_test, target_regressor, linestyle="--", alpha=0.2,
+        data_test, regressor_predictions, linestyle="--", alpha=0.2,
         label="Predictions of base models" if i == 0 else None,
         color="tab:blue"
     )

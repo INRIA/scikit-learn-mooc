@@ -1570,7 +1570,7 @@ this page.</p>
 <h2>Main terms used in this course<a class="headerlink" href="#main-terms-used-in-this-course" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="classification">
 <h3>classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h3>
-<p>type of problems where the goal is to predict a target that can take finite set
+<p>Type of problems where the goal is to predict a target that can take finite set
 of values.</p>
 <p>Example of classification problems are:</p>
 <ul class="simple">
@@ -1585,14 +1585,26 @@ title, etc …</p></li>
 classification. This the case for the medical and spam use cases above.</p>
 <p>When the predicted label can have at least three values, it is called
 multi-class classification. This is the case for the Iris use case above.</p>
-<p>TODO basically the idea is to use all the terms on a given example. This is
-simpler than explaining each term individually. for features, samples,
-prediction, decision rule</p>
+<p>Below, we illustrate an example of binary classification.</p>
+<p><img alt="img" src="https://inria.github.io/scikit-learn-mooc/figures/lin_separable.svg" /></p>
+<p>The data provided by the user contains 2 features, represented by the x- and
+y-axis. This is a binary classification problem because the target contains
+only 2 labels, here encoded by colors with blue and orange data points. Thus,
+each data points represent a sample and the entire set was used to train a
+linear model. The decision rule learned is thus the black dotted line. This
+decision rule is used to predict the label of a new sample according the its
+position with respect to the line: a sample lying on the left of the line will
+be predicted as a blue sample while a sample lying on the right of the line
+will be predicted as an orange sample. Here, we have a linear classifier
+because the decision rule is defined as a line (it is called an hyperplane
+in higher dimension). However, the shape of the decision rule will depend on
+the model fitted.</p>
 </div>
 <div class="section" id="classifier">
 <h3>classifier<a class="headerlink" href="#classifier" title="Permalink to this headline">¶</a></h3>
-<p>a model used for classification. For example in scikit-learn
-<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> or <code class="docutils literal notranslate"><span class="pre">HistGradientBosstingClassifier</span></code> are classifier
+<p>A model used for classification. These models handle targets that contains
+discrete values such as <code class="docutils literal notranslate"><span class="pre">0</span></code>/<code class="docutils literal notranslate"><span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">cat</span></code>/<code class="docutils literal notranslate"><span class="pre">dog</span></code>. For example in scikit-learn
+<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> or <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> are classifier
 classes.</p>
 <p>Note: for historic reasons the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> name is confusing.
 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> is not a regression model but a classification model.</p>
@@ -1601,8 +1613,12 @@ classes.</p>
 <h3>cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline">¶</a></h3>
 <p>A procedure to estimate how well a model will generalize to new data. The main
 idea behind this is to train a model on a dataset (called train set) and
-evaluate its performance on a separate dataset (called test set). See
-<a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation">this</a>
+evaluate its performance on a separate dataset (called test set).</p>
+<p>This train/evaluate performance is repeated several times on different train
+and test sets to get an estimate of the statistical model performance
+uncertainties.</p>
+<p>See
+<a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation">this scikit-learn documentation</a>
 for more details.</p>
 </div>
 <div class="section" id="data-matrix-input-data">
@@ -1619,7 +1635,8 @@ parameters are learned (or estimated) from the data.</p>
 </div>
 <div class="section" id="feature-variable-attribute-descriptor-covariate">
 <h3>feature, variable, attribute, descriptor, covariate<a class="headerlink" href="#feature-variable-attribute-descriptor-covariate" title="Permalink to this headline">¶</a></h3>
-<p>A quality describing an observation (e.g. color, size, weight)</p>
+<p>A quantity describing an observation (e.g. color, size, weight). You can see a
+features as a quantity measured during the dataset collection.</p>
 <p>For example, in the Iris dataset, features might include petal length and petal
 width.</p>
 </div>
@@ -1627,31 +1644,39 @@ width.</p>
 <h3>hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this headline">¶</a></h3>
 <p>Aspects of model configuration that are not learnt from data. For example when
 using a k-nearest neighbor approach, the number of neighbors to use is a
-hyper-parameter.</p>
+hyperparameter.</p>
 <p>When trying to train a polynomial model (say of degree between 1 and 10 for
 example) to 1 dimensional data, the degree of the polynomial is a
-hyper-parameter.</p>
-<p>TODO Say something about validation that basically validation is used to find
-the best hyperparameters ???</p>
+hyperparameter.</p>
+<p>Hyperparameters will impact the statistical and computational performance
+of a model. Indeed, hyperparameters of a model are usually inspected with
+regard to their impact on the model performance and tuned to maximize model
+performance (usually statistical performance). It is called hyperparameters
+tuning and involve grid-search and randomized-search involving model evaluation
+on some validation sets.</p>
 </div>
 <div class="section" id="infer-inference">
 <h3>infer/inference<a class="headerlink" href="#infer-inference" title="Permalink to this headline">¶</a></h3>
-<p>TODO we only mention it in the intro slides in a statistical meaning, we
-probably use it in the notebook as a verb.</p>
-<p>mention statistical meaning vs machine-learning usage (from google glossary
-below:)</p>
-<p>In machine learning, often refers to the process of making predictions by
-applying the trained model to unlabeled examples. In statistics, inference
-refers to the process of fitting the parameters of a distribution conditioned
-on some observed data. (See the Wikipedia article on statistical inference.)</p>
+<p>This term might have different meaning in machine-learning and statistical
+inference.</p>
+<p>In machine-learning and more generally in this MOOC, we refer to inference the
+process of making predictions by applying a trained model to unlabeled data. In
+other words, inference is equivalent to predict the target of unseen data using
+a fitted model.</p>
+<p>In statistic inference, the notion of left-out/unseen data is not tight to
+the definition. Indeed, inference refers to the process of fitting the
+parameters of a distribution conditioned on some observed data. You can check
+the Wikipedia article on
+<a class="reference external" href="https://en.wikipedia.org/wiki/Statistical_inference">statistical inference</a>
+for more details.</p>
 </div>
 <div class="section" id="learned-parameters">
 <h3>learned parameters<a class="headerlink" href="#learned-parameters" title="Permalink to this headline">¶</a></h3>
-<p>In scikit-learn the convetion is that learned parameters finish with <code class="docutils literal notranslate"><span class="pre">\_</span></code> at
+<p>In scikit-learn the convention is that learned parameters finish with <code class="docutils literal notranslate"><span class="pre">\_</span></code> at
 the end in scikit-learn (they are called attributes in scikit-learn glossary,
 never used this and confusing with attributes = features). They are only
 available after <code class="docutils literal notranslate"><span class="pre">fit</span></code> has been called.</p>
-<p>watch out parameters can also be used as a general Python meaning, as in
+<p>Watch out parameters can also be used as a general Python meaning, as in
 passing a parameter to a function or a class</p>
 </div>
 <div class="section" id="meta-estimator">
@@ -1661,7 +1686,7 @@ Examples of meta-estimators include <code class="docutils literal notranslate"><
 </div>
 <div class="section" id="model">
 <h3>model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h3>
-<p>generic term that refers to something that can learn prediction rules from the
+<p>Generic term that refers to something that can learn prediction rules from the
 data.</p>
 </div>
 <div class="section" id="overfitting">
@@ -1687,19 +1712,21 @@ does your model predict for <code class="docutils literal notranslate"><span cla
 </div>
 <div class="section" id="regression">
 <h3>regression<a class="headerlink" href="#regression" title="Permalink to this headline">¶</a></h3>
-<p>problem the goal is to predict a target that is continuous. Example of
-regression problems are:</p>
+<p>The goal is to predict a target that is continuous (contrary to discrete target
+for classification problems). Example of regression problems are:</p>
 <ul class="simple">
 <li><p>predicting house prices from their descriptions (number of rooms, surface,
 location, etc …)</p></li>
 <li><p>predicting the age of patients from their MRI scans</p></li>
 </ul>
-<p>TODO</p>
-<p>Reuse <a class="reference external" href="https://inria.github.io/scikit-learn-mooc/figures/linear_fit.svg">https://inria.github.io/scikit-learn-mooc/figures/linear_fit.svg</a> or
-linear regression 1d e.g. with Penguin example???</p>
-<p>basically the idea is to use all the terms on a given example. This is simpler
-than explaining each term individually. for features, samples, prediction,
-decision rule</p>
+<p>Below, we illustrate an example of regression.</p>
+<p><img alt="img" src="https://inria.github.io/scikit-learn-mooc/figures/dt_fit.svg" /></p>
+<p>The data provided by the user contains 1 feature called <code class="docutils literal notranslate"><span class="pre">x</span></code> and we want to
+predict the continuous target <code class="docutils literal notranslate"><span class="pre">y</span></code>. Each black data points are samples used to
+train a model. The model here is a decision tree and thus the decision rule
+is defined as a piecewise constant function represented by the orange line.
+To predict the target for a new sample for a given value of the x-axis, the
+model will output the corresponding <code class="docutils literal notranslate"><span class="pre">y</span></code> value lying on the orange line.</p>
 </div>
 <div class="section" id="regressor">
 <h3>regressor<a class="headerlink" href="#regressor" title="Permalink to this headline">¶</a></h3>
@@ -1713,7 +1740,7 @@ towards zero. This can be useful to combat overfitting.</p>
 </div>
 <div class="section" id="sample-instance-observation">
 <h3>sample, instance, observation<a class="headerlink" href="#sample-instance-observation" title="Permalink to this headline">¶</a></h3>
-<p>a data point in a dataset.</p>
+<p>A data point in a dataset.</p>
 <p>In the 2d data matrix, a sample is a row.</p>
 <p>For example in the Iris dataset, a sample would be the measurements of a single
 flower.</p>
@@ -1731,7 +1758,8 @@ instance of the <code class="docutils literal notranslate"><span class="pre">KNe
 given the features. reuse the phrasing from the intro.</p>
 <p><code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">f(X)</span></code> y is the target, <code class="docutils literal notranslate"><span class="pre">X</span></code> is the data matrix, <code class="docutils literal notranslate"><span class="pre">f</span></code> is the model we are
 trying to learn from the data.</p>
-<p>A simple example in a 1d linear regression, we are trying to learn the model <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x</span> <span class="pre">+</span> <span class="pre">b</span></code>. The coefficients <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are learned from the data, i.e.
+<p>A simple example in a 1d linear regression, we are trying to learn the model
+<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">a*x</span> <span class="pre">+</span> <span class="pre">b</span></code>. The coefficients <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are learned from the data, i.e.
 adjusted so that the model fits the data as well as possible.</p>
 </div>
 <div class="section" id="target-label-annotation">

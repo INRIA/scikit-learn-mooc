@@ -1422,8 +1422,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#an-example-of-machine-learning-model-decision-rules">
-   An example of machine learning model decision rules
+  <a class="reference internal nav-link" href="#creating-decision-rules-by-hand">
+   Creating decision rules by hand
   </a>
  </li>
 </ul>
@@ -2198,73 +2198,82 @@ variables.</p>
 <img alt="../_images/01_tabular_data_exploration_28_0.png" src="../_images/01_tabular_data_exploration_28_0.png" />
 </div>
 </div>
-<p>By looking at the data you could infer some hand-written rules to predict the
-class:</p>
-<ul class="simple">
-<li><p>if you are young (less than 25 year-old roughly), you are in the
-<code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> class;</p></li>
-<li><p>if you are old (more than 70 year-old roughly), you are in the
-<code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> class;</p></li>
-<li><p>if you work part-time (less than 40 hours roughly) you are in the
-<code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> class.</p></li>
-</ul>
-<p>These hand-written rules could work reasonably well without the need for any
-machine learning. Note however that it is not very easy to create rules for
-the region <code class="docutils literal notranslate"><span class="pre">40</span> <span class="pre">&lt;</span> <span class="pre">hours-per-week</span> <span class="pre">&lt;</span> <span class="pre">60</span></code> and <code class="docutils literal notranslate"><span class="pre">30</span> <span class="pre">&lt;</span> <span class="pre">age</span> <span class="pre">&lt;</span> <span class="pre">70</span></code>. We can hope that
-machine learning can help in this region. Also note that visualization can
-help creating hand-written rules but is limited to 2 dimensions (maybe 3
-dimensions), whereas machine learning models can build models in
-high-dimensional spaces.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In a machine-learning setting, a model automatically creates the “rules” from
-the data in order to make predictions on new unseen data.</p>
 </div>
-<p>Another thing worth mentioning in this plot: if you are young (less than 25
-year-old roughly) or old (more than 70 year-old roughly) you tend to work
-less. This is a non-linear relationship between age and hours per week.
-Linear machine learning models can only capture linear interactions, so this
-may be a factor when deciding which model to chose.</p>
+<div class="section" id="creating-decision-rules-by-hand">
+<h2>Creating decision rules by hand<a class="headerlink" href="#creating-decision-rules-by-hand" title="Permalink to this headline">¶</a></h2>
+<p>By looking at the previous plots, we could create some hand-written rules
+that predicts whether someone has a high- or low-income. For instance, we
+could focus on the combination of the <code class="docutils literal notranslate"><span class="pre">hours-per-week</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code> features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="an-example-of-machine-learning-model-decision-rules">
-<h2>An example of machine learning model decision rules<a class="headerlink" href="#an-example-of-machine-learning-model-decision-rules" title="Permalink to this headline">¶</a></h2>
-<p>The plot below shows the rules of a simple model, called decision tree. This
-model has been trained using the <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">hours-per-week</span></code> features, so that
-we can have a nice graphical representation of its decision rules in two
-dimensions. We will explain how this model works in a later notebook, for now
-let us just consider the model predictions when trained on this dataset:</p>
-<p><img alt="" src="../_images/simple_decision_tree_adult_census.png" /></p>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_tabular_data_exploration_30_0.png" src="../_images/01_tabular_data_exploration_30_0.png" />
+</div>
+</div>
 <p>The data points (circles) show the distribution of <code class="docutils literal notranslate"><span class="pre">hours-per-week</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code>
-in the dataset. Blue points mean <code class="docutils literal notranslate"><span class="pre">low-income</span></code> and orange points mean
-<code class="docutils literal notranslate"><span class="pre">high-income</span></code>. This part of the plot is the same as the bottom-left plot in
+in the dataset. Blue points mean low-income and orange points mean
+high-income. This part of the plot is the same as the bottom-left plot in
 the pairplot above.</p>
-<p>What is new in this plot is that we have added the model decision rules as
-background colors. The background color in each area represents the
-probability of the class <code class="docutils literal notranslate"><span class="pre">high-income</span></code> as estimated by the model. Values
-towards 0 (dark blue) indicates that the model predicts <code class="docutils literal notranslate"><span class="pre">low-income</span></code> with a
-high probability. Values towards 1 (dark orange) indicates that the model
-predicts <code class="docutils literal notranslate"><span class="pre">high-income</span></code> with a high probability. Values towards 0.5 (white)
-indicates that the model is not very sure about its prediction.</p>
-<p>Looking at the plot, here is what we can gather:</p>
+<p>In this plot, we can try to find regions that mainly contains a single class
+such that we can easily decide what class one should predict. We could come
+up with hand-written rules as shown in this plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">age_limit</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">age_limit</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">hours_per_week_limit</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">hours_per_week_limit</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&lt;=50K&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&lt;=50K&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;???&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01_tabular_data_exploration_32_0.png" src="../_images/01_tabular_data_exploration_32_0.png" />
+</div>
+</div>
 <ul class="simple">
-<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&lt;</span> <span class="pre">28.5</span></code> (left region) the prediction is <code class="docutils literal notranslate"><span class="pre">low-income</span></code>.
-The dark blue color indicates that the model is quite sure about its
-prediction.</p></li>
-<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">28.5</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&lt;</span> <span class="pre">40.5</span></code>
-(bottom-right region), the prediction is <code class="docutils literal notranslate"><span class="pre">low-income</span></code>. Note that the blue
-is a bit lighter that for the left region which means that the algorithm is
-not as certain in this region.</p></li>
-<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">28.5</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&gt;</span> <span class="pre">40.5</span></code> (top-right region),
-the prediction is <code class="docutils literal notranslate"><span class="pre">low-income</span></code>. However the probability of the class
-<code class="docutils literal notranslate"><span class="pre">low-income</span></code> is very close to 0.5 which means the model is not sure at all
-about its prediction.</p></li>
+<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&lt;</span> <span class="pre">27</span></code> (left region) the prediction is low-income.
+Indeed, there are many blue points and we cannot see any orange points.</p></li>
+<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">27</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&lt;</span> <span class="pre">40</span></code>
+(bottom-right region), the prediction is low-income. Indeed, there are
+many blue points and only a few orange points.</p></li>
+<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">27</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&gt;</span> <span class="pre">40</span></code> (top-right region),
+we see a mix of blue points and orange points. It seems complicated to
+chose which class we should predict in this region.</p></li>
 </ul>
-<p>It is interesting to see that a simple model creates rules similar to the
-ones that we could have created by hand. Note that machine learning is really
-interesting when creating rules by hand is not straightforward, for example
-because we are in high dimension (many features) or because there are no
-simple and obvious rules that separate the two classes as in the top-right
-region</p>
+<p>It is interesting to note that some machine learning models will work
+similarly to what we did: they are known as decision tree models. The two
+thresholds that we chose (27 years and 40 hours) are somewhat arbitrary, i.e.
+we chose them by only looking at the pairplot. In contrast, a decision tree
+will chose the “best” splits based on data without human intervention or
+inspection. Decision trees will be covered in more details in a future module.</p>
+<p>Note that machine learning is really interesting when creating rules by hand
+is not straightforward, for example because we are in high dimension (many
+features) or because there are no simple and obvious rules that separate the
+two classes as in the top-right region of the previous plot.</p>
+<p>To sum up, the important thing to remember is that in a machine-learning
+setting, a model automatically creates the “rules” from the data in order to
+make predictions on new unseen data.</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
 <li><p>loaded the data from a CSV file using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>;</p></li>

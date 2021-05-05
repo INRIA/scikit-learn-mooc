@@ -7,8 +7,7 @@
 # Random forests are a popular model in machine learning. They are a
 # modification of the bagging algorithm. In bagging, any classifier or
 # regressor can be used. In random forests, the base classifier or regressor
-# must be a decision tree. In the previous notebook, we showed that we could
-# pass a base model different from a decision tree.
+# must be a decision tree.
 #
 # Random forests have another particularity: when training a tree, the search
 # for the best split is done only on a subset of the original features taken at

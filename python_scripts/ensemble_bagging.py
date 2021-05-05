@@ -307,9 +307,10 @@ _ = bagging.fit(data_train, target_train)
 
 
 # %%
-for i, regr in enumerate(bagging.estimators_):
+for i, regressor in enumerate(bagging.estimators_):
+    target_regressor_predicted = regressor.predict(data_test)
     base_model_line = plt.plot(
-        data_test, regr.predict(data_test), linestyle="--", alpha=0.2,
+        data_test, target_regressor, linestyle="--", alpha=0.2,
         label="Predictions of base models" if i == 0 else None,
         color="tab:blue"
     )

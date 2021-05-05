@@ -48,9 +48,10 @@ target = adult_census[target_name]
 #
 # Since there are rare categories in this dataset we need to specifically
 # encode unknown categories at prediction time in order to be able to use
-# cross-validation. Otherwise rare categories could only be present on the
+# cross-validation. Otherwise some rare categories could only be present on the
 # validation side of the cross-validation split and the `OrdinalEncoder` would
-# raise an error when encoding such data points.
+# raise an error when calling the its `transform` method with the data points
+# of the validation set.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
@@ -66,8 +67,8 @@ preprocessor = make_column_transformer(
 
 # %% [markdown]
 #
-# We will first give a simple example where we will train a decision tree
-# classifier and check its statistical performance via cross-validation.
+# We will first give a simple example where we will train a single decision
+# tree classifier and check its statistical performance via cross-validation.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -85,8 +86,8 @@ print(f"Decision tree classifier: "
 
 # %% [markdown]
 #
-# In the previous notebook, we should how to use a bagging model. Indeed, we
-# need to specificy the base model to use, here a decision tree classifier. In
+# Similarly to what was done in the previous notebook, we construct a
+# `BaggingClassifier` with a decision tree classifier as base model. In
 # addition, we need to specify how many models do we want to combine. Note that
 # we also need to preprocess the data and thus use a scikit-learn pipeline.
 
@@ -109,10 +110,12 @@ print(f"Bagged decision tree classifier: "
 
 # %% [markdown]
 #
+# Not that the performance of the bagged trees is already much better than the
+# performance of a single tree.
+#
 # Now, we will use a random forest. You will observe that we do not need to
-# specify any `base_estimator` because the estimator is forced to be a
-# decision tree. Thus, we only have to specify the desired number of trees in
-# the forest.
+# specify any `base_estimator` because the estimator is forced to be a decision
+# tree. Thus, we just specify the desired number of trees in the forest.
 
 # %%
 from sklearn.ensemble import RandomForestClassifier
@@ -149,19 +152,28 @@ print(f"Random forest classifier: "
 # By default, `RandomForestRegressor` disables feature subsampling while
 # `RandomForestClassifier` uses `max_features=np.sqrt(n_features)`. These
 # default values reflect good practices given in the scientific literature.
-# However, `max_features` is one of the hyperparameter to consider when tuning
-# a random forests.
 #
-# Note that bagging ensemble exposes a parameter `max_features` as well.
-# However, the process is different since the base estimator is not necessarily
-# a decision tree. Indeed, the features subsampling take place at the model
-# level by selecting a subset of feature on each bootstrap sample.
+# However, `max_features` is one of the hyperparameters to consider when tuning
+# a random forests:
+# - too much randomness in the trees can lead to underfitting base models and
+#   can be detrimental for the ensemble as a whole,
+# - too few randomness in the trees leads to more correlation of the prediction
+#   errors and as a result reduce the benefits of the averaging step in terms
+#   of overfitting control.
+#
+# In scikit-learn, the bagging classes also expose a `max_features` parameter.
+# However, `BaggingClassifier` and `BaggingRegressor` are agnostic with respect
+# to their base model and therefore random feature subsampling can only happen
+# once before fitting each base model instead of several times per base model
+# as is the case when adding splits to a given tree.
 #
 # We summarize these details in the following table:
 #
-# | Ensemble model class     | Base model class          | Default value for `max_features` | Level of features subsampling |
-# |--------------------------|---------------------------|----------------------------------|-------------------------------|
-# | `BaggingClassifier`      | User specified (flexible) | `n_features` (no subsampling)    | Model level                   |
-# | `RandomForestClassifier` | `DecisionTreeClassifier`  | `sqrt(n_features)`               | Tree node level               |
-# | `BaggingRegressor`       | User specified (flexible) | `n_features` (no subsampling)    | Model level                   |
-# | `RandomForestRegressor`  | `DecisionTreeRegressor`   | `n_features` (no subsampling)    | Tree node level               |
+# | Ensemble model class     | Base model class          | Default value for `max_features`   | Features subsampling strategy |
+# |--------------------------|---------------------------|------------------------------------|-------------------------------|
+# | `BaggingClassifier`      | User specified (flexible) | `n_features` (no&nbsp;subsampling) | Model level                   |
+# | `RandomForestClassifier` | `DecisionTreeClassifier`  | `sqrt(n_features)`                 | Tree node level               |
+# | `BaggingRegressor`       | User specified (flexible) | `n_features` (no&nbsp;subsampling) | Model level                   |
+# | `RandomForestRegressor`  | `DecisionTreeRegressor`   | `n_features` (no&nbsp;subsampling) | Tree node level               |
+
+# %%

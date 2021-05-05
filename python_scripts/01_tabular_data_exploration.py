@@ -268,7 +268,9 @@ plt.annotate("<=50K", (35, 20), fontsize=35)
 _ = plt.annotate("???", (45, 60), fontsize=35)
 
 # %% [markdown]
-# Looking at the plot, we can define the following rules:
+# Looking at the plot, we can define the following rules that isolate best
+# a single class (low-income or high-income). We can limit ourself to only
+# two thresholds. One arbitrary possibility would be:
 #
 # * In the region `age < 27` (left region) the prediction is low-income.
 #   Indeed, there are many blue samples and we cannot see any orange samples.
@@ -280,11 +282,15 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 #   to predict a specific class in this case.
 #
 # It is interesting to note that some machine learning models will work
-# similarly to what we did: they are known as decision tree models. Note that
-# machine learning is really interesting when creating rules by hand is not
-# straightforward, for example because we are in high dimension (many features)
-# or because there are no simple and obvious rules that separate the two
-# classes as in the top-right region
+# similarly to what we did: they are known as decision tree models. The two
+# thresholds chosen by hand are arbitrary or we chose them after inspecting the
+# pairplot; a decision tree will chose the "best" splits based on data without
+# human intervention or inspection.
+#
+# Note that machine learning is really interesting when creating rules by hand
+# is not straightforward, for example because we are in high dimension (many
+# features) or because there are no simple and obvious rules that separate the
+# two classes as in the top-right region
 #
 # In conclusion, in a machine-learning setting, a model automatically creates
 # the "rules" from the data in order to make predictions on new unseen data.

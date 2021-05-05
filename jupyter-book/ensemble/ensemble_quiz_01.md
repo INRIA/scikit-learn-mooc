@@ -10,6 +10,9 @@ draw:
 - b) random samples with replacement over features
 - c) random samples without replacement over training points
 - d) random samples without replacement over features
+
+Hint: it is possible to access the documentation for those classes by
+clicking on the links on their name.
 ```
 
 +++

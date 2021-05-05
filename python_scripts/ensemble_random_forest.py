@@ -7,17 +7,19 @@
 # Random forests are a popular model in machine learning. They are a
 # modification of the bagging algorithm. In bagging, any classifier or
 # regressor can be used. In random forests, the base classifier or regressor
-# must be a decision tree.
+# is always a decision tree.
 #
 # Random forests have another particularity: when training a tree, the search
 # for the best split is done only on a subset of the original features taken at
-# random for each split.
+# random. The random subsets are different for each split node. The goal is to
+# inject additional randomization into the learning procedure to try to
+# decorrelate the prediction errors of the individual trees.
 #
-# Therefore, random forests are using randomization on both axes of the data
-# matrix:
+# Therefore, random forests are using **randomization on both axes of the data
+# matrix**:
 #
-# - by bootstrapping samples for each tree in the forest;
-# - randomly selecting a subset of features at each node of the tree.
+# - by **bootstrapping samples** for **each tree** in the forest;
+# - randomly selecting a **subset of features** at **each node** of the tree.
 #
 # ## A look at random forests
 #
@@ -40,12 +42,15 @@ target = adult_census[target_name]
 
 # %%[markdown]
 #
-# The adult census contains some categorical data and we will encode the
-# categorical features using an `OrdinalEncoder` since we are going to use
-# tree-based models.
+# The adult census contains some categorical data and we encode the categorical
+# features using an `OrdinalEncoder` since tree-based models can work very
+# efficiently with such a naive representation of categorical variables.
 #
-# Since we can get rare category during cross-validation, we use specify the
-# option to handle the unknown categories after training.
+# Since there are rare categories in this dataset we need to specifically
+# encode unknown categories at prediction time in order to be able to use
+# cross-validation. Otherwise rare categories could only be present on the
+# validation side of the cross-validation split and the `OrdinalEncoder` would
+# raise an error when encoding such data points.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
@@ -63,8 +68,6 @@ preprocessor = make_column_transformer(
 #
 # We will first give a simple example where we will train a decision tree
 # classifier and check its statistical performance via cross-validation.
-# We need to use a scikit-learn pipeline such that we first preprocess the
-# dataset to only have numerical data at the entry of the decision tree.
 
 # %%
 from sklearn.pipeline import make_pipeline

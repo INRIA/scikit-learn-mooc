@@ -6,10 +6,13 @@ By default, a
 or [`BaggingRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingRegressor.html)
 draw:
 
-- a) subsamples with replacement over samples
-- b) subsamples with replacement over features
-- c) subsamples without replacement over samples
-- d) subsamples without replacement over features
+- a) random samples with replacement over training points
+- b) random samples with replacement over features
+- c) random samples without replacement over training points
+- d) random samples without replacement over features
+
+Hint: it is possible to access the documentation for those classes by
+clicking on the links on their name.
 ```
 
 +++

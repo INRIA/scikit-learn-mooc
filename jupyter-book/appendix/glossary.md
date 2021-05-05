@@ -133,7 +133,7 @@ the end in scikit-learn (they are called attributes in scikit-learn glossary,
 never used this and confusing with attributes = features). They are only
 available after `fit` has been called.
 
-watch out parameters can also be used as a general Python meaning, as in
+Watch out parameters can also be used as a general Python meaning, as in
 passing a parameter to a function or a class
 
 ### meta-estimator
@@ -143,7 +143,7 @@ Examples of meta-estimators include `Pipeline` and `GridSearchCV`.
 
 ### model
 
-generic term that refers to something that can learn prediction rules from the
+Generic term that refers to something that can learn prediction rules from the
 data.
 
 ### overfitting
@@ -170,7 +170,7 @@ does your model predict for `x = 10` we can use `y = 2*10 - 5 = 15`.
 
 ### regression
 
-problem the goal is to predict a target that is continuous. Example of
+Problem the goal is to predict a target that is continuous. Example of
 regression problems are:
 
 - predicting house prices from their descriptions (number of rooms, surface,
@@ -182,7 +182,7 @@ TODO
 Reuse https://inria.github.io/scikit-learn-mooc/figures/linear_fit.svg or
 linear regression 1d e.g. with Penguin example???
 
-basically the idea is to use all the terms on a given example. This is simpler
+Basically the idea is to use all the terms on a given example. This is simpler
 than explaining each term individually. for features, samples, prediction,
 decision rule
 
@@ -199,7 +199,7 @@ towards zero. This can be useful to combat overfitting.
 
 ### sample, instance, observation
 
-a data point in a dataset.
+A data point in a dataset.
 
 In the 2d data matrix, a sample is a row.
 
@@ -222,7 +222,8 @@ given the features. reuse the phrasing from the intro.
 `y = f(X)` y is the target, `X` is the data matrix, `f` is the model we are
 trying to learn from the data.
 
-A simple example in a 1d linear regression, we are trying to learn the model `y = a*x + b`. The coefficients `a` and `b` are learned from the data, i.e.
+A simple example in a 1d linear regression, we are trying to learn the model
+`y = a*x + b`. The coefficients `a` and `b` are learned from the data, i.e.
 adjusted so that the model fits the data as well as possible.
 
 ### target, label, annotation

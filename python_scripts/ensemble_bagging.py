@@ -318,6 +318,7 @@ polynomial_regressor = make_pipeline(
 # The ensemble itself is simply built by passing the resulting pipeline as the
 # `base_estimator` parameter of the `BaggingRegressor` class:
 
+# %%
 bagging = BaggingRegressor(
     base_estimator=polynomial_regressor,
     n_estimators=100,

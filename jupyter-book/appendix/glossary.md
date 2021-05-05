@@ -19,7 +19,7 @@ this page.
 
 ### classification
 
-type of problems where the goal is to predict a target that can take finite set
+Type of problems where the goal is to predict a target that can take finite set
 of values.
 
 Example of classification problems are:
@@ -56,7 +56,8 @@ the model fitted.
 
 ### classifier
 
-a model used for classification. For example in scikit-learn
+A model used for classification. These models handle targets that contains
+discrete values such as `0`/`1` or `cat`/`dog`. For example in scikit-learn
 `LogisticRegression` or `HistGradientBosstingClassifier` are classifier
 classes.
 
@@ -85,7 +86,8 @@ parameters are learned (or estimated) from the data.
 
 ### feature, variable, attribute, descriptor, covariate
 
-A quality describing an observation (e.g. color, size, weight)
+A quantity describing an observation (e.g. color, size, weight). You can see a
+features as a quantity measured during the dataset collection.
 
 For example, in the Iris dataset, features might include petal length and petal
 width.
@@ -94,27 +96,35 @@ width.
 
 Aspects of model configuration that are not learnt from data. For example when
 using a k-nearest neighbor approach, the number of neighbors to use is a
-hyper-parameter.
+hyperparameter.
 
 When trying to train a polynomial model (say of degree between 1 and 10 for
 example) to 1 dimensional data, the degree of the polynomial is a
-hyper-parameter.
+hyperparameter.
 
-TODO Say something about validation that basically validation is used to find
-the best hyperparameters ???
+Hyperparameters will impact the statistical and computational performance
+of a model. Indeed, hyperparameters of a model are usually inspected with
+regard to their impact on the model performance and tuned to maximize model
+performance (usually statistical performance). It is called hyperparameters
+tuning and involve grid-search and randomized-search involving model evaluation
+on some validation sets.
 
 ### infer/inference
 
-TODO we only mention it in the intro slides in a statistical meaning, we
-probably use it in the notebook as a verb.
+This term might have different meaning in machine-learning and descriptive
+statistic.
 
-mention statistical meaning vs machine-learning usage (from google glossary
-below:)
+In machine-learning and more generally in this MOOC, we refer to inference the
+process of making predictions by applying a trained model to unlabeled data. In
+other words, inference is equivalent to predict the target of unseen data using
+a fitted model.
 
-In machine learning, often refers to the process of making predictions by
-applying the trained model to unlabeled examples. In statistics, inference
-refers to the process of fitting the parameters of a distribution conditioned
-on some observed data. (See the Wikipedia article on statistical inference.)
+In descriptive statistic, the notion of left-out/unseen data is not tight to
+the definition. Indeed, inference refers to the process of fitting the
+parameters of a distribution conditioned on some observed data. You can check
+the Wikipedia article on
+[statistical inference](https://en.wikipedia.org/wiki/Statistical_inference)
+for more details.
 
 ### learned parameters
 

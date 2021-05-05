@@ -45,13 +45,16 @@ from sklearn.model_selection import cross_validate
 from sklearn.ensemble import GradientBoostingRegressor
 
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
-cv_results_gbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
+cv_results_gbdt = cross_validate(
+    gradient_boosting, data, target, scoring="neg_mean_absolute_error",
+    n_jobs=-1
+)
 
 # %%
 print("Gradient Boosting Decision Tree")
-print(f"R2 score via cross-validation: "
-      f"{cv_results_gbdt['test_score'].mean():.3f} +/- "
-      f"{cv_results_gbdt['test_score'].std():.3f}")
+print(f"Mean absolute error via cross-validation: "
+      f"{-cv_results_gbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_gbdt['test_score'].std():.3f} k$")
 print(f"Average fit time: "
       f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
 print(f"Average score time: "
@@ -98,13 +101,16 @@ from sklearn.pipeline import make_pipeline
 
 gradient_boosting = make_pipeline(
     discretizer, GradientBoostingRegressor(n_estimators=200))
-cv_results_gbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
+cv_results_gbdt = cross_validate(
+    gradient_boosting, data, target, scoring="neg_mean_absolute_error",
+    n_jobs=-1,
+)
 
 # %%
 print("Gradient Boosting Decision Tree with KBinsDiscretizer")
-print(f"R2 score via cross-validation: "
-      f"{cv_results_gbdt['test_score'].mean():.3f} +/- "
-      f"{cv_results_gbdt['test_score'].std():.3f}")
+print(f"Mean absolute error via cross-validation: "
+      f"{-cv_results_gbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_gbdt['test_score'].std():.3f} k$")
 print(f"Average fit time: "
       f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
 print(f"Average score time: "
@@ -129,13 +135,16 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 
 histogram_gradient_boosting = HistGradientBoostingRegressor(
     max_iter=200, random_state=0)
-cv_results_hgbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
+cv_results_hgbdt = cross_validate(
+    gradient_boosting, data, target, scoring="neg_mean_absolute_error",
+    n_jobs=-1,
+)
 
 # %%
 print("Histogram Gradient Boosting Decision Tree")
-print(f"R2 score via cross-validation: "
-      f"{cv_results_hgbdt['test_score'].mean():.3f} +/- "
-      f"{cv_results_hgbdt['test_score'].std():.3f}")
+print(f"Mean absolute error via cross-validation: "
+      f"{-cv_results_hgbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_hgbdt['test_score'].std():.3f} k$")
 print(f"Average fit time: "
       f"{cv_results_hgbdt['fit_time'].mean():.3f} seconds")
 print(f"Average score time: "

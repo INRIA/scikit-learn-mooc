@@ -26,15 +26,17 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Then, create an `AbaBoostRegressor`. Use the function
 # `sklearn.model_selection.validation_curve` to get training and test scores
-# by varying the number of estimators.
+# by varying the number of estimators. Use the mean absolute error as a metric
+# by passing `scoring="neg_mean_absolute_error"`.
 # *Hint: vary the number of estimators between 1 and 60.*
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Plot both the mean training and test scores. You can also plot the
-# standard deviation of the scores.
+# Plot both the mean training and test errors. You can also plot the
+# standard deviation of the errors.
+# *Hint: you can use `plt.errorbar`.*
 
 # %%
 # Write your code here.

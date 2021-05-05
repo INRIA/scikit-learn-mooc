@@ -49,12 +49,15 @@ param_grid = {
     "max_depth": [3, 5, None],
 }
 grid_search = GridSearchCV(
-    RandomForestRegressor(n_jobs=-1), param_grid=param_grid, n_jobs=-1)
+    RandomForestRegressor(n_jobs=-1), param_grid=param_grid,
+    scoring="neg_mean_absolute_error", n_jobs=-1,
+)
 grid_search.fit(data_train, target_train)
 
 columns = [f"param_{name}" for name in param_grid.keys()]
 columns += ["mean_test_score", "rank_test_score"]
 cv_results = pd.DataFrame(grid_search.cv_results_)
+cv_results["mean_test_score"] = -cv_results["mean_test_score"]
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
@@ -102,12 +105,15 @@ param_grid = {
     "learning_rate": [0.1, 1],
 }
 grid_search = GridSearchCV(
-    GradientBoostingRegressor(), param_grid=param_grid, n_jobs=-1)
+    GradientBoostingRegressor(), param_grid=param_grid,
+    scoring="neg_mean_absolute_error", n_jobs=-1
+)
 grid_search.fit(data_train, target_train)
 
 columns = [f"param_{name}" for name in param_grid.keys()]
 columns += ["mean_test_score", "rank_test_score"]
 cv_results = pd.DataFrame(grid_search.cv_results_)
+cv_results["mean_test_score"] = -cv_results["mean_test_score"]
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]

@@ -110,8 +110,8 @@ print(f"Bagged decision tree classifier: "
 
 # %% [markdown]
 #
-# Not that the performance of the bagged trees is already much better than the
-# performance of a single tree.
+# Note that the generalization performance of the bagged trees is already much
+# better than the performance of a single tree.
 #
 # Now, we will use a random forest. You will observe that we do not need to
 # specify any `base_estimator` because the estimator is forced to be a decision
@@ -154,8 +154,8 @@ print(f"Random forest classifier: "
 # default values reflect good practices given in the scientific literature.
 #
 # However, `max_features` is one of the hyperparameters to consider when tuning
-# a random forests:
-# - too much randomness in the trees can lead to underfitting base models and
+# a random forest:
+# - too much randomness in the trees can lead to underfitted base models and
 #   can be detrimental for the ensemble as a whole,
 # - too few randomness in the trees leads to more correlation of the prediction
 #   errors and as a result reduce the benefits of the averaging step in terms
@@ -175,5 +175,3 @@ print(f"Random forest classifier: "
 # | `RandomForestClassifier` | `DecisionTreeClassifier`  | `sqrt(n_features)`                 | Tree node level               |
 # | `BaggingRegressor`       | User specified (flexible) | `n_features` (no&nbsp;subsampling) | Model level                   |
 # | `RandomForestRegressor`  | `DecisionTreeRegressor`   | `n_features` (no&nbsp;subsampling) | Tree node level               |
-
-# %%

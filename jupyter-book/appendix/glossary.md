@@ -58,7 +58,7 @@ the model fitted.
 
 A model used for classification. These models handle targets that contains
 discrete values such as `0`/`1` or `cat`/`dog`. For example in scikit-learn
-`LogisticRegression` or `HistGradientBosstingClassifier` are classifier
+`LogisticRegression` or `HistGradientBoostingClassifier` are classifier
 classes.
 
 Note: for historic reasons the `LogisticRegression` name is confusing.
@@ -176,21 +176,23 @@ does your model predict for `x = 10` we can use `y = 2*10 - 5 = 15`.
 
 ### regression
 
-Problem the goal is to predict a target that is continuous. Example of
-regression problems are:
+The goal is to predict a target that is continuous (contrary to discrete target
+for classification problems). Example of regression problems are:
 
 - predicting house prices from their descriptions (number of rooms, surface,
   location, etc ...)
 - predicting the age of patients from their MRI scans
 
-TODO
+Below, we illustrate an example of regression.
 
-Reuse https://inria.github.io/scikit-learn-mooc/figures/linear_fit.svg or
-linear regression 1d e.g. with Penguin example???
+![img](https://inria.github.io/scikit-learn-mooc/figures/dt_fit.svg)
 
-Basically the idea is to use all the terms on a given example. This is simpler
-than explaining each term individually. for features, samples, prediction,
-decision rule
+The data provided by the user contains 1 feature called `x` and we want to
+predict the continuous target `y`. Each black data points are samples used to
+train a model. The model here is a decision tree and thus the decision rule
+is defined as a piecewise constant function represented by the orange line.
+To predict the target for a new sample for a given value of the x-axis, the
+model will output the corresponding `y` value lying on the orange line.
 
 ### regressor
 

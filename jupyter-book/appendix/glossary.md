@@ -68,8 +68,14 @@ Note: for historic reasons the `LogisticRegression` name is confusing.
 
 A procedure to estimate how well a model will generalize to new data. The main
 idea behind this is to train a model on a dataset (called train set) and
-evaluate its performance on a separate dataset (called test set). See
-[this](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation)
+evaluate its performance on a separate dataset (called test set).
+
+This train/evaluate performance is repeated several times on different train
+and test sets to get an estimate of the statistical model performance
+uncertainties.
+
+See
+[this scikit-learn documentation](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation)
 for more details.
 
 ### data matrix, input data
@@ -111,15 +117,15 @@ on some validation sets.
 
 ### infer/inference
 
-This term might have different meaning in machine-learning and descriptive
-statistic.
+This term might have different meaning in machine-learning and statistical
+inference.
 
 In machine-learning and more generally in this MOOC, we refer to inference the
 process of making predictions by applying a trained model to unlabeled data. In
 other words, inference is equivalent to predict the target of unseen data using
 a fitted model.
 
-In descriptive statistic, the notion of left-out/unseen data is not tight to
+In statistic inference, the notion of left-out/unseen data is not tight to
 the definition. Indeed, inference refers to the process of fitting the
 parameters of a distribution conditioned on some observed data. You can check
 the Wikipedia article on
@@ -128,7 +134,7 @@ for more details.
 
 ### learned parameters
 
-In scikit-learn the convetion is that learned parameters finish with `\_` at
+In scikit-learn the convention is that learned parameters finish with `\_` at
 the end in scikit-learn (they are called attributes in scikit-learn glossary,
 never used this and confusing with attributes = features). They are only
 available after `fit` has been called.

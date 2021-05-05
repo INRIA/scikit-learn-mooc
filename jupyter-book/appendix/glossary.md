@@ -37,9 +37,22 @@ classification. This the case for the medical and spam use cases above.
 When the predicted label can have at least three values, it is called
 multi-class classification. This is the case for the Iris use case above.
 
-TODO basically the idea is to use all the terms on a given example. This is
-simpler than explaining each term individually. for features, samples,
-prediction, decision rule
+Below, we illustrate an example of binary classification.
+
+![img](https://inria.github.io/scikit-learn-mooc/figures/lin_separable.svg)
+
+The data provided by the user contains 2 features, represented by the x- and
+y-axis. This is a binary classification problem because the target contains
+only 2 labels, here encoded by colors with blue and orange data points. Thus,
+each data points represent a sample and the entire set was used to train a
+linear model. The decision rule learned is thus the black dotted line. This
+decision rule is used to predict the label of a new sample according the its
+position with respect to the line: a sample lying on the left of the line will
+be predicted as a blue sample while a sample lying on the right of the line
+will be predicted as an orange sample. Here, we have a linear classifier
+because the decision rule is defined as a line (it is called an hyperplane
+in higher dimension). However, the shape of the decision rule will depend on
+the model fitted.
 
 ### classifier
 
@@ -90,7 +103,6 @@ hyper-parameter.
 TODO Say something about validation that basically validation is used to find
 the best hyperparameters ???
 
-
 ### infer/inference
 
 TODO we only mention it in the intro slides in a statistical meaning, we
@@ -104,7 +116,6 @@ applying the trained model to unlabeled examples. In statistics, inference
 refers to the process of fitting the parameters of a distribution conditioned
 on some observed data. (See the Wikipedia article on statistical inference.)
 
-
 ### learned parameters
 
 In scikit-learn the convetion is that learned parameters finish with `\_` at
@@ -115,18 +126,15 @@ available after `fit` has been called.
 watch out parameters can also be used as a general Python meaning, as in
 passing a parameter to a function or a class
 
-
 ### meta-estimator
 
 In scikit-learn jargon: an estimator that takes another estimator as parameter.
 Examples of meta-estimators include `Pipeline` and `GridSearchCV`.
 
-
 ### model
 
 generic term that refers to something that can learn prediction rules from the
 data.
-
 
 ### overfitting
 
@@ -135,13 +143,11 @@ that it ends up learning the noise in the dataset rather than the relevant
 patterns. You can tell a model is overfitting when it performs great on your
 train set, but poorly on your test set (or new real-world data).
 
-
 ### predictor
 
 An estimator (object with a `fit` method) with a `predict` and/or `fit_predict`
 method. Note a classifier or a regressor is a predictor. Example of predictor
 classes are `KNeighborsClassifier` and `DecisionTreeRegressor`.
-
 
 ### predict/prediction
 
@@ -151,7 +157,6 @@ then use to make predictions on new samples that were not seen during training.
 Example with a linear regression. If we do a linear regression in 1d and we
 learn the linear model `y = 2 x - 5`. Say someone comes along and says what
 does your model predict for `x = 10` we can use `y = 2*10 - 5 = 15`.
-
 
 ### regression
 
@@ -172,6 +177,7 @@ than explaining each term individually. for features, samples, prediction,
 decision rule
 
 ### regressor
+
 A regressor is a predictor in a regression setting.
 
 In scikit-learn, `DecisionTreeRegressor` or `Ridge` are regressor classes.
@@ -180,7 +186,6 @@ In scikit-learn, `DecisionTreeRegressor` or `Ridge` are regressor classes.
 
 In linear models, regularization can be used in order to shrink the weights
 towards zero. This can be useful to combat overfitting.
-
 
 ### sample, instance, observation
 
@@ -207,8 +212,7 @@ given the features. reuse the phrasing from the intro.
 `y = f(X)` y is the target, `X` is the data matrix, `f` is the model we are
 trying to learn from the data.
 
-A simple example in a 1d linear regression, we are trying to learn the model `y
-= a*x + b`. The coefficients `a` and `b` are learned from the data, i.e.
+A simple example in a 1d linear regression, we are trying to learn the model `y = a*x + b`. The coefficients `a` and `b` are learned from the data, i.e.
 adjusted so that the model fits the data as well as possible.
 
 ### target, label, annotation
@@ -227,7 +231,6 @@ follows the convention that output is called `y` as in `y = f(x)`.
 
 The dataset used to evaluate the generalization performance of the model after
 it is trained.
-
 
 ### train, learn, fit
 
@@ -251,7 +254,7 @@ The dataset used to train the model.
 
 An [estimator](#estimator) (i.e. an object that has a `fit` method) supporting
 `transform` and/or `fit_transform`. Examples for transformers are
-`StandardScaler` or `ColumnTransformer**
+`StandardScaler` or `ColumnTransformer\*\*
 
 ### underfitting
 
@@ -265,26 +268,28 @@ In this setting, samples are not labelled. One particular example of
 unsupervised learning is clustering, whose goal is to group the data into
 subsets of similar samples. Potential applications of clustering include:
 
--   using the content of articles to group them into broad topics
--   finding different types of customers from a e-commerce website data
+- using the content of articles to group them into broad topics
+- finding different types of customers from a e-commerce website data
 
 Note that although mentioned, unsupervised learning is not covered in this
 course.
 
 ### validation set
+
 TODO ??? (validation set is mentioned in some notebooks but probably never
 defined)
 
 different meaning validation set for early stopping, validation set for
 optimizing hyperparameter train-validation-test set.
 
-
 ## Other useful glossaries
 
 For generic machine learning terms:
+
 - ML cheatsheet glossary: https://ml-cheatsheet.readthedocs.io/en/latest/glossary.html
 - Google Machine Learning glossary:
   https://developers.google.com/machine-learning/glossary
 
 For more advanced scikit-learn related terminology:
+
 - scikit-learn glossary: https://scikit-learn.org/stable/glossary.html

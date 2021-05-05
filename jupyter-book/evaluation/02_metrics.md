@@ -6,9 +6,6 @@ function is usually decoupled from the evaluation metric that we want to
 optimize in practice. The objective function serves as a proxy for the
 evaluation metric.
 
-**FIXME: add information about a loss function depending on the notebooks
-presented before the notebook about metrics.**
-
 While other notebooks will give insight about machine learning algorithms and
 their associated objective functions, we will focus, in this notebook, on the
 metrics used to evaluate the performance of a predictive model.

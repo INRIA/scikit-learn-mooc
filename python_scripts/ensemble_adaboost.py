@@ -180,8 +180,6 @@ ensemble_weight
 # learner weights. However, there are statistical theories (like in AdaBoost)
 # for how these sample and learner weights can be optimally calculated.
 #
-# **FIXME: I think we should add a reference to ESL here.**
-#
 # We will use the AdaBoost classifier implemented in scikit-learn and
 # look at the underlying decision tree classifiers trained.
 

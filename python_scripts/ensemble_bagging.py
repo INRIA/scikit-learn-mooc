@@ -71,7 +71,7 @@ _ = plt.title("Predictions by a single decision tree")
 #
 # ## Bootstrap resampling
 #
-# A bootstrap sample corresponds to a resampling, with replacement, of the
+# A bootstrap sample corresponds to a resampling with replacement, of the
 # original dataset, a sample that is the same size as the original dataset.
 # Thus, the bootstrap sample will contain some data points several times while
 # some of the original data points will not be present.
@@ -221,7 +221,7 @@ _ = plt.title("Predictions of bagged trees")
 # an estimator that wraps another estimator: it takes a base model that is
 # cloned several times and trained independently on each bootstrap sample.
 #
-# The following shows how to build a bagging ensemble of decision trees. We set
+# The following code snippet shows how to build a bagging ensemble of decision trees. We set
 # `n_estimtators=100` instead of 3 in our manual implementation above to get
 # a stronger smoothing effect.
 
@@ -240,7 +240,8 @@ _ = bagged_trees.fit(data_train, target_train)
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-plt.plot(data_test, bagged_trees.predict(data_test))
+target_predicted = bagged_trees.predict(data_test)
+plt.plot(data_test, target_predicted)
 _ = plt.title("Predictions from a bagging classifier")
 
 # %% [markdown]
@@ -248,7 +249,7 @@ _ = plt.title("Predictions from a bagging classifier")
 # Because we use 100 trees in the ensemble, the average prediction is indeed
 # slightly smoother but very similar to our previous average plot.
 #
-# It is possible to access the internel models of the ensemble in stored as a
+# It is possible to access the internal models of the ensemble stored as a
 # Python list in the `bagged_trees.estimators_` attribute after fitting.
 #
 # Let us compare the based model predictions with their average:
@@ -256,13 +257,15 @@ _ = plt.title("Predictions from a bagging classifier")
 # %%
 for tree_idx, tree in enumerate(bagged_trees.estimators_):
     label = "Predictions of individual trees" if tree_idx == 0 else None
-    plt.plot(data_test, tree.predict(data_test), linestyle="--", alpha=0.1,
+    target_tree_predicted = tree.predict(data_test)
+    plt.plot(data_test, target_tree_predicted, linestyle="--", alpha=0.1,
              color="tab:blue", label=label)
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 
-plt.plot(data_test, bagged_trees.predict(data_test),
+target_bagged_trees_predicted = bagged_trees.predict(data_test)
+plt.plot(data_test, target_bagged_trees_predicted,
          color="tab:orange", label="Predictions of ensemble")
 _ = plt.legend()
 

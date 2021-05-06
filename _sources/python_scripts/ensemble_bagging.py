@@ -184,7 +184,7 @@ _ = plt.title("Predictions of trees trained on different bootstraps")
 # them. In regression, the most straightforward way to combine those
 # predictions is just to average them: for a given test data point, we feed the
 # input feature values to each of the `n` trained models in the ensemble and as
-# a resutl compute `n` predicted values for the target varible. The final
+# a result compute `n` predicted values for the target variable. The final
 # prediction of the ensemble for the test data point is the average of those
 # `n` values.
 #
@@ -221,9 +221,9 @@ _ = plt.title("Predictions of bagged trees")
 # an estimator that wraps another estimator: it takes a base model that is
 # cloned several times and trained independently on each bootstrap sample.
 #
-# The following code snippet shows how to build a bagging ensemble of decision trees. We set
-# `n_estimtators=100` instead of 3 in our manual implementation above to get
-# a stronger smoothing effect.
+# The following code snippet shows how to build a bagging ensemble of decision
+# trees. We set `n_estimtators=100` instead of 3 in our manual implementation
+# above to get a stronger smoothing effect.
 
 # %%
 from sklearn.ensemble import BaggingRegressor

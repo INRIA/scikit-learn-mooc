@@ -45,7 +45,7 @@ data.head()
 target
 
 # %% [markdown]
-# ```{caution}
+# ```{note}
 # Here and later, we use the name `data` and `target` to be explicit. In
 # scikit-learn documentation, `data` is commonly named `X` and `target` is
 # commonly called `y`.

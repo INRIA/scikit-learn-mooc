@@ -83,14 +83,19 @@ print(f"The dataset contains {data.shape[0]} samples and "
 # into account its `k` closest samples in the training set and predicts the
 # majority target of these samples.
 #
-# The `fit` method is called to train the model from the input
-# (features) and target data.
-#
 # ```{caution}
 # We use a K-nearest neighbors here. However, be aware that it is seldom useful
 # in practice. We use it because it is an intuitive algorithm. In the next
 # notebook, we will introduce better models.
 # ```
+#
+# The `fit` method is called to train the model from the input (features) and
+# target data.
+
+# %%
+# to display nice model diagram
+from sklearn import set_config
+set_config(display='diagram')
 
 # %%
 from sklearn.neighbors import KNeighborsClassifier
@@ -105,12 +110,12 @@ model.fit(data, target)
 #
 # The method `fit` is composed of two elements: (i) a **learning algorithm**
 # and (ii) some **model states**. The learning algorithm takes the training
-# data and training target as input and set the model states. These model
-# states will be used later to either predict (for classifier and regressor) or
-# transform data (for transformers).
+# data and training target as input and sets the model states. These model
+# states will be used later to either predict (for classifiers and regressors)
+# or transform data (for transformers).
 #
 # Both the learning algorithm and the type of model states are specific to each
-# type of models.
+# type of model.
 
 # %% [markdown]
 # ```{note}

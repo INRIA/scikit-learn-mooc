@@ -191,6 +191,11 @@ print(f"Number of samples in training: {data_train.shape[0]} => "
 # To create a logistic regression model in scikit-learn you can do:
 
 # %%
+# to display nice model diagram
+from sklearn import set_config
+set_config(display='diagram')
+
+# %%
 from sklearn.linear_model import LogisticRegression
 
 model = LogisticRegression()

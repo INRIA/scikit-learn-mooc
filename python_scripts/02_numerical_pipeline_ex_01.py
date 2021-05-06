@@ -62,8 +62,23 @@ from sklearn.model_selection import train_test_split
 data_numeric_train, data_numeric_test, target_train, target_test = \
     train_test_split(data_numeric, target, random_state=0)
 
+# %% [markdown]
+# Split the dataset into a train and test sets.
 # %%
 from sklearn.model_selection import train_test_split
+
+# Write your code here.
+
+
+# %% [markdown]
+# Use a `DummyClassifier` such that the resulting classifier will always
+# predict the class `' >50K'`. What is the accuracy score on the test set?
+# Repeat the experiment by always predicting the class `' <=50K'`.
+#
+# Hint: you can refer to the parameter `strategy` of the `DummyClassifier`
+# to achieve the desired behaviour.
+
+# %%
 from sklearn.dummy import DummyClassifier
 
 # Write your code here.

@@ -34,6 +34,11 @@ import pandas as pd
 
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
+# %%
+# to display nice model diagram
+from sklearn import set_config
+set_config(display='diagram')
+
 # %% [markdown]
 # We will now drop the target from the data we will use to train our
 # predictive model.
@@ -191,8 +196,7 @@ data_train_scaled.describe()
 # `Pipeline`, which chains together operations and is used as any other
 # classifier or regressor. The helper function `make_pipeline` will create a
 # `Pipeline`: it takes as arguments the successive transformations to perform,
-# followed by the classifier or regressor model, and will assign automatically
-# a name at steps based on the name of the classes.
+# followed by the classifier or regressor model.
 
 # %%
 import time
@@ -200,6 +204,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(StandardScaler(), LogisticRegression())
+model
+
+# %% [markdown]
+# The `make_pipeline` function did not require us to give a name to each step.
+# Indeed, it was automatically assigned based on the name of the classes
+# provided; a `StandardScaler` will be a step named `"standardscaler"` in the
+# resulting pipeline. We can check the name of each steps of our model:
+
+# %%
+model.named_steps
 
 # %% [markdown]
 # This predictive pipeline exposes the same methods as the final predictor:
@@ -278,11 +292,11 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 #
 # ```{warning}
 # Working with non-scaled data will potentially force the algorithm to iterate
-# more as we showed in the example above. There is also a catastrophic scenario
-# where the number of required iterations are more than the maximum number of
-# iterations allowed by the predictor (controlled by the `max_iter`) parameter.
-# Therefore, before increasing `max_iter`, make sure that the data are well
-# scaled.
+# more as we showed in the example above. There is also the catastrophic
+# scenario where the number of required iterations are more than the maximum
+# number of iterations allowed by the predictor (controlled by the `max_iter`)
+# parameter. Therefore, before increasing `max_iter`, make sure that the data
+# are well scaled.
 # ```
 
 # %% [markdown]
@@ -298,7 +312,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # the procedure such that the training and testing sets are different each
 # time. Statistical performance metrics are collected for each repetition and
 # then aggregated. As a result we can get an estimate of the variability of the
-# model statistical performance.
+# model's statistical performance.
 #
 # Note that there exists several cross-validation strategies, each of them
 # defines how to repeat the `fit`/`score` procedure. In this section, we will

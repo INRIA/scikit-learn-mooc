@@ -118,8 +118,7 @@ from sklearn.pipeline import make_pipeline
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=500))
 
 # %% [markdown]
-# Starting from `scikit-learn 0.23`, the notebooks can display an interactive
-# view of the pipelines.
+# We can display an interactive diagram with the following command:
 
 # %%
 from sklearn import set_config

@@ -1564,7 +1564,7 @@ of this page.</p>
 <h2>Main terms used in this course<a class="headerlink" href="#main-terms-used-in-this-course" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="classification">
 <h3>classification<a class="headerlink" href="#classification" title="Permalink to this headline">¶</a></h3>
-<p>Type of problems where the goal is to predict a
+<p>Type of problems where the goal is to <a class="reference external" href="#predict-prediction">predict</a> a
 <a class="reference external" href="#target-label-annotation">target</a> that can take finite set of values.</p>
 <p>Examples of classification problems are:</p>
 <ul class="simple">
@@ -1575,40 +1575,50 @@ medical tests</p></li>
 <li><p>predicting whether an email is a spam or not from the email content, sender,
 title, etc …</p></li>
 </ul>
-<p>When the predicted label can have two values, it is called binary
-classification. This the case for the medical and spam use cases above.</p>
-<p>When the predicted label can have at least three values, it is called
-multi-class classification. This is the case for the Iris use case above.</p>
+<p>When the predicted <a class="reference external" href="#target-label-annotation">label</a> can have two values, it is
+called binary classification. This the case for the medical and spam use cases
+above.</p>
+<p>When the predicted <a class="reference external" href="#target-label-annotation">label</a> can have at least three
+values, it is called multi-class classification. This is the case for the Iris
+use case above.</p>
 <p>Below, we illustrate an example of binary classification.</p>
 <p><img alt="img" src="https://inria.github.io/scikit-learn-mooc/figures/lin_separable.svg" /></p>
-<p>The data provided by the user contains 2 features, represented by the x- and
-y-axis. This is a binary classification problem because the target contains
-only 2 labels, here encoded by colors with blue and orange data points. Thus,
-each data points represent a sample and the entire set was used to train a
-linear model. The decision rule learned is thus the black dotted line. This
-decision rule is used to predict the label of a new sample according its
-position with respect to the line: a sample lying on the left of the line will
-be predicted as a blue sample while a sample lying on the right of the line
-will be predicted as an orange sample. Here, we have a linear classifier
-because the decision rule is defined as a line (in higher dimensions this would
-be an hyperplane). However, the shape of the decision rule will depend on the
-model used.</p>
+<p>The data provided by the user contains 2
+<a class="reference external" href="#feature-variable-attribute-descriptor-covariate">features</a>, represented by
+the x- and y-axis. This is a binary classification problem because the
+<a class="reference external" href="#target-label-annotation">target</a> contains only 2
+<a class="reference external" href="#target-label-annotation">labels</a>, here encoded by colors with blue and orange
+data points. Thus, each data points represent a
+<a class="reference external" href="#sample-instance-observation">sample</a> and the entire set was used to
+<a class="reference external" href="#train-learn-fit">train</a> a linear <a class="reference external" href="#model">model</a>. The decision rule learned
+is thus the black dotted line. This decision rule is used to
+<a class="reference external" href="#predict-prediction">predict</a> the <a class="reference external" href="#target-label-annotation">label</a> of a new
+<a class="reference external" href="#sample-instance-observation">sample</a> according its position with respect to
+the line: a <a class="reference external" href="#sample-instance-observation">sample</a> lying on the left of the
+line will be predicted as a blue sample while a sample lying on the right of
+the line will be predicted as an orange sample. Here, we have a linear
+<a class="reference external" href="#classifier">classifier</a> because the decision rule is defined as a line (in
+higher dimensions this would be an hyperplane). However, the shape of the
+decision rule will depend on the <a class="reference external" href="#model">model</a> used.</p>
 </div>
 <div class="section" id="classifier">
 <h3>classifier<a class="headerlink" href="#classifier" title="Permalink to this headline">¶</a></h3>
 <p>A model used for <a class="reference external" href="#classification">classification</a>. These models handle
 <a class="reference external" href="#target-label-annotation">targets</a> that contains discrete values such as
 <code class="docutils literal notranslate"><span class="pre">0</span></code>/<code class="docutils literal notranslate"><span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">cat</span></code>/<code class="docutils literal notranslate"><span class="pre">dog</span></code>. For example in scikit-learn <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> or
-<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> are classifier classes.</p>
+<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> are classifier
+<a class="reference external" href="#target-label-annotation">classes</a>.</p>
 <p>Note: for historic reasons the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> name is confusing.
 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> is not a regression model but a classification model, in
 contrary with what the name would suggest.</p>
 </div>
 <div class="section" id="cross-validation">
 <h3>cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline">¶</a></h3>
-<p>A procedure to estimate how well a model will generalize to new data. The main
-idea behind this is to train a model on a dataset (called train set) and
-evaluate its performance on a separate dataset (called test set).</p>
+<p>A procedure to estimate how well a <a class="reference external" href="#model">model</a> will generalize to new data.
+The main idea behind this is to <a class="reference external" href="#train-learn-fit">train</a> a <a class="reference external" href="#model">model</a> on
+a dataset (called <a class="reference external" href="#train-set">train set</a>) and evaluate its
+<a class="reference external" href="#statistical-performance-generalization-performance-predictive-performance">performance</a>
+on a separate dataset (called <a class="reference external" href="#test-set">test set</a>).</p>
 <p>This train/evaluate performance is repeated several times on different train
 and test sets to get an estimate of the statistical model performance
 uncertainties.</p>
@@ -1642,21 +1652,23 @@ monitoring the generalization score on a <a class="reference external" href="#va
 <div class="section" id="estimator">
 <h3>estimator<a class="headerlink" href="#estimator" title="Permalink to this headline">¶</a></h3>
 <p>In scikit-learn jargon: an object that has a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method. The reasons for the
-name estimator is that once the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called on a model, the
-parameters are learned (or estimated) from the data.</p>
+name estimator is that once the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called on a <a class="reference external" href="#model">model</a>,
+the parameters are learned (or estimated) from the data.</p>
 </div>
 <div class="section" id="feature-variable-attribute-descriptor-covariate">
 <h3>feature, variable, attribute, descriptor, covariate<a class="headerlink" href="#feature-variable-attribute-descriptor-covariate" title="Permalink to this headline">¶</a></h3>
 <p>A quantity describing a <a class="reference external" href="#sample-instance-observation">sample</a> (e.g. color,
-size, weight). You can see a features as a quantity measured during the dataset
-collection.</p>
-<p>For example, in the Iris dataset, there are four features: sepal length, sepal
-width, petal length and petal width.</p>
+size, weight). You can see a
+<a class="reference external" href="#feature-variable-attribute-descriptor-covariate">features</a> as a quantity
+measured during the dataset collection.</p>
+<p>For example, in the Iris dataset, there are four
+<a class="reference external" href="#feature-variable-attribute-descriptor-covariate">features</a>: sepal length,
+sepal width, petal length and petal width.</p>
 </div>
 <div class="section" id="hyperparameters">
 <h3>hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this headline">¶</a></h3>
-<p>Aspects of model configuration that are not learnt from data. Examples of
-hyperparameters:</p>
+<p>Aspects of <a class="reference external" href="#model">model</a> configuration that are not learnt from data.
+Examples of hyperparameters:</p>
 <ul class="simple">
 <li><p>for a k-nearest neighbor approach, the number of neighbors to use is a
 hyperparameter</p></li>
@@ -1666,71 +1678,82 @@ degree of the polynomial is a hyperparameter.</p></li>
 <p>Hyperparameters will impact the statistical and computational performance of a
 model. Indeed, hyperparameters of a model are usually inspected with regard to
 their impact on the model performance and tuned to maximize model performance
-(usually statistical performance). It is called hyperparameters tuning and
+(usually
+<a class="reference external" href="#statistical-performance-generalization-performance-predictive-performance">statistical performance</a>
+). It is called hyperparameters tuning and
 involve grid-search and randomized-search involving model evaluation on some
-validation sets.</p>
+<a class="reference external" href="#validation-set">validation sets</a>.</p>
 </div>
 <div class="section" id="infer-inference">
 <h3>infer, inference<a class="headerlink" href="#infer-inference" title="Permalink to this headline">¶</a></h3>
 <p>This term has a different meaning in machine-learning and statistical
 inference.</p>
 <p>In machine-learning and more generally in this MOOC, we refer to inference the
-process of making predictions by applying a trained model to unlabeled data. In
-other words, inference is equivalent to predict the target of unseen data using
-a fitted model.</p>
-<p>In statistic inference, the notion of left-out/unseen data is not tied to the
-definition. Indeed, inference refers to the process of fitting the parameters
-of a distribution conditioned on some observed data. You can check the
-Wikipedia article on <a class="reference external" href="https://en.wikipedia.org/wiki/Statistical_inference">statistical
-inference</a> for more
-details.</p>
+process of making <a class="reference external" href="#predict-prediction">predictions</a> by applying a
+<a class="reference external" href="#train-learn-fit">trained</a> <a class="reference external" href="#model">model</a> to unlabeled data. In other words,
+inference is equivalent to <a class="reference external" href="#predict-prediction">predict</a> the
+<a class="reference external" href="#target-label-annotation">target</a> of unseen data using a fitted
+<a class="reference external" href="#model">model</a>.</p>
+<p>In statistic inference, the notion of <a class="reference external" href="#test-set">left-out/unseen data</a> is not
+tied to the definition. Indeed, inference refers to the process of
+<a class="reference external" href="#train-learn-fit">fitting</a> the parameters of a distribution conditioned on
+some observed data. You can check the Wikipedia article on
+<a class="reference external" href="https://en.wikipedia.org/wiki/Statistical_inference">statistical inference</a>
+for more details.</p>
 </div>
 <div class="section" id="learned-parameters">
 <h3>learned parameters<a class="headerlink" href="#learned-parameters" title="Permalink to this headline">¶</a></h3>
 <p>In scikit-learn the convention is that learned parameters finish with <code class="docutils literal notranslate"><span class="pre">\_</span></code> at
-the end in scikit-learn. They are only available after <code class="docutils literal notranslate"><span class="pre">fit</span></code> has been called.</p>
-<p>An example for such a parameter are the slope and intercept of a linear model
-in one dimension see this <a class="reference external" href="#train-learn-fit">section</a> for more details about
-such a model.</p>
+the end in scikit-learn. They are only available after
+<a class="reference external" href="#train-learn-fit"><code class="docutils literal notranslate"><span class="pre">fit</span></code></a> has been called.</p>
+<p>An example for such a parameter are the slope and intercept of a linear
+<a class="reference external" href="#model">model</a> in one dimension see this <a class="reference external" href="#train-learn-fit">section</a> for more
+details about such a model.</p>
 <p>Note: parameters can also be used in a general Python meaning, as in passing a
 parameter to a function or a class</p>
 </div>
 <div class="section" id="meta-estimator">
 <h3>meta-estimator<a class="headerlink" href="#meta-estimator" title="Permalink to this headline">¶</a></h3>
-<p>In scikit-learn jargon: an estimator that takes another estimator as parameter.
-Examples of meta-estimators include <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>.</p>
+<p>In scikit-learn jargon: an <a class="reference external" href="#estimator">estimator</a> that takes another
+<a class="reference external" href="#estimator">estimator</a> as parameter. Examples of meta-estimators include
+<code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> and <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>.</p>
 </div>
 <div class="section" id="model">
 <h3>model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h3>
-<p>Generic term that refers to something that can learn prediction rules from the
-data.</p>
+<p>Generic term that refers to something that can <a class="reference external" href="#train-learn-fit">learn</a>
+<a class="reference external" href="#predict-prediction">prediction</a> rules from the data.</p>
 </div>
 <div class="section" id="overfitting">
 <h3>overfitting<a class="headerlink" href="#overfitting" title="Permalink to this headline">¶</a></h3>
-<p>Overfitting occurs when your model stick too closely to the training data, so
-that it ends up learning the noise in the dataset rather than the relevant
-patterns. You can tell a model is overfitting when it performs great on your
-<a class="reference external" href="#train-set">train set</a>, but poorly on your <a class="reference external" href="#test-set">test set</a> (or new
-real-world data).</p>
+<p>Overfitting occurs when your <a class="reference external" href="#model">model</a> stick too closely to the <a class="reference external" href="#train-set">training
+data</a>, so that it ends up learning the noise in the dataset rather
+than the relevant patterns. You can tell a <a class="reference external" href="#model">model</a> is overfitting when
+it performs great on your <a class="reference external" href="#train-set">train set</a>, but poorly on your <a class="reference external" href="#test-set">test
+set</a> (or new real-world data).</p>
 </div>
 <div class="section" id="predictor">
 <h3>predictor<a class="headerlink" href="#predictor" title="Permalink to this headline">¶</a></h3>
-<p>An estimator (object with a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method) with a <code class="docutils literal notranslate"><span class="pre">predict</span></code> and/or <code class="docutils literal notranslate"><span class="pre">fit_predict</span></code>
-method. Note a classifier or a regressor is a predictor. Example of predictor
-classes are <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> and <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code>.</p>
+<p>An <a class="reference external" href="#estimator">estimator</a> (object with a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method) with a <code class="docutils literal notranslate"><span class="pre">predict</span></code> and/or
+<code class="docutils literal notranslate"><span class="pre">fit_predict</span></code> method. Note a <a class="reference external" href="#classifier">classifier</a> or a
+<a class="reference external" href="#regressor">regressor</a> is a predictor. Example of predictor classes are
+<code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> and <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code>.</p>
 </div>
 <div class="section" id="predict-prediction">
 <h3>predict, prediction<a class="headerlink" href="#predict-prediction" title="Permalink to this headline">¶</a></h3>
 <p>One of the focus of machine learning is to learn rules from data that we can
-then use to make predictions on new samples that were not seen during training.</p>
-<p>Example with a linear regression. If we do a linear regression in 1d and we
-learn the linear model <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">x</span> <span class="pre">-</span> <span class="pre">5</span></code>. Say someone comes along and says what
-does your model predict for <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">10</span></code> we can use <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">2*10</span> <span class="pre">-</span> <span class="pre">5</span> <span class="pre">=</span> <span class="pre">15</span></code>.</p>
+then use to make predictions on new <a class="reference external" href="#sample-instance-observation">samples</a>
+that were not seen during <a class="reference external" href="#train-learn-fit">training</a>.</p>
+<p>Example with a linear <a class="reference external" href="#regression">regression</a>. If we do a linear
+<a class="reference external" href="#regression">regression</a> in 1d and we learn the linear <a class="reference external" href="#model">model</a>
+<code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">2*x</span> <span class="pre">-</span> <span class="pre">5</span></code>. Say someone comes along and says what does your <a class="reference external" href="#model">model</a>
+predict for <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">10</span></code> we can use <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">2*10</span> <span class="pre">-</span> <span class="pre">5</span> <span class="pre">=</span> <span class="pre">15</span></code>.</p>
 </div>
 <div class="section" id="regression">
 <h3>regression<a class="headerlink" href="#regression" title="Permalink to this headline">¶</a></h3>
-<p>The goal is to predict a target that is continuous (contrary to discrete target
-for classification problems). Example of regression problems are:</p>
+<p>The goal is to <a class="reference external" href="#predict-prediction">predict</a> a [target](#target, label,
+annotation) that is continuous (contrary to discrete [target](#target, label,
+annotation) for <a class="reference external" href="#classification">classification</a> problems). Example of
+regression problems are:</p>
 <ul class="simple">
 <li><p>predicting house prices from their descriptions (number of rooms, surface,
 location, etc …)</p></li>
@@ -1738,27 +1761,35 @@ location, etc …)</p></li>
 </ul>
 <p>Below, we illustrate an example of regression.</p>
 <p><img alt="img" src="https://inria.github.io/scikit-learn-mooc/figures/dt_fit.svg" /></p>
-<p>The data provided by the user contains 1 feature called <code class="docutils literal notranslate"><span class="pre">x</span></code> and we want to
-predict the continuous target <code class="docutils literal notranslate"><span class="pre">y</span></code>. Each black data points are samples used to
-train a model. The model here is a decision tree and thus the decision rule is
-defined as a piecewise constant function represented by the orange line. To
-predict the target for a new sample for a given value of the x-axis, the model
-will output the corresponding <code class="docutils literal notranslate"><span class="pre">y</span></code> value lying on the orange line.</p>
+<p>The data provided by the user contains 1
+<a class="reference external" href="#feature-variable-attribute-descriptor-covariate">feature</a> called <code class="docutils literal notranslate"><span class="pre">x</span></code> and we
+want to <a class="reference external" href="#predict-prediction">predict</a> the continuous
+<a class="reference external" href="#target-label-annotation">target</a> <code class="docutils literal notranslate"><span class="pre">y</span></code>. Each black data points are
+<a class="reference external" href="#sample-instance-observation">samples</a> used to <a class="reference external" href="#train-learn-fit">train</a> a
+<a class="reference external" href="#model">model</a>. The <a class="reference external" href="#model">model</a> here is a decision tree and thus the
+decision rule is defined as a piecewise constant function represented by the
+orange line. To <a class="reference external" href="#predict-prediction">predict</a> the
+<a class="reference external" href="#target-label-annotation">target</a> for a new
+<a class="reference external" href="#sample-instance-observation">sample</a> for a given value of the x-axis, the
+<a class="reference external" href="#model">model</a> will output the corresponding <code class="docutils literal notranslate"><span class="pre">y</span></code> value lying on the orange
+line.</p>
 </div>
 <div class="section" id="regressor">
 <h3>regressor<a class="headerlink" href="#regressor" title="Permalink to this headline">¶</a></h3>
-<p>A regressor is a predictor in a regression setting.</p>
+<p>A regressor is a <a class="reference external" href="#predictor">predictor</a> in a <a class="reference external" href="#regression">regression</a>
+setting.</p>
 <p>In scikit-learn, <code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code> or <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> are regressor classes.</p>
 </div>
 <div class="section" id="regularization-penalization">
 <h3>regularization, penalization<a class="headerlink" href="#regularization-penalization" title="Permalink to this headline">¶</a></h3>
-<p>In linear models, regularization can be used in order to shrink the weights
-towards zero. This can be useful to combat overfitting.</p>
+<p>In linear <a class="reference external" href="#model">models</a>, regularization can be used in order to
+shrink/constrain the weights/parameters towards zero. This can be useful to
+avoid <a class="reference external" href="#overfitting">overfitting</a>.</p>
 </div>
 <div class="section" id="sample-instance-observation">
 <h3>sample, instance, observation<a class="headerlink" href="#sample-instance-observation" title="Permalink to this headline">¶</a></h3>
 <p>A data point in a dataset.</p>
-<p>In the 2d data matrix, a sample is a row.</p>
+<p>In the 2d <a class="reference external" href="#data-matrix-input-data">data matrix</a>, a sample is a row.</p>
 <p>For example in the Iris dataset, a sample would be the measurements of a single
 flower.</p>
 <p>Note: “instance” is also used in a object-oriented meaning in this course. For
@@ -1767,8 +1798,9 @@ instance of the <code class="docutils literal notranslate"><span class="pre">KNe
 </div>
 <div class="section" id="statistical-performance-generalization-performance-predictive-performance">
 <h3>statistical performance, generalization performance, predictive performance<a class="headerlink" href="#statistical-performance-generalization-performance-predictive-performance" title="Permalink to this headline">¶</a></h3>
-<p>The performance of a model on the test data. The test data where never seen by
-the model during the training procedure.</p>
+<p>The performance of a <a class="reference external" href="#model">model</a> on the <a class="reference external" href="#test-set">test data</a>. The <a class="reference external" href="#test-set">test
+data</a> where never seen by the <a class="reference external" href="#model">model</a> during the
+<a class="reference external" href="#train-learn-fit">training</a> procedure.</p>
 </div>
 <div class="section" id="supervised-learning">
 <h3>supervised learning<a class="headerlink" href="#supervised-learning" title="Permalink to this headline">¶</a></h3>

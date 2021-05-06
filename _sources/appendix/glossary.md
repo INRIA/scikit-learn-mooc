@@ -7,7 +7,8 @@ of this page.
 ## Main terms used in this course
 
 ### classification
-Type of problems where the goal is to predict a
+
+Type of problems where the goal is to [predict](#predict-prediction) a
 [target](#target-label-annotation) that can take finite set of values.
 
 Examples of classification problems are:
@@ -19,35 +20,43 @@ Examples of classification problems are:
 - predicting whether an email is a spam or not from the email content, sender,
   title, etc ...
 
-When the predicted label can have two values, it is called binary
-classification. This the case for the medical and spam use cases above.
+When the predicted [label](#target-label-annotation) can have two values, it is
+called binary classification. This the case for the medical and spam use cases
+above.
 
-When the predicted label can have at least three values, it is called
-multi-class classification. This is the case for the Iris use case above.
+When the predicted [label](#target-label-annotation) can have at least three
+values, it is called multi-class classification. This is the case for the Iris
+use case above.
 
 Below, we illustrate an example of binary classification.
 
 ![img](https://inria.github.io/scikit-learn-mooc/figures/lin_separable.svg)
 
-The data provided by the user contains 2 features, represented by the x- and
-y-axis. This is a binary classification problem because the target contains
-only 2 labels, here encoded by colors with blue and orange data points. Thus,
-each data points represent a sample and the entire set was used to train a
-linear model. The decision rule learned is thus the black dotted line. This
-decision rule is used to predict the label of a new sample according its
-position with respect to the line: a sample lying on the left of the line will
-be predicted as a blue sample while a sample lying on the right of the line
-will be predicted as an orange sample. Here, we have a linear classifier
-because the decision rule is defined as a line (in higher dimensions this would
-be an hyperplane). However, the shape of the decision rule will depend on the
-model used.
+The data provided by the user contains 2
+[features](#feature-variable-attribute-descriptor-covariate), represented by
+the x- and y-axis. This is a binary classification problem because the
+[target](#target-label-annotation) contains only 2
+[labels](#target-label-annotation), here encoded by colors with blue and orange
+data points. Thus, each data points represent a
+[sample](#sample-instance-observation) and the entire set was used to
+[train](#train-learn-fit) a linear [model](#model). The decision rule learned
+is thus the black dotted line. This decision rule is used to
+[predict](#predict-prediction) the [label](#target-label-annotation) of a new
+[sample](#sample-instance-observation) according its position with respect to
+the line: a [sample](#sample-instance-observation) lying on the left of the
+line will be predicted as a blue sample while a sample lying on the right of
+the line will be predicted as an orange sample. Here, we have a linear
+[classifier](#classifier) because the decision rule is defined as a line (in
+higher dimensions this would be an hyperplane). However, the shape of the
+decision rule will depend on the [model](#model) used.
 
 ### classifier
 
 A model used for [classification](#classification). These models handle
 [targets](#target-label-annotation) that contains discrete values such as
 `0`/`1` or `cat`/`dog`. For example in scikit-learn `LogisticRegression` or
-`HistGradientBoostingClassifier` are classifier classes.
+`HistGradientBoostingClassifier` are classifier
+[classes](#target-label-annotation).
 
 Note: for historic reasons the `LogisticRegression` name is confusing.
 `LogisticRegression` is not a regression model but a classification model, in
@@ -55,9 +64,11 @@ contrary with what the name would suggest.
 
 ### cross-validation
 
-A procedure to estimate how well a model will generalize to new data. The main
-idea behind this is to train a model on a dataset (called train set) and
-evaluate its performance on a separate dataset (called test set).
+A procedure to estimate how well a [model](#model) will generalize to new data.
+The main idea behind this is to [train](#train-learn-fit) a [model](#model) on
+a dataset (called [train set](#train-set)) and evaluate its
+[performance](#statistical-performance-generalization-performance-predictive-performance)
+on a separate dataset (called [test set](#test-set)).
 
 This train/evaluate performance is repeated several times on different train
 and test sets to get an estimate of the statistical model performance
@@ -75,6 +86,7 @@ The data containing only the
 
 The data matrix has `n_samples` rows and `n_features` columns. For example for
 the Iris dataset:
+
 - the data matrix has a number of rows equal to the number of Iris flowers in
   the dataset
 - the data matrix has 4 columns (for sepal length, sepal width, petal length,
@@ -93,22 +105,25 @@ monitoring the generalization score on a [validation set](#validation-set).
 ### estimator
 
 In scikit-learn jargon: an object that has a `fit` method. The reasons for the
-name estimator is that once the `fit` method is called on a model, the
-parameters are learned (or estimated) from the data.
+name estimator is that once the `fit` method is called on a [model](#model),
+the parameters are learned (or estimated) from the data.
 
 ### feature, variable, attribute, descriptor, covariate
 
 A quantity describing a [sample](#sample-instance-observation) (e.g. color,
-size, weight). You can see a features as a quantity measured during the dataset
-collection.
+size, weight). You can see a
+[features](#feature-variable-attribute-descriptor-covariate) as a quantity
+measured during the dataset collection.
 
-For example, in the Iris dataset, there are four features: sepal length, sepal
-width, petal length and petal width.
+For example, in the Iris dataset, there are four
+[features](#feature-variable-attribute-descriptor-covariate): sepal length,
+sepal width, petal length and petal width.
 
 ### hyperparameters
 
-Aspects of model configuration that are not learnt from data. Examples of
-hyperparameters:
+Aspects of [model](#model) configuration that are not learnt from data.
+Examples of hyperparameters:
+
 - for a k-nearest neighbor approach, the number of neighbors to use is a
   hyperparameter
 - for a polynomial model (say of degree between 1 and 10 for example), the
@@ -117,9 +132,11 @@ hyperparameters:
 Hyperparameters will impact the statistical and computational performance of a
 model. Indeed, hyperparameters of a model are usually inspected with regard to
 their impact on the model performance and tuned to maximize model performance
-(usually statistical performance). It is called hyperparameters tuning and
+(usually
+[statistical performance](#statistical-performance-generalization-performance-predictive-performance)
+). It is called hyperparameters tuning and
 involve grid-search and randomized-search involving model evaluation on some
-validation sets.
+[validation sets](#validation-set).
 
 ### infer, inference
 
@@ -127,66 +144,75 @@ This term has a different meaning in machine-learning and statistical
 inference.
 
 In machine-learning and more generally in this MOOC, we refer to inference the
-process of making predictions by applying a trained model to unlabeled data. In
-other words, inference is equivalent to predict the target of unseen data using
-a fitted model.
+process of making [predictions](#predict-prediction) by applying a
+[trained](#train-learn-fit) [model](#model) to unlabeled data. In other words,
+inference is equivalent to [predict](#predict-prediction) the
+[target](#target-label-annotation) of unseen data using a fitted
+[model](#model).
 
-In statistic inference, the notion of left-out/unseen data is not tied to the
-definition. Indeed, inference refers to the process of fitting the parameters
-of a distribution conditioned on some observed data. You can check the
-Wikipedia article on [statistical
-inference](https://en.wikipedia.org/wiki/Statistical_inference) for more
-details.
+In statistic inference, the notion of [left-out/unseen data](#test-set) is not
+tied to the definition. Indeed, inference refers to the process of
+[fitting](#train-learn-fit) the parameters of a distribution conditioned on
+some observed data. You can check the Wikipedia article on
+[statistical inference](https://en.wikipedia.org/wiki/Statistical_inference)
+for more details.
 
 ### learned parameters
 
 In scikit-learn the convention is that learned parameters finish with `\_` at
-the end in scikit-learn. They are only available after `fit` has been called.
+the end in scikit-learn. They are only available after
+[`fit`](#train-learn-fit) has been called.
 
-An example for such a parameter are the slope and intercept of a linear model
-in one dimension see this [section](#train-learn-fit) for more details about
-such a model.
+An example for such a parameter are the slope and intercept of a linear
+[model](#model) in one dimension see this [section](#train-learn-fit) for more
+details about such a model.
 
 Note: parameters can also be used in a general Python meaning, as in passing a
 parameter to a function or a class
 
 ### meta-estimator
 
-In scikit-learn jargon: an estimator that takes another estimator as parameter.
-Examples of meta-estimators include `Pipeline` and `GridSearchCV`.
+In scikit-learn jargon: an [estimator](#estimator) that takes another
+[estimator](#estimator) as parameter. Examples of meta-estimators include
+`Pipeline` and `GridSearchCV`.
 
 ### model
 
-Generic term that refers to something that can learn prediction rules from the
-data.
+Generic term that refers to something that can [learn](#train-learn-fit)
+[prediction](#predict-prediction) rules from the data.
 
 ### overfitting
 
-Overfitting occurs when your model stick too closely to the training data, so
-that it ends up learning the noise in the dataset rather than the relevant
-patterns. You can tell a model is overfitting when it performs great on your
-[train set](#train-set), but poorly on your [test set](#test-set) (or new
-real-world data).
+Overfitting occurs when your [model](#model) stick too closely to the [training
+data](#train-set), so that it ends up learning the noise in the dataset rather
+than the relevant patterns. You can tell a [model](#model) is overfitting when
+it performs great on your [train set](#train-set), but poorly on your [test
+set](#test-set) (or new real-world data).
 
 ### predictor
 
-An estimator (object with a `fit` method) with a `predict` and/or `fit_predict`
-method. Note a classifier or a regressor is a predictor. Example of predictor
-classes are `KNeighborsClassifier` and `DecisionTreeRegressor`.
+An [estimator](#estimator) (object with a `fit` method) with a `predict` and/or
+`fit_predict` method. Note a [classifier](#classifier) or a
+[regressor](#regressor) is a predictor. Example of predictor classes are
+`KNeighborsClassifier` and `DecisionTreeRegressor`.
 
 ### predict, prediction
 
 One of the focus of machine learning is to learn rules from data that we can
-then use to make predictions on new samples that were not seen during training.
+then use to make predictions on new [samples](#sample-instance-observation)
+that were not seen during [training](#train-learn-fit).
 
-Example with a linear regression. If we do a linear regression in 1d and we
-learn the linear model `y = 2 x - 5`. Say someone comes along and says what
-does your model predict for `x = 10` we can use `y = 2*10 - 5 = 15`.
+Example with a linear [regression](#regression). If we do a linear
+[regression](#regression) in 1d and we learn the linear [model](#model)
+`y = 2*x - 5`. Say someone comes along and says what does your [model](#model)
+predict for `x = 10` we can use `y = 2*10 - 5 = 15`.
 
 ### regression
 
-The goal is to predict a target that is continuous (contrary to discrete target
-for classification problems). Example of regression problems are:
+The goal is to [predict](#predict-prediction) a [target](#target, label,
+annotation) that is continuous (contrary to discrete [target](#target, label,
+annotation) for [classification](#classification) problems). Example of
+regression problems are:
 
 - predicting house prices from their descriptions (number of rooms, surface,
   location, etc ...)
@@ -196,29 +222,37 @@ Below, we illustrate an example of regression.
 
 ![img](https://inria.github.io/scikit-learn-mooc/figures/dt_fit.svg)
 
-The data provided by the user contains 1 feature called `x` and we want to
-predict the continuous target `y`. Each black data points are samples used to
-train a model. The model here is a decision tree and thus the decision rule is
-defined as a piecewise constant function represented by the orange line. To
-predict the target for a new sample for a given value of the x-axis, the model
-will output the corresponding `y` value lying on the orange line.
+The data provided by the user contains 1
+[feature](#feature-variable-attribute-descriptor-covariate) called `x` and we
+want to [predict](#predict-prediction) the continuous
+[target](#target-label-annotation) `y`. Each black data points are
+[samples](#sample-instance-observation) used to [train](#train-learn-fit) a
+[model](#model). The [model](#model) here is a decision tree and thus the
+decision rule is defined as a piecewise constant function represented by the
+orange line. To [predict](#predict-prediction) the
+[target](#target-label-annotation) for a new
+[sample](#sample-instance-observation) for a given value of the x-axis, the
+[model](#model) will output the corresponding `y` value lying on the orange
+line.
 
 ### regressor
 
-A regressor is a predictor in a regression setting.
+A regressor is a [predictor](#predictor) in a [regression](#regression)
+setting.
 
 In scikit-learn, `DecisionTreeRegressor` or `Ridge` are regressor classes.
 
 ### regularization, penalization
 
-In linear models, regularization can be used in order to shrink the weights
-towards zero. This can be useful to combat overfitting.
+In linear [models](#model), regularization can be used in order to
+shrink/constrain the weights/parameters towards zero. This can be useful to
+avoid [overfitting](#overfitting).
 
 ### sample, instance, observation
 
 A data point in a dataset.
 
-In the 2d data matrix, a sample is a row.
+In the 2d [data matrix](#data-matrix-input-data), a sample is a row.
 
 For example in the Iris dataset, a sample would be the measurements of a single
 flower.
@@ -229,8 +263,9 @@ instance of the `KNeighborsClassifier` class.
 
 ### statistical performance, generalization performance, predictive performance
 
-The performance of a model on the test data. The test data where never seen by
-the model during the training procedure.
+The performance of a [model](#model) on the [test data](#test-set). The [test
+data](#test-set) where never seen by the [model](#model) during the
+[training](#train-learn-fit) procedure.
 
 ### supervised learning
 
@@ -268,8 +303,7 @@ petal length and petal width, while the label would be the Iris specie.
 
 In scikit-learn convention: `y` is a variable name commonly used to denote the
 target. This is because the target can be seen as the output of the
-[model](#model) and follows the convention that output is called `y` as in `y =
-f(x)`.
+[model](#model) and follows the convention that output is called `y` as in `y = f(x)`.
 
 Target is usually used for [regression](#regression) setting while label is
 usually used in [classification](#classification) setting.

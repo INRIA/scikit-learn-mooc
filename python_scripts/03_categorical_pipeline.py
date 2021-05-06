@@ -194,7 +194,7 @@ encoder = OneHotEncoder(sparse=False)
 education_encoded = encoder.fit_transform(education_column)
 education_encoded
 
-# [markdown]
+# %% [markdown]
 # ```{note}
 # `sparse=False` is used in the `OneHotEncoder` for didactic purposes, namely
 # easier visualisation of the data.

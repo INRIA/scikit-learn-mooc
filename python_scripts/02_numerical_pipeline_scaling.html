@@ -1857,9 +1857,12 @@ or <code class="docutils literal notranslate"><span class="pre">score</span></co
 by the following diagram:</p>
 <p><img alt="pipeline fit diagram" src="../_images/api_diagram-pipeline.fit.svg" /></p>
 <p>When calling <code class="docutils literal notranslate"><span class="pre">model.fit</span></code>, the method <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> from each underlying
-transformer in the pipeline will be called to: (i) learn their internal
-model states and (ii) transform the training data. Finally, the preprocessed
-data are provided to train the predictor.</p>
+transformer (here a single transformer) in the pipeline will be called to:</p>
+<ul class="simple">
+<li><p>learn their internal model states</p></li>
+<li><p>transform the training data. Finally, the preprocessed data are provided to
+train the predictor.</p></li>
+</ul>
 <p>To predict the targets given a test set, one uses the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1876,11 +1879,12 @@ data are provided to train the predictor.</p>
 </div>
 <p>Let’s show the underlying mechanism:</p>
 <p><img alt="pipeline predict diagram" src="../_images/api_diagram-pipeline.predict.svg" /></p>
-<p>The method <code class="docutils literal notranslate"><span class="pre">transform</span></code> of each transformer is called to preprocess the data.
-Note that there is no need to call the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method for these transformers
-because we are using the internal model states computed when calling
-<code class="docutils literal notranslate"><span class="pre">model.fit</span></code>. The preprocessed data is then provided to the predictor that
-will output the predicted target by calling its method <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">transform</span></code> of each transformer (here a single transformer) is
+called to preprocess the data. Note that there is no need to call the <code class="docutils literal notranslate"><span class="pre">fit</span></code>
+method for these transformers because we are using the internal model states
+computed when calling <code class="docutils literal notranslate"><span class="pre">model.fit</span></code>. The preprocessed data is then provided to
+the predictor that will output the predicted target by calling its method
+<code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
 <p>As a shorthand, we can check the score of the full predictive pipeline
 calling the method <code class="docutils literal notranslate"><span class="pre">model.score</span></code>. Thus, let’s check the computational and
 statistical performance of such a predictive pipeline.</p>

@@ -113,22 +113,10 @@ model.fit(data, target)
 # type of models.
 
 # %% [markdown]
-# ```{caution}
+# ```{note}
 # Here and later, we use the name `data` and `target` to be explicit. In
 # scikit-learn documentation, `data` is commonly named `X` and `target` is
 # commonly called `y`.
-# ```
-
-# %% [markdown]
-# ```{tip}
-# In the notebook, we will use the following terminology:
-#
-# * a predictor corresponds to a classifier or a regressor
-# * a predictive model (or model) corresponds to a succession of steps made of
-#   some preprocessing steps followed by a predictor. Sometimes, no
-#   preprocessing is required.
-# * an estimator corresponds to any scikit-learn object, transformer,
-#   classifier, or regressor.
 # ```
 
 # %% [markdown]
@@ -216,11 +204,6 @@ print(f"The testing dataset contains {data_test.shape[0]} samples and "
       f"{data_test.shape[1]} features")
 
 # %% [markdown]
-# ```{note}
-# Scikit-learn provides a helper function `train_test_split` which
-# can be used to split the dataset into a training and a testing set. It will
-# also ensure that the data are shuffled randomly before splitting the data.
-# ```
 #
 # Instead of computing the prediction and manually computing the average
 # success rate, we can use the method `score`. When dealing with classifiers

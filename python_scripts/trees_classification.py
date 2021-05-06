@@ -32,12 +32,6 @@ range_features = {
     for feature_name in data.columns}
 
 # %% [markdown]
-# ```{caution}
-# Here and later, we use the name `data` and `target` to be explicit. In
-# scikit-learn documentation, `data` is commonly named `X` and `target` is
-# commonly called `y`.
-
-# %% [markdown]
 # In a previous notebook, we learnt that a linear classifier will define a
 # linear separation to split classes using a linear combination of the input
 # features. In our 2-dimensional space, it means that a linear classifier will

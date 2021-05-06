@@ -36,13 +36,6 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=[target_name])
 
 # %% [markdown]
-# ```{caution}
-# Here and later, we use the name `data` and `target` to be explicit. In
-# scikit-learn documentation, `data` is commonly named `X` and `target` is
-# commonly called `y`.
-# ```
-
-# %% [markdown]
 #
 # ## Identify categorical variables
 #
@@ -262,8 +255,8 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # while tree-based models will not be.
 #
 # Thus, in general `OneHotEncoder` is the encoding strategy used when the
-# downstream models are linear models while `OrdinalEncoder` is used with
-# tree-based models.
+# downstream models are **linear models** while `OrdinalEncoder` is used with
+# **tree-based models**.
 #
 # You still can use an `OrdinalEncoder` with linear models but you need to be
 # sure that:
@@ -309,7 +302,8 @@ data["native-country"].value_counts()
 # ```{tip}
 # Be aware the `OrdinalEncoder` exposes as well a parameter
 # `handle_unknown`. It can be set to `use_encoded_value` and by setting
-# `unknown_value` to handle rare categories.
+# `unknown_value` to handle rare categories. You are going to use these
+# parameters in the next exercise.
 # ```
 
 # %% [markdown]

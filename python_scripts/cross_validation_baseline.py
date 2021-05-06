@@ -27,12 +27,6 @@ data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 
 # %% [markdown]
-# ```{caution}
-# Here and later, we use the name `data` and `target` to be explicit. In
-# scikit-learn documentation, `data` is commonly named `X` and `target` is
-# commonly called `y`.
-
-# %% [markdown]
 # Across all evaluations, we will use a `ShuffleSplit` cross-validation.
 
 # %%

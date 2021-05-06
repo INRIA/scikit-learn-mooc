@@ -35,13 +35,6 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=[target_name])
 
 # %% [markdown]
-# ```{caution}
-# Here and later, we use the name `data` and `target` to be explicit. In
-# scikit-learn documentation, `data` is commonly named `X` and `target` is
-# commonly called `y`.
-# ```
-
-# %% [markdown]
 # ## Selection based on data types
 #
 # We will separate categorical and numerical variables using their data

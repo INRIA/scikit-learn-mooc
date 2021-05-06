@@ -44,13 +44,6 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=target_name)
 
 # %% [markdown]
-# ```{caution}
-# Here and later, we use the name `data` and `target` to be explicit. In
-# scikit-learn documentation, `data` is commonly named `X` and `target` is
-# commonly called `y`.
-# ```
-
-# %% [markdown]
 # Then, we select only the numerical columns, as seen in the previous
 # notebook.
 
@@ -69,6 +62,7 @@ from sklearn.model_selection import train_test_split
 data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
+# %% [markdown]
 # ## Model fitting with preprocessing
 #
 # A range of preprocessing algorithms in scikit-learn allow us to transform
@@ -307,18 +301,19 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # model statistical performance.
 #
 # Note that there exists several cross-validation strategies, each of them
-# defines how to repeat the experiment. In this section, we will use the K-fold
-# strategy: the entire dataset is split into `K` partitions. The experiment
-# `fit`/`score` is repeated `K` times where at each iteration `K - 1`
+# defines how to repeat the `fit`/`score` procedure. In this section, we will
+# use the K-fold strategy: the entire dataset is split into `K` partitions. The
+# `fit`/`score` procedure is repeated `K` times where at each iteration `K - 1`
 # partitions are used to fit the model and `1` partition is used to score. The
 # figure below illustrates this K-fold strategy.
 #
 # ![Cross-validation diagram](../figures/cross_validation_diagram.png)
 #
 # ```{note}
-# This figure shows a particular cross-validation strategy named K-fold. There
-# are a variety of different cross-validation strategies. Some of these aspects
-# will be covered in more details in future notebooks.
+# This figure shows the particular case of K-fold cross-validation strategy.
+# As mentioned earlier, there are a variety of different cross-validation
+# strategies. Some of these aspects will be covered in more details in future
+# notebooks.
 # ```
 #
 # For each cross-validation split, the procedure trains a model on all the red

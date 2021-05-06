@@ -45,7 +45,7 @@ data.head()
 target
 
 # %% [markdown]
-# ```{caution}
+# ```{note}
 # Here and later, we use the name `data` and `target` to be explicit. In
 # scikit-learn documentation, `data` is commonly named `X` and `target` is
 # commonly called `y`.
@@ -131,13 +131,13 @@ data_numeric = data[numerical_columns]
 # ## Train-test split the dataset
 #
 # In the previous notebook, we loaded two separate datasets: a training one and
-# a testing one. However, as mentioned earlier, having separate datasets like
-# that is unusual: most of the time, we have a single one, which we will
-# subdivide.
+# a testing one. However, having separate datasets in two distincts files is
+# unusual: most of the time, we have a single file containing all the data that
+# we need to split once loaded in the memory.
 #
-# We also mentioned that scikit-learn provides the helper function
+# Scikit-learn provides the helper function
 # `sklearn.model_selection.train_test_split` which is used to automatically
-# split the data.
+# split the dataset into two subsets.
 
 # %%
 from sklearn.model_selection import train_test_split

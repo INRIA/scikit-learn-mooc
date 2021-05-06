@@ -209,10 +209,10 @@ predict for `x = 10` we can use `y = 2*10 - 5 = 15`.
 
 ### regression
 
-The goal is to [predict](#predict-prediction) a [target](#target, label,
-annotation) that is continuous (contrary to discrete [target](#target, label,
-annotation) for [classification](#classification) problems). Example of
-regression problems are:
+The goal is to [predict](#predict-prediction) a
+[target](#target-label-annotation) that is continuous (contrary to discrete
+[target](#target-label-annotation) for [classification](#classification)
+problems). Example of regression problems are:
 
 - predicting house prices from their descriptions (number of rooms, surface,
   location, etc ...)

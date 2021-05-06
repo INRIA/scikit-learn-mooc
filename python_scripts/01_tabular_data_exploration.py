@@ -150,6 +150,7 @@ print(f"The dataset contains {adult_census.shape[1] - 1} features.")
 # works for features containing numerical values:
 
 # %%
+1/0
 _ = adult_census.hist(figsize=(20, 14))
 
 # %% [markdown]

@@ -41,7 +41,7 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 # In the previous notebook, we used `sklearn.compose.make_column_selector` to
 # automatically select columns with a specific data type (also called `dtype`).
 # Here, we will use this selector to get only the columns containing strings
-# (column with `object` dtype) that corresponds to categorical features in our
+# (column with `object` dtype) that correspond to categorical features in our
 # dataset.
 
 # %%

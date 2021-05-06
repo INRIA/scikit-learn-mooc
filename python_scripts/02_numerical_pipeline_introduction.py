@@ -113,22 +113,10 @@ model.fit(data, target)
 # type of models.
 
 # %% [markdown]
-# ```{caution}
+# ```{note}
 # Here and later, we use the name `data` and `target` to be explicit. In
 # scikit-learn documentation, `data` is commonly named `X` and `target` is
 # commonly called `y`.
-# ```
-
-# %% [markdown]
-# ```{tip}
-# In the notebook, we will use the following terminology:
-#
-# * a predictor corresponds to a classifier or a regressor
-# * a predictive model (or model) corresponds to a succession of steps made of
-#   some preprocessing steps followed by a predictor. Sometimes, no
-#   preprocessing is required.
-# * an estimator corresponds to any scikit-learn object, transformer,
-#   classifier, or regressor.
 # ```
 
 # %% [markdown]

@@ -255,8 +255,8 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # while tree-based models will not be.
 #
 # Thus, in general `OneHotEncoder` is the encoding strategy used when the
-# downstream models are linear models while `OrdinalEncoder` is used with
-# tree-based models.
+# downstream models are **linear models** while `OrdinalEncoder` is used with
+# **tree-based models**.
 #
 # You still can use an `OrdinalEncoder` with linear models but you need to be
 # sure that:

@@ -1410,6 +1410,11 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-fitting-with-preprocessing">
+   Model fitting with preprocessing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#model-evaluation-using-cross-validation">
    Model evaluation using cross-validation
   </a>
@@ -1459,12 +1464,6 @@ predictive model.</p>
 </div>
 </div>
 </div>
-<div class="admonition caution">
-<p class="admonition-title">Caution</p>
-<p>Here and later, we use the name <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> to be explicit. In
-scikit-learn documentation, <code class="docutils literal notranslate"><span class="pre">data</span></code> is commonly named <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> is
-commonly called <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
-</div>
 <p>Then, we select only the numerical columns, as seen in the previous
 notebook.</p>
 <div class="cell docutils container">
@@ -1484,19 +1483,18 @@ notebook.</p>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-
-<span class="c1"># ## Model fitting with preprocessing</span>
-<span class="c1">#</span>
-<span class="c1"># A range of preprocessing algorithms in scikit-learn allow us to transform</span>
-<span class="c1"># the input data before training a model. In our case, we will standardize the</span>
-<span class="c1"># data and then train a new logistic regression model on that new version of</span>
-<span class="c1"># the dataset.</span>
-<span class="c1">#</span>
-<span class="c1"># Let&#39;s start by printing some statistics about the training data.</span>
 </pre></div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="model-fitting-with-preprocessing">
+<h2>Model fitting with preprocessing<a class="headerlink" href="#model-fitting-with-preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>A range of preprocessing algorithms in scikit-learn allow us to transform
+the input data before training a model. In our case, we will standardize the
+data and then train a new logistic regression model on that new version of
+the dataset.</p>
+<p>Let’s start by printing some statistics about the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1899,7 +1897,7 @@ statistical performance of such a predictive pipeline.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.082 seconds in 12 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.101 seconds in 12 iterations
 </pre></div>
 </div>
 </div>
@@ -1927,7 +1925,7 @@ the previous notebook which did not scale features.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.172 seconds in 59 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.220 seconds in 59 iterations
 </pre></div>
 </div>
 </div>
@@ -1959,17 +1957,18 @@ time. Statistical performance metrics are collected for each repetition and
 then aggregated. As a result we can get an estimate of the variability of the
 model statistical performance.</p>
 <p>Note that there exists several cross-validation strategies, each of them
-defines how to repeat the experiment. In this section, we will use the K-fold
-strategy: the entire dataset is split into <code class="docutils literal notranslate"><span class="pre">K</span></code> partitions. The experiment
-<code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">score</span></code> is repeated <code class="docutils literal notranslate"><span class="pre">K</span></code> times where at each iteration <code class="docutils literal notranslate"><span class="pre">K</span> <span class="pre">-</span> <span class="pre">1</span></code>
+defines how to repeat the <code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">score</span></code> procedure. In this section, we will
+use the K-fold strategy: the entire dataset is split into <code class="docutils literal notranslate"><span class="pre">K</span></code> partitions. The
+<code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">score</span></code> procedure is repeated <code class="docutils literal notranslate"><span class="pre">K</span></code> times where at each iteration <code class="docutils literal notranslate"><span class="pre">K</span> <span class="pre">-</span> <span class="pre">1</span></code>
 partitions are used to fit the model and <code class="docutils literal notranslate"><span class="pre">1</span></code> partition is used to score. The
 figure below illustrates this K-fold strategy.</p>
 <p><img alt="Cross-validation diagram" src="../_images/cross_validation_diagram.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This figure shows a particular cross-validation strategy named K-fold. There
-are a variety of different cross-validation strategies. Some of these aspects
-will be covered in more details in future notebooks.</p>
+<p>This figure shows the particular case of K-fold cross-validation strategy.
+As mentioned earlier, there are a variety of different cross-validation
+strategies. Some of these aspects will be covered in more details in future
+notebooks.</p>
 </div>
 <p>For each cross-validation split, the procedure trains a model on all the red
 samples and evaluate the score of the model on the blue samples.
@@ -1991,12 +1990,12 @@ parameter <code class="docutils literal notranslate"><span class="pre">cv</span>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 808 ms, sys: 293 ms, total: 1.1 s
-Wall time: 577 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1 s, sys: 339 ms, total: 1.34 s
+Wall time: 702 ms
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.08703113, 0.08440685, 0.08618665, 0.08325791, 0.08319974]),
- &#39;score_time&#39;: array([0.01750064, 0.01771212, 0.01754284, 0.01731801, 0.01738977]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.1030581 , 0.10596299, 0.10561705, 0.10061812, 0.1000154 ]),
+ &#39;score_time&#39;: array([0.02142096, 0.02236462, 0.02127123, 0.02104878, 0.02094531]),
  &#39;test_score&#39;: array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])}
 </pre></div>
 </div>

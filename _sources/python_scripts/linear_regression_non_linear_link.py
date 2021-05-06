@@ -170,8 +170,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 
 polynomial_regression = make_pipeline(
-      PolynomialFeatures(degree=3),
-      LinearRegression(),
+    PolynomialFeatures(degree=3),
+    LinearRegression(),
 )
 polynomial_regression.fit(data, target)
 target_predicted = polynomial_regression.predict(data)
@@ -240,8 +240,9 @@ target_predicted = svr.predict(data)
 mse = mean_squared_error(target, target_predicted)
 
 # %%
-ax = sns.scatterplot(data=full_data, x="input_feature", y="target")
-ax.plot(data, target_predicted, color="tab:orange")
+ax = sns.scatterplot(data=full_data, x="input_feature", y="target",
+                     color="black", alpha=0.5)
+ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
@@ -264,8 +265,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 from sklearn.preprocessing import KBinsDiscretizer
 
 binned_regression = make_pipeline(
-      KBinsDiscretizer(n_bins=8),
-      LinearRegression(),
+    KBinsDiscretizer(n_bins=8), LinearRegression(),
 )
 binned_regression.fit(data, target)
 target_predicted = binned_regression.predict(data)
@@ -280,8 +280,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 from sklearn.kernel_approximation import Nystroem
 
 nystroem_regression = make_pipeline(
-      Nystroem(n_components=5),
-      LinearRegression(),
+    Nystroem(n_components=5), LinearRegression(),
 )
 nystroem_regression.fit(data, target)
 target_predicted = nystroem_regression.predict(data)

@@ -23,12 +23,6 @@ data, target = make_classification(
 )
 
 # %% [markdown]
-# ```{caution}
-# Here and later, we use the name `data` and `target` to be explicit. In
-# scikit-learn documentation, `data` is commonly named `X` and `target` is
-# commonly called `y`.
-
-# %% [markdown]
 # We chose to create a dataset with two informative features among a hundred.
 # To simplify our example, we did not include either redundant or repeated
 # features.

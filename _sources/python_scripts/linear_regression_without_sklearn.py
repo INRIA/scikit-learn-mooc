@@ -43,13 +43,6 @@ ax.set_title("Flipper length in function of the body mass")
 # ```
 
 # %% [markdown]
-# ```{caution}
-# Here and later, we use the name `data` and `target` to be explicit. In
-# scikit-learn documentation, `data` is commonly named `X` and `target` is
-# commonly called `y`.
-# ```
-
-# %% [markdown]
 # In this problem, penguin mass is our target. It is a continuous
 # variable that roughly varies between 2700 g and 6300 g. Thus, this is a
 # regression problem (in contrast to classification). We also see that there is

@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M4.02
 
 ```{admonition} Question
 If we fit a linear regression where `X` is a single column vector, how many

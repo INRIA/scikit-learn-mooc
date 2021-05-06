@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M6.03
 
 ```{admonition} Question
 Boosting algorithms are building a predictor:

@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M6.02
 
 ```{admonition} Question
 By default, a

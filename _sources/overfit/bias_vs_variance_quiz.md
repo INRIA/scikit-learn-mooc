@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M2.03
 
 ```{admonition} Question
 Choosing a model with a high bias:

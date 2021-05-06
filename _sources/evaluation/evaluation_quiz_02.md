@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M7.02
 
 ```{admonition} Question
 Given a dataset containing records from subjects from 10 different hospitals,

@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M5.02
 
 ```{admonition} Question
 For a decision tree built in scikit-learn, a split:

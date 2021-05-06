@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M4.01
 
 ```{admonition} Question
 What is a linear regression?

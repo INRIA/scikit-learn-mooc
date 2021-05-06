@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M4.06
 
 ```{admonition} Question
 By default, a `LogisticRegression` in scikit-learn applies:

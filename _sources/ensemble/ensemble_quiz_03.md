@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M6.04
 
 ```{admonition} Question
 Gradient boosting are usually composed of (in comparison to random forest):

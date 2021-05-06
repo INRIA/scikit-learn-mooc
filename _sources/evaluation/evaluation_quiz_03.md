@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M7.03
 
 ```{admonition} Question
 How to evaluate and tune the hyperparameters' model?

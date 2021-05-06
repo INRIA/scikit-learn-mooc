@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M7.05
 
 ```{admonition} Question
 What is the default score in scikit-learn when using a regressor?

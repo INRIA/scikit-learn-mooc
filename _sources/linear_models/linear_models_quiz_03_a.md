@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M4.04
 
 ```{admonition} Question
 Regularization allows:

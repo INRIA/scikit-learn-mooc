@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M0.01
 
 Given a case study: pricing apartments based on a real estate website. We have
 thousands of house descriptions with their price. Typically, an example of a

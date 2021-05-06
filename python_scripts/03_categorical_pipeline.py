@@ -165,7 +165,10 @@ print(
 # "S", "M", "L", "XL" to 2, 1, 0, 3, by following the alphabetical order.
 #
 # The `OrdinalEncoder` class accepts a `categories` constructor argument to
-# pass categories in the expected ordering explicitly.
+# pass categories in the expected ordering explicitly. You can find more
+# information in the
+# [scikit-learn documentation](https://scikit-learn.org/stable/modules/preprocessing.html#encoding-categorical-features)
+# if needed.
 #
 # If a categorical variable does not carry any meaningful order information
 # then this encoding might be misleading to downstream statistical models and
@@ -193,9 +196,9 @@ education_encoded
 # %% [markdown]
 # ```{note}
 # `sparse=False` is used in the `OneHotEncoder` for didactic purposes, namely
-# easier visualisation of the data.
+# easier visualization of the data.
 #
-# sparse matrices are efficient data structures when most of your matrix
+# Sparse matrices are efficient data structures when most of your matrix
 # elements are zero. They won't be covered in details in this course. If you
 # want more details about them, you can look at
 # [this](https://scipy-lectures.org/advanced/scipy_sparse/introduction.html#why-sparse-matrices).
@@ -267,6 +270,10 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # - the original categories (before encoding) have an ordering;
 # - the encoded categories follow the same ordering than the original
 #   categories.
+#
+# Also, there is no need to use an `OneHotEncoder` even if the original
+# categories do not have an given order with tree-based model. It will be
+# the purpose of the final exercise of this sequence.
 
 # %% [markdown]
 # ## Evaluate our predictive pipeline

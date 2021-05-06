@@ -52,8 +52,8 @@ categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %% [markdown]
-# Now, that we have our dataset with only categorical features, you will
-# define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
+# We filter our dataset that it contains only categorical features.
+# Define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
 # `LogisticRegression` classifier.
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
@@ -70,7 +70,7 @@ from sklearn.linear_model import LogisticRegression
 # Write your code here.
 
 # %% [markdown]
-# Now that your model is created, evaluate it using a cross-validation using
+# Your model is now defined. Evaluate it using a cross-validation using
 # `sklearn.model_selection.cross_validate`.
 
 # %%

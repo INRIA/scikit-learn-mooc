@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M1.02
 
 ```{admonition} Question
 Why do we need two sets: a train set and a test set?

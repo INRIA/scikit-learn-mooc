@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M7.04
 
 ```{admonition} Question
 What is the default score in scikit-learn when using a classifier?

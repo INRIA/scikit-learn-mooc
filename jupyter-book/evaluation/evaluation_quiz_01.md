@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M7.01
 
 ```{admonition} Question
 What the benefit of using cross-validation?

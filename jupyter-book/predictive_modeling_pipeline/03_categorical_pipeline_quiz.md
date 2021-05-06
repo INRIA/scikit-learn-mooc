@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M1.03
 
 ```{admonition} Question
 How are categorical variables represented?

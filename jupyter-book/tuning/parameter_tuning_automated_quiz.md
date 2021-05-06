@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M3.02
 
 ```{admonition} Question
 What does `CV` stand for in `GridSearchCV` and why?

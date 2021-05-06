@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M4.05
 
 ```{admonition} Question
 Regularization refers to:

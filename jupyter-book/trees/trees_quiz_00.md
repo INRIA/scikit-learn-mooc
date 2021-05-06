@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M5.01
 
 ```{admonition} Question
 Decision trees can be applied for:

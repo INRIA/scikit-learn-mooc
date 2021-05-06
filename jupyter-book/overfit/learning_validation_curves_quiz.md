@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M2.02
 
 ```{admonition} Question
 A model is overfitting when:

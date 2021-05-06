@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M1.01
 
 ```{admonition} Question
 In the previous notebook, we used pandas and specifically

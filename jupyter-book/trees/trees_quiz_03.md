@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M5.04
 
 ```{admonition} Question
 If a decision tree is overfitting, you need to increase the maximum depth.

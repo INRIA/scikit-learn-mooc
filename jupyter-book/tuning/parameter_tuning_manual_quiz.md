@@ -1,4 +1,4 @@
-# ✅ Quiz
+# ✅ Quiz M3.01
 
 ```{admonition} Question
 Which parameters below are hyperparameters of `HistGradientBosstingClassifier`?

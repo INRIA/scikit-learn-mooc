@@ -224,9 +224,11 @@ elapsed_time = time.time() - start
 # ![pipeline fit diagram](../figures/api_diagram-pipeline.fit.svg)
 #
 # When calling `model.fit`, the method `fit_transform` from each underlying
-# transformer in the pipeline will be called to: (i) learn their internal
-# model states and (ii) transform the training data. Finally, the preprocessed
-# data are provided to train the predictor.
+# transformer (here a single transformer) in the pipeline will be called to:
+#
+# - learn their internal model states
+# - transform the training data. Finally, the preprocessed data are provided to
+#   train the predictor.
 #
 # To predict the targets given a test set, one uses the `predict` method.
 
@@ -239,11 +241,12 @@ predicted_target[:5]
 #
 # ![pipeline predict diagram](../figures/api_diagram-pipeline.predict.svg)
 #
-# The method `transform` of each transformer is called to preprocess the data.
-# Note that there is no need to call the `fit` method for these transformers
-# because we are using the internal model states computed when calling
-# `model.fit`. The preprocessed data is then provided to the predictor that
-# will output the predicted target by calling its method `predict`.
+# The method `transform` of each transformer (here a single transformer) is
+# called to preprocess the data. Note that there is no need to call the `fit`
+# method for these transformers because we are using the internal model states
+# computed when calling `model.fit`. The preprocessed data is then provided to
+# the predictor that will output the predicted target by calling its method
+# `predict`.
 #
 # As a shorthand, we can check the score of the full predictive pipeline
 # calling the method `model.score`. Thus, let's check the computational and

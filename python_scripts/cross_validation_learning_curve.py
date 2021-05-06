@@ -15,8 +15,6 @@
 # %%
 from sklearn.datasets import fetch_california_housing
 
-5/0
-
 housing = fetch_california_housing(as_frame=True)
 data, target = housing.data, housing.target
 target *= 100  # rescale the target in k$

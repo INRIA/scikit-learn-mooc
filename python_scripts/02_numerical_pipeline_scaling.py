@@ -62,6 +62,7 @@ from sklearn.model_selection import train_test_split
 data_train, data_test, target_train, target_test = train_test_split(
     data_numeric, target, random_state=42)
 
+# %% [markdown]
 # ## Model fitting with preprocessing
 #
 # A range of preprocessing algorithms in scikit-learn allow us to transform

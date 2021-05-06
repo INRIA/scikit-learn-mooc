@@ -106,7 +106,9 @@ print(f"The dataset is composed of {data_categorical.shape[1]} features")
 # machine-learning algorithm.
 
 # %% [markdown]
-# ## Encoding ordinal categories
+# ## Strategies to encode categories
+#
+# ### Encoding ordinal categories
 #
 # The most intuitive strategy is to encode each category with a different
 # number. The `OrdinalEncoder` will transform the data in such manner.
@@ -131,7 +133,7 @@ education_encoded
 encoder.categories_
 
 # %% [markdown]
-#  Now, we can check the encoding applied on all categorical features.
+# Now, we can check the encoding applied on all categorical features.
 
 # %%
 data_encoded = encoder.fit_transform(data_categorical)
@@ -169,13 +171,7 @@ print(
 # then this encoding might be misleading to downstream statistical models and
 # you might consider using one-hot encoding instead (see below).
 #
-# ```{important}
-# Note however that the impact of violating this ordering assumption is really
-# dependent on the downstream models. For instance, linear models will be
-# impacted by misordered categories while decision trees model will not be.
-# ```
-#
-# ## Encoding nominal categories (without assuming any order)
+# ### Encoding nominal categories (without assuming any order)
 #
 # `OneHotEncoder` is an alternative encoder that prevents the downstream
 # models to make a false assumption about the ordering of categories. For a
@@ -243,13 +239,33 @@ columns_encoded = encoder.get_feature_names(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]
-# Look at how the "workclass" variable of the 3 first records has been encoded
-# and compare this to the original string representation.
+# Look at how the `"workclass"` variable of the 3 first records has been
+# encoded and compare this to the original string representation.
 #
 # The number of features after the encoding is more than 10 times larger than
 # in the original data because some variables such as `occupation` and
 # `native-country` have many possible categories.
+
+# %% [markdown]
+# ### Choosing an encoding strategy
 #
+# Choosing an encoding strategy will depend of the underlying models and the
+# type of categories (i.e. ordinal vs. nominal).
+#
+# Indeed, using an `OrdinaleEncoder` will output ordinal categories. It means
+# that there is an order in the resulting categories (e.g. `0 > 1 > 2`). The
+# impact of violating this ordering assumption is really dependent on the
+# downstream models. Linear models will be impacted by misordered categories
+# while tree-based models will not be.
+#
+# Thus, in general `OneHotEncoder` is the encoding strategy used when the
+# downstream models is a linear models while `OrdinalEncoder` is used with
+# tree-based models.
+#
+# You still can use an `OrdinalEncoder` with linear models but you need to be
+# sure about categories ordering.
+
+# %% [markdown]
 # ## Evaluate our predictive pipeline
 #
 # We can now integrate this encoder inside a machine learning pipeline like we

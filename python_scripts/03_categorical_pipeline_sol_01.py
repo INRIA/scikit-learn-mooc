@@ -106,7 +106,7 @@ print("The mean cross-validation accuracy is: "
 # Now, we would like to compare the statistical performance of our previous
 # model with a new model where instead of using an `OrdinalEncoder`, we will
 # use a `OneHotEncoder`. Repeat the model evaluation using cross-validation.
-# Compare the score of both models and conclude on the impact of the choosing a
+# Compare the score of both models and conclude on the impact of choosing a
 # specific encoding strategy when using a linear model.
 
 # %%

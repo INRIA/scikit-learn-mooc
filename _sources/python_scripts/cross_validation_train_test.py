@@ -27,7 +27,7 @@ data, target = housing.data, housing.target
 # notebook. The target to be predicted is a continuous variable and not anymore
 # discrete. This task is called regression.
 #
-# Therefore, we will use predictive model specific to regression and not to
+# This, we will use a predictive model specific to regression and not to
 # classification.
 
 # %%
@@ -173,7 +173,10 @@ print(f"The testing error of our model is {score:.2f} k$")
 # record their statistical performance on each variant of the test set.
 #
 # To evaluate the statistical performance of our regressor, we can use
-# `cross_validate` with a `ShuffleSplit` object:
+# [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
+# with a
+# [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
+# object:
 
 # %%
 from sklearn.model_selection import cross_validate
@@ -221,9 +224,9 @@ cv_results["test_error"] = -cv_results["test_score"]
 cv_results.head(10)
 
 # %% [markdown]
-# We get timing information to fit and predict at each round of
-# cross-validation. Also, we get the test score, which corresponds to the
-# testing error on each of the split.
+# We get timing information to fit and predict at each cross-validation
+# iteration. Also, we get the test score, which corresponds to the testing
+# error on each of the splits.
 
 # %%
 len(cv_results)
@@ -258,7 +261,7 @@ print(f"The standard deviation of the testing error is: "
 # 46.36 +/- 1.17 k\$.
 #
 # If we were to train a single model on the full dataset (without
-# cross-validation) and then had later access to an unlimited amount of test
+# cross-validation) and then later had access to an unlimited amount of test
 # data, we would expect its true testing error to fall close to that
 # region.
 #
@@ -281,7 +284,7 @@ print(f"The standard deviation of the target is: {target.std():.2f} k$")
 #
 # We notice that the mean estimate of the testing error obtained by
 # cross-validation is a bit smaller than the natural scale of variation of the
-# target variable. Furthermore the standard deviation of the cross validation
+# target variable. Furthermore, the standard deviation of the cross validation
 # estimate of the testing error is even smaller.
 #
 # This is a good start, but not necessarily enough to decide whether the
@@ -298,15 +301,15 @@ print(f"The standard deviation of the target is: {target.std():.2f} k$")
 # mean absolute percentage error would have been a much better choice.
 #
 # But in all cases, an error of 47 k\$ might be too large to automatically use
-# our model to tag house value without expert supervision.
+# our model to tag house values without expert supervision.
 #
 # ## More detail regarding `cross_validate`
 #
 # During cross-validation, many models are trained and evaluated. Indeed, the
 # number of elements in each array of the output of `cross_validate` is a
-# result from one of this `fit`/`score`. To make it explicit, it is possible
-# to retrieve theses fitted models for each of the fold by passing the option
-# `return_estimator=True` in `cross_validate`.
+# result from one of these `fit`/`score` procedures. To make it explicit, it is
+# possible to retrieve theses fitted models for each of the splits/folds by
+# passing the option `return_estimator=True` in `cross_validate`.
 
 # %%
 cv_results = cross_validate(regressor, data, target, return_estimator=True)
@@ -321,7 +324,7 @@ cv_results["estimator"]
 # because it allows to inspect the internal fitted parameters of these
 # regressors.
 #
-# In the case where you are interested only about the test score, scikit-learn
+# In the case where you only are interested in the test score, scikit-learn
 # provide a `cross_val_score` function. It is identical to calling the
 # `cross_validate` function and to select the `test_score` only (as we
 # extensively did in the previous notebooks).

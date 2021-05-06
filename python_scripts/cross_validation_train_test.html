@@ -1449,7 +1449,7 @@ geographical information.</p>
 <p>Therefore, the task to solve is different from the one shown in the previous
 notebook. The target to be predicted is a continuous variable and not anymore
 discrete. This task is called regression.</p>
-<p>Therefore, we will use predictive model specific to regression and not to
+<p>This, we will use a predictive model specific to regression and not to
 classification.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1772,7 +1772,10 @@ focus on one called “shuffle-split”. At each iteration of this strategy we:<
 will train 40 models in total and all of them will be discarded: we just
 record their statistical performance on each variant of the test set.</p>
 <p>To evaluate the statistical performance of our regressor, we can use
-<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> with a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> object:</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code></a>
+with a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ShuffleSplit</span></code></a>
+object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
@@ -1984,9 +1987,9 @@ score.</p>
 </table>
 </div></div></div>
 </div>
-<p>We get timing information to fit and predict at each round of
-cross-validation. Also, we get the test score, which corresponds to the
-testing error on each of the split.</p>
+<p>We get timing information to fit and predict at each cross-validation
+iteration. Also, we get the test score, which corresponds to the testing
+error on each of the splits.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
@@ -2048,7 +2051,7 @@ ranges from 43 k$ to 50 k$.</p>
 summarize that our cross-validation estimate of the testing error is
 46.36 +/- 1.17 k$.</p>
 <p>If we were to train a single model on the full dataset (without
-cross-validation) and then had later access to an unlimited amount of test
+cross-validation) and then later had access to an unlimited amount of test
 data, we would expect its true testing error to fall close to that
 region.</p>
 <p>While this information is interesting in itself, it should be contrasted to
@@ -2082,7 +2085,7 @@ the scale of the natural variability of the vector <code class="docutils literal
 standard deviation around 115 k$.</p>
 <p>We notice that the mean estimate of the testing error obtained by
 cross-validation is a bit smaller than the natural scale of variation of the
-target variable. Furthermore the standard deviation of the cross validation
+target variable. Furthermore, the standard deviation of the cross validation
 estimate of the testing error is even smaller.</p>
 <p>This is a good start, but not necessarily enough to decide whether the
 generalization performance is good enough to make our prediction useful in
@@ -2095,15 +2098,15 @@ metric (Mean Absolute Error) is not ideal.</p>
 <p>We might instead choose a metric relative to the target value to predict: the
 mean absolute percentage error would have been a much better choice.</p>
 <p>But in all cases, an error of 47 k$ might be too large to automatically use
-our model to tag house value without expert supervision.</p>
+our model to tag house values without expert supervision.</p>
 </div>
 <div class="section" id="more-detail-regarding-cross-validate">
 <h2>More detail regarding <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code><a class="headerlink" href="#more-detail-regarding-cross-validate" title="Permalink to this headline">¶</a></h2>
 <p>During cross-validation, many models are trained and evaluated. Indeed, the
 number of elements in each array of the output of <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> is a
-result from one of this <code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">score</span></code>. To make it explicit, it is possible
-to retrieve theses fitted models for each of the fold by passing the option
-<code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> in <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>.</p>
+result from one of these <code class="docutils literal notranslate"><span class="pre">fit</span></code>/<code class="docutils literal notranslate"><span class="pre">score</span></code> procedures. To make it explicit, it is
+possible to retrieve theses fitted models for each of the splits/folds by
+passing the option <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> in <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -2144,7 +2147,7 @@ to retrieve theses fitted models for each of the fold by passing the option
 trees on the different folds. Having access to these regressors is handy
 because it allows to inspect the internal fitted parameters of these
 regressors.</p>
-<p>In the case where you are interested only about the test score, scikit-learn
+<p>In the case where you only are interested in the test score, scikit-learn
 provide a <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> function. It is identical to calling the
 <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function and to select the <code class="docutils literal notranslate"><span class="pre">test_score</span></code> only (as we
 extensively did in the previous notebooks).</p>

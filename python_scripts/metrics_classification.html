@@ -1387,80 +1387,29 @@
             </div>
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Classification
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#classifier-predictions">
-     Classifier predictions
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#accuracy-as-a-baseline">
-     Accuracy as a baseline
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#confusion-matrix-and-derived-metrics">
-     Confusion matrix and derived metrics
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-issue-of-class-imbalance">
-     The issue of class imbalance
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#evaluation-and-different-probability-thresholds">
-     Evaluation and different probability thresholds
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#link-between-confusion-matrix-precision-recall-curve-and-roc-curve">
-   ## Link between confusion matrix, precision-recall curve and ROC curve
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#classifier-predictions">
+   Classifier predictions
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#accuracy-as-a-baseline">
+   Accuracy as a baseline
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#todo-ipywidgets-to-play-with-interactive-curve">
-   TODO: ipywidgets to play with interactive curve
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#confusion-matrix-and-derived-metrics">
+   Confusion matrix and derived metrics
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   %%
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-issue-of-class-imbalance">
+   The issue of class imbalance
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   %%
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   %%
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
-   %%
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
-   %%
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
-   %%
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation-and-different-probability-thresholds">
+   Evaluation and different probability thresholds
   </a>
  </li>
 </ul>
@@ -1991,178 +1940,6 @@ the ROC-AUC is 0.5. Indeed, we show the statistical performance of a dummy
 classifier (the orange dashed line) to show that even the worst statistical
 performance obtained will be above this line.</p>
 </div>
-</div>
-<div class="section" id="link-between-confusion-matrix-precision-recall-curve-and-roc-curve">
-<h1>## Link between confusion matrix, precision-recall curve and ROC curve<a class="headerlink" href="#link-between-confusion-matrix-precision-recall-curve-and-roc-curve" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="id1">
-<h1><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="todo-ipywidgets-to-play-with-interactive-curve">
-<h1>TODO: ipywidgets to play with interactive curve<a class="headerlink" href="#todo-ipywidgets-to-play-with-interactive-curve" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="id2">
-<h1>%%<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
-<p>import matplotlib.pyplot as plt
-from sklearn.metrics import precision_recall_curve
-from sklearn.metrics import average_precision_score</p>
-<p>def plot_pr_curve(classifier, X_test, y_test, pos_label,
-probability_threshold, ax):
-y_pred = classifier.predict_proba(X_test)
-precision, recall, threshold = precision_recall_curve(
-y_test, y_pred[:, 0], pos_label=pos_label,
-)
-average_precision = average_precision_score(
-y_test, y_pred[:, 0], pos_label=pos_label,
-)
-ax.plot(
-recall, precision,
-color=”tab:orange”, linewidth=3,
-label=f”Average Precision: {average_precision:.2f}”,
-)
-threshold_idx = np.searchsorted(
-threshold, probability_threshold,
-)
-ax.plot(
-recall[threshold_idx], precision[threshold_idx],
-color=”tab:blue”, marker=”.”, markersize=10,
-)
-ax.plot(
-[recall[threshold_idx], recall[threshold_idx]],
-[0, precision[threshold_idx]],
-‘–’, color=”tab:blue”,
-)
-ax.plot(
-[0, recall[threshold_idx]],
-[precision[threshold_idx], precision[threshold_idx]],
-‘–’, color=”tab:blue”,
-)
-ax.set_xlabel(f”Recall”)
-ax.set_ylabel(f”Precision”)
-ax.set_xlim([0, 1])
-ax.set_ylim([0, 1])
-ax.legend()
-return ax</p>
-</div>
-<div class="section" id="id3">
-<h1>%%<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
-<p>from sklearn.metrics import roc_auc_score
-from sklearn.metrics import roc_curve</p>
-<p>def plot_roc_curve(classifier, X_test, y_test, pos_label,
-probability_threshold, ax):
-y_pred = classifier.predict_proba(X_test)
-fpr, tpr, threshold = roc_curve(y_test, y_pred[:, 0], pos_label=pos_label)
-roc_auc = roc_auc_score(y_test, y_pred[:, 1])
-ax.plot(
-fpr, tpr,
-color=”tab:orange”, linewidth=3,
-label=f”ROC-AUC: {roc_auc:.2f}”
-)
-ax.plot([0, 1], [0, 1], “–”, color=”tab:green”, label=”Chance”)
-threshold_idx = np.searchsorted(
-threshold[::-1], probability_threshold,
-)
-threshold_idx = len(threshold) - threshold_idx - 1
-ax.plot(
-fpr[threshold_idx], tpr[threshold_idx],
-color=”tab:blue”, marker=”.”, markersize=10,
-)
-ax.plot(
-[fpr[threshold_idx], fpr[threshold_idx]],
-[0, tpr[threshold_idx]],
-‘–’, color=”tab:blue”,
-)
-ax.plot(
-[0, fpr[threshold_idx]],
-[tpr[threshold_idx], tpr[threshold_idx]],
-‘–’, color=”tab:blue”,
-)
-ax.set_xlabel(f”1 - Specificity”)
-ax.set_ylabel(f”Sensitivity”)
-ax.set_xlim([0, 1])
-ax.set_ylim([0, 1])
-ax.legend()
-return ax</p>
-</div>
-<div class="section" id="id4">
-<h1>%%<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
-<p>def plot_confusion_matrix_with_threshold(classifier, X_test, y_test, pos_label,
-probability_threshold, ax):
-from itertools import product
-from sklearn.metrics import confusion_matrix</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>class_idx = np.where(classifier.classes_ == pos_label)[0][0]
-n_classes = len(classifier.classes_)
-
-y_pred = classifier.predict_proba(X_test)
-y_pred = (y_pred[:, class_idx] &gt; probability_threshold).astype(int)
-
-cm = confusion_matrix(
-    (y_test == pos_label).astype(int), y_pred,
-)
-im_ = ax.imshow(cm, interpolation=&#39;nearest&#39;)
-
-text_ = None
-cmap_min, cmap_max = im_.cmap(0), im_.cmap(256)
-
-text_ = np.empty_like(cm, dtype=object)
-
-# print text with appropriate color depending on background
-thresh = (cm.max() + cm.min()) / 2.0
-
-for i, j in product(range(n_classes), range(n_classes)):
-    color = cmap_max if cm[i, j] &lt; thresh else cmap_min
-
-    text_cm = format(cm[i, j], &#39;.2g&#39;)
-    if cm.dtype.kind != &#39;f&#39;:
-        text_d = format(cm[i, j], &#39;d&#39;)
-        if len(text_d) &lt; len(text_cm):
-            text_cm = text_d
-
-    text_[i, j] = ax.text(
-        j, i, text_cm, ha=&quot;center&quot;, va=&quot;center&quot;, color=color
-    )
-
-ax.set(
-    xticks=np.arange(n_classes),
-    yticks=np.arange(n_classes),
-    xticklabels=classifier.classes_[[int(not bool(class_idx)), class_idx]],
-    yticklabels=classifier.classes_[[int(not bool(class_idx)), class_idx]],
-    ylabel=&quot;True label&quot;,
-    xlabel=&quot;Predicted label&quot;
-)
-</pre></div>
-</div>
-</div>
-<div class="section" id="id5">
-<h1>%%<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
-<p>def plot_pr_roc(threshold):
-# FIXME: we could optimize the plotting by only updating the
-fig, axs = plt.subplots(ncols=3, figsize=(21, 6))
-plot_pr_curve(
-classifier, data_test, target_test, pos_label=”donated”,
-probability_threshold=threshold, ax=axs[0],
-)
-plot_roc_curve(
-classifier, data_test, target_test, pos_label=”donated”,
-probability_threshold=threshold, ax=axs[1]
-)
-plot_confusion_matrix_with_threshold(
-classifier, data_test, target_test, pos_label=”donated”,
-probability_threshold=threshold, ax=axs[2]
-)
-fig.suptitle(
-“Overall statistical performance with positive class ‘donated’”)</p>
-</div>
-<div class="section" id="id6">
-<h1>%%<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h1>
-<p>def plot_pr_roc_interactive():
-from ipywidgets import interactive, FloatSlider
-slider = FloatSlider(min=0, max=1, step=0.01, value=0.5)
-return interactive(plot_pr_roc, threshold=slider)</p>
-</div>
-<div class="section" id="id7">
-<h1>%%<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h1>
-<p>plot_pr_roc_interactive()</p>
 </div>
 
     <script type="text/x-thebe-config">

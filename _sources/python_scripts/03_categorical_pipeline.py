@@ -270,6 +270,8 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # - the original categories (before encoding) have an ordering;
 # - the encoded categories follow the same ordering than the original
 #   categories.
+# The next exercise highlight the issue of misusing `OrdinalEncoder` with a
+# linear model.
 #
 # Also, there is no need to use an `OneHotEncoder` even if the original
 # categories do not have an given order with tree-based model. It will be

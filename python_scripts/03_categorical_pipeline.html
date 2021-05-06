@@ -1415,14 +1415,26 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#encoding-ordinal-categories">
-   Encoding ordinal categories
+  <a class="reference internal nav-link" href="#strategies-to-encode-categories">
+   Strategies to encode categories
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#encoding-nominal-categories-without-assuming-any-order">
-   Encoding nominal categories (without assuming any order)
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoding-ordinal-categories">
+     Encoding ordinal categories
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoding-nominal-categories-without-assuming-any-order">
+     Encoding nominal categories (without assuming any order)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choosing-an-encoding-strategy">
+     Choosing an encoding strategy
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#evaluate-our-predictive-pipeline">
@@ -1710,8 +1722,10 @@ unwanted columns:</p>
 encode categorical data into numerical data which can be used by a
 machine-learning algorithm.</p>
 </div>
+<div class="section" id="strategies-to-encode-categories">
+<h2>Strategies to encode categories<a class="headerlink" href="#strategies-to-encode-categories" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="encoding-ordinal-categories">
-<h2>Encoding ordinal categories<a class="headerlink" href="#encoding-ordinal-categories" title="Permalink to this headline">¶</a></h2>
+<h3>Encoding ordinal categories<a class="headerlink" href="#encoding-ordinal-categories" title="Permalink to this headline">¶</a></h3>
 <p>The most intuitive strategy is to encode each category with a different
 number. The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will transform the data in such manner.
 We will start by encoding a single column to understand how the encoding
@@ -1844,19 +1858,16 @@ increasing integers such as <code class="docutils literal notranslate"><span cla
 However, the lexicographical strategy used by default would map the labels
 “S”, “M”, “L”, “XL” to 2, 1, 0, 3, by following the alphabetical order.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a <code class="docutils literal notranslate"><span class="pre">categories</span></code> constructor argument to
-pass categories in the expected ordering explicitly.</p>
+pass categories in the expected ordering explicitly. You can find more
+information in the
+<a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html#encoding-categorical-features">scikit-learn documentation</a>
+if needed.</p>
 <p>If a categorical variable does not carry any meaningful order information
 then this encoding might be misleading to downstream statistical models and
 you might consider using one-hot encoding instead (see below).</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Note however that the impact of violating this ordering assumption is really
-dependent on the downstream models. For instance, linear models will be
-impacted by misordered categories while decision trees model will not be.</p>
-</div>
 </div>
 <div class="section" id="encoding-nominal-categories-without-assuming-any-order">
-<h2>Encoding nominal categories (without assuming any order)<a class="headerlink" href="#encoding-nominal-categories-without-assuming-any-order" title="Permalink to this headline">¶</a></h2>
+<h3>Encoding nominal categories (without assuming any order)<a class="headerlink" href="#encoding-nominal-categories-without-assuming-any-order" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is an alternative encoder that prevents the downstream
 models to make a false assumption about the ordering of categories. For a
 given feature, it will create as many new columns as there are possible
@@ -1872,17 +1883,6 @@ how the encoding works.</p>
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
 <span class="n">education_encoded</span>
-
-<span class="c1"># [markdown]</span>
-<span class="c1"># ```{note}</span>
-<span class="c1"># `sparse=False` is used in the `OneHotEncoder` for didactic purposes, namely</span>
-<span class="c1"># easier visualisation of the data.</span>
-<span class="c1">#</span>
-<span class="c1"># sparse matrices are efficient data structures when most of your matrix</span>
-<span class="c1"># elements are zero. They won&#39;t be covered in details in this course. If you</span>
-<span class="c1"># want more details about them, you can look at</span>
-<span class="c1"># [this](https://scipy-lectures.org/advanced/scipy_sparse/introduction.html#why-sparse-matrices).</span>
-<span class="c1"># ```</span>
 </pre></div>
 </div>
 </div>
@@ -1897,6 +1897,15 @@ how the encoding works.</p>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">sparse=False</span></code> is used in the <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> for didactic purposes, namely
+easier visualization of the data.</p>
+<p>Sparse matrices are efficient data structures when most of your matrix
+elements are zero. They won’t be covered in details in this course. If you
+want more details about them, you can look at
+<a class="reference external" href="https://scipy-lectures.org/advanced/scipy_sparse/introduction.html#why-sparse-matrices">this</a>.</p>
 </div>
 <p>We see that encoding a single feature will give a NumPy array full of zeros
 and ones. We can get a better understanding using the associated feature
@@ -2501,11 +2510,35 @@ provided by the encoder object:</p>
 <p>5 rows × 102 columns</p>
 </div></div></div>
 </div>
-<p>Look at how the “workclass” variable of the 3 first records has been encoded
-and compare this to the original string representation.</p>
+<p>Look at how the <code class="docutils literal notranslate"><span class="pre">&quot;workclass&quot;</span></code> variable of the 3 first records has been
+encoded and compare this to the original string representation.</p>
 <p>The number of features after the encoding is more than 10 times larger than
 in the original data because some variables such as <code class="docutils literal notranslate"><span class="pre">occupation</span></code> and
 <code class="docutils literal notranslate"><span class="pre">native-country</span></code> have many possible categories.</p>
+</div>
+<div class="section" id="choosing-an-encoding-strategy">
+<h3>Choosing an encoding strategy<a class="headerlink" href="#choosing-an-encoding-strategy" title="Permalink to this headline">¶</a></h3>
+<p>Choosing an encoding strategy will depend on the underlying models and the
+type of categories (i.e. ordinal vs. nominal).</p>
+<p>Indeed, using an <code class="docutils literal notranslate"><span class="pre">OrdinaleEncoder</span></code> will output ordinal categories. It means
+that there is an order in the resulting categories (e.g. <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&gt;</span> <span class="pre">1</span> <span class="pre">&gt;</span> <span class="pre">2</span></code>). The
+impact of violating this ordering assumption is really dependent on the
+downstream models. Linear models will be impacted by misordered categories
+while tree-based models will not be.</p>
+<p>Thus, in general <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is the encoding strategy used when the
+downstream models are linear models while <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is used with
+tree-based models.</p>
+<p>You still can use an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with linear models but you need to be
+sure that:</p>
+<ul class="simple">
+<li><p>the original categories (before encoding) have an ordering;</p></li>
+<li><p>the encoded categories follow the same ordering than the original
+categories.</p></li>
+</ul>
+<p>Also, there is no need to use an <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> even if the original
+categories do not have an given order with tree-based model. It will be
+the purpose of the final exercise of this sequence.</p>
+</div>
 </div>
 <div class="section" id="evaluate-our-predictive-pipeline">
 <h2>Evaluate our predictive pipeline<a class="headerlink" href="#evaluate-our-predictive-pipeline" title="Permalink to this headline">¶</a></h2>
@@ -2553,8 +2586,8 @@ Let’s recall some statistics regarding this column.</p>
  Ecuador                          45
  France                           38
  Ireland                          37
- Hong                             30
  Thailand                         30
+ Hong                             30
  Cambodia                         28
  Trinadad&amp;Tobago                  27
  Yugoslavia                       23
@@ -2618,8 +2651,8 @@ categorical columns.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.95517015, 0.98488617, 0.88348651, 0.94834566, 0.93537378]),
- &#39;score_time&#39;: array([0.03422236, 0.03315306, 0.03345609, 0.0359242 , 0.03354192]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.11648297, 1.13122153, 1.0302422 , 1.10437703, 1.06971383]),
+ &#39;score_time&#39;: array([0.04242682, 0.03946829, 0.03654385, 0.03783083, 0.03372812]),
  &#39;test_score&#39;: array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])}
 </pre></div>
 </div>

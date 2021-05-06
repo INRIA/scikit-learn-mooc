@@ -25,14 +25,18 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Create a random forest containing three trees. Train the forest and
-# check the statistical performance on the testing set.
+# check the statistical performance on the testing set in terms of mean
+# absolute error.
 
 # %%
+from sklearn.metrics import mean_absolute_error
 from sklearn.ensemble import RandomForestRegressor
 
 forest = RandomForestRegressor(n_estimators=3)
 forest.fit(data_train, target_train)
-print(f"Accuracy score: {forest.score(data_test, target_test):.3f}")
+target_predicted = forest.predict(data_test)
+print(f"Mean absolute error: "
+      f"{mean_absolute_error(target_test, target_predicted):.3f} grams")
 
 # %% [markdown]
 # The next steps of this exercise are to:
@@ -80,6 +84,4 @@ for tree_idx, predictions in enumerate(tree_predictions):
              linestyle="--", alpha=0.8)
 
 plt.plot(data_ranges, forest_predictions, label=f"Random forest")
-plt.legend()
-
-# %%
+_ = plt.legend()

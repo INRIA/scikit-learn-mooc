@@ -48,26 +48,24 @@ from sklearn.linear_model import LinearRegression
 
 linear_regression = make_pipeline(PolynomialFeatures(degree=2),
                                   LinearRegression())
-cv_results = cross_validate(linear_regression, data, target, cv=10,
+cv_results = cross_validate(linear_regression, data, target,
+                            cv=10, scoring="neg_mean_squared_error",
                             return_train_score=True,
                             return_estimator=True)
 
-# %%
-test_score = cv_results["test_score"]
-print(f"R2 score of linear regresion model on the test set:\n"
-      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
-
 # %% [markdown]
-# We see that we obtain an $R^2$ score below zero.
-#
-# It means that our model is far worse at predicting the mean of `y_train`.
-# This issue is due to overfitting.
-# We can compute the score on the training set to confirm this intuition.
+# We can compare the mean squared error on the training and testing set to
+# assess the generalization performance of our model.
 
 # %%
-train_score = cv_results["train_score"]
-print(f"R2 score of linear regresion model on the train set:\n"
-      f"{train_score.mean():.3f} +/- {train_score.std():.3f}")
+train_error = -cv_results["train_score"]
+print(f"Mean squared error of linear regresion model on the train set:\n"
+      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
+
+# %%
+test_error = -cv_results["test_score"]
+print(f"Mean squared error of linear regresion model on the test set:\n"
+      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
 # The score on the training set is much better. This statistical performance
@@ -128,19 +126,20 @@ from sklearn.linear_model import Ridge
 
 ridge = make_pipeline(PolynomialFeatures(degree=2),
                       Ridge(alpha=100))
-cv_results = cross_validate(ridge, data, target, cv=10,
+cv_results = cross_validate(ridge, data, target,
+                            cv=10, scoring="neg_mean_squared_error",
                             return_train_score=True,
                             return_estimator=True)
 
 # %%
-test_score = cv_results["test_score"]
-print(f"R2 score of ridge model on the test set:\n"
-      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
+train_error = -cv_results["train_score"]
+print(f"Mean squared error of linear regresion model on the train set:\n"
+      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
 
 # %%
-train_score = cv_results["train_score"]
-print(f"R2 score of ridge model on the train set:\n"
-      f"{train_score.mean():.3f} +/- {train_score.std():.3f}")
+test_error = -cv_results["test_score"]
+print(f"Mean squared error of linear regresion model on the test set:\n"
+      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
 # We see that the training and testing scores are much closer, indicating that
@@ -200,19 +199,20 @@ from sklearn.preprocessing import StandardScaler
 
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
                       Ridge(alpha=0.5))
-cv_results = cross_validate(ridge, data, target, cv=10,
+cv_results = cross_validate(ridge, data, target,
+                            cv=10, scoring="neg_mean_squared_error",
                             return_train_score=True,
                             return_estimator=True)
 
 # %%
-test_score = cv_results["test_score"]
-print(f"R2 score of ridge model on the test set:\n"
-      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
+train_error = -cv_results["train_score"]
+print(f"Mean squared error of linear regresion model on the train set:\n"
+      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
 
 # %%
-train_score = cv_results["train_score"]
-print(f"R2 score of ridge model on the train set:\n"
-      f"{train_score.mean():.3f} +/- {train_score.std():.3f}")
+test_error = -cv_results["test_score"]
+print(f"Mean squared error of linear regresion model on the test set:\n"
+      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
 # We observe that scaling data has a positive impact on the test score and that
@@ -281,19 +281,20 @@ ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
 from sklearn.model_selection import ShuffleSplit
 
 cv = ShuffleSplit(n_splits=5, random_state=1)
-cv_results = cross_validate(ridge, data, target, cv=cv,
+cv_results = cross_validate(ridge, data, target,
+                            cv=cv, scoring="neg_mean_squared_error",
                             return_train_score=True,
                             return_estimator=True, n_jobs=-1)
 
 # %%
-test_score = cv_results["test_score"]
-print(f"R2 score of ridge model with optimal alpha on the test set:\n"
-      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
+train_error = -cv_results["train_score"]
+print(f"Mean squared error of linear regresion model on the train set:\n"
+      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
 
 # %%
-train_score = cv_results["train_score"]
-print(f"R2 score of ridge model on the train set:\n"
-      f"{train_score.mean():.3f} +/- {train_score.std():.3f}")
+test_error = -cv_results["test_score"]
+print(f"Mean squared error of linear regresion model on the test set:\n"
+      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
 # By optimizing `alpha`, we see that the training an testing scores are closed.
@@ -301,7 +302,8 @@ print(f"R2 score of ridge model on the train set:\n"
 #
 # When fitting the ridge regressor, we also requested to store the error found
 # during cross-validation (by setting the parameter `store_cv_values=True`).
-# We will plot the mean MSE for the different `alphas`.
+# We will plot the mean squared error for the different `alphas` regularization
+# strength that we tried.
 
 # %%
 mse_alphas = [est[-1].cv_values_.mean(axis=0)

@@ -1417,7 +1417,8 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <p>Then, create an <code class="docutils literal notranslate"><span class="pre">AbaBoostRegressor</span></code>. Use the function
 <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code> to get training and test scores
-by varying the number of estimators.
+by varying the number of estimators. Use the mean absolute error as a metric
+by passing <code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_absolute_error&quot;</span></code>.
 <em>Hint: vary the number of estimators between 1 and 60.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1428,27 +1429,30 @@ by varying the number of estimators.
 <span class="n">adaboost</span> <span class="o">=</span> <span class="n">AdaBoostRegressor</span><span class="p">()</span>
 <span class="n">param_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
 <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
-    <span class="n">adaboost</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span>
-    <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adaboost</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span>
+    <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Plot both the mean training and test scores. You can also plot the
-standard deviation of the scores.</p>
+<p>Plot both the mean training and test errors. You can also plot the
+standard deviation of the errors.
+<em>Hint: you can use <code class="docutils literal notranslate"><span class="pre">plt.errorbar</span></code>.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
              <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cross-validation score&quot;</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">test_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cross-validation score&quot;</span><span class="p">,</span>
              <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$R^2$ score&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error in k$</span><span class="se">\n</span><span class="s2">(smaller is better)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;# estimators&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Validation curve for AdaBoost regressor&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1468,23 +1472,25 @@ Adding too many estimators is detrimental for the performance of the model.</p>
 
 <span class="n">forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
 <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
-    <span class="n">forest</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span>
-    <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">forest</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span>
+    <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
              <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cross-validation score&quot;</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">test_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cross-validation score&quot;</span><span class="p">,</span>
              <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$R^2$ score&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error in k$</span><span class="se">\n</span><span class="s2">(smaller is better)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;# estimators&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Validation curve for RandomForest regressor&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1495,9 +1501,10 @@ Adding too many estimators is detrimental for the performance of the model.</p>
 </div>
 </div>
 <p>In contrary to the AdaBoost regressor, we can see that increasing the number
-trees in the forest will increase the statistical performance of the random
-forest. In fact, a random forest has less chance to suffer from overfitting
-than AdaBoost when increasing the number of estimators.</p>
+trees in the forest will increase the statistical performance (by decreasing
+the mean absolute error) of the random forest. In fact, a random forest has
+less chance to suffer from overfitting than AdaBoost when increasing the
+number of estimators.</p>
 </div>
 
     <script type="text/x-thebe-config">

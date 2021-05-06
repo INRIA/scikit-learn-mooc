@@ -1496,30 +1496,52 @@ scikit-learn.</p>
 </div>
 </div>
 <p>In the solution of the previous exercise, we implemented a function to
-compute the error of the model. Instead of using it, we will import the
-metric directly from scikit-learn.</p>
+compute the goodness of fit of a model. Indeed, we mentioned two metrics: (i)
+the mean squared error and (ii) the mean absolute error. These metrics are
+implemented in scikit-learn and we do not need to use our own implementation.</p>
+<p>We can first compute the mean squared error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
 
 <span class="n">inferred_body_mass</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">model_error</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">inferred_body_mass</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The error of the optimal model is </span><span class="si">{</span><span class="n">model_error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean squared error of the optimal model is </span><span class="si">{</span><span class="n">model_error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The error of the optimal model is 154546.19
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean squared error of the optimal model is 154546.19
 </pre></div>
 </div>
 </div>
 </div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Indeed, fitting a <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> on the train dataset is equivalent of
-finding the <code class="docutils literal notranslate"><span class="pre">coef_</span></code> and <code class="docutils literal notranslate"><span class="pre">intercept_</span></code> (i.e. finding the model) that minimize
-the mean squared error on these training data.</p>
+<p>A linear regression model minimizes the mean squared error on the training
+set. This means that the parameters obtained after the fit (i.e. <code class="docutils literal notranslate"><span class="pre">coef_</span></code> and
+<code class="docutils literal notranslate"><span class="pre">intercept_</span></code>) are the optimal parameters that minimizes the mean squared
+error. In other words, any other choice of parameters will yield a model with
+a higher mean squared error on the training set.</p>
+<p>However, the mean squared error is difficult to interpret. The mean absolute
+error is more intuitive since it provides an error in the same unit as the
+one of the target.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+
+<span class="n">model_error</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">inferred_body_mass</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean absolute error of the optimal model is </span><span class="si">{</span><span class="n">model_error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> g&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean absolute error of the optimal model is 313.00 g
+</pre></div>
+</div>
+</div>
+</div>
+<p>A mean absolute error of 313 means that in average, our model make an error
+of +/- 313 grams when predicting the body mass of a penguin given its flipper
+length.</p>
 <p>In this notebook, you saw how to train a linear regression model using
 scikit-learn.</p>
 </div>

@@ -26,7 +26,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Then, create an `AbaBoostRegressor`. Use the function
 # `sklearn.model_selection.validation_curve` to get training and test scores
-# by varying the number of estimators.
+# by varying the number of estimators. Use the mean absolute error as a metric
+# by passing `scoring="neg_mean_absolute_error"`.
 # *Hint: vary the number of estimators between 1 and 60.*
 
 # %%
@@ -37,25 +38,28 @@ from sklearn.model_selection import validation_curve
 adaboost = AdaBoostRegressor()
 param_range = np.unique(np.logspace(0, 1.8, num=30).astype(int))
 train_scores, test_scores = validation_curve(
-    adaboost, data_train, target_train, param_name="n_estimators",
-    param_range=param_range, n_jobs=-1)
+    adaboost, data_train, target_train,
+    param_name="n_estimators", param_range=param_range,
+    scoring="neg_mean_absolute_error", n_jobs=-1)
+train_errors, test_errors = -train_scores, -test_scores
 
 # %% [markdown]
-# Plot both the mean training and test scores. You can also plot the
-# standard deviation of the scores.
+# Plot both the mean training and test errors. You can also plot the
+# standard deviation of the errors.
+# *Hint: you can use `plt.errorbar`.*
 
 # %%
 import matplotlib.pyplot as plt
 
-plt.errorbar(param_range, train_scores.mean(axis=1),
-             yerr=train_scores.std(axis=1), label="Training score",
+plt.errorbar(param_range, train_errors.mean(axis=1),
+             yerr=train_errors.std(axis=1), label="Training score",
              alpha=0.7)
-plt.errorbar(param_range, test_scores.mean(axis=1),
-             yerr=test_scores.std(axis=1), label="Cross-validation score",
+plt.errorbar(param_range, test_errors.mean(axis=1),
+             yerr=test_errors.std(axis=1), label="Cross-validation score",
              alpha=0.7)
 
 plt.legend()
-plt.ylabel("$R^2$ score")
+plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
 _ = plt.title("Validation curve for AdaBoost regressor")
 
@@ -72,24 +76,27 @@ from sklearn.ensemble import RandomForestRegressor
 
 forest = RandomForestRegressor()
 train_scores, test_scores = validation_curve(
-    forest, data_train, target_train, param_name="n_estimators",
-    param_range=param_range, n_jobs=-1)
+    forest, data_train, target_train,
+    param_name="n_estimators", param_range=param_range,
+    scoring="neg_mean_absolute_error", n_jobs=-1)
+train_errors, test_errors = -train_scores, -test_scores
 
 # %%
-plt.errorbar(param_range, train_scores.mean(axis=1),
-             yerr=train_scores.std(axis=1), label="Training score",
+plt.errorbar(param_range, train_errors.mean(axis=1),
+             yerr=train_errors.std(axis=1), label="Training score",
              alpha=0.7)
-plt.errorbar(param_range, test_scores.mean(axis=1),
-             yerr=test_scores.std(axis=1), label="Cross-validation score",
+plt.errorbar(param_range, test_errors.mean(axis=1),
+             yerr=test_errors.std(axis=1), label="Cross-validation score",
              alpha=0.7)
 
 plt.legend()
-plt.ylabel("$R^2$ score")
+plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
 _ = plt.title("Validation curve for RandomForest regressor")
 
 # %% [markdown]
 # In contrary to the AdaBoost regressor, we can see that increasing the number
-# trees in the forest will increase the statistical performance of the random
-# forest. In fact, a random forest has less chance to suffer from overfitting
-# than AdaBoost when increasing the number of estimators.
+# trees in the forest will increase the statistical performance (by decreasing
+# the mean absolute error) of the random forest. In fact, a random forest has
+# less chance to suffer from overfitting than AdaBoost when increasing the
+# number of estimators.

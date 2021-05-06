@@ -241,13 +241,16 @@ target *= 100  # rescale the target in k$
 from sklearn.ensemble import GradientBoostingRegressor
 
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
-cv_results_gbdt = cross_validate(gradient_boosting, data, target, n_jobs=-1)
+cv_results_gbdt = cross_validate(
+    gradient_boosting, data, target, scoring="neg_mean_absolute_error",
+    n_jobs=-1,
+)
 
 # %%
 print("Gradient Boosting Decision Tree")
-print(f"R2 score via cross-validation: "
-      f"{cv_results_gbdt['test_score'].mean():.3f} +/- "
-      f"{cv_results_gbdt['test_score'].std():.3f}")
+print(f"Mean absolute error via cross-validation: "
+      f"{-cv_results_gbdt['test_score'].mean():.3f} +/- "
+      f"{cv_results_gbdt['test_score'].std():.3f} k$")
 print(f"Average fit time: "
       f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
 print(f"Average score time: "
@@ -257,13 +260,16 @@ print(f"Average score time: "
 from sklearn.ensemble import RandomForestRegressor
 
 random_forest = RandomForestRegressor(n_estimators=200, n_jobs=-1)
-cv_results_rf = cross_validate(gradient_boosting, data, target, n_jobs=-1)
+cv_results_rf = cross_validate(
+    gradient_boosting, data, target, scoring="neg_mean_absolute_error",
+    n_jobs=-1,
+)
 
 # %%
 print("Random Forest")
-print(f"R2 score via cross-validation: "
-      f"{cv_results_rf['test_score'].mean():.3f} +/- "
-      f"{cv_results_rf['test_score'].std():.3f}")
+print(f"Mean absolute error via cross-validation: "
+      f"{-cv_results_rf['test_score'].mean():.3f} +/- "
+      f"{cv_results_rf['test_score'].std():.3f} k$")
 print(f"Average fit time: "
       f"{cv_results_rf['fit_time'].mean():.3f} seconds")
 print(f"Average score time: "

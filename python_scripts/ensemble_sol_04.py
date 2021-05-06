@@ -28,7 +28,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Similarly to the previous exercise, create a gradient boosting decision tree
 # and create a validation curve to assess the impact of the number of trees
-# on the statistical performance of the model.
+# on the statistical performance of the model. Use the mean absolute error
+# to assess the statistical performance of the model.
 
 # %%
 import numpy as np
@@ -38,19 +39,34 @@ from sklearn.model_selection import validation_curve
 gbdt = GradientBoostingRegressor()
 param_range = np.unique(np.logspace(0, 1.8, num=30).astype(int))
 train_scores, test_scores = validation_curve(
-    gbdt, data_train, target_train, param_name="n_estimators",
-    param_range=param_range, n_jobs=-1)
+    gbdt,
+    data_train,
+    target_train,
+    param_name="n_estimators",
+    param_range=param_range,
+    scoring="neg_mean_absolute_error",
+    n_jobs=-1,
+)
+train_errors, test_errors = -train_scores, -test_scores
 
 # %%
 import matplotlib.pyplot as plt
 
-plt.errorbar(param_range, train_scores.mean(axis=1),
-             yerr=train_scores.std(axis=1), label="Training score")
-plt.errorbar(param_range, test_scores.mean(axis=1),
-             yerr=test_scores.std(axis=1), label="Cross-validation score")
+plt.errorbar(
+    param_range,
+    train_errors.mean(axis=1),
+    yerr=train_errors.std(axis=1),
+    label="Training score",
+)
+plt.errorbar(
+    param_range,
+    test_errors.mean(axis=1),
+    yerr=test_errors.std(axis=1),
+    label="Cross-validation score",
+)
 
 plt.legend()
-plt.ylabel("$R^2$ score")
+plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
 _ = plt.title("Validation curve for GBDT regressor")
 

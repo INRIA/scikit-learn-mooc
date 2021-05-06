@@ -28,7 +28,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Similarly to the previous exercise, create a gradient boosting decision tree
 # and create a validation curve to assess the impact of the number of trees
-# on the statistical performance of the model.
+# on the statistical performance of the model. Use the mean absolute error
+# to assess the statistical performance of the model.
 
 # %%
 # Write your code here.

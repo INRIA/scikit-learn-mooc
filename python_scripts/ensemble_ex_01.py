@@ -25,7 +25,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
 # to its parameter `base_estimator`. Train the regressor and evaluate its
-# statistical performance on the testing set.
+# statistical performance on the testing set using the mean absolute error.
 
 # %%
 # Write your code here.
@@ -34,7 +34,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # Now, create a `RandomizedSearchCV` instance using the previous model and
 # tune the important parameters of the bagging regressor. Find the best
 # parameters  and check if you are able to find a set of parameters that
-# improve the default regressor.
+# improve the default regressor still using the mean absolute error as a
+# metric.
 
 # ```{tip}
 # You can list the bagging regressor's parameters using the `get_params`

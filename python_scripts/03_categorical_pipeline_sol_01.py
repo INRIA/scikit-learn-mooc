@@ -25,10 +25,6 @@
 # evaluated by cross-validation and then compared to the score obtained when
 # using `OneHotEncoder` or to some other baseline score.
 #
-# Because `OrdinalEncoder` can raise errors if it sees an unknown category at
-# prediction time, you can set the `handle_unknown` and `unknown_value`
-# parameters.
-#
 # First, we load the dataset.
 
 # %%

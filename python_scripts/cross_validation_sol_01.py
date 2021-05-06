@@ -33,7 +33,7 @@ target = blood_transfusion["Class"]
 # details for the exercise.
 #
 # Also, this classifier can become more flexible/expressive by using a
-# so-called kernel. The model becomes non-linear. Again, no requirement
+# so-called kernel making the model becomes non-linear. Again, no requirement
 # regarding the mathematics is required to accomplish this exercise.
 #
 # We will use an RBF kernel where a parameter `gamma` allows to tune the

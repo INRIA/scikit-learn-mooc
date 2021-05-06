@@ -93,14 +93,20 @@ plt.ylabel("Mean absolute error (k$)")
 _ = plt.title("Learning curve for decision tree")
 
 # %% [markdown]
-# We see that the more samples we add to the training set on this learning
-# curve, the lower the error becomes. With this curve, we are searching for the
-# plateau for which there is no benefit to adding samples anymore or assessing
-# the potential gain of adding more samples into the training set.
+# Looking at the training error alone, we see that we get an error of 0 k$. It
+# means that the trained model (i.e. decision tree) is clearly overfitting the
+# training data.
 #
-# For this dataset we notice that our decision tree model would really benefit
-# from additional datapoints to reduce the amount of over-fitting and hopefully
-# reduce the testing error even further.
+# Looking at the testing error alone, we observe that the more samples are
+# added into the training set, the lower the testing error becomes. Also, we
+# are searching for the plateau of the testing error for which there is no
+# benefit to adding samples anymore or assessing the potential gain of adding
+# more samples into the training set.
+#
+# If we achieve a plateau and adding new samples in the training set does not
+# reduce the testing error, we might have reach the Bayes error rate using the
+# available model. Using a more complex model might be the only possibility to
+# reduce the testing error further.
 #
 # ## Summary
 #

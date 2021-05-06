@@ -301,18 +301,19 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # model statistical performance.
 #
 # Note that there exists several cross-validation strategies, each of them
-# defines how to repeat the experiment. In this section, we will use the K-fold
-# strategy: the entire dataset is split into `K` partitions. The experiment
-# `fit`/`score` is repeated `K` times where at each iteration `K - 1`
+# defines how to repeat the `fit`/`score` procedure. In this section, we will
+# use the K-fold strategy: the entire dataset is split into `K` partitions. The
+# `fit`/`score` procedure is repeated `K` times where at each iteration `K - 1`
 # partitions are used to fit the model and `1` partition is used to score. The
 # figure below illustrates this K-fold strategy.
 #
 # ![Cross-validation diagram](../figures/cross_validation_diagram.png)
 #
 # ```{note}
-# This figure shows a particular cross-validation strategy named K-fold. There
-# are a variety of different cross-validation strategies. Some of these aspects
-# will be covered in more details in future notebooks.
+# This figure shows the particular case of K-fold cross-validation strategy.
+# As mentioned earlier, there are a variety of different cross-validation
+# strategies. Some of these aspects will be covered in more details in future
+# notebooks.
 # ```
 #
 # For each cross-validation split, the procedure trains a model on all the red

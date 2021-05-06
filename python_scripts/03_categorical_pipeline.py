@@ -249,7 +249,7 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # %% [markdown]
 # ### Choosing an encoding strategy
 #
-# Choosing an encoding strategy will depend of the underlying models and the
+# Choosing an encoding strategy will depend on the underlying models and the
 # type of categories (i.e. ordinal vs. nominal).
 #
 # Indeed, using an `OrdinaleEncoder` will output ordinal categories. It means
@@ -259,11 +259,14 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # while tree-based models will not be.
 #
 # Thus, in general `OneHotEncoder` is the encoding strategy used when the
-# downstream models is a linear models while `OrdinalEncoder` is used with
+# downstream models are linear models while `OrdinalEncoder` is used with
 # tree-based models.
 #
 # You still can use an `OrdinalEncoder` with linear models but you need to be
-# sure about categories ordering.
+# sure that:
+# - the original categories (before encoding) have an ordering;
+# - the encoded categories follow the same ordering than the original
+#   categories.
 
 # %% [markdown]
 # ## Evaluate our predictive pipeline

@@ -48,7 +48,8 @@ cv_results = cross_validate(regressor, data, target,
 cv_results = pd.DataFrame(cv_results)
 
 # %% [markdown]
-# We will select the train and test score and take the error instead.
+# The cross-validation used the negative mean absolute error. We transform
+# the negative mean absolute error into a positive mean absolute error.
 
 # %%
 scores = pd.DataFrame()
@@ -81,8 +82,8 @@ _ = plt.title("Train and test errors distribution via cross-validation")
 # Some model hyperparameters are usually the key to go from a model that
 # underfits to a model that overfits, hopefully going through a region were we
 # can get a good balance between the two. We can acquire knowledge by plotting
-# a curve called the validation curve. This curve applies the above experiment
-# and varies the value of a hyperparameter.
+# a curve called the validation curve. This curve can also be applied to the
+# above experiment and varies the value of a hyperparameter.
 #
 # For the decision tree, the `max_depth` parameter is used to control the
 # tradeoff between under-fitting and over-fitting.
@@ -125,14 +126,14 @@ _ = plt.title("Validation curve for decision tree")
 #
 # - For `max_depth > 10`, the decision tree overfits. The training error
 #   becomes very small, while the testing error increases. In this
-#   region, the models create decision specifically for noisy samples harming
+#   region, the models create decisions specifically for noisy samples harming
 #   its ability to generalize to test data.
 #
 # Note that for `max_depth = 10`, the model overfits a bit as there is a gap
 # between the training error and the testing error. It can also
 # potentially underfit also a bit at the same time, because the training error
 # is still far from zero (more than 30 k\$), meaning that the model might
-# still be too constrained to model interesting parts of the data. However the
+# still be too constrained to model interesting parts of the data. However, the
 # testing error is minimal, and this is what really matters. This is the
 # best compromise we could reach by just tuning this parameter.
 #

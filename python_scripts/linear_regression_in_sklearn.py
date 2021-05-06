@@ -86,13 +86,14 @@ model_error = mean_squared_error(target, inferred_body_mass)
 print(f"The mean squared error of the optimal model is {model_error:.2f}")
 
 # %% [markdown]
-# A linear regression model fitted on a training set is the model minimizes the
-# mean squared error on this set. It means that there is not any other linear
-# models (i.e. other set of parameters `coef_` and `intercept_`) for which the
-# mean squared error will be lower than the one that we computed above.
+# A linear regression model minimizes the mean squared error on the training
+# set. This means that the parameters obtained after the fit (i.e. `coef_` and
+# `intercept_`) are the optimal parameters that minimizes the mean squared
+# error. In other words, any other choice of parameters will yield a model with
+# a higher mean squared error on the training set.
 #
 # However, the mean squared error is difficult to interpret. The mean absolute
-# error is more intuitive since it provides an error in the same unit than the
+# error is more intuitive since it provides an error in the same unit as the
 # one of the target.
 
 # %%

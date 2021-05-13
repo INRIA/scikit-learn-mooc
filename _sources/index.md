@@ -67,3 +67,26 @@ or use the following resources:
 - [Introduction to Pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
 - [Introduction to Matplotlib](https://sebastianraschka.com/blog/2020/numpy-intro.html#410-matplotlib)
 
+
+## MOOC material
+
+The MOOC material is developed publicly under the [CC-By license](
+https://github.com/INRIA/scikit-learn-mooc/blob/master/LICENSE),
+including the notebooks, exercises and solutions to the exercises
+(but not the solutions for the quiz ;) via the following GitHub
+repository:
+
+  https://github.com/INRIA/scikit-learn-mooc/
+
+This is also published as a static website at:
+
+  https://inria.github.io/scikit-learn-mooc/
+
+It is possible to use the rocket icon at the top of each notebook
+page to interactively execute the code cells via the Binder
+service.
+
+Note however that it is required to use the
+[version hosted on the fun-mooc platform](
+https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn/)
+to complete the quiz.

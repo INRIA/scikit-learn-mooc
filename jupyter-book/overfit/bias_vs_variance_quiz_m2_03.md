@@ -1,21 +1,21 @@
 # ✅ Quiz M2.03
 
 ```{admonition} Question
-Choosing a model with a high bias:
+Fitting a model with a high bias:
 
-- a) leads to underfitting?
-- b) leads to overfitting?
+- a) causes underfitting?
+- b) causes overfitting?
 - c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
-- d) leads the learned prediction function to make systematic errors?
+- d) causes the learned prediction function to make systematic errors?
 ```
 
 +++
 
 ```{admonition} Question
-Choosing a model with a high variance:
+Fitting a high variance model:
 
-- a) leads to underfitting?
-- b) leads to overfitting?
+- a) causes underfitting?
+- b) causes overfitting?
 - c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
-- d) leads the learned prediction function to make systematic errors?
+- d) causes the learned prediction function to make systematic errors?
 ```

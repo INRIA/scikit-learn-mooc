@@ -27,8 +27,8 @@ house is expensive. "Expensive" is defined as a sale price greater than
 $200,000.
 
 ```{admonition} Question
-Use the `data.info()` command to examine the columns of the dataframe.
-The dataset contains:
+Use the `data.info()` and ` data.head()` commands to examine the columns of
+the dataframe. The dataset contains:
 
 - a) numerical features
 - b) categorical features

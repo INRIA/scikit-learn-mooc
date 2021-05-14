@@ -1473,7 +1473,7 @@ raw features (with <code class="docutils literal notranslate"><span class="pre">
     <span class="kc">None</span><span class="p">,</span>
     <span class="n">StandardScaler</span><span class="p">(),</span>
     <span class="n">MinMaxScaler</span><span class="p">(),</span>
-    <span class="n">QuantileTransformer</span><span class="p">(),</span>
+    <span class="n">QuantileTransformer</span><span class="p">(</span><span class="n">n_quantiles</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
     <span class="n">PowerTransformer</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;box-cox&quot;</span><span class="p">),</span>
 <span class="p">]</span>
 </pre></div>
@@ -1488,8 +1488,13 @@ chapter</a> of the
 scikit-learn user guide but this is not required to answer the quiz questions.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Use <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.GridSearchCV</span></code> to study the impact of the choice of the preprocessor and the number of neighbors on the 10-fold cross-validated <code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code> metric. We want to study the <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> in the range <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">51,</span> <span class="pre">101]</span></code> and <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> in the range <code class="docutils literal notranslate"><span class="pre">all_preprocessors</span></code></p>
-<p>Let us consider that a model is significantly better than another if the its mean test score is better than the mean test score of the alternative by more than the standard deviation of its test score.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.GridSearchCV</span></code> to study the impact of the choice of
+the preprocessor and the number of neighbors on the 10-fold cross-validated
+<code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code> metric. We want to study the <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> in the range
+<code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">51,</span> <span class="pre">101]</span></code> and <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> in the range <code class="docutils literal notranslate"><span class="pre">all_preprocessors</span></code>.</p>
+<p>Let us consider that a model is significantly better than another if the its
+mean test score is better than the mean test score of the alternative by more
+than the standard deviation of its test score.</p>
 <p>Which of the following statements hold:</p>
 <ul class="simple">
 <li><p>a) The best model with <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is significantly better than using any other processor</p></li>

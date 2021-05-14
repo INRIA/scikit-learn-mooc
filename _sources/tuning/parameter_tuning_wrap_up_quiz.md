@@ -96,7 +96,7 @@ all_preprocessors = [
     None,
     StandardScaler(),
     MinMaxScaler(),
-    QuantileTransformer(),
+    QuantileTransformer(n_quantiles=100),
     PowerTransformer(method="box-cox"),
 ]
 ```
@@ -112,9 +112,14 @@ scikit-learn user guide but this is not required to answer the quiz questions.
 
 ```{admonition} Question
 
-Use `sklearn.model_selection.GridSearchCV` to study the impact of the choice of the preprocessor and the number of neighbors on the 10-fold cross-validated `balanced_accuracy` metric. We want to study the `n_neighbors` in the range `[5, 51, 101]` and `preprocessor` in the range `all_preprocessors`
+Use `sklearn.model_selection.GridSearchCV` to study the impact of the choice of
+the preprocessor and the number of neighbors on the 10-fold cross-validated
+`balanced_accuracy` metric. We want to study the `n_neighbors` in the range
+`[5, 51, 101]` and `preprocessor` in the range `all_preprocessors`.
 
-Let us consider that a model is significantly better than another if the its mean test score is better than the mean test score of the alternative by more than the standard deviation of its test score.
+Let us consider that a model is significantly better than another if the its
+mean test score is better than the mean test score of the alternative by more
+than the standard deviation of its test score.
 
 Which of the following statements hold:
 

@@ -32,12 +32,13 @@ interpreting their predictions.
 <div class="container">
   <div class="row">
     <div class="col-xl">
-      This document is a work in progress. You can
+      Register to the
       <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
-        register to the "Machine learning in Python with scikit-learn MOOC"
+        "Machine learning in Python with scikit-learn MOOC"
       </a>,
-      based on this document. Note: you will be able to register now but the MOOC itself will
-      start on May 18 2021.</br>
+      to have the full MOOC experience (quizz solutions, executable notebooks,
+      discussion forum, etc ...)!
+      </br>
       The MOOC is free and the platform does not use the student data for any other purpose
       than improving the educational material.
     </div>
@@ -73,7 +74,7 @@ or use the following resources:
 The MOOC material is developed publicly under the [CC-By license](
 https://github.com/INRIA/scikit-learn-mooc/blob/master/LICENSE),
 including the notebooks, exercises and solutions to the exercises
-(but not the solutions for the quiz ;) via the following GitHub
+(but not the quizz solutions ;) via the following GitHub
 repository:
 
   https://github.com/INRIA/scikit-learn-mooc/
@@ -89,4 +90,4 @@ service.
 Note however that it is required to use the
 [version hosted on the fun-mooc platform](
 https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn/)
-to complete the quiz.
+to complete the quizzes.

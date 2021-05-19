@@ -61,7 +61,7 @@ data_numeric = data[numerical_columns]
 from sklearn.model_selection import train_test_split
 
 data_numeric_train, data_numeric_test, target_train, target_test = \
-    train_test_split(data_numeric, target, random_state=0)
+    train_test_split(data_numeric, target, random_state=42)
 
 # %% [markdown]
 # We will first create a dummy classifier which will always predict the

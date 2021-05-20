@@ -54,16 +54,8 @@ numerical_columns = [
 data_numeric = data[numerical_columns]
 
 # %% [markdown]
-# Next, let's split the data and target into a train and test set.
-
-# %%
-from sklearn.model_selection import train_test_split
-
-data_numeric_train, data_numeric_test, target_train, target_test = \
-    train_test_split(data_numeric, target, random_state=0)
-
-# %% [markdown]
 # Split the dataset into a train and test sets.
+
 # %%
 from sklearn.model_selection import train_test_split
 

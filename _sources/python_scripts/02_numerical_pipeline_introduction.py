@@ -194,7 +194,7 @@ print(f"Number of correct prediction: "
 adult_census_test = pd.read_csv('../datasets/adult-census-numeric-test.csv')
 
 # %% [markdown]
-# From this new data, we separate out input features and the target to predict,
+# From this new data, we separate our input features and the target to predict,
 # as in the beginning of this notebook.
 
 # %%

@@ -23,9 +23,9 @@ In the previous notebook, we used:
 
 - a) pandas to manipulate data
 - b) pandas and seaborn to visually inspect the dataset
-- b) numpy and scipy to perform numerical inspection (for instance using
+- c) numpy and scipy to perform numerical inspection (for instance using
   `scipy.optimize.minimize`)
-- c) scikit-learn to fit some machine learning models
+- d) scikit-learn to fit some machine learning models
 ```
 
 +++

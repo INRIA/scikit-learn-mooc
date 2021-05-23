@@ -75,7 +75,7 @@ for the remainder of this quiz.
 
 ```{admonition} Question
 Why is it relevant to add a preprocessing step to scale the data using a
-`StandardScaler` when working with a `KNearestNeighborsClassifier`?
+`StandardScaler` when working with a `KNeighborsClassifier`?
 
 - a) faster to compute the list of neighbors on scaled data
 - b) k-nearest neighbors is based on computing some distances. Features need

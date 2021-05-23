@@ -34,7 +34,7 @@ One-hot encoding will:
 ```{admonition} Question
 
 Assume we have a dataset where each line describes a company. Which of the
-following columns should be considered as a meaningful numerical feature to
+following columns should be considered as a meaningful **numerical feature** to
 train a machine learning model to classify companies:
 
 - a) the sector of activity ("construction", "retail", "energy", "insurance"...)

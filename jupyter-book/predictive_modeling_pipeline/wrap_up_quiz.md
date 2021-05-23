@@ -144,9 +144,12 @@ preprocessor = ColumnTransformer(transformers=[
 model = make_pipeline(preprocessor, LogisticRegression())
 ```
 
-Let us now define a substantial improvement or deterioration as an increase or
-decrease of the mean generalization score of at least three times the standard
-deviation of the cross-validated generalization score.
+Let us now define a **substantial** improvement or deterioration as an
+increase or decrease of the mean test score (**difference of the mean
+test scores** of models using only numerical features and numerical
+together with numerical features) of **at least three times the
+standard deviation** of the cross-validated test scores of the model
+using both categorical and numerical features.
 
 ```{admonition} Question
 With this heterogeneous pipeline, the accuracy score:

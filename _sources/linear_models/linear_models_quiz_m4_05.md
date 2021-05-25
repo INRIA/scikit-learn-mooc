@@ -1,53 +1,29 @@
 # ✅ Quiz M4.05
 
 ```{admonition} Question
-Regularization refers to:
+By default, a `LogisticRegression` in scikit-learn applies:
 
-- a) constraining the intercept of the linear model to be zero
-- b) shrinking the weights of the linear model towards zero
-- c) using a subset of the available data when fitting a linear model
+- a) no penalty
+- b) a l2 penalty
+- c) a l1 penalty
 ```
 
 +++
 
 ```{admonition} Question
-A ridge model is:
+The decision boundaries of a logistic regression:
 
-- a) the same as linear regression with penalized weights
-- b) the same as logistic regression with penalized weights
-- c) a linear model
-- d) a non linear model
+- a) uses only one of the input features
+- b) uses a combination of the input features
+- c) separates a single class
 ```
 
 +++
 
 ```{admonition} Question
-The parameter `alpha` in ridge is:
+The parameter `C` in a logistic regression is:
 
-- a) learnt during the fit on the train set
-- b) can be chosen by cross-validation on the train set
-- c) can be chosen by cross-validation on the test set
-- d) can be chosen by hand a priori
-```
-
-+++
-
-```{admonition} Question
-Scaling the data before fitting a model:
-
-- a) is necessary when using a regularized model
-- b) is always necessary
-- c) may speed-up fitting
-- d) has no impact on the regularization parameter
-```
-
-+++
-
-```{admonition} Question
-The effect of an l2-regularization (as done in ridge) is to:
-
-- a) shrink all weights towards zero
-- b) make all weights equal
-- c) set a subset of the weights to exactly zero
-- d) constrain all the weights to be positive
+- a) similar to the parameter `alpha` in a ridge regressor
+- b) similar to `1 / alpha` where `alpha` is the parameter of a ridge regressor
+- c) not controlling the regularization
 ```

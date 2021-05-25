@@ -76,8 +76,8 @@ model = Pipeline([
 # %%
 from sklearn.model_selection import cross_val_score
 
-learning_rate = [0.05, 0.1, 0.5, 1, 5]
-max_leaf_nodes = [3, 10, 30, 100]
+learning_rate = [0.01, 0.1, 1, 10]
+max_leaf_nodes = [3, 10, 30]
 
 best_score = 0
 best_params = {}

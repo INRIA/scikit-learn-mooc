@@ -64,8 +64,10 @@ Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 
 +++
 
-We will load the results from the randomized-search performed in the previous
-notebook:
+Copy and execute the following code in the sandbox notebook to load the results
+of the randomized-search performed in the previous notebook. Executing this
+code will display an interactive plot to analyze the impact of the
+hyper-parameters on the test score of the models.
 
 ```py
 import numpy as np
@@ -102,7 +104,9 @@ spread the active ranges and improve the readability of the plot.
 ```
 
 ```{admonition} Question
-In the parallel coordinate plot shown above, select the bad performing models.
+In the parallel coordinate plot obtained by the running the above code snippet,
+select the bad performing models.
+
 We define bad performing models as the models with a `mean_test_score` below
 0.8. You can select the range [0.0, 0.8] by clicking and holding on the
 `mean_test_score` axis of the parallel coordinate plot.

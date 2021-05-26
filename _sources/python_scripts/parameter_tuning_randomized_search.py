@@ -78,8 +78,9 @@ from sklearn.pipeline import Pipeline
 
 model = Pipeline([
     ("preprocessor", preprocessor),
-    ("classifier",
-     HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4))])
+    ("classifier", HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4)),
+])
+
 model
 
 # %% [markdown]
@@ -147,9 +148,15 @@ class loguniform_int:
 
 
 # %% [markdown]
+#
 # Now, we can define the randomized search using the different distributions.
+# Executing 10 iterations of 5-fold cross-validation for random
+# parametrizations of this model on this dataset can take from 10 seconds to
+# several minutes, depending on the speed of the host computer and the number
+# of available processors.
 
 # %%
+%%time
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
@@ -157,11 +164,13 @@ param_distributions = {
     'classifier__learning_rate': loguniform(0.001, 10),
     'classifier__max_leaf_nodes': loguniform_int(2, 256),
     'classifier__min_samples_leaf': loguniform_int(1, 100),
-    'classifier__max_bins': loguniform_int(2, 255)}
+    'classifier__max_bins': loguniform_int(2, 255),
+}
 
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions, n_iter=10,
-    n_jobs=4, cv=5)
+    cv=5, verbose=1,
+)
 model_random_search.fit(data_train, target_train)
 
 # %% [markdown]
@@ -180,8 +189,9 @@ print("The best parameters are:")
 pprint(model_random_search.best_params_)
 
 # %% [markdown]
-# We can inspect the results using the attributes `cv_results` as we previously
-# did.
+#
+# We can inspect the results using the attributes `cv_results` as we did
+# previously.
 
 
 # %%
@@ -248,6 +258,7 @@ fig = px.parallel_coordinates(
 fig.show()
 
 # %% [markdown]
+#
 # The parallel coordinates plot will display the values of the hyperparameters
 # on different columns while the performance metric is color coded. Thus, we
 # are able to quickly inspect if there is a range of hyperparameters which is
@@ -258,11 +269,28 @@ fig.show()
 # spread the active ranges and improve the readability of the plot.
 # ```
 #
-# It is possible to **select a range of results by clicking and holding on
-# any axis** of the parallel coordinate plot. You can then slide (move)
-# the range selection and cross two selections to see the intersections.
+# In particular for this hyper-parameter search, it is interesting to see that
+# the yellow lines (top performing models) all reach intermediate values for
+# the learning rate, that is, tick values between -2 and 0 which correspond to
+# learning rate values of 0.01 to 1.0 once we invert the log10 transform for
+# that axis.
+#
+# It is possible to **select a range of results by clicking and holding on any
+# axis** of the parallel coordinate plot. You can then slide (move) the range
+# selection and cross two selections to see the intersections. You can undo a
+# selection by clicking once again on the same axis.
+#
+# We also observe that it is not possible to select the highest performing
+# models by selecting lines of on the `max_bins` axis with tick values between
+# 1 and 3.
+#
+# The other hyper-parameters are not very sensitive. We can check that if we
+# select the `learning_rate` axis tick values between -1.5 and -0.5 and
+# `max_bins` tick values between 5 and 8, we always select top performing
+# models, whatever the values of the other hyper-parameters.
 
 # %% [markdown]
+#
 # In this notebook, we have seen how randomized search offer a valuable
 # alternative to grid-search when the number of hyperparameters to tune is more
 # than two. It also alleviates the regularity imposed by the grid that might be

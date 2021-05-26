@@ -27,7 +27,7 @@ data, target = load_iris(return_X_y=True, as_frame=True)
 # Write your code here.
 
 # %% [markdown]
-# Now, use the utility `sklearn.utils.cross_val_score` with a
+# Now, use the utility `sklearn.model_selection.cross_val_score` with a
 # `sklearn.model_selection.KFold` by setting only `n_splits=3`. Check the
 # results on each fold. Explain the results.
 

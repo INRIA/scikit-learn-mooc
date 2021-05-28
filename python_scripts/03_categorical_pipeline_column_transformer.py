@@ -261,6 +261,6 @@ model.score(data_test, target_test)
 # * used a `ColumnTransformer` to apply different preprocessing for
 #   categorical and numerical variables;
 # * used a pipeline to chain the `ColumnTransformer` preprocessing and
-#   logistic regresssion fitting;
+#   logistic regression fitting;
 # * seen that **gradient boosting methods** can outperform **linear
 #   models**.

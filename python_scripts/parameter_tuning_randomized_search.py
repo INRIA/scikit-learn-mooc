@@ -233,7 +233,7 @@ cv_results = pd.read_csv("../figures/randomized_search_results.csv",
                          index_col=0)
 
 # %% [markdown]
-# As we have more than 2 paramters in our grid-search, we cannot visualize the
+# As we have more than 2 parameters in our grid-search, we cannot visualize the
 # results using a heatmap. However, we can us a parallel coordinates plot.
 
 # %%

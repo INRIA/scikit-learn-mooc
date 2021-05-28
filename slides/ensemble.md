@@ -322,7 +322,7 @@ histograms to approximate feature sorting to find the best feature split
 thresholds and can therefore be trained efficiently on datasets with hundreds
 of features and tens of millions of data points.
 
-Futhermore they can benefit from running on machines with many CPU cores very
+Furthermore they can benefit from running on machines with many CPU cores very
 efficiently.
 
 ---

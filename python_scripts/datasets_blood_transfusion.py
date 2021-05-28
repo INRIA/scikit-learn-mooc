@@ -3,7 +3,7 @@
 #
 # In this notebook, we will present the "blood transfusion" dataset. This
 # dataset is locally available in the directory `datasets` and it is stored as
-# a comma separeted value (CSV) file. We start by loading the entire dataset.
+# a comma separated value (CSV) file. We start by loading the entire dataset.
 
 # %%
 import pandas as pd

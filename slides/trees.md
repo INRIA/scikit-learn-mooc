@@ -84,7 +84,7 @@ thresholds is used to decide which branch to follow at each split node until
 the test sample reaches a leaf node.
 
 The tree predicts the fraction of training points of each class that reached
-that node, divided by the total number of training points that reached that node. Those values can be interpreted as **class assignement probabilities**.
+that node, divided by the total number of training points that reached that node. Those values can be interpreted as **class assignment probabilities**.
 
 ---
 class: split-50

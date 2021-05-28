@@ -334,7 +334,7 @@ In a more abstract manner, we can represent fitting with the following diagram:
 
 ![img](https://inria.github.io/scikit-learn-mooc/_images/api_diagram-predictor.fit.svg)
 
-The model state are indeed the parameters and the jockey wheels are refering to
+The model state are indeed the parameters and the jockey wheels are referring to
 an optimization algorithm to find the best parameters.
 
 ### train set
@@ -389,7 +389,7 @@ Sometimes, we also use a validation set in context of
 iterative optimization to be fitted and it is not clear how many iterations are
 needed to train the model. In this case, one will used a validation set to
 monitor the performance of the model on some data different from the [training
-set](#train-set). Once that some criteria are fullfiled, the model is trained.
+set](#train-set). Once that some criteria are fulfilled, the model is trained.
 This model is finally evaluated on the left-out [testing set](#test-set).
 
 ## Other useful glossaries

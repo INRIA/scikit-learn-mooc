@@ -307,7 +307,7 @@ plt.subplots_adjust(left=.3)
 #
 # We can see that out of the two correlated features `AveRooms` and
 # `AveBedrms`, the model has selected one. Note that this choice is
-# partly arbitary: choosing one does not mean that the other is not
+# partly arbitrary: choosing one does not mean that the other is not
 # important for prediction. **Avoid over-interpreting models, as they are
 # imperfect**.
 #
@@ -334,7 +334,7 @@ plt.subplots_adjust(left=.3)
 # We can see that both the coefficients associated to `AveRooms` and
 # `AveBedrms` have a strong variability and that they can both be non
 # zero. Given that they are strongly correlated, the model can pick one
-# or the other to predict well. This choice is a bit arbitary, and must
+# or the other to predict well. This choice is a bit arbitrary, and must
 # not be over-interpreted.
 
 # %% [markdown]
@@ -420,7 +420,7 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
 
 # %% [markdown]
 # As the model gives a good prediction, it has captured well the link
-# between X and y. Hence, it is reasonnable to interpret what it has
+# between X and y. Hence, it is reasonable to interpret what it has
 # captured from the data.
 
 # %% [markdown]
@@ -548,7 +548,7 @@ plot_importantes_features(perm_importance_result_train, X_train.columns)
 # important for the model.
 #
 # We note that our random variable `rnd_num` is now very less important than
-# latitude. Indeed, the feature importance build-in in RandomForest has bias
+# latitude. Indeed, the feature importance built-in in RandomForest has bias
 # for continuous data, such as `AveOccup` and `rnd_num`.
 #
 # However, the model still uses these `rnd_num` feature to compute the output.

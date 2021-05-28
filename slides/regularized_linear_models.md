@@ -312,7 +312,7 @@ But for ridge regression it's also possible to use the `RidgeCV` class that can
 run a very efficient internal tuning procedure that can be significantly faster
 than running a traditional grid search.
 
-The selected value for the parameter `alpha` is stored as the atttribute
+The selected value for the parameter `alpha` is stored as the attribute
 `model.alpha_` after calling fit.
 
 ---

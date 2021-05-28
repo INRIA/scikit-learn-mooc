@@ -23,9 +23,9 @@ print(california_housing.DESCR)
 california_housing.frame.head()
 
 # %% [markdown]
-# A written in the descritpion, the dataset contains aggregated data regarding
-# each district in California. Let's have a close look at the features that
-# can be used by a predictive model.
+# As written in the description, the dataset contains aggregated data regarding
+# each district in California. Let's have a close look at the features that can
+# be used by a predictive model.
 
 # %%
 california_housing.data.head()

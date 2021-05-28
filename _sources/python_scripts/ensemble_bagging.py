@@ -356,7 +356,7 @@ _ = plt.title("Bagged polynomial regression")
 # appreciate the uncertainty in the prediction of the bagged ensemble.
 #
 # To conclude this notebook, we note that the bootstrapping procedure is a
-# generic tool of statistics and is not limitted to build ensemble of machine
-# learning models. The interested reader can learn more on the [Wikpedia
+# generic tool of statistics and is not limited to build ensemble of machine
+# learning models. The interested reader can learn more on the [Wikipedia
 # article on
 # bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)).

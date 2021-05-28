@@ -75,7 +75,7 @@ numerical_data = data.select_dtypes("number")
 numerical_data.info()
 
 # %% [markdown]
-# We see that the data are mainly represented with interger number. Let's have
+# We see that the data are mainly represented with integer number. Let's have
 # a look at the histogram for all these features.
 
 # %%

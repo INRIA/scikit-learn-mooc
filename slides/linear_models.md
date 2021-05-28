@@ -415,5 +415,5 @@ than the number of samples: more complex model can typically struggle more than
 linear models in this regime for no added improvement in predictive
 performance.
 
-Howerver in high dimensions, we need to use regularized linear models which
+However in high dimensions, we need to use regularized linear models which
 will introduce in the next presentation.

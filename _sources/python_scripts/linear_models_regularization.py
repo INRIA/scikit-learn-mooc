@@ -59,12 +59,12 @@ cv_results = cross_validate(linear_regression, data, target,
 
 # %%
 train_error = -cv_results["train_score"]
-print(f"Mean squared error of linear regresion model on the train set:\n"
+print(f"Mean squared error of linear regression model on the train set:\n"
       f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
-print(f"Mean squared error of linear regresion model on the test set:\n"
+print(f"Mean squared error of linear regression model on the test set:\n"
       f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
@@ -133,12 +133,12 @@ cv_results = cross_validate(ridge, data, target,
 
 # %%
 train_error = -cv_results["train_score"]
-print(f"Mean squared error of linear regresion model on the train set:\n"
+print(f"Mean squared error of linear regression model on the train set:\n"
       f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
-print(f"Mean squared error of linear regresion model on the test set:\n"
+print(f"Mean squared error of linear regression model on the test set:\n"
       f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
@@ -206,12 +206,12 @@ cv_results = cross_validate(ridge, data, target,
 
 # %%
 train_error = -cv_results["train_score"]
-print(f"Mean squared error of linear regresion model on the train set:\n"
+print(f"Mean squared error of linear regression model on the train set:\n"
       f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
-print(f"Mean squared error of linear regresion model on the test set:\n"
+print(f"Mean squared error of linear regression model on the test set:\n"
       f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
@@ -288,12 +288,12 @@ cv_results = cross_validate(ridge, data, target,
 
 # %%
 train_error = -cv_results["train_score"]
-print(f"Mean squared error of linear regresion model on the train set:\n"
+print(f"Mean squared error of linear regression model on the train set:\n"
       f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
-print(f"Mean squared error of linear regresion model on the test set:\n"
+print(f"Mean squared error of linear regression model on the test set:\n"
       f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]

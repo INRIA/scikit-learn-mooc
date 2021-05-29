@@ -178,8 +178,9 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Is the balanced accuracy of the `BalancedBaggingClassifier` is
-_choose an answer_ than an `HistGradientBoostingClassifier` alone?
+Compared to the balanced accuracy of a `HistGradientBoostingClassifier` alone
+(computed in one of the previous questions), the balanced accuracy of the
+`BalancedBaggingClassifier` is:
 
 - a) Worse
 - b) Better

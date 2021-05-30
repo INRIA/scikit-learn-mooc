@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # %% [markdown]
 # # 📃 Solution for Exercise M2.01
 #
@@ -108,9 +110,9 @@ import matplotlib.pyplot as plt
 
 # %%
 plt.errorbar(gammas, train_scores.mean(axis=1),
-             yerr=train_scores.std(axis=1), label='Training error')
+             yerr=train_scores.std(axis=1), label='Training score')
 plt.errorbar(gammas, test_scores.mean(axis=1),
-             yerr=test_scores.std(axis=1), label='Testing error')
+             yerr=test_scores.std(axis=1), label='Testing score')
 plt.legend()
 
 plt.xscale("log")
@@ -142,9 +144,9 @@ train_size, train_scores, test_scores = results[:3]
 
 # %%
 plt.errorbar(train_size, train_scores.mean(axis=1),
-             yerr=train_scores.std(axis=1), label='Training error')
+             yerr=train_scores.std(axis=1), label='Training score')
 plt.errorbar(train_size, test_scores.mean(axis=1),
-             yerr=test_scores.std(axis=1), label='Testing error')
+             yerr=test_scores.std(axis=1), label='Testing score')
 plt.legend()
 
 plt.xlabel("Number of samples in the training set")

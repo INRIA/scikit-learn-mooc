@@ -109,7 +109,7 @@ param_distributions = {
 
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions,
-    n_iter=20, error_score=np.nan, n_jobs=-1, verbose=1)
+    n_iter=20, error_score=np.nan, n_jobs=2, verbose=1)
 model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 

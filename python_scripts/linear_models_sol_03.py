@@ -50,7 +50,7 @@ from sklearn.model_selection import cross_validate
 
 cv_results = cross_validate(linear_regression, data, target,
                             scoring="neg_mean_absolute_error",
-                            return_estimator=True, cv=10, n_jobs=-1)
+                            return_estimator=True, cv=10, n_jobs=2)
 
 # %%
 print(f"Mean absolute error on testing set: "

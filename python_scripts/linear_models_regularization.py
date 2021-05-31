@@ -284,7 +284,7 @@ cv = ShuffleSplit(n_splits=5, random_state=1)
 cv_results = cross_validate(ridge, data, target,
                             cv=cv, scoring="neg_mean_squared_error",
                             return_train_score=True,
-                            return_estimator=True, n_jobs=-1)
+                            return_estimator=True, n_jobs=2)
 
 # %%
 train_error = -cv_results["train_score"]

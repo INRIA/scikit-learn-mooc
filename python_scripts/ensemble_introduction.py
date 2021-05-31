@@ -30,7 +30,7 @@ from sklearn.model_selection import cross_validate
 from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(random_state=0)
-cv_results = cross_validate(tree, data, target, n_jobs=-1)
+cv_results = cross_validate(tree, data, target, n_jobs=2)
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "
@@ -64,8 +64,8 @@ param_grid = {
 cv = 3
 
 tree = GridSearchCV(DecisionTreeRegressor(random_state=0),
-                    param_grid=param_grid, cv=cv, n_jobs=-1)
-cv_results = cross_validate(tree, data, target, n_jobs=-1,
+                    param_grid=param_grid, cv=cv, n_jobs=2)
+cv_results = cross_validate(tree, data, target, n_jobs=2,
                             return_estimator=True)
 scores = cv_results["test_score"]
 
@@ -99,7 +99,7 @@ base_estimator = DecisionTreeRegressor(random_state=0)
 bagging_regressor = BaggingRegressor(
     base_estimator=base_estimator, n_estimators=20, random_state=0)
 
-cv_results = cross_validate(bagging_regressor, data, target, n_jobs=-1)
+cv_results = cross_validate(bagging_regressor, data, target, n_jobs=2)
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "

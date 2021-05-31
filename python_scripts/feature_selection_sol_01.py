@@ -35,7 +35,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
 
 model = LogisticRegression()
-test_score = cross_val_score(model, data, target, n_jobs=-1)
+test_score = cross_val_score(model, data, target, n_jobs=2)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
 # %% [markdown]

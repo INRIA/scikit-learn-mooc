@@ -47,7 +47,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
 cv_results_gbdt = cross_validate(
     gradient_boosting, data, target, scoring="neg_mean_absolute_error",
-    n_jobs=-1
+    n_jobs=2
 )
 
 # %%
@@ -103,7 +103,7 @@ gradient_boosting = make_pipeline(
     discretizer, GradientBoostingRegressor(n_estimators=200))
 cv_results_gbdt = cross_validate(
     gradient_boosting, data, target, scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
 )
 
 # %%
@@ -137,7 +137,7 @@ histogram_gradient_boosting = HistGradientBoostingRegressor(
     max_iter=200, random_state=0)
 cv_results_hgbdt = cross_validate(
     gradient_boosting, data, target, scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
 )
 
 # %%

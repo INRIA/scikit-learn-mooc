@@ -39,7 +39,7 @@ data, target = make_classification(
 # %%
 from sklearn.ensemble import RandomForestClassifier
 
-model_without_selection = RandomForestClassifier(n_jobs=-1)
+model_without_selection = RandomForestClassifier(n_jobs=2)
 
 # %% [markdown]
 # Then, let's create a pipeline where the first stage will make the feature
@@ -53,7 +53,7 @@ from sklearn.pipeline import make_pipeline
 
 model_with_selection = make_pipeline(
     SelectKBest(score_func=f_classif, k=2),
-    RandomForestClassifier(n_jobs=-1),
+    RandomForestClassifier(n_jobs=2),
 )
 
 # %% [markdown]

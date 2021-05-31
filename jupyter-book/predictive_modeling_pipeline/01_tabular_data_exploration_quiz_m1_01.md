@@ -1,7 +1,7 @@
 # ✅ Quiz M1.01
 
 ```{admonition} Question
-In the previous notebook, we used pandas and specifically
+In the notebook "First look at our dataset", we used pandas and specifically
 `adult_census = pd.read_csv("../datasets/adult-census.csv")` to:
 
 - a) load a comma-separated values file

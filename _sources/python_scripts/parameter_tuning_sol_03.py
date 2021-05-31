@@ -114,15 +114,19 @@ model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 
 # %% [markdown]
+#
 # So the best hyperparameters give a model where the features are scaled but
 # not centered and the final model is regularized.
 #
 # Getting the best parameter combinations is the main outcome of the
-# hyper-parameter optimization procedure. However it is also interesting
-# to assess the sensitivity of the best models to the choice of those
-# parameters. The following code, not required to answer the quiz question
-# shows how to conduct such an analysis for this this pipeline using a
-# parallel coordinate plot.
+# hyper-parameter optimization procedure. However it is also interesting to
+# assess the sensitivity of the best models to the choice of those parameters.
+# The following code, not required to answer the quiz question shows how to
+# conduct such an interactive analysis for this this pipeline using a parallel
+# coordinate plot using the plotly library.
+#
+# You can copy and paste this code at the end of your notebook to display the
+# generated figure and to follow the rest of the discussion.
 #
 # We could use `cv_results = model_random_search.cv_results_` to make a
 # parallel coordinate plot as we did in the previous notebook (you are more

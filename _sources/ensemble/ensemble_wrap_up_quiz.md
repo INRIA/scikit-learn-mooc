@@ -149,20 +149,6 @@ Use the `BalancedBaggingClassifier` and pass an
 `HistGradientBoostingClassifier` as a `base_estimator`. Fix the hyperparameter
 `n_estimators` to 50.
 
-**Note**: In case that imbalanced-learn is not available on your laptop, you
-can install it via PyPI or conda-forge channel. Thus in a notebook, you can
-install using:
-
-```
-%pip install -U imbalanced-learn
-```
-
-or
-
-```
-!conda install imbalannced-learn -c conda-forge
-```
-
 ```{admonition} Question
 What is a [`BalancedBaggingClassifier`](https://imbalanced-learn.org/stable/ensemble.html#bagging)?
 

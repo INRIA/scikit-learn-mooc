@@ -49,8 +49,8 @@ param_grid = {
     "max_depth": [3, 5, None],
 }
 grid_search = GridSearchCV(
-    RandomForestRegressor(n_jobs=-1), param_grid=param_grid,
-    scoring="neg_mean_absolute_error", n_jobs=-1,
+    RandomForestRegressor(n_jobs=2), param_grid=param_grid,
+    scoring="neg_mean_absolute_error", n_jobs=2,
 )
 grid_search.fit(data_train, target_train)
 
@@ -106,7 +106,7 @@ param_grid = {
 }
 grid_search = GridSearchCV(
     GradientBoostingRegressor(), param_grid=param_grid,
-    scoring="neg_mean_absolute_error", n_jobs=-1
+    scoring="neg_mean_absolute_error", n_jobs=2
 )
 grid_search.fit(data_train, target_train)
 

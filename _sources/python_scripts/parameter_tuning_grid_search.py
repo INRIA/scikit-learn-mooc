@@ -119,7 +119,7 @@ param_grid = {
     'classifier__learning_rate': (0.05, 0.1, 0.5, 1, 5),
     'classifier__max_leaf_nodes': (3, 10, 30, 100)}
 model_grid_search = GridSearchCV(model, param_grid=param_grid,
-                                 n_jobs=4, cv=2)
+                                 n_jobs=2, cv=2)
 model_grid_search.fit(data_train, target_train)
 
 # %% [markdown]

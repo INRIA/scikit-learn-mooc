@@ -35,7 +35,7 @@ param_grid = {"C": [0.1, 1, 10], "gamma": [.01, .1]}
 model_to_tune = SVC()
 
 search = GridSearchCV(estimator=model_to_tune, param_grid=param_grid,
-                      n_jobs=-1)
+                      n_jobs=2)
 search.fit(data, target)
 
 # %% [markdown]
@@ -89,10 +89,10 @@ outer_cv = KFold(n_splits=4, shuffle=True, random_state=0)
 
 # Inner cross-validation for parameter search
 model = GridSearchCV(
-    estimator=model_to_tune, param_grid=param_grid, cv=inner_cv, n_jobs=-1)
+    estimator=model_to_tune, param_grid=param_grid, cv=inner_cv, n_jobs=2)
 
 # Outer cross-validation to compute the testing score
-test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=-1)
+test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=2)
 print(f"The mean score using nested cross-validation is: "
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
@@ -117,12 +117,12 @@ for i in range(N_TRIALS):
 
     # Non_nested parameter search and scoring
     model = GridSearchCV(estimator=model_to_tune, param_grid=param_grid,
-                         cv=inner_cv, n_jobs=-1)
+                         cv=inner_cv, n_jobs=2)
     model.fit(data, target)
     test_score_not_nested.append(model.best_score_)
 
     # Nested CV with parameter optimization
-    test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=-1)
+    test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=2)
     test_score_nested.append(test_score.mean())
 
 # %% [markdown]

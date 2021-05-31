@@ -243,7 +243,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
 cv_results_gbdt = cross_validate(
     gradient_boosting, data, target, scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
 )
 
 # %%
@@ -259,10 +259,10 @@ print(f"Average score time: "
 # %%
 from sklearn.ensemble import RandomForestRegressor
 
-random_forest = RandomForestRegressor(n_estimators=200, n_jobs=-1)
+random_forest = RandomForestRegressor(n_estimators=200, n_jobs=2)
 cv_results_rf = cross_validate(
     gradient_boosting, data, target, scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
 )
 
 # %%

@@ -183,7 +183,7 @@ alphas = np.logspace(-3, 1, num=30)
 model = make_pipeline(StandardScaler(), RidgeCV(alphas=alphas))
 cv_results = cross_validate(
     model, california_housing.data, california_housing.target,
-    return_estimator=True, n_jobs=-1)
+    return_estimator=True, n_jobs=2)
 
 # %%
 score = cv_results["test_score"]

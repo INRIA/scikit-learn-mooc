@@ -45,7 +45,7 @@ train_scores, test_scores = validation_curve(
     param_name="n_estimators",
     param_range=param_range,
     scoring="neg_mean_absolute_error",
-    n_jobs=-1,
+    n_jobs=2,
 )
 train_errors, test_errors = -train_scores, -test_scores
 

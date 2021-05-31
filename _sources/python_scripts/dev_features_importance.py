@@ -252,7 +252,7 @@ from sklearn.model_selection import RepeatedKFold
 
 cv_model = cross_validate(
    model, X_with_rnd_feat, y, cv=RepeatedKFold(n_splits=5, n_repeats=5),
-   return_estimator=True, n_jobs=-1
+   return_estimator=True, n_jobs=2
 )
 coefs = pd.DataFrame(
    [model[1].coef_
@@ -316,7 +316,7 @@ plt.subplots_adjust(left=.3)
 # %%
 cv_model = cross_validate(
    model, X_with_rnd_feat, y, cv=RepeatedKFold(n_splits=5, n_repeats=5),
-   return_estimator=True, n_jobs=-1
+   return_estimator=True, n_jobs=2
 )
 coefs = pd.DataFrame(
    [model[1].coef_

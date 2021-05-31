@@ -1458,7 +1458,7 @@ and let the other parameters to the default.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">ShuffleSplit</span>
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
 <span class="n">cv_results</span>
 </pre></div>
@@ -1491,62 +1491,62 @@ and let the other parameters to the default.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.037024</td>
-      <td>0.002978</td>
+      <td>0.046138</td>
+      <td>0.003435</td>
       <td>0.680000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.042164</td>
-      <td>0.002930</td>
+      <td>0.046081</td>
+      <td>0.003497</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.017110</td>
-      <td>0.002919</td>
+      <td>0.020264</td>
+      <td>0.003587</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.016089</td>
-      <td>0.003059</td>
+      <td>0.019644</td>
+      <td>0.005854</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.016986</td>
-      <td>0.002918</td>
+      <td>0.020143</td>
+      <td>0.003403</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.020017</td>
-      <td>0.004834</td>
+      <td>0.023411</td>
+      <td>0.003207</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.016295</td>
-      <td>0.002807</td>
+      <td>0.018345</td>
+      <td>0.003163</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.015347</td>
-      <td>0.002789</td>
+      <td>0.017559</td>
+      <td>0.003206</td>
       <td>0.826667</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.016257</td>
-      <td>0.002807</td>
+      <td>0.017645</td>
+      <td>0.003086</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.015986</td>
-      <td>0.002826</td>
+      <td>0.017733</td>
+      <td>0.003025</td>
       <td>0.733333</td>
     </tr>
   </tbody>
@@ -1588,7 +1588,7 @@ accessing and setting hyperparameter in the next section.</p>
 <span class="n">param_name</span> <span class="o">=</span> <span class="s2">&quot;svc__gamma&quot;</span>
 <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">gammas</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1636,7 +1636,7 @@ Plot the train and test scores with respect to the number of samples.</p>
 
 <span class="n">train_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">learning_curve</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">train_sizes</span><span class="o">=</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">train_sizes</span><span class="o">=</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">train_size</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 </div>

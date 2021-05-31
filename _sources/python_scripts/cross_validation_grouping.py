@@ -30,7 +30,7 @@ from sklearn.model_selection import cross_val_score, KFold
 
 cv = KFold(shuffle=False)
 test_score_no_shuffling = cross_val_score(model, data, target, cv=cv,
-                                          n_jobs=-1)
+                                          n_jobs=2)
 print(f"The average accuracy is "
       f"{test_score_no_shuffling.mean():.3f} +/- "
       f"{test_score_no_shuffling.std():.3f}")
@@ -42,7 +42,7 @@ print(f"The average accuracy is "
 # %%
 cv = KFold(shuffle=True)
 test_score_with_shuffling = cross_val_score(model, data, target, cv=cv,
-                                            n_jobs=-1)
+                                            n_jobs=2)
 print(f"The average accuracy is "
       f"{test_score_with_shuffling.mean():.3f} +/- "
       f"{test_score_with_shuffling.std():.3f}")
@@ -143,7 +143,7 @@ from sklearn.model_selection import GroupKFold
 
 cv = GroupKFold()
 test_score = cross_val_score(model, data, target, groups=groups, cv=cv,
-                             n_jobs=-1)
+                             n_jobs=2)
 print(f"The average accuracy is "
       f"{test_score.mean():.3f} +/- "
       f"{test_score.std():.3f}")

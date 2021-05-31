@@ -100,7 +100,7 @@ param_grid = {
     'classifier__learning_rate': (0.05, 0.1),
     'classifier__max_leaf_nodes': (30, 40)}
 model_grid_search = GridSearchCV(model, param_grid=param_grid,
-                                 n_jobs=4, cv=2)
+                                 n_jobs=2, cv=2)
 
 cv_results = cross_validate(
     model_grid_search, data, target, cv=3, return_estimator=True)

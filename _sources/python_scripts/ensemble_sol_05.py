@@ -60,7 +60,7 @@ from sklearn.model_selection import KFold
 
 cv = KFold(n_splits=5, shuffle=True, random_state=0)
 results = cross_validate(
-    search, data, target, cv=cv, return_estimator=True, n_jobs=-1)
+    search, data, target, cv=cv, return_estimator=True, n_jobs=2)
 
 # %% [markdown]
 # Now that we got the cross-validation results, print out the mean and

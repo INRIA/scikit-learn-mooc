@@ -33,7 +33,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import BaggingRegressor
 
 tree = DecisionTreeRegressor()
-bagging = BaggingRegressor(base_estimator=tree, n_jobs=-1)
+bagging = BaggingRegressor(base_estimator=tree, n_jobs=2)
 bagging.fit(data_train, target_train)
 target_predicted = bagging.predict(data_test)
 print(f"Basic mean absolute error of the bagging regressor:\n"

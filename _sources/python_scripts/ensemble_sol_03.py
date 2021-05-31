@@ -40,7 +40,7 @@ param_range = np.unique(np.logspace(0, 1.8, num=30).astype(int))
 train_scores, test_scores = validation_curve(
     adaboost, data_train, target_train,
     param_name="n_estimators", param_range=param_range,
-    scoring="neg_mean_absolute_error", n_jobs=-1)
+    scoring="neg_mean_absolute_error", n_jobs=2)
 train_errors, test_errors = -train_scores, -test_scores
 
 # %% [markdown]
@@ -78,7 +78,7 @@ forest = RandomForestRegressor()
 train_scores, test_scores = validation_curve(
     forest, data_train, target_train,
     param_name="n_estimators", param_range=param_range,
-    scoring="neg_mean_absolute_error", n_jobs=-1)
+    scoring="neg_mean_absolute_error", n_jobs=2)
 train_errors, test_errors = -train_scores, -test_scores
 
 # %%

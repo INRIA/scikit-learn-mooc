@@ -55,8 +55,7 @@ Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 
 - a) `RandomizedSearchCV` has a fixed computation budget through its `n_iter` parameter
 - b) `RandomizedSearchCV` allows to test all the combinations of a fixed set of parameter values
-- c) `GridSearchCV` can be computationally intensive when the number of
-     parameters and the number of possible parameter values grows
+- c) `GridSearchCV` can become very computationally intensive when the number of parameters grows
 - d) both `GridSearchCV` and `RandomizedSearchCV` have the attributes `cv_results_` and `best_params_`
 - e) both `GridSearchCV` and `RandomizedSearchCV` can use probability
      distributions to draw parameter values from

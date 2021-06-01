@@ -261,7 +261,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 random_forest = RandomForestRegressor(n_estimators=200, n_jobs=2)
 cv_results_rf = cross_validate(
-    gradient_boosting, data, target, scoring="neg_mean_absolute_error",
+    random_forest, data, target, scoring="neg_mean_absolute_error",
     n_jobs=2,
 )
 

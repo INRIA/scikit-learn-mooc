@@ -110,7 +110,7 @@ We define bad performing models as the models with a `mean_test_score` below
 0.8. You can select the range [0.0, 0.8] by clicking and holding on the
 `mean_test_score` axis of the parallel coordinate plot.
 
-What do have all these models in common?
+Looking at this plot, which parameter values always cause the model to perform badly?
 
 - a) too large `l2_regularization`
 - b) too small `l2_regularization`

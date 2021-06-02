@@ -128,9 +128,9 @@ model
 #   histograms.
 #
 # ```{note}
-# The `loguniform` function from SciPy returns a floating number. Since we
-# want to use this distribution to create integer, we will create a class that
-# will cast the floating number into an integer.
+# `scipy.stats.loguniform` can be used to generate floating numbers. To
+# generate random values for integer-valued parameters (e.g.
+# `min_samples_leaf`) we can adapt is as follows:
 # ```
 
 # %%

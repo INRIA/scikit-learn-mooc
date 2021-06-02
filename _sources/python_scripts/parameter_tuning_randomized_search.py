@@ -129,7 +129,7 @@ model
 #
 # ```{note}
 # The `loguniform` function from SciPy returns a floating number. Since we
-# want to us this distribution to create integer, we will create a class that
+# want to use this distribution to create integer, we will create a class that
 # will cast the floating number into an integer.
 # ```
 

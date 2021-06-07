@@ -1540,13 +1540,15 @@ have a tree that is able to predict the errors made by the initial tree.</p>
 </div>
 </div>
 <p>We see that this new tree only manages to fit some of the residuals. We will
-focus on the last sample in <code class="docutils literal notranslate"><span class="pre">data_train</span></code> and explain how the predictions of
-both trees are combined. Let’s first select the last sample in <code class="docutils literal notranslate"><span class="pre">data_train</span></code>.</p>
+focus on a specific sample from the training set (i.e. we know that the
+sample will be well classified using to successive trees). We will use this
+sample to explain how the predictions of both trees are combined. Let’s first
+select this sample in <code class="docutils literal notranslate"><span class="pre">data_train</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_max</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">target_true</span> <span class="o">=</span> <span class="n">target_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">target_true_residual</span> <span class="o">=</span> <span class="n">residuals</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_max</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">target_true</span> <span class="o">=</span> <span class="n">target_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">target_true_residual</span> <span class="o">=</span> <span class="n">residuals</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1572,7 +1574,7 @@ decision tree.</p>
 <span class="c1"># Highlight the sample of interest</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_max</span><span class="p">,</span> <span class="n">target_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tree predictions&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1602,7 +1604,7 @@ computed from the first decision tree and show the residual predictions.</p>
 <span class="c1"># Highlight the sample of interest</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_max</span><span class="p">,</span> <span class="n">target_true_residual</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction of the residuals&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1629,9 +1631,9 @@ and compare it with the true value.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True value to predict for f(x=-0.382) = 0.238
-Prediction of the first decision tree for x=-0.382: y=-0.145
-Error of the tree: 0.383
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True value to predict for f(x=-0.517) = -0.393
+Prediction of the first decision tree for x=-0.517: y=-0.145
+Error of the tree: -0.248
 </pre></div>
 </div>
 </div>
@@ -1646,7 +1648,7 @@ tree to try to predict this residual.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the residual for x=-0.382: 0.264
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the residual for x=-0.517: -0.248
 </pre></div>
 </div>
 </div>
@@ -1666,8 +1668,8 @@ summing the prediction of the all trees in the ensemble.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the first and second decision trees combined for x=-0.382: y=0.120
-Error of the tree: 0.118
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the first and second decision trees combined for x=-0.517: y=-0.393
+Error of the tree: 0.000
 </pre></div>
 </div>
 </div>
@@ -1719,8 +1721,8 @@ boosting on the California housing dataset.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree
-Mean absolute error via cross-validation: 46.393 +/- 2.908 k$
-Average fit time: 8.087 seconds
+Mean absolute error via cross-validation: 46.390 +/- 2.913 k$
+Average fit time: 8.254 seconds
 Average score time: 0.011 seconds
 </pre></div>
 </div>
@@ -1754,9 +1756,9 @@ Average score time: 0.011 seconds
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest
-Mean absolute error via cross-validation: 46.402 +/- 4.356 k$
-Average fit time: 21.609 seconds
-Average score time: 0.212 seconds
+Mean absolute error via cross-validation: 46.576 +/- 4.475 k$
+Average fit time: 21.849 seconds
+Average score time: 0.209 seconds
 </pre></div>
 </div>
 </div>

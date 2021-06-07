@@ -78,8 +78,10 @@ _Select a single answer_
 +++
 
 Compare a `sklearn.ensemble.GradientBoostingClassifier` and a
-`sklearn.ensemble.RandomForestClassifier` with both 300 trees. Evaluate both
-models with a 10-fold cross-validation and repeat the experiment 10 times.
+`sklearn.ensemble.RandomForestClassifier` with both 300 trees. To do so, repeat
+10 times a 10-fold cross-validation by using the balanced accuracy as metric.
+For each of the ten try, compute the average of the cross-validation score
+for both models. Count how many times a model is better than the other.
 
 ```{admonition} Question
 On average, is the gradient boosting better than the random forest?

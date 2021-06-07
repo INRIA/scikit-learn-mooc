@@ -274,7 +274,7 @@ We can give a concrete graphical example.
 ![img](https://inria.github.io/scikit-learn-mooc/figures/boosting0.svg)
 
 The plot represent a [supervised](#supervised-learning)
-[classification](classification) example. The data are composed of 2 features
+[classification](#classification) example. The data are composed of 2 features
 since we can plot each [data point](#sample-instance-observation) on a 2-axis
 plot. The color and shape correspond to the [target](#target-label-annotation)
 and we have 2 potential choices: blue circle vs. orange square.

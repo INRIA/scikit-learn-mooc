@@ -37,7 +37,8 @@ on each fold. As we saw in the previous notebooks, you will have to use a
 `sklearn.preprocessing.StandardScaler` to scale the data before passing it to
 the regressor. Also, some missing data are present in the different columns.
 You can use a `sklearn.impute.SimpleImputer` with the default parameters to
-impute missing data.
+impute missing data. Thus, you can create a model that will **pipeline the
+scaler, followed by the imputer, followed by the linear regression**.
 
 ```{admonition} Question
 What is the order of magnitude of the extremum weight values over all the features:
@@ -152,7 +153,8 @@ data = data.drop(columns=["education-num"])
 ```
 
 ```{admonition} Question
-How many numerical features are present in the dataset?
+How many numerical features are present in the dataset contained in the
+variable `data`?
 
 - a) 3
 - b) 4
@@ -164,7 +166,8 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Are there missing values in this dataset?
+Are there missing values in this dataset in the dataset contained in the
+variable `data`?
 
 - a) Yes
 - b) No

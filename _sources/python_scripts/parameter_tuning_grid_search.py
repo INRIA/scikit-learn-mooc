@@ -242,7 +242,7 @@ ax.invert_yaxis()
 #   of `max_leaf_nodes` depends on the value of `learning_rate`;
 # * in particular, we observe a "diagonal" of good models with an accuracy
 #   close to the maximal of 0.87: when the value of `max_leaf_nodes` is
-#   increased, one should increase the value of `learning_rate` accordingly
+#   increased, one should decrease the value of `learning_rate` accordingly
 #   to preserve a good accuracy.
 #
 # The precise meaning of those two parameters will be explained in a latter

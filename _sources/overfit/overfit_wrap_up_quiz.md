@@ -113,9 +113,10 @@ estimator.
 +++
 
 ```{admonition} Question
-Evaluate the previous model with a 10-fold cross-validation. What can you
-say about this model? Compare the train and test scores to argument your
-answer.
+Evaluate the previous model with a 10-fold cross-validation. Use the balanced
+accuracy as a score.
+What can you say about this model? Compare the average of the train and test
+scores to argument your answer.
 
 - a) The model clearly underfits
 - b) The model generalizes

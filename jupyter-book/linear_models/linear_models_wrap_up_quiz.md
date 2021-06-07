@@ -153,7 +153,8 @@ data = data.drop(columns=["education-num"])
 ```
 
 ```{admonition} Question
-How many numerical features are present in the dataset?
+How many numerical features are present in the dataset contained in the
+variable `data`?
 
 - a) 3
 - b) 4
@@ -165,7 +166,8 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Are there missing values in this dataset?
+Are there missing values in this dataset in the dataset contained in the
+variable `data`?
 
 - a) Yes
 - b) No

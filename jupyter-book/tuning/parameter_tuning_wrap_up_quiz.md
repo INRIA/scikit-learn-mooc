@@ -71,6 +71,9 @@ Use `sklearn.model_selection.cross_validate` with
 `scoring="balanced_accuracy"`.
 Use `model.get_params()` to list the parameters of the pipeline and use
 `model.set_params(param_name=param_value)` to update them.
+For this question, we consider a model is **better** if its mean
+cross-validation score is larger than the mean plus the standard deviation
+of the cross-validation score of the model that we compare to.
 
 - a) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.9 and 1.0
 - b) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.8 and 0.9

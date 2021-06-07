@@ -248,7 +248,7 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # Choosing an encoding strategy will depend on the underlying models and the
 # type of categories (i.e. ordinal vs. nominal).
 #
-# Indeed, using an `OrdinaleEncoder` will output ordinal categories. It means
+# Indeed, using an `OrdinalEncoder` will output ordinal categories. It means
 # that there is an order in the resulting categories (e.g. `0 < 1 < 2`). The
 # impact of violating this ordering assumption is really dependent on the
 # downstream models. Linear models will be impacted by misordered categories

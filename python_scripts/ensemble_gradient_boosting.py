@@ -124,13 +124,15 @@ _ = plt.title("Prediction of the previous residuals")
 
 # %% [markdown]
 # We see that this new tree only manages to fit some of the residuals. We will
-# focus on the last sample in `data_train` and explain how the predictions of
-# both trees are combined. Let's first select the last sample in `data_train`.
+# focus on a specific sample from the training set (i.e. we know that the
+# sample will be well classified using to successive trees). We will use this
+# sample to explain how the predictions of both trees are combined. Let's first
+# select this sample in `data_train`.
 
 # %%
-data_max = data_train.iloc[-1, 0]
-target_true = target_train.iloc[-1]
-target_true_residual = residuals.iloc[-1]
+data_max = data_train.iloc[-2, 0]
+target_true = target_train.iloc[-2]
+target_true_residual = residuals.iloc[-2]
 
 # %% [markdown]
 # Let's plot the previous information and highlight our sample of interest.
@@ -154,7 +156,7 @@ for value, true, predicted in zip(data_train["Feature"],
 # Highlight the sample of interest
 plt.scatter(data_max, target_true, label="Sample of interest",
             color="tab:orange", s=200)
-plt.xlim([-0.5, 0])
+plt.xlim([-1, 0])
 plt.legend()
 _ = plt.title("Tree predictions")
 
@@ -179,7 +181,7 @@ for value, true, predicted in zip(data_train["Feature"],
 # Highlight the sample of interest
 plt.scatter(data_max, target_true_residual, label="Sample of interest",
             color="tab:orange", s=200)
-plt.xlim([-0.5, 0])
+plt.xlim([-1, 0])
 plt.legend()
 _ = plt.title("Prediction of the residuals")
 

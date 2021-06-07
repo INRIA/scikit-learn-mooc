@@ -28,14 +28,22 @@ penguins = penguins.set_index("Species").loc[
 
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
-data, target = penguins[culmen_columns], penguins[target_column]
 
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, stratify=target, random_state=0,
-)
+# %%
+from sklearn.model_selection import train_test_split
+
+penguins_train, penguins_test = train_test_split(penguins, random_state=0)
+
+data_train = penguins_train[culmen_columns]
+data_test = penguins_test[culmen_columns]
+
+target_train = penguins_train[target_column]
+target_test = penguins_test[target_column]
+
 range_features = {
-    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
-    for feature_name in data
+    feature_name: (penguins[feature_name].min() - 1,
+                   penguins[feature_name].max() + 1)
+    for feature_name in culmen_columns
 }
 
 # %%

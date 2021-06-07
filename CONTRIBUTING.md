@@ -43,6 +43,17 @@ If you want to generate a single notebook, you can do something like this:
 $ make notebooks/02_numerical_pipeline_scaling.ipynb
 ```
 
+## Troubleshooting sphinx failures
+ 
+I could not find a built-in way to pass `sphinx -P` in JupyterBook to have `pdb`
+on failure. The simplest thing I found was to edit your jupyter_book package
+(in jupyter_book/sphinx.py) and use: 
+```py
+debug_args.pdb = True  # False by default
+```
+See https://github.com/executablebooks/jupyter-book/blob/18d52700b8636773f96631b3e187e38075557041/jupyter_book/sphinx.py#L87-L91
+for the JupyterBook code.
+
 ## API diagrams
 
 We are using app.diagrams.net to create and update some diagrams in `figures`,

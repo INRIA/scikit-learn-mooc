@@ -139,7 +139,7 @@ combining this preprocessor with a classifier.
 ```python
 scaler_imputer_transformer = make_pipeline(StandardScaler(), SimpleImputer())
 preprocessor = ColumnTransformer(transformers=[
-    ("num-preprocessor", scaler_imputer_transformer, numerical_features)
+    ("num_preprocessor", scaler_imputer_transformer, numerical_features)
 ])
 model = make_pipeline(preprocessor, LogisticRegression())
 ```

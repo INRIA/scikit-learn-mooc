@@ -166,8 +166,7 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Are there missing values in this dataset in the dataset contained in the
-variable `data`?
+Are there any missing values in the dataset contained in the variable `data`?
 
 - a) Yes
 - b) No

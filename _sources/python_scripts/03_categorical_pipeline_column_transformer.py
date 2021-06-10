@@ -89,7 +89,7 @@ from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer([
     ('one-hot-encoder', categorical_preprocessor, categorical_columns),
-    ('standard-scaler', numerical_preprocessor, numerical_columns)])
+    ('standard_scaler', numerical_preprocessor, numerical_columns)])
 
 # %% [markdown]
 # We can take a minute to represent graphically the structure of a

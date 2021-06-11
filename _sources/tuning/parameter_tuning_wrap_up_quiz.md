@@ -127,7 +127,7 @@ than the standard deviation of its test score.
 Which of the following statements hold:
 
 - a) The best model with `StandardScaler` is significantly better than using any other processor
-- b) Using any of the preprocessors is always better than using no processor, irrespective of the value `of n_neighbors`
+- b) Using any of the preprocessors has always a better ranking than using no processor, irrespective of the value `of n_neighbors`
 - c) The model with `n_neighbors=5` and `StandardScaler` is significantly better than the model with `n_neighbors=51` and `StandardScaler`.
 - d) The model with `n_neighbors=51` and `StandardScaler` is significantly better than the model with `n_neighbors=101` and `StandardScaler`.
 

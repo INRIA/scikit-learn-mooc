@@ -119,13 +119,21 @@ model
 # ```
 #
 # We will optimize 3 other parameters in addition to the ones we
-# optimized above:
+# optimized in the notebook presenting the `GridSearchCV`:
 #
-# * `max_iter`: it corresponds to the number of trees in the ensemble;
+# * `l2_regularization`: it corresponds to the constant to regularized the loss
+#   function
 # * `min_samples_leaf`: it corresponds to the minimum number of samples
 #   required in a leaf;
 # * `max_bins`: it corresponds to the maximum number of bins to construct the
 #   histograms.
+#
+# We recall the meaning of the 2 remaining parameters:
+#
+# * `learning_rate`: it corresponds to the speed at which the gradient-boosting
+#   will correct the residuals at each boosting iteration;
+# * `max_leaf_nodes`: it corresponds to the maximum number of leaves for each
+#   tree in the ensemble.
 #
 # ```{note}
 # `scipy.stats.loguniform` can be used to generate floating numbers. To

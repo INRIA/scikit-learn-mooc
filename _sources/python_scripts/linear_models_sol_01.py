@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # %% [markdown]
 # # 📃 Solution for Exercise M4.01
 #
@@ -47,7 +49,7 @@ def linear_model_flipper_mass(
 #
 # Given a vector of the flipper length, several weights and intercepts to
 # plot several linear model that could fit our data. Use the above
-# visualization helper function to visualize both the model and data.
+# helper function to visualize both the model and data.
 
 # %%
 import numpy as np

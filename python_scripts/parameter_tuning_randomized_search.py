@@ -230,9 +230,9 @@ cv_results
 
 # %%
 # model_random_search = RandomizedSearchCV(
-#     model, param_distributions=param_distributions, n_iter=500,
+#     model, param_distributions=param_distributions, n_iter=200,
 #     n_jobs=2, cv=5)
-# model_random_search.fit(df_train, target_train)
+# model_random_search.fit(data_train, target_train)
 # cv_results =  pd.DataFrame(model_random_search.cv_results_)
 # cv_results.to_csv("../figures/randomized_search_results.csv")
 

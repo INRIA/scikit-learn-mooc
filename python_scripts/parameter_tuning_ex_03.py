@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # ---
 # jupyter:
 #   jupytext:
@@ -68,8 +70,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
 # %% [markdown]
-# Use a `RandomizedSearchCV` to find the best set of hyperparameters by tuning
-# the following parameters of the `model`:
+# Use a `RandomizedSearchCV` with `n_iter=20` to find the best set of
+# hyperparameters by tuning the following parameters of the `model`:
 #
 # - the parameter `C` of the `LogisticRegression` with values ranging from
 #   0.001 to 10. You can use a log-uniform distribution

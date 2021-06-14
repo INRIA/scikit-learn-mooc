@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # %% [markdown]
 # # 📃 Solution for Exercise M4.02
 #
@@ -70,7 +72,7 @@ _ = ax.plot(data, predictions)
 # %%
 from sklearn.metrics import mean_squared_error
 
-error = mean_squared_error(target, f(data, weight=1.2, intercept=0.2))
+error = mean_squared_error(target, f(data, weight=1.2, intercept=-0.2))
 print(f"The MSE is {error}")
 
 # %% [markdown]

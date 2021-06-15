@@ -52,6 +52,15 @@ numerical_columns = numerical_columns_selector(data)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
+# ```{caution}
+# Here, we know that `object` data type is used to represent strings and thus
+# categorical features. Be aware that this is not always the case. Sometimes
+# `object` data type could contain other type of information (e.g. dates that
+# were not parsed) and you should manually introspect the content of your
+# dataframe to not wrongly use `make_column_selector`.
+# ```
+
+# %% [markdown]
 # ## Dispatch columns to a specific processor
 #
 # In the previous sections, we saw that we need to treat data differently

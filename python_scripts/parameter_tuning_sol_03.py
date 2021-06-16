@@ -109,7 +109,7 @@ param_distributions = {
 
 model_random_search = RandomizedSearchCV(
     model, param_distributions=param_distributions,
-    n_iter=20, error_score=np.nan, n_jobs=2, verbose=1)
+    n_iter=20, error_score=np.nan, n_jobs=2, verbose=1, random_state=1)
 model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 
@@ -123,7 +123,7 @@ model_random_search.best_params_
 # assess the sensitivity of the best models to the choice of those parameters.
 # The following code, not required to answer the quiz question shows how to
 # conduct such an interactive analysis for this this pipeline using a parallel
-# coordinate plot using the plotly library.
+# coordinate plot using the `plotly` library.
 #
 # We could use `cv_results = model_random_search.cv_results_` to make a
 # parallel coordinate plot as we did in the previous notebook (you are more

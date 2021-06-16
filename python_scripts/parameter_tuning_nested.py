@@ -39,15 +39,6 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 data.head()
 
 # %% [markdown]
-# Once the dataset is loaded, we split it into a training and testing sets.
-
-# %%
-from sklearn.model_selection import train_test_split
-
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
-
-# %% [markdown]
 # We will create the same predictive pipeline as seen in the grid-search
 # section.
 

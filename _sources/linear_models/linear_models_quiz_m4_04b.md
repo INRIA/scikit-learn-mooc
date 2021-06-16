@@ -22,12 +22,14 @@ A ridge model is:
 +++
 
 ```{admonition} Question
-The parameter `alpha` in ridge is:
+Assume that a data scientist has prepared a train/test split and plans to use
+the test for the final evaluation of a `Ridge` model. The parameter `alpha` of
+the `Ridge` model:
 
-- a) learnt during the fit on the train set
-- b) can be chosen by cross-validation on the train set
-- c) can be chosen by cross-validation on the test set
-- d) can be chosen by hand a priori
+- a) is internally tuned when calling `fit` on the train set
+- b) should be tuned by running cross-validation on a **train set**
+- c) should be tuned by running cross-validation on a **test set**
+- d) can be chosen by hand a priori using expert knowledge of the problem at hand
 ```
 
 +++

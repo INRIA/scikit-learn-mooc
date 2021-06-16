@@ -51,8 +51,8 @@ Replace the `DummyClassifier` by a `sklearn.tree.DecisionTreeClassifier` and
 check the statistical performance to answer the question below.
 
 ```{admonition} Question
-Is a single decision classifier better than a dummy classifier (at least an
-increase of 4%) in terms of balanced accuracy?
+Is a single decision classifier better than a dummy classifier, by an increase
+of at least 0.04 of the balanced accuracy?
 
 - a) Yes
 - b) No
@@ -66,8 +66,8 @@ Evaluate the performance of a `sklearn.ensemble.RandomForestClassifier` using
 300 trees.
 
 ```{admonition} Question
-Is random forest better than a dummy classifier (at least an increase of 4%)
-in terms of balanced accuracy?
+Is random forest better than a dummy classifier, by an increase of at least
+0.04 of the balanced accuracy?
 
 - a) Yes
 - b) No
@@ -110,7 +110,8 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 ```
 
 ```{admonition} Question
-Is histogram gradient boosting a better classifier?
+Is histogram gradient boosting a better classifier considering the mean of
+the cross-validation test score?
 
 - a) Histogram gradient boosting is the best estimator
 - b) Histogram gradient boosting is better than random forest by worse than

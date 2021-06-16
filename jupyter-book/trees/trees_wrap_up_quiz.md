@@ -77,9 +77,9 @@ _Select a single answer_
 ```{admonition} Question
 A tree with an optimal depth is performing:
 
-- a) better than a linear model
-- b) equally to a linear model
-- c) worse than a linear model
+- a) better than a linear model: ~0.74
+- b) equally to a linear model: ~0.72
+- c) worse than a linear model: ~0.7
 
 _Select a single answer_
 ```

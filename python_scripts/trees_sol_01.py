@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # %% [markdown]
 # # 📃 Solution for Exercise M5.01
 #
@@ -86,7 +88,7 @@ ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
                      hue=target_column, palette=palette)
 plot_decision_function(tree, range_features, ax=ax)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-_ = plt.title("Decision boundary using a logistic regression")
+_ = plt.title("Decision boundary using a decision tree")
 
 # %% [markdown]
 # Did we make use of the feature "Culmen Length"?

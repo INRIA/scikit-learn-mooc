@@ -75,11 +75,11 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-A tree with an optimal depth is performing:
+A tree with an optimal depth has a score of:
 
-- a) better than a linear model: ~0.74
-- b) equally to a linear model: ~0.72
-- c) worse than a linear model: ~0.7
+a) ~0.74 and is better than the linear model
+b) ~0.72 and is equal to the linear model
+c) ~0.7 and is worse than the linear model
 
 _Select a single answer_
 ```

@@ -10,7 +10,7 @@
 # they are spelled with a final underscore `_`, for instance `model.coef_`.
 #
 # We will start by loading the adult census dataset and only use the numerical
-# feature.
+# features.
 
 # %%
 import pandas as pd

@@ -138,6 +138,9 @@ their impact on the model performance and tuned to maximize model performance
 involve grid-search and randomized-search involving model evaluation on some
 [validation sets](#validation-set).
 
+For more details, you can further read the following
+[post](https://machinelearningmastery.com/difference-between-a-parameter-and-a-hyperparameter/)
+
 ### infer, inference
 
 This term has a different meaning in machine-learning and statistical

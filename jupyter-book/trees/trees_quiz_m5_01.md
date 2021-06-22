@@ -1,7 +1,8 @@
 # ✅ Quiz M5.01
 
 ```{admonition} Question
-Decision trees can be applied for:
+From the presentation given in the video, for which kind of supervised learning
+tasks decision trees can be applied to:
 
 - a) classification tasks
 - b) regression tasks

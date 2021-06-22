@@ -91,7 +91,8 @@ Instead of using only the numerical dataset (which was the variable
 
 Create a preprocessor by dealing separately with the numerical and categorical
 columns. For the sake of simplicity, we will define the categorical columns as
-the columns with an `object` data type.
+the columns with an `object` data type while all other columns will be
+considered as numerical columns.
 
 **Do not optimize the `max_depth` parameter for this exercise.**
 

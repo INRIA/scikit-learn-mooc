@@ -184,12 +184,13 @@ model, do not forget to scale the data with a `StandardScaler` before training
 the model.
 
 ```{admonition} Question
-On average, how much better/worse/similar is the logistic regression  to a dummy
-classifier that would predict the most frequent class?
+On average, how much better/worse/similar is the logistic regression to a dummy
+classifier that would predict the most frequent class? We will consider an
+increase or decrease of the accuracy score.
 
-- a) Worse than a dummy classifier by ~4%
+- a) Worse than a dummy classifier with a decrease of 0.04
 - b) Similar to a dummy classifier
-- c) Better than a dummy classifier by ~4%
+- c) Better than a dummy classifier with an increase 0.04
 
 _Select a single answer_
 ```
@@ -236,13 +237,14 @@ the numerical data should be scaled, and the predictor used should be a
 logistic regression classifier.
 
 ```{admonition} Question
-On average, what is the improvement of using the categorical features?
+On average, what is the increase in terms of accuracy by using the categorical
+features?
 
 - a) It gives similar results
-- b) It improves the statistical performance by 2.5%
-- c) it improves the statistical performance by 5%
-- d) it improves the statistical performance by 7.5%
-- e) it improves the statistical performance by 10%
+- b) It increases the statistical performance by 0.025
+- c) it increases the statistical performance by 0.05
+- d) it increases the statistical performance by 0.075
+- e) it increases the statistical performance by 0.1
 
 _Select a single answer_
 ```

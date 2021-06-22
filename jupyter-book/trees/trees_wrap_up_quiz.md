@@ -96,6 +96,8 @@ considered as numerical columns.
 
 **Do not optimize the `max_depth` parameter for this exercise.**
 
+**Fix the random state of the tree by passing the parameter `random_state=0`**
+
 ```{admonition} Question
 Are the performance in terms of $R^2$ better by incorporating the categorical
 features in comparison with the previous tree with the optimal depth?

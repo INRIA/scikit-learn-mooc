@@ -65,6 +65,12 @@ print(f"Accuracy score via cross-validation:\n"
 # wanted to use a different `C` parameter we could have done so when we created
 # the `LogisticRegression` object with something like `LogisticRegression(C=1e-3)`.
 #
+# ```{note}
+# For more information on the model hyperparameter `C`, refer to the
+# [documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html).
+# Be aware that we will focus on linear models in an upcoming module.
+# ```
+#
 # We can also change the parameter of a model after it has been created with
 # the `set_params` method, which is available for all scikit-learn estimators.
 # For example, we can set `C=1e-3`, fit and evaluate the model:

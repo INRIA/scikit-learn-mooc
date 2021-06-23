@@ -86,13 +86,15 @@ _Select a single answer_
 
 +++
 
-Instead of using only the numerical dataset (which was the variable
-`data_numerical`), use the entire dataset available in the variable `data`.
+Instead of using only the numerical dataset you will now use the entire
+dataset available in the variable `data`.
 
 Create a preprocessor by dealing separately with the numerical and categorical
-columns. For the sake of simplicity, we will define the categorical columns as
-the columns with an `object` data type while all other columns will be
-considered as numerical columns.
+columns. For the sake of simplicity, we will assume the following:
+
+* categorical columns can be selected if they have an `object` data type;
+* numerical columns can be selected if they do not have an `object` data type.
+  It will be the complement of the numerical columns.
 
 **Do not optimize the `max_depth` parameter for this exercise.**
 

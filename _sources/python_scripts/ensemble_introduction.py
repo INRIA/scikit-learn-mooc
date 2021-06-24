@@ -87,7 +87,7 @@ print(f"R2 score obtained by cross-validation: "
 # them on a slightly modified version of the training set. Then, the
 # predictions of all these base regressors will be combined by averaging.
 #
-# Here, we will use 50 decision trees and check the fitting time as well as the
+# Here, we will use 20 decision trees and check the fitting time as well as the
 # statistical performance on the left-out testing data. It is important to note
 # that we are not going to tune any parameter of the decision tree.
 

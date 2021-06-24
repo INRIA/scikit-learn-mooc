@@ -40,7 +40,7 @@ target = adult_census[target_name]
 # Appendix - Datasets description section at the end of this MOOC.
 # ```
 
-# %%[markdown]
+# %% [markdown]
 #
 # The adult census contains some categorical data and we encode the categorical
 # features using an `OrdinalEncoder` since tree-based models can work very

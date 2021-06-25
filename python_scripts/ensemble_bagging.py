@@ -222,7 +222,7 @@ _ = plt.title("Predictions of bagged trees")
 # cloned several times and trained independently on each bootstrap sample.
 #
 # The following code snippet shows how to build a bagging ensemble of decision
-# trees. We set `n_estimtators=100` instead of 3 in our manual implementation
+# trees. We set `n_estimators=100` instead of 3 in our manual implementation
 # above to get a stronger smoothing effect.
 
 # %%

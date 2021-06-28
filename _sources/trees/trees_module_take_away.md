@@ -9,7 +9,7 @@ In this module, we presented decision trees in details. We saw that they:
 - are suited for both regression and classification problems;
 - are non-parametric models;
 - are not able to extrapolate;
-- are sensible to hyperparameter tuning.
+- are sensitive to hyperparameter tuning.
 
 ## To go further
 

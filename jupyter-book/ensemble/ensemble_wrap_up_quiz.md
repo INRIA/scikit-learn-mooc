@@ -114,7 +114,7 @@ Is histogram gradient boosting a better classifier considering the mean of
 the cross-validation test score?
 
 - a) Histogram gradient boosting is the best estimator
-- b) Histogram gradient boosting is better than random forest by worse than
+- b) Histogram gradient boosting is better than random forest but worse than
   the exact gradient boosting
 - c) Histogram gradient boosting is better than the exact gradient boosting but
   worse than the random forest

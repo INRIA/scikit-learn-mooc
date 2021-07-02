@@ -54,7 +54,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # from heterogeneous data such as age, employment, education, family
 # information, etc.
 #
-# test
+# test 2
 
 # %% [markdown]
 # ## The variables (columns) in the dataset

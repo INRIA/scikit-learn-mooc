@@ -5,9 +5,9 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.6.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -53,6 +53,8 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # The goal with this data is to predict whether a person earns over 50K a year
 # from heterogeneous data such as age, employment, education, family
 # information, etc.
+#
+# test
 
 # %% [markdown]
 # ## The variables (columns) in the dataset

@@ -213,6 +213,8 @@ pd.crosstab(index=adult_census['education'],
 # diagonal show the distribution of individual variables for each `class`. The
 # plots on the off-diagonal can reveal interesting interactions between
 # variables.
+#
+# another test
 
 # %%
 import seaborn as sns

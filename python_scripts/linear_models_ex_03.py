@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # %% [markdown]
 # # 📝 Exercise M4.03
 #
@@ -6,7 +8,7 @@
 # expressive by deriving new features, based on the original feature.
 #
 # The aim of this notebook is to train a linear regression algorithm on a
-# dataset more than a single feature.
+# dataset with more than a single feature.
 #
 # We will load a dataset about house prices in California.
 # The dataset consists of 8 features regarding the demography and geography of

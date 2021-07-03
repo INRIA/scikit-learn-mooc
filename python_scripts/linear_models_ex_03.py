@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # %% [markdown]
 # # 📝 Exercise M4.03
 #

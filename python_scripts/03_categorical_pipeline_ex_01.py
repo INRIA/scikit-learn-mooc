@@ -52,7 +52,7 @@ categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %% [markdown]
-# We filter our dataset that it contains only categorical features.
+# We filtered our dataset so that it contains only categorical features.
 # Define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
 # `LogisticRegression` classifier.
 #

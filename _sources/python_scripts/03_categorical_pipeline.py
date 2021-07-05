@@ -5,9 +5,9 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.6.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -192,7 +192,7 @@ education_encoded
 # easier visualization of the data.
 #
 # Sparse matrices are efficient data structures when most of your matrix
-# elements are zero. They won't be covered in details in this course. If you
+# elements are zero. They won't be covered in detail in this course. If you
 # want more details about them, you can look at
 # [this](https://scipy-lectures.org/advanced/scipy_sparse/introduction.html#why-sparse-matrices).
 # ```
@@ -266,8 +266,8 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # The next exercise highlight the issue of misusing `OrdinalEncoder` with a
 # linear model.
 #
-# Also, there is no need to use an `OneHotEncoder` even if the original
-# categories do not have an given order with tree-based model. It will be
+# Also, there is no need to use a `OneHotEncoder` even if the original
+# categories do not have a given order with tree-based model. It will be
 # the purpose of the final exercise of this sequence.
 
 # %% [markdown]

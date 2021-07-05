@@ -112,7 +112,7 @@ print(f"Mean absolute error: "
 
 # %% [markdown]
 # By computing the mean absolute error, we can interpret that our model is
-# predicting on average 22.6 k$ away from the true house price. A disadvantage
+# predicting on average 22.6 k\$ away from the true house price. A disadvantage
 # of this metric is that the mean can be impacted by large error. For some
 # applications, we might not want these large errors to have such a big
 # influence on our metric. In this case we can use the median absolute error.
@@ -125,8 +125,8 @@ print(f"Median absolute error: "
 
 # %% [markdown]
 # The mean absolute error (or median absolute error) still have a known
-# limitation: committing an error of 50 k$ for an house valued at 50 k$ has the
-# same impact than committing an error of 50 k$ for an house valued at 500 k$.
+# limitation: committing an error of 50 k\$ for an house valued at 50 k\$ has the
+# same impact than committing an error of 50 k\$ for an house valued at 500 k\$.
 # Indeed, the mean absolute error is not relative.
 #
 # The mean absolute percentage error introduce this relative scaling.

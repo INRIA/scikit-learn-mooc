@@ -5,9 +5,9 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.6.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -16,7 +16,7 @@
 # # Preprocessing for numerical features
 #
 # In this notebook, we will still use only numerical features.
-
+#
 # We will introduce these new aspects:
 #
 # * an example of preprocessing, namely **scaling numerical variables**;
@@ -302,11 +302,12 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # %% [markdown]
 # ## Model evaluation using cross-validation
 #
-# In the previous example, we split the original data into a training set and a
-# testing set. This strategy has several issues: in a setting where the amount
-# of data is small, the subset used to train or test will be small. Besides, a
-# single split does not give information regarding the confidence of the
-# results obtained.
+# In the previous example, we split the original data into a training set and a 
+# testing set. The score of a model will in general depend on the way we make 
+# such a split. One downside of doing a single split is that it does not give
+# any information about this variability. Another downside, in a setting where 
+# the amount of data is small, is that the the data available for training
+# and testing will be even smaller after splitting.
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating
 # the procedure such that the training and testing sets are different each

@@ -53,9 +53,9 @@ data_categorical = data[categorical_columns]
 
 # %% [markdown]
 # We filtered our dataset so that it contains only categorical features.
+#
 # Define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
 # `LogisticRegression` classifier.
-#
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
 # prediction time, you can set the `handle_unknown="use_encoded_value"` and
 # `unknown_value` parameters. You can refer to the

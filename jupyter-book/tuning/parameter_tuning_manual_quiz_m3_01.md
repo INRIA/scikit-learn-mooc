@@ -14,7 +14,7 @@ Which parameters below are hyperparameters of `HistGradientBosstingClassifier`?
 
 ````{admonition} Question
 Given `model` defined by:
-```py
+```python
 from sklearn.linear_model import LogisticRegression
 model = LogisticRegression()
 ```
@@ -30,7 +30,7 @@ how do you get the value of the `C` parameter?
 
 ````{admonition} Question
 Given `model` defined by:
-```py
+```python
 from sklearn.linear_model import LogisticRegression
 
 model = LogisticRegression()
@@ -47,7 +47,7 @@ how do you set the value of the `C` parameter to `5`?
 
 ````{admonition} Question
 Given `model` defined by:
-```py
+```python
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline

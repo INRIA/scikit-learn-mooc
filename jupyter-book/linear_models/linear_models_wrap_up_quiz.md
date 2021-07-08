@@ -4,7 +4,7 @@
 
 Open the dataset `house_prices.csv` with the following command:
 
-```py
+```python
 ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
 target_name = "SalePrice"
 data = ames_housing.drop(columns=target_name)
@@ -145,7 +145,7 @@ Now, we will tackle a classification problem instead of a regression problem.
 Load the Adult Census dataset with the following snippet of code and we will
 work only with **numerical features**.
 
-```py
+```python
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 target = adult_census["class"]
 data = adult_census.select_dtypes(["integer", "floating"])
@@ -213,7 +213,7 @@ _Select a single answer_
 Now, we will work with **both numerical and categorical features**. You can
 load Adult Census with the following snippet:
 
-```py
+```python
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 target = adult_census["class"]
 data = adult_census.drop(columns=["class", "education-num"])
@@ -254,7 +254,7 @@ _Select a single answer_
 For the following questions, you can use the following snippet to get the
 feature names after the preprocessing performed.
 
-```py
+```python
 preprocessor.fit(data)
 feature_names = (preprocessor.named_transformers_["onehotencoder"]
                              .get_feature_names(categorical_columns)).tolist()

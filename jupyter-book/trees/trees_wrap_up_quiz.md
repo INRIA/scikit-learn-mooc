@@ -4,7 +4,7 @@
 
 Open the dataset `house_prices.csv` with the following command:
 
-```py
+```python
 ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
 target_name = "SalePrice"
 data = ames_housing.drop(columns=target_name)
@@ -18,7 +18,7 @@ marker for cells with missing values also known as "null" values.
 To simplify this exercise, we will only used the numerical features defined
 below:
 
-```
+```python
 numerical_features = [
     "LotFrontage", "LotArea", "MasVnrArea", "BsmtFinSF1", "BsmtFinSF2",
     "BsmtUnfSF", "TotalBsmtSF", "1stFlrSF", "2ndFlrSF", "LowQualFinSF",

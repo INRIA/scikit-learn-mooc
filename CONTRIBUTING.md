@@ -1,13 +1,44 @@
 # Contributing
 
 The source files, which should be modified, are in the `python_scripts`
-directory. The notebooks are generated from these files.
+directory. The notebooks are generated from these Python files with
+[Jupytext](https://jupytext.readthedocs.io/).
 
-## Notebooks saved in Python files
+## Recommended workflow : Visual Studio Code
 
-This repository uses [Jupytext](https://jupytext.readthedocs.io/) to display
-Python files as notebooks. Saving as Python files facilitates version
-control.
+- Download [Visual Studio Code](https://code.visualstudio.com/)
+- Install the [Jupyter Extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter).
+  This will allow you to run Python files in a cell by cell fashion
+- notebooks are generated through the Jupytext command-line interface (see
+  [below](#updating-the-notebooks))
+
+It may well be that alternative editors (e.g. PyCharm) allow you to have a
+similar workflow, the only feature you need is to be able to run a `.py` file
+in a cell-by-cell fashion with `# %%` cell markers.
+
+### Updating the notebooks
+
+To update all the notebooks:
+
+```
+$ make
+```
+
+If you want to generate a single notebook, you can do something like this:
+```
+$ make notebooks/02_numerical_pipeline_scaling.ipynb
+```
+
+## Alternative workflow within Jupyter
+
+- you can configure Jupyter to open `.py` files as notebooks (see
+  [below](#setting-up-jupytext) for instructions) though Jupytext
+- when saving the notebook inside Jupyter it will actually write to the `.py` file
+
+In our experience, this workflow is less convenient (Visual Studio Code is a
+nicer developping environment) and also it tends to add some not very important
+(and different on everyone's machine) metadata changes in the `.py` file, for
+example about jupytext version, Jupyter kernel, Python version, etc ...
 
 ### Setting up jupytext
 
@@ -30,24 +61,11 @@ works if you use conda). Then in jupyter lab you have to right click
 "Open with -> notebook" to open the python scripts with the notebook
 interface.
 
-## Updating the notebooks
-
-To update all the notebooks:
-
-```
-$ make
-```
-
-If you want to generate a single notebook, you can do something like this:
-```
-$ make notebooks/02_numerical_pipeline_scaling.ipynb
-```
-
 ## Troubleshooting sphinx failures
- 
+
 I could not find a built-in way to pass `sphinx -P` in JupyterBook to have `pdb`
 on failure. The simplest thing I found was to edit your jupyter_book package
-(in jupyter_book/sphinx.py) and use: 
+(in jupyter_book/sphinx.py) and use:
 ```py
 debug_args.pdb = True  # False by default
 ```
@@ -81,6 +99,34 @@ New modal (Save as):
 Once you have done this, the SVG should have been updated in the github repo.
 Make sure the github svg looks the way you want:
 https://github.com/INRIA/scikit-learn-mooc/tree/master/figures
+
+## Jupytext useful use cases
+
+### Get wrap-up quiz solutions code
+
+You can convert the quiz `.md` file to `.py` with valid Python code. This is
+particularly useful to check quiz solutions or to try to debug user questions
+on the forum.
+
+```
+jupytext --to py jupyter-book/linear_models/linear_models_wrap_up_quiz.md
+```
+
+This creates `jupyter-book/linear_models/linear_models_wrap_up_quiz.py` with
+executable code.
+
+Note: for this to work nicely with Jupytext you need to use `python` and not
+`py` in the block codes i.e.:
+``````
+```python
+```
+``````
+
+and not:
+``````
+```py
+```
+``````
 
 ## Direct binder links to OVH, GESIS and GKE to trigger and cache builds
 

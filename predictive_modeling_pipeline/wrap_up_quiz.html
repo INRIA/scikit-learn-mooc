@@ -1395,7 +1395,7 @@
 <h1>🏁 Wrap-up quiz<a class="headerlink" href="#wrap-up-quiz" title="Permalink to this headline">¶</a></h1>
 <p><strong>This quiz requires some programming to be answered.</strong></p>
 <p>Open the dataset <code class="docutils literal notranslate"><span class="pre">house_prices.csv</span></code> with the following command:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">)</span>
 <span class="n">ames_housing</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Id&quot;</span><span class="p">)</span>
 
@@ -1467,7 +1467,7 @@ value (excluding ordinal categories)?</p>
 <p><em>Select several answers</em></p>
 </div>
 <p>We consider the following numerical columns:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span>
   <span class="s2">&quot;LotFrontage&quot;</span><span class="p">,</span> <span class="s2">&quot;LotArea&quot;</span><span class="p">,</span> <span class="s2">&quot;MasVnrArea&quot;</span><span class="p">,</span> <span class="s2">&quot;BsmtFinSF1&quot;</span><span class="p">,</span> <span class="s2">&quot;BsmtFinSF2&quot;</span><span class="p">,</span>
   <span class="s2">&quot;BsmtUnfSF&quot;</span><span class="p">,</span> <span class="s2">&quot;TotalBsmtSF&quot;</span><span class="p">,</span> <span class="s2">&quot;1stFlrSF&quot;</span><span class="p">,</span> <span class="s2">&quot;2ndFlrSF&quot;</span><span class="p">,</span> <span class="s2">&quot;LowQualFinSF&quot;</span><span class="p">,</span>
   <span class="s2">&quot;GrLivArea&quot;</span><span class="p">,</span> <span class="s2">&quot;BedroomAbvGr&quot;</span><span class="p">,</span> <span class="s2">&quot;KitchenAbvGr&quot;</span><span class="p">,</span> <span class="s2">&quot;TotRmsAbvGrd&quot;</span><span class="p">,</span> <span class="s2">&quot;Fireplaces&quot;</span><span class="p">,</span>
@@ -1507,11 +1507,11 @@ replace missing values by the most-frequent value in each column.</p></li>
 <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to select the numerical columns and process them (i.e.
 scale and impute). We additionally show that we can create a final model
 combining this preprocessor with a classifier.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scaler_imputer_transformer</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">SimpleImputer</span><span class="p">())</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">(</span><span class="s2">&quot;num_preprocessor&quot;</span><span class="p">,</span> <span class="n">scaler_imputer_transformer</span><span class="p">,</span> <span class="n">numerical_features</span><span class="p">)</span>
-<span class="p">])</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+<div class="highlight-pythonthon notranslate"><div class="highlight"><pre><span></span>scaler_imputer_transformer = make_pipeline(StandardScaler(), SimpleImputer())
+preprocessor = ColumnTransformer(transformers=[
+    (&quot;num_preprocessor&quot;, scaler_imputer_transformer, numerical_features)
+])
+model = make_pipeline(preprocessor, LogisticRegression())
 </pre></div>
 </div>
 <p>Let us now define a <strong>substantial</strong> improvement or deterioration as an

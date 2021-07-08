@@ -4,7 +4,7 @@
 
 Open the dataset `house_prices.csv` with the following command:
 
-```py
+```python
 import pandas as pd
 ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
 ames_housing = ames_housing.drop(columns="Id")
@@ -91,7 +91,7 @@ _Select several answers_
 
 We consider the following numerical columns:
 
-```py
+```python
 numerical_features = [
   "LotFrontage", "LotArea", "MasVnrArea", "BsmtFinSF1", "BsmtFinSF2",
   "BsmtUnfSF", "TotalBsmtSF", "1stFlrSF", "2ndFlrSF", "LowQualFinSF",
@@ -136,7 +136,7 @@ Be aware that you can pass a `Pipeline` as a transformer in a
 scale and impute). We additionally show that we can create a final model
 combining this preprocessor with a classifier.
 
-```python
+```pythonthon
 scaler_imputer_transformer = make_pipeline(StandardScaler(), SimpleImputer())
 preprocessor = ColumnTransformer(transformers=[
     ("num_preprocessor", scaler_imputer_transformer, numerical_features)

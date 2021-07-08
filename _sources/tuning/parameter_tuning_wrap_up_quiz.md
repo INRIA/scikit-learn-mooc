@@ -4,7 +4,7 @@
 
 Load the dataset file named `penguins.csv` with the following command:
 
-```py
+```python
 import pandas as pd
 
 
@@ -51,7 +51,7 @@ that are helpful to answer to this question.
 
 Let's now consider the following pipeline:
 
-```py
+```python
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -89,7 +89,7 @@ _Select several answers_
 
 We will now study the impact of different preprocessors defined in the list below:
 
-```py
+```python
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import QuantileTransformer
 from sklearn.preprocessing import PowerTransformer

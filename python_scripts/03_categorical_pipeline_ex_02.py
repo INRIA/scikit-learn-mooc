@@ -16,11 +16,11 @@
 # # 📝 Exercise M1.05
 #
 # The goal of this exercise is to evaluate the impact of feature preprocessing
-# on a pipeline that uses a decision-tree-based classifier instead of logistic
+# on a pipeline that uses a decision-tree-based classifier instead of a logistic
 # regression.
 #
 # - The first question is to empirically evaluate whether scaling numerical
-#   feature is helpful or not;
+#   features is helpful or not;
 # - The second question is to evaluate whether it is empirically better (both
 #   from a computational and a statistical perspective) to use integer coded or
 #   one-hot encoded categories.
@@ -37,7 +37,7 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 
 # %% [markdown]
 # As in the previous notebooks, we use the utility `make_column_selector`
-# to only select column with a specific data type. Besides, we list in
+# to select only columns with a specific data type. Besides, we list in
 # advance all categories for the categorical columns.
 
 # %%

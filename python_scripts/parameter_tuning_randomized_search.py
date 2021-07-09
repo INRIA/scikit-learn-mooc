@@ -6,7 +6,7 @@
 # of a predictive model.
 #
 # However, a grid-search approach has limitations. It does not scale when
-# the number of parameters to tune is increasing. Also, the grid will imposed
+# the number of parameters to tune is increasing. Also, the grid will impose
 # a regularity during the search which might be problematic.
 #
 # In this notebook, we will present the another method to tune hyperparameters

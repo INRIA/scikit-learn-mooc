@@ -87,10 +87,10 @@ print("The mean cross-validation accuracy is: "
 # %% [markdown]
 # ## One-hot encoding of categorical variables
 #
-# For linear models, we have observed that integer coding of categorical
-# variables can be very detrimental. However for
-# `HistGradientBoostingClassifier` models, it does not seem to be the case as
-# the cross-validation of the reference pipeline with `OrdinalEncoder` is good.
+# We observed that integer coding of categorical variables can be very
+# detrimental for linear models. However, it does not seem to be the case for
+# `HistGradientBoostingClassifier` models, as the cross-validation score
+# of the reference pipeline with `OrdinalEncoder` is reasonably good.
 #
 # Let's see if we can get an even better accuracy with `OneHotEncoder`.
 #

@@ -297,7 +297,7 @@ print(f"Mean squared error of linear regression model on the test set:\n"
       f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
-# By optimizing `alpha`, we see that the training an testing scores are closed.
+# By optimizing `alpha`, we see that the training and testing scores are close.
 # It indicates that our model is not overfitting.
 #
 # When fitting the ridge regressor, we also requested to store the error found

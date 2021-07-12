@@ -195,8 +195,8 @@ _ = plt.title("Decision boundary with a model using an RBF kernel")
 # classifier more expressive, exactly as we saw in regression.
 #
 # Keep in mind that adding flexibility to a model can also risk increasing
-# overfitting by making the decision function to sensitive to individual
+# overfitting by making the decision function to be sensitive to individual
 # (possibly noisy) data points of the training set. Here we can observe that
 # the decision functions remain smooth enough to preserve good generalization.
-# If you are curious, you can try repeated the above experiment with
+# If you are curious, you can try to repeat the above experiment with
 # `gamma=100` and look at the decision functions.

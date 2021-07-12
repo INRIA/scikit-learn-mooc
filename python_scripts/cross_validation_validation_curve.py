@@ -6,7 +6,7 @@
 # as their fluctuations.
 #
 # In this notebook, we will put these two errors into perspective and show how
-# they can help us know if our model generalizes, overfit, or underfit.
+# they can help us know if our model generalizes, overfits, or underfits.
 #
 # Let's first load the data and create the same model as in the previous
 # notebook.

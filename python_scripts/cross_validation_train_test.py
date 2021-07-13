@@ -308,7 +308,7 @@ print(f"The standard deviation of the target is: {target.std():.2f} k$")
 # During cross-validation, many models are trained and evaluated. Indeed, the
 # number of elements in each array of the output of `cross_validate` is a
 # result from one of these `fit`/`score` procedures. To make it explicit, it is
-# possible to retrieve theses fitted models for each of the splits/folds by
+# possible to retrieve these fitted models for each of the splits/folds by
 # passing the option `return_estimator=True` in `cross_validate`.
 
 # %%

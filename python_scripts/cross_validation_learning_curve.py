@@ -114,5 +114,5 @@ _ = plt.title("Learning curve for decision tree")
 #
 # * the influence of the number of samples in a dataset, especially on the
 #   variability of the errors reported when running the cross-validation;
-# * about the learning curve that is a visual representation of the capacity
+# * about the learning curve, which is a visual representation of the capacity
 #   of a model to improve by adding new samples.

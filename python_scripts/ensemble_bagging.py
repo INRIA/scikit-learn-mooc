@@ -210,7 +210,7 @@ _ = plt.title("Predictions of bagged trees")
 # %% [markdown]
 #
 # The unbroken red line shows the averaged predictions, which would be the
-# final preditions given by our 'bag' of decision tree regressors. Note that
+# final predictions given by our 'bag' of decision tree regressors. Note that
 # the predictions of the ensemble is more stable because of the averaging
 # operation. As a result, the bag of trees as a whole is less likely to overfit
 # than the individual trees.

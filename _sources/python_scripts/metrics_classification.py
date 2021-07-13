@@ -33,7 +33,7 @@ _ = plt.title("Number of samples per classes present\n in the target")
 
 # %% [markdown]
 # We can see that the vector `target` contains two classes corresponding to
-# whether a subject gave blood We will use a logistic regression classifier to
+# whether a subject gave blood. We will use a logistic regression classifier to
 # predict this outcome.
 #
 # To focus on the metrics presentation, we will only use a single split instead

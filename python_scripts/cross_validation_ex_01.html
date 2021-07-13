@@ -1399,8 +1399,8 @@
 cross-validation;</p></li>
 <li><p>study the effect of the parameter gamma of this classifier using a
 validation curve;</p></li>
-<li><p>study if it would be useful in term of classification if we could add new
-samples in the dataset using a learning curve.</p></li>
+<li><p>use a learning curve to determine the usefulness of adding new
+samples in the dataset when building a classifier.</p></li>
 </ul>
 <p>To make these experiments we will first load the blood transfusion dataset.</p>
 <div class="admonition note">
@@ -1425,7 +1425,7 @@ logistic regression. Indeed, the optimization used to find the optimal
 weights of the linear model are different but we don’t need to know these
 details for the exercise.</p>
 <p>Also, this classifier can become more flexible/expressive by using a
-so-called kernel making the model becomes non-linear. Again, no requirement
+so-called kernel that makes the model become non-linear. Again, no requirement
 regarding the mathematics is required to accomplish this exercise.</p>
 <p>We will use an RBF kernel where a parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> allows to tune the
 flexibility of the model.</p>
@@ -1457,7 +1457,7 @@ and let the other parameters to the default.</p>
 </div>
 </div>
 </div>
-<p>As previously mentioned, the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameter
+<p>As previously mentioned, the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameters
 controlling under/over-fitting in support vector machine with an RBF kernel.</p>
 <p>Compute the validation curve
 (using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a>)
@@ -1466,7 +1466,7 @@ between <code class="docutils literal notranslate"><span class="pre">10e-3</span
 Thus, you can use <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
 <p>Since we are manipulating a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> the parameter name will be set to
 <code class="docutils literal notranslate"><span class="pre">svc__gamma</span></code> instead of only <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can retrieve the parameter name
-using <code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into details regarding
+using <code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into detail regarding
 accessing and setting hyperparameter in the next section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

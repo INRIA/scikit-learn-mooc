@@ -9,8 +9,8 @@
 #   cross-validation;
 # * study the effect of the parameter gamma of this classifier using a
 #   validation curve;
-# * study if it would be useful in term of classification if we could add new
-#   samples in the dataset using a learning curve.
+# * use a learning curve to determine the usefulness of adding new
+#   samples in the dataset when building a classifier.
 #
 # To make these experiments we will first load the blood transfusion dataset.
 
@@ -35,7 +35,7 @@ target = blood_transfusion["Class"]
 # details for the exercise.
 #
 # Also, this classifier can become more flexible/expressive by using a
-# so-called kernel making the model becomes non-linear. Again, no requirement
+# so-called kernel that makes the model become non-linear. Again, no requirement
 # regarding the mathematics is required to accomplish this exercise.
 #
 # We will use an RBF kernel where a parameter `gamma` allows to tune the
@@ -80,16 +80,18 @@ print(
 )
 
 # %% [markdown]
-# As previously mentioned, the parameter `gamma` is one of the parameter
+# As previously mentioned, the parameter `gamma` is one of the parameters
 # controlling under/over-fitting in support vector machine with an RBF kernel.
 #
-# Compute the validation curve to evaluate the effect of the parameter `gamma`.
-# You can vary its value between `10e-3` and `10e2` by generating samples on a
-# logarithmic scale. Thus, you can use `np.logspace(-3, 2, num=30)`.
+# "Evaluate the effect of the parameter `gamma` by using a\n",
+# "[`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html)).\n",
+# "Use the default `scoring=None`. You can vary `gamma`\n",
+# "between `10e-3` and `10e2` by generating samples on a logarithmic scale\n",
+# "with the help of `np.logspace(-3, 2, num=30)`. \n",
 #
 # Since we are manipulating a `Pipeline` the parameter name will be set to
 # `svc__gamma` instead of only `gamma`. You can retrieve the parameter name
-# using `model.get_params().keys()`. We will go more into details regarding
+# using `model.get_params().keys()`. We will go more into detail regarding
 # accessing and setting hyperparameter in the next section.
 
 # %%

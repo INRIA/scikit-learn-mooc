@@ -68,7 +68,8 @@ target = blood_transfusion["Class"]
 # Evaluate the effect of the parameter `gamma` by using the
 # [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html))
 # function.
-# Use the default `scoring=None`. You can vary `gamma`
+# You can leave the default `scoring=None` which is equivalent to
+# `scoring="accuracy"` for classification problems. You can vary `gamma`
 # between `10e-3` and `10e2` by generating samples on a logarithmic scale
 # with the help of `np.logspace(-3, 2, num=30)`. 
 #

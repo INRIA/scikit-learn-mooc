@@ -65,8 +65,9 @@ target = blood_transfusion["Class"]
 # As previously mentioned, the parameter `gamma` is one of the parameter
 # controlling under/over-fitting in support vector machine with an RBF kernel.
 #
-# Evaluate the effect of the parameter `gamma` by using a
-# [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html)).
+# Evaluate the effect of the parameter `gamma` by using the
+# [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html))
+# function.
 # Use the default `scoring=None`. You can vary `gamma`
 # between `10e-3` and `10e2` by generating samples on a logarithmic scale
 # with the help of `np.logspace(-3, 2, num=30)`. 

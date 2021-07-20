@@ -149,7 +149,7 @@ print(
 # charge of creating all possible combinations and test them.
 #
 # The number of combinations will be equal to the product of the
-# number of values to explore for each parameter (e.g. in our example 4 x 4
+# number of values to explore for each parameter (e.g. in our example 4 x 3
 # combinations). Thus, adding new parameters with their associated values to be
 # explored become rapidly computationally expensive.
 #
@@ -249,7 +249,7 @@ ax.invert_yaxis()
 # notebook.
 #
 # For now we will note that, in general, **there is no unique optimal parameter
-# setting**: 6 models out of the 16 parameter configuration reach the maximal
+# setting**: 4 models out of the 12 parameter configurations reach the maximal
 # accuracy (up to small random fluctuations caused by the sampling of the
 # training set).
 

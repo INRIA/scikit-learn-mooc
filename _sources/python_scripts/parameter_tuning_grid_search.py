@@ -116,8 +116,8 @@ model
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {
-    'classifier__learning_rate': (0.05, 0.1, 0.5, 1, 5),
-    'classifier__max_leaf_nodes': (3, 10, 30, 100)}
+    'classifier__learning_rate': (0.01, 0.1, 1, 10),
+    'classifier__max_leaf_nodes': (3, 10, 30)}
 model_grid_search = GridSearchCV(model, param_grid=param_grid,
                                  n_jobs=2, cv=2)
 model_grid_search.fit(data_train, target_train)
@@ -149,7 +149,7 @@ print(
 # charge of creating all possible combinations and test them.
 #
 # The number of combinations will be equal to the product of the
-# number of values to explore for each parameter (e.g. in our example 4 x 4
+# number of values to explore for each parameter (e.g. in our example 4 x 3
 # combinations). Thus, adding new parameters with their associated values to be
 # explored become rapidly computationally expensive.
 #
@@ -249,7 +249,7 @@ ax.invert_yaxis()
 # notebook.
 #
 # For now we will note that, in general, **there is no unique optimal parameter
-# setting**: 6 models out of the 16 parameter configuration reach the maximal
+# setting**: 4 models out of the 12 parameter configurations reach the maximal
 # accuracy (up to small random fluctuations caused by the sampling of the
 # training set).
 

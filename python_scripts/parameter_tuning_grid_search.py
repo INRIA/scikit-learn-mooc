@@ -49,14 +49,9 @@ data_train, data_test, target_train, target_test = train_test_split(
 # We will define a pipeline as seen in the first module. It will handle both
 # numerical and categorical features.
 #
-# As we will use a tree-based model as a predictor, here we apply an ordinal
-# encoder on the categorical features: it encodes every category with an
-# arbitrary integer. For simple models such as linear models, a one-hot encoder
-# should be preferred. But for complex models, in particular tree-based models,
-# the ordinal encoder is useful as it avoids having high-dimensional
-# representations.
-#
-# First we select all the categorical columns.
+# Here we will use a tree-based model as a predictor. That means that only the
+# categorical features need preprocessing. The first step is to select all the
+# categorical columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -65,7 +60,13 @@ categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
-# Then we build our ordinal encoder, giving it the known categories.
+# Here we apply an `OrdinalEncoder` on the categorical features, which encodes 
+# every category with an arbitrary integer. Remember that for simple models 
+# such as linear models, a `OneHotEncoder` should be preferred. But for complex 
+# models, in particular tree-based models, the `OrdinalEncoder` avoids having 
+# high-dimensional representations.
+#
+# We now build our `OrdinalEncoder`, giving it the known categories.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
@@ -74,8 +75,8 @@ categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
                                           unknown_value=-1)
 
 # %% [markdown]
-# We now use a column transformer with code to select the categorical columns
-# and apply to them the ordinal encoder.
+# We then use a `ColumnTransformer` to select the categorical columns and
+# apply the `OrdinalEncoder` to them.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -104,10 +105,10 @@ model
 # ## Tuning using a grid-search
 #
 # Instead of manually writing the two `for` loops, scikit-learn provides a
-# class called `GridSearchCV` which implement the exhaustive search implemented
+# class called `GridSearchCV` which implements the exhaustive search we did
 # during the exercise.
 #
-# Let see how to use the `GridSearchCV` estimator for doing such search.
+# Lets see how to use the `GridSearchCV` estimator for doing such search.
 # Since the grid-search will be costly, we will only explore the combination
 # learning-rate and the maximum number of nodes.
 
@@ -245,7 +246,7 @@ ax.invert_yaxis()
 #   increased, one should decrease the value of `learning_rate` accordingly
 #   to preserve a good accuracy.
 #
-# The precise meaning of those two parameters will be explained in a latter
+# The precise meaning of those two parameters will be explained in a later
 # notebook.
 #
 # For now we will note that, in general, **there is no unique optimal parameter

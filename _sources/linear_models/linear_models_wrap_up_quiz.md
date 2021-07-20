@@ -18,7 +18,7 @@ marker for cells with missing values also known as "null" values.
 To simplify this exercise, we will only used the numerical features defined
 below:
 
-```
+```python
 numerical_features = [
     "LotFrontage", "LotArea", "MasVnrArea", "BsmtFinSF1", "BsmtFinSF2",
     "BsmtUnfSF", "TotalBsmtSF", "1stFlrSF", "2ndFlrSF", "LowQualFinSF",

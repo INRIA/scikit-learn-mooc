@@ -1459,11 +1459,12 @@ and let the other parameters to the default.</p>
 </div>
 <p>As previously mentioned, the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameters
 controlling under/over-fitting in support vector machine with an RBF kernel.</p>
-<p>Compute the validation curve
-(using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a>)
-to evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can vary its value
-between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale.
-Thus, you can use <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
+<p>Evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> by using the
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a> function.
+You can leave the default <code class="docutils literal notranslate"><span class="pre">scoring=None</span></code> which is equivalent to
+<code class="docutils literal notranslate"><span class="pre">scoring=&quot;accuracy&quot;</span></code> for classification problems. You can vary <code class="docutils literal notranslate"><span class="pre">gamma</span></code>
+between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale
+with the help of <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
 <p>Since we are manipulating a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> the parameter name will be set to
 <code class="docutils literal notranslate"><span class="pre">svc__gamma</span></code> instead of only <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can retrieve the parameter name
 using <code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into detail regarding

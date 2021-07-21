@@ -22,7 +22,7 @@ data, target = fetch_california_housing(as_frame=True, return_X_y=True)
 target *= 100  # rescale the target in k$
 
 # %% [markdown]
-# We will check the statistical performance of decision tree regressor with
+# We will check the generalization performance of decision tree regressor with
 # default parameters.
 
 # %%
@@ -74,7 +74,7 @@ print(f"R2 score obtained by cross-validation: "
 
 # %% [markdown]
 # We see that optimizing the hyperparameters will have a positive effect
-# on the statistical performance. However, it comes with a higher computational
+# on the generalization performance. However, it comes with a higher computational
 # cost.
 
 # %% [markdown]
@@ -88,7 +88,7 @@ print(f"R2 score obtained by cross-validation: "
 # predictions of all these base regressors will be combined by averaging.
 #
 # Here, we will use 20 decision trees and check the fitting time as well as the
-# statistical performance on the left-out testing data. It is important to note
+# generalization performance on the left-out testing data. It is important to note
 # that we are not going to tune any parameter of the decision tree.
 
 # %%
@@ -106,13 +106,13 @@ print(f"R2 score obtained by cross-validation: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# Without searching for optimal hyperparameters, the overall statistical
+# Without searching for optimal hyperparameters, the overall generalization
 # performance of the bagging regressor is better than a single decision tree.
 # In addition, the computational cost is reduced in comparison of seeking
 # for the optimal hyperparameters.
 #
 # This shows the motivation behind the use of an ensemble learner: it gives a
-# relatively good baseline with decent statistical performance without any
+# relatively good baseline with decent generalization performance without any
 # parameter tuning.
 #
 # Now, we will discuss in detail two ensemble families: bagging and

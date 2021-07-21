@@ -57,7 +57,7 @@ from sklearn.svm import SVC
 model = make_pipeline(StandardScaler(), SVC())
 
 # %% [markdown]
-# Evaluate the statistical performance of your model by cross-validation with a
+# Evaluate the generalization performance of your model by cross-validation with a
 # `ShuffleSplit` scheme. Thus, you can use
 # [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
 # and pass a [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)

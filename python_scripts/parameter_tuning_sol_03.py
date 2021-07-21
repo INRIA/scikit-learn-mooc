@@ -16,7 +16,7 @@
 # # 📃 Solution for Exercise M3.02
 #
 # The goal is to find the best set of hyperparameters which maximize the
-# statistical performance on a training set.
+# generalization performance on a training set.
 #
 # Here again with limit the size of the training set to make computation
 # run faster. Feel free to increase the `train_size` value if your computer

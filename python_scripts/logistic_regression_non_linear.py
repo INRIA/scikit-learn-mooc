@@ -100,7 +100,7 @@ linear_model.fit(data_moons, target_moons)
 # on the same dataset without splitting the dataset into a training set and a
 # testing set. While this is a bad practice, we use it for the sake of
 # simplicity to depict the model behavior. Always use cross-validation when
-# you want to assess the statistical performance of a machine-learning model.
+# you want to assess the generalization performance of a machine-learning model.
 # ```
 
 # %% [markdown]

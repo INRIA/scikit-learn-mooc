@@ -210,7 +210,7 @@ model = LogisticRegression()
 model.fit(data_train, target_train)
 
 # %% [markdown]
-# We can also use the `score` method to check the model statistical performance
+# We can also use the `score` method to check the model generalization performance
 # on the test set.
 
 # %%
@@ -218,7 +218,7 @@ accuracy = model.score(data_test, target_test)
 print(f"Accuracy of logistic regression: {accuracy:.3f}")
 
 # %% [markdown]
-# Now the real question is: is this statistical performance relevant of a good
+# Now the real question is: is this generalization performance relevant of a good
 # predictive model? Find out by solving the next exercise!
 #
 # In this notebook, we learned to:

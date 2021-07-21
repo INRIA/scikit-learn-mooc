@@ -68,7 +68,7 @@ preprocessor = make_column_transformer(
 # %% [markdown]
 #
 # We will first give a simple example where we will train a single decision
-# tree classifier and check its statistical performance via cross-validation.
+# tree classifier and check its generalization performance via cross-validation.
 
 # %%
 from sklearn.pipeline import make_pipeline

@@ -44,7 +44,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Plotting the validation curve, we can see that AdaBoost is not immune against
 # overfitting. Indeed, there is an optimal number of estimators to be found.
-# Adding too many estimators is detrimental for the statistical performance of
+# Adding too many estimators is detrimental for the generalization performance of
 # the model.
 
 # %% [markdown]

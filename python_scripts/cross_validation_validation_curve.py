@@ -32,7 +32,7 @@ regressor = DecisionTreeRegressor()
 # %% [markdown]
 # ## Overfitting vs. underfitting
 #
-# To better understand the statistical performance of our model and maybe find
+# To better understand the generalization performance of our model and maybe find
 # insights on how to improve it, we will compare the testing error with the
 # training error. Thus, we need to compute the error on the training set,
 # which is possible using the `cross_validate` function.

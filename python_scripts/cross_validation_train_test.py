@@ -62,7 +62,7 @@ regressor = DecisionTreeRegressor(random_state=0)
 regressor.fit(data, target)
 
 # %% [markdown]
-# After training the regressor, we would like to know its potential statistical
+# After training the regressor, we would like to know its potential generalization
 # performance once deployed in production. For this purpose, we use the mean
 # absolute error, which gives us an error in the native unit, i.e. k\$.
 
@@ -158,7 +158,7 @@ print(f"The testing error of our model is {score:.2f} k$")
 # **Cross-validation** allows estimating the robustness of a predictive model
 # by repeating the splitting procedure. It will give several training and
 # testing errors and thus some **estimate of the variability of the
-# model statistical performance**.
+# model generalization performance**.
 #
 # There are different cross-validation strategies, for now we are going to
 # focus on one called "shuffle-split". At each iteration of this strategy we:
@@ -170,9 +170,9 @@ print(f"The testing error of our model is {score:.2f} k$")
 #
 # We repeat this procedure `n_splits` times. Using `n_splits=40` means that we
 # will train 40 models in total and all of them will be discarded: we just
-# record their statistical performance on each variant of the test set.
+# record their generalization performance on each variant of the test set.
 #
-# To evaluate the statistical performance of our regressor, we can use
+# To evaluate the generalization performance of our regressor, we can use
 # [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
 # with a
 # [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
@@ -343,4 +343,4 @@ scores
 # * the necessity of splitting the data into a train and test set;
 # * the meaning of the training and testing errors;
 # * the overall cross-validation framework with the possibility to study
-#   statistical performance variations;
+#   generalization performance variations.

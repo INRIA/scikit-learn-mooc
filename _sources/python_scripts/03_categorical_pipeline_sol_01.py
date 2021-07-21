@@ -21,7 +21,7 @@
 #
 # To do so, let's try to use `OrdinalEncoder` to preprocess the categorical
 # variables. This preprocessor is assembled in a pipeline with
-# `LogisticRegression`. The statistical performance of the pipeline can be
+# `LogisticRegression`. The generalization performance of the pipeline can be
 # evaluated by cross-validation and then compared to the score obtained when
 # using `OneHotEncoder` or to some other baseline score.
 #
@@ -103,7 +103,7 @@ print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# Now, we would like to compare the statistical performance of our previous
+# Now, we would like to compare the generalization performance of our previous
 # model with a new model where instead of using an `OrdinalEncoder`, we will
 # use a `OneHotEncoder`. Repeat the model evaluation using cross-validation.
 # Compare the score of both models and conclude on the impact of choosing a

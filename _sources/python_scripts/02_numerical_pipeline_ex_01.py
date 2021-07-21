@@ -15,7 +15,7 @@
 # %% [markdown]
 # # 📝 Exercise M1.03
 #
-# The goal of this exercise is to compare the statistical performance of our
+# The goal of this exercise is to compare the generalization performance of our
 # classifier (81% accuracy) to some baseline classifiers that would ignore the
 # input data and instead make constant predictions.
 #
@@ -26,7 +26,7 @@
 # Use a `DummyClassifier` and do a train-test split to evaluate
 # its accuracy on the test set. This
 # [link](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
-# shows a few examples of how to evaluate the statistical performance of these
+# shows a few examples of how to evaluate the generalization performance of these
 # baseline models.
 
 # %%

@@ -1457,7 +1457,7 @@ cross-validation that you used in the introductory exercise.</p>
 </div>
 <p>We will use a decision tree regressor that we expect to overfit and thus not
 generalize to unseen data. We will use a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation to
-check the statistical performance of our model.</p>
+check the generalization performance of our model.</p>
 <p>Let’s first define our model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1496,7 +1496,7 @@ check the statistical performance of our model.</p>
 </div>
 </div>
 </div>
-<p>Surprisingly, we get outstanding statistical performance. We will investigate
+<p>Surprisingly, we get outstanding generalization performance. We will investigate
 and find the reason for such good results with a model that is expected to
 fail. We previously mentioned that <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is an iterative
 cross-validation scheme that shuffles data and split. We will simplify this
@@ -1512,7 +1512,7 @@ procedure with a single split and plot the prediction. We can use
 </div>
 </div>
 </div>
-<p>Let’s check the statistical performance of our model on this split.</p>
+<p>Let’s check the generalization performance of our model on this split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
@@ -1603,7 +1603,7 @@ check what we are predicting.</p>
 </div>
 <p>We see that our model cannot predict anything because it doesn’t have samples
 around the testing sample. Let’s check how we could have made a proper
-cross-validation scheme to get a reasonable statistical performance estimate.</p>
+cross-validation scheme to get a reasonable generalization performance estimate.</p>
 <p>One solution would be to group the samples into time blocks, e.g. by quarter,
 and predict each group’s information by using information from the other
 groups. We can use the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> cross-validation for this purpose.</p>

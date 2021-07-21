@@ -2,7 +2,7 @@
 # # Hyperparameter tuning by grid-search
 #
 # In the previous notebook, we saw that hyperparameters can affect the
-# statistical performance of a model. In this notebook, we will show how to
+# generalization performance of a model. In this notebook, we will show how to
 # optimize hyperparameters using a grid-search approach.
 
 # %% [markdown]
@@ -235,7 +235,7 @@ ax.invert_yaxis()
 # %% [markdown]
 # The above tables highlights the following things:
 #
-# * for too high values of `learning_rate`, the statistical performance of the
+# * for too high values of `learning_rate`, the generalization performance of the
 #   model is degraded and adjusting the value of `max_leaf_nodes` cannot fix
 #   that problem;
 # * outside of this pathological region, we observe that the optimal choice

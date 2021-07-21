@@ -5,7 +5,7 @@
 # should be used when you want to both evaluate a model and tune the
 # model's hyperparameters.
 #
-# Cross-validation is a powerful tool to evaluate the statistical performance
+# Cross-validation is a powerful tool to evaluate the generalization performance
 # of a model. It is also used to select the best model from a pool of models.
 # This pool of models can be the same family of predictor but with different
 # parameters. In this case, we call this procedure **hyperparameter tuning**.
@@ -98,7 +98,7 @@ print(f"The mean score using nested cross-validation is: "
 
 # %% [markdown]
 # In the example above, the reported score is more trustful and should be close
-# to production's expected statistical performance.
+# to production's expected generalization performance.
 #
 # We will illustrate the difference between the nested and non-nested
 # cross-validation scores to show that the latter one will be too optimistic in
@@ -147,10 +147,10 @@ _ = plt.title("Comparison of mean accuracy obtained on the test sets with\n"
               "and without nested cross-validation")
 
 # %% [markdown]
-# We observe that the model's statistical performance with the nested
+# We observe that the model's generalization performance with the nested
 # cross-validation is not as good as the non-nested cross-validation.
 #
 # As a conclusion, when optimizing parts of the machine learning pipeline (e.g.
 # hyperparameter, transform, etc.), one needs to use nested cross-validation to
-# evaluate the statistical performance of the predictive model. Otherwise, the
+# evaluate the generalization performance of the predictive model. Otherwise, the
 # results obtained without nested cross-validation are over-optimistic.

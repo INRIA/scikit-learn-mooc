@@ -2,7 +2,7 @@
 # # Hyperparameter tuning by randomized-search
 #
 # In the previous notebook, we showed how to use a grid-search approach to
-# search for the best hyperparameters maximizing the statistical performance
+# search for the best hyperparameters maximizing the generalization performance
 # of a predictive model.
 #
 # However, a grid-search approach has limitations. It does not scale when

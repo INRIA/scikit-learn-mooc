@@ -22,7 +22,7 @@
 # * an example of preprocessing, namely **scaling numerical variables**;
 # * using a scikit-learn **pipeline** to chain preprocessing and model
 #   training;
-# * assessing the statistical performance of our model via **cross-validation**
+# * assessing the generalization performance of our model via **cross-validation**
 #   instead of a single train-test split.
 #
 # ## Data preparation
@@ -258,7 +258,7 @@ predicted_target[:5]
 #
 # As a shorthand, we can check the score of the full predictive pipeline
 # calling the method `model.score`. Thus, let's check the computational and
-# statistical performance of such a predictive pipeline.
+# generalization performance of such a predictive pipeline.
 
 # %%
 model_name = model.__class__.__name__
@@ -287,7 +287,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # %% [markdown]
 # We see that scaling the data before training the logistic regression was
 # beneficial in terms of computational performance. Indeed, the number of
-# iterations decreased as well as the training time. The statistical
+# iterations decreased as well as the training time. The generalization
 # performance did not change since both models converged.
 #
 # ```{warning}
@@ -311,9 +311,9 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating
 # the procedure such that the training and testing sets are different each
-# time. Statistical performance metrics are collected for each repetition and
+# time. Generalization performance metrics are collected for each repetition and
 # then aggregated. As a result we can get an estimate of the variability of the
-# model's statistical performance.
+# model's generalization performance.
 #
 # Note that there exists several cross-validation strategies, each of them
 # defines how to repeat the `fit`/`score` procedure. In this section, we will
@@ -381,10 +381,10 @@ print("The mean cross-validation accuracy is: "
 
 # %% [markdown]
 # Note that by computing the standard-deviation of the cross-validation scores,
-# we can estimate the uncertainty of our model statistical performance. This is
+# we can estimate the uncertainty of our model generalization performance. This is
 # the main advantage of cross-validation and can be crucial in practice, for
 # example when comparing different models to figure out whether one is better
-# than the other or whether the statistical performance differences are within
+# than the other or whether the generalization performance differences are within
 # the uncertainty.
 #
 # In this particular case, only the first 2 decimals seem to be trustworthy. If
@@ -397,4 +397,4 @@ print("The mean cross-validation accuracy is: "
 #
 # * seen the importance of **scaling numerical variables**;
 # * used a **pipeline** to chain scaling and logistic regression training;
-# * assessed the statistical performance of our model via **cross-validation**.
+# * assessed the generalization performance of our model via **cross-validation**.

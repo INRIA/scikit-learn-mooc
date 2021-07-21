@@ -25,7 +25,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Create a random forest containing three trees. Train the forest and
-# check the statistical performance on the testing set in terms of mean
+# check the generalization performance on the testing set in terms of mean
 # absolute error.
 
 # %%

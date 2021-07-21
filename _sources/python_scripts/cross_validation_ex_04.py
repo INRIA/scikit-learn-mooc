@@ -21,7 +21,7 @@ data, target = load_digits(return_X_y=True, as_frame=True)
 # %% [markdown]
 # Then, create a a `KFold` object making sure that the data will not be
 # shuffled during the cross-validation. Use the previous model, data, and
-# cross-validation strategy defined to estimate the statistical performance of
+# cross-validation strategy defined to estimate the generalization performance of
 # the model.
 
 # %%

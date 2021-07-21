@@ -26,5 +26,5 @@ To generate the quizzes without solution from our private repo:
 ```sh
 cd jupyter-book
 
-python convert_exercises.py <private-repo-jupyter-book-folder> .
+make quizzes
 ```

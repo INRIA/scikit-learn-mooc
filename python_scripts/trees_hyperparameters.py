@@ -180,7 +180,7 @@ _ = plt.title(f"Optimal depth found via CV: "
 # The `max_depth` hyperparameter controls the overall complexity of the tree.
 # This parameter is adequate under the assumption that a tree is built is
 # symmetric. However, there is no guarantee that a tree will be symmetric.
-# Indeed, optimal statistical performance could be reached by growing some of
+# Indeed, optimal generalization performance could be reached by growing some of
 # the branches deeper than some others.
 #
 # We will built a dataset where we will illustrate this asymmetry. We will

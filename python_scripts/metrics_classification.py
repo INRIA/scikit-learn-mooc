@@ -2,7 +2,7 @@
 # # Classification
 #
 # This notebook aims at giving an overview of the classification metrics that
-# can be used to evaluate the predictive model statistical performance. We can
+# can be used to evaluate the predictive model generalization performance. We can
 # recall that in a classification setting, the vector `target` is categorical
 # rather than continuous.
 #
@@ -100,7 +100,7 @@ target_test == target_predicted
 # In the comparison above, a `True` value means that the value predicted by our
 # classifier is identical to the real value, while a `False` means that our
 # classifier made a mistake. One way of getting an overall rate representing
-# the statistical performance of our classifier would be to compute how many
+# the generalization performance of our classifier would be to compute how many
 # times our classifier was right and divide it by the number of samples in our
 # set.
 
@@ -160,7 +160,7 @@ _ = plot_confusion_matrix(classifier, data_test, target_test)
 #   people who did not give blood but were predicted to have given blood.
 #
 # Once we have split this information, we can compute metrics to highlight the
-# statistical performance of our classifier in a particular setting. For
+# generalization performance of our classifier in a particular setting. For
 # instance, we could be interested in the fraction of people who really gave
 # blood when the classifier predicted so or the fraction of people predicted to
 # have given blood out of the total population that actually did so.
@@ -269,7 +269,7 @@ np.all(equivalence_pred_proba)
 
 # %% [markdown]
 # The default decision threshold (0.5) might not be the best threshold that
-# leads to optimal statistical performance of our classifier. In this case, one
+# leads to optimal generalization performance of our classifier. In this case, one
 # can vary the decision threshold, and therefore the underlying prediction, and
 # compute the same statistics presented earlier. Usually, the two metrics
 # recall and precision are computed and plotted on a graph. Each metric plotted
@@ -328,8 +328,8 @@ _ = disp.ax_.set_title("ROC AUC curve")
 # This curve was built using the same principle as the precision-recall curve:
 # we vary the probability threshold for determining "hard" prediction and
 # compute the metrics. As with the precision-recall curve, we can compute the
-# area under the ROC (ROC-AUC) to characterize the statistical performance of
+# area under the ROC (ROC-AUC) to characterize the generalization performance of
 # our classifier. However, it is important to observe that the lower bound of
-# the ROC-AUC is 0.5. Indeed, we show the statistical performance of a dummy
-# classifier (the orange dashed line) to show that even the worst statistical
+# the ROC-AUC is 0.5. Indeed, we show the generalization performance of a dummy
+# classifier (the orange dashed line) to show that even the worst generalization
 # performance obtained will be above this line.

@@ -90,7 +90,7 @@ target.value_counts(normalize=True)
 # important: a classifier that would predict always this `"not donated"` class
 # would achieve an accuracy of 76% of good classification without using any
 # information from the data itself. This issue is known as class imbalance. One
-# should take care about the statistical performance metric used to evaluate a
+# should take care about the generalization performance metric used to evaluate a
 # model as well as the predictive model chosen itself.
 #
 # Now, let's have a naive analysis to see if there is a link between features

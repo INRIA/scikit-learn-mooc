@@ -229,7 +229,7 @@ print(f"Error of the tree: {target_true - y_pred_first_and_second_tree:.3f}")
 # (i.e. the second tree corrects the first tree's error, while the third tree
 # corrects the second tree's error and so on.)
 #
-# We will compare the statistical performance of random-forest and gradient
+# We will compare the generalization performance of random-forest and gradient
 # boosting on the California housing dataset.
 
 # %%

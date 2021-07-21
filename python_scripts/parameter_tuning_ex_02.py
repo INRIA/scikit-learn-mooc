@@ -16,7 +16,7 @@
 # # 📝 Exercise M3.01
 #
 # The goal is to write an exhaustive search to find the best parameters
-# combination maximizing the model statistical performance.
+# combination maximizing the model generalization performance.
 #
 # Here we use a small subset of the Adult Census dataset to make the code
 # faster to execute. Once your code works on the small subset, try to

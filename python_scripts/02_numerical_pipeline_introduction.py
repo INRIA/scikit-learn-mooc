@@ -21,7 +21,7 @@
 # In particular we will highlight:
 #
 # * the scikit-learn API: `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
-# * how to evaluate the statistical performance of a model with a train-test
+# * how to evaluate the generalization performance of a model with a train-test
 #   split.
 #
 # ## Loading the dataset with Pandas
@@ -177,7 +177,7 @@ print(f"Number of correct prediction: "
 # ## Train-test data split
 #
 # When building a machine learning model, it is important to evaluate the
-# trained model on data that was not used to fit it, as generalization is
+# trained model on data that was not used to fit it, as **generalization** is
 # more than memorization (meaning we want a rule that generalizes to new data,
 # without comparing to data we memorized).
 # It is harder to conclude on never-seen instances than on already seen ones.
@@ -235,17 +235,17 @@ print(f"The test accuracy using a {model_name} is "
 # on the training set, we find that this evaluation was indeed optimistic
 # compared to the score obtained on an held-out test set.
 #
-# It shows the importance to always testing the statistical performance of
+# It shows the importance to always testing the generalization performance of
 # predictive models on a different set than the one used to train these models.
 # We will discuss later in more details how predictive models should be
 # evaluated.
 
 # %% [markdown]
 # ```{note}
-# In this MOOC, we will refer to **statistical performance** of a model when
+# In this MOOC, we will refer to **generalization performance** of a model when
 # referring to the test score or test error obtained by comparing the
 # prediction of a model and the true targets. Equivalent terms for
-# **statistical performance** are predictive performance and generalization
+# **generalization performance** are predictive performance and statistical
 # performance. We will refer to **computational performance** of a predictive
 # model when accessing the computational costs of training a predictive model
 # or using it to make predictions.
@@ -255,7 +255,7 @@ print(f"The test accuracy using a {model_name} is "
 # In this notebook we:
 #
 # * fitted a **k-nearest neighbors** model on a training dataset;
-# * evaluated its statistical performance on the testing data;
+# * evaluated its generalization performance on the testing data;
 # * introduced the scikit-learn API `.fit(X, y)` (to train a model),
 #   `.predict(X)` (to make predictions) and `.score(X, y)`
 #   (to evaluate a model).

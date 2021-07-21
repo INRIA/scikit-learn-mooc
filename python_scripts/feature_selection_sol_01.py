@@ -16,7 +16,7 @@
 #
 # This type of dimensionality is typical in bioinformatics when dealing with
 # RNA-seq. However, we will use completely randomized features such that we
-# don't have a link between the data and the target. Thus, the statistical
+# don't have a link between the data and the target. Thus, the generalization
 # performance of any machine-learning model should not perform better than the
 # chance-level.
 
@@ -105,7 +105,7 @@ print(f"The mean accuracy is: {test_score:.3f}")
 #
 # Thus, start by creating a pipeline with the feature selector and the logistic
 # regression. Then, use cross-validation to get an estimate of the uncertainty
-# of your model statistical performance.
+# of your model generalization performance.
 
 # %%
 from sklearn.pipeline import make_pipeline

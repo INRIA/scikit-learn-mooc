@@ -1,7 +1,7 @@
 # %% [markdown]
 # # Comparing results with baseline and chance level
 #
-# In this notebook, we present how to compare the statistical performance of a
+# In this notebook, we present how to compare the generalization performance of a
 # model to a minimal baseline.
 #
 # Indeed, in the previous notebook, we compared the testing error by
@@ -68,8 +68,8 @@ result_dummy = cross_validate(dummy, data, target,
 errors_dummy = pd.Series(-result_dummy["test_score"], name="Dummy error")
 
 # %% [markdown]
-# Finally, we will evaluate the statistical performance of the second baseline.
-# This baseline will provide the statistical performance of the chance level.
+# Finally, we will evaluate the generalization performance of the second baseline.
+# This baseline will provide the generalization performance of the chance level.
 # Indeed, we will train a decision tree on some training data and evaluate the
 # same tree on data where the target vector has been randomized.
 
@@ -99,7 +99,7 @@ plt.xlabel("Mean absolute error (k$)")
 _ = plt.title("Distribution of the testing errors")
 
 # %% [markdown]
-# We see that even if the statistical performance of our model is far from
+# We see that even if the generalization performance of our model is far from
 # being good, it is better than the two baselines. Besides, we see that the
 # dummy regressor is better than a chance level regressor.
 #

@@ -218,7 +218,7 @@ print("The mean cross-validation accuracy is: "
 # However, it is often useful to check whether more complex models such as an
 # ensemble of decision trees can lead to higher predictive performance. In this
 # section we will use such a model called **gradient-boosting trees** and
-# evaluate its statistical performance. More precisely, the scikit-learn model
+# evaluate its generalization performance. More precisely, the scikit-learn model
 # we will use is called `HistGradientBoostingClassifier`. Note that boosting
 # models will be covered in more detail in a future module.
 #
@@ -246,7 +246,7 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
 # %% [markdown]
-# Now that we created our model, we can check its statistical performance.
+# Now that we created our model, we can check its generalization performance.
 
 # %%
 # %%time

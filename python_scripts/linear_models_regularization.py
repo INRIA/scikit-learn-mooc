@@ -68,7 +68,7 @@ print(f"Mean squared error of linear regression model on the test set:\n"
       f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
 
 # %% [markdown]
-# The score on the training set is much better. This statistical performance
+# The score on the training set is much better. This generalization performance
 # gap between the training and testing score is an indication that our model
 # overfitted our training set.
 #
@@ -319,7 +319,7 @@ _ = plt.title("Error obtained by cross-validation")
 
 # %% [markdown]
 # As we can see, regularization is just like salt in cooking: one must balance
-# its amount to get the best statistical performance. We can check if the best
+# its amount to get the best generalization performance. We can check if the best
 # `alpha` found is stable across the cross-validation fold.
 
 # %%

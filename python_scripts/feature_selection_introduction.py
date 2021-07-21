@@ -114,7 +114,7 @@ _ = plt.title("Time to make prediction")
 # We can draw the same conclusions for both training and scoring elapsed time:
 # selecting the most informative features speed-up our pipeline.
 #
-# Of course, such speed-up is beneficial only if the statistical performance in
+# Of course, such speed-up is beneficial only if the generalization performance in
 # terms of metrics remain the same. Let's check the testing score.
 
 # %%
@@ -123,7 +123,7 @@ plt.xlabel("Accuracy score")
 _ = plt.title("Test score via cross-validation")
 
 # %% [markdown]
-# We can observe that the model's statistical performance selecting a subset of
+# We can observe that the model's generalization performance selecting a subset of
 # features decreases compared with the model using all available features.
 # Since we generated the dataset, we can infer that the decrease is because of
 # the selection. The feature selection algorithm did not choose the two
@@ -145,7 +145,7 @@ for idx, pipeline in enumerate(cv_results_with_selection["estimator"]):
 # We see that the feature `53` is always selected while the other feature
 # varies depending on the cross-validation fold.
 #
-# If we would like to keep our score with similar statistical performance, we
+# If we would like to keep our score with similar generalization performance, we
 # could choose another metric to perform the test or select more features. For
 # instance, we could select the number of features based on a specific
 # percentile of the highest scores. Besides, we should keep in mind that we

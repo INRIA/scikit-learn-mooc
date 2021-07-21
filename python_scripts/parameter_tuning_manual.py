@@ -49,7 +49,7 @@ model = Pipeline(steps=[
 ])
 
 # %% [markdown]
-# We can evaluate the statistical performance of the model via
+# We can evaluate the generalization performance of the model via
 # cross-validation.
 
 # %%

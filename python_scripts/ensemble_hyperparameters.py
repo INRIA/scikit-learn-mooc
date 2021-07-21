@@ -18,9 +18,9 @@
 # ## Random forest
 #
 # The main parameter to tune for random forest is the `n_estimators` parameter.
-# In general, the more trees in the forest, the better the statistical
+# In general, the more trees in the forest, the better the generalization
 # performance will be. However, it will slow down the fitting and prediction
-# time. The goal is to balance computing time and statistical performance when
+# time. The goal is to balance computing time and generalization performance when
 # setting the number of estimators when putting such learner in production.
 #
 # The `max_depth` parameter could also be tuned. Sometimes, there is no need
@@ -62,7 +62,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
 # We can observe that in our grid-search, the largest `max_depth` together
-# with the largest `n_estimators` led to the best statistical performance.
+# with the largest `n_estimators` led to the best generalization performance.
 #
 # ## Gradient-boosting decision trees
 #

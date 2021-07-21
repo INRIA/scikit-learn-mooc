@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -5,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.6.0
+#       jupytext_version: 1.10.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -13,7 +14,7 @@
 # ---
 
 # %% [markdown]
-# # 📝 Exercise M1.04
+# # 📃 Solution for Exercise M1.04
 #
 # The goal of this exercise is to evaluate the impact of using an arbitrary
 # integer encoding for categorical variables along with a linear
@@ -52,8 +53,8 @@ categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %% [markdown]
-# Define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
-# `LogisticRegression` classifier.
+# We filter our dataset that it contains only categorical features.
+# Define a scikit-learn pipeline com
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
 # prediction time, you can set the `handle_unknown="use_encoded_value"` and
@@ -62,11 +63,10 @@ data_categorical = data[categorical_columns]
 # for more details regarding these parameters.
 
 # %%
+
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
-
-# Write your code here.
 
 # %% [markdown]
 # Your model is now defined. Evaluate it using a cross-validation using
@@ -74,8 +74,6 @@ from sklearn.linear_model import LogisticRegression
 
 # %%
 from sklearn.model_selection import cross_validate
-
-# Write your code here.
 
 # %% [markdown]
 # Now, we would like to compare the generalization performance of our previous
@@ -86,5 +84,3 @@ from sklearn.model_selection import cross_validate
 
 # %%
 from sklearn.preprocessing import OneHotEncoder
-
-# Write your code here.

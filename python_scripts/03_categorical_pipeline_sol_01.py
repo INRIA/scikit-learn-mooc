@@ -67,6 +67,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
 
+# %% tags=["solution"]
+
 model = make_pipeline(
     OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
     LogisticRegression(max_iter=500))
@@ -78,13 +80,15 @@ model = make_pipeline(
 # %%
 from sklearn.model_selection import cross_validate
 
+# %% tags=["solution"]
+
 cv_results = cross_validate(model, data_categorical, target)
 
 scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Using an arbitrary mapping from string labels to integers as done here causes
 # the linear model to make bad assumptions on the relative ordering of
 # categories.
@@ -93,7 +97,7 @@ print("The mean cross-validation accuracy is: "
 # cross-validated score is even lower than the baseline we obtained by ignoring
 # the input data and just constantly predicting the most frequent class:
 
-# %%
+# %% tags=["solution"]
 from sklearn.dummy import DummyClassifier
 
 cv_results = cross_validate(DummyClassifier(strategy="most_frequent"),
@@ -112,6 +116,7 @@ print("The mean cross-validation accuracy is: "
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
+# %% tags=["solution"]
 model = make_pipeline(
     OneHotEncoder(handle_unknown="ignore"),
     LogisticRegression(max_iter=500))
@@ -120,7 +125,7 @@ scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # With the linear classifier chosen, using an encoding that does not assume
 # any ordering lead to much better result.
 #

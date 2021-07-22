@@ -67,7 +67,6 @@ from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
 
 # solution
-
 model = make_pipeline(
     OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
     LogisticRegression(max_iter=500))

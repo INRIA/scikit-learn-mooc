@@ -52,8 +52,8 @@ categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %% [markdown]
-# We filter our dataset that it contains only categorical features.
-# Define a scikit-learn pipeline com
+# Define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
+# `LogisticRegression` classifier.
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
 # prediction time, you can set the `handle_unknown="use_encoded_value"` and
@@ -62,7 +62,6 @@ data_categorical = data[categorical_columns]
 # for more details regarding these parameters.
 
 # %%
-
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression

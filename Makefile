@@ -19,4 +19,4 @@ sanity_check_$(NOTEBOOKS_DIR):
 	python build_tools/sanity-check.py $(PYTHON_SCRIPTS_DIR) $(NOTEBOOKS_DIR)
 
 exercises:
-	python generate_exercise_from_solution.py $(PYTHON_SCRIPTS_DIR)
+	python build_tools/generate-exercise-from-solution.py $(PYTHON_SCRIPTS_DIR)

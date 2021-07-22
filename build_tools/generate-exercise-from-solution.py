@@ -64,17 +64,6 @@ def write_all_exercises(python_scripts_folder):
 
         write_exercise_py(solution_path, exercise_path)
 
-# def write_all_exercises(input_root_path, output_root_path):
-#     print(input_root_path, output_root_path)
-#     input_exercises = Path(input_root_path).glob("**/*quiz*.md")
-
-#     for input_path in input_exercises:
-#         # FIXME there may be a better way with the pathlib API
-#         relative_path_str = re.sub(str(input_root_path) + "/?", "",
-#                                    str(input_path))
-#         output_path = Path(output_root_path).joinpath(relative_path_str)
-#         print(str(input_path), str(output_path))
-#         write_exercise_myst(input_path, output_path)
 
 if __name__ == "__main__":
     python_scripts_folder = Path(sys.argv[1])

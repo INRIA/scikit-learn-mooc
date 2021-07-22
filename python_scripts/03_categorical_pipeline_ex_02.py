@@ -56,7 +56,8 @@ categorical_columns = categorical_columns_selector(data)
 # reference:
 
 # %%
-# %%time
+import time
+
 from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
 from sklearn.compose import ColumnTransformer
@@ -71,10 +72,16 @@ preprocessor = ColumnTransformer([
     remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
+
+start = time.time()
 cv_results = cross_validate(model, data, target)
+elapsed_time = time.time() - start
+
 scores = cv_results["test_score"]
+
 print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} +/- {scores.std():.3f} "
+      f"with a fitting time of {elapsed_time:.3f}")
 
 # %% [markdown]
 # ## Scaling numerical features

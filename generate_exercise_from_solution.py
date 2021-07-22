@@ -28,7 +28,7 @@ def remove_solution(input_py_str):
 
     # now we look for custom marker comment when we want to remove partial cells
     marker = "# solution"
-    pattern = re.compile(f"^.+{marker}.*", flags=re.MULTILINE|re.DOTALL)
+    pattern = re.compile(f"^{marker}.*", flags=re.MULTILINE|re.DOTALL)
 
     cells_to_modify = [c for c in nb.cells if c["cell_type"] == "code" and
                        marker in c["source"]]

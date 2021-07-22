@@ -16,11 +16,11 @@
 # # 📃 Solution for Exercise M1.05
 #
 # The goal of this exercise is to evaluate the impact of feature preprocessing
-# on a pipeline that uses a decision-tree-based classifier instead of logistic
+# on a pipeline that uses a decision-tree-based classifier instead of a logistic
 # regression.
 #
 # - The first question is to empirically evaluate whether scaling numerical
-#   feature is helpful or not;
+#   features is helpful or not;
 # - The second question is to evaluate whether it is empirically better (both
 #   from a computational and a statistical perspective) to use integer coded or
 #   one-hot encoded categories.
@@ -37,7 +37,7 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 
 # %% [markdown]
 # As in the previous notebooks, we use the utility `make_column_selector`
-# to only select column with a specific data type. Besides, we list in
+# to select only columns with a specific data type. Besides, we list in
 # advance all categories for the categorical columns.
 
 # %%
@@ -77,8 +77,12 @@ print("The mean cross-validation accuracy is: "
 
 # %% [markdown]
 # ## Scaling numerical features
+#
+# Let's write a similar pipeline that also scales the numerical features using
+# `StandardScaler` (or similar):
 
 # %%
+# solution
 # %%time
 from sklearn.preprocessing import StandardScaler
 
@@ -94,7 +98,7 @@ scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # ### Analysis
 #
 # We can observe that both the accuracy and the training time are approximately
@@ -107,10 +111,10 @@ print("The mean cross-validation accuracy is: "
 # %% [markdown]
 # ## One-hot encoding of categorical variables
 #
-# For linear models, we have observed that integer coding of categorical
-# variables can be very detrimental. However for
-# `HistGradientBoostingClassifier` models, it does not seem to be the case as
-# the cross-validation of the reference pipeline with `OrdinalEncoder` is good.
+# We observed that integer coding of categorical variables can be very
+# detrimental for linear models. However, it does not seem to be the case for
+# `HistGradientBoostingClassifier` models, as the cross-validation score
+# of the reference pipeline with `OrdinalEncoder` is reasonably good.
 #
 # Let's see if we can get an even better accuracy with `OneHotEncoder`.
 #
@@ -120,6 +124,7 @@ print("The mean cross-validation accuracy is: "
 # dense representation as a workaround.
 
 # %%
+# solution
 # %%time
 from sklearn.preprocessing import OneHotEncoder
 
@@ -134,7 +139,7 @@ scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # ### Analysis
 #
 # From an accuracy point of view, the result is almost exactly the same.

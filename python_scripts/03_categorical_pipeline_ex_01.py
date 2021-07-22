@@ -14,7 +14,7 @@
 # ---
 
 # %% [markdown]
-# # 📃 Solution for Exercise M1.04
+# # 📝 Exercise M1.04
 #
 # The goal of this exercise is to evaluate the impact of using an arbitrary
 # integer encoding for categorical variables along with a linear
@@ -68,12 +68,16 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
 
+# Write your code here.
+
 # %% [markdown]
 # Your model is now defined. Evaluate it using a cross-validation using
 # `sklearn.model_selection.cross_validate`.
 
 # %%
 from sklearn.model_selection import cross_validate
+
+# Write your code here.
 
 # %% [markdown]
 # Now, we would like to compare the generalization performance of our previous
@@ -84,3 +88,5 @@ from sklearn.model_selection import cross_validate
 
 # %%
 from sklearn.preprocessing import OneHotEncoder
+
+# Write your code here.

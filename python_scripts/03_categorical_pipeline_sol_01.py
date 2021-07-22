@@ -67,7 +67,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
 
-# %% tags=["solution"]
+# solution
 
 model = make_pipeline(
     OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
@@ -80,7 +80,7 @@ model = make_pipeline(
 # %%
 from sklearn.model_selection import cross_validate
 
-# %% tags=["solution"]
+# solution
 
 cv_results = cross_validate(model, data_categorical, target)
 
@@ -116,7 +116,7 @@ print("The mean cross-validation accuracy is: "
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
-# %% tags=["solution"]
+# solution
 model = make_pipeline(
     OneHotEncoder(handle_unknown="ignore"),
     LogisticRegression(max_iter=500))

@@ -16,7 +16,7 @@
 # # 📝 Exercise M1.03
 #
 # The goal of this exercise is to compare the generalization performance of our
-# classifier (81% accuracy) to some baseline classifiers that would ignore the
+# classification model (81% accuracy) to some baseline classification models that would ignore the
 # input data and instead make constant predictions.
 #
 # - What would be the score of a model that always predicts `' >50K'`?
@@ -63,7 +63,7 @@ from sklearn.model_selection import train_test_split
 
 
 # %% [markdown]
-# Use a `DummyClassifier` such that the resulting classifier will always
+# Use a `DummyClassifier` such that the resulting classification model will always
 # predict the class `' >50K'`. What is the accuracy score on the test set?
 # Repeat the experiment by always predicting the class `' <=50K'`.
 #

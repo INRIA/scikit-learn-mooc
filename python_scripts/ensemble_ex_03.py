@@ -24,7 +24,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Then, create an `AbaBoostRegressor`. Use the function
+# Then, create an `AdaBoostRegressor`. Use the function
 # `sklearn.model_selection.validation_curve` to get training and test scores
 # by varying the number of estimators. Use the mean absolute error as a metric
 # by passing `scoring="neg_mean_absolute_error"`.
@@ -48,7 +48,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # the model.
 
 # %% [markdown]
-# Repeat the experiment using a random forest instead of an AdaBoost regressor.
+# Repeat the experiment using a random forest instead of an AdaBoost regression model.
 
 # %%
 # Write your code here.

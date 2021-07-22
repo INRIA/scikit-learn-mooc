@@ -16,7 +16,7 @@
 # # 📝 Exercise M1.05
 #
 # The goal of this exercise is to evaluate the impact of feature preprocessing
-# on a pipeline that uses a decision-tree-based classifier instead of a logistic
+# on a pipeline that uses a decision-tree-based classification model instead of a logistic
 # regression.
 #
 # - The first question is to empirically evaluate whether scaling numerical

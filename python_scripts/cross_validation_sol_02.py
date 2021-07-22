@@ -1,7 +1,7 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M7.01
 #
-# This notebook aims at building baseline classifiers, which we'll use to
+# This notebook aims at building baseline classification models, which we'll use to
 # compare our predictive model. Besides, we will check the differences with
 # the baselines that we saw in regression.
 #
@@ -57,7 +57,7 @@ score, permutation_score, pvalue = permutation_test_score(
 test_score_permutation = pd.Series(permutation_score, name="Permuted score")
 
 # %% [markdown]
-# Finally, compute the test score of a dummy classifier which would predict
+# Finally, compute the test score of a dummy classification model which would predict
 # the most frequent class from the training set. You can look at the
 # `sklearn.dummy.DummyClassifier` class.
 
@@ -93,12 +93,12 @@ plt.xlabel("Accuracy (%)")
 _ = plt.title("Distribution of the test scores")
 
 # %% [markdown]
-# We observe that the dummy classifier with the strategy `most_frequent` is
+# We observe that the dummy classification model with the strategy `most_frequent` is
 # equivalent to the permutation score. We can also conclude that our model
 # is better than the other baseline.
 
 # %% [markdown]
-# Change the strategy of the dummy classifier to `stratified`, compute the
+# Change the strategy of the dummy classification model to `stratified`, compute the
 # results and plot the distribution together with the other results. Explain
 # why the results get worse.
 

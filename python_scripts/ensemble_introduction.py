@@ -22,7 +22,7 @@ data, target = fetch_california_housing(as_frame=True, return_X_y=True)
 target *= 100  # rescale the target in k$
 
 # %% [markdown]
-# We will check the generalization performance of decision tree regressor with
+# We will check the generalization performance of decision tree regression model with
 # default parameters.
 
 # %%
@@ -83,9 +83,9 @@ print(f"R2 score obtained by cross-validation: "
 #
 # Now we will use an ensemble method called bagging. More details about this
 # method will be discussed in the next section. In short, this method will use
-# a base regressor (i.e. decision tree regressors) and will train several of
+# a base regression (i.e. decision tree regression models) and will train several of
 # them on a slightly modified version of the training set. Then, the
-# predictions of all these base regressors will be combined by averaging.
+# predictions of all these base regressions will be combined by averaging.
 #
 # Here, we will use 20 decision trees and check the fitting time as well as the
 # generalization performance on the left-out testing data. It is important to note
@@ -107,7 +107,7 @@ print(f"R2 score obtained by cross-validation: "
 
 # %% [markdown]
 # Without searching for optimal hyperparameters, the overall generalization
-# performance of the bagging regressor is better than a single decision tree.
+# performance of the bagging regression model is better than a single decision tree.
 # In addition, the computational cost is reduced in comparison of seeking
 # for the optimal hyperparameters.
 #

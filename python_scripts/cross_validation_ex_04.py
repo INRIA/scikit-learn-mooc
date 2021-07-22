@@ -13,7 +13,7 @@ data, target = load_digits(return_X_y=True, as_frame=True)
 
 # %% [markdown]
 # The first step is to create a model. Use a machine learning pipeline
-# composed of a scaler followed by a logistic regression classifier.
+# composed of a scaler followed by a logistic regression classification model.
 
 # %%
 # Write your code here.

@@ -1,11 +1,11 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.05
 # In the previous notebook, we presented a non-penalized logistic regression
-# classifier. This classifier accepts a parameter `penalty` to add a
+# classification model. This model accepts a parameter `penalty` to add a
 # regularization. The regularization strength is set using the parameter `C`.
 #
 # In this exercise, we ask you to train a l2-penalized logistic regression
-# classifier and to find by yourself the effect of the parameter `C`.
+# classification model and to find by yourself the effect of the parameter `C`.
 #
 # We will start by loading the dataset and create the helper function to show
 # the decision separation as in the previous code.

@@ -32,12 +32,12 @@ range_features = {
     for feature_name in data.columns}
 
 # %% [markdown]
-# In a previous notebook, we learnt that a linear classifier will define a
+# In a previous notebook, we learnt that a linear classification model will define a
 # linear separation to split classes using a linear combination of the input
-# features. In our 2-dimensional space, it means that a linear classifier will
+# features. In our 2-dimensional space, it means that a linear classification model will
 # define some oblique lines that best separate our classes. We define a
-# function below that, given a set of data points and a classifier, will plot
-# the decision boundaries learnt by the classifier.
+# function below that, given a set of data points and a classification model, will plot
+# the decision boundaries learnt by the model.
 
 # %%
 import numpy as np
@@ -70,7 +70,7 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
 
 # %% [markdown]
-# Thus, for a linear classifier, we will obtain the following decision
+# Thus, for a linear classification model, we will obtain the following decision
 # boundaries. These boundaries lines indicate where the model changes its
 # prediction from one class to another.
 
@@ -165,7 +165,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # partition defined by a threshold inferior to 16.45mm. In this case, the most
 # represented class is the Gentoo species.
 #
-# Let's see how our tree would work as a predictor. Let's start to see the
+# Let's see how our tree would work as a predictive model. Let's start to see the
 # class predicted when the culmen depth is inferior to the threshold.
 
 # %%
@@ -181,7 +181,7 @@ tree.predict([[0, 17]])
 # %% [markdown]
 # In this case, the tree predicts the Adelie specie.
 #
-# Thus, we can conclude that a decision tree classifier will predict the most
+# Thus, we can conclude that a decision tree classification model will predict the most
 # represented class within a partition.
 #
 # During the training, we have a count of samples in each partition, we can

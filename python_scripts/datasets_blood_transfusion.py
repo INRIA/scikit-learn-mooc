@@ -87,7 +87,7 @@ target.value_counts(normalize=True)
 
 # %% [markdown]
 # Indeed, ~76% of the samples belong to the class `"not donated"`. It is rather
-# important: a classifier that would predict always this `"not donated"` class
+# important: a classification model that would predict always this `"not donated"` class
 # would achieve an accuracy of 76% of good classification without using any
 # information from the data itself. This issue is known as class imbalance. One
 # should take care about the generalization performance metric used to evaluate a

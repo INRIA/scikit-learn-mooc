@@ -52,7 +52,7 @@ _ = plt.title("Synthetic regression dataset")
 
 # %% [markdown]
 # As we previously discussed, boosting will be based on assembling a sequence
-# of learners. We will start by creating a decision tree regressor. We will set
+# of learners. We will start by creating a decision tree regression model. We will set
 # the depth of the tree so that the resulting learner will underfit the data.
 
 # %%

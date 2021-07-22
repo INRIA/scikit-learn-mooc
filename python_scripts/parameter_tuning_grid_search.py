@@ -49,7 +49,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # We will define a pipeline as seen in the first module. It will handle both
 # numerical and categorical features.
 #
-# As we will use a tree-based model as a predictor, here we apply an ordinal
+# As we will use a tree-based model as a predictive model, here we apply an ordinal
 # encoder on the categorical features: it encodes every category with an
 # arbitrary integer. For simple models such as linear models, a one-hot encoder
 # should be preferred. But for complex models, in particular tree-based models,
@@ -85,7 +85,7 @@ preprocessor = ColumnTransformer([
     remainder='passthrough', sparse_threshold=0)
 
 # %% [markdown]
-# Finally, we use a tree-based classifier (i.e. histogram gradient-boosting) to
+# Finally, we use a tree-based classification model (i.e. histogram gradient-boosting) to
 # predict whether or not a person earns more than 50 k$ a year.
 
 # %%
@@ -153,7 +153,7 @@ print(
 # combinations). Thus, adding new parameters with their associated values to be
 # explored become rapidly computationally expensive.
 #
-# Once the grid-search is fitted, it can be used as any other predictor by
+# Once the grid-search is fitted, it can be used as any other predictive model by
 # calling `predict` and `predict_proba`. Internally, it will use the model with
 # the best parameters found during `fit`.
 #

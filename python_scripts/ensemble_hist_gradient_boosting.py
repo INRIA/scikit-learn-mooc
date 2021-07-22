@@ -94,7 +94,7 @@ data_trans
 # %% [markdown]
 # After this transformation, we see that we have at most 256 unique values per
 # features. Now, we will use this transformer to discretize data before
-# training the gradient boosting regressor.
+# training the gradient boosting regression model.
 
 # %%
 from sklearn.pipeline import make_pipeline

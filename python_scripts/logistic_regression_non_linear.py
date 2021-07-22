@@ -13,7 +13,7 @@
 # find a perfect linear separation.
 #
 # First, we redefine our plotting utility to show the decision boundary of a
-# classifier.
+# classification model.
 
 # %%
 import numpy as np
@@ -79,12 +79,12 @@ _ = plt.title("Illustration of the moons dataset")
 
 # %% [markdown]
 # From the intuitions that we got by studying linear model, it should be
-# obvious that a linear classifier will not be able to find a perfect decision
+# obvious that a linear classification model will not be able to find a perfect decision
 # function to separate the two classes.
 #
-# Let's try to see what is the decision boundary of such a linear classifier.
+# Let's try to see what is the decision boundary of such a linear model.
 # We will create a predictive model by standardizing the dataset followed by
-# a linear support vector machine classifier.
+# a linear support vector machine classification model.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -96,7 +96,7 @@ linear_model.fit(data_moons, target_moons)
 
 # %% [markdown]
 # ```{warning}
-# Be aware that we fit and will check the boundary decision of the classifier
+# Be aware that we fit and will check the boundary decision of the classification model
 # on the same dataset without splitting the dataset into a training set and a
 # testing set. While this is a bad practice, we use it for the sake of
 # simplicity to depict the model behavior. Always use cross-validation when
@@ -158,7 +158,7 @@ _ = plt.title("Decision boundary of a linear model")
 # In the section about linear regression, we saw that we could use several
 # tricks to make a linear model more flexible by augmenting features or
 # using a kernel. Here, we will use the later solution by using a radial basis
-# function (RBF) kernel together with a support vector machine classifier.
+# function (RBF) kernel together with a support vector machine classification model.
 #
 # We will repeat the two previous experiments and check the obtained decision
 # function.
@@ -176,7 +176,7 @@ _ = plt.title("Decision boundary with a model using an RBF kernel")
 # %% [markdown]
 # We see that the decision boundary is not anymore a straight line. Indeed,
 # an area is defined around the red samples and we could imagine that this
-# classifier should be able to generalize on unseen data.
+# classification model should be able to generalize on unseen data.
 #
 # Let's check the decision function on the second dataset.
 
@@ -192,7 +192,7 @@ _ = plt.title("Decision boundary with a model using an RBF kernel")
 # is more flexible and does not underfit anymore.
 #
 # Thus, kernel trick or feature expansion are the tricks to make a linear
-# classifier more expressive, exactly as we saw in regression.
+# classification model more expressive, exactly as we saw in regression.
 #
 # Keep in mind that adding flexibility to a model can also risk increasing
 # overfitting by making the decision function to be sensitive to individual

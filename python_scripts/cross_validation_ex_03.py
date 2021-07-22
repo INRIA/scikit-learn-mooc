@@ -12,7 +12,7 @@ from sklearn.datasets import load_iris
 data, target = load_iris(return_X_y=True, as_frame=True)
 
 # %% [markdown]
-# Create a decision tree classifier that we will use in the next experiments.
+# Create a decision tree classification model that we will use in the next experiments.
 
 # %%
 # Write your code here.
@@ -20,7 +20,7 @@ data, target = load_iris(return_X_y=True, as_frame=True)
 # %% [markdown]
 # As a first experiment, use the utility
 # `sklearn.model_selection.train_test_split` to split the data into a train
-# and test set. Train the classifier using the train set and check the score
+# and test set. Train the classification model using the train set and check the score
 # on the test set.
 
 # %%

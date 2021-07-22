@@ -104,7 +104,7 @@ print(f"weight: {linear_regression.coef_[0]:.2f}, "
 # 3. use a "kernel" to have a locally-based decision function instead of a
 #    global linear decision function.
 #
-# Let's illustrate quickly the first point by using a decision tree regressor
+# Let's illustrate quickly the first point by using a decision tree regression model
 # which can natively handle non-linearity.
 
 # %%

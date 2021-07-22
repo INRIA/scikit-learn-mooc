@@ -53,7 +53,7 @@ target.head()
 # %% [markdown]
 # ## Training error vs testing error
 #
-# To solve this regression task, we will use a decision tree regressor.
+# To solve this regression task, we will use a decision tree regression model.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -62,7 +62,7 @@ regressor = DecisionTreeRegressor(random_state=0)
 regressor.fit(data, target)
 
 # %% [markdown]
-# After training the regressor, we would like to know its potential generalization
+# After training the regression model, we would like to know its potential generalization
 # performance once deployed in production. For this purpose, we use the mean
 # absolute error, which gives us an error in the native unit, i.e. k\$.
 
@@ -71,7 +71,7 @@ from sklearn.metrics import mean_absolute_error
 
 target_predicted = regressor.predict(data)
 score = mean_absolute_error(target, target_predicted)
-print(f"On average, our regressor makes an error of {score:.2f} k$")
+print(f"On average, our regression model makes an error of {score:.2f} k$")
 
 # %% [markdown]
 # We get perfect prediction with no error. It is too optimistic and almost
@@ -172,7 +172,7 @@ print(f"The testing error of our model is {score:.2f} k$")
 # will train 40 models in total and all of them will be discarded: we just
 # record their generalization performance on each variant of the test set.
 #
-# To evaluate the generalization performance of our regressor, we can use
+# To evaluate the generalization performance of our regression model, we can use
 # [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
 # with a
 # [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
@@ -319,10 +319,9 @@ cv_results
 cv_results["estimator"]
 
 # %% [markdown]
-# The five decision tree regressors corresponds to the five fitted decision
-# trees on the different folds. Having access to these regressors is handy
-# because it allows to inspect the internal fitted parameters of these
-# regressors.
+# The five decision tree regression models correspond to the five fitted decision
+# trees on the different folds. Having access to these regression models is handy
+# because it allows to inspect the internal fitted parameters of such models.
 #
 # In the case where you only are interested in the test score, scikit-learn
 # provide a `cross_val_score` function. It is identical to calling the

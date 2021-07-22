@@ -106,12 +106,12 @@ model.fit(data, target)
 # %% [markdown]
 # Learning can be represented as follows:
 #
-# ![Predictor fit diagram](../figures/api_diagram-predictor.fit.svg)
+# ![Predictive model fit diagram](../figures/api_diagram-predictor.fit.svg)
 #
 # The method `fit` is composed of two elements: (i) a **learning algorithm**
 # and (ii) some **model states**. The learning algorithm takes the training
 # data and training target as input and sets the model states. These model
-# states will be used later to either predict (for classifiers and regressors)
+# states will be used later to either predict (for classification and regression models)
 # or transform data (for transformers).
 #
 # Both the learning algorithm and the type of model states are specific to each
@@ -133,7 +133,7 @@ target_predicted = model.predict(data)
 # %% [markdown]
 # We can illustrate the prediction mechanism as follows:
 #
-# ![Predictor predict diagram](../figures/api_diagram-predictor.predict.svg)
+# ![Predictive model predict diagram](../figures/api_diagram-predictor.predict.svg)
 #
 # To predict, a model uses a **prediction function** that will use the input
 # data together with the model states. As for the learning algorithm and the
@@ -211,7 +211,7 @@ print(f"The testing dataset contains {data_test.shape[0]} samples and "
 # %% [markdown]
 #
 # Instead of computing the prediction and manually computing the average
-# success rate, we can use the method `score`. When dealing with classifiers
+# success rate, we can use the method `score`. When dealing with classification models
 # this method returns their performance metric.
 
 # %%
@@ -224,9 +224,9 @@ print(f"The test accuracy using a {model_name} is "
 # %% [markdown]
 # Let's check the underlying mechanism when the `score` method is called:
 #
-# ![Predictor score diagram](../figures/api_diagram-predictor.score.svg)
+# ![Predictive model score diagram](../figures/api_diagram-predictor.score.svg)
 #
-# To compute the score, the predictor first computes the predictions (using
+# To compute the score, the predictive model first computes the predictions (using
 # the `predict` method) and then uses a scoring function to compare the
 # true target `y` and the predictions. Finally, the score is returned.
 

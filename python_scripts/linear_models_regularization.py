@@ -192,7 +192,7 @@ _ = plt.title("Ridge weights")
 # is generally good practice to scale the data.
 #
 # Thus, we will add a `StandardScaler` in the machine learning pipeline. This
-# scaler will be placed just before the regressor.
+# scaler will be placed just before the regression model.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -258,12 +258,12 @@ _ = plt.title("Ridge weights with data scaling")
 #
 # Therefore, we should include search of the hyperparameter `alpha` within the
 # cross-validation. As we saw in previous notebooks, we could use a
-# grid-search. However, some predictor in scikit-learn are available with
+# grid-search. However, some predictive models in scikit-learn are available with
 # an integrated hyperparameter search, more efficient than using a grid-search.
-# The name of these predictors finishes by `CV`. In the case of `Ridge`,
-# scikit-learn provides a `RidgeCV` regressor.
+# The name of these predictive models finishes by `CV`. In the case of `Ridge`,
+# scikit-learn provides a `RidgeCV` regression model.
 #
-# Therefore, we can use this predictor as the last step of the pipeline.
+# Therefore, we can use this predictive model as the last step of the pipeline.
 # Including the pipeline a cross-validation allows to make a nested
 # cross-validation: the inner cross-validation will search for the best
 # alpha, while the outer cross-validation will give an estimate of the
@@ -300,7 +300,7 @@ print(f"Mean squared error of linear regression model on the test set:\n"
 # By optimizing `alpha`, we see that the training and testing scores are close.
 # It indicates that our model is not overfitting.
 #
-# When fitting the ridge regressor, we also requested to store the error found
+# When fitting the ridge regression model, we also requested to store the error found
 # during cross-validation (by setting the parameter `store_cv_values=True`).
 # We will plot the mean squared error for the different `alphas` regularization
 # strength that we tried.

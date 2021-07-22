@@ -117,8 +117,8 @@ preprocessor = ColumnTransformer([
 # * It then **concatenates the transformed datasets** into a single dataset.
 
 # The important thing is that `ColumnTransformer` is like any other
-# scikit-learn transformer. In particular it can be combined with a classifier
-# in a `Pipeline`:
+# scikit-learn transformer. In particular it can be combined with a classification
+# model in a `Pipeline`:
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -139,7 +139,7 @@ model
 # the same API (the same set of methods that can be called by the user):
 #
 # - the `fit` method is called to preprocess the data and then train the
-#   classifier of the preprocessed data;
+#   classification model of the preprocessed data;
 # - the `predict` method makes predictions on new data;
 # - the `score` method is used to predict on the test data and compare the
 #   predictions to the expected test labels to compute the accuracy.
@@ -192,7 +192,7 @@ model.score(data_test, target_test)
 #
 # As previously stated, a predictive model should be evaluated by
 # cross-validation. Our model is usable with the cross-validation tools of
-# scikit-learn as any other predictors:
+# scikit-learn just as any other predictive model:
 
 # %%
 from sklearn.model_selection import cross_validate

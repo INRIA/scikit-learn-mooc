@@ -15,9 +15,9 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M1.03
 #
-# The goal of this exercise is to compare the performance of our classifier in
+# The goal of this exercise is to compare the performance of our classification model in
 # the previous notebook (roughly 81% accuracy with `LogisticRegression`) to
-# some simple baseline classifiers. The simplest baseline classifier is one
+# some simple baseline classification models. The simplest baseline classification model is one
 # that always predicts the same class, irrespective of the input data.
 #
 # - What would be the score of a model that always predicts `' >50K'`?
@@ -64,7 +64,7 @@ data_numeric_train, data_numeric_test, target_train, target_test = \
     train_test_split(data_numeric, target, random_state=42)
 
 # %% [markdown]
-# We will first create a dummy classifier which will always predict the
+# We will first create a dummy classification model which will always predict the
 # high revenue class, i.e. `" >50K"`, and check the generalization
 # performance.
 
@@ -96,7 +96,7 @@ print(f"Accuracy of a model predicting only low revenue: {score:.3f}")
 # the fact that we have 3/4 of the target belonging to low-revenue class.
 
 # %% [markdown]
-# Therefore, any predictive model giving results below this dummy classifier
+# Therefore, any predictive model giving results below this dummy classification model
 # will not be helpful.
 
 # %%

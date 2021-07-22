@@ -93,7 +93,7 @@ from sklearn.dummy import DummyRegressor
 
 dummy_regressor = DummyRegressor(strategy="mean")
 dummy_regressor.fit(data_train, target_train)
-print(f"R2 score for a regressor predicting the mean:"
+print(f"R2 score for a regression model predicting the mean:"
       f"{dummy_regressor.score(data_test, target_test):.3f}")
 
 # %% [markdown]

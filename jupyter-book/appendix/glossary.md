@@ -46,21 +46,26 @@ is thus the black dotted line. This decision rule is used to
 the line: a [sample](#sample-instance-observation) lying on the left of the
 line will be predicted as a blue sample while a sample lying on the right of
 the line will be predicted as an orange sample. Here, we have a linear
-[classifier](#classifier) because the decision rule is defined as a line (in
+[classification model](#classification-model) because the decision rule is defined as a line (in
 higher dimensions this would be an hyperplane). However, the shape of the
 decision rule will depend on the [model](#model) used.
 
-### classifier
+### classification model
 
 A model used for [classification](#classification). These models handle
 [targets](#target-label-annotation) that contains discrete values such as
 `0`/`1` or `cat`/`dog`. For example in scikit-learn `LogisticRegression` or
-`HistGradientBoostingClassifier` are classifier
+`HistGradientBoostingClassifier` are classification model
 [classes](#target-label-annotation).
 
 Note: for historic reasons the `LogisticRegression` name is confusing.
 `LogisticRegression` is not a regression model but a classification model, in
 contrary with what the name would suggest.
+
+### classifier
+
+The term "classifier" refers to an algorithm for implementing a 
+[classification model](#classification-model). 
 
 ### cross-validation
 
@@ -192,11 +197,11 @@ than the relevant patterns. You can tell a [model](#model) is overfitting when
 it performs great on your [train set](#train-set), but poorly on your [test
 set](#test-set) (or new real-world data).
 
-### predictor
+### predictive model
 
 An [estimator](#estimator) (object with a `fit` method) with a `predict` and/or
-`fit_predict` method. Note a [classifier](#classifier) or a
-[regressor](#regressor) is a predictor. Example of predictor classes are
+`fit_predict` method. Note a [classification model](#classification-model) or a
+[regression model](#regression-model) is a predictive model. Example of predictive model classes are
 `KNeighborsClassifier` and `DecisionTreeRegressor`.
 
 ### predict, prediction
@@ -238,12 +243,19 @@ orange line. To [predict](#predict-prediction) the
 [model](#model) will output the corresponding `y` value lying on the orange
 line.
 
-### regressor
+### regression model
 
-A regressor is a [predictor](#predictor) in a [regression](#regression)
+A regression model is a [predictive model](#predictive-model) in a [regression](#regression)
 setting.
 
-In scikit-learn, `DecisionTreeRegressor` or `Ridge` are regressor classes.
+In scikit-learn, `DecisionTreeRegressor` and `Ridge` are regression model classes.
+
+### regressor
+
+The term "regressor" is quite often used to mean a scikit-learn object implementing 
+a [regression model](#regression-model). 
+
+Note: "regressors" can also mean features used in a regression.
 
 ### regularization, penalization
 

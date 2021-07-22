@@ -70,8 +70,8 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
 
 # %% [markdown]
-# Create a decision tree classifier with a maximum depth of 2 levels and fit
-# the training data. Once this classifier trained, plot the data and the
+# Create a decision tree classification model with a maximum depth of 2 levels and fit
+# the training data. Once this model is trained, plot the data and the
 # decision boundary to see the benefit of increasing the depth.
 
 # %%

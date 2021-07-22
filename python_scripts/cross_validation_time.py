@@ -54,7 +54,7 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, shuffle=True, random_state=0)
 
 # %% [markdown]
-# We will use a decision tree regressor that we expect to overfit and thus not
+# We will use a decision tree regression model that we expect to overfit and thus not
 # generalize to unseen data. We will use a `ShuffleSplit` cross-validation to
 # check the generalization performance of our model.
 #

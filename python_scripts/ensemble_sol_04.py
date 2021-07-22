@@ -68,7 +68,7 @@ plt.errorbar(
 plt.legend()
 plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
-_ = plt.title("Validation curve for GBDT regressor")
+_ = plt.title("Validation curve for GBDT regression model")
 
 # %% [markdown]
 # Unlike AdaBoost, the gradient boosting model will always improve when

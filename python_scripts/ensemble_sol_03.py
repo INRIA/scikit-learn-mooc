@@ -61,7 +61,7 @@ plt.errorbar(param_range, test_errors.mean(axis=1),
 plt.legend()
 plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
-_ = plt.title("Validation curve for AdaBoost regressor")
+_ = plt.title("Validation curve for AdaBoost regression model")
 
 # %% [markdown]
 # Plotting the validation curve, we can see that AdaBoost is not immune against
@@ -69,7 +69,7 @@ _ = plt.title("Validation curve for AdaBoost regressor")
 # Adding too many estimators is detrimental for the performance of the model.
 
 # %% [markdown]
-# Repeat the experiment using a random forest instead of an AdaBoost regressor.
+# Repeat the experiment using a random forest instead of an AdaBoost regression model.
 
 # %%
 from sklearn.ensemble import RandomForestRegressor
@@ -92,10 +92,10 @@ plt.errorbar(param_range, test_errors.mean(axis=1),
 plt.legend()
 plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
-_ = plt.title("Validation curve for RandomForest regressor")
+_ = plt.title("Validation curve for RandomForest regression model")
 
 # %% [markdown]
-# In contrary to the AdaBoost regressor, we can see that increasing the number
+# In contrast to the AdaBoost regression model, we can see that increasing the number
 # trees in the forest will increase the generalization performance (by decreasing
 # the mean absolute error) of the random forest. In fact, a random forest has
 # less chance to suffer from overfitting than AdaBoost when increasing the

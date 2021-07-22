@@ -15,7 +15,7 @@ data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 
 # %% [markdown]
-# First, create a histogram gradient boosting regressor. You can set the
+# First, create a histogram gradient boosting regression model. You can set the
 # trees number to be large, and configure the model to use early-stopping.
 
 # %%

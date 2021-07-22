@@ -3,12 +3,12 @@
 #
 # The aim of this exercise is to make the following experiments:
 #
-# * train and test a support vector machine classifier through
+# * train and test a support vector machine classification model through
 #   cross-validation;
-# * study the effect of the parameter gamma of this classifier using a
+# * study the effect of the parameter gamma of this classification model using a
 #   validation curve;
 # * use a learning curve to determine the usefulness of adding new
-#   samples in the dataset when building a classifier.
+#   samples in the dataset when building a classification model.
 #
 # To make these experiments we will first load the blood transfusion dataset.
 
@@ -26,13 +26,13 @@ data = blood_transfusion.drop(columns="Class")
 target = blood_transfusion["Class"]
 
 # %% [markdown]
-# We will use a support vector machine classifier (SVM). In its most simple
-# form, a SVM classifier is a linear classifier behaving similarly to a
+# We will use a support vector machine classification model (SVM). In its most simple
+# form, a SVM is a linear classification model behaving similarly to a
 # logistic regression. Indeed, the optimization used to find the optimal
 # weights of the linear model are different but we don't need to know these
 # details for the exercise.
 #
-# Also, this classifier can become more flexible/expressive by using a
+# Also, this classification model can become more flexible/expressive by using a
 # so-called kernel that makes the model become non-linear. Again, no requirement
 # regarding the mathematics is required to accomplish this exercise.
 #

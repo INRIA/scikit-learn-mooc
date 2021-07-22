@@ -32,7 +32,7 @@ data.head()
 
 # %% [markdown]
 # Let's create a simple predictive model made of a scaler followed by a
-# logistic regression classifier.
+# logistic regression classification model.
 #
 # As mentioned in previous notebooks, many models, including linear ones,
 # work better if all features have a similar scaling. For this purpose,

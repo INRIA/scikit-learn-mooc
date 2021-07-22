@@ -121,7 +121,7 @@ print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# With the linear classifier chosen, using an encoding that does not assume
+# With the linear classification model chosen, using an encoding that does not assume
 # any ordering lead to much better result.
 #
 # The important message here is: linear model and `OrdinalEncoder` are used

@@ -33,7 +33,7 @@ _ = plt.title("Number of samples per classes present\n in the target")
 
 # %% [markdown]
 # We can see that the vector `target` contains two classes corresponding to
-# whether a subject gave blood. We will use a logistic regression classifier to
+# whether a subject gave blood. We will use a logistic regression classification model to
 # predict this outcome.
 #
 # To focus on the metrics presentation, we will only use a single split instead
@@ -46,7 +46,7 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, shuffle=True, random_state=0, test_size=0.5)
 
 # %% [markdown]
-# We will use a logistic regression classifier as a base model. We will train
+# We will use a logistic regression classification model as a base model. We will train
 # the model on the train set, and later use the test set to compute the
 # different classification metric.
 
@@ -57,9 +57,9 @@ classifier = LogisticRegression()
 classifier.fit(data_train, target_train)
 
 # %% [markdown]
-# ## Classifier predictions
+# ## classification model predictions
 # Before we go into details regarding the metrics, we will recall what type
-# of predictions a classifier can provide.
+# of predictions a classification model can provide.
 #
 # For this reason, we will create a synthetic sample for a new potential donor:
 # he/she donated blood twice in the past (1000 c.c. each time). The last time
@@ -69,20 +69,20 @@ classifier.fit(data_train, target_train)
 new_donor = [[6, 2, 1000, 20]]
 
 # %% [markdown]
-# We can get the class predicted by the classifier by calling the method
+# We can get the class predicted by the classification model by calling the method
 # `predict`.
 
 # %%
 classifier.predict(new_donor)
 
 # %% [markdown]
-# With this information, our classifier predicts that this synthetic subject
+# With this information, our classification model predicts that this synthetic subject
 # is more likely to not donate blood again.
 #
 # However, we cannot check whether the prediction is correct (we do not know
 # the true target value). That's the purpose of the testing set. First, we
 # predict whether a subject will give blood with the help of the trained
-# classifier.
+# classification model.
 
 # %%
 target_predicted = classifier.predict(data_test)
@@ -98,10 +98,10 @@ target_test == target_predicted
 
 # %% [markdown]
 # In the comparison above, a `True` value means that the value predicted by our
-# classifier is identical to the real value, while a `False` means that our
-# classifier made a mistake. One way of getting an overall rate representing
-# the generalization performance of our classifier would be to compute how many
-# times our classifier was right and divide it by the number of samples in our
+# classification model is identical to the real value, while a `False` means that our
+# model made a mistake. One way of getting an overall rate representing
+# the generalization performance of our classification model would be to compute how many
+# times it was right and divide it by the number of samples in our
 # set.
 
 # %%
@@ -110,7 +110,7 @@ import numpy as np
 np.mean(target_test == target_predicted)
 
 # %% [markdown]
-# This measure is called the accuracy. Here, our classifier is 78%
+# This measure is called the accuracy. Here, our classification model is 78%
 # accurate at classifying if a subject will give blood. `scikit-learn` provides
 # a function that computes this metric in the module `sklearn.metrics`.
 
@@ -130,8 +130,8 @@ classifier.score(data_test, target_test)
 # %% [markdown]
 # ## Confusion matrix and derived metrics
 # The comparison that we did above and the accuracy that we calculated did not
-# take into account the type of error our classifier was making. Accuracy
-# is an aggregate of the errors made by the classifier. We may be interested
+# take into account the type of error our classification model was making. Accuracy
+# is an aggregate of the errors made by the model. We may be interested
 # in finer granularity - to know independently what the error is for each of
 # the two following cases:
 #
@@ -150,26 +150,26 @@ _ = plot_confusion_matrix(classifier, data_test, target_test)
 # predictions:
 #
 # * the top left corner are true positives (TP) and corresponds to people
-#   who gave blood and were predicted as such by the classifier;
+#   who gave blood and were predicted as such by the classification model;
 # * the bottom right corner are true negatives (TN) and correspond to
 #   people who did not give blood and were predicted as such by the
-#   classifier;
+#   model;
 # * the top right corner are false negatives (FN) and correspond to
 #   people who gave blood but were predicted to not have given blood;
 # * the bottom left corner are false positives (FP) and correspond to
 #   people who did not give blood but were predicted to have given blood.
 #
 # Once we have split this information, we can compute metrics to highlight the
-# generalization performance of our classifier in a particular setting. For
+# generalization performance of our classification model in a particular setting. For
 # instance, we could be interested in the fraction of people who really gave
-# blood when the classifier predicted so or the fraction of people predicted to
+# blood when the model predicted so or the fraction of people predicted to
 # have given blood out of the total population that actually did so.
 #
 # The former metric, known as the precision, is defined as TP / (TP + FP)
-# and represents how likely the person actually gave blood when the classifier
+# and represents how likely the person actually gave blood when the classification model
 # predicted that they did.
 # The latter, known as the recall, defined as TP / (TP + FN) and
-# assesses how well the classifier is able to correctly identify people who
+# assesses how well the model is able to correctly identify people who
 # did give blood.
 # We could, similarly to accuracy, manually compute these values,
 # however scikit-learn provides functions to compute these statistics.
@@ -186,7 +186,7 @@ print(f"Recall score: {recall:.3f}")
 # %% [markdown]
 # These results are in line with what was seen in the confusion matrix. Looking
 # at the left column, more than half of the "donated" predictions were correct,
-# leading to a precision above 0.5. However, our classifier mislabeled a lot of
+# leading to a precision above 0.5. However, our classification model mislabeled a lot of
 # people who gave blood as "not donated", leading to a very low recall of
 # around 0.1.
 #
@@ -206,23 +206,23 @@ _ = plt.title("Class frequency in the training set")
 
 # %% [markdown]
 # We observe that the positive class, `'donated'`, comprises only 24% of the
-# samples. The good accuracy of our classifier is then linked to its ability to
+# samples. The good accuracy of our classification model is then linked to its ability to
 # correctly predict the negative class `'not donated'` which may or may not be
 # relevant, depending on the application. We can illustrate the issue using a
-# dummy classifier as a baseline.
+# dummy classification model as a baseline.
 
 # %%
 from sklearn.dummy import DummyClassifier
 
 dummy_classifier = DummyClassifier(strategy="most_frequent")
 dummy_classifier.fit(data_train, target_train)
-print(f"Accuracy of the dummy classifier: "
+print(f"Accuracy of the dummy classification model: "
       f"{dummy_classifier.score(data_test, target_test):.3f}")
 
 # %% [markdown]
-# With the dummy classifier, which always predicts the negative class `'not
+# With the dummy classification model, which always predicts the negative class `'not
 # donated'`, we obtain an accuracy score of 76%. Therefore, it means that this
-# classifier, without learning anything from the data `data`, is capable of
+# model, without learning anything from the data `data`, is capable of
 # predicting as accurately as our logistic regression model.
 #
 # The problem illustrated above is also known as the class imbalance problem.
@@ -244,9 +244,9 @@ print(f"Balanced accuracy: {balanced_accuracy:.3f}")
 # All statistics that we presented up to now rely on `classifier.predict` which
 # outputs the most likely label. We haven't made use of the probability
 # associated with this prediction, which gives the confidence of the
-# classifier in this prediction. By default, the prediction of a classifier
+# classification model in this prediction. By default, the prediction of a classification model
 # corresponds to a threshold of 0.5 probability in a binary classification
-# problem. We can quickly check this relationship with the classifier that
+# problem. We can quickly check this relation with the model that
 # we trained.
 
 # %%
@@ -269,7 +269,7 @@ np.all(equivalence_pred_proba)
 
 # %% [markdown]
 # The default decision threshold (0.5) might not be the best threshold that
-# leads to optimal generalization performance of our classifier. In this case, one
+# leads to optimal generalization performance of our classification model. In this case, one
 # can vary the decision threshold, and therefore the underlying prediction, and
 # compute the same statistics presented earlier. Usually, the two metrics
 # recall and precision are computed and plotted on a graph. Each metric plotted
@@ -298,9 +298,9 @@ _ = disp.ax_.set_title("Precision-recall curve")
 # used as a decision threshold. We can see that, by varying this decision
 # threshold, we get different precision vs. recall values.
 #
-# A perfect classifier would have a precision of 1 for all recall values. A
+# A perfect classification model would have a precision of 1 for all recall values. A
 # metric characterizing the curve is linked to the area under the curve (AUC)
-# and is named average precision (AP). With an ideal classifier, the average
+# and is named average precision (AP). With an ideal classification model, the average
 # precision would be 1.
 #
 # The precision and recall metric focuses on the positive class, however, one
@@ -329,7 +329,7 @@ _ = disp.ax_.set_title("ROC AUC curve")
 # we vary the probability threshold for determining "hard" prediction and
 # compute the metrics. As with the precision-recall curve, we can compute the
 # area under the ROC (ROC-AUC) to characterize the generalization performance of
-# our classifier. However, it is important to observe that the lower bound of
+# our classification model. However, it is important to observe that the lower bound of
 # the ROC-AUC is 0.5. Indeed, we show the generalization performance of a dummy
-# classifier (the orange dashed line) to show that even the worst generalization
+# classification model (the orange dashed line) to show that even the worst generalization
 # performance obtained will be above this line.

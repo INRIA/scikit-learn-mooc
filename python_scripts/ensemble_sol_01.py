@@ -2,7 +2,7 @@
 # # 📃 Solution of Exercise M6.01
 #
 # The aim of this notebook is to investigate if we can tune the hyperparameters
-# of a bagging regressor and evaluate the gain obtained.
+# of a bagging regression model and evaluate the gain obtained.
 #
 # We will load the California housing dataset and split it into a training and
 # a testing set.
@@ -24,7 +24,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
-# to its parameter `base_estimator`. Train the regressor and evaluate its
+# to its parameter `base_estimator`. Train the regression model and evaluate its
 # generalization performance on the testing set using the mean absolute error.
 
 # %%
@@ -36,18 +36,18 @@ tree = DecisionTreeRegressor()
 bagging = BaggingRegressor(base_estimator=tree, n_jobs=2)
 bagging.fit(data_train, target_train)
 target_predicted = bagging.predict(data_test)
-print(f"Basic mean absolute error of the bagging regressor:\n"
+print(f"Basic mean absolute error of the bagging regression model:\n"
       f"{mean_absolute_error(target_test, target_predicted):.2f} k$")
 
 # %% [markdown]
 # Now, create a `RandomizedSearchCV` instance using the previous model and
-# tune the important parameters of the bagging regressor. Find the best
+# tune the important parameters of the bagging regression model. Find the best
 # parameters  and check if you are able to find a set of parameters that
-# improve the default regressor still using the mean absolute error as a
+# improve the default regression model still using the mean absolute error as a
 # metric.
 
 # ```{tip}
-# You can list the bagging regressor's parameters using the `get_params`
+# You can list the bagging regression model's parameters using the `get_params`
 # method.
 # ```
 
@@ -82,12 +82,12 @@ cv_results
 
 # %%
 target_predicted = search.predict(data_test)
-print(f"Mean absolute error after tuning of the bagging regressor:\n"
+print(f"Mean absolute error after tuning of the bagging regression model:\n"
       f"{mean_absolute_error(target_test, target_predicted):.2f} k$")
 
 # %% [markdown]
-# We see that the predictor provided by the bagging regressor does not need
+# We see that the predictive model provided by the bagging regression model does not need
 # much hyperparameter tuning compared to a single decision tree. We see that
-# the bagging regressor provides a predictor for which tuning the
+# the bagging regression model provides a predictive model for which tuning the
 # hyperparameters is not as important as in the case of fitting a single
 # decision tree.

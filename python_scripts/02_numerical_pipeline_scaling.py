@@ -120,7 +120,7 @@ scaler.fit(data_train)
 
 # %% [markdown]
 # The `fit` method for transformers is similar to the `fit` method for
-# predictors. The main difference is that the former has a single argument (the
+# predictive models. The main difference is that the former has a single argument (the
 # data matrix), whereas the latter has two arguments (the data matrix and the
 # target).
 #
@@ -166,12 +166,12 @@ data_train_scaled
 
 # %% [markdown]
 # Let's illustrate the internal mechanism of the `transform` method and put it
-# to perspective with what we already saw with predictors.
+# to perspective with what we already saw with predictive models.
 #
 # ![Transformer transform diagram](../figures/api_diagram-transformer.transform.svg)
 #
 # The `transform` method for transformers is similar to the `predict` method
-# for predictors. It uses a predefined function, called a **transformation
+# for predictive models. It uses a predefined function, called a **transformation
 # function**, and uses the model states and the input data. However, instead of
 # outputting predictions, the job of the `transform` method is to output a
 # transformed version of the input data.
@@ -194,9 +194,9 @@ data_train_scaled.describe()
 # %% [markdown]
 # We can easily combine these sequential operations with a scikit-learn
 # `Pipeline`, which chains together operations and is used as any other
-# classifier or regressor. The helper function `make_pipeline` will create a
+# classification or regression model. The helper function `make_pipeline` will create a
 # `Pipeline`: it takes as arguments the successive transformations to perform,
-# followed by the classifier or regressor model.
+# followed by the classification or regression model.
 
 # %%
 import time
@@ -216,7 +216,7 @@ model
 model.named_steps
 
 # %% [markdown]
-# This predictive pipeline exposes the same methods as the final predictor:
+# This predictive pipeline exposes the same methods as the final predictive model:
 # `fit` and `predict` (and additionally `predict_proba`, `decision_function`,
 # or `score`).
 
@@ -236,7 +236,7 @@ elapsed_time = time.time() - start
 #
 # - learn their internal model states
 # - transform the training data. Finally, the preprocessed data are provided to
-#   train the predictor.
+#   train the predictive model.
 #
 # To predict the targets given a test set, one uses the `predict` method.
 
@@ -253,7 +253,7 @@ predicted_target[:5]
 # called to preprocess the data. Note that there is no need to call the `fit`
 # method for these transformers because we are using the internal model states
 # computed when calling `model.fit`. The preprocessed data is then provided to
-# the predictor that will output the predicted target by calling its method
+# the predictive model that will output the predicted target by calling its method
 # `predict`.
 #
 # As a shorthand, we can check the score of the full predictive pipeline
@@ -294,7 +294,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # Working with non-scaled data will potentially force the algorithm to iterate
 # more as we showed in the example above. There is also the catastrophic
 # scenario where the number of required iterations are more than the maximum
-# number of iterations allowed by the predictor (controlled by the `max_iter`)
+# number of iterations allowed by the predictive model (controlled by the `max_iter`)
 # parameter. Therefore, before increasing `max_iter`, make sure that the data
 # are well scaled.
 # ```

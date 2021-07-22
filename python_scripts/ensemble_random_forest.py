@@ -5,9 +5,9 @@
 # differences with the bagging ensembles.
 #
 # Random forests are a popular model in machine learning. They are a
-# modification of the bagging algorithm. In bagging, any classifier or
-# regressor can be used. In random forests, the base classifier or regressor
-# is always a decision tree.
+# modification of the bagging algorithm. In bagging, any classification or
+# regression model can be used. In random forests, the base classification or regression
+# model is always a decision tree.
 #
 # Random forests have another particularity: when training a tree, the search
 # for the best split is done only on a subset of the original features taken at
@@ -23,7 +23,7 @@
 #
 # ## A look at random forests
 #
-# We will illustrate the usage of a random forest classifier on the adult
+# We will illustrate the usage of a random forest classification model on the adult
 # census dataset.
 
 # %%
@@ -68,7 +68,7 @@ preprocessor = make_column_transformer(
 # %% [markdown]
 #
 # We will first give a simple example where we will train a single decision
-# tree classifier and check its generalization performance via cross-validation.
+# tree classification model and check its generalization performance via cross-validation.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -81,13 +81,13 @@ from sklearn.model_selection import cross_val_score
 
 scores_tree = cross_val_score(tree, data, target)
 
-print(f"Decision tree classifier: "
+print(f"Decision tree classification model: "
       f"{scores_tree.mean():.3f} +/- {scores_tree.std():.3f}")
 
 # %% [markdown]
 #
 # Similarly to what was done in the previous notebook, we construct a
-# `BaggingClassifier` with a decision tree classifier as base model. In
+# `BaggingClassifier` with a decision tree classification model as base model. In
 # addition, we need to specify how many models do we want to combine. Note that
 # we also need to preprocess the data and thus use a scikit-learn pipeline.
 
@@ -105,7 +105,7 @@ bagged_trees = make_pipeline(
 # %%
 scores_bagged_trees = cross_val_score(bagged_trees, data, target)
 
-print(f"Bagged decision tree classifier: "
+print(f"Bagged decision tree classification model: "
       f"{scores_bagged_trees.mean():.3f} +/- {scores_bagged_trees.std():.3f}")
 
 # %% [markdown]
@@ -128,7 +128,7 @@ random_forest = make_pipeline(
 # %%
 scores_random_forest = cross_val_score(random_forest, data, target)
 
-print(f"Random forest classifier: "
+print(f"Random forest classification model: "
       f"{scores_random_forest.mean():.3f} +/- "
       f"{scores_random_forest.std():.3f}")
 

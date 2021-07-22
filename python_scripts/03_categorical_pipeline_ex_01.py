@@ -53,7 +53,7 @@ data_categorical = data[categorical_columns]
 
 # %% [markdown]
 # Define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
-# `LogisticRegression` classifier.
+# `LogisticRegression` classification model.
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
 # prediction time, you can set the `handle_unknown="use_encoded_value"` and

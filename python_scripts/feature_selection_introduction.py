@@ -29,7 +29,7 @@ data, target = make_classification(
 #
 # We will create two machine learning pipelines. The former will be a random
 # forest that will use all available features. The latter will also be a random
-# forest, but we will add a feature selection step to train this classifier.
+# forest, but we will add a feature selection step to train this classification model.
 # The feature selection is based on a univariate test (ANOVA F-value) between
 # each feature and the target that we want to predict. The features with the
 # two most significant scores are selected.

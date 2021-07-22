@@ -36,7 +36,7 @@ cv = ShuffleSplit(n_splits=30, test_size=0.2, random_state=0)
 
 # %% [markdown]
 # We will start by running the cross-validation for the decision tree
-# regressor which is our model of interest. Besides, we will store the
+# regression which is our model of interest. Besides, we will store the
 # testing error in a pandas series.
 
 # %%
@@ -54,8 +54,8 @@ errors_regressor = pd.Series(-result_regressor["test_score"],
 
 # %% [markdown]
 # Then, we will evaluate our first baseline. This baseline is called a dummy
-# regressor. This dummy regressor will always predict the mean target computed
-# on the training. Therefore, the dummy regressor will never use any
+# regression model. It will always predict the mean target computed
+# on the training set. Therefore, the dummy regression model will never use any
 # information regarding the data `data`.
 
 # %%
@@ -84,7 +84,7 @@ errors_permutation = pd.Series(-permutation_score, name="Permuted error")
 
 # %% [markdown]
 # Finally, we plot the testing errors for the two baselines and the
-# actual regressor.
+# actual regression model.
 
 # %%
 final_errors = pd.concat([errors_regressor, errors_dummy, errors_permutation],
@@ -101,9 +101,9 @@ _ = plt.title("Distribution of the testing errors")
 # %% [markdown]
 # We see that even if the generalization performance of our model is far from
 # being good, it is better than the two baselines. Besides, we see that the
-# dummy regressor is better than a chance level regressor.
+# dummy regression model is better than a chance level regression model.
 #
-# In practice, using a dummy regressor might be sufficient as a baseline.
+# In practice, using a dummy regression model might be sufficient as a baseline.
 # Indeed, to obtain a reliable estimate the permutation of the target should
 # be repeated and thus this method is costly. However, it gives the true
 # chance level.

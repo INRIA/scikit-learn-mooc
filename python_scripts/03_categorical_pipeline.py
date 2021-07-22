@@ -274,7 +274,7 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # ## Evaluate our predictive pipeline
 #
 # We can now integrate this encoder inside a machine learning pipeline like we
-# did with numerical data: let's train a linear classifier on the encoded data
+# did with numerical data: let's train a linear classification model on the encoded data
 # and check the generalization performance of this machine learning pipeline using
 # cross-validation.
 #
@@ -287,7 +287,7 @@ data["native-country"].value_counts()
 # %% [markdown]
 # We see that the `Holand-Netherlands` category is occurring rarely. This will
 # be a problem during cross-validation: if the sample ends up in the test set
-# during splitting then the classifier would not have seen the category during
+# during splitting then the classification model would not have seen the category during
 # training and will not be able to encode it.
 #
 # In scikit-learn, there are two solutions to bypass this issue:

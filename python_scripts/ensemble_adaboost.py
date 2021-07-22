@@ -97,16 +97,16 @@ _ = plt.title("Decision tree predictions \nwith misclassified samples "
               "highlighted")
 
 # %% [markdown]
-# We observe that several samples have been misclassified by the classifier.
+# We observe that several samples have been misclassified by the classification model.
 #
-# We mentioned that boosting relies on creating a new classifier which tries to
+# We mentioned that boosting relies on creating a new classification model which tries to
 # correct these misclassifications. In scikit-learn, learners have a
 # parameter `sample_weight` which forces it to pay more attention to
 # samples with higher weights during the training.
 #
 # This parameter is set when calling
 # `classifier.fit(X, y, sample_weight=weights)`.
-# We will use this trick to create a new classifier by 'discarding' all
+# We will use this trick to create a new classification model by 'discarding' all
 # correctly classified samples and only considering the misclassified samples.
 # Thus, misclassified samples will be assigned a weight of 1 and well
 # classified samples will be assigned a weight of 0.
@@ -146,8 +146,8 @@ print(f"Number of samples previously misclassified and "
 
 # %% [markdown]
 # However, we are making mistakes on previously well classified samples. Thus,
-# we get the intuition that we should weight the predictions of each classifier
-# differently, most probably by using the number of mistakes each classifier
+# we get the intuition that we should weight the predictions of each classification model
+# differently, most probably by using the number of mistakes each classification model
 # is making.
 #
 # So we could use the classification error to combine both trees.
@@ -160,12 +160,12 @@ ensemble_weight = [
 ensemble_weight
 
 # %% [markdown]
-# The first classifier was 94% accurate and the second one 69% accurate.
-# Therefore, when predicting a class, we should trust the first classifier
+# The first classification model was 94% accurate and the second one 69% accurate.
+# Therefore, when predicting a class, we should trust the first model
 # slightly more than the second one. We could use these accuracy values to
 # weight the predictions of each learner.
 #
-# To summarize, boosting learns several classifiers, each of which will
+# To summarize, boosting learns several classification models, each of which will
 # focus more or less on specific samples of the dataset. Boosting is thus
 # different from bagging: here we never resample our dataset, we just assign
 # different weights to the original dataset.
@@ -180,8 +180,8 @@ ensemble_weight
 # learner weights. However, there are statistical theories (like in AdaBoost)
 # for how these sample and learner weights can be optimally calculated.
 #
-# We will use the AdaBoost classifier implemented in scikit-learn and
-# look at the underlying decision tree classifiers trained.
+# We will use the AdaBoost classification model implemented in scikit-learn and
+# look at the underlying decision tree classification models trained.
 
 # %%
 from sklearn.ensemble import AdaBoostClassifier
@@ -203,17 +203,17 @@ for boosting_round, tree in enumerate(adaboost.estimators_):
     _ = plt.title(f"Decision tree trained at round {boosting_round}")
 
 # %%
-print(f"Weight of each classifier: {adaboost.estimator_weights_}")
+print(f"Weight of each classification model: {adaboost.estimator_weights_}")
 
 # %%
-print(f"Error of each classifier: {adaboost.estimator_errors_}")
+print(f"Error of each classification model: {adaboost.estimator_errors_}")
 
 # %% [markdown]
-# We see that AdaBoost learned three different classifiers, each of which
+# We see that AdaBoost learned three different classification models, each of which
 # focuses on different samples. Looking at the weights of each learner, we see
-# that the ensemble gives the highest weight to the first classifier. This
-# indeed makes sense when we look at the errors of each classifier. The first
-# classifier also has the highest classification generalization performance.
+# that the ensemble gives the highest weight to the first model. This
+# indeed makes sense when we look at the errors of each classification model. The first
+# home also has the highest classification generalization performance.
 #
 # While AdaBoost is a nice algorithm to demonstrate the internal machinery of
 # boosting algorithms, it is not the most efficient.

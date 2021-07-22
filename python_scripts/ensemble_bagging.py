@@ -210,7 +210,7 @@ _ = plt.title("Predictions of bagged trees")
 # %% [markdown]
 #
 # The unbroken red line shows the averaged predictions, which would be the
-# final predictions given by our 'bag' of decision tree regressors. Note that
+# final predictions given by our 'bag' of decision tree regression models. Note that
 # the predictions of the ensemble is more stable because of the averaging
 # operation. As a result, the bag of trees as a whole is less likely to overfit
 # than the individual trees.
@@ -244,7 +244,7 @@ sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
 bagged_trees_predictions = bagged_trees.predict(data_test)
 plt.plot(data_test, bagged_trees_predictions)
 
-_ = plt.title("Predictions from a bagging classifier")
+_ = plt.title("Predictions from a bagging classification model")
 
 # %% [markdown]
 #

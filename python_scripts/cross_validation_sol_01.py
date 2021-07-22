@@ -5,12 +5,12 @@
 #
 # The aim of this exercise is to make the following experiments:
 #
-# * train and test a support vector machine classifier through
+# * train and test a support vector machine classification model through
 #   cross-validation;
-# * study the effect of the parameter gamma of this classifier using a
+# * study the effect of the parameter gamma of this classification model using a
 #   validation curve;
 # * use a learning curve to determine the usefulness of adding new
-#   samples in the dataset when building a classifier.
+#   samples in the dataset when building a classification model.
 #
 # To make these experiments we will first load the blood transfusion dataset.
 
@@ -28,13 +28,13 @@ data = blood_transfusion.drop(columns="Class")
 target = blood_transfusion["Class"]
 
 # %% [markdown]
-# We will use a support vector machine classifier (SVM). In its most simple
-# form, a SVM classifier is a linear classifier behaving similarly to a
+# We will use a support vector machine classification model (SVM). In its most simple
+# form, a SVM is a linear classification model behaving similarly to a
 # logistic regression. Indeed, the optimization used to find the optimal
 # weights of the linear model are different but we don't need to know these
 # details for the exercise.
 #
-# Also, this classifier can become more flexible/expressive by using a
+# Also, this classification model can become more flexible/expressive by using a
 # so-called kernel that makes the model become non-linear. Again, no requirement
 # regarding the mathematics is required to accomplish this exercise.
 #
@@ -125,9 +125,9 @@ _ = plt.title("Validation score of support vector machine")
 
 # %% [markdown]
 # Looking at the curve, we can clearly identify the over-fitting regime of
-# the SVC classifier when `gamma > 1`.
+# the SVC classification model when `gamma > 1`.
 # The best setting is around `gamma = 1` while for `gamma < 1`,
-# it is not very clear if the classifier is under-fitting but the
+# it is not very clear if the classification model is under-fitting but the
 # testing score is worse than for `gamma = 1`.
 
 # %% [markdown]

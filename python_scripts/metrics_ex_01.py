@@ -21,7 +21,7 @@ target = blood_transfusion["Class"]
 # ```
 
 # %% [markdown]
-# First, create a decision tree classifier.
+# First, create a decision tree classification model.
 
 # %%
 # Write your code here.

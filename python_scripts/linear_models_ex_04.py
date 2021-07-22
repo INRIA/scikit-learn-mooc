@@ -31,9 +31,9 @@ coef.plot.barh()
 coef
 
 # %% [markdown]
-# Create a `LinearRegression` regressor and fit on the entire dataset and
+# Create a `LinearRegression` regression model and fit on the entire dataset and
 # check the value of the coefficients. Are the coefficients of the linear
-# regressor close to the coefficients used to generate the dataset?
+# regression close to the coefficients used to generate the dataset?
 
 # %%
 from sklearn.linear_model import LinearRegression
@@ -61,14 +61,14 @@ _ = coef.plot.barh()
 # Write your code here.
 
 # %% [markdown]
-# Fit again the linear regressor on this new dataset and check the
+# Fit again the linear regression on this new dataset and check the
 # coefficients. What do you observe?
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Create a ridge regressor and fit on the same dataset. Check the coefficients.
+# Create a ridge regression model and fit on the same dataset. Check the coefficients.
 # What do you observe?
 
 # %%

@@ -45,14 +45,24 @@ def remove_solution(input_py_str):
     # return re.sub(header_pattern, "", py_nb_str)
 
 
-def write_exercise_py(input_path, output_path):
-    input_py = input_path.read_text()
+def write_exercise_py(solution_path, exercise_path):
+    input_py = solution_path.read_text()
 
     output_py = input_py
     for replace_func in [replace_simple_text, remove_solution]:
         output_py = replace_func(output_py)
-    output_path.write_text(output_py)
+    exercise_path.write_text(output_py)
 
+
+def write_all_exercises(python_scripts_folder):
+    solution_paths = Path(python_scripts_folder).glob("*_sol_*")
+
+    for solution_path in solution_paths:
+        exercise_path = Path(str(solution_path).replace("_sol_", "_ex_"))
+        if not exercise_path.exists():
+            print(f"{exercise_path} does not exist")
+
+        write_exercise_py(solution_path, exercise_path)
 
 # def write_all_exercises(input_root_path, output_root_path):
 #     print(input_root_path, output_root_path)
@@ -67,7 +77,6 @@ def write_exercise_py(input_path, output_path):
 #         write_exercise_myst(input_path, output_path)
 
 if __name__ == "__main__":
-    input_path = Path(sys.argv[1])
-    output_path = Path(sys.argv[2])
+    python_scripts_folder = Path(sys.argv[1])
 
-    write_exercise_py(input_path, output_path)
+    write_all_exercises(python_scripts_folder)

@@ -6,8 +6,7 @@ from jupytext.myst import myst_to_notebook
 import jupytext
 
 def replace_simple_text(input_py_str):
-    result = input_py_str.replace("📃 Solution for Exercise", "📝 Exercise")
-    # import pudb; pudb.set_trace()
+    result = input_py_str.replace("📃 Solution for", "📝")
     return result
 
 

@@ -82,8 +82,7 @@ print("The mean cross-validation accuracy is: "
 # `StandardScaler` (or similar):
 
 # %%
-# solution
-# %%time
+# %%time  # solution
 from sklearn.preprocessing import StandardScaler
 
 preprocessor = ColumnTransformer([
@@ -124,8 +123,7 @@ print("The mean cross-validation accuracy is: "
 # dense representation as a workaround.
 
 # %%
-# solution
-# %%time
+# %%time  # solution
 from sklearn.preprocessing import OneHotEncoder
 
 categorical_preprocessor = OneHotEncoder(handle_unknown="ignore", sparse=False)

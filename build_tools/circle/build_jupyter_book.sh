@@ -26,7 +26,7 @@ affected_jupyter_book_paths() {
     # TODO: rather than the grep pattern below we could potentially look at
     # _toc.yml to know whether the file affects the JupyterBook
     echo "$files" | grep python_scripts | perl -pe 's@\.py$@.html@'
-    echo "$files" | grep -P 'jupyter_book/.+md$' | perl -pe 's@jupyter-book/(.+)\.md@\1.html@'
+    echo "$files" | grep -P 'jupyter-book/.+md$' | perl -pe 's@jupyter-book/(.+)\.md@\1.html@'
 }
 
 write_changed_html() {
@@ -37,7 +37,7 @@ write_changed_html() {
         echo "$affected"
         (
             echo '<html><body><ul>'
-            echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">master</a>|'
+            echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">master</a>]|'
             echo '</ul><p>General: <a href="index.html">Home</a>'
             echo '</ul></body></html>'
         ) > '_build/html/_changed.html'

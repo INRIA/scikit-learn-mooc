@@ -1482,7 +1482,8 @@ advance all categories for the categorical columns.</p>
 reference:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 <span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -1497,17 +1498,21 @@ reference:</p>
     <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;with a fitting time of </span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.873 +/- 0.003
-CPU times: user 6.35 s, sys: 104 ms, total: 6.46 s
-Wall time: 6.46 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.873 +/- 0.003 with a fitting time of 5.111
 </pre></div>
 </div>
 </div>

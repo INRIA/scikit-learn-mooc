@@ -22,7 +22,7 @@
 #
 # What are the features? What is the target?
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # The features are "culmen length" and "culmen depth".
 # The target is the penguin species.
 
@@ -31,6 +31,7 @@
 # with `pandas` into a `DataFrame`.
 
 # %%
+# solution
 import pandas as pd
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
@@ -40,11 +41,12 @@ penguins = pd.read_csv("../datasets/penguins_classification.csv")
 #
 # How many features are numerical? How many features are categorical?
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Both features, "culmen length" and "culmen depth" are numerical. There are no
 # categorical features in this dataset.
 
 # %%
+# solution
 penguins.head()
 
 # %% [markdown]
@@ -53,12 +55,14 @@ penguins.head()
 # the [`value_counts`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.value_counts.html) method.
 
 # %%
+# solution
 penguins["Species"].value_counts()
 
 # %% [markdown]
 # Plot histograms for the numerical features
 
 # %%
+# solution
 _ = penguins.hist(figsize=(8, 4))
 
 # %% [markdown]
@@ -66,16 +70,17 @@ _ = penguins.hist(figsize=(8, 4))
 # [`seaborn.pairplot`](https://seaborn.pydata.org/generated/seaborn.pairplot.html)
 
 # %%
+# solution
 import seaborn
 
 pairplot_figure = seaborn.pairplot(penguins, hue="Species")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We observe that the labels on the axis are overlapping. Even if it is not
 # the priority of this notebook, one can tweak the by increasing the height
 # of each subfigure.
 
-# %%
+# %% tags=["solution"]
 pairplot_figure = seaborn.pairplot(
     penguins, hue="Species", height=4)
 
@@ -83,7 +88,7 @@ pairplot_figure = seaborn.pairplot(
 # Looking at these distributions, how hard do you think it will be to classify
 # the penguins only using "culmen depth" and "culmen length"?
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Looking at the previous scatter-plot showing "culmen length" and "culmen
 # depth", the species are reasonably well separated:
 # - low culmen length -> Adelie

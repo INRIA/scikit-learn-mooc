@@ -1453,8 +1453,8 @@ dataset.</p>
 </div>
 </div>
 </div>
-<p>We filter our dataset that it contains only categorical features.
-Define a scikit-learn pipeline com</p>
+<p>Define a scikit-learn pipeline composed of an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> and a
+<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> classifier.</p>
 <p>Because <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> can raise errors if it sees an unknown category at
 prediction time, you can set the <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;use_encoded_value&quot;</span></code> and
 <code class="docutils literal notranslate"><span class="pre">unknown_value</span></code> parameters. You can refer to the
@@ -1466,6 +1466,7 @@ for more details regarding these parameters.</p>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
+<span class="c1"># solution</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
     <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
@@ -1478,6 +1479,8 @@ for more details regarding these parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+<span class="c1"># solution</span>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 
@@ -1499,7 +1502,7 @@ categories.</p>
 <p>This prevents the model from learning anything predictive enough and the
 cross-validated score is even lower than the baseline we obtained by ignoring
 the input data and just constantly predicting the most frequent class:</p>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
@@ -1526,6 +1529,7 @@ specific encoding strategy when using a linear model.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
 
+<span class="c1"># solution</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">),</span>
     <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -5,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.6.0
+#       jupytext_version: 1.10.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -16,11 +17,11 @@
 # # 📃 Solution for Exercise M1.05
 #
 # The goal of this exercise is to evaluate the impact of feature preprocessing
-# on a pipeline that uses a decision-tree-based classifier instead of logistic
+# on a pipeline that uses a decision-tree-based classifier instead of a logistic
 # regression.
 #
 # - The first question is to empirically evaluate whether scaling numerical
-#   feature is helpful or not;
+#   features is helpful or not;
 # - The second question is to evaluate whether it is empirically better (both
 #   from a computational and a statistical perspective) to use integer coded or
 #   one-hot encoded categories.
@@ -37,7 +38,7 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 
 # %% [markdown]
 # As in the previous notebooks, we use the utility `make_column_selector`
-# to only select column with a specific data type. Besides, we list in
+# to select only columns with a specific data type. Besides, we list in
 # advance all categories for the categorical columns.
 
 # %%
@@ -55,7 +56,8 @@ categorical_columns = categorical_columns_selector(data)
 # reference:
 
 # %%
-# %%time
+import time
+
 from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
 from sklearn.compose import ColumnTransformer
@@ -70,16 +72,27 @@ preprocessor = ColumnTransformer([
     remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
+
+start = time.time()
 cv_results = cross_validate(model, data, target)
+elapsed_time = time.time() - start
+
 scores = cv_results["test_score"]
+
 print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} +/- {scores.std():.3f} "
+      f"with a fitting time of {elapsed_time:.3f}")
 
 # %% [markdown]
 # ## Scaling numerical features
+#
+# Let's write a similar pipeline that also scales the numerical features using
+# `StandardScaler` (or similar):
 
 # %%
-# %%time
+# solution
+import time
+
 from sklearn.preprocessing import StandardScaler
 
 preprocessor = ColumnTransformer([
@@ -89,12 +102,18 @@ preprocessor = ColumnTransformer([
      categorical_columns)])
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-cv_results = cross_validate(model, data, target)
-scores = cv_results["test_score"]
-print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+start = time.time()
+cv_results = cross_validate(model, data, target)
+elapsed_time = time.time() - start
+
+scores = cv_results["test_score"]
+
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f} "
+      f"with a fitting time of {elapsed_time:.3f}")
+
+# %% [markdown] tags=["solution"]
 # ### Analysis
 #
 # We can observe that both the accuracy and the training time are approximately
@@ -107,10 +126,10 @@ print("The mean cross-validation accuracy is: "
 # %% [markdown]
 # ## One-hot encoding of categorical variables
 #
-# For linear models, we have observed that integer coding of categorical
-# variables can be very detrimental. However for
-# `HistGradientBoostingClassifier` models, it does not seem to be the case as
-# the cross-validation of the reference pipeline with `OrdinalEncoder` is good.
+# We observed that integer coding of categorical variables can be very
+# detrimental for linear models. However, it does not seem to be the case for
+# `HistGradientBoostingClassifier` models, as the cross-validation score
+# of the reference pipeline with `OrdinalEncoder` is reasonably good.
 #
 # Let's see if we can get an even better accuracy with `OneHotEncoder`.
 #
@@ -120,7 +139,9 @@ print("The mean cross-validation accuracy is: "
 # dense representation as a workaround.
 
 # %%
-# %%time
+# solution
+import time
+
 from sklearn.preprocessing import OneHotEncoder
 
 categorical_preprocessor = OneHotEncoder(handle_unknown="ignore", sparse=False)
@@ -129,12 +150,18 @@ preprocessor = ColumnTransformer([
     remainder="passthrough")
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
-cv_results = cross_validate(model, data, target)
-scores = cv_results["test_score"]
-print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+start = time.time()
+cv_results = cross_validate(model, data, target)
+elapsed_time = time.time() - start
+
+scores = cv_results["test_score"]
+
+print("The mean cross-validation accuracy is: "
+      f"{scores.mean():.3f} +/- {scores.std():.3f} "
+      f"with a fitting time of {elapsed_time:.3f}")
+
+# %% [markdown] tags=["solution"]
 # ### Analysis
 #
 # From an accuracy point of view, the result is almost exactly the same.

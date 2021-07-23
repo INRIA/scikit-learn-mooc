@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.10.3
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -68,7 +68,7 @@ from sklearn.model_selection import train_test_split
 # predict the class `' >50K'`. What is the accuracy score on the test set?
 # Repeat the experiment by always predicting the class `' <=50K'`.
 #
-# Hint: you can set the `strategy` parameter` of the `DummyClassifier` to
+# Hint: you can set the `strategy` parameter of the `DummyClassifier` to
 # achieve the desired behavior.
 
 # %%

@@ -1,7 +1,5 @@
 # ✅ Quiz M1.01
 
-*THIS IS SOME CHANGE*
-
 ```{admonition} Question
 In the notebook "First look at our dataset", we used pandas and specifically
 `adult_census = pd.read_csv("../datasets/adult-census.csv")` to:

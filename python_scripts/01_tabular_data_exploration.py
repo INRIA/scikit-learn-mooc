@@ -13,7 +13,7 @@
 # ---
 
 # %% [markdown]
-# # First look at our dataset CHANGE
+# # First look at our dataset
 #
 # In this notebook, we will look at the necessary steps required before any
 #  machine learning takes place. It involves:

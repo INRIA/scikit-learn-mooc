@@ -1507,11 +1507,11 @@ replace missing values by the most-frequent value in each column.</p></li>
 <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to select the numerical columns and process them (i.e.
 scale and impute). We additionally show that we can create a final model
 combining this preprocessor with a classifier.</p>
-<div class="highlight-pythonthon notranslate"><div class="highlight"><pre><span></span>scaler_imputer_transformer = make_pipeline(StandardScaler(), SimpleImputer())
-preprocessor = ColumnTransformer(transformers=[
-    (&quot;num_preprocessor&quot;, scaler_imputer_transformer, numerical_features)
-])
-model = make_pipeline(preprocessor, LogisticRegression())
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scaler_imputer_transformer</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">SimpleImputer</span><span class="p">())</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;num_preprocessor&quot;</span><span class="p">,</span> <span class="n">scaler_imputer_transformer</span><span class="p">,</span> <span class="n">numerical_features</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>Let us now define a <strong>substantial</strong> improvement or deterioration as an

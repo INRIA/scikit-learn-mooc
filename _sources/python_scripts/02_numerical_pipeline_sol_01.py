@@ -69,7 +69,7 @@ data_numeric_train, data_numeric_test, target_train, target_test = \
 # predict the class `' >50K'`. What is the accuracy score on the test set?
 # Repeat the experiment by always predicting the class `' <=50K'`.
 #
-# Hint: you can set the `strategy` parameter` of the `DummyClassifier` to
+# Hint: you can set the `strategy` parameter of the `DummyClassifier` to
 # achieve the desired behavior.
 
 # %%

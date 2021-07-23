@@ -30,7 +30,7 @@ affected_jupyter_book_paths() {
 }
 
 write_changed_html() {
-    affected=$1
+    affected="$1"
     if [ -n "$CI_PULL_REQUEST" ]
     then
         echo "The following files may have been changed by PR #$CI_PULL_REQUEST:"
@@ -50,7 +50,7 @@ affected=$(affected_jupyter_book_paths)
 cd jupyter-book
 make 2>&1 | tee build.log
 
-write_changed_html $affected
+write_changed_html "$affected"
 
 # Grep the log to make sure there has been no errors when running the notebooks
 # since jupyter-book exit code is always 0

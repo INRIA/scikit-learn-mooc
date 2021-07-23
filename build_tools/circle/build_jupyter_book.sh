@@ -36,12 +36,13 @@ write_changed_html() {
         echo "The following files may have been changed by PR #$CI_PULL_REQUEST:"
         echo "$affected"
         (
-            echo '<html><body><ul>'
+            echo '<html><body>'
+            echo 'Files changed by PR <a href="'"$CI_PULL_REQUEST"'">'"$CI_PULL_REQUEST</a>"
+            echo '<ul>'
             echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">master</a>]|'
-            echo '</ul><p>General: <a href="index.html">Home</a>'
+            echo '</ul><p>This PR JupyterBook <a href="index.html">index</a>'
             echo '</ul></body></html>'
         ) > '_build/html/_changed.html'
-
     fi
 }
 

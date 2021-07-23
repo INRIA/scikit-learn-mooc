@@ -56,7 +56,7 @@ A model used for [classification](#classification). These models handle
 [targets](#target-label-annotation) that contains discrete values such as
 `0`/`1` or `cat`/`dog`. For example in scikit-learn `LogisticRegression` or
 `HistGradientBoostingClassifier` are classification model
-[classes](#target-label-annotation).
+classes
 
 Note: for historic reasons the `LogisticRegression` name is confusing.
 `LogisticRegression` is not a regression model but a classification model, in

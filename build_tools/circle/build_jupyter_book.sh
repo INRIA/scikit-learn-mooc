@@ -21,8 +21,36 @@ conda create -n scikit-learn-mooc --yes python=3
 conda activate scikit-learn-mooc
 pip install -r requirements-dev.txt
 
+affected_jupyter_book_paths() {
+    files=$(git diff --name-only origin/master...$CIRCLE_SHA1)
+    # TODO: rather than the grep pattern below we could potentially look at
+    # _toc.yml to know whether the file affects the JupyterBook
+    echo "$files" | grep python_scripts | perl -pe 's@\.py$@.html@'
+    echo "$files" | grep -P 'jupyter_book/.+md$' | perl -pe 's@jupyter-book/(.+)\.md@\1.html@'
+}
+
+write_changed_html() {
+    affected=$1
+    if [ -n "$CI_PULL_REQUEST" ]
+    then
+        echo "The following files may have been changed by PR #$CI_PULL_REQUEST:"
+        echo "$affected"
+        (
+            echo '<html><body><ul>'
+            echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">master</a>|'
+            echo '</ul><p>General: <a href="index.html">Home</a>'
+            echo '</ul></body></html>'
+        ) > '_build/html/_changed.html'
+
+    fi
+}
+
+affected=$(affected_jupyter_book_paths)
+
 cd jupyter-book
 make 2>&1 | tee build.log
+
+write_changed_html $affected
 
 # Grep the log to make sure there has been no errors when running the notebooks
 # since jupyter-book exit code is always 0

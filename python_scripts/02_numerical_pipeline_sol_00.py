@@ -41,13 +41,14 @@ target = adult_census["class"]
 # help inside your notebook `KNeighborsClassifier?` or on the [scikit-learn
 # website](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # The default value for `n_neighbors` is 5
 
 # %% [markdown]
 # Create a `KNeighborsClassifier` model with `n_neighbors=50`
 
 # %%
+# solution
 from sklearn.neighbors import KNeighborsClassifier
 
 model = KNeighborsClassifier(n_neighbors=50)
@@ -56,6 +57,7 @@ model = KNeighborsClassifier(n_neighbors=50)
 # Fit this model on the data and target loaded above
 
 # %%
+# solution
 model.fit(data, target)
 
 # %% [markdown]
@@ -63,15 +65,16 @@ model.fit(data, target)
 # data. Do they match the actual target values?
 
 # %%
+# solution
 first_data_values = data.iloc[:10]
 first_predictions = model.predict(first_data_values)
 first_predictions
 
-# %%
+# %% tags=["solution"]
 first_target_values = target.iloc[:10]
 first_target_values
 
-# %%
+# %% tags=["solution"]
 number_of_correct_predictions = (
     first_predictions == first_target_values).sum()
 number_of_predictions = len(first_predictions)
@@ -83,6 +86,7 @@ print(
 # Compute the accuracy on the training data.
 
 # %%
+# solution
 model.score(data, target)
 
 # %% [markdown]
@@ -90,12 +94,14 @@ model.score(data, target)
 # compute the accuracy on the test data.
 
 # %%
+# solution
 adult_census_test = pd.read_csv("../datasets/adult-census-numeric-test.csv")
 
 data_test = adult_census_test.drop(columns="class")
 target_test = adult_census_test["class"]
 
 model.score(data_test, target_test)
-# %% [markdown]
+
+# %% [markdown] tags=["solution"]
 # Looking at the previous notebook, the accuracy seems slightly higher with
 # `n_neighbors=50` than with `n_neighbors=5` (the default value).

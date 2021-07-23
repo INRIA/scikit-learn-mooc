@@ -1429,6 +1429,11 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generalization-performance-predictive-performance-statistical-performance">
+     generalization performance, predictive performance, statistical performance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#hyperparameters">
      hyperparameters
     </a>
@@ -1486,11 +1491,6 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#sample-instance-observation">
      sample, instance, observation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#statistical-performance-generalization-performance-predictive-performance">
-     statistical performance, generalization performance, predictive performance
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -1607,8 +1607,7 @@ decision rule will depend on the <a class="reference external" href="#model">mod
 <p>A model used for <a class="reference external" href="#classification">classification</a>. These models handle
 <a class="reference external" href="#target-label-annotation">targets</a> that contains discrete values such as
 <code class="docutils literal notranslate"><span class="pre">0</span></code>/<code class="docutils literal notranslate"><span class="pre">1</span></code> or <code class="docutils literal notranslate"><span class="pre">cat</span></code>/<code class="docutils literal notranslate"><span class="pre">dog</span></code>. For example in scikit-learn <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> or
-<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> are classifier
-<a class="reference external" href="#target-label-annotation">classes</a>.</p>
+<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> are classification model classes.</p>
 <p>Note: for historic reasons the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> name is confusing.
 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> is not a regression model but a classification model, in
 contrary with what the name would suggest.</p>
@@ -1618,10 +1617,10 @@ contrary with what the name would suggest.</p>
 <p>A procedure to estimate how well a <a class="reference external" href="#model">model</a> will generalize to new data.
 The main idea behind this is to <a class="reference external" href="#train-learn-fit">train</a> a <a class="reference external" href="#model">model</a> on
 a dataset (called <a class="reference external" href="#train-set">train set</a>) and evaluate its
-<a class="reference external" href="#statistical-performance-generalization-performance-predictive-performance">performance</a>
+<a class="reference external" href="#generalization-performance-predictive-performance-statistical-performance">performance</a>
 on a separate dataset (called <a class="reference external" href="#test-set">test set</a>).</p>
 <p>This train/evaluate performance is repeated several times on different train
-and test sets to get an estimate of the statistical model performance
+and test sets to get an estimate of the model’s generalization performance
 uncertainties.</p>
 <p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation">this scikit-learn
 documentation</a>
@@ -1666,6 +1665,12 @@ measured during the dataset collection.</p>
 <a class="reference external" href="#feature-variable-attribute-descriptor-covariate">features</a>: sepal length,
 sepal width, petal length and petal width.</p>
 </div>
+<div class="section" id="generalization-performance-predictive-performance-statistical-performance">
+<h3>generalization performance, predictive performance, statistical performance<a class="headerlink" href="#generalization-performance-predictive-performance-statistical-performance" title="Permalink to this headline">¶</a></h3>
+<p>The performance of a <a class="reference external" href="#model">model</a> on the <a class="reference external" href="#test-set">test data</a>. The <a class="reference external" href="#test-set">test
+data</a> where never seen by the <a class="reference external" href="#model">model</a> during the
+<a class="reference external" href="#train-learn-fit">training</a> procedure.</p>
+</div>
 <div class="section" id="hyperparameters">
 <h3>hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this headline">¶</a></h3>
 <p>Aspects of <a class="reference external" href="#model">model</a> configuration that are not learnt from data.
@@ -1676,11 +1681,11 @@ hyperparameter</p></li>
 <li><p>for a polynomial model (say of degree between 1 and 10 for example), the
 degree of the polynomial is a hyperparameter.</p></li>
 </ul>
-<p>Hyperparameters will impact the statistical and computational performance of a
+<p>Hyperparameters will impact the generalization and computational performance of a
 model. Indeed, hyperparameters of a model are usually inspected with regard to
 their impact on the model performance and tuned to maximize model performance
 (usually
-<a class="reference external" href="#statistical-performance-generalization-performance-predictive-performance">statistical performance</a>
+<a class="reference external" href="#generalization-performance-predictive-performance-statistical-performance">generalization performance</a>
 ). It is called hyperparameters tuning and
 involve grid-search and randomized-search involving model evaluation on some
 <a class="reference external" href="#validation-set">validation sets</a>.</p>
@@ -1799,12 +1804,6 @@ flower.</p>
 example, if we define <code class="docutils literal notranslate"><span class="pre">clf</span> <span class="pre">=</span> <span class="pre">KNeighborsClassifier()</span></code>, we say that <code class="docutils literal notranslate"><span class="pre">clf</span></code> is an
 instance of the <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> class.</p>
 </div>
-<div class="section" id="statistical-performance-generalization-performance-predictive-performance">
-<h3>statistical performance, generalization performance, predictive performance<a class="headerlink" href="#statistical-performance-generalization-performance-predictive-performance" title="Permalink to this headline">¶</a></h3>
-<p>The performance of a <a class="reference external" href="#model">model</a> on the <a class="reference external" href="#test-set">test data</a>. The <a class="reference external" href="#test-set">test
-data</a> where never seen by the <a class="reference external" href="#model">model</a> during the
-<a class="reference external" href="#train-learn-fit">training</a> procedure.</p>
-</div>
 <div class="section" id="supervised-learning">
 <h3>supervised learning<a class="headerlink" href="#supervised-learning" title="Permalink to this headline">¶</a></h3>
 <p>We can give a concrete graphical example.</p>
@@ -1840,7 +1839,7 @@ usually used in <a class="reference external" href="#classification">classificat
 </div>
 <div class="section" id="test-set">
 <h3>test set<a class="headerlink" href="#test-set" title="Permalink to this headline">¶</a></h3>
-<p>The dataset used to evaluate the <a class="reference external" href="#statistical-performance-generalization-performance-predictive-performance">generalization
+<p>The dataset used to evaluate the <a class="reference external" href="#generalization-performance-predictive-performance-statistical-performance">generalization
 performance</a>
 of the <a class="reference external" href="#model">model</a> after it is <a class="reference external" href="#train-learn-fit">trained</a>.</p>
 </div>

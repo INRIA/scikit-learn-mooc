@@ -78,7 +78,7 @@ _ = plt.title("Validation curve for GBDT regression model")
 # To avoid adding new unnecessary tree, gradient boosting offers an
 # early-stopping option. Internally, the algorithm will use an out-of-sample
 # set to compute the generalization performance of the model at each addition of a
-# tree. Thus, if the generalization performance are not improving for several
+# tree. Thus, if the generalization performance is not improving for several
 # iterations, it will stop adding trees.
 #
 # Now, create a gradient-boosting model with `n_estimators=1000`. This number

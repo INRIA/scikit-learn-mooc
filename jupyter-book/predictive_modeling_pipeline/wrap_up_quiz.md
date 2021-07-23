@@ -136,7 +136,7 @@ Be aware that you can pass a `Pipeline` as a transformer in a
 scale and impute). We additionally show that we can create a final model
 combining this preprocessor with a classifier.
 
-```pythonthon
+```python
 scaler_imputer_transformer = make_pipeline(StandardScaler(), SimpleImputer())
 preprocessor = ColumnTransformer(transformers=[
     ("num_preprocessor", scaler_imputer_transformer, numerical_features)

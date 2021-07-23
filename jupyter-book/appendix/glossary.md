@@ -55,8 +55,7 @@ decision rule will depend on the [model](#model) used.
 A model used for [classification](#classification). These models handle
 [targets](#target-label-annotation) that contains discrete values such as
 `0`/`1` or `cat`/`dog`. For example in scikit-learn `LogisticRegression` or
-`HistGradientBoostingClassifier` are classifier
-[classes](#target-label-annotation).
+`HistGradientBoostingClassifier` are classification model classes.
 
 Note: for historic reasons the `LogisticRegression` name is confusing.
 `LogisticRegression` is not a regression model but a classification model, in
@@ -67,11 +66,11 @@ contrary with what the name would suggest.
 A procedure to estimate how well a [model](#model) will generalize to new data.
 The main idea behind this is to [train](#train-learn-fit) a [model](#model) on
 a dataset (called [train set](#train-set)) and evaluate its
-[performance](#statistical-performance-generalization-performance-predictive-performance)
+[performance](#generalization-performance-predictive-performance-statistical-performance)
 on a separate dataset (called [test set](#test-set)).
 
 This train/evaluate performance is repeated several times on different train
-and test sets to get an estimate of the statistical model performance
+and test sets to get an estimate of the model's generalization performance
 uncertainties.
 
 See [this scikit-learn
@@ -119,6 +118,12 @@ For example, in the Iris dataset, there are four
 [features](#feature-variable-attribute-descriptor-covariate): sepal length,
 sepal width, petal length and petal width.
 
+### generalization performance, predictive performance, statistical performance
+
+The performance of a [model](#model) on the [test data](#test-set). The [test
+data](#test-set) where never seen by the [model](#model) during the
+[training](#train-learn-fit) procedure.
+
 ### hyperparameters
 
 Aspects of [model](#model) configuration that are not learnt from data.
@@ -129,11 +134,11 @@ Examples of hyperparameters:
 - for a polynomial model (say of degree between 1 and 10 for example), the
   degree of the polynomial is a hyperparameter.
 
-Hyperparameters will impact the statistical and computational performance of a
+Hyperparameters will impact the generalization and computational performance of a
 model. Indeed, hyperparameters of a model are usually inspected with regard to
 their impact on the model performance and tuned to maximize model performance
 (usually
-[statistical performance](#statistical-performance-generalization-performance-predictive-performance)
+[generalization performance](#generalization-performance-predictive-performance-statistical-performance)
 ). It is called hyperparameters tuning and
 involve grid-search and randomized-search involving model evaluation on some
 [validation sets](#validation-set).
@@ -264,12 +269,6 @@ Note: "instance" is also used in a object-oriented meaning in this course. For
 example, if we define `clf = KNeighborsClassifier()`, we say that `clf` is an
 instance of the `KNeighborsClassifier` class.
 
-### statistical performance, generalization performance, predictive performance
-
-The performance of a [model](#model) on the [test data](#test-set). The [test
-data](#test-set) where never seen by the [model](#model) during the
-[training](#train-learn-fit) procedure.
-
 ### supervised learning
 
 We can give a concrete graphical example.
@@ -314,7 +313,7 @@ usually used in [classification](#classification) setting.
 ### test set
 
 The dataset used to evaluate the [generalization
-performance](#statistical-performance-generalization-performance-predictive-performance)
+performance](#generalization-performance-predictive-performance-statistical-performance)
 of the [model](#model) after it is [trained](#train-learn-fit).
 
 ### train, learn, fit

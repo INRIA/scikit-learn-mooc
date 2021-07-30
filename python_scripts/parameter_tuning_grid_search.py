@@ -49,9 +49,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # We will define a pipeline as seen in the first module. It will handle both
 # numerical and categorical features.
 #
-# Here we will use a tree-based model as a predictor. That means that only the
-# categorical features need preprocessing. The first step is to select all the
-# categorical columns.
+# The first step is to select all the categorical columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -60,13 +58,15 @@ categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
-# Here we apply an `OrdinalEncoder` on the categorical features, which encodes 
-# every category with an arbitrary integer. Remember that for simple models 
-# such as linear models, a `OneHotEncoder` should be preferred. But for complex 
-# models, in particular tree-based models, the `OrdinalEncoder` avoids having 
-# high-dimensional representations.
+# Here we will use a tree-based model as a predictor. That means:
 #
-# We now build our `OrdinalEncoder`, giving it the known categories.
+# * Numerical variables don't need scaling
+# * Categorical variables can be dealt with an `OrdinalEncoder` even if the 
+#   coding order is not meaningful
+# * For tree-based models, the `OrdinalEncoder` avoids having high-dimensional 
+#   representations.
+#
+# We now build our `OrdinalEncoder` by passing it the known categories.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
@@ -104,9 +104,9 @@ model
 # %% [markdown]
 # ## Tuning using a grid-search
 #
-# Instead of manually writing the two `for` loops, scikit-learn provides a
-# class called `GridSearchCV` which implements the exhaustive search we did
-# during the exercise.
+# In the previous exercise we used one `for` loop for each hyperparameter to find the 
+# best combination over a fixed grid of values. `GridSearchCV` is a scikit-learn class 
+# that implements a very similar logic with less repetitive code.
 #
 # Lets see how to use the `GridSearchCV` estimator for doing such search.
 # Since the grid-search will be costly, we will only explore the combination

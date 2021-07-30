@@ -181,7 +181,7 @@ print("The mean cross-validation accuracy is: "
 # categories is perfectly fine for `HistGradientBoostingClassifier`
 # and yields fast training times.
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # ```{important}
 # Which encoder should I use?
 #

@@ -24,7 +24,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Then, create an `AdaBoostRegressor`. Use the function
+# Then, create an `AdaBoostRegressor` instance. Use the function
 # `sklearn.model_selection.validation_curve` to get training and test scores
 # by varying the number of estimators. Use the mean absolute error as a metric
 # by passing `scoring="neg_mean_absolute_error"`.

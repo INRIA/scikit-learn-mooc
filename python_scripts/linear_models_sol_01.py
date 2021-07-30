@@ -87,6 +87,7 @@ _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.25), ncol=1)
 
 # %%
 def goodness_fit_measure(true_values, predictions):
+    "FIXME quick fix for the CI"
     # solution
     # we compute the error between the true values and the predictions of our
     # model

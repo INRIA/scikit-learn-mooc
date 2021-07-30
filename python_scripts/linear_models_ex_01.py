@@ -70,6 +70,7 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 
 # %%
 def goodness_fit_measure(true_values, predictions):
+    "FIXME quick fix for the CI"
     # Write your code here.
 
 # %% [markdown]

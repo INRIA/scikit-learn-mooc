@@ -133,7 +133,7 @@ _ = plt.title("Validation score of support vector machine")
 # it is not very clear if the classifier is under-fitting but the
 # testing score is worse than for `gamma = 1`.
 
-# %% [markdown] 
+# %% [markdown]
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize. Compute the learning curve
 # (using [`sklearn.model_selection.learning_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.learning_curve.html))

@@ -22,6 +22,8 @@
 
 # %%
 import numpy as np
+
+# solution
 rng = np.random.RandomState(42)
 data, target = rng.randn(100, 100000), rng.randint(0, 2, size=100)
 

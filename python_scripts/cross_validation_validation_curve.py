@@ -6,7 +6,7 @@
 # as their fluctuations.
 #
 # In this notebook, we will put these two errors into perspective and show how
-# they can help us know if our model generalizes, overfit, or underfit.
+# they can help us know if our model generalizes, overfits, or underfits.
 #
 # Let's first load the data and create the same model as in the previous
 # notebook.
@@ -32,7 +32,7 @@ regressor = DecisionTreeRegressor()
 # %% [markdown]
 # ## Overfitting vs. underfitting
 #
-# To better understand the statistical performance of our model and maybe find
+# To better understand the generalization performance of our model and maybe find
 # insights on how to improve it, we will compare the testing error with the
 # training error. Thus, we need to compute the error on the training set,
 # which is possible using the `cross_validate` function.

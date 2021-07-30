@@ -213,7 +213,7 @@ print(f"Error of each classifier: {adaboost.estimator_errors_}")
 # focuses on different samples. Looking at the weights of each learner, we see
 # that the ensemble gives the highest weight to the first classifier. This
 # indeed makes sense when we look at the errors of each classifier. The first
-# classifier also has the highest classification statistical performance.
+# classifier also has the highest classification generalization performance.
 #
 # While AdaBoost is a nice algorithm to demonstrate the internal machinery of
 # boosting algorithms, it is not the most efficient.

@@ -34,7 +34,7 @@ regressor = DecisionTreeRegressor()
 # ## Learning curve
 #
 # To understand the impact of the number of samples available for training on
-# the statistical performance of a predictive model, it is possible to
+# the generalization performance of a predictive model, it is possible to
 # synthetically reduce the number of samples used to train the predictive model
 # and check the training and testing errors.
 #
@@ -44,7 +44,7 @@ regressor = DecisionTreeRegressor()
 # number of training samples. This curve is called the **learning curve**.
 #
 # It gives information regarding the benefit of adding new training samples
-# to improve a model's statistical performance.
+# to improve a model's generalization performance.
 #
 # Let's compute the learning curve for a decision tree and vary the
 # proportion of the training set from 10% to 100%.
@@ -114,5 +114,5 @@ _ = plt.title("Learning curve for decision tree")
 #
 # * the influence of the number of samples in a dataset, especially on the
 #   variability of the errors reported when running the cross-validation;
-# * about the learning curve that is a visual representation of the capacity
+# * about the learning curve, which is a visual representation of the capacity
 #   of a model to improve by adding new samples.

@@ -21,7 +21,7 @@
 #
 # To do so, let's try to use `OrdinalEncoder` to preprocess the categorical
 # variables. This preprocessor is assembled in a pipeline with
-# `LogisticRegression`. The statistical performance of the pipeline can be
+# `LogisticRegression`. The generalization performance of the pipeline can be
 # evaluated by cross-validation and then compared to the score obtained when
 # using `OneHotEncoder` or to some other baseline score.
 #
@@ -52,8 +52,8 @@ categorical_columns = categorical_columns_selector(data)
 data_categorical = data[categorical_columns]
 
 # %% [markdown]
-# We filter our dataset that it contains only categorical features.
-# Define a scikit-learn pipeline com
+# Define a scikit-learn pipeline composed of an `OrdinalEncoder` and a
+# `LogisticRegression` classifier.
 #
 # Because `OrdinalEncoder` can raise errors if it sees an unknown category at
 # prediction time, you can set the `handle_unknown="use_encoded_value"` and
@@ -62,11 +62,11 @@ data_categorical = data[categorical_columns]
 # for more details regarding these parameters.
 
 # %%
-
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.linear_model import LogisticRegression
 
+# solution
 model = make_pipeline(
     OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
     LogisticRegression(max_iter=500))
@@ -78,13 +78,15 @@ model = make_pipeline(
 # %%
 from sklearn.model_selection import cross_validate
 
+# solution
+
 cv_results = cross_validate(model, data_categorical, target)
 
 scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Using an arbitrary mapping from string labels to integers as done here causes
 # the linear model to make bad assumptions on the relative ordering of
 # categories.
@@ -93,7 +95,7 @@ print("The mean cross-validation accuracy is: "
 # cross-validated score is even lower than the baseline we obtained by ignoring
 # the input data and just constantly predicting the most frequent class:
 
-# %%
+# %% tags=["solution"]
 from sklearn.dummy import DummyClassifier
 
 cv_results = cross_validate(DummyClassifier(strategy="most_frequent"),
@@ -103,7 +105,7 @@ print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
 # %% [markdown]
-# Now, we would like to compare the statistical performance of our previous
+# Now, we would like to compare the generalization performance of our previous
 # model with a new model where instead of using an `OrdinalEncoder`, we will
 # use a `OneHotEncoder`. Repeat the model evaluation using cross-validation.
 # Compare the score of both models and conclude on the impact of choosing a
@@ -112,6 +114,7 @@ print("The mean cross-validation accuracy is: "
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
+# solution
 model = make_pipeline(
     OneHotEncoder(handle_unknown="ignore"),
     LogisticRegression(max_iter=500))
@@ -120,7 +123,7 @@ scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # With the linear classifier chosen, using an encoding that does not assume
 # any ordering lead to much better result.
 #

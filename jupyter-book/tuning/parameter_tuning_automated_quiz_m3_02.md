@@ -17,7 +17,7 @@ What does `CV` stand for in `GridSearchCV` and why?
 
 ````{admonition} Question
 Given `pipeline` defined by:
-```py
+```python
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
@@ -68,7 +68,7 @@ of the randomized-search performed in the previous notebook. Executing this
 code will display an interactive plot to analyze the impact of the
 hyper-parameters on the test score of the models.
 
-```py
+```python
 import numpy as np
 import pandas as pd
 import plotly.express as px

@@ -114,7 +114,7 @@ preprocessor = ColumnTransformer([
 # * It **transforms each subsets**. A specific transformer is applied to
 #   each subset: it will internally call `fit_transform` or `transform`. The
 #   output of this step is a set of transformed datasets.
-# * It then **concatenate the transformed datasets** into a single dataset.
+# * It then **concatenates the transformed datasets** into a single dataset.
 
 # The important thing is that `ColumnTransformer` is like any other
 # scikit-learn transformer. In particular it can be combined with a classifier
@@ -218,9 +218,9 @@ print("The mean cross-validation accuracy is: "
 # However, it is often useful to check whether more complex models such as an
 # ensemble of decision trees can lead to higher predictive performance. In this
 # section we will use such a model called **gradient-boosting trees** and
-# evaluate its statistical performance. More precisely, the scikit-learn model
+# evaluate its generalization performance. More precisely, the scikit-learn model
 # we will use is called `HistGradientBoostingClassifier`. Note that boosting
-# models will be covered in more details in a future module.
+# models will be covered in more detail in a future module.
 #
 # For tree-based models, the handling of numerical and categorical variables is
 # simpler than for linear models:
@@ -246,7 +246,7 @@ preprocessor = ColumnTransformer([
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
 # %% [markdown]
-# Now that we created our model, we can check its statistical performance.
+# Now that we created our model, we can check its generalization performance.
 
 # %%
 # %%time
@@ -271,5 +271,5 @@ model.score(data_test, target_test)
 #   categorical and numerical variables;
 # * used a pipeline to chain the `ColumnTransformer` preprocessing and
 #   logistic regression fitting;
-# * seen that **gradient boosting methods** can outperform **linear
+# * saw that **gradient boosting methods** can outperform **linear
 #   models**.

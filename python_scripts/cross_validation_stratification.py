@@ -43,7 +43,7 @@ for train_index, test_index in cv.split(data_random):
 # for the last split. In the end, all samples have been used in testing at
 # least once among the different splits.
 #
-# Now, let's apply this strategy to check the statistical performance of our
+# Now, let's apply this strategy to check the generalization performance of our
 # model.
 
 # %%

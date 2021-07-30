@@ -4,7 +4,7 @@
 
 Open the dataset `blood_transfusion.csv` with the following command:
 
-```py
+```python
 import pandas as pd
 
 blood_transfusion = pd.read_csv("../datasets/blood_transfusion.csv")
@@ -134,7 +134,7 @@ function to also compute the train score.
 We will now study the effect of the parameter `n_neighbors` on the train and
 test score using a validation curve. You can use the following parameter range:
 
-```py
+```python
 param_range = [1, 2, 5, 10, 20, 50, 100, 200, 500]
 ```
 

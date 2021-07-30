@@ -6,7 +6,7 @@
 # * verify if a GBDT tends to overfit if the number of estimators is not
 #   appropriate as previously seen for AdaBoost;
 # * use the early-stopping strategy to avoid adding unnecessary trees, to
-#   get the best statistical performances.
+#   get the best generalization performances.
 #
 # We will use the California housing dataset to conduct our experiments.
 
@@ -28,8 +28,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Similarly to the previous exercise, create a gradient boosting decision tree
 # and create a validation curve to assess the impact of the number of trees
-# on the statistical performance of the model. Use the mean absolute error
-# to assess the statistical performance of the model.
+# on the generalization performance of the model. Use the mean absolute error
+# to assess the generalization performance of the model.
 
 # %%
 # Write your code here.
@@ -41,14 +41,14 @@ data_train, data_test, target_train, target_test = train_test_split(
 #
 # To avoid adding new unnecessary tree, gradient boosting offers an
 # early-stopping option. Internally, the algorithm will use an out-of-sample
-# set to compute the statistical performance of the model at each addition of a
-# tree. Thus, if the statistical performance are not improving for several
+# set to compute the generalization performance of the model at each addition of a
+# tree. Thus, if the generalization performance is not improving for several
 # iterations, it will stop adding trees.
 #
 # Now, create a gradient-boosting model with `n_estimators=1000`. This number
 # of trees will be too large. Change the parameter `n_iter_no_change` such
 # that the gradient boosting fitting will stop after adding 5 trees that do not
-# improve the overall statistical performance.
+# improve the overall generalization performance.
 
 # %%
 # Write your code here.

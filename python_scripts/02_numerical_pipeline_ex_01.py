@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -5,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.6.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,9 +16,10 @@
 # %% [markdown]
 # # 📝 Exercise M1.03
 #
-# The goal of this exercise is to compare the statistical performance of our
-# classifier (81% accuracy) to some baseline classifiers that would ignore the
-# input data and instead make constant predictions.
+# The goal of this exercise is to compare the performance of our classifier in
+# the previous notebook (roughly 81% accuracy with `LogisticRegression`) to
+# some simple baseline classifiers. The simplest baseline classifier is one
+# that always predicts the same class, irrespective of the input data.
 #
 # - What would be the score of a model that always predicts `' >50K'`?
 # - What would be the score of a model that always predicts `' <=50K'`?
@@ -26,7 +28,7 @@
 # Use a `DummyClassifier` and do a train-test split to evaluate
 # its accuracy on the test set. This
 # [link](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
-# shows a few examples of how to evaluate the statistical performance of these
+# shows a few examples of how to evaluate the generalization performance of these
 # baseline models.
 
 # %%
@@ -54,21 +56,20 @@ numerical_columns = [
 data_numeric = data[numerical_columns]
 
 # %% [markdown]
-# Split the dataset into a train and test sets.
+# Split the data and target into a train and test set.
 
 # %%
 from sklearn.model_selection import train_test_split
 
 # Write your code here.
 
-
 # %% [markdown]
 # Use a `DummyClassifier` such that the resulting classifier will always
 # predict the class `' >50K'`. What is the accuracy score on the test set?
 # Repeat the experiment by always predicting the class `' <=50K'`.
 #
-# Hint: you can refer to the parameter `strategy` of the `DummyClassifier`
-# to achieve the desired behaviour.
+# Hint: you can set the `strategy` parameter of the `DummyClassifier` to
+# achieve the desired behavior.
 
 # %%
 from sklearn.dummy import DummyClassifier

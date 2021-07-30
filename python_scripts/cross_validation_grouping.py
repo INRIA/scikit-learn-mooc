@@ -149,7 +149,7 @@ print(f"The average accuracy is "
       f"{test_score.std():.3f}")
 
 # %% [markdown]
-# We see that this strategy is less optimistic regarding the model statistical
+# We see that this strategy is less optimistic regarding the model generalization
 # performance. However, this is the most reliable if our goal is to make
 # handwritten digits recognition writers independent. Besides, we can as well
 # see that the standard deviation was reduced.

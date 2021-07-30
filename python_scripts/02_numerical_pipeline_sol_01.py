@@ -27,7 +27,7 @@
 # Use a `DummyClassifier` and do a train-test split to evaluate
 # its accuracy on the test set. This
 # [link](https://scikit-learn.org/stable/modules/model_evaluation.html#dummy-estimators)
-# shows a few examples of how to evaluate the statistical performance of these
+# shows a few examples of how to evaluate the generalization performance of these
 # baseline models.
 
 # %%
@@ -55,22 +55,27 @@ numerical_columns = [
 data_numeric = data[numerical_columns]
 
 # %% [markdown]
-# Next, let's split the data and target into a train and test set.
+# Split the data and target into a train and test set.
 
 # %%
 from sklearn.model_selection import train_test_split
 
+# solution
 data_numeric_train, data_numeric_test, target_train, target_test = \
     train_test_split(data_numeric, target, random_state=42)
 
 # %% [markdown]
-# We will first create a dummy classifier which will always predict the
-# high revenue class, i.e. `" >50K"`, and check the statistical
-# performance.
+# Use a `DummyClassifier` such that the resulting classifier will always
+# predict the class `' >50K'`. What is the accuracy score on the test set?
+# Repeat the experiment by always predicting the class `' <=50K'`.
+#
+# Hint: you can set the `strategy` parameter of the `DummyClassifier` to
+# achieve the desired behavior.
 
 # %%
 from sklearn.dummy import DummyClassifier
 
+# solution
 class_to_predict = " >50K"
 high_revenue_clf = DummyClassifier(strategy="constant",
                                    constant=class_to_predict)
@@ -78,12 +83,12 @@ high_revenue_clf.fit(data_numeric_train, target_train)
 score = high_revenue_clf.score(data_numeric_test, target_test)
 print(f"Accuracy of a model predicting only high revenue: {score:.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We clearly see that the score is below 0.5 which might be surprising at
-# first. We will now check the statistical performance of a model which always
+# first. We will now check the generalization performance of a model which always
 # predict the low revenue class, i.e. `" <=50K"`.
 
-# %%
+# %% tags=["solution"]
 class_to_predict = " <=50K"
 low_revenue_clf = DummyClassifier(strategy="constant",
                                   constant=class_to_predict)
@@ -91,31 +96,31 @@ low_revenue_clf.fit(data_numeric_train, target_train)
 score = low_revenue_clf.score(data_numeric_test, target_test)
 print(f"Accuracy of a model predicting only low revenue: {score:.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We observe that this model has an accuracy higher than 0.5. This is due to
 # the fact that we have 3/4 of the target belonging to low-revenue class.
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Therefore, any predictive model giving results below this dummy classifier
 # will not be helpful.
 
-# %%
+# %% tags=["solution"]
 adult_census["class"].value_counts()
 
-# %%
+# %% tags=["solution"]
 (target == " <=50K").mean()
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # In practice, we could have the strategy `"most_frequent"` to predict the
 # class that appears the most in the training target.
 
-# %%
+# %% tags=["solution"]
 most_freq_revenue_clf = DummyClassifier(strategy="most_frequent")
 most_freq_revenue_clf.fit(data_numeric_train, target_train)
 score = most_freq_revenue_clf.score(data_numeric_test, target_test)
 print(f"Accuracy of a model predicting the most frequent class: {score:.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # So the `LogisticRegression` accuracy (roughly 81%) seems better than the
 # `DummyClassifier` accuracy (roughly 76%). In a way it is a bit reassuring,
 # using a machine learning model gives you a better performance than always

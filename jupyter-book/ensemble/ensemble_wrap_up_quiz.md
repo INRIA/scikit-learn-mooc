@@ -4,7 +4,7 @@
 
 Open the dataset `blood_transfusion.csv`.
 
-```py
+```python
 import pandas as pd
 
 blood_transfusion = pd.read_csv("../datasets/blood_transfusion.csv")
@@ -102,7 +102,7 @@ add as many trees as needed.
 **Note**: Be aware that you need a specific import when importing the
 `HistGradientBoostingClassifier`:
 
-```py
+```python
 # explicitly require this experimental feature
 from sklearn.experimental import enable_hist_gradient_boosting
 # now you can import normally from ensemble

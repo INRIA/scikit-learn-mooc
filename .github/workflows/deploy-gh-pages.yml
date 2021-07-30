@@ -39,10 +39,9 @@ jobs:
           v1-${{ github.ref }}
           v1-refs/heads/master
 
-    - name: Build the book
+    - name: Build the JupyterBook
       run: |
-        cd jupyter-book
-        make
+        make jupyter-book
 
     - name: Create folder for gh-pages
       run: |
@@ -54,3 +53,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./gh-pages
+        commit_message: "[ci skip] ${{ github.event.head_commit.message }}"

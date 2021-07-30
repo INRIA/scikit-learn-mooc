@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M4.01
 #
@@ -58,9 +57,6 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 
 # %%
 # Write your code here.
-# weights = [...]
-# intercepts = [...]
-
 
 # %% [markdown]
 # In the previous question, you were asked to create several linear models.
@@ -74,18 +70,26 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 
 # %%
 def goodness_fit_measure(true_values, predictions):
-    # Write your code here.
-    # Define a measure indicating the goodness of fit of a model given the true
-    # values and the model predictions.
-    pass
+    # solution
+    # we compute the error between the true values and the predictions of our
+    # model
+    errors = np.ravel(true_values) - np.ravel(predictions)
+    # We have several possible strategy to reduce all errors to a single value.
+    # Computing the mean error (sum divided by the number of element) looks
+    # like a good solution. However, we have negative error and therefore, we
+    # need to sum only positive numbers. Therefore, we can either square each
+    # error or take the absolute value: these metrics are known as mean
+    # squared error (MSE) and mean absolute error (MAE). Let's use the MAE here
+    # as an example.
+    return np.mean(np.abs(errors))
 
-
-# %%
-# Uncomment the code below.
+# %% [markdown]
+# You can now use the code below to show the goodness of fit for each model.
+#
+# ```python
 # for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
 #     target_predicted = linear_model_flipper_mass(data, weight, intercept)
 #     print(f"Model #{model_idx}:")
 #     print(f"{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)")
 #     print(f"Error: {goodness_fit_measure(target, target_predicted):.3f}\n")
-
-# %%
+# ```

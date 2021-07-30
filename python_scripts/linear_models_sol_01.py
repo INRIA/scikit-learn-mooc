@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📃 Solution for Exercise M4.01
 #
@@ -57,6 +56,7 @@ import numpy as np
 flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 
 # %%
+# solution
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -87,6 +87,7 @@ _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.25), ncol=1)
 
 # %%
 def goodness_fit_measure(true_values, predictions):
+    # solution
     # we compute the error between the true values and the predictions of our
     # model
     errors = np.ravel(true_values) - np.ravel(predictions)
@@ -99,8 +100,18 @@ def goodness_fit_measure(true_values, predictions):
     # as an example.
     return np.mean(np.abs(errors))
 
+# %% [markdown]
+# You can now use the code below to show the goodness of fit for each model.
+#
+# ```python
+# for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
+#     target_predicted = linear_model_flipper_mass(data, weight, intercept)
+#     print(f"Model #{model_idx}:")
+#     print(f"{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)")
+#     print(f"Error: {goodness_fit_measure(target, target_predicted):.3f}\n")
+# ```
 
-# %%
+# %% tags=["solution"]
 for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
     target_predicted = linear_model_flipper_mass(data, weight, intercept)
     print(f"Model #{model_idx}:")

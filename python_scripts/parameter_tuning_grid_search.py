@@ -60,9 +60,9 @@ categorical_columns = categorical_columns_selector(data)
 # %% [markdown]
 # Here we will use a tree-based model as a predictor. That means:
 #
-# * Numerical variables don't need scaling
+# * Numerical variables don't need scaling;
 # * Categorical variables can be dealt with an `OrdinalEncoder` even if the 
-#   coding order is not meaningful
+#   coding order is not meaningful;
 # * For tree-based models, the `OrdinalEncoder` avoids having high-dimensional 
 #   representations.
 #

@@ -65,6 +65,17 @@ def write_all_exercises(python_scripts_folder):
 
 
 if __name__ == "__main__":
-    python_scripts_folder = Path(sys.argv[1])
+    path = Path(sys.argv[1])
 
-    write_all_exercises(python_scripts_folder)
+    if path.is_dir():
+        write_all_exercises(path)
+    else:
+        if '_ex_' not in str(path):
+            raise ValueError(
+                f'Path argument should be an exercise file. Path was {path}')
+        solution_path = Path(str(path).replace("_ex_", "_sol_"))
+        if not solution_path.exists():
+            raise ValueError(
+                f"{solution_path} does not exist, check argument path {path}")
+
+        write_exercise(solution_path, path)

@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 set -xe
 
+JUPYTER_BOOK_DIR=jupyter-book
+JUPYTER_BOOK_BUILD_DIR="$JUPYTER_BOOK_DIR/_build/html"
+
 function show_error_logs {
     echo "Some notebooks failed, see logs below:"
-    for f in _build/html/reports/*.log; do
+    for f in $JUPYTER_BOOK_BUILD_DIR/reports/*.log; do
         echo "================================================================================"
         echo $f
         echo "================================================================================"
@@ -26,7 +29,8 @@ affected_jupyter_book_paths() {
     # TODO: rather than the grep pattern below we could potentially look at
     # _toc.yml to know whether the file affects the JupyterBook
     echo "$files" | grep python_scripts | perl -pe 's@\.py$@.html@'
-    echo "$files" | grep -P 'jupyter-book/.+md$' | perl -pe 's@jupyter-book/(.+)\.md@\1.html@'
+    echo "$files" | grep -P "$JUPYTER_BOOK_DIR/.+md$" | \
+        perl -pe "s@$JUPYTER_BOOK_DIR/(.+)\.md@\1.html@"
 }
 
 write_changed_html() {
@@ -42,18 +46,17 @@ write_changed_html() {
             echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">master</a>]|'
             echo '</ul><p>This PR JupyterBook <a href="index.html">index</a>'
             echo '</ul></body></html>'
-        ) > '_build/html/_changed.html'
+        ) > '$JUPYTER_BOOK_BUILD_DIR/_changed.html'
     fi
 }
 
 affected=$(affected_jupyter_book_paths)
 
-cd jupyter-book
-make 2>&1 | tee build.log
+make $JUPYTER_BOOK_DIR 2>&1 | tee $JUPYTER_BOOK_DIR/build.log
 
 write_changed_html "$affected"
 
 # Grep the log to make sure there has been no errors when running the notebooks
 # since jupyter-book exit code is always 0
-grep 'Execution Failed' build.log && show_error_logs || \
+grep 'Execution Failed' $JUPYTER_BOOK_DIR/build.log && show_error_logs || \
     echo 'All notebooks ran successfully'

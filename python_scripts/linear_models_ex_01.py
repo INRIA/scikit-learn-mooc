@@ -70,18 +70,7 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 
 # %%
 def goodness_fit_measure(true_values, predictions):
-    # solution
-    # we compute the error between the true values and the predictions of our
-    # model
-    errors = np.ravel(true_values) - np.ravel(predictions)
-    # We have several possible strategy to reduce all errors to a single value.
-    # Computing the mean error (sum divided by the number of element) looks
-    # like a good solution. However, we have negative error and therefore, we
-    # need to sum only positive numbers. Therefore, we can either square each
-    # error or take the absolute value: these metrics are known as mean
-    # squared error (MSE) and mean absolute error (MAE). Let's use the MAE here
-    # as an example.
-    return np.mean(np.abs(errors))
+    # Write your code here.
 
 # %% [markdown]
 # You can now use the code below to show the goodness of fit for each model.

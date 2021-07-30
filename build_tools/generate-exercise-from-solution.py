@@ -30,7 +30,7 @@ def remove_solution(input_py_str):
 
     # Partial cell removal based on "# solution" comment
     marker = "# solution"
-    pattern = re.compile(f"^{marker}.*", flags=re.MULTILINE|re.DOTALL)
+    pattern = re.compile(f"{marker}.*", flags=re.MULTILINE|re.DOTALL)
 
     cells_to_modify = [c for c in nb.cells if c["cell_type"] == "code" and
                        marker in c["source"]]

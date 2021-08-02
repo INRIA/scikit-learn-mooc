@@ -3,7 +3,7 @@
 #
 # In this notebook, we introduce linear regression. Before presenting the
 # available scikit-learn classes, we will provide some insights with a simple
-# example. We will use a dataset that contains information about penguins.
+# example. We will use a dataset that contains measurements taken on penguins.
 
 # %% [markdown]
 # ```{note}
@@ -18,9 +18,8 @@ penguins = pd.read_csv("../datasets/penguins_regression.csv")
 penguins.head()
 
 # %% [markdown]
-# This dataset contains measurements taken on penguins. We will formulate the
-# following problem: using the flipper length of a penguin, we would like
-# to infer its mass.
+# We will formulate the following problem: using the flipper length of a penguin, 
+# we would like to infer its mass.
 
 # %%
 import seaborn as sns
@@ -38,7 +37,7 @@ ax.set_title("Flipper length in function of the body mass")
 # The function `scatterplot` from searborn take as input the full dataframe
 # and the parameter `x` and `y` allows to specify the name of the columns to
 # be plotted. Note that this function returns a matplotlib axis
-# (named `ax` in the example above) that can be further used to add element on
+# (named `ax` in the example above) that can be further used to add elements on
 # the same matplotlib axis (such as a title).
 # ```
 

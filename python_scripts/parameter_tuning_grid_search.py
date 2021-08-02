@@ -108,7 +108,7 @@ model
 # best combination over a fixed grid of values. `GridSearchCV` is a scikit-learn class 
 # that implements a very similar logic with less repetitive code.
 #
-# Lets see how to use the `GridSearchCV` estimator for doing such search.
+# Let's see how to use the `GridSearchCV` estimator for doing such search.
 # Since the grid-search will be costly, we will only explore the combination
 # learning-rate and the maximum number of nodes.
 

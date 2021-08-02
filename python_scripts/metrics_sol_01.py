@@ -67,7 +67,7 @@ from sklearn.tree import DecisionTreeClassifier
 
 tree = DecisionTreeClassifier()
 try:
-    scores = cross_val_score(tree, data, target, cv=cv, scoring="precision")
+    scores = cross_val_score(tree, data, target, cv=10, scoring="precision")
 except ValueError as exc:
     print(exc)
 
@@ -83,6 +83,7 @@ except ValueError as exc:
 # So, import `sklearn.metrics.make_scorer` and
 # `sklearn.metrics.precision_score`. Check their documentations for more
 # information.
+# Finally, create a scorer by calling `make_scorer` using the score function
 # `precision_score` and pass the extra parameter `pos_label="donated"`.
 
 # %%

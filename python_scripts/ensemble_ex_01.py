@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M6.01
 #
@@ -36,7 +37,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # parameters  and check if you are able to find a set of parameters that
 # improve the default regressor still using the mean absolute error as a
 # metric.
-
+#
 # ```{tip}
 # You can list the bagging regressor's parameters using the `get_params`
 # method.
@@ -46,5 +47,5 @@ data_train, data_test, target_train, target_test = train_test_split(
 # Write your code here.
 
 # %% [markdown]
-# We see that the bagging regressor provides a predictor in which fine tuning
-# is not as important as in the case of fitting a single decision tree.
+# We see that the predictor provided by the bagging regressor does not need
+# much hyperparameter tuning compared to a single decision tree.

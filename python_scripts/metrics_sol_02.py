@@ -69,12 +69,13 @@ print(f"Mean absolute error: "
 # compute the $R^2$ score and the mean absolute error for instance.
 
 # %%
+# solution
 from sklearn.model_selection import cross_validate
 
 scoring = ["r2", "neg_mean_absolute_error"]
 cv_results = cross_validate(model, data, target, scoring=scoring)
 
-# %%
+# %% tags=["solution"]
 import pandas as pd
 
 scores = {"R2": cv_results["test_r2"],

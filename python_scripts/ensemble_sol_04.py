@@ -8,7 +8,7 @@
 # * use the early-stopping strategy to avoid adding unnecessary trees, to
 #   get the best generalization performances.
 #
-# we will use the California housing dataset to conduct our experiments.
+# We will use the California housing dataset to conduct our experiments.
 
 # %%
 from sklearn.datasets import fetch_california_housing

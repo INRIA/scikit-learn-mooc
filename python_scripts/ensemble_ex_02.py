@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M6.02
 #
 # The aim of this exercise it to explore some attributes available in
-# scikit-learn random forest.
+# scikit-learn's random forest.
 #
 # First, we will fit the penguins regression dataset.
 
@@ -40,7 +41,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # - plot the decision of each individual tree by predicting on the newly
 #   created dataset;
 # - plot the decision of the random forest using this newly created dataset.
-
+#
 # ```{tip}
 # The trees contained in the forest that you created can be accessed
 # with the attribute `estimators_`.

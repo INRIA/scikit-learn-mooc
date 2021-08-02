@@ -37,6 +37,7 @@ data, target = rng.randn(100, 100000), rng.randint(0, 2, size=100)
 from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
 
+# solution
 model = LogisticRegression()
 test_score = cross_val_score(model, data, target, n_jobs=2)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
@@ -58,6 +59,7 @@ print(f"The mean accuracy is: {test_score.mean():.3f}")
 # solution
 from sklearn.feature_selection import SelectKBest, f_classif
 
+# solution
 feature_selector = SelectKBest(score_func=f_classif, k=10)
 data_subset = feature_selector.fit_transform(data, target)
 test_score = cross_val_score(model, data_subset, target)
@@ -84,6 +86,7 @@ print(f"The mean accuracy is: {test_score.mean():.3f}")
 # solution
 from sklearn.model_selection import train_test_split
 
+# solution
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
 feature_selector.fit(data_train, target_train)
@@ -93,7 +96,7 @@ model.fit(data_train_subset, target_train)
 test_score = model.score(data_test_subset, target_test)
 print(f"The mean accuracy is: {test_score:.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # It is not a surprise that our model is not working. We see that selecting
 # features only on the training set will not help when testing our model. In
 # this case, we obtained the expected results.
@@ -102,6 +105,8 @@ print(f"The mean accuracy is: {test_score:.3f}")
 # the feature space should be done solely on the training set, keeping a part
 # of the data left-out.
 #
+
+# %% [markdown]
 # However, the previous case is not perfect. For instance, if we were asking
 # to perform cross-validation, the manual `fit`/`transform` of the datasets
 # will make our life hard. Indeed, the solution here is to use a scikit-learn
@@ -116,6 +121,7 @@ print(f"The mean accuracy is: {test_score:.3f}")
 # solution
 from sklearn.pipeline import make_pipeline
 
+# solution
 model = make_pipeline(feature_selector, LogisticRegression())
 test_score = cross_val_score(model, data, target)
 print(f"The mean accuracy is: {test_score.mean():.3f}")

@@ -56,14 +56,6 @@ import numpy as np
 # Write your code here.
 
 # %% [markdown]
-# It is not a surprise that our model is not working. We see that selecting
-# features only on the training set will not help when testing our model. In
-# this case, we obtained the expected results.
-#
-# Therefore, as with hyperparameters optimization or model selection, tuning
-# the feature space should be done solely on the training set, keeping a part
-# of the data left-out.
-#
 # However, the previous case is not perfect. For instance, if we were asking
 # to perform cross-validation, the manual `fit`/`transform` of the datasets
 # will make our life hard. Indeed, the solution here is to use a scikit-learn

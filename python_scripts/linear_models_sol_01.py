@@ -117,7 +117,8 @@ def goodness_fit_measure(true_values, predictions):
 #     print(f"Error: {goodness_fit_measure(target, target_predicted):.3f}\n")
 # ```
 
-# %% tags=["solution"]
+# %%
+# solution
 for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
     target_predicted = linear_model_flipper_mass(data, weight, intercept)
     print(f"Model #{model_idx}:")

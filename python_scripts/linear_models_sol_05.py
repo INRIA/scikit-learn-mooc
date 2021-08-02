@@ -114,8 +114,6 @@ for C in Cs:
 
 # %%
 # solution
-
-# %% tags=["solution"]
 weights_ridge = []
 for C in Cs:
     logistic_regression.set_params(logisticregression__C=C)

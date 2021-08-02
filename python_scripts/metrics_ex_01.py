@@ -52,8 +52,12 @@ target = blood_transfusion["Class"]
 # label will not be supported by scikit-learn because it is indeed ambiguous.
 
 # %%
+from sklearn.model_selection import cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+
+tree = DecisionTreeClassifier()
 try:
-    scores = cross_val_score(tree, data, target, cv=cv, scoring="precision")
+    scores = cross_val_score(tree, data, target, cv=10, scoring="precision")
 except ValueError as exc:
     print(exc)
 

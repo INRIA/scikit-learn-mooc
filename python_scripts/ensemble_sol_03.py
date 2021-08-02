@@ -65,7 +65,7 @@ plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
 _ = plt.title("Validation curve for AdaBoost regressor")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Plotting the validation curve, we can see that AdaBoost is not immune against
 # overfitting. Indeed, there is an optimal number of estimators to be found.
 # Adding too many estimators is detrimental for the performance of the model.

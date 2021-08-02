@@ -91,5 +91,6 @@ from sklearn.linear_model import LinearRegression
 
 # %% [markdown]
 # Compute the mean squared error
+
 # %%
 # Write your code here.

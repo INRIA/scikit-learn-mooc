@@ -110,6 +110,7 @@ _ = ax.plot(data, predictions)
 
 # %% [markdown]
 # Compute the mean squared error
+
 # %%
 # solution
 error = mean_squared_error(target, predictions)

@@ -88,7 +88,7 @@ from sklearn.linear_model import LogisticRegression
 logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="l2"))
 
-# %% [mardown]
+# %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of
 # `C` on the classifier decision boundary.
 

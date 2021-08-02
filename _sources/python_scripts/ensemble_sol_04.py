@@ -8,7 +8,7 @@
 # * use the early-stopping strategy to avoid adding unnecessary trees, to
 #   get the best generalization performances.
 #
-# we will use the California housing dataset to conduct our experiments.
+# We will use the California housing dataset to conduct our experiments.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -32,6 +32,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # to assess the generalization performance of the model.
 
 # %%
+# solution
 import numpy as np
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import validation_curve
@@ -49,7 +50,7 @@ train_scores, test_scores = validation_curve(
 )
 train_errors, test_errors = -train_scores, -test_scores
 
-# %%
+# %% tags=["solution"]
 import matplotlib.pyplot as plt
 
 plt.errorbar(
@@ -87,11 +88,12 @@ _ = plt.title("Validation curve for GBDT regressor")
 # improve the overall generalization performance.
 
 # %%
+# solution
 gbdt = GradientBoostingRegressor(n_estimators=1000, n_iter_no_change=5)
 gbdt.fit(data_train, target_train)
 gbdt.n_estimators_
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that the number of trees used is far below 1000 with the current
 # dataset. Training the GBDT with the entire 1000 trees would have been
 # useless.

@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📃 Solution for Exercise M4.01
 #
@@ -57,6 +56,7 @@ import numpy as np
 flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 
 # %%
+# solution
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -80,12 +80,15 @@ _ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.25), ncol=1)
 # The visualization allowed you to qualitatively assess if a model was better
 # than another.
 #
-# Now, you should come up with a quantitative measure which will indicate the
-# goodness of fit of each linear model. This quantitative metric should result
-# in a single scalar and allow you to pick up the best model.
+# Now, you should come up with a quantitative measure which indicates the
+# goodness of fit of each linear model and allows you to select the best model.
+# Define a function `goodness_fit_measure(true_values, predictions)` that takes
+# as inputs the true target values and the predictions and returns a single
+# scalar as output.
 
 
 # %%
+# solution
 def goodness_fit_measure(true_values, predictions):
     # we compute the error between the true values and the predictions of our
     # model
@@ -99,8 +102,19 @@ def goodness_fit_measure(true_values, predictions):
     # as an example.
     return np.mean(np.abs(errors))
 
+# %% [markdown]
+# You can now copy and paste the code below to show the goodness of fit for
+# each model.
+#
+# ```python
+# for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
+#     target_predicted = linear_model_flipper_mass(data, weight, intercept)
+#     print(f"Model #{model_idx}:")
+#     print(f"{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)")
+#     print(f"Error: {goodness_fit_measure(target, target_predicted):.3f}\n")
+# ```
 
-# %%
+# %% tags=["solution"]
 for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
     target_predicted = linear_model_flipper_mass(data, weight, intercept)
     print(f"Model #{model_idx}:")

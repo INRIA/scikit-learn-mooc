@@ -858,7 +858,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="ensemble_sol_01.html">
-     📃 Solution of Exercise M6.01
+     📃 Solution for Exercise M6.01
     </a>
    </li>
    <li class="toctree-l2">
@@ -1400,7 +1400,7 @@ number of estimators.</p>
 training and a testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1416,14 +1416,15 @@ training and a testing set.</p>
 <p>If you want a deeper overview regarding this dataset, you can refer to the
 Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
-<p>Then, create an <code class="docutils literal notranslate"><span class="pre">AbaBoostRegressor</span></code>. Use the function
+<p>Then, create an <code class="docutils literal notranslate"><span class="pre">AdaBoostRegressor</span></code> instance. Use the function
 <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code> to get training and test scores
 by varying the number of estimators. Use the mean absolute error as a metric
 by passing <code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_absolute_error&quot;</span></code>.
 <em>Hint: vary the number of estimators between 1 and 60.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">validation_curve</span>
 
@@ -1443,7 +1444,8 @@ standard deviation of the errors.
 <em>Hint: you can use <code class="docutils literal notranslate"><span class="pre">plt.errorbar</span></code>.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
              <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
@@ -1459,9 +1461,6 @@ standard deviation of the errors.
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/ensemble_sol_03_6_0.png" src="../_images/ensemble_sol_03_6_0.png" />
-</div>
 </div>
 <p>Plotting the validation curve, we can see that AdaBoost is not immune against
 overfitting. Indeed, there is an optimal number of estimators to be found.
@@ -1469,7 +1468,8 @@ Adding too many estimators is detrimental for the performance of the model.</p>
 <p>Repeat the experiment using a random forest instead of an AdaBoost regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
 <span class="n">forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
 <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
@@ -1481,9 +1481,9 @@ Adding too many estimators is detrimental for the performance of the model.</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
              <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
              <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">param_range</span><span class="p">,</span> <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
@@ -1497,11 +1497,8 @@ Adding too many estimators is detrimental for the performance of the model.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/ensemble_sol_03_10_0.png" src="../_images/ensemble_sol_03_10_0.png" />
 </div>
-</div>
-<p>In contrary to the AdaBoost regressor, we can see that increasing the number
+<p>In contrast to the AdaBoost regressor, we can see that increasing the number of
 trees in the forest will increase the generalization performance (by decreasing
 the mean absolute error) of the random forest. In fact, a random forest has
 less chance to suffer from overfitting than AdaBoost when increasing the

@@ -37,17 +37,20 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, train_size=0.2, random_state=42)
 
 # %% [markdown]
-# You should:
+# In this exercise, we will progressively define the classification pipeline
+# and later tune its hyperparameters.
+# 
+# Our pipeline should:
 # * preprocess the categorical columns using a `OneHotEncoder` and use a
 #   `StandardScaler` to normalize the numerical data.
 # * use a `LogisticRegression` as a predictive model.
-
-# %% [markdown]
+#
 # Start by defining the columns and the preprocessing pipelines to be applied
-# on each columns.
+# on each group of columns.
 # %%
 from sklearn.compose import make_column_selector as selector
 
+# solution
 categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
@@ -58,6 +61,7 @@ numerical_columns = numerical_columns_selector(data)
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
+# solution
 categorical_processor = OneHotEncoder(handle_unknown="ignore")
 numerical_processor = StandardScaler()
 
@@ -68,18 +72,21 @@ numerical_processor = StandardScaler()
 # %%
 from sklearn.compose import ColumnTransformer
 
+# solution
 preprocessor = ColumnTransformer(
     [('cat-preprocessor', categorical_processor, categorical_columns),
      ('num-preprocessor', numerical_processor, numerical_columns)]
 )
 
 # %% [markdown]
-# Finally, concatenate the preprocessing pipeline with a logistic regression.
+# Assemble the final pipeline by combining the above preprocessor
+# with a logistic regression classifier.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
+# solution
 model = make_pipeline(preprocessor, LogisticRegression())
 
 # %% [markdown]
@@ -101,6 +108,7 @@ model = make_pipeline(preprocessor, LogisticRegression())
 from sklearn.model_selection import RandomizedSearchCV
 from scipy.stats import loguniform
 
+# solution
 param_distributions = {
     "logisticregression__C": loguniform(0.001, 10),
     "columntransformer__num-preprocessor__with_mean": [True, False],
@@ -113,7 +121,7 @@ model_random_search = RandomizedSearchCV(
 model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 #
 # So the best hyperparameters give a model where the features are scaled but
 # not centered and the final model is regularized.
@@ -130,15 +138,15 @@ model_random_search.best_params_
 # than welcome to try!). Instead we are going to load the results obtained from
 # a similar search with many more iterations (1,000 instead of 20).
 
-# %%
+# %% tags=["solution"]
 cv_results = pd.read_csv(
     "../figures/randomized_search_results_logistic_regression.csv")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # To simplify the axis of the plot, we will rename the column of the dataframe
 # and only select the mean test score and the value of the hyperparameters.
 
-# %%
+# %% tags=["solution"]
 column_name_mapping = {
     "param_logisticregression__C": "C",
     "param_columntransformer__num-preprocessor__with_mean": "centering",
@@ -150,7 +158,7 @@ cv_results = cv_results.rename(columns=column_name_mapping)
 cv_results = cv_results[column_name_mapping.values()].sort_values(
     "mean test accuracy", ascending=False)
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # In addition, the parallel coordinate plot from `plotly` expects all data to
 # be numeric. Thus, we convert the boolean indicator informing whether or not
 # the data were centered or scaled into an integer, where True is mapped to 1
@@ -159,12 +167,12 @@ cv_results = cv_results[column_name_mapping.values()].sort_values(
 # We also take the logarithm of the `C` values to span the data on a broader
 # range for a better visualization.
 
-# %%
+# %% tags=["solution"]
 column_scaler = ["centering", "scaling"]
 cv_results[column_scaler] = cv_results[column_scaler].astype(np.int64)
 cv_results['log C'] = np.log10(cv_results['C'])
 
-# %%
+# %% tags=["solution"]
 import plotly.express as px
 
 fig = px.parallel_coordinates(
@@ -175,7 +183,7 @@ fig = px.parallel_coordinates(
 )
 fig.show()
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We recall that it is possible to select a range of results by clicking and
 # holding on any axis of the parallel coordinate plot. You can then slide
 # (move) the range selection and cross two selections to see the intersections.

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>📃 Solution of Exercise M6.01 &#8212; Scikit-learn course</title>
+    <title>📃 Solution for Exercise M6.01 &#8212; Scikit-learn course</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -858,7 +858,7 @@
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     📃 Solution of Exercise M6.01
+     📃 Solution for Exercise M6.01
     </a>
    </li>
    <li class="toctree-l2">
@@ -1391,15 +1391,15 @@
         
               <div>
                 
-  <div class="section" id="solution-of-exercise-m6-01">
-<h1>📃 Solution of Exercise M6.01<a class="headerlink" href="#solution-of-exercise-m6-01" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="solution-for-exercise-m6-01">
+<h1>📃 Solution for Exercise M6.01<a class="headerlink" href="#solution-for-exercise-m6-01" title="Permalink to this headline">¶</a></h1>
 <p>The aim of this notebook is to investigate if we can tune the hyperparameters
 of a bagging regressor and evaluate the gain obtained.</p>
 <p>We will load the California housing dataset and split it into a training and
 a testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1420,7 +1420,8 @@ to its parameter <code class="docutils literal notranslate"><span class="pre">ba
 generalization performance on the testing set using the mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
 
@@ -1430,12 +1431,6 @@ generalization performance on the testing set using the mean absolute error.</p>
 <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basic mean absolute error of the bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic mean absolute error of the bagging regressor:
-36.38 k$
 </pre></div>
 </div>
 </div>
@@ -1452,42 +1447,16 @@ method.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">bagging</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">bagging</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>base_estimator__ccp_alpha
-base_estimator__criterion
-base_estimator__max_depth
-base_estimator__max_features
-base_estimator__max_leaf_nodes
-base_estimator__min_impurity_decrease
-base_estimator__min_impurity_split
-base_estimator__min_samples_leaf
-base_estimator__min_samples_split
-base_estimator__min_weight_fraction_leaf
-base_estimator__random_state
-base_estimator__splitter
-base_estimator
-bootstrap
-bootstrap_features
-max_features
-max_samples
-n_estimators
-n_jobs
-oob_score
-random_state
-verbose
-warm_start
-</pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
@@ -1504,9 +1473,9 @@ warm_start
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
@@ -1517,259 +1486,18 @@ warm_start
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>param_n_estimators</th>
-      <th>param_max_samples</th>
-      <th>param_max_features</th>
-      <th>param_base_estimator__max_depth</th>
-      <th>mean_test_score</th>
-      <th>std_test_score</th>
-      <th>rank_test_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>15</th>
-      <td>21</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>8</td>
-      <td>40.030884</td>
-      <td>1.273278</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>14</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>8</td>
-      <td>41.353784</td>
-      <td>1.116039</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>21</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>7</td>
-      <td>41.799669</td>
-      <td>1.521985</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>22</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>7</td>
-      <td>42.216457</td>
-      <td>1.072362</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>21</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>7</td>
-      <td>42.388688</td>
-      <td>1.177851</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>25</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>7</td>
-      <td>42.746657</td>
-      <td>1.276234</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>15</td>
-      <td>0.5</td>
-      <td>1.0</td>
-      <td>7</td>
-      <td>43.014306</td>
-      <td>1.303823</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>24</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>7</td>
-      <td>43.048924</td>
-      <td>0.969746</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>14</td>
-      <td>0.5</td>
-      <td>1.0</td>
-      <td>7</td>
-      <td>43.272181</td>
-      <td>1.227020</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>17</td>
-      <td>0.5</td>
-      <td>1.0</td>
-      <td>6</td>
-      <td>45.258098</td>
-      <td>1.229740</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>15</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>6</td>
-      <td>45.467947</td>
-      <td>1.198316</td>
-      <td>11</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>14</td>
-      <td>0.5</td>
-      <td>0.5</td>
-      <td>7</td>
-      <td>46.188176</td>
-      <td>1.689583</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>11</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>5</td>
-      <td>48.486368</td>
-      <td>1.007336</td>
-      <td>13</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>11</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>5</td>
-      <td>49.332554</td>
-      <td>1.022812</td>
-      <td>14</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>24</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>4</td>
-      <td>51.860316</td>
-      <td>1.123646</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>29</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>4</td>
-      <td>52.360165</td>
-      <td>1.393773</td>
-      <td>16</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>15</td>
-      <td>0.5</td>
-      <td>0.5</td>
-      <td>5</td>
-      <td>52.491499</td>
-      <td>2.411352</td>
-      <td>17</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>10</td>
-      <td>0.5</td>
-      <td>1.0</td>
-      <td>3</td>
-      <td>56.769980</td>
-      <td>1.116707</td>
-      <td>18</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>27</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>3</td>
-      <td>57.312467</td>
-      <td>1.262450</td>
-      <td>19</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>14</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>3</td>
-      <td>58.037170</td>
-      <td>0.844139</td>
-      <td>20</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error after tuning of the bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean absolute error after tuning of the bagging regressor:
-40.66 k$
-</pre></div>
-</div>
-</div>
 </div>
 <p>We see that the predictor provided by the bagging regressor does not need
-much hyperparameter tuning compared to a single decision tree. We see that
-the bagging regressor provides a predictor for which tuning the
-hyperparameters is not as important as in the case of fitting a single
-decision tree.</p>
+much hyperparameter tuning compared to a single decision tree.</p>
 </div>
 
     <script type="text/x-thebe-config">

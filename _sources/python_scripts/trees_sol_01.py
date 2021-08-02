@@ -1,5 +1,4 @@
 # coding: utf-8
-
 # %% [markdown]
 # # 📃 Solution for Exercise M5.01
 #
@@ -75,12 +74,13 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 # decision boundary to see the benefit of increasing the depth.
 
 # %%
+# solution
 from sklearn.tree import DecisionTreeClassifier
 
 tree = DecisionTreeClassifier(max_depth=2)
 tree.fit(data_train, target_train)
 
-# %%
+# %% tags=["solution"]
 import seaborn as sns
 
 palette = ["tab:red", "tab:blue", "black"]
@@ -95,24 +95,27 @@ _ = plt.title("Decision boundary using a decision tree")
 # Plot the tree using the function `sklearn.tree.plot_tree` to find out!
 
 # %%
+# solution
 from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(16, 12))
 _ = plot_tree(tree, feature_names=culmen_columns,
               class_names=tree.classes_, impurity=False, ax=ax)
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that the second tree level used the "Culmen Length" to make
 # two new decisions. Qualitatively, we saw that such a simple tree was enough
 # to classify the penguins' species.
-#
+
+# %% [markdown]
 # Compute the accuracy of the decision tree on the testing data.
 
 # %%
+# solution
 test_score = tree.fit(data_train, target_train).score(data_test, target_test)
 print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # At this stage, we have the intuition that a decision tree is built by
 # successively partitioning the feature space, considering one feature at a
 # time.

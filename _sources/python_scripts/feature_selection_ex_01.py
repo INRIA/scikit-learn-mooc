@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise 01
 #
@@ -17,11 +18,12 @@
 # This type of dimensionality is typical in bioinformatics when dealing with
 # RNA-seq. However, we will use completely randomized features such that we
 # don't have a link between the data and the target. Thus, the generalization
-# performance of any machine learning model should not perform better than the
+# performance of any machine-learning model should not perform better than the
 # chance-level.
 
 # %%
 import numpy as np
+
 # Write your code here.
 
 # %% [markdown]
@@ -54,14 +56,6 @@ import numpy as np
 # Write your code here.
 
 # %% [markdown]
-# This is not a surprise that our model is not working. We see that selecting
-# feature only on the training set will not help when testing our model. In
-# this case, we obtained the expected results.
-#
-# Therefore, as with hyperparameters optimization or model selection, tuning
-# the feature space should be done solely on the training set, keeping a part
-# of the data left-out.
-#
 # However, the previous case is not perfect. For instance, if we were asking
 # to perform cross-validation, the manual `fit`/`transform` of the datasets
 # will make our life hard. Indeed, the solution here is to use a scikit-learn

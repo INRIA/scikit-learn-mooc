@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M4.03
 #
@@ -41,4 +42,4 @@ data.head()
 #   to plot a box plot.
 
 # %%
-# Write your code here.: make the exercise
+# Write your code here.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M7.03
 #
@@ -21,6 +22,7 @@ target /= 1000
 # If you want a deeper overview regarding this dataset, you can refer to the
 # Appendix - Datasets description section at the end of this MOOC.
 # ```
+
 
 # %% [markdown]
 # The first step will be to create a linear regression model.

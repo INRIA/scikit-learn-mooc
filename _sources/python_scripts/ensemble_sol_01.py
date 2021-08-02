@@ -1,5 +1,5 @@
 # %% [markdown]
-# # 📃 Solution of Exercise M6.01
+# # 📃 Solution for Exercise M6.01
 #
 # The aim of this notebook is to investigate if we can tune the hyperparameters
 # of a bagging regressor and evaluate the gain obtained.
@@ -28,6 +28,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # generalization performance on the testing set using the mean absolute error.
 
 # %%
+# solution
 from sklearn.metrics import mean_absolute_error
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import BaggingRegressor
@@ -52,10 +53,11 @@ print(f"Basic mean absolute error of the bagging regressor:\n"
 # ```
 
 # %%
+# solution
 for param in bagging.get_params().keys():
     print(param)
 
-# %%
+# %% tags=["solution"]
 from scipy.stats import randint
 from sklearn.model_selection import RandomizedSearchCV
 
@@ -70,7 +72,7 @@ search = RandomizedSearchCV(
 )
 _ = search.fit(data_train, target_train)
 
-# %%
+# %% tags=["solution"]
 import pandas as pd
 
 columns = [f"param_{name}" for name in param_grid.keys()]
@@ -80,14 +82,11 @@ cv_results = cv_results[columns].sort_values(by="rank_test_score")
 cv_results["mean_test_score"] = -cv_results["mean_test_score"]
 cv_results
 
-# %%
+# %% tags=["solution"]
 target_predicted = search.predict(data_test)
 print(f"Mean absolute error after tuning of the bagging regressor:\n"
       f"{mean_absolute_error(target_test, target_predicted):.2f} k$")
 
 # %% [markdown]
 # We see that the predictor provided by the bagging regressor does not need
-# much hyperparameter tuning compared to a single decision tree. We see that
-# the bagging regressor provides a predictor for which tuning the
-# hyperparameters is not as important as in the case of fitting a single
-# decision tree.
+# much hyperparameter tuning compared to a single decision tree.

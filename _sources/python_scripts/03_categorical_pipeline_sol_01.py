@@ -79,7 +79,6 @@ model = make_pipeline(
 from sklearn.model_selection import cross_validate
 
 # solution
-
 cv_results = cross_validate(model, data_categorical, target)
 
 scores = cv_results["test_score"]

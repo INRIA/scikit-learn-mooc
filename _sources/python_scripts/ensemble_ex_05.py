@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M6.05
 #
@@ -53,7 +54,7 @@ target *= 100  # rescale the target in k$
 # Write your code here.
 
 # %% [markdown]
-# Then, inspect the `estimator` entry of the results and check the best
+# Then inspect the `estimator` entry of the results and check the best
 # parameters values. Besides, check the number of trees used by the model.
 
 # %%

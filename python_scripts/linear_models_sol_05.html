@@ -858,7 +858,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="ensemble_sol_01.html">
-     📃 Solution of Exercise M6.01
+     📃 Solution for Exercise M6.01
     </a>
    </li>
    <li class="toctree-l2">
@@ -1407,7 +1407,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
@@ -1423,7 +1423,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">penguins_train</span><span class="p">,</span> <span class="n">penguins_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
@@ -1444,7 +1444,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 
@@ -1477,26 +1477,27 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 </div>
-<p>Given the following candidate for the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code>, find out what is the
-effect of the value of this parameter on the decision boundary and on the
-weights magnitude. First, let’s create our predictive model.</p>
+<p>First, let’s create our predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-<span class="n">Cs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
 <span class="n">logistic_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can now show the decision boundary.</p>
+<p>Given the following candidates for the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter, find out the impact of
+<code class="docutils literal notranslate"><span class="pre">C</span></code> on the classifier decision boundary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Cs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+
+<span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
 <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
     <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
@@ -1511,19 +1512,12 @@ weights magnitude. First, let’s create our predictive model.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/linear_models_sol_05_8_0.png" src="../_images/linear_models_sol_05_8_0.png" />
-<img alt="../_images/linear_models_sol_05_8_1.png" src="../_images/linear_models_sol_05_8_1.png" />
-<img alt="../_images/linear_models_sol_05_8_2.png" src="../_images/linear_models_sol_05_8_2.png" />
-<img alt="../_images/linear_models_sol_05_8_3.png" src="../_images/linear_models_sol_05_8_3.png" />
 </div>
-</div>
-<p>We will focus on the impact of the hyperparameter <code class="docutils literal notranslate"><span class="pre">C</span></code> on the magnitude of
-the weights. Thus, let’s collect the weights for the different <code class="docutils literal notranslate"><span class="pre">C</span></code> values
-and plot these values.</p>
+<p>Look at the impact of the <code class="docutils literal notranslate"><span class="pre">C</span></code> hyperparameter on the magnitude of the weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
     <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
     <span class="n">logistic_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
@@ -1533,17 +1527,14 @@ and plot these values.</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
     <span class="n">weights_ridge</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C: </span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">])</span>
 <span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;LogisticRegression weights depending of C&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/linear_models_sol_05_11_0.png" src="../_images/linear_models_sol_05_11_0.png" />
 </div>
 </div>
 <p>We see that a small <code class="docutils literal notranslate"><span class="pre">C</span></code> will shrink the weights values toward zero. It means

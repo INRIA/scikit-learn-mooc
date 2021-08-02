@@ -63,18 +63,19 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 # The visualization allowed you to qualitatively assess if a model was better
 # than another.
 #
-# Now, you should come up with a quantitative measure which will indicate the
-# goodness of fit of each linear model. This quantitative metric should result
-# in a single scalar and allow you to pick up the best model.
+# Now, you should come up with a quantitative measure which indicates the
+# goodness of fit of each linear model and allows you to select the best model.
+# Define a function `goodness_fit_measure(true_values, predictions)` that takes
+# as inputs the true target values and the predictions and returns a single
+# scalar as output.
 
 
 # %%
-def goodness_fit_measure(true_values, predictions):
-    "FIXME quick fix for the CI"
-    # Write your code here.
+# Write your code here.
 
 # %% [markdown]
-# You can now use the code below to show the goodness of fit for each model.
+# You can now copy and paste the code below to show the goodness of fit for
+# each model.
 #
 # ```python
 # for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):

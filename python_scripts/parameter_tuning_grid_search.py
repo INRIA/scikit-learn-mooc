@@ -246,8 +246,7 @@ ax.invert_yaxis()
 #   increased, one should decrease the value of `learning_rate` accordingly
 #   to preserve a good accuracy.
 #
-# The precise meaning of those two parameters will be explained in a later
-# notebook.
+# The precise meaning of those two parameters will be explained later.
 #
 # For now we will note that, in general, **there is no unique optimal parameter
 # setting**: 6 models out of the 16 parameter configuration reach the maximal

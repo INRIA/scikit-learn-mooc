@@ -41,29 +41,30 @@ data.head()
 #   to plot a box plot.
 
 # %%
+# solution
 from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
 
-# %%
+# %% tags=["solution"]
 from sklearn.model_selection import cross_validate
 
 cv_results = cross_validate(linear_regression, data, target,
                             scoring="neg_mean_absolute_error",
                             return_estimator=True, cv=10, n_jobs=2)
 
-# %%
+# %% tags=["solution"]
 print(f"Mean absolute error on testing set: "
       f"{-cv_results['test_score'].mean():.3f} k$ +/- "
       f"{cv_results['test_score'].std():.3f}")
 
-# %%
+# %% tags=["solution"]
 import pandas as pd
 
 weights = pd.DataFrame(
     [est.coef_ for est in cv_results["estimator"]], columns=data.columns)
 
-# %%
+# %% tags=["solution"]
 import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}

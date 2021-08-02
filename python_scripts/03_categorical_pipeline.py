@@ -272,7 +272,7 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # a linear model.
 #
 # One-hot encoding categorical variables with high cardinality can cause 
-# inefficiency in tree-based modeles. Because of this, it is not recommended
+# computational inefficiency in tree-based models. Because of this, it is not recommended
 # to use `OneHotEncoder` in such cases even if the original categories do not 
 # have a given order. We will show this in the **final exercise** of this sequence.
 

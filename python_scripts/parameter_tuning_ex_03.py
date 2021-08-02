@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -7,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.6.0
+#       jupytext_version: 1.11.3
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -33,27 +32,32 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 target_name = "class"
 target = adult_census[target_name]
 data = adult_census.drop(columns=[target_name, "education-num"])
-
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
+    data, target, train_size=0.2, random_state=42)
 
 # %% [markdown]
-# Create your machine learning pipeline
+# In this exercise, we will progressively define the classification pipeline
+# and later tune its hyperparameters.
 #
-# You should:
+# Our pipeline should:
 # * preprocess the categorical columns using a `OneHotEncoder` and use a
 #   `StandardScaler` to normalize the numerical data.
 # * use a `LogisticRegression` as a predictive model.
-
-# %% [markdown]
+#
 # Start by defining the columns and the preprocessing pipelines to be applied
-# on each columns.
+# on each group of columns.
+# %%
+from sklearn.compose import make_column_selector as selector
+
+# Write your code here.
 
 # %%
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
+
+# Write your code here.
 
 # %% [markdown]
 # Subsequently, create a `ColumnTransformer` to redirect the specific columns
@@ -62,15 +66,20 @@ from sklearn.preprocessing import StandardScaler
 # %%
 from sklearn.compose import ColumnTransformer
 
+# Write your code here.
+
 # %% [markdown]
-# Finally, concatenate the preprocessing pipeline with a logistic regression.
+# Assemble the final pipeline by combining the above preprocessor
+# with a logistic regression classifier.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
+# Write your code here.
+
 # %% [markdown]
-# Use a `RandomizedSearchCV` with `n_iter=20` to find the best set of
+# Use `RandomizedSearchCV` with `n_iter=20` to find the best set of
 # hyperparameters by tuning the following parameters of the `model`:
 #
 # - the parameter `C` of the `LogisticRegression` with values ranging from
@@ -83,3 +92,9 @@ from sklearn.linear_model import LogisticRegression
 #
 # Once the computation has completed, print the best combination of parameters
 # stored in the `best_params_` attribute.
+
+# %%
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import loguniform
+
+# Write your code here.

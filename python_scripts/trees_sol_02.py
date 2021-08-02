@@ -31,6 +31,7 @@ data_train, target_train = penguins[data_columns], penguins[target_column]
 # 3 levels for the decision tree.
 
 # %%
+# solution
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 
@@ -46,13 +47,14 @@ tree.fit(data_train, target_train)
 # using this test dataset.
 
 # %%
+# solution
 import numpy as np
 
 data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
                                    data_train[data_columns[0]].max()),
                          columns=data_columns)
 
-# %%
+# %% tags=["solution"]
 target_predicted_linear_regression = linear_regression.predict(data_test)
 target_predicted_tree = tree.predict(data_test)
 
@@ -61,6 +63,7 @@ target_predicted_tree = tree.predict(data_test)
 # predictions of both model on the top.
 
 # %%
+# solution
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -72,17 +75,19 @@ plt.plot(data_test, target_predicted_tree, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction of linear model and a decision tree")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # The predictions that we got were within the range of feature values seen
 # during training. In some sense, we observe the capabilities of our model to
 # interpolate.
-#
+
+# %% [markdown]
 # Now, we will check the extrapolation capabilities of each model. Create a
 # dataset containing the value of your previous dataset. Besides, add values
 # below and above the minimum and the maximum of the flipper length seen
 # during training.
 
 # %%
+# solution
 offset = 30
 data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min() - offset,
                                    data_train[data_columns[0]].max() + offset),
@@ -93,10 +98,11 @@ data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min() - offset,
 # the plotting of the previous exercise.
 
 # %%
+# solution
 target_predicted_linear_regression = linear_regression.predict(data_test)
 target_predicted_tree = tree.predict(data_test)
 
-# %%
+# %% tags=["solution"]
 sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                 color="black", alpha=0.5)
 plt.plot(data_test, target_predicted_linear_regression,
@@ -105,7 +111,7 @@ plt.plot(data_test, target_predicted_tree, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction of linear model and a decision tree")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # The linear model will extrapolate using the fitted model for flipper lengths
 # < 175 mm and > 235 mm. In fact, we are using the model parametrization to
 # make this predictions.

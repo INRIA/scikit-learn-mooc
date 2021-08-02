@@ -22,6 +22,8 @@
 
 # %%
 import numpy as np
+
+# solution
 rng = np.random.RandomState(42)
 data, target = rng.randn(100, 100000), rng.randint(0, 2, size=100)
 
@@ -31,16 +33,18 @@ data, target = rng.randn(100, 100000), rng.randint(0, 2, size=100)
 # predict anything meaningful from random data.
 
 # %%
+# solution
 from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
 
+# solution
 model = LogisticRegression()
 test_score = cross_val_score(model, data, target, n_jobs=2)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
-# %% [markdown]
-# There is no surprise that the logistic regression model performs as the
-# chance level when we provide the full dataset.
+# %% [markdown] tags=["solution"]
+# It is not surprising that the logistic regression model performs as bad as
+# pure chance when we provide the full dataset.
 
 # %% [markdown]
 # Now, we will ask you to program the **wrong** pattern to select feature.
@@ -52,14 +56,16 @@ print(f"The mean accuracy is: {test_score.mean():.3f}")
 # You should get some surprising results.
 
 # %%
+# solution
 from sklearn.feature_selection import SelectKBest, f_classif
 
+# solution
 feature_selector = SelectKBest(score_func=f_classif, k=10)
 data_subset = feature_selector.fit_transform(data, target)
 test_score = cross_val_score(model, data_subset, target)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Surprisingly, the logistic regression succeeded in having a fantastic
 # accuracy using data with no link with the target, initially. We, therefore,
 # know that these results are not legit.
@@ -77,8 +83,10 @@ print(f"The mean accuracy is: {test_score.mean():.3f}")
 # testing sets before to train and test the logistic regression.
 
 # %%
+# solution
 from sklearn.model_selection import train_test_split
 
+# solution
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
 feature_selector.fit(data_train, target_train)
@@ -88,15 +96,17 @@ model.fit(data_train_subset, target_train)
 test_score = model.score(data_test_subset, target_test)
 print(f"The mean accuracy is: {test_score:.3f}")
 
-# %% [markdown]
-# This is not a surprise that our model is not working. We see that selecting
-# feature only on the training set will not help when testing our model. In
+# %% [markdown] tags=["solution"]
+# It is not a surprise that our model is not working. We see that selecting
+# features only on the training set will not help when testing our model. In
 # this case, we obtained the expected results.
 #
 # Therefore, as with hyperparameters optimization or model selection, tuning
 # the feature space should be done solely on the training set, keeping a part
 # of the data left-out.
 #
+
+# %% [markdown]
 # However, the previous case is not perfect. For instance, if we were asking
 # to perform cross-validation, the manual `fit`/`transform` of the datasets
 # will make our life hard. Indeed, the solution here is to use a scikit-learn
@@ -108,13 +118,15 @@ print(f"The mean accuracy is: {test_score:.3f}")
 # of your model generalization performance.
 
 # %%
+# solution
 from sklearn.pipeline import make_pipeline
 
+# solution
 model = make_pipeline(feature_selector, LogisticRegression())
 test_score = cross_val_score(model, data, target)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that using a scikit-learn pipeline is removing a lot of boilerplate
 # code and avoiding to make mistake while calling `fit` and `transform` on the
 # different set of data.

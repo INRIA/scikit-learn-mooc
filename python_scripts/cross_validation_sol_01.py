@@ -1,5 +1,4 @@
 # coding: utf-8
-
 # %% [markdown]
 # # 📃 Solution for Exercise M2.01
 #
@@ -50,6 +49,7 @@ target = blood_transfusion["Class"]
 #   default.
 
 # %%
+# solution
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -65,6 +65,7 @@ model = make_pipeline(StandardScaler(), SVC())
 # and let the other parameters to the default.
 
 # %%
+# solution
 from sklearn.model_selection import cross_validate, ShuffleSplit
 
 cv = ShuffleSplit(random_state=0)
@@ -72,7 +73,7 @@ cv_results = cross_validate(model, data, target, cv=cv, n_jobs=2)
 cv_results = pd.DataFrame(cv_results)
 cv_results
 
-# %%
+# %% tags=["solution"]
 print(
     f"Accuracy score of our model:\n"
     f"{cv_results['test_score'].mean():.3f} +/- "
@@ -96,6 +97,7 @@ print(
 # accessing and setting hyperparameter in the next section.
 
 # %%
+# solution
 import numpy as np
 from sklearn.model_selection import validation_curve
 
@@ -109,9 +111,9 @@ train_scores, test_scores = validation_curve(
 # Plot the validation curve for the train and test scores.
 
 # %%
+# solution
 import matplotlib.pyplot as plt
 
-# %%
 plt.errorbar(gammas, train_scores.mean(axis=1),
              yerr=train_scores.std(axis=1), label='Training score')
 plt.errorbar(gammas, test_scores.mean(axis=1),
@@ -123,7 +125,7 @@ plt.xlabel(r"Value of hyperparameter $\gamma$")
 plt.ylabel("Accuracy score")
 _ = plt.title("Validation score of support vector machine")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Looking at the curve, we can clearly identify the over-fitting regime of
 # the SVC classifier when `gamma > 1`.
 # The best setting is around `gamma = 1` while for `gamma < 1`,
@@ -138,6 +140,7 @@ _ = plt.title("Validation score of support vector machine")
 # Plot the train and test scores with respect to the number of samples.
 
 # %%
+# solution
 from sklearn.model_selection import learning_curve
 
 train_sizes = np.linspace(0.1, 1, num=10)
@@ -145,7 +148,7 @@ results = learning_curve(
     model, data, target, train_sizes=train_sizes, cv=cv, n_jobs=2)
 train_size, train_scores, test_scores = results[:3]
 
-# %%
+# %% tags=["solution"]
 plt.errorbar(train_size, train_scores.mean(axis=1),
              yerr=train_scores.std(axis=1), label='Training score')
 plt.errorbar(train_size, test_scores.mean(axis=1),
@@ -156,7 +159,7 @@ plt.xlabel("Number of samples in the training set")
 plt.ylabel("Accuracy")
 _ = plt.title("Learning curve for support vector machine")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We observe that adding new samples in the dataset does not improve the
 # testing score. We can only conclude that the standard deviation of
 # the training error is decreasing when adding more samples which is not a

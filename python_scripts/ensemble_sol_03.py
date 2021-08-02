@@ -24,13 +24,14 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Then, create an `AbaBoostRegressor`. Use the function
+# Then, create an `AdaBoostRegressor` instance. Use the function
 # `sklearn.model_selection.validation_curve` to get training and test scores
 # by varying the number of estimators. Use the mean absolute error as a metric
 # by passing `scoring="neg_mean_absolute_error"`.
 # *Hint: vary the number of estimators between 1 and 60.*
 
 # %%
+# solution
 import numpy as np
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.model_selection import validation_curve
@@ -49,6 +50,7 @@ train_errors, test_errors = -train_scores, -test_scores
 # *Hint: you can use `plt.errorbar`.*
 
 # %%
+# solution
 import matplotlib.pyplot as plt
 
 plt.errorbar(param_range, train_errors.mean(axis=1),
@@ -63,7 +65,7 @@ plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
 _ = plt.title("Validation curve for AdaBoost regressor")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Plotting the validation curve, we can see that AdaBoost is not immune against
 # overfitting. Indeed, there is an optimal number of estimators to be found.
 # Adding too many estimators is detrimental for the performance of the model.
@@ -72,6 +74,7 @@ _ = plt.title("Validation curve for AdaBoost regressor")
 # Repeat the experiment using a random forest instead of an AdaBoost regressor.
 
 # %%
+# solution
 from sklearn.ensemble import RandomForestRegressor
 
 forest = RandomForestRegressor()
@@ -81,7 +84,7 @@ train_scores, test_scores = validation_curve(
     scoring="neg_mean_absolute_error", n_jobs=2)
 train_errors, test_errors = -train_scores, -test_scores
 
-# %%
+# %% tags=["solution"]
 plt.errorbar(param_range, train_errors.mean(axis=1),
              yerr=train_errors.std(axis=1), label="Training score",
              alpha=0.7)
@@ -94,8 +97,8 @@ plt.ylabel("Mean absolute error in k$\n(smaller is better)")
 plt.xlabel("# estimators")
 _ = plt.title("Validation curve for RandomForest regressor")
 
-# %% [markdown]
-# In contrary to the AdaBoost regressor, we can see that increasing the number
+# %% [markdown] tags=["solution"]
+# In contrast to the AdaBoost regressor, we can see that increasing the number of
 # trees in the forest will increase the generalization performance (by decreasing
 # the mean absolute error) of the random forest. In fact, a random forest has
 # less chance to suffer from overfitting than AdaBoost when increasing the

@@ -19,6 +19,7 @@ target *= 100  # rescale the target in k$
 # trees number to be large, and configure the model to use early-stopping.
 
 # %%
+# solution
 from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingRegressor
 
@@ -37,6 +38,7 @@ hist_gbdt = HistGradientBoostingRegressor(
 # grid-search providing the previous gradient boosting instance as the model.
 
 # %%
+# solution
 from sklearn.model_selection import GridSearchCV
 
 params = {
@@ -55,6 +57,7 @@ search = GridSearchCV(hist_gbdt, params)
 # so that we can investigate the inner model trained via cross-validation.
 
 # %%
+# solution
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import KFold
 
@@ -67,6 +70,7 @@ results = cross_validate(
 # standard deviation score.
 
 # %%
+# solution
 print(f"R2 score with cross-validation:\n"
       f"{results['test_score'].mean():.3f} +/- "
       f"{results['test_score'].std():.3f}")
@@ -76,11 +80,12 @@ print(f"R2 score with cross-validation:\n"
 # parameters values. Besides, check the number of trees used by the model.
 
 # %%
+# solution
 for estimator in results["estimator"]:
     print(estimator.best_params_)
     print(f"# trees: {estimator.best_estimator_.n_iter_}")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We observe that the parameters are varying. We can get the intuition that
 # results of the inner CV are very close for certain set of parameters.
 
@@ -90,6 +95,7 @@ for estimator in results["estimator"]:
 # plot of these scores.
 
 # %%
+# solution
 import pandas as pd
 
 index_columns = [f"param_{name}" for name in params.keys()]
@@ -104,7 +110,7 @@ for cv_idx, estimator in enumerate(results["estimator"]):
     inner_cv_results.append(search_cv_results)
 inner_cv_results = pd.concat(inner_cv_results, axis=1).T
 
-# %%
+# %% tags=["solution"]
 import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
@@ -114,7 +120,7 @@ plt.ylabel("Parameters")
 _ = plt.title("Inner CV results with parameters\n"
               "(max_depth, max_leaf_nodes, learning_rate)")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that the first 4 ranked set of parameters are very close.
 # We could select any of these 4 combinations.
 # It coincides with the results we observe when inspecting the

@@ -1,3 +1,4 @@
+# coding: utf-8
 # %% [markdown]
 # # 📝 Exercise M5.01
 #
@@ -65,7 +66,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
     ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
 
     return ax
-
 
 # %% [markdown]
 # Create a decision tree classifier with a maximum depth of 2 levels and fit

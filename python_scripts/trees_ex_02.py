@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M5.02
 #
@@ -58,7 +59,7 @@ data_train, target_train = penguins[data_columns], penguins[target_column]
 # Write your code here.
 
 # %% [markdown]
-# Finally, make predictions with both model on this new testing set. Repeat
+# Finally, make predictions with both models on this new testing set. Repeat
 # the plotting of the previous exercise.
 
 # %%

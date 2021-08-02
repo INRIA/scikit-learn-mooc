@@ -78,23 +78,24 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
 
 # %% [markdown]
-# Given the following candidate for the parameter `C`, find out what is the
-# effect of the value of this parameter on the decision boundary and on the
-# weights magnitude. First, let's create our predictive model.
+# First, let's create our predictive model.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
-Cs = [0.01, 0.1, 1, 10]
 logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="l2"))
 
 # %% [markdown]
-# We can now show the decision boundary.
+# Given the following candidates for the `C` parameter, find out the impact of
+# `C` on the classifier decision boundary.
 
 # %%
+Cs = [0.01, 0.1, 1, 10]
+
+# solution
 import seaborn as sns
 
 for C in Cs:
@@ -109,11 +110,10 @@ for C in Cs:
     plt.title(f"C: {C}")
 
 # %% [markdown]
-# We will focus on the impact of the hyperparameter `C` on the magnitude of
-# the weights. Thus, let's collect the weights for the different `C` values
-# and plot these values.
+# Look at the impact of the `C` hyperparameter on the magnitude of the weights.
 
 # %%
+# solution
 weights_ridge = []
 for C in Cs:
     logistic_regression.set_params(logisticregression__C=C)
@@ -121,13 +121,13 @@ for C in Cs:
     coefs = logistic_regression[-1].coef_[0]
     weights_ridge.append(pd.Series(coefs, index=culmen_columns))
 
-# %%
+# %% tags=["solution"]
 weights_ridge = pd.concat(
     weights_ridge, axis=1, keys=[f"C: {C}" for C in Cs])
 weights_ridge.plot.barh()
 _ = plt.title("LogisticRegression weights depending of C")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that a small `C` will shrink the weights values toward zero. It means
 # that a small `C` provides a more regularized model. Thus, `C` is the inverse
 # of the `alpha` coefficient in the `Ridge` model.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M6.03
 #
@@ -24,7 +25,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Then, create an `AbaBoostRegressor`. Use the function
+# Then, create an `AdaBoostRegressor` instance. Use the function
 # `sklearn.model_selection.validation_curve` to get training and test scores
 # by varying the number of estimators. Use the mean absolute error as a metric
 # by passing `scoring="neg_mean_absolute_error"`.
@@ -40,12 +41,6 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %%
 # Write your code here.
-
-# %% [markdown]
-# Plotting the validation curve, we can see that AdaBoost is not immune against
-# overfitting. Indeed, there is an optimal number of estimators to be found.
-# Adding too many estimators is detrimental for the generalization performance of
-# the model.
 
 # %% [markdown]
 # Repeat the experiment using a random forest instead of an AdaBoost regressor.

@@ -74,6 +74,7 @@ model = Pipeline([
 #   depth of each tree.
 
 # %%
+# solution
 from sklearn.model_selection import cross_val_score
 
 learning_rate = [0.01, 0.1, 1, 10]

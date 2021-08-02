@@ -41,18 +41,19 @@ coef
 # regressor close to the coefficients used to generate the dataset?
 
 # %%
+# solution
 from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
 linear_regression.fit(data, target)
 linear_regression.coef_
 
-# %%
+# %% tags=["solution"]
 feature_names = [f"Features {i}" for i in range(data.shape[1])]
 coef = pd.Series(linear_regression.coef_, index=feature_names)
 _ = coef.plot.barh()
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that the coefficients are close to the coefficients used to generate
 # the dataset. The dispersion is indeed cause by the noise injected during the
 # dataset generation.
@@ -63,6 +64,7 @@ _ = coef.plot.barh()
 # perfectly correlated features.
 
 # %%
+# solution
 import numpy as np
 
 data = np.concatenate([data, data[:, [0, 1]], data[:, [0, 1]]], axis=1)
@@ -72,16 +74,17 @@ data = np.concatenate([data, data[:, [0, 1]], data[:, [0, 1]]], axis=1)
 # coefficients. What do you observe?
 
 # %%
+# solution
 linear_regression = LinearRegression()
 linear_regression.fit(data, target)
 linear_regression.coef_
 
-# %%
+# %% tags=["solution"]
 feature_names = [f"Features {i}" for i in range(data.shape[1])]
 coef = pd.Series(linear_regression.coef_, index=feature_names)
 _ = coef.plot.barh()
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that the coefficient values are far from what one could expect.
 # By repeating the informative features, one would have expected these
 # coefficients to be similarly informative.
@@ -97,16 +100,18 @@ _ = coef.plot.barh()
 # What do you observe?
 
 # %%
+# solution
 from sklearn.linear_model import Ridge
 
 ridge = Ridge()
 ridge.fit(data, target)
 ridge.coef_
 
-# %%
+# %% tags=["solution"]
 coef = pd.Series(ridge.coef_, index=feature_names)
 _ = coef.plot.barh()
-# %% [markdown]
+
+# %% [markdown] tags=["solution"]
 # We see that the penalty applied on the weights give a better results: the
 # values of the coefficients do not suffer from numerical issues. Indeed, the
 # matrix to be inverted internally is `np.dot(data.T, data) + alpha * I`.
@@ -117,13 +122,14 @@ _ = coef.plot.barh()
 # coefficients?
 
 # %%
+# solution
 ridge.coef_[:5] * 3
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # Repeating three times each informative features induced to divide the
 # ridge coefficients by three.
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # ```{tip}
 # We always advise to use l2-penalized model instead of non-penalized model
 # in practice. In scikit-learn, `LogisticRegression` applies such penalty

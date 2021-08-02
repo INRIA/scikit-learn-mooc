@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M4.05
 # In the previous notebook, we presented a non-penalized logistic regression
@@ -15,7 +16,6 @@
 # If you want a deeper overview regarding this dataset, you can refer to the
 # Appendix - Datasets description section at the end of this MOOC.
 # ```
-
 
 # %%
 import pandas as pd
@@ -71,7 +71,7 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
     # make the plot of the boundary and the data samples
     if ax is None:
         _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
+    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu_r")
     ax.set_xlabel(feature_names[0])
     ax.set_ylabel(feature_names[1])
 
@@ -79,18 +79,27 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
 
 # %% [markdown]
-# Given the following candidate for the parameter `C`, find out what is the
-# effect of the value of this parameter on the decision boundary and on the
-# weights magnitude.
+# First, let's create our predictive model.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
-Cs = [0.01, 0.1, 1, 10]
 logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="l2"))
+
+# %% [markdown]
+# Given the following candidates for the `C` parameter, find out the impact of
+# `C` on the classifier decision boundary.
+
+# %%
+Cs = [0.01, 0.1, 1, 10]
+
+# Write your code here.
+
+# %% [markdown]
+# Look at the impact of the `C` hyperparameter on the magnitude of the weights.
 
 # %%
 # Write your code here.

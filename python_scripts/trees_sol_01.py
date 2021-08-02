@@ -1,5 +1,4 @@
 # coding: utf-8
-
 # %% [markdown]
 # # 📃 Solution for Exercise M5.01
 #

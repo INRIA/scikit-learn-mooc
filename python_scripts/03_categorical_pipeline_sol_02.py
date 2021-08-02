@@ -194,6 +194,6 @@ print("The mean cross-validation accuracy is: "
 #   unnecessary slow with trees.
 # - `OrdinalEncoder`: can be detrimental for linear models unless your category
 #   has a meaningful order and you make sure that `OrdinalEncoder` respects this
-#   order. Trees can deal with OrdinalEncoder fine as long as they are deep
+#   order. Trees can deal with `OrdinalEncoder` fine as long as they are deep
 #   enough.
 # ```

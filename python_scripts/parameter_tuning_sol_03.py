@@ -108,7 +108,6 @@ model = make_pipeline(preprocessor, LogisticRegression())
 from sklearn.model_selection import RandomizedSearchCV
 from scipy.stats import loguniform
 
-
 # solution
 param_distributions = {
     "logisticregression__C": loguniform(0.001, 10),

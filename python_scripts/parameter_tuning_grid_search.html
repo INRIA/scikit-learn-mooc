@@ -1596,13 +1596,7 @@ duplicates the information from the <code class="docutils literal notranslate"><
 </div>
 <p>We will define a pipeline as seen in the first module. It will handle both
 numerical and categorical features.</p>
-<p>As we will use a tree-based model as a predictor, here we apply an ordinal
-encoder on the categorical features: it encodes every category with an
-arbitrary integer. For simple models such as linear models, a one-hot encoder
-should be preferred. But for complex models, in particular tree-based models,
-the ordinal encoder is useful as it avoids having high-dimensional
-representations.</p>
-<p>First we select all the categorical columns.</p>
+<p>The first step is to select all the categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -1613,7 +1607,16 @@ representations.</p>
 </div>
 </div>
 </div>
-<p>Then we build our ordinal encoder, giving it the known categories.</p>
+<p>Here we will use a tree-based model as a classifier
+(i.e. <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>). That means:</p>
+<ul class="simple">
+<li><p>Numerical variables don’t need scaling;</p></li>
+<li><p>Categorical variables can be dealt with an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> even if the
+coding order is not meaningful;</p></li>
+<li><p>For tree-based models, the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> avoids having high-dimensional
+representations.</p></li>
+</ul>
+<p>We now build our <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> by passing it the known categories.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
@@ -1624,8 +1627,8 @@ representations.</p>
 </div>
 </div>
 </div>
-<p>We now use a column transformer with code to select the categorical columns
-and apply to them the ordinal encoder.</p>
+<p>We then use a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to select the categorical columns and
+apply the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> to them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -1678,10 +1681,10 @@ predict whether or not a person earns more than 50 k$ a year.</p>
 </div>
 <div class="section" id="tuning-using-a-grid-search">
 <h2>Tuning using a grid-search<a class="headerlink" href="#tuning-using-a-grid-search" title="Permalink to this headline">¶</a></h2>
-<p>Instead of manually writing the two <code class="docutils literal notranslate"><span class="pre">for</span></code> loops, scikit-learn provides a
-class called <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> which implement the exhaustive search implemented
-during the exercise.</p>
-<p>Let see how to use the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator for doing such search.
+<p>In the previous exercise we used one <code class="docutils literal notranslate"><span class="pre">for</span></code> loop for each hyperparameter to find the
+best combination over a fixed grid of values. <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> is a scikit-learn class
+that implements a very similar logic with less repetitive code.</p>
+<p>Let’s see how to use the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator for doing such search.
 Since the grid-search will be costly, we will only explore the combination
 learning-rate and the maximum number of nodes.</p>
 <div class="cell docutils container">
@@ -2179,8 +2182,7 @@ close to the maximal of 0.87: when the value of <code class="docutils literal no
 increased, one should decrease the value of <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> accordingly
 to preserve a good accuracy.</p></li>
 </ul>
-<p>The precise meaning of those two parameters will be explained in a latter
-notebook.</p>
+<p>The precise meaning of those two parameters will be explained later.</p>
 <p>For now we will note that, in general, <strong>there is no unique optimal parameter
 setting</strong>: 4 models out of the 12 parameter configurations reach the maximal
 accuracy (up to small random fluctuations caused by the sampling of the

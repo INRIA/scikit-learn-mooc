@@ -58,7 +58,8 @@ categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
-# Here we will use a tree-based model as a predictor. That means:
+# Here we will use a tree-based model as a classifier
+# (i.e. `HistGradientBoostingClassifier`). That means:
 #
 # * Numerical variables don't need scaling;
 # * Categorical variables can be dealt with an `OrdinalEncoder` even if the 

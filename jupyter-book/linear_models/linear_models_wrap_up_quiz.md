@@ -2,18 +2,19 @@
 
 **This quiz requires some programming to be answered.**
 
-Open the dataset `house_prices.csv` with the following command:
+Open the dataset `ames_housing_no_missing.csv` with the following command:
 
 ```python
-ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
+import pandas as pd
+
+ames_housing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
 target_name = "SalePrice"
 data = ames_housing.drop(columns=target_name)
 target = ames_housing[target_name]
 ```
 
 `ames_housing` is a pandas dataframe. The column "SalePrice" contains the
-target variable. Note that we instructed pandas to treat the character "?" as a
-marker for cells with missing values also known as "null" values.
+target variable.
 
 To simplify this exercise, we will only used the numerical features defined
 below:
@@ -35,17 +36,15 @@ Use a 10-fold cross-validation and pass the argument `return_estimator=True` in
 `sklearn.model_selection.cross_validate` to access all fitted estimators fitted
 on each fold. As we saw in the previous notebooks, you will have to use a
 `sklearn.preprocessing.StandardScaler` to scale the data before passing it to
-the regressor. Also, some missing data are present in the different columns.
-You can use a `sklearn.impute.SimpleImputer` with the default parameters to
-impute missing data. Thus, you can create a model that will **pipeline the
-scaler, followed by the imputer, followed by the linear regression**.
+the regressor.
 
 ```{admonition} Question
-What is the order of magnitude of the extremum weight values over all the features:
+What is the order of magnitude of the extremum weight values over all the
+features:
 
-- a) 1e4
-- b) 1e6
-- c) 1e18
+- a) <= 1
+- b) <= 1,000
+- c) > 1,000
 
 _Select a single answer_
 ```
@@ -58,9 +57,9 @@ Repeat the same experiment by fitting a ridge regressor
 ```{admonition} Question
 What magnitude of the extremum weight values for all features?
 
-- a) 1e4
-- b) 1e6
-- c) 1e18
+- a) <= 1
+- b) <= 100,000
+- c) > 100,000
 
 _Select a single answer_
 ```

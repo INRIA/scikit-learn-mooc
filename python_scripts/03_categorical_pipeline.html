@@ -2515,26 +2515,30 @@ in the original data because some variables such as <code class="docutils litera
 <h3>Choosing an encoding strategy<a class="headerlink" href="#choosing-an-encoding-strategy" title="Permalink to this headline">¶</a></h3>
 <p>Choosing an encoding strategy will depend on the underlying models and the
 type of categories (i.e. ordinal vs. nominal).</p>
-<p>Indeed, using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will output ordinal categories. It means
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In general <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is the encoding strategy used when the
+downstream models are <strong>linear models</strong> while <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is often a
+good strategy with <strong>tree-based models</strong>.</p>
+</div>
+<p>Using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will output ordinal categories. This means
 that there is an order in the resulting categories (e.g. <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">2</span></code>). The
 impact of violating this ordering assumption is really dependent on the
 downstream models. Linear models will be impacted by misordered categories
-while tree-based models will not be.</p>
-<p>Thus, in general <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is the encoding strategy used when the
-downstream models are <strong>linear models</strong> while <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is used with
-<strong>tree-based models</strong>.</p>
-<p>You still can use an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with linear models but you need to be
+while tree-based models will not.</p>
+<p>You can still use an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with linear models but you need to be
 sure that:</p>
 <ul class="simple">
 <li><p>the original categories (before encoding) have an ordering;</p></li>
 <li><p>the encoded categories follow the same ordering than the original
 categories.
-The next exercise highlight the issue of misusing <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with a
-linear model.</p></li>
+The <strong>next exercise</strong> highlights the issue of misusing <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with
+a linear model.</p></li>
 </ul>
-<p>Also, there is no need to use a <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> even if the original
-categories do not have a given order with tree-based model. It will be
-the purpose of the final exercise of this sequence.</p>
+<p>One-hot encoding categorical variables with high cardinality can cause
+computational inefficiency in tree-based models. Because of this, it is not recommended
+to use <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> in such cases even if the original categories do not
+have a given order. We will show this in the <strong>final exercise</strong> of this sequence.</p>
 </div>
 </div>
 <div class="section" id="evaluate-our-predictive-pipeline">

@@ -180,3 +180,20 @@ print("The mean cross-validation accuracy is: "
 # The main take away message is that arbitrary integer coding of
 # categories is perfectly fine for `HistGradientBoostingClassifier`
 # and yields fast training times.
+
+# %% [markdown] tags=["solution"]
+# ```{important}
+# Which encoder should I use?
+#
+# |  | Meaningful order | Non-meaningful order
+# ------------ | ------------- | -------------
+# Tree-based model | `OrdinalEncoder` | `OrdinalEncoder`
+# Linear model | `OrdinalEncoder` with caution | `OneHotEncoder`
+#
+# - `OneHotEncoder`: will always do something meaningful, but can be
+#   unnecessary slow with trees.
+# - `OrdinalEncoder`: can be detrimental for linear models unless your category
+#   has a meaningful order and you make sure that `OrdinalEncoder` respects this
+#   order. Trees can deal with `OrdinalEncoder` fine as long as they are deep
+#   enough.
+# ```

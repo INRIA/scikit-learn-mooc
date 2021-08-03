@@ -247,28 +247,34 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 #
 # Choosing an encoding strategy will depend on the underlying models and the
 # type of categories (i.e. ordinal vs. nominal).
+
+# %% [markdown]
+# ```{note}
+# In general `OneHotEncoder` is the encoding strategy used when the
+# downstream models are **linear models** while `OrdinalEncoder` is often a
+# good strategy with **tree-based models**.
+# ```
+
+# %% [markdown]
 #
-# Indeed, using an `OrdinalEncoder` will output ordinal categories. It means
+# Using an `OrdinalEncoder` will output ordinal categories. This means
 # that there is an order in the resulting categories (e.g. `0 < 1 < 2`). The
 # impact of violating this ordering assumption is really dependent on the
 # downstream models. Linear models will be impacted by misordered categories
-# while tree-based models will not be.
+# while tree-based models will not.
 #
-# Thus, in general `OneHotEncoder` is the encoding strategy used when the
-# downstream models are **linear models** while `OrdinalEncoder` is used with
-# **tree-based models**.
-#
-# You still can use an `OrdinalEncoder` with linear models but you need to be
+# You can still use an `OrdinalEncoder` with linear models but you need to be
 # sure that:
 # - the original categories (before encoding) have an ordering;
 # - the encoded categories follow the same ordering than the original
 #   categories.
-# The next exercise highlight the issue of misusing `OrdinalEncoder` with a
-# linear model.
+# The **next exercise** highlights the issue of misusing `OrdinalEncoder` with
+# a linear model.
 #
-# Also, there is no need to use a `OneHotEncoder` even if the original
-# categories do not have a given order with tree-based model. It will be
-# the purpose of the final exercise of this sequence.
+# One-hot encoding categorical variables with high cardinality can cause 
+# computational inefficiency in tree-based models. Because of this, it is not recommended
+# to use `OneHotEncoder` in such cases even if the original categories do not 
+# have a given order. We will show this in the **final exercise** of this sequence.
 
 # %% [markdown]
 # ## Evaluate our predictive pipeline

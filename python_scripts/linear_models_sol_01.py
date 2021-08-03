@@ -46,9 +46,12 @@ def linear_model_flipper_mass(
 # %% [markdown]
 # ## Main exercise
 #
-# Given a vector of the flipper length, several weights and intercepts to
-# plot several linear model that could fit our data. Use the above
-# helper function to visualize both the model and data.
+# Define a vector `weights = [...]` and a vector `intercepts = [...]` of
+# the same length. Each pair of entries `(weights[i], intercepts[i])` tags a
+# different model. Use these vectors along with the vector
+# `flipper_length_range` to plot several linear models that could possibly
+# fit our data. Use the above helper function to visualize both the models and
+# the real samples.
 
 # %%
 import numpy as np
@@ -93,10 +96,10 @@ def goodness_fit_measure(true_values, predictions):
     # we compute the error between the true values and the predictions of our
     # model
     errors = np.ravel(true_values) - np.ravel(predictions)
-    # We have several possible strategy to reduce all errors to a single value.
-    # Computing the mean error (sum divided by the number of element) looks
-    # like a good solution. However, we have negative error and therefore, we
-    # need to sum only positive numbers. Therefore, we can either square each
+    # We have several possible strategies to reduce all errors to a single value.
+    # Computing the mean error (sum divided by the number of element) might seem
+    # like a good solution. However, we have negative errors that will misleadingly
+    # reduce the mean error. Therefore, we can either square each
     # error or take the absolute value: these metrics are known as mean
     # squared error (MSE) and mean absolute error (MAE). Let's use the MAE here
     # as an example.
@@ -114,7 +117,8 @@ def goodness_fit_measure(true_values, predictions):
 #     print(f"Error: {goodness_fit_measure(target, target_predicted):.3f}\n")
 # ```
 
-# %% tags=["solution"]
+# %%
+# solution
 for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
     target_predicted = linear_model_flipper_mass(data, weight, intercept)
     print(f"Model #{model_idx}:")

@@ -1,4 +1,4 @@
-# Intro
+# Introduction
 
 ## Course presentation
 
@@ -92,12 +92,3 @@ Note however that it is required to use the
 https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn/)
 to complete the quizzes.
 
-
-``````{container} remove-from-content-only
-
-<h2 id="toc">Table of contents<a class="headerlink" href="#toc" title="Permalink to this headline">¶</a></h2>
-
-```{tableofcontents}
-```
-
-``````

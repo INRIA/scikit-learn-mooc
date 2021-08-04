@@ -30,16 +30,31 @@ data.head()
 
 # %% [markdown]
 # Now it is your turn to train a linear regression model on this dataset.
-# You will need to:
-# * create a linear regression model;
-# * execute a cross-validation with 10 folds and use the mean absolute error
-#   (MAE) as metric. Be sure to *return* the fitted *estimators*;
-# * inspect the fitted model using a box plot to show the distribution of values
-#   for the coefficients returned from the cross-validation. Hint:
-#   use the function
-#   [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
-#   to create a box plot;
-# * compute mean and std of the MAE in thousands of dollars (k$).
+# First, create a linear regression model.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Execute a cross-validation with 10 folds and use the mean absolute error
+# (MAE) as metric. Be sure to *return* the fitted *estimators*.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Compute the mean and std of the MAE in thousands of dollars (k$).
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Inspect the fitted model using a box plot to show the distribution of values
+# for the coefficients returned from the cross-validation. Hint:
+# use the function
+# [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
+# to create a box plot;
+
 
 # %%
 # Write your code here.

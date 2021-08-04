@@ -29,16 +29,7 @@ data.head()
 
 # %% [markdown]
 # Now it is your turn to train a linear regression model on this dataset.
-# You will need to:
-# * create a linear regression model;
-# * execute a cross-validation with 10 folds and use the mean absolute error
-#   (MAE) as metric. Be sure to *return* the fitted *estimators*;
-# * inspect the fitted model using a box plot to show the distribution of values
-#   for the coefficients returned from the cross-validation. Hint:
-#   use the function
-#   [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
-#   to create a box plot;
-# * compute mean and std of the MAE in thousands of dollars (k$).
+# First, create a linear regression model.
 
 # %%
 # solution
@@ -46,14 +37,37 @@ from sklearn.linear_model import LinearRegression
 
 linear_regression = LinearRegression()
 
-# %% tags=["solution"]
+# %% [markdown]
+# Execute a cross-validation with 10 folds and use the mean absolute error
+# (MAE) as metric. Be sure to *return* the fitted *estimators*.
+
+# %%
+# solution
 from sklearn.model_selection import cross_validate
 
 cv_results = cross_validate(linear_regression, data, target,
                             scoring="neg_mean_absolute_error",
                             return_estimator=True, cv=10, n_jobs=2)
 
-# %% tags=["solution"]
+# %% [markdown]
+# Compute the mean and std of the MAE in thousands of dollars (k$).
+
+# %%
+# solution
+print(f"Mean absolute error on testing set: "
+      f"{-cv_results['test_score'].mean():.3f} k$ +/- "
+      f"{cv_results['test_score'].std():.3f}")
+
+# %% [markdown]
+# Inspect the fitted model using a box plot to show the distribution of values
+# for the coefficients returned from the cross-validation. Hint:
+# use the function
+# [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
+# to create a box plot;
+
+
+# %%
+# solution
 import pandas as pd
 
 weights = pd.DataFrame(
@@ -65,8 +79,3 @@ import matplotlib.pyplot as plt
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
 weights.plot.box(color=color, vert=False)
 _ = plt.title("Value of linear regression coefficients")
-
-# %% tags=["solution"]
-print(f"Mean absolute error on testing set: "
-      f"{-cv_results['test_score'].mean():.3f} k$ +/- "
-      f"{cv_results['test_score'].std():.3f}")

@@ -1524,19 +1524,8 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </table>
 </div></div></div>
 </div>
-<p>Now this is your turn to train a linear regression model on this dataset.
-You will need to:</p>
-<ul class="simple">
-<li><p>create a linear regression model;</p></li>
-<li><p>execute a cross-validation with 10 folds and use the mean absolute error
-(MAE) as metric. Ensure to return the fitted estimators;</p></li>
-<li><p>compute mean and std of the MAE in thousands of dollars (k$);</p></li>
-<li><p>show the values of the coefficients for each feature using a boxplot by
-inspecting the fitted model returned from the cross-validation. Hint: you
-use the function
-<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html"><code class="docutils literal notranslate"><span class="pre">df.plot.box()</span></code></a>
-to plot a box plot.</p></li>
-</ul>
+<p>Now it is your turn to train a linear regression model on this dataset.
+First, create a linear regression model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1547,9 +1536,12 @@ to plot a box plot.</p></li>
 </div>
 </div>
 </div>
-<div class="cell tag_solution docutils container">
+<p>Execute a cross-validation with 10 folds and use the mean absolute error
+(MAE) as metric. Be sure to <em>return</em> the fitted <em>estimators</em>.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">linear_regression</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
                             <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
@@ -1558,9 +1550,11 @@ to plot a box plot.</p></li>
 </div>
 </div>
 </div>
-<div class="cell tag_solution docutils container">
+<p>Compute the mean and std of the MAE in thousands of dollars (k$).</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error on testing set: &quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error on testing set: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$ +/- &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1572,9 +1566,15 @@ to plot a box plot.</p></li>
 </div>
 </div>
 </div>
-<div class="cell tag_solution docutils container">
+<p>Inspect the fitted model using a box plot to show the distribution of values
+for the coefficients returned from the cross-validation. Hint:
+use the function
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html"><code class="docutils literal notranslate"><span class="pre">df.plot.box()</span></code></a>
+to create a box plot.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">[</span><span class="n">est</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -1593,7 +1593,7 @@ to plot a box plot.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_sol_03_8_0.png" src="../_images/linear_models_sol_03_8_0.png" />
+<img alt="../_images/linear_models_sol_03_11_0.png" src="../_images/linear_models_sol_03_11_0.png" />
 </div>
 </div>
 </div>

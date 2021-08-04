@@ -63,7 +63,7 @@ print(f"Mean absolute error on testing set: "
 # for the coefficients returned from the cross-validation. Hint:
 # use the function
 # [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
-# to create a box plot;
+# to create a box plot.
 
 
 # %%

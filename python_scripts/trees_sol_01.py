@@ -103,6 +103,8 @@ _ = plot_tree(tree, feature_names=culmen_columns,
               class_names=tree.classes_, impurity=False, ax=ax)
 
 # %% [markdown] tags=["solution"]
+# The resulting tree has 7 nodes: 3 of them are "split nodes" and 4
+# are "leaf nodes" (or simply "leaves"), organized in 2 levels.
 # We see that the second tree level used the "Culmen Length" to make
 # two new decisions. Qualitatively, we saw that such a simple tree was enough
 # to classify the penguins' species.

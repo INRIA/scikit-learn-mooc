@@ -193,5 +193,5 @@ _ = sns.pairplot(data=subset, hue="power", palette="viridis")
 # the a link between higher slope / high heart-rate and higher power: a cyclist
 # need to develop more energy to go uphill enforcing a stronger physiological
 # stimuli on the body. We can confirm this intuition by looking at the
-# interaction between the slope and the speed: a lower speed with an higher
+# interaction between the slope and the speed: a lower speed with a higher
 # slope is usually associated with higher power.

@@ -125,8 +125,8 @@ print(f"Median absolute error: "
 
 # %% [markdown]
 # The mean absolute error (or median absolute error) still have a known
-# limitation: committing an error of 50 k\$ for an house valued at 50 k\$ has the
-# same impact than committing an error of 50 k\$ for an house valued at 500 k\$.
+# limitation: committing an error of 50 k\$ for a house valued at 50 k\$ has the
+# same impact than committing an error of 50 k\$ for a house valued at 500 k\$.
 # Indeed, the mean absolute error is not relative.
 #
 # The mean absolute percentage error introduce this relative scaling.

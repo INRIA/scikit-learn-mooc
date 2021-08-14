@@ -40,7 +40,7 @@ _Select several answers_
 +++
 
 ```{admonition} Question
-How many features are available to predict whether or not an house is
+How many features are available to predict whether or not a house is
 expensive?
 
 - a) 79

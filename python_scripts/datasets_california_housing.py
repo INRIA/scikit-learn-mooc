@@ -96,7 +96,7 @@ california_housing.frame[features_of_interest].describe()
 
 # %% [markdown]
 # For each of these features, comparing the `max` and `75%` values, we can see
-# an huge difference. It confirms the intuitions that there are a couple of
+# a huge difference. It confirms the intuitions that there are a couple of
 # extreme values.
 #
 # Up to know, we discarded the longitude and latitude that carry geographical

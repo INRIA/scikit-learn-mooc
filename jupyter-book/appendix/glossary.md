@@ -47,7 +47,7 @@ the line: a [sample](#sample-instance-observation) lying on the left of the
 line will be predicted as a blue sample while a sample lying on the right of
 the line will be predicted as an orange sample. Here, we have a linear
 [classifier](#classifier) because the decision rule is defined as a line (in
-higher dimensions this would be an hyperplane). However, the shape of the
+higher dimensions this would be a hyperplane). However, the shape of the
 decision rule will depend on the [model](#model) used.
 
 ### classifier

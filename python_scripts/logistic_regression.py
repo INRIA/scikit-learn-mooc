@@ -65,7 +65,7 @@ range_features = {
 }
 
 # %% [markdown]
-# To visualize the separation found by our classifier, we will define an helper
+# To visualize the separation found by our classifier, we will define a helper
 # function `plot_decision_function`. In short, this function will plot the edge
 # of the decision function, where the probability to be an Adelie or Chinstrap
 # will be equal (p=0.5).

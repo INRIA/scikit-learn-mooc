@@ -233,7 +233,7 @@ print(f"The test accuracy using a {model_name} is "
 # %% [markdown]
 # If we compare with the accuracy obtained by wrongly evaluating the model
 # on the training set, we find that this evaluation was indeed optimistic
-# compared to the score obtained on an held-out test set.
+# compared to the score obtained on a held-out test set.
 #
 # It shows the importance to always testing the generalization performance of
 # predictive models on a different set than the one used to train these models.

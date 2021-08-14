@@ -44,7 +44,7 @@ The required technical skills to carry on this module are:
 The objective in the module are the following:
 
 - understand what is a model hyperparameter;
-- understand how to get and set the value an hyperparameter of a scikit-learn
+- understand how to get and set the value of a hyperparameter in a scikit-learn
   model;
 - be able to fine tune a full predictive modeling pipeline;
 - understand and visualize the combination of parameters that improves the

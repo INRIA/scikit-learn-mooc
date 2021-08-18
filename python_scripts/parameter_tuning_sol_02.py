@@ -65,8 +65,8 @@ model = Pipeline([
 # loops, make a search of the best combinations of the `learning_rate` and
 # `max_leaf_nodes` parameters. In this regard, you will need to train and test
 # the model by setting the parameters. The evaluation of the model should be
-# performed using `cross_val_score`. We will use the following parameters
-# search:
+# performed using `cross_val_score` inside the training set. We will use the
+# following parameters search:
 # - `learning_rate` for the values 0.01, 0.1, 1 and 10. This parameter controls
 #   the ability of a new tree to correct the error of the previous sequence of
 #   trees
@@ -100,3 +100,20 @@ for lr in learning_rate:
 
 print(f"The best accuracy obtained is {best_score:.3f}")
 print(f"The best parameters found are:\n {best_params}")
+
+# %% [markdown]
+#
+# Now use the test set to score the model using the best parameters
+# that we found using cross-validation in the training set.
+
+# %%
+# solution
+best_lr = best_params['learning-rate']
+best_mln = best_params['max leaf nodes']
+
+model.set_params(classifier__learning_rate=best_lr,
+                classifier__max_leaf_nodes=best_mln)
+
+model.fit(data_train, target_train)
+
+model.score(data_test, target_test)

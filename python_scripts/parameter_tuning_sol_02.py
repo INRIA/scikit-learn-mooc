@@ -113,7 +113,7 @@ best_mln = best_params['max leaf nodes']
 
 model.set_params(classifier__learning_rate=best_lr,
                 classifier__max_leaf_nodes=best_mln)
-
 model.fit(data_train, target_train)
+test_score = model.score(data_test, target_test)
 
-model.score(data_test, target_test)
+print(f"Test score after the parameter tuning: {test_score:.3f}")

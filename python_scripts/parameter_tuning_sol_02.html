@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -45,7 +45,7 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
@@ -85,7 +85,7 @@
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -1481,8 +1481,8 @@ change <code class="docutils literal notranslate"><span class="pre">train_size</
 loops, make a search of the best combinations of the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> and
 <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> parameters. In this regard, you will need to train and test
 the model by setting the parameters. The evaluation of the model should be
-performed using <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code>. We will use the following parameters
-search:</p>
+performed using <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> on the training set. We will use the
+following parameters search:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> for the values 0.01, 0.1, 1 and 10. This parameter controls
 the ability of a new tree to correct the error of the previous sequence of
@@ -1563,15 +1563,44 @@ Evaluating model with learning rate 1.000 and max leaf nodes 30...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.828
-Evaluating model with learning rate 10.000 and max leaf nodes 3... score: 0.288
+Evaluating model with learning rate 10.000 and max leaf nodes 3... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.288
 Evaluating model with learning rate 10.000 and max leaf nodes 10... 
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.480
-Evaluating model with learning rate 10.000 and max leaf nodes 30... score: 0.639
+Evaluating model with learning rate 10.000 and max leaf nodes 30... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.639
 The best accuracy obtained is 0.859
 The best parameters found are:
  {&#39;learning-rate&#39;: 0.1, &#39;max leaf nodes&#39;: 10}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now use the test set to score the model using the best parameters
+that we found using cross-validation in the training set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">best_lr</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;learning-rate&#39;</span><span class="p">]</span>
+<span class="n">best_mln</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;max leaf nodes&#39;</span><span class="p">]</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__learning_rate</span><span class="o">=</span><span class="n">best_lr</span><span class="p">,</span>
+                 <span class="n">classifier__max_leaf_nodes</span><span class="o">=</span><span class="n">best_mln</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test score after the parameter tuning: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test score after the parameter tuning: 0.870
 </pre></div>
 </div>
 </div>
@@ -1601,12 +1630,32 @@ The best parameters found are:
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="parameter_tuning_ex_02.html" title="previous page">📝 Exercise M3.01</a>
-    <a class='right-next' id="next-link" href="../tuning/parameter_tuning_manual_quiz_m3_01.html" title="next page">✅ Quiz M3.01</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="parameter_tuning_ex_02.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">📝 Exercise M3.01</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="../tuning/parameter_tuning_manual_quiz_m3_01.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">✅ Quiz M3.01</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>

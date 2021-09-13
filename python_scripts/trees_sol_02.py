@@ -60,7 +60,7 @@ target_predicted_tree = tree.predict(data_range)
 
 # %% [markdown]
 # Create a scatter plot containing the training samples and superimpose the
-# predictions of both model on the top.
+# predictions of both models on the top.
 
 # %%
 # solution

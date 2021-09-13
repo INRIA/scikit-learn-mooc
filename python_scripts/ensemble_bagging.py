@@ -21,7 +21,7 @@ rng = np.random.RandomState(1)
 
 
 def generate_data(n_samples=30):
-    """Generate synthetic dataset. Returns `data_train`, `data_test`,
+    """Generate synthetic dataset. Returns `data_train`, `data_range`,
     `target_train`."""
     x_min, x_max = -3, 3
     x = rng.uniform(x_min, x_max, size=n_samples)
@@ -30,18 +30,18 @@ def generate_data(n_samples=30):
     y /= y.std()
 
     data_train = pd.DataFrame(x, columns=["Feature"])
-    data_test = pd.DataFrame(
+    data_range = pd.DataFrame(
         np.linspace(x_max, x_min, num=300), columns=["Feature"])
     target_train = pd.Series(y, name="Target")
 
-    return data_train, data_test, target_train
+    return data_train, data_range, target_train
 
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-data_train, data_test, target_train = generate_data(n_samples=30)
+data_train, data_range, target_train = generate_data(n_samples=30)
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 _ = plt.title("Synthetic regression dataset")
@@ -57,12 +57,12 @@ from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=3, random_state=0)
 tree.fit(data_train, target_train)
-y_pred = tree.predict(data_test)
+y_pred = tree.predict(data_range)
 
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-plt.plot(data_test, y_pred, label="Fitted tree")
+plt.plot(data_range, y_pred, label="Fitted tree")
 plt.legend()
 _ = plt.title("Predictions by a single decision tree")
 
@@ -127,7 +127,7 @@ for bootstrap_idx in range(n_bootstraps):
 # unique samples in the bootstrap samples.
 
 # %%
-data_train_huge, data_test_huge, target_train_huge = generate_data(
+data_train_huge, data_range_huge, target_train_huge = generate_data(
     n_samples=100_000)
 data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
     data_train_huge, target_train_huge)
@@ -163,15 +163,16 @@ for bootstrap_idx in range(n_bootstraps):
 
 # %% [markdown]
 #
-# Now that we created a bag of different trees, we can use each of the tree to
-# predict on the testing data. They shall give slightly different predictions.
+# Now that we created a bag of different trees, we can use each of the trees to
+# predict the samples within the range of data. They shall give slightly
+# different predictions.
 
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 for tree_idx, tree in enumerate(bag_of_trees):
-    tree_predictions = tree.predict(data_test)
-    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.8,
+    tree_predictions = tree.predict(data_range)
+    plt.plot(data_range, tree_predictions, linestyle="--", alpha=0.8,
              label=f"Tree #{tree_idx} predictions")
 
 plt.legend()
@@ -196,13 +197,13 @@ sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
 
 bag_predictions = []
 for tree_idx, tree in enumerate(bag_of_trees):
-    tree_predictions = tree.predict(data_test)
-    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.8,
+    tree_predictions = tree.predict(data_range)
+    plt.plot(data_range, tree_predictions, linestyle="--", alpha=0.8,
              label=f"Tree #{tree_idx} predictions")
     bag_predictions.append(tree_predictions)
 
 bag_predictions = np.mean(bag_predictions, axis=0)
-plt.plot(data_test, bag_predictions, label="Averaged predictions",
+plt.plot(data_range, bag_predictions, label="Averaged predictions",
          linestyle="-")
 plt.legend()
 _ = plt.title("Predictions of bagged trees")
@@ -236,13 +237,13 @@ _ = bagged_trees.fit(data_train, target_train)
 
 # %% [markdown]
 #
-# Let us visualize the predictions of the ensemble on the same test data:
+# Let us visualize the predictions of the ensemble on the same interval of data:
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 
-bagged_trees_predictions = bagged_trees.predict(data_test)
-plt.plot(data_test, bagged_trees_predictions)
+bagged_trees_predictions = bagged_trees.predict(data_range)
+plt.plot(data_range, bagged_trees_predictions)
 
 _ = plt.title("Predictions from a bagging classifier")
 
@@ -259,15 +260,15 @@ _ = plt.title("Predictions from a bagging classifier")
 # %%
 for tree_idx, tree in enumerate(bagged_trees.estimators_):
     label = "Predictions of individual trees" if tree_idx == 0 else None
-    tree_predictions = tree.predict(data_test)
-    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.1,
+    tree_predictions = tree.predict(data_range)
+    plt.plot(data_range, tree_predictions, linestyle="--", alpha=0.1,
              color="tab:blue", label=label)
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 
-bagged_trees_predictions = bagged_trees.predict(data_test)
-plt.plot(data_test, bagged_trees_predictions,
+bagged_trees_predictions = bagged_trees.predict(data_range)
+plt.plot(data_range, bagged_trees_predictions,
          color="tab:orange", label="Predictions of ensemble")
 _ = plt.legend()
 
@@ -329,17 +330,17 @@ _ = bagging.fit(data_train, target_train)
 
 # %%
 for i, regressor in enumerate(bagging.estimators_):
-    regressor_predictions = regressor.predict(data_test)
+    regressor_predictions = regressor.predict(data_range)
     base_model_line = plt.plot(
-        data_test, regressor_predictions, linestyle="--", alpha=0.2,
+        data_range, regressor_predictions, linestyle="--", alpha=0.2,
         label="Predictions of base models" if i == 0 else None,
         color="tab:blue"
     )
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-bagging_predictions = bagging.predict(data_test)
-plt.plot(data_test, bagging_predictions,
+bagging_predictions = bagging.predict(data_range)
+plt.plot(data_range, bagging_predictions,
          color="tab:orange", label="Predictions of ensemble")
 plt.ylim(target_train.min(), target_train.max())
 plt.legend()

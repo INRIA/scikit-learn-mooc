@@ -42,21 +42,21 @@ linear_regression.fit(data_train, target_train)
 tree.fit(data_train, target_train)
 
 # %% [markdown]
-# Create a testing dataset, ranging from the minimum to the maximum of the
+# Create a dataset ranging from the minimum to the maximum of the
 # flipper length of the training dataset. Get the predictions of each model
-# using this test dataset.
+# using this dataset.
 
 # %%
 # solution
 import numpy as np
 
-data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
+data_range = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
                                    data_train[data_columns[0]].max()),
                          columns=data_columns)
 
 # %% tags=["solution"]
-target_predicted_linear_regression = linear_regression.predict(data_test)
-target_predicted_tree = tree.predict(data_test)
+target_predicted_linear_regression = linear_regression.predict(data_range)
+target_predicted_tree = tree.predict(data_range)
 
 # %% [markdown]
 # Create a scatter plot containing the training samples and superimpose the
@@ -69,9 +69,9 @@ import seaborn as sns
 
 sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                 color="black", alpha=0.5)
-plt.plot(data_test, target_predicted_linear_regression,
+plt.plot(data_range, target_predicted_linear_regression,
          label="Linear regression")
-plt.plot(data_test, target_predicted_tree, label="Decision tree")
+plt.plot(data_range, target_predicted_tree, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction of linear model and a decision tree")
 
@@ -82,32 +82,32 @@ _ = plt.title("Prediction of linear model and a decision tree")
 
 # %% [markdown]
 # Now, we will check the extrapolation capabilities of each model. Create a
-# dataset containing the value of your previous dataset. Besides, add values
-# below and above the minimum and the maximum of the flipper length seen
-# during training.
+# dataset containing the same range of values as your previous dataset.
+# Besides, add values below and above the minimum and the maximum of the
+# flipper length seen during training.
 
 # %%
 # solution
 offset = 30
-data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min() - offset,
+data_range = pd.DataFrame(np.arange(data_train[data_columns[0]].min() - offset,
                                    data_train[data_columns[0]].max() + offset),
                          columns=data_columns)
 
 # %% [markdown]
-# Finally, make predictions with both models on this new testing set. Repeat
+# Finally, make predictions with both models on this new ranging set. Repeat
 # the plotting of the previous exercise.
 
 # %%
 # solution
-target_predicted_linear_regression = linear_regression.predict(data_test)
-target_predicted_tree = tree.predict(data_test)
+target_predicted_linear_regression = linear_regression.predict(data_range)
+target_predicted_tree = tree.predict(data_range)
 
 # %% tags=["solution"]
 sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                 color="black", alpha=0.5)
-plt.plot(data_test, target_predicted_linear_regression,
+plt.plot(data_range, target_predicted_linear_regression,
          label="Linear regression")
-plt.plot(data_test, target_predicted_tree, label="Decision tree")
+plt.plot(data_range, target_predicted_tree, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction of linear model and a decision tree")
 

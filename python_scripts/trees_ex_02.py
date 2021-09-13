@@ -44,7 +44,7 @@ data_train, target_train = penguins[data_columns], penguins[target_column]
 
 # %% [markdown]
 # Create a scatter plot containing the training samples and superimpose the
-# predictions of both model on the top.
+# predictions of both models on the top.
 
 # %%
 # Write your code here.

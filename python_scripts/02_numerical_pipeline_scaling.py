@@ -192,7 +192,48 @@ data_train_scaled = pd.DataFrame(data_train_scaled,
 data_train_scaled.describe()
 
 # %% [markdown]
-# We can easily combine these sequential operations with a scikit-learn
+# ```{tip}
+# You can play with the code below to get familiar with `StandardScaler`.
+# Try changing the position of the `centers`.
+# ```
+
+# %%
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+
+# we generate a synthetic dataset "X" with gaussian blobs
+centers = [[0, 2], [3, 0.5]]
+X, _ =make_blobs(n_samples=100, n_features=2, centers=centers,
+                 cluster_std=0.5, center_box=(1, 10.0),
+                 shuffle=True, random_state=0)
+
+# we "fit" and "transform" the datapoints
+scaler = StandardScaler()
+scaler.fit(X)
+X_scaled = scaler.transform(X)
+
+# plot the synthetic points
+fig, ax = plt.subplots()
+plt.title("Gaussian blobs synthetic data")
+plt.scatter(X[:, 0], X[:, 1])
+ax.spines['left'].set_position('zero')
+ax.spines['right'].set_color('none')
+ax.spines['bottom'].set_position('zero')
+ax.spines['top'].set_color('none')
+plt.show()
+
+# plot the scaled data points
+fig, ax = plt.subplots()
+plt.title("Scaled blobs using StandardScaler")
+plt.scatter(X_scaled[:, 0], X_scaled[:, 1])
+ax.spines['left'].set_position('zero')
+ax.spines['right'].set_color('none')
+ax.spines['bottom'].set_position('zero')
+ax.spines['top'].set_color('none')
+plt.show()
+
+# %% [markdown]
+# We can easily combine sequential operations with a scikit-learn
 # `Pipeline`, which chains together operations and is used as any other
 # classifier or regressor. The helper function `make_pipeline` will create a
 # `Pipeline`: it takes as arguments the successive transformations to perform,

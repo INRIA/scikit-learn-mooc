@@ -135,6 +135,37 @@ _ = plt.title("Distribution of the test scores")
 # We see that using `strategy="stratified"`, the results are much worse than
 # with the `most_frequent` strategy. Since the classes are imbalanced,
 # predicting the most frequent involves that we will be right for the
-# proportion of this class (~75% of the samples). However, by using the
-# `stratified` strategy, wrong predictions will be made even for the most
+# proportion of this class (~75% of the samples). However, the `stratified`
+# strategy will randomly generate predictions by respecting the training
+# set’s class distribution, resulting in wrong predictions even for the most
 # frequent class, hence we obtain a lower accuracy.
+#
+# Notice that the `most_frequent` strategy is deterministic for a given
+# cross-validation split, whereas the `stratified` strategy will lead
+# to different results even for the same cv split due to the extra randomization.
+
+# %% tags=["solution"]
+dummy_most_frequent = DummyClassifier(strategy="most_frequent")
+dummy_stratified = DummyClassifier(strategy="stratified")
+n_runs = 3
+
+for run_idx in range(n_runs):
+
+    result_most_frequent = cross_validate(dummy_most_frequent, data, target,
+                              cv=cv,  n_jobs=2)
+
+    result_stratified = cross_validate(dummy_stratified, data, target,
+                              cv=cv,  n_jobs=2)
+
+    scores_most_frequent = pd.Series(result_most_frequent["test_score"],
+                                    name="Dummy 'most_frequent' score")
+    scores_stratified = pd.Series(result_stratified["test_score"],
+                                    name="Dummy 'stratify' score")
+
+    final_scores = pd.concat([scores_stratified, scores_most_frequent],
+                         axis=1)
+
+    final_scores.plot.hist(bins=50, density=True, edgecolor="black")
+    plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+    plt.xlabel("Accuracy (%)")
+    _ = plt.title(f"Distribution of scores in run #{run_idx}")

@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5)
+    data, target, random_state=0, test_size=5000)
 
 # %% [markdown]
 # ```{note}
@@ -26,44 +26,57 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Similarly to the previous exercise, create a gradient boosting decision tree
-# and create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Use the mean absolute error
-# to assess the generalization performance of the model.
+# Create a gradient boosting decision tree. Set the maximum depth of the individual
+# trees to `max_depth=7` and `learning_rate=0.5`. This will make the trees more
+# likely to fit the noise in the training set.
 
 # %%
 # solution
-import numpy as np
 from sklearn.ensemble import GradientBoostingRegressor
+
+gbdt = GradientBoostingRegressor(
+    max_depth=7,
+    learning_rate=0.5,
+)
+
+# %% [markdown]
+# Create a validation curve to assess the impact of the number of trees
+# on the generalization performance of the model. Evaluate the list of parameters
+# `param_range = [1, 2, 5, 10, 20, 50, 100, 200]` and use the mean absolute error
+# to assess the generalization performance of the model.
+# Try lowering the number of cross-validation folds to 3 to speed up the evaluation.
+
+# %%
+# solution
 from sklearn.model_selection import validation_curve
 
-gbdt = GradientBoostingRegressor()
-param_range = np.unique(np.logspace(0, 1.8, num=30).astype(int))
-train_scores, test_scores = validation_curve(
+param_range = [1, 2, 5, 10, 20, 50, 100, 200]
+gbdt_train_scores, gbdt_test_scores = validation_curve(
     gbdt,
     data_train,
     target_train,
     param_name="n_estimators",
     param_range=param_range,
     scoring="neg_mean_absolute_error",
+    cv=3,
     n_jobs=2,
 )
-train_errors, test_errors = -train_scores, -test_scores
+gbdt_train_errors, gbdt_test_errors = -gbdt_train_scores, -gbdt_test_scores
 
 # %% tags=["solution"]
 import matplotlib.pyplot as plt
 
 plt.errorbar(
     param_range,
-    train_errors.mean(axis=1),
-    yerr=train_errors.std(axis=1),
-    label="Training score",
+    gbdt_train_errors.mean(axis=1),
+    yerr=gbdt_train_errors.std(axis=1),
+    label="Training",
 )
 plt.errorbar(
     param_range,
-    test_errors.mean(axis=1),
-    yerr=test_errors.std(axis=1),
-    label="Cross-validation score",
+    gbdt_test_errors.mean(axis=1),
+    yerr=gbdt_test_errors.std(axis=1),
+    label="Cross-validation",
 )
 
 plt.legend()

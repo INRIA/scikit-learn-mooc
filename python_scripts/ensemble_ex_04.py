@@ -18,7 +18,7 @@ from sklearn.model_selection import train_test_split
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5)
+    data, target, random_state=0, test_size=5000)
 
 # %% [markdown]
 # ```{note}
@@ -27,10 +27,19 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Similarly to the previous exercise, create a gradient boosting decision tree
-# and create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Use the mean absolute error
+# Create a gradient boosting decision tree. Set the maximum depth of the individual
+# trees to `max_depth=7` and `learning_rate=0.5`. This will make the trees more
+# likely to fit the noise in the training set.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Create a validation curve to assess the impact of the number of trees
+# on the generalization performance of the model. Evaluate the list of parameters
+# `param_range = [1, 2, 5, 10, 20, 50, 100, 200]` and use the mean absolute error
 # to assess the generalization performance of the model.
+# Try lowering the number of cross-validation folds to 3 to speed up the evaluation.
 
 # %%
 # Write your code here.

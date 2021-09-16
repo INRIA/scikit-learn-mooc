@@ -68,8 +68,8 @@ such a model as part of this exercise. Thus, you need to:
 - use a
   [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
   cross-validation strategy with only 4 splits (`n_splits=4`) to evaluate the
-  statistical performance of the model. Use the mean absolute error (MAE) as a
-  statistical performance metric. Also, pass the parameter
+  generalization performance of the model. Use the mean absolute error (MAE) as a
+  generalization performance metric. Also, pass the parameter
   `return_estimator=True` and `return_train_score=True` to answer the
   subsequent questions. Be aware that the `ShuffleSplit` strategy is a naive
   strategy and we will investigate the consequence of making this choice in the
@@ -156,13 +156,13 @@ Comparing both the linear model and the histogram gradient boosting model and
 taking into consideration the train and test MAE obtained via cross-validation,
 select the correct statements:
 
-- a) the statistical performance of the histogram gradient-boosting model is
+- a) the generalization performance of the histogram gradient-boosting model is
   limited by its underfitting
-- b) the statistical performance of the histogram gradient-boosting model is
+- b) the generalization performance of the histogram gradient-boosting model is
   limited by its overfitting
-- c) the statistical performance of the linear model is limited by its
+- c) the generalization performance of the linear model is limited by its
   underfitting
-- d) the statistical performance of the linear model is limited by its
+- d) the generalization performance of the linear model is limited by its
   overfitting
 
 _Select several answers_
@@ -231,13 +231,13 @@ Using the previous evaluations (with both `ShuffleSplit` and
 `LeaveOneGroupOut`) and looking at the train and test errors for both models,
 select the correct statements:
 
-- a) the statistical performance of the gradient-boosting model is
+- a) the generalization performance of the gradient-boosting model is
   limited by its underfitting
-- b) the statistical performance of the gradient-boosting model is
+- b) the generalization performance of the gradient-boosting model is
   limited by its overfitting
-- c) the statistical performance of the linear model is limited by its
+- c) the generalization performance of the linear model is limited by its
   underfitting
-- d) the statistical performance of the linear model is limited by its
+- d) the generalization performance of the linear model is limited by its
   overfitting
 
 _Select several answers_

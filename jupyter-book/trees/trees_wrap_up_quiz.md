@@ -30,7 +30,7 @@ numerical_features = [
 data_numerical = data[numerical_features]
 ```
 
-We will compare the statistical performance of a decision tree and a linear
+We will compare the generalization performance of a decision tree and a linear
 regression. For this purpose, we will create two separate predictive models
 and evaluate them by 10-fold cross-validation.
 
@@ -104,9 +104,9 @@ columns. For the sake of simplicity, we will assume the following:
 Are the performance in terms of $R^2$ better by incorporating the categorical
 features in comparison with the previous tree with the optimal depth?
 
-- a) No the statistical performance are the same: ~0.7
-- b) The statistical performance is slightly better: ~0.72
-- c) The statistical performance is better: ~0.74
+- a) No, the generalization performance is the same: ~0.7
+- b) The generalization performance is slightly better: ~0.72
+- c) The generalization performance is better: ~0.74
 
 _Select a single answer_
 ```

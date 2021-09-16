@@ -109,7 +109,7 @@ _Select a single answer_
 +++
 
 Now, we will search for the regularization strength that will maximize the
-statistical performance of our predictive model. Fit a
+generalization performance of our predictive model. Fit a
 [`sklearn.linear_model.RidgeCV`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html)
 instead of a `Ridge` regressor pass `alphas=np.logspace(-1, 3, num=30)` to
 explore the effect of changing the regularization strength.
@@ -241,10 +241,10 @@ On average, what is the increase in terms of accuracy by using the categorical
 features?
 
 - a) It gives similar results
-- b) It increases the statistical performance by 0.025
-- c) it increases the statistical performance by 0.05
-- d) it increases the statistical performance by 0.075
-- e) it increases the statistical performance by 0.1
+- b) It increases the generalization performance by 0.025
+- c) it increases the generalization performance by 0.05
+- d) it increases the generalization performance by 0.075
+- e) it increases the generalization performance by 0.1
 
 _Select a single answer_
 ```

@@ -42,7 +42,7 @@ gbdt = GradientBoostingRegressor(
 # %% [markdown]
 # Create a validation curve to assess the impact of the number of trees
 # on the generalization performance of the model. Evaluate the list of parameters
-# `param_range = [1, 2, 5, 10, 20, 50, 100, 200]` and use the mean absolute error
+# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
 # to assess the generalization performance of the model.
 # Try lowering the number of cross-validation folds to 3 to speed up the evaluation.
 
@@ -50,7 +50,7 @@ gbdt = GradientBoostingRegressor(
 # solution
 from sklearn.model_selection import validation_curve
 
-param_range = [1, 2, 5, 10, 20, 50, 100, 200]
+param_range = [1, 2, 5, 10, 20, 50, 100]
 gbdt_train_scores, gbdt_test_scores = validation_curve(
     gbdt,
     data_train,

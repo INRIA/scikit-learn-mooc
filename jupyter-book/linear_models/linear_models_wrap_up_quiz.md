@@ -242,9 +242,9 @@ features?
 
 - a) It gives similar results
 - b) It increases the generalization performance by 0.025
-- c) it increases the generalization performance by 0.05
-- d) it increases the generalization performance by 0.075
-- e) it increases the generalization performance by 0.1
+- c) It increases the generalization performance by 0.05
+- d) It increases the generalization performance by 0.075
+- e) It increases the generalization performance by 0.1
 
 _Select a single answer_
 ```

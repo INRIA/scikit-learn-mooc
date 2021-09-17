@@ -192,20 +192,27 @@ data_train_scaled = pd.DataFrame(data_train_scaled,
 data_train_scaled.describe()
 
 # %% [markdown]
-# We can use a jointplot to visualize the histograms and scatterplot of any
-# pair of numerical features at the same time. We can observe that `StandardScaler`
-# does not change the structure of the data itself but the axes
-# get shifted and scaled.
+# Notice that the mean of all the columns is close to 0 and the standard deviation
+# in all cases is close to 1.
+# We can also visualize the effect of `StandardScaler` using a jointplot to show
+# both the histograms of the distributions and a scatterplot of any pair of numerical
+# features at the same time. We can observe that `StandardScaler` does not change
+# the structure of the data itself but the axes get shifted and scaled.
 
 # %%
 import matplotlib.pyplot  as plt
 import seaborn as sns
 
-sns.jointplot(data=data_train[:300], x="age", y="hours-per-week", marginal_kws=dict(bins=15))
-plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nbefore StandardScaler", y = 1.1)
+# number of points to visualize to have a clearer plot
+num_points_to_plot = 300
 
-sns.jointplot(data=data_train_scaled[:300], x="age", y="hours-per-week", marginal_kws=dict(bins=15))
-_ = plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nafter StandardScaler", y = 1.1)
+sns.jointplot(data=data_train[:num_points_to_plot], x="age",
+              y="hours-per-week", marginal_kws=dict(bins=15))
+plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nbefore StandardScaler", y=1.1)
+
+sns.jointplot(data=data_train_scaled[:num_points_to_plot], x="age",
+              y="hours-per-week", marginal_kws=dict(bins=15))
+_ = plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nafter StandardScaler", y=1.1)
 
 # %% [markdown]
 # We can easily combine sequential operations with a scikit-learn

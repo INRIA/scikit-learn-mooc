@@ -32,9 +32,15 @@ data_train, target_train = penguins[data_columns], penguins[target_column]
 # %%
 import numpy as np
 
-data_range = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
+data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
                                    data_train[data_columns[0]].max()),
                          columns=data_columns)
+
+# %% [markdown]
+# Using the term "test" here refers to data that was not used for training.
+# It should not be confused with data coming from a train-test split, as it
+# was generated in equally-spaced intervals for the visual evaluation of the
+# predictions.
 
 # %%
 import matplotlib.pyplot as plt
@@ -53,12 +59,12 @@ from sklearn.linear_model import LinearRegression
 
 linear_model = LinearRegression()
 linear_model.fit(data_train, target_train)
-target_predicted = linear_model.predict(data_range)
+target_predicted = linear_model.predict(data_test)
 
 # %%
 sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                 color="black", alpha=0.5)
-plt.plot(data_range, target_predicted, label="Linear regression")
+plt.plot(data_test, target_predicted, label="Linear regression")
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")
 
@@ -71,9 +77,9 @@ _ = plt.title("Prediction function using a LinearRegression")
 # %%
 ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
-plt.plot(data_range, target_predicted, label="Linear regression",
+plt.plot(data_test, target_predicted, label="Linear regression",
          linestyle="--")
-plt.scatter(data_range[::3], target_predicted[::3], label="Predictions",
+plt.scatter(data_test[::3], target_predicted[::3], label="Predictions",
             color="tab:orange")
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")
@@ -89,12 +95,12 @@ from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=1)
 tree.fit(data_train, target_train)
-target_predicted = tree.predict(data_range)
+target_predicted = tree.predict(data_test)
 
 # %%
 sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                 color="black", alpha=0.5)
-plt.plot(data_range, target_predicted, label="Decision tree")
+plt.plot(data_test, target_predicted, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")
 
@@ -126,12 +132,12 @@ _ = plot_tree(tree, feature_names=data_columns, ax=ax)
 # %%
 tree = DecisionTreeRegressor(max_depth=3)
 tree.fit(data_train, target_train)
-target_predicted = tree.predict(data_range)
+target_predicted = tree.predict(data_test)
 
 # %%
 sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                 color="black", alpha=0.5)
-plt.plot(data_range, target_predicted, label="Decision tree")
+plt.plot(data_test, target_predicted, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")
 

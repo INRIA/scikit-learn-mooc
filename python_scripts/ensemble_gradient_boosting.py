@@ -24,7 +24,7 @@ rng = np.random.RandomState(0)
 
 
 def generate_data(n_samples=50):
-    """Generate synthetic dataset. Returns `data_train`, `data_range`,
+    """Generate synthetic dataset. Returns `data_train`, `data_test`,
     `target_train`."""
     x_max, x_min = 1.4, -1.4
     len_x = x_max - x_min
@@ -33,14 +33,14 @@ def generate_data(n_samples=50):
     y = x ** 3 - 0.5 * x ** 2 + noise
 
     data_train = pd.DataFrame(x, columns=["Feature"])
-    data_range = pd.DataFrame(np.linspace(x_max, x_min, num=300),
+    data_test = pd.DataFrame(np.linspace(x_max, x_min, num=300),
                              columns=["Feature"])
     target_train = pd.Series(y, name="Target")
 
-    return data_train, data_range, target_train
+    return data_train, data_test, target_train
 
 
-data_train, data_range, target_train = generate_data()
+data_train, data_test, target_train = generate_data()
 
 # %%
 import matplotlib.pyplot as plt
@@ -62,22 +62,20 @@ tree = DecisionTreeRegressor(max_depth=3, random_state=0)
 tree.fit(data_train, target_train)
 
 target_train_predicted = tree.predict(data_train)
-target_test_predicted = tree.predict(data_range)
+target_test_predicted = tree.predict(data_test)
 
 # %% [markdown]
-# ```{warning}
 # Using the term "test" here refers to data that was not used for training.
 # It should not be confused with data coming from a train-test split, as it
 # was generated in equally-spaced intervals for the visual evaluation of the
 # predictions.
-# ```
 
 # %%
 # plot the data
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 # plot the predictions
-line_predictions = plt.plot(data_range, target_test_predicted, "--")
+line_predictions = plt.plot(data_test, target_test_predicted, "--")
 
 # plot the residuals
 for value, true, predicted in zip(data_train["Feature"],
@@ -114,11 +112,11 @@ tree_residuals = DecisionTreeRegressor(max_depth=5, random_state=0)
 tree_residuals.fit(data_train, residuals)
 
 target_train_predicted_residuals = tree_residuals.predict(data_train)
-target_test_predicted_residuals = tree_residuals.predict(data_range)
+target_test_predicted_residuals = tree_residuals.predict(data_test)
 
 # %%
 sns.scatterplot(x=data_train["Feature"], y=residuals, color="black", alpha=0.5)
-line_predictions = plt.plot(data_range, target_test_predicted_residuals, "--")
+line_predictions = plt.plot(data_test, target_test_predicted_residuals, "--")
 
 # plot the residuals of the predicted residuals
 for value, true, predicted in zip(data_train["Feature"],
@@ -155,7 +153,7 @@ target_true_residual = residuals.iloc[-2]
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-plt.plot(data_range, target_test_predicted, "--")
+plt.plot(data_test, target_test_predicted, "--")
 for value, true, predicted in zip(data_train["Feature"],
                                   target_train,
                                   target_train_predicted):
@@ -180,7 +178,7 @@ _ = plt.title("Tree predictions")
 
 sns.scatterplot(x=data_train["Feature"], y=residuals,
                 color="black", alpha=0.5)
-plt.plot(data_range, target_test_predicted_residuals, "--")
+plt.plot(data_test, target_test_predicted_residuals, "--")
 for value, true, predicted in zip(data_train["Feature"],
                                   residuals,
                                   target_train_predicted_residuals):

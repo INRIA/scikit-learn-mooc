@@ -79,16 +79,16 @@ def plot_classification(model, X, y, ax=None):
 def plot_regression(model, X, y, ax=None):
     model.fit(X, y)
 
-    X_range = pd.DataFrame(
+    X_test = pd.DataFrame(
         np.arange(X.iloc[:, 0].min(), X.iloc[:, 0].max()),
         columns=X.columns,
     )
-    y_pred = model.predict(X_range)
+    y_pred = model.predict(X_test)
 
     if ax is None:
         _, ax = plt.subplots()
     sns.scatterplot(x=X.iloc[:, 0], y=y, color="black", alpha=0.5, ax=ax)
-    ax.plot(X_range, y_pred, linewidth=4)
+    ax.plot(X_test, y_pred, linewidth=4)
 
     return ax
 

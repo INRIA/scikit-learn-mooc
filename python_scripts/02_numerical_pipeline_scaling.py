@@ -192,45 +192,20 @@ data_train_scaled = pd.DataFrame(data_train_scaled,
 data_train_scaled.describe()
 
 # %% [markdown]
-# ```{tip}
-# You can play with the code below to get familiar with `StandardScaler`.
-# Try changing the position of the `centers`.
-# ```
+# We can use a jointplot to visualize the histograms and scatterplot of any
+# pair of numerical features at the same time. We can observe that `StandardScaler`
+# does not change the structure of the data itself but the axes
+# get shifted and scaled.
 
 # %%
-import matplotlib.pyplot as plt
-from sklearn.datasets import make_blobs
+import matplotlib.pyplot  as plt
+import seaborn as sns
 
-# we generate a synthetic dataset "X" with gaussian blobs
-centers = [[0, 2], [3, 0.5]]
-X, _ =make_blobs(n_samples=100, n_features=2, centers=centers,
-                 cluster_std=0.5, center_box=(1, 10.0),
-                 shuffle=True, random_state=0)
+sns.jointplot(data=data_train[:300], x="age", y="hours-per-week", marginal_kws=dict(bins=15))
+plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nbefore StandardScaler", y = 1.1)
 
-# we "fit" and "transform" the datapoints
-scaler = StandardScaler()
-scaler.fit(X)
-X_scaled = scaler.transform(X)
-
-# plot the synthetic points
-fig, ax = plt.subplots()
-plt.title("Gaussian blobs synthetic data")
-plt.scatter(X[:, 0], X[:, 1])
-ax.spines['left'].set_position('zero')
-ax.spines['right'].set_color('none')
-ax.spines['bottom'].set_position('zero')
-ax.spines['top'].set_color('none')
-plt.show()
-
-# plot the scaled data points
-fig, ax = plt.subplots()
-plt.title("Scaled blobs using StandardScaler")
-plt.scatter(X_scaled[:, 0], X_scaled[:, 1])
-ax.spines['left'].set_position('zero')
-ax.spines['right'].set_color('none')
-ax.spines['bottom'].set_position('zero')
-ax.spines['top'].set_color('none')
-plt.show()
+sns.jointplot(data=data_train_scaled[:300], x="age", y="hours-per-week", marginal_kws=dict(bins=15))
+_ = plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nafter StandardScaler", y = 1.1)
 
 # %% [markdown]
 # We can easily combine sequential operations with a scikit-learn

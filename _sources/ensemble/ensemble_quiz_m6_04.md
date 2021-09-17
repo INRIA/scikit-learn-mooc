@@ -24,7 +24,7 @@ Which of the hyperparameter(s) do not exist in random forest but exists in gradi
 ```{admonition} Question
 Which of the following options are correct about the benefits of ensemble models?
 
-- a) Better statistical performance
+- a) Better generalization performance
 - b) Reduced sensitivity to hyper-parameter tuning of individual predictors
 - c) Better interpretability
 ```

@@ -48,7 +48,7 @@ _Select a single answer_
 +++
 
 Replace the `DummyClassifier` by a `sklearn.tree.DecisionTreeClassifier` and
-check the statistical performance to answer the question below.
+check the generalization performance to answer the question below.
 
 ```{admonition} Question
 Is a single decision classifier better than a dummy classifier, by an increase

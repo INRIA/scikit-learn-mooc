@@ -1,22 +1,15 @@
 # %% [markdown]
 # # Nested cross-validation
 #
-# In this notebook, we show a pattern called **nested cross-validation** which
-# should be used when you want to both evaluate a model and tune the
-# model's hyperparameters.
+# In this notebook, we will return on the concept of nested cross-validation.
+# We saw this evaluation strategy when dealing with a model where
+# hyperparameters are tuned.
 #
-# Cross-validation is a powerful tool to evaluate the generalization performance
-# of a model. It is also used to select the best model from a pool of models.
-# This pool of models can be the same family of predictor but with different
-# parameters. In this case, we call this procedure **hyperparameter tuning**.
+# Here, we would like to use the nested cross-validation and highlight the
+# effect on the generalization performance reported when compared with not
+# nested cross-validation.
 #
-# We could also imagine that we would like to choose among heterogeneous models
-# that will similarly use the cross-validation.
-#
-# Before we go into details regarding the nested cross-validation, we will
-# first recall the pattern used to fine tune a model's hyperparameters.
-#
-# Let's load the breast cancer dataset.
+# We will illustrate this difference using the breast cancer dataset.
 
 # %%
 from sklearn.datasets import load_breast_cancer
@@ -34,8 +27,9 @@ from sklearn.svm import SVC
 param_grid = {"C": [0.1, 1, 10], "gamma": [.01, .1]}
 model_to_tune = SVC()
 
-search = GridSearchCV(estimator=model_to_tune, param_grid=param_grid,
-                      n_jobs=2)
+search = GridSearchCV(
+    estimator=model_to_tune, param_grid=param_grid, n_jobs=2
+)
 search.fit(data, target)
 
 # %% [markdown]
@@ -84,8 +78,8 @@ print(f"The mean score in CV is: {search.best_score_:.3f}")
 from sklearn.model_selection import cross_val_score, KFold
 
 # Declare the inner and outer cross-validation
-inner_cv = KFold(n_splits=4, shuffle=True, random_state=0)
-outer_cv = KFold(n_splits=4, shuffle=True, random_state=0)
+inner_cv = KFold(n_splits=5, shuffle=True, random_state=0)
+outer_cv = KFold(n_splits=3, shuffle=True, random_state=0)
 
 # Inner cross-validation for parameter search
 model = GridSearchCV(
@@ -112,8 +106,8 @@ test_score_nested = []
 
 N_TRIALS = 20
 for i in range(N_TRIALS):
-    inner_cv = KFold(n_splits=4, shuffle=True, random_state=i)
-    outer_cv = KFold(n_splits=4, shuffle=True, random_state=i)
+    inner_cv = KFold(n_splits=5, shuffle=True, random_state=i)
+    outer_cv = KFold(n_splits=3, shuffle=True, random_state=i)
 
     # Non_nested parameter search and scoring
     model = GridSearchCV(estimator=model_to_tune, param_grid=param_grid,
@@ -152,5 +146,5 @@ _ = plt.title("Comparison of mean accuracy obtained on the test sets with\n"
 #
 # As a conclusion, when optimizing parts of the machine learning pipeline (e.g.
 # hyperparameter, transform, etc.), one needs to use nested cross-validation to
-# evaluate the generalization performance of the predictive model. Otherwise, the
-# results obtained without nested cross-validation are over-optimistic.
+# evaluate the generalization performance of the predictive model. Otherwise,
+# the results obtained without nested cross-validation are over-optimistic.

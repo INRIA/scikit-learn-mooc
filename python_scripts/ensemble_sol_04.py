@@ -104,5 +104,3 @@ gbdt.n_estimators_
 # We see that the number of trees used is far below 1000 with the current
 # dataset. Training the GBDT with the entire 1000 trees would have been
 # useless.
-
-# %%

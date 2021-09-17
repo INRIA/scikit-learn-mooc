@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=5000)
+    data, target, random_state=0, test_size=0.5)
 
 # %% [markdown]
 # ```{note}
@@ -26,25 +26,20 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Create a gradient boosting decision tree. Set the maximum depth of the individual
-# trees to `max_depth=7` and `learning_rate=0.5`. This will make the trees more
-# likely to fit the noise in the training set.
+# Create a gradient boosting decision tree with `max_depth=5` and
+# `learning_rate=0.5`.
 
 # %%
 # solution
 from sklearn.ensemble import GradientBoostingRegressor
 
-gbdt = GradientBoostingRegressor(
-    max_depth=7,
-    learning_rate=0.5,
-)
+gbdt = GradientBoostingRegressor(max_depth=5, learning_rate=0.5)
 
 # %% [markdown]
 # Create a validation curve to assess the impact of the number of trees
 # on the generalization performance of the model. Evaluate the list of parameters
 # `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
 # to assess the generalization performance of the model.
-# Try lowering the number of cross-validation folds to 3 to speed up the evaluation.
 
 # %%
 # solution
@@ -58,7 +53,6 @@ gbdt_train_scores, gbdt_test_scores = validation_curve(
     param_name="n_estimators",
     param_range=param_range,
     scoring="neg_mean_absolute_error",
-    cv=3,
     n_jobs=2,
 )
 gbdt_train_errors, gbdt_test_errors = -gbdt_train_scores, -gbdt_test_scores
@@ -110,3 +104,5 @@ gbdt.n_estimators_
 # We see that the number of trees used is far below 1000 with the current
 # dataset. Training the GBDT with the entire 1000 trees would have been
 # useless.
+
+# %%

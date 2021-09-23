@@ -26,20 +26,27 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Similarly to the previous exercise, create a gradient boosting decision tree
-# and create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Use the mean absolute error
+# Create a gradient boosting decision tree with `max_depth=5` and
+# `learning_rate=0.5`.
+
+# %%
+# solution
+from sklearn.ensemble import GradientBoostingRegressor
+
+gbdt = GradientBoostingRegressor(max_depth=5, learning_rate=0.5)
+
+# %% [markdown]
+# Create a validation curve to assess the impact of the number of trees
+# on the generalization performance of the model. Evaluate the list of parameters
+# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
 # to assess the generalization performance of the model.
 
 # %%
 # solution
-import numpy as np
-from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import validation_curve
 
-gbdt = GradientBoostingRegressor()
-param_range = np.unique(np.logspace(0, 1.8, num=30).astype(int))
-train_scores, test_scores = validation_curve(
+param_range = [1, 2, 5, 10, 20, 50, 100]
+gbdt_train_scores, gbdt_test_scores = validation_curve(
     gbdt,
     data_train,
     target_train,
@@ -48,22 +55,22 @@ train_scores, test_scores = validation_curve(
     scoring="neg_mean_absolute_error",
     n_jobs=2,
 )
-train_errors, test_errors = -train_scores, -test_scores
+gbdt_train_errors, gbdt_test_errors = -gbdt_train_scores, -gbdt_test_scores
 
 # %% tags=["solution"]
 import matplotlib.pyplot as plt
 
 plt.errorbar(
     param_range,
-    train_errors.mean(axis=1),
-    yerr=train_errors.std(axis=1),
-    label="Training score",
+    gbdt_train_errors.mean(axis=1),
+    yerr=gbdt_train_errors.std(axis=1),
+    label="Training",
 )
 plt.errorbar(
     param_range,
-    test_errors.mean(axis=1),
-    yerr=test_errors.std(axis=1),
-    label="Cross-validation score",
+    gbdt_test_errors.mean(axis=1),
+    yerr=gbdt_test_errors.std(axis=1),
+    label="Cross-validation",
 )
 
 plt.legend()

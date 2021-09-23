@@ -27,9 +27,16 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Similarly to the previous exercise, create a gradient boosting decision tree
-# and create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Use the mean absolute error
+# Create a gradient boosting decision tree with `max_depth=5` and
+# `learning_rate=0.5`.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Create a validation curve to assess the impact of the number of trees
+# on the generalization performance of the model. Evaluate the list of parameters
+# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
 # to assess the generalization performance of the model.
 
 # %%

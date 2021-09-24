@@ -61,7 +61,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # Write your code here.
 
 # %% [markdown]
-# Estimate the generalization performance of this model using the test set.
+# Estimate the generalization performance of this model using the test set
+# and `sklearn.metrics.mean_absolute_error`.
 
 # %%
 # Write your code here.

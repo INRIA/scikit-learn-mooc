@@ -105,7 +105,8 @@ gbdt.n_estimators_
 # useless.
 
 # %% [markdown]
-# Estimate the generalization performance of this model using the test set.
+# Estimate the generalization performance of this model using the test set
+# and `sklearn.metrics.mean_absolute_error`.
 
 # %%
 # solution

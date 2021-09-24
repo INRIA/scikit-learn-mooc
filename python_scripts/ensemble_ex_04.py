@@ -34,10 +34,9 @@ data_train, data_test, target_train, target_test = train_test_split(
 # Write your code here.
 
 # %% [markdown]
-# Create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Evaluate the list of parameters
-# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
-# to assess the generalization performance of the model.
+# Create a validation curve using the training set to assess the impact of the
+# number of trees on the performance of the model. Evaluate the list of parameters
+# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error.
 
 # %%
 # Write your code here.
@@ -57,6 +56,12 @@ data_train, data_test, target_train, target_test = train_test_split(
 # of trees will be too large. Change the parameter `n_iter_no_change` such
 # that the gradient boosting fitting will stop after adding 5 trees that do not
 # improve the overall generalization performance.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Estimate the generalization performance of this model using the test set.
 
 # %%
 # Write your code here.

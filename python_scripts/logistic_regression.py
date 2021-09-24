@@ -124,7 +124,10 @@ import seaborn as sns
 ax = sns.scatterplot(
     data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
     hue=target_column, palette=["tab:red", "tab:blue"])
-_ = plot_decision_function(logistic_regression, range_features, ax=ax)
+plot_decision_function(logistic_regression, range_features, ax=ax)
+plt.show()
+accuracy = logistic_regression.score(data_test, target_test)
+print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
 # Thus, we see that our decision function is represented by a line separating

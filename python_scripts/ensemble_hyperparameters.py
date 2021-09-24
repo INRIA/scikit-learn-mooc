@@ -62,8 +62,15 @@ cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
 # We can observe that in our grid-search, the largest `max_depth` together
-# with the largest `n_estimators` led to the best generalization performance.
-#
+# with the largest `n_estimators` led to the best performance in the validation
+# set. Now we will estimate the generalization performance of the best model
+# using the test set.
+
+# %%
+score = -grid_search.score(data_test, target_test)
+print(f"On average, our random forest regressor makes an error of {score:.2f} k$")
+
+# %% [markdown]
 # ## Gradient-boosting decision trees
 #
 # For gradient-boosting, parameters are coupled, so we cannot set the
@@ -121,3 +128,10 @@ cv_results[columns].sort_values(by="rank_test_score")
 # Here, we tune the `n_estimators` but be aware that using early-stopping as
 # in the previous exercise will be better.
 # ```
+
+# %% [markdown]
+# Now we estimate the generalization performance of the best model
+# using the test set.
+# %%
+score = -grid_search.score(data_test, target_test)
+print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")

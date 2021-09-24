@@ -18,7 +18,6 @@
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes
@@ -89,8 +88,9 @@ logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="l2"))
 
 # %% [markdown]
-# Given the following candidates for the `C` parameter, find out the impact of
-# `C` on the classifier decision boundary.
+# Given the following candidates for the `C` parameter, find out the impact
+# of `C` on both the classifier's decision boundary and its generalization
+# performance.
 
 # %%
 Cs = [0.01, 0.1, 1, 10]
@@ -108,6 +108,9 @@ for C in Cs:
         hue=target_column, palette=["tab:red", "tab:blue"])
     plot_decision_function(logistic_regression, range_features, ax=ax)
     plt.title(f"C: {C}")
+    plt.show()
+    accuracy = logistic_regression.score(data_test, target_test)
+    print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.

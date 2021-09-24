@@ -115,12 +115,20 @@ tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 plot_classification(tree_clf, data_clf[data_clf_columns],
                     data_clf[target_clf_column])
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-_ = plt.title(f"Shallow classification tree with max-depth of {max_depth}")
+plt.title(f"Shallow classification tree with max-depth of {max_depth}")
+plt.show()
+accuracy = tree_clf.score(data_clf[data_clf_columns],
+                          data_clf[target_clf_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %%
 plot_regression(tree_reg, data_reg[data_reg_columns],
                 data_reg[target_reg_column])
-_ = plt.title(f"Shallow regression tree with max-depth of {max_depth}")
+plt.title(f"Shallow regression tree with max-depth of {max_depth}")
+plt.show()
+accuracy = tree_reg.score(data_reg[data_reg_columns],
+                          data_reg[target_reg_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %% [markdown]
 # Now, let's increase the `max_depth` parameter value to check the difference
@@ -135,12 +143,20 @@ tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 plot_classification(tree_clf, data_clf[data_clf_columns],
                     data_clf[target_clf_column])
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-_ = plt.title(f"Deep classification tree with max-depth of {max_depth}")
+plt.title(f"Deep classification tree with max-depth of {max_depth}")
+plt.show()
+accuracy = tree_clf.score(data_clf[data_clf_columns],
+                          data_clf[target_clf_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %%
 plot_regression(tree_reg, data_reg[data_reg_columns],
                 data_reg[target_reg_column])
-_ = plt.title(f"Deep regression tree with max-depth of {max_depth}")
+plt.title(f"Deep regression tree with max-depth of {max_depth}")
+plt.show()
+accuracy = tree_reg.score(data_reg[data_reg_columns],
+                          data_reg[target_reg_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %% [markdown]
 # For both classification and regression setting, we observe that
@@ -161,14 +177,22 @@ tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid)
 plot_classification(tree_clf, data_clf[data_clf_columns],
                     data_clf[target_clf_column])
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-_ = plt.title(f"Optimal depth found via CV: "
-              f"{tree_clf.best_params_['max_depth']}")
+plt.title(f"Optimal depth found via CV: "
+          f"{tree_clf.best_params_['max_depth']}")
+plt.show()
+accuracy = tree_clf.score(data_clf[data_clf_columns],
+                          data_clf[target_clf_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %%
 plot_regression(tree_reg, data_reg[data_reg_columns],
                 data_reg[target_reg_column])
-_ = plt.title(f"Optimal depth found via CV: "
-              f"{tree_reg.best_params_['max_depth']}")
+plt.title(f"Optimal depth found via CV: "
+          f"{tree_reg.best_params_['max_depth']}")
+plt.show()
+accuracy = tree_reg.score(data_reg[data_reg_columns],
+                          data_reg[target_reg_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %% [markdown]
 # With this example, we see that there is not a single value that is optimal
@@ -225,7 +249,11 @@ max_depth = 2
 tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 plot_classification(tree_clf, data_clf[data_clf_columns],
                     data_clf[target_clf_column])
-_ = plt.title(f"Decision tree with max-depth of {max_depth}")
+plt.title(f"Decision tree with max-depth of {max_depth}")
+plt.show()
+accuracy = tree_clf.score(data_clf[data_clf_columns],
+                          data_clf[target_clf_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %% [markdown]
 # As expected, we see that the blue blob on the right and the red blob on the
@@ -252,7 +280,11 @@ max_depth = 6
 tree_clf = DecisionTreeClassifier(max_depth=max_depth)
 plot_classification(tree_clf, data_clf[data_clf_columns],
                     data_clf[target_clf_column])
-_ = plt.title(f"Decision tree with max-depth of {max_depth}")
+plt.title(f"Decision tree with max-depth of {max_depth}")
+plt.show()
+accuracy = tree_clf.score(data_clf[data_clf_columns],
+                          data_clf[target_clf_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %%
 _, ax = plt.subplots(figsize=(11, 7))
@@ -274,8 +306,12 @@ min_samples_leaf = 60
 tree_clf = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf)
 plot_classification(tree_clf, data_clf[data_clf_columns],
                     data_clf[target_clf_column])
-_ = plt.title(
+plt.title(
     f"Decision tree with leaf having at least {min_samples_leaf} samples")
+plt.show()
+accuracy = tree_clf.score(data_clf[data_clf_columns],
+                          data_clf[target_clf_column])
+print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %%
 _, ax = plt.subplots(figsize=(10, 7))

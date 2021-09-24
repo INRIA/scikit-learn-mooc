@@ -35,9 +35,9 @@ data_train, target_train = penguins[data_columns], penguins[target_column]
 # Write your code here.
 
 # %% [markdown]
-# Create a dataset ranging from the minimum to the maximum of the
-# flipper length of the training dataset. Get the predictions of each model
-# using this dataset.
+# Create a synthetic dataset containing all possible flipper length from
+# the minimum to the maximum of the training dataset. Get the predictions of
+# each model using this dataset.
 
 # %%
 # Write your code here.
@@ -51,16 +51,16 @@ data_train, target_train = penguins[data_columns], penguins[target_column]
 
 # %% [markdown]
 # Now, we will check the extrapolation capabilities of each model. Create a
-# dataset containing the same range of values as your previous dataset.
-# Besides, add values below and above the minimum and the maximum of the
-# flipper length seen during training.
+# dataset containing a broader range of values than your previous dataset,
+# in other words, add values below and above the minimum and the maximum of
+# the flipper length seen during training.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Finally, make predictions with both models on this new ranging set. Repeat
-# the plotting of the previous exercise.
+# Finally, make predictions with both models on this new interval of data.
+# Repeat the plotting of the previous exercise.
 
 # %%
 # Write your code here.

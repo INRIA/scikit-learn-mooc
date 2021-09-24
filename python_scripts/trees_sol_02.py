@@ -82,9 +82,9 @@ _ = plt.title("Prediction of linear model and a decision tree")
 
 # %% [markdown]
 # Now, we will check the extrapolation capabilities of each model. Create a
-# dataset containing the same range of values as your previous dataset.
-# Besides, add values beyond the minimum and the maximum of the
-# flipper length seen during training.
+# dataset containing a broader range of values than your previous dataset,
+# in other words, add values below and above the minimum and the maximum of
+# the flipper length seen during training.
 
 # %%
 # solution
@@ -94,8 +94,8 @@ data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min() - offset,
                          columns=data_columns)
 
 # %% [markdown]
-# Finally, make predictions with both models on this new synthetic set. Repeat
-# the plotting of the previous exercise.
+# Finally, make predictions with both models on this new interval of data.
+# Repeat the plotting of the previous exercise.
 
 # %%
 # solution

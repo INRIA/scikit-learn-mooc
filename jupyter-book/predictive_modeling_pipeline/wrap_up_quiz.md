@@ -25,9 +25,9 @@ $200,000.
 Use the `data.info()` and ` data.head()` commands to examine the columns of
 the dataframe. The dataset contains:
 
-- a) numerical features
-- b) categorical features
-- c) `datetime` features
+- a) only numerical features
+- b) only categorical features
+- c) both numerical and categorical features
 
 _Select several answers_
 ```

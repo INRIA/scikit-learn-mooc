@@ -39,12 +39,11 @@ on each fold. As we saw in the previous notebooks, you will have to use a
 the regressor.
 
 ```{admonition} Question
-What is the order of magnitude of the extremum weight values over all the
-features:
+How large is the weight with the largest absolute value in this model?
 
-- a) <= 1
-- b) <= 1,000
-- c) > 1,000
+- a) Lower than 1.0
+- b) Between 1.0 and 1,000.0
+- c) Larger than 1,000.0
 
 _Select a single answer_
 ```
@@ -55,11 +54,11 @@ Repeat the same experiment by fitting a ridge regressor
 (`sklearn.linear_model.Ridge`) with the default parameter.
 
 ```{admonition} Question
-What magnitude of the extremum weight values for all features?
+What is the value of the weight with the largest absolute value in this model?
 
-- a) <= 1
-- b) <= 100,000
-- c) > 100,000
+- a) Lower than 1.0
+- b) Between 1.0 and 100,000.0
+- c) Larger than 100,000.0
 
 _Select a single answer_
 ```
@@ -108,7 +107,7 @@ _Select a single answer_
 +++
 
 Now, we will search for the regularization strength that will maximize the
-statistical performance of our predictive model. Fit a
+generalization performance of our predictive model. Fit a
 [`sklearn.linear_model.RidgeCV`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html)
 instead of a `Ridge` regressor pass `alphas=np.logspace(-1, 3, num=30)` to
 explore the effect of changing the regularization strength.
@@ -214,10 +213,10 @@ On average, what is the increase in terms of accuracy by using the categorical
 features?
 
 - a) It gives similar results
-- b) It increases the statistical performance by 0.025
-- c) it increases the statistical performance by 0.05
-- d) it increases the statistical performance by 0.075
-- e) it increases the statistical performance by 0.1
+- b) It increases the generalization performance by 0.025
+- c) It increases the generalization performance by 0.05
+- d) It increases the generalization performance by 0.075
+- e) It increases the generalization performance by 0.1
 
 _Select a single answer_
 ```

@@ -164,19 +164,6 @@ _Select a single answer_
 
 +++
 
-```{admonition} Question
-Are there any missing values in the dataset contained in the variable `data`?
-
-- a) Yes
-- b) No
-
-_Select a single answer_
-
-Hint: you can use `df.info()` to get information regarding each column.
-```
-
-+++
-
 Fit a `sklearn.linear_model.LogisticRegression` classifier using a 10-fold
 cross-validation to assess the performance. Since we are dealing with a linear
 model, do not forget to scale the data with a `StandardScaler` before training
@@ -217,19 +204,6 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 target = adult_census["class"]
 data = adult_census.drop(columns=["class", "education-num"])
 ```
-
-```{admonition} Question
-Are there missing values in this dataset?
-
-- a) Yes
-- b) No
-
-_Select a single answer_
-
-Hint: you can use `df.info()` to get information regarding each column.
-```
-
-+++
 
 Create a predictive model where the categorical data should be one-hot encoded,
 the numerical data should be scaled, and the predictor used should be a

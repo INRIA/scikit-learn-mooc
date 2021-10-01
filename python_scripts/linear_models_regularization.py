@@ -159,16 +159,17 @@ _ = plt.title("Ridge weights")
 # previous plot, we see that the magnitude of the weights are shrunk towards
 # zero in comparison with the linear regression model.
 #
+# Regularization will add constraints on weights of the model. We saw in the
+# previous example that a ridge model will enforce that all weights have a
+# similar magnitude by penalizing large values. In fact, the larger alpha is,
+# the larger this enforcement will be. A negative value for alpha would
+# actually enhance large weights and promote overfitting.
+#
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization
 # parameter.
 #
 # ## Scale your data!
-#
-# Regularization will add constraints on weights of the model. We saw in the
-# previous example that a ridge model will enforce that all weights have a
-# similar magnitude. Indeed, the larger alpha is, the larger this enforcement
-# will be.
 #
 # This procedure should make us think about feature rescaling. Let's consider
 # the case where features have an identical data dispersion: if two features

@@ -33,9 +33,6 @@ When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
   array with 5 scores computed on the **train sets**
 - e) a Python dictionary is returned containing a key/value containing a NumPy
   array with 5 scores computed on the **test sets**
-- f) a single floating number corresponding to the average of 5 scores on the
-  test sets is returned
-- g) the 5 trained estimators are returned
 ```
 
 +++

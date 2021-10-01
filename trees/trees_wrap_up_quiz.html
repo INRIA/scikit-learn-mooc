@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -1417,16 +1417,17 @@
   <div class="section" id="wrap-up-quiz">
 <h1>🏁 Wrap-up quiz<a class="headerlink" href="#wrap-up-quiz" title="Permalink to this headline">¶</a></h1>
 <p><strong>This quiz requires some programming to be answered.</strong></p>
-<p>Open the dataset <code class="docutils literal notranslate"><span class="pre">house_prices.csv</span></code> with the following command:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">)</span>
+<p>Open the dataset <code class="docutils literal notranslate"><span class="pre">ames_housing_no_missing.csv</span></code> with the following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ames_housing</span></code> is a pandas dataframe. The column “SalePrice” contains the
-target variable. Note that we instructed pandas to treat the character “?” as a
-marker for cells with missing values also known as “null” values.</p>
+target variable.</p>
 <p>To simplify this exercise, we will only used the numerical features defined
 below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span>
@@ -1446,9 +1447,7 @@ and evaluate them by 10-fold cross-validation.</p>
 <p>Thus, use <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code> and
 <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code> to create the model. Use the default
 parameters for both models.</p>
-<p><strong>Note</strong>: missing values should be handle with a scikit-learn
-<code class="docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code> and the default strategy (<code class="docutils literal notranslate"><span class="pre">&quot;mean&quot;</span></code>). Be also
-aware that a linear model requires to scale the data. You can use a
+<p>Be aware that a linear model requires to scale the data. You can use a
 <code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code>.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
@@ -1493,7 +1492,8 @@ columns. For the sake of simplicity, we will assume the following:</p>
 <li><p>numerical columns can be selected if they do not have an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.
 It will be the complement of the numerical columns.</p></li>
 </ul>
-<p><strong>Do not optimize the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter for this exercise.</strong></p>
+<p><strong>Do not optimize the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter for this exercise.</strong> Keep the
+default value (<code class="docutils literal notranslate"><span class="pre">None</span></code>) for this parameter.</p>
 <p><strong>Fix the random state of the tree by passing the parameter <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code></strong></p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>

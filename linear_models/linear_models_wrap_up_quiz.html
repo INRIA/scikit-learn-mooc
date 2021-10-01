@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -1415,16 +1415,17 @@
   <div class="section" id="wrap-up-quiz">
 <h1>🏁 Wrap-up quiz<a class="headerlink" href="#wrap-up-quiz" title="Permalink to this headline">¶</a></h1>
 <p><strong>This quiz requires some programming to be answered.</strong></p>
-<p>Open the dataset <code class="docutils literal notranslate"><span class="pre">house_prices.csv</span></code> with the following command:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">)</span>
+<p>Open the dataset <code class="docutils literal notranslate"><span class="pre">ames_housing_no_missing.csv</span></code> with the following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ames_housing</span></code> is a pandas dataframe. The column “SalePrice” contains the
-target variable. Note that we instructed pandas to treat the character “?” as a
-marker for cells with missing values also known as “null” values.</p>
+target variable.</p>
 <p>To simplify this exercise, we will only used the numerical features defined
 below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span>
@@ -1443,17 +1444,14 @@ Use a 10-fold cross-validation and pass the argument <code class="docutils liter
 <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> to access all fitted estimators fitted
 on each fold. As we saw in the previous notebooks, you will have to use a
 <code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code> to scale the data before passing it to
-the regressor. Also, some missing data are present in the different columns.
-You can use a <code class="docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code> with the default parameters to
-impute missing data. Thus, you can create a model that will <strong>pipeline the
-scaler, followed by the imputer, followed by the linear regression</strong>.</p>
+the regressor.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What is the order of magnitude of the extremum weight values over all the features:</p>
+<p>How large is the weight with the largest absolute value in this model?</p>
 <ul class="simple">
-<li><p>a) 1e4</p></li>
-<li><p>b) 1e6</p></li>
-<li><p>c) 1e18</p></li>
+<li><p>a) Lower than 1.0</p></li>
+<li><p>b) Between 1.0 and 1,000.0</p></li>
+<li><p>c) Larger than 1,000.0</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
@@ -1461,11 +1459,11 @@ scaler, followed by the imputer, followed by the linear regression</strong>.</p>
 (<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code>) with the default parameter.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What magnitude of the extremum weight values for all features?</p>
+<p>What is the value of the weight with the largest absolute value in this model?</p>
 <ul class="simple">
-<li><p>a) 1e4</p></li>
-<li><p>b) 1e6</p></li>
-<li><p>c) 1e18</p></li>
+<li><p>a) Lower than 1.0</p></li>
+<li><p>b) Between 1.0 and 100,000.0</p></li>
+<li><p>c) Larger than 100,000.0</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
@@ -1550,16 +1548,6 @@ variable <code class="docutils literal notranslate"><span class="pre">data</span
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Are there any missing values in the dataset contained in the variable <code class="docutils literal notranslate"><span class="pre">data</span></code>?</p>
-<ul class="simple">
-<li><p>a) Yes</p></li>
-<li><p>b) No</p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-<p>Hint: you can use <code class="docutils literal notranslate"><span class="pre">df.info()</span></code> to get information regarding each column.</p>
-</div>
 <p>Fit a <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression</span></code> classifier using a 10-fold
 cross-validation to assess the performance. Since we are dealing with a linear
 model, do not forget to scale the data with a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> before training
@@ -1593,16 +1581,6 @@ load Adult Census with the following snippet:</p>
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 </pre></div>
-</div>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Are there missing values in this dataset?</p>
-<ul class="simple">
-<li><p>a) Yes</p></li>
-<li><p>b) No</p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-<p>Hint: you can use <code class="docutils literal notranslate"><span class="pre">df.info()</span></code> to get information regarding each column.</p>
 </div>
 <p>Create a predictive model where the categorical data should be one-hot encoded,
 the numerical data should be scaled, and the predictor used should be a

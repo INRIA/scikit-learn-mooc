@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -1492,26 +1492,32 @@ California Housing dataset
     :Number of Attributes: 8 numeric, predictive attributes and the target
 
     :Attribute Information:
-        - MedInc        median income in block
-        - HouseAge      median house age in block
-        - AveRooms      average number of rooms
-        - AveBedrms     average number of bedrooms
-        - Population    block population
-        - AveOccup      average house occupancy
-        - Latitude      house block latitude
-        - Longitude     house block longitude
+        - MedInc        median income in block group
+        - HouseAge      median house age in block group
+        - AveRooms      average number of rooms per household
+        - AveBedrms     average number of bedrooms per household
+        - Population    block group population
+        - AveOccup      average number of household members
+        - Latitude      block group latitude
+        - Longitude     block group longitude
 
     :Missing Attribute Values: None
 
 This dataset was obtained from the StatLib repository.
-http://lib.stat.cmu.edu/datasets/
+https://www.dcc.fc.up.pt/~ltorgo/Regression/cal_housing.html
 
-The target variable is the median house value for California districts.
+The target variable is the median house value for California districts,
+expressed in hundreds of thousands of dollars ($100,000).
 
 This dataset was derived from the 1990 U.S. census, using one row per census
 block group. A block group is the smallest geographical unit for which the U.S.
 Census Bureau publishes sample data (a block group typically has a population
 of 600 to 3,000 people).
+
+An household is a group of people residing within a home. Since the average
+number of rooms and bedrooms in this dataset are provided per household, these
+columns may take surpinsingly large values for block groups with few households
+and many empty houses, such as vacation resorts.
 
 It can be downloaded/loaded using the
 :func:`sklearn.datasets.fetch_california_housing` function.
@@ -1848,32 +1854,32 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.196538</td>
-      <td>0.004264</td>
+      <td>0.148744</td>
+      <td>0.004313</td>
       <td>-46.909797</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.173958</td>
-      <td>0.004171</td>
+      <td>0.154589</td>
+      <td>0.004317</td>
       <td>-46.421170</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.172339</td>
-      <td>0.004182</td>
+      <td>0.152584</td>
+      <td>0.004087</td>
       <td>-47.411089</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.174510</td>
-      <td>0.004209</td>
+      <td>0.155116</td>
+      <td>0.005586</td>
       <td>-44.319824</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.170731</td>
-      <td>0.004170</td>
+      <td>0.147180</td>
+      <td>0.004471</td>
       <td>-47.607875</td>
     </tr>
   </tbody>
@@ -1937,71 +1943,71 @@ score.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.196538</td>
-      <td>0.004264</td>
+      <td>0.148744</td>
+      <td>0.004313</td>
       <td>-46.909797</td>
       <td>46.909797</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.173958</td>
-      <td>0.004171</td>
+      <td>0.154589</td>
+      <td>0.004317</td>
       <td>-46.421170</td>
       <td>46.421170</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.172339</td>
-      <td>0.004182</td>
+      <td>0.152584</td>
+      <td>0.004087</td>
       <td>-47.411089</td>
       <td>47.411089</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.174510</td>
-      <td>0.004209</td>
+      <td>0.155116</td>
+      <td>0.005586</td>
       <td>-44.319824</td>
       <td>44.319824</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.170731</td>
-      <td>0.004170</td>
+      <td>0.147180</td>
+      <td>0.004471</td>
       <td>-47.607875</td>
       <td>47.607875</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.173078</td>
-      <td>0.004182</td>
+      <td>0.152745</td>
+      <td>0.004777</td>
       <td>-45.901300</td>
       <td>45.901300</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.174084</td>
-      <td>0.004223</td>
+      <td>0.143792</td>
+      <td>0.003898</td>
       <td>-46.572767</td>
       <td>46.572767</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.174209</td>
-      <td>0.004264</td>
+      <td>0.134562</td>
+      <td>0.004097</td>
       <td>-46.194585</td>
       <td>46.194585</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.174633</td>
-      <td>0.004118</td>
+      <td>0.132889</td>
+      <td>0.003467</td>
       <td>-45.590236</td>
       <td>45.590236</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.175318</td>
-      <td>0.004207</td>
+      <td>0.140669</td>
+      <td>0.004256</td>
       <td>-45.727998</td>
       <td>45.727998</td>
     </tr>
@@ -2137,8 +2143,8 @@ passing the option <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.21222138, 0.19869828, 0.19875336, 0.19958425, 0.19324183]),
- &#39;score_time&#39;: array([0.00297618, 0.00297022, 0.00306177, 0.00293064, 0.00297785]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.16871119, 0.16790533, 0.15603042, 0.15334463, 0.14153719]),
+ &#39;score_time&#39;: array([0.00308919, 0.00341558, 0.00332761, 0.00275016, 0.00255322]),
  &#39;estimator&#39;: [DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),

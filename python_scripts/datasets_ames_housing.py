@@ -184,12 +184,12 @@ numerical_features = [
 ]
 categorical_features = data.columns.difference(numerical_features)
 
-categorical_processor = SimpleImputer(strategy="most_frequent")
-numerical_processor = SimpleImputer()
+most_frequent_imputer = SimpleImputer(strategy="most_frequent")
+mean_imputer = SimpleImputer(strategy="mean")
 
 preprocessor = make_column_transformer(
-    (categorical_processor, categorical_features),
-    (numerical_processor, numerical_features),
+    (most_frequent_imputer, categorical_features),
+    (mean_imputer, numerical_features),
 )
 ames_housing_preprocessed = pd.DataFrame(
     preprocessor.fit_transform(ames_housing),

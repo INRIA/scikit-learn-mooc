@@ -197,4 +197,4 @@ ames_housing_preprocessed = pd.DataFrame(
 )
 ames_housing_preprocessed = ames_housing_preprocessed[ames_housing.columns]
 ames_housing_preprocessed = ames_housing_preprocessed.astype(ames_housing.dtypes)
-(ames_housing_no_missing == ames_housing_preprocessed).head()
+(ames_housing_no_missing == ames_housing_preprocessed).all()

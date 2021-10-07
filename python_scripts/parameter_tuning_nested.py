@@ -85,7 +85,7 @@ cv_results = cross_validate(model, data, target, cv=5)
 cv_results = pd.DataFrame(cv_results)
 cv_results
 
-# %%
+# %% [markdown]
 # The cross-validation scores are coming from a 5-fold cross-validation. So
 # we can compute the mean and standard deviation of the generalization score.
 

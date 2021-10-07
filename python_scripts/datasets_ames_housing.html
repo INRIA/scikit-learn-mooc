@@ -1429,6 +1429,7 @@ will be parsed by pandas when opening the file.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Id&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1459,7 +1460,6 @@ will be parsed by pandas when opening the file.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Id</th>
       <th>MSSubClass</th>
       <th>MSZoning</th>
       <th>LotFrontage</th>
@@ -1469,6 +1469,7 @@ will be parsed by pandas when opening the file.</p>
       <th>LotShape</th>
       <th>LandContour</th>
       <th>Utilities</th>
+      <th>LotConfig</th>
       <th>...</th>
       <th>PoolArea</th>
       <th>PoolQC</th>
@@ -1485,7 +1486,6 @@ will be parsed by pandas when opening the file.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1</td>
       <td>60</td>
       <td>RL</td>
       <td>65.0</td>
@@ -1495,6 +1495,7 @@ will be parsed by pandas when opening the file.</p>
       <td>Reg</td>
       <td>Lvl</td>
       <td>AllPub</td>
+      <td>Inside</td>
       <td>...</td>
       <td>0</td>
       <td>NaN</td>
@@ -1509,7 +1510,6 @@ will be parsed by pandas when opening the file.</p>
     </tr>
     <tr>
       <th>1</th>
-      <td>2</td>
       <td>20</td>
       <td>RL</td>
       <td>80.0</td>
@@ -1519,6 +1519,7 @@ will be parsed by pandas when opening the file.</p>
       <td>Reg</td>
       <td>Lvl</td>
       <td>AllPub</td>
+      <td>FR2</td>
       <td>...</td>
       <td>0</td>
       <td>NaN</td>
@@ -1533,7 +1534,6 @@ will be parsed by pandas when opening the file.</p>
     </tr>
     <tr>
       <th>2</th>
-      <td>3</td>
       <td>60</td>
       <td>RL</td>
       <td>68.0</td>
@@ -1543,6 +1543,7 @@ will be parsed by pandas when opening the file.</p>
       <td>IR1</td>
       <td>Lvl</td>
       <td>AllPub</td>
+      <td>Inside</td>
       <td>...</td>
       <td>0</td>
       <td>NaN</td>
@@ -1557,7 +1558,6 @@ will be parsed by pandas when opening the file.</p>
     </tr>
     <tr>
       <th>3</th>
-      <td>4</td>
       <td>70</td>
       <td>RL</td>
       <td>60.0</td>
@@ -1567,6 +1567,7 @@ will be parsed by pandas when opening the file.</p>
       <td>IR1</td>
       <td>Lvl</td>
       <td>AllPub</td>
+      <td>Corner</td>
       <td>...</td>
       <td>0</td>
       <td>NaN</td>
@@ -1581,7 +1582,6 @@ will be parsed by pandas when opening the file.</p>
     </tr>
     <tr>
       <th>4</th>
-      <td>5</td>
       <td>60</td>
       <td>RL</td>
       <td>84.0</td>
@@ -1591,6 +1591,7 @@ will be parsed by pandas when opening the file.</p>
       <td>IR1</td>
       <td>Lvl</td>
       <td>AllPub</td>
+      <td>FR2</td>
       <td>...</td>
       <td>0</td>
       <td>NaN</td>
@@ -1605,7 +1606,7 @@ will be parsed by pandas when opening the file.</p>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 81 columns</p>
+<p>5 rows × 80 columns</p>
 </div></div></div>
 </div>
 <p>We see that the last column named <code class="docutils literal notranslate"><span class="pre">&quot;SalePrice&quot;</span></code> is indeed the target that we
@@ -1613,8 +1614,8 @@ would like to predict. So we will split our dataset into two variables
 containing the data and the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">,</span> <span class="s2">&quot;SalePrice&quot;</span><span class="p">])</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">),</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1934,6 +1935,260 @@ count for each feature.</p>
 </ul>
 <p>Knowing about these peculiarities would help at designing the predictive
 pipeline.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to keep the content of the course simple and didactic, we
+created a version of this database without missing values.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing_no_missing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
+<span class="n">ames_housing_no_missing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MSSubClass</th>
+      <th>MSZoning</th>
+      <th>LotFrontage</th>
+      <th>LotArea</th>
+      <th>Street</th>
+      <th>Alley</th>
+      <th>LotShape</th>
+      <th>LandContour</th>
+      <th>Utilities</th>
+      <th>LotConfig</th>
+      <th>...</th>
+      <th>PoolArea</th>
+      <th>PoolQC</th>
+      <th>Fence</th>
+      <th>MiscFeature</th>
+      <th>MiscVal</th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+      <th>SaleType</th>
+      <th>SaleCondition</th>
+      <th>SalePrice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>60</td>
+      <td>RL</td>
+      <td>65.0</td>
+      <td>8450</td>
+      <td>Pave</td>
+      <td>Grvl</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>Inside</td>
+      <td>...</td>
+      <td>0</td>
+      <td>Gd</td>
+      <td>MnPrv</td>
+      <td>Shed</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>208500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20</td>
+      <td>RL</td>
+      <td>80.0</td>
+      <td>9600</td>
+      <td>Pave</td>
+      <td>Grvl</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>FR2</td>
+      <td>...</td>
+      <td>0</td>
+      <td>Gd</td>
+      <td>MnPrv</td>
+      <td>Shed</td>
+      <td>0</td>
+      <td>5</td>
+      <td>2007</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>181500</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>60</td>
+      <td>RL</td>
+      <td>68.0</td>
+      <td>11250</td>
+      <td>Pave</td>
+      <td>Grvl</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>Inside</td>
+      <td>...</td>
+      <td>0</td>
+      <td>Gd</td>
+      <td>MnPrv</td>
+      <td>Shed</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>223500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>70</td>
+      <td>RL</td>
+      <td>60.0</td>
+      <td>9550</td>
+      <td>Pave</td>
+      <td>Grvl</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>Corner</td>
+      <td>...</td>
+      <td>0</td>
+      <td>Gd</td>
+      <td>MnPrv</td>
+      <td>Shed</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Abnorml</td>
+      <td>140000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>60</td>
+      <td>RL</td>
+      <td>84.0</td>
+      <td>14260</td>
+      <td>Pave</td>
+      <td>Grvl</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>FR2</td>
+      <td>...</td>
+      <td>0</td>
+      <td>Gd</td>
+      <td>MnPrv</td>
+      <td>Shed</td>
+      <td>0</td>
+      <td>12</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>250000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 80 columns</p>
+</div></div></div>
+</div>
+<p>It contains the same information as the original dataset after using a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html"><code class="docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code></a>
+to replace missing values using the mean along each numerical column
+(including the target), and the most frequent value along each categorical column.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_transformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+
+<span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;LotFrontage&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LotArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MasVnrArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BsmtFinSF1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BsmtFinSF2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BsmtUnfSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TotalBsmtSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1stFlrSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;2ndFlrSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LowQualFinSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GrLivArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BedroomAbvGr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KitchenAbvGr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TotRmsAbvGrd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Fireplaces&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GarageCars&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GarageArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WoodDeckSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OpenPorchSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EnclosedPorch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;3SsnPorch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ScreenPorch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PoolArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MiscVal&quot;</span><span class="p">,</span>
+    <span class="n">target_name</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">categorical_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">numerical_features</span><span class="p">)</span>
+
+<span class="n">most_frequent_imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<span class="n">mean_imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">most_frequent_imputer</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">mean_imputer</span><span class="p">,</span> <span class="n">numerical_features</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ames_housing</span><span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">categorical_features</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="n">numerical_features</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">ames_housing_preprocessed</span><span class="p">[</span><span class="n">ames_housing</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">ames_housing_preprocessed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">ames_housing</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="p">(</span><span class="n">ames_housing_no_missing</span> <span class="o">==</span> <span class="n">ames_housing_preprocessed</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSSubClass       True
+MSZoning         True
+LotFrontage      True
+LotArea          True
+Street           True
+                 ... 
+MoSold           True
+YrSold           True
+SaleType         True
+SaleCondition    True
+SalePrice        True
+Length: 80, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

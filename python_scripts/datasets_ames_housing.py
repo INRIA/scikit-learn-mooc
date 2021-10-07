@@ -18,6 +18,7 @@
 import pandas as pd
 
 ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values='?')
+ames_housing = ames_housing.drop(columns="Id")
 
 # %% [markdown]
 # We can have a first look at the available columns in this dataset.
@@ -31,8 +32,8 @@ ames_housing.head()
 # containing the data and the target.
 
 # %%
-data = ames_housing.drop(columns=["Id", "SalePrice"])
-target = ames_housing["SalePrice"]
+target_name = "SalePrice"
+data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
 
 # %% [markdown]
 # Let's have a quick look at the target before to focus on the data.
@@ -131,3 +132,69 @@ plt.subplots_adjust(hspace=0.2, wspace=0.8)
 #
 # Knowing about these peculiarities would help at designing the predictive
 # pipeline.
+
+# %% [markdown]
+# ```{note}
+# In order to keep the content of the course simple and didactic, we
+# created a version of this database without missing values.
+# ```
+
+# %%
+ames_housing_no_missing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
+ames_housing_no_missing.head()
+
+# %% [markdown]
+# It contains the same information as the original dataset after using a
+# [`sklearn.impute.SimpleImputer`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html)
+# to replace missing values using the mean along each numerical column
+# (including the target), and the most frequent value along each categorical column.
+
+# %%
+from sklearn.compose import make_column_transformer
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import make_pipeline
+
+
+numerical_features = [
+    "LotFrontage",
+    "LotArea",
+    "MasVnrArea",
+    "BsmtFinSF1",
+    "BsmtFinSF2",
+    "BsmtUnfSF",
+    "TotalBsmtSF",
+    "1stFlrSF",
+    "2ndFlrSF",
+    "LowQualFinSF",
+    "GrLivArea",
+    "BedroomAbvGr",
+    "KitchenAbvGr",
+    "TotRmsAbvGrd",
+    "Fireplaces",
+    "GarageCars",
+    "GarageArea",
+    "WoodDeckSF",
+    "OpenPorchSF",
+    "EnclosedPorch",
+    "3SsnPorch",
+    "ScreenPorch",
+    "PoolArea",
+    "MiscVal",
+    target_name,
+]
+categorical_features = data.columns.difference(numerical_features)
+
+most_frequent_imputer = SimpleImputer(strategy="most_frequent")
+mean_imputer = SimpleImputer(strategy="mean")
+
+preprocessor = make_column_transformer(
+    (most_frequent_imputer, categorical_features),
+    (mean_imputer, numerical_features),
+)
+ames_housing_preprocessed = pd.DataFrame(
+    preprocessor.fit_transform(ames_housing),
+    columns=categorical_features.tolist() + numerical_features,
+)
+ames_housing_preprocessed = ames_housing_preprocessed[ames_housing.columns]
+ames_housing_preprocessed = ames_housing_preprocessed.astype(ames_housing.dtypes)
+(ames_housing_no_missing == ames_housing_preprocessed).all()

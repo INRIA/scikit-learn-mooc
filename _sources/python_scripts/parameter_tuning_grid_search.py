@@ -136,13 +136,14 @@ print(
 
 # %% [markdown]
 # ```{warning}
-# Be aware that the evaluation should normally be performed in a
-# cross-validation framework by providing `model_grid_search` as a model to
-# the `cross_validate` function.
+# Be aware that the evaluation should normally be performed through
+# cross-validation by providing `model_grid_search` as a model to the
+# `cross_validate` function.
 #
-# Here, we are using a single train-test split to highlight the specificities
-# of the `model_grid_search` instance. We will show such examples in the last
-# section of this notebook.
+# Here, we used a single train-test split to to evaluate `model_grid_search`.
+# In a future notebook will go into more detail about nested cross-validation,
+# when you use cross-validation both for hyperparameter tuning and model
+# evaluation.
 # ```
 
 # %% [markdown]

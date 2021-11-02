@@ -133,9 +133,6 @@ data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
 
 # %%
-encoder.categories_
-
-# %%
 print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
 

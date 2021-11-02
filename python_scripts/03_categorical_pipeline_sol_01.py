@@ -127,5 +127,5 @@ print("The mean cross-validation accuracy is: "
 # any ordering lead to much better result.
 #
 # The important message here is: linear model and `OrdinalEncoder` are used
-# together only for ordinal categorical features, features with a specific
-# ordering. Otherwise, your model will perform poorly.
+# together only for ordinal categorical features, i.e. features that have a
+# specific ordering. Otherwise, your model will perform poorly.

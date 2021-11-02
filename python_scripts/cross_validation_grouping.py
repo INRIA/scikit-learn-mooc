@@ -65,7 +65,6 @@ all_scores = pd.DataFrame(
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 all_scores.plot.hist(bins=10, edgecolor="black", density=True, alpha=0.7)
 plt.xlim([0.8, 1.0])

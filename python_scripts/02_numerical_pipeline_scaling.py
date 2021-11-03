@@ -390,9 +390,13 @@ cv_result
 # trained to the full training set, along with an estimate of the variability
 # (uncertainty on the generalization accuracy).
 #
-# You can pass additional parameters to `cross_validate` to get more
-# information, for instance training scores. These features will be covered in
-# a future notebook.
+# Setting `cv=5` or `cv=10` is a common practice, as it is a good trade-off between
+# computation time and stability of the estimated variability.
+#
+# You can pass additional parameters to
+# [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
+# to get more information, for instance training scores. These features will be
+# covered in a future notebook.
 #
 # Let's extract the test scores from the `cv_result` dictionary and compute
 # the mean accuracy and the variation of the accuracy across folds.

@@ -67,7 +67,7 @@ categorical_columns = categorical_columns_selector(data)
 categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
                                           unknown_value=-1)
 preprocessor = ColumnTransformer([
-    ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    ('cat_preprocessor', categorical_preprocessor, categorical_columns)],
     remainder='passthrough', sparse_threshold=0)
 
 # %%

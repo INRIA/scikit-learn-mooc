@@ -46,7 +46,7 @@ from sklearn.preprocessing import OrdinalEncoder
 categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
                                           unknown_value=-1)
 preprocessor = ColumnTransformer(
-    [('cat-preprocessor', categorical_preprocessor,
+    [('cat_preprocessor', categorical_preprocessor,
       selector(dtype_include=object))],
     remainder='passthrough', sparse_threshold=0)
 

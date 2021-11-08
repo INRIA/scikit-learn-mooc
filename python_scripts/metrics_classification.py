@@ -139,9 +139,9 @@ classifier.score(data_test, target_test)
 # - we predicted that a person will not give blood but she/he did.
 
 # %%
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
 
-_ = plot_confusion_matrix(classifier, data_test, target_test)
+_ = ConfusionMatrixDisplay.from_estimator(classifier, data_test, target_test)
 
 # %% [markdown]
 # The in-diagonal numbers are related to predictions that were correct
@@ -277,9 +277,9 @@ np.all(equivalence_pred_proba)
 # decision threshold. Let's start by computing the precision-recall curve.
 
 # %%
-from sklearn.metrics import plot_precision_recall_curve
+from sklearn.metrics import PrecisionRecallDisplay
 
-disp = plot_precision_recall_curve(
+disp = PrecisionRecallDisplay.from_estimator(
     classifier, data_test, target_test, pos_label='donated',
     marker="+"
 )
@@ -314,12 +314,12 @@ _ = disp.ax_.set_title("Precision-recall curve")
 # (ROC) curve. Below is such a curve:
 
 # %%
-from sklearn.metrics import plot_roc_curve
+from sklearn.metrics import RocCurveDisplay
 
-disp = plot_roc_curve(
+disp = RocCurveDisplay.from_estimator(
     classifier, data_test, target_test, pos_label='donated',
     marker="+")
-disp = plot_roc_curve(
+disp = RocCurveDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
 _ = disp.ax_.set_title("ROC AUC curve")

@@ -54,9 +54,12 @@ def plot_classification(model, X, y, ax=None):
         np.arange(*range_features[feature_names[0]], plot_step),
         np.arange(*range_features[feature_names[1]], plot_step),
     )
+    grid = pd.DataFrame(np.c_[xx.ravel(), yy.ravel()],
+                        columns=[feature_names[0], feature_names[1]],
+                       )
 
     # compute the associated prediction
-    Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = model.predict(grid)
     Z = LabelEncoder().fit_transform(Z)
     Z = Z.reshape(xx.shape)
 

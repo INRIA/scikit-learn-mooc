@@ -101,7 +101,6 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
     return ax
 
-
 # %% [markdown]
 # The linear regression that we previously saw will predict a continuous
 # output. When the target is a binary outcome, one can use the logistic

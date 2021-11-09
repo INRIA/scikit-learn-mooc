@@ -66,7 +66,7 @@ classifier.fit(data_train, target_train)
 # was 6 months ago, and the first time goes back to 20 months ago.
 
 # %%
-new_donor = [[6, 2, 1000, 20]]
+new_donor = pd.DataFrame([[6, 2, 1000, 20]], columns=data.columns)
 
 # %% [markdown]
 # We can get the class predicted by the classifier by calling the method

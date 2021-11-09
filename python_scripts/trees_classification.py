@@ -172,14 +172,16 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # class predicted when the culmen depth is inferior to the threshold.
 
 # %%
-tree.predict([[0, 15]])
+sample_1 = pd.DataFrame([[0, 15]], columns=culmen_columns)
+tree.predict(sample_1)
 
 # %% [markdown]
 # The class predicted is the Gentoo. We can now check if we pass a culmen
 # depth superior to the threshold.
 
 # %%
-tree.predict([[0, 17]])
+sample_2 = pd.DataFrame([[0, 17]], columns=culmen_columns)
+tree.predict(sample_2)
 
 # %% [markdown]
 # In this case, the tree predicts the Adelie specie.
@@ -192,7 +194,7 @@ tree.predict([[0, 17]])
 # partition.
 
 # %%
-y_pred_proba = tree.predict_proba([[0, 17]])
+y_pred_proba = tree.predict_proba(sample_2)
 y_proba_class_0 = pd.Series(y_pred_proba[0], index=tree.classes_)
 
 # %%
@@ -219,7 +221,8 @@ print(f"Probabilities for the different classes:\n"
 # during the prediction.
 
 # %%
-tree.predict_proba([[10000, 17]])
+sample_3 = pd.DataFrame([[10000, 17]], columns=culmen_columns)
+tree.predict_proba(sample_3)
 
 # %% [markdown]
 # Going back to our classification problem, the split found with a maximum

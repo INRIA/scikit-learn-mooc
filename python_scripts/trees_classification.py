@@ -55,9 +55,10 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
         np.arange(*range_features[feature_names[0]], plot_step),
         np.arange(*range_features[feature_names[1]], plot_step),
     )
-    grid = pd.DataFrame(np.c_[xx.ravel(), yy.ravel()],
-                        columns=[feature_names[0], feature_names[1]],
-                       )
+    grid = pd.DataFrame(
+        np.c_[xx.ravel(), yy.ravel()],
+        columns=[feature_names[0], feature_names[1]],
+    )
 
     # compute the associated prediction
     Z = fitted_classifier.predict(grid)
@@ -220,10 +221,12 @@ _ = plt.title("Probability to belong to a penguin class")
 adelie_proba = 103 / 161
 chinstrap_proba = 52 / 161
 gentoo_proba = 6 / 161
-print(f"Probabilities for the different classes:\n"
-      f"Adelie: {adelie_proba:.3f}\n"
-      f"Chinstrap: {chinstrap_proba:.3f}\n"
-      f"Gentoo: {gentoo_proba:.3f}\n")
+print(
+    f"Probabilities for the different classes:\n"
+    f"Adelie: {adelie_proba:.3f}\n"
+    f"Chinstrap: {chinstrap_proba:.3f}\n"
+    f"Gentoo: {gentoo_proba:.3f}\n"
+)
 
 # %% [markdown]
 # It is also important to note that the culmen length has been disregarded for

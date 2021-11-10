@@ -68,10 +68,10 @@ classifier.fit(data_train, target_train)
 # %%
 new_donor = pd.DataFrame(
     {
-    "Recency": 6,
-    "Frequency": 2,
-    "Monetary": 1000,
-    "Time": 20,
+    "Recency": [6],
+    "Frequency": [2],
+    "Monetary": [1000],
+    "Time": [20],
     }
 )
 

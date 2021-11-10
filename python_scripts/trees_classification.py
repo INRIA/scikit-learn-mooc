@@ -172,7 +172,12 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # class predicted when the culmen depth is inferior to the threshold.
 
 # %%
-sample_1 = pd.DataFrame([[0, 15]], columns=culmen_columns)
+sample_1 = pd.DataFrame(
+    {
+        "Culmen Length (mm)": 0,
+        "Culmen Depth (mm)": 15,
+    }
+)
 tree.predict(sample_1)
 
 # %% [markdown]
@@ -180,7 +185,12 @@ tree.predict(sample_1)
 # depth superior to the threshold.
 
 # %%
-sample_2 = pd.DataFrame([[0, 17]], columns=culmen_columns)
+sample_2 = pd.DataFrame(
+    {
+        "Culmen Length (mm)": 0,
+        "Culmen Depth (mm)": 17,
+    }
+)
 tree.predict(sample_2)
 
 # %% [markdown]
@@ -221,7 +231,12 @@ print(f"Probabilities for the different classes:\n"
 # during the prediction.
 
 # %%
-sample_3 = pd.DataFrame([[10000, 17]], columns=culmen_columns)
+sample_3 = pd.DataFrame(
+    {
+        "Culmen Length (mm)": 10000,
+        "Culmen Depth (mm)": 17,
+    }
+)
 tree.predict_proba(sample_3)
 
 # %% [markdown]

@@ -163,7 +163,7 @@ _ = plt.title("Ridge weights")
 
 # %% [markdown]
 # By comparing the magnitude of the weights on this plot compared to the
-# previous plot, we see that the magnitude of the weights are shrunk towards
+# previous plot, we see that the magnitude of the weights is shrunk towards
 # zero in comparison with the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to

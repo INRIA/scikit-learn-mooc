@@ -131,6 +131,13 @@ cv_results = cross_validate(ridge, data, target,
                             return_train_score=True,
                             return_estimator=True)
 
+# %% [markdown]
+# The code cell above will generate a couple of warnings because the features
+# included both extremely large and extremely small values, which are causing
+# problems with the underlying linear algebra solver used to fit the model.
+#
+# We can explore the train and test scores of this model.
+
 # %%
 train_error = -cv_results["train_score"]
 print(f"Mean squared error of linear regression model on the train set:\n"

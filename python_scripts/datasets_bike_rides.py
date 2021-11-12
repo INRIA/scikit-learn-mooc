@@ -132,8 +132,8 @@ data.index.normalize().nunique()
 
 # %%
 date_first_ride = "2020-08-18"
-cycling_ride = cycling[date_first_ride]
-data_ride, target_ride = data[date_first_ride], target[date_first_ride]
+cycling_ride = cycling.loc[date_first_ride]
+data_ride, target_ride = data.loc[date_first_ride], target.loc[date_first_ride]
 
 # %%
 data_ride.plot()

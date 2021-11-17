@@ -348,14 +348,14 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # ![Cross-validation diagram](../figures/cross_validation_diagram.png)
 #
 # ```{note}
-# This figure shows the particular case of K-fold cross-validation strategy.
+# This figure shows the particular case of **K-fold** cross-validation strategy.
+# For each cross-validation split, the procedure trains a model on all the red
+# samples and evaluate the score of the model on the blue samples.
 # As mentioned earlier, there are a variety of different cross-validation
-# strategies. Some of these aspects will be covered in more details in future
+# strategies. Some of these aspects will be covered in more detail in future
 # notebooks.
 # ```
 #
-# For each cross-validation split, the procedure trains a model on all the red
-# samples and evaluate the score of the model on the blue samples.
 # Cross-validation is therefore computationally intensive because it requires
 # training several models instead of one.
 #

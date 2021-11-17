@@ -168,7 +168,19 @@ print(f"The testing error of our model is {score:.2f} k$")
 # - train a new model on the train set;
 # - evaluate the testing error on the test set.
 #
-# We repeat this procedure `n_splits` times. Using `n_splits=40` means that we
+# We repeat this procedure `n_splits` times. Keep in mind that the computational
+# cost increases with `n_splits`.
+#
+# ![Cross-validation diagram](../figures/shufflesplit_diagram.png)
+#
+# ```{note}
+# This figure shows the particular case of **shuffle-split** cross-validation
+# strategy using `n_splits=5`.
+# For each cross-validation split, the procedure trains a model on all the red
+# samples and evaluate the score of the model on the blue samples.
+# ```
+#
+# In this case we will set `n_splits=40`, meaning that we
 # will train 40 models in total and all of them will be discarded: we just
 # record their generalization performance on each variant of the test set.
 #

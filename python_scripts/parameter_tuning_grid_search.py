@@ -83,7 +83,7 @@ categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
 from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer([
-    ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    ('cat_preprocessor', categorical_preprocessor, categorical_columns)],
     remainder='passthrough', sparse_threshold=0)
 
 # %% [markdown]

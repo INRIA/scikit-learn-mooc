@@ -103,7 +103,7 @@ print(f"The mean score using nested cross-validation is: "
 # to production's expected generalization performance.
 #
 # We will illustrate the difference between the nested and non-nested
-# cross-validation scores to show that the latter will be too optimistic in
+# cross-validation scores to show that the latter are too optimistic in
 # practice. In this regard, we will repeat several times the experiment and
 # shuffle the data differently. Besides, we will store the score obtained with
 # and without the nested cross-validation.

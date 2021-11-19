@@ -158,4 +158,4 @@ _ = plt.title("Comparison of mean accuracy obtained on the test sets with\n"
 # As a conclusion, when optimizing parts of the machine learning pipeline (e.g.
 # hyperparameter, transform, etc.), one needs to use nested cross-validation to
 # evaluate the generalization performance of the predictive model. Otherwise,
-# the results obtained without nested cross-validation are over-optimistic.
+# the results obtained without nested cross-validation are often overly optimistic.

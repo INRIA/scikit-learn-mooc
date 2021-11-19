@@ -55,9 +55,12 @@ categorical_columns = categorical_columns_selector(data)
 # ```{caution}
 # Here, we know that `object` data type is used to represent strings and thus
 # categorical features. Be aware that this is not always the case. Sometimes
-# `object` data type could contain other type of information (e.g. dates that
-# were not parsed) and you should manually introspect the content of your
-# dataframe to not wrongly use `make_column_selector`.
+# `object` data type could contain other types of information, such as dates that
+# were not properly formatted (strings) and yet relate to a quantity of
+# elapsed  time.
+#
+# In a more general scenario you should manually introspect the content of your
+# dataframe not to wrongly use `make_column_selector`.
 # ```
 
 # %% [markdown]

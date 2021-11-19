@@ -29,7 +29,7 @@ data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
 
 # %% [markdown]
-# FIXME: update the following description
+#
 # In a previous notebook, we learnt that a linear classifier will define a
 # linear separation to split classes using a linear combination of the input
 # features. In our 2-dimensional space, it means that a linear classifier will

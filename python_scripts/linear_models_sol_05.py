@@ -68,9 +68,12 @@ for C in Cs:
     logistic_regression.set_params(logisticregression__C=C)
     logistic_regression.fit(data_train, target_train)
 
-    plt.figure()
     DecisionBoundaryDisplay.from_estimator(
-        logistic_regression, data_test, cmap="RdBu_r"
+        logistic_regression,
+        data_test,
+        response_method="predict",
+        cmap="RdBu_r",
+        alpha=0.5,
     )
     sns.scatterplot(
         data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],

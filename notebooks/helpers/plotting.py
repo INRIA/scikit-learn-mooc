@@ -7,6 +7,8 @@ from sklearn.utils import _safe_indexing
 def _check_boundary_response_method(estimator, response_method):
     """Return prediction method from the `response_method` for decision boundary.
 
+    This is used in `DecisionBoundaryDisplay`.
+
     Parameters
     ----------
     estimator : object
@@ -64,9 +66,9 @@ class DecisionBoundaryDisplay:
     to create a :class:`DecisionBoundaryDisplay`. All parameters are stored as
     attributes.
 
-    Read more in the :ref:`User Guide <visualizations>`.
-
-    .. versionadded:: 1.0
+    This function is a port of the following PR and will be removed when
+    the following will be merged upstream:
+    https://github.com/scikit-learn/scikit-learn/pull/16061
 
     Parameters
     ----------

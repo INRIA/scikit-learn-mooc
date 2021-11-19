@@ -58,18 +58,7 @@ data_test = penguins_test[culmen_columns]
 target_train = penguins_train[target_column]
 target_test = penguins_test[target_column]
 
-range_features = {
-    feature_name: (penguins[feature_name].min() - 1,
-                   penguins[feature_name].max() + 1)
-    for feature_name in culmen_columns
-}
-
 # %% [markdown]
-# FIXME: update the description here.
-# To visualize the separation found by our classifier, we will define a helper
-# function `plot_decision_function`. In short, this function will plot the edge
-# of the decision function, where the probability to be an Adelie or Chinstrap
-# will be equal (p=0.5).
 #
 # The linear regression that we previously saw will predict a continuous
 # output. When the target is a binary outcome, one can use the logistic
@@ -89,11 +78,30 @@ logistic_regression = make_pipeline(
 )
 logistic_regression.fit(data_train, target_train)
 
+# %% [markdown]
+#
+# Since we are dealing with a classification problem containing only 2
+# features, it is then possible to observe the decision function boundary.
+# The boundary is the rule used by our predictive model to affect a class label
+# given the feature values of the sample.
+#
+# ```{note}
+# Here, we will use the class `DecisionBoundaryDisplay`. We provide this class
+# to allow making plots of the decision function boundary in a 2 dimensional
+# space. The implementation can be found [here](
+# https://github.com/INRIA/scikit-learn-mooc/blob/master/python_scripts/helpers/plotting.py).
+# This class is intended to be part of the `scikit-learn` package in the future
+# as it is proposed in the following [Pull-Request](
+# https://github.com/scikit-learn/scikit-learn/pull/16061).
+# ```
+
 # %%
 import seaborn as sns
 from helpers.plotting import DecisionBoundaryDisplay
 
-DecisionBoundaryDisplay.from_estimator(logistic_regression, data_test, cmap="RdBu_r")
+DecisionBoundaryDisplay.from_estimator(
+    logistic_regression, data_test, response_method="predict", cmap="RdBu_r", alpha=0.5
+)
 sns.scatterplot(
     data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
     hue=target_column, palette=["tab:red", "tab:blue"])

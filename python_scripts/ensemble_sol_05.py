@@ -20,7 +20,6 @@ target *= 100  # rescale the target in k$
 
 # %%
 # solution
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 hist_gbdt = HistGradientBoostingRegressor(

@@ -91,8 +91,6 @@ preprocessor = ColumnTransformer([
 # predict whether or not a person earns more than 50 k$ a year.
 
 # %%
-# for the moment this line is required to import HistGradientBoostingClassifier
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 

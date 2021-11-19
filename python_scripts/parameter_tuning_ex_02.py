@@ -50,8 +50,6 @@ preprocessor = ColumnTransformer(
       selector(dtype_include=object))],
     remainder='passthrough', sparse_threshold=0)
 
-# This line is currently required to import HistGradientBoostingClassifier
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 

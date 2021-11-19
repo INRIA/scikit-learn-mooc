@@ -71,8 +71,6 @@ preprocessor = ColumnTransformer([
     remainder='passthrough', sparse_threshold=0)
 
 # %%
-# for the moment this line is required to import HistGradientBoostingClassifier
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 

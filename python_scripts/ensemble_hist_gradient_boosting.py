@@ -130,7 +130,6 @@ print(f"Average score time: "
 # computation times with the experiment of the previous section.
 
 # %%
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 histogram_gradient_boosting = HistGradientBoostingRegressor(

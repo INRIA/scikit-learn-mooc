@@ -16,9 +16,6 @@ culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
 data, target = penguins[culmen_columns], penguins[target_column]
-range_features = {
-    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
-    for feature_name in data.columns}
 
 # %% [markdown]
 # ```{note}

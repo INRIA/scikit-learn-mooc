@@ -98,7 +98,7 @@ from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer([
     ('one-hot-encoder', categorical_preprocessor, categorical_columns),
-    ('standard-scaler', numerical_preprocessor, numerical_columns)])
+    ('standard_scaler', numerical_preprocessor, numerical_columns)])
 
 # %% [markdown]
 # We can take a minute to represent graphically the structure of a
@@ -232,7 +232,6 @@ print("The mean cross-validation accuracy is: "
 # is slightly simpler than the one we saw earlier for the `LogisticRegression`:
 
 # %%
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.preprocessing import OrdinalEncoder
 

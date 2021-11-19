@@ -83,7 +83,7 @@ categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
 from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer([
-    ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    ('cat_preprocessor', categorical_preprocessor, categorical_columns)],
     remainder='passthrough', sparse_threshold=0)
 
 # %% [markdown]
@@ -91,8 +91,6 @@ preprocessor = ColumnTransformer([
 # predict whether or not a person earns more than 50 k$ a year.
 
 # %%
-# for the moment this line is required to import HistGradientBoostingClassifier
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 

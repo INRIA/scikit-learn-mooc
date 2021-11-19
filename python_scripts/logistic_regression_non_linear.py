@@ -53,6 +53,10 @@ _ = plt.title("Illustration of the moons dataset")
 # a linear support vector machine classifier.
 
 # %%
+import sklearn
+sklearn.set_config(display="diagram")
+
+# %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -75,7 +79,9 @@ linear_model.fit(data_moons, target_moons)
 # %%
 from helpers.plotting import DecisionBoundaryDisplay
 
-DecisionBoundaryDisplay.from_estimator(linear_model, data_moons, cmap="RdBu")
+DecisionBoundaryDisplay.from_estimator(
+    linear_model, data_moons, response_method="predict", cmap="RdBu", alpha=0.5
+)
 sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
                 hue=target_moons, palette=["tab:red", "tab:blue"])
 _ = plt.title("Decision boundary of a linear model")
@@ -111,7 +117,9 @@ _ = plt.title("Illustration of the Gaussian quantiles dataset")
 
 # %%
 linear_model.fit(data_gauss, target_gauss)
-DecisionBoundaryDisplay.from_estimator(linear_model, data_gauss, cmap="RdBu")
+DecisionBoundaryDisplay.from_estimator(
+    linear_model, data_gauss, response_method="predict", cmap="RdBu", alpha=0.5
+)
 sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
                 hue=target_gauss, palette=["tab:red", "tab:blue"])
 _ = plt.title("Decision boundary of a linear model")
@@ -134,7 +142,9 @@ kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf", gamma=5))
 
 # %%
 kernel_model.fit(data_moons, target_moons)
-DecisionBoundaryDisplay.from_estimator(kernel_model, data_moons, cmap="RdBu")
+DecisionBoundaryDisplay.from_estimator(
+    kernel_model, data_moons, response_method="predict", cmap="RdBu", alpha=0.5
+)
 sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
                 hue=target_moons, palette=["tab:red", "tab:blue"])
 _ = plt.title("Decision boundary with a model using an RBF kernel")
@@ -148,7 +158,9 @@ _ = plt.title("Decision boundary with a model using an RBF kernel")
 
 # %%
 kernel_model.fit(data_gauss, target_gauss)
-DecisionBoundaryDisplay.from_estimator(kernel_model, data_gauss, cmap="RdBu")
+DecisionBoundaryDisplay.from_estimator(
+    kernel_model, data_gauss, response_method="predict", cmap="RdBu", alpha=0.5
+)
 ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
                      hue=target_gauss, palette=["tab:red", "tab:blue"])
 _ = plt.title("Decision boundary with a model using an RBF kernel")

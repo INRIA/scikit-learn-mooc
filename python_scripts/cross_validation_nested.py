@@ -12,9 +12,10 @@
 # properly evaluate the generalization performance of the full modeling
 # procedure.
 #
-# Here, we would like to use the nested cross-validation and highlight the
-# effect on the generalization performance reported when compared with not
-# nested cross-validation.
+# This notebook introduces nested cross-validation and highlights its impact
+# on the the estimated generalization performance compared to naively using
+# a single level of cross-validation, both for hyper-parameter tuning and
+# evaluation of the generalization performance.
 #
 # We will illustrate this difference using the breast cancer dataset.
 

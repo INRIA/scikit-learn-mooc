@@ -1,9 +1,16 @@
 # %% [markdown]
 # # Nested cross-validation
 #
-# In this notebook, we will return on the concept of nested cross-validation.
-# We saw this evaluation strategy when dealing with a model where
-# hyperparameters are tuned.
+# Cross-validation can be used both for hyper-parameter tuning and for
+# estimating the generalization performance of a model. However using
+# it for both purpose at the same time is problematic because the resulting
+# evaluation is likely to under-estimate some over-fitting that results from
+# the hyper-parameter tuning procedure itself.
+#
+# Philosophically, hyper-parameter tuning is a form of machine learning in
+# itself and therefore, we need another outer loop of cross-validation to
+# properly evaluate the generalization performance of the full modeling
+# procedure.
 #
 # Here, we would like to use the nested cross-validation and highlight the
 # effect on the generalization performance reported when compared with not

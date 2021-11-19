@@ -65,41 +65,12 @@ range_features = {
 }
 
 # %% [markdown]
+# FIXME: update the description here.
 # To visualize the separation found by our classifier, we will define a helper
 # function `plot_decision_function`. In short, this function will plot the edge
 # of the decision function, where the probability to be an Adelie or Chinstrap
 # will be equal (p=0.5).
-
-# %%
-import numpy as np
-
-
-def plot_decision_function(fitted_classifier, range_features, ax=None):
-    """Plot the boundary of the decision function of a classifier."""
-    from sklearn.preprocessing import LabelEncoder
-
-    feature_names = list(range_features.keys())
-    # create a grid to evaluate all possible samples
-    plot_step = 0.02
-    xx, yy = np.meshgrid(
-        np.arange(*range_features[feature_names[0]], plot_step),
-        np.arange(*range_features[feature_names[1]], plot_step),
-    )
-
-    # compute the associated prediction
-    Z = fitted_classifier.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = LabelEncoder().fit_transform(Z)
-    Z = Z.reshape(xx.shape)
-
-    # make the plot of the boundary and the data samples
-    if ax is None:
-        _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu_r")
-
-    return ax
-
-
-# %% [markdown]
+#
 # The linear regression that we previously saw will predict a continuous
 # output. When the target is a binary outcome, one can use the logistic
 # function to model the probability. This model is known as logistic
@@ -120,11 +91,12 @@ logistic_regression.fit(data_train, target_train)
 
 # %%
 import seaborn as sns
+from helpers.plotting import DecisionBoundaryDisplay
 
-ax = sns.scatterplot(
+DecisionBoundaryDisplay.from_estimator(logistic_regression, data_test, cmap="RdBu_r")
+sns.scatterplot(
     data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
     hue=target_column, palette=["tab:red", "tab:blue"])
-_ = plot_decision_function(logistic_regression, range_features, ax=ax)
 
 # %% [markdown]
 # Thus, we see that our decision function is represented by a line separating

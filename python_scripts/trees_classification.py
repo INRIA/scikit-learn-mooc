@@ -27,49 +27,16 @@ from sklearn.model_selection import train_test_split
 data, target = penguins[culmen_columns], penguins[target_column]
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
-range_features = {
-    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
-    for feature_name in data.columns}
 
 # %% [markdown]
+# FIXME: update the following description
 # In a previous notebook, we learnt that a linear classifier will define a
 # linear separation to split classes using a linear combination of the input
 # features. In our 2-dimensional space, it means that a linear classifier will
 # define some oblique lines that best separate our classes. We define a
 # function below that, given a set of data points and a classifier, will plot
 # the decision boundaries learnt by the classifier.
-
-# %%
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def plot_decision_function(fitted_classifier, range_features, ax=None):
-    """Plot the boundary of the decision function of a classifier."""
-    from sklearn.preprocessing import LabelEncoder
-
-    feature_names = list(range_features.keys())
-    # create a grid to evaluate all possible samples
-    plot_step = 0.02
-    xx, yy = np.meshgrid(
-        np.arange(*range_features[feature_names[0]], plot_step),
-        np.arange(*range_features[feature_names[1]], plot_step),
-    )
-
-    # compute the associated prediction
-    Z = fitted_classifier.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = LabelEncoder().fit_transform(Z)
-    Z = Z.reshape(xx.shape)
-
-    # make the plot of the boundary and the data samples
-    if ax is None:
-        _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
-
-    return ax
-
-
-# %% [markdown]
+#
 # Thus, for a linear classifier, we will obtain the following decision
 # boundaries. These boundaries lines indicate where the model changes its
 # prediction from one class to another.
@@ -81,14 +48,19 @@ linear_model = LogisticRegression()
 linear_model.fit(data_train, target_train)
 
 # %%
+import matplotlib.pyplot as plt
 import seaborn as sns
+
+from helpers.plotting import DecisionBoundaryDisplay
 
 # create a palette to be used in the scatterplot
 palette = ["tab:red", "tab:blue", "black"]
 
-ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                     hue=target_column, palette=palette)
-plot_decision_function(linear_model, range_features, ax=ax)
+DecisionBoundaryDisplay.from_estimator(
+    linear_model, data_train, response_method="predict", cmap="RdBu", alpha=0.5
+)
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
 # put the legend outside the plot
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 _ = plt.title("Decision boundary using a logistic regression")
@@ -123,9 +95,11 @@ tree = DecisionTreeClassifier(max_depth=1)
 tree.fit(data_train, target_train)
 
 # %%
-ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                     hue=target_column, palette=palette)
-plot_decision_function(tree, range_features, ax=ax)
+DecisionBoundaryDisplay.from_estimator(
+    tree, data_train, response_method="predict", cmap="RdBu", alpha=0.5
+)
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 _ = plt.title("Decision boundary using a decision tree")
 

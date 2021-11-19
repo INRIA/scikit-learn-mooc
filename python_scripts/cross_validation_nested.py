@@ -105,8 +105,8 @@ print(f"The mean score using nested cross-validation is: "
 # We will illustrate the difference between the nested and non-nested
 # cross-validation scores to show that the latter are too optimistic in
 # practice. In this regard, we will repeat several times the experiment and
-# shuffle the data differently. Besides, we will store the score obtained with
-# and without the nested cross-validation.
+# shuffle the data differently to ensure that our conclusion does not depend on
+# a particular resampling of the data.
 
 # %%
 test_score_not_nested = []

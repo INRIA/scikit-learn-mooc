@@ -114,6 +114,9 @@ test_score_nested = []
 
 N_TRIALS = 20
 for i in range(N_TRIALS):
+    # For each trial, we use cross-validation splits on independently
+    # randomly shuffled data by passing distinct values to the random_state
+    # parameter.
     inner_cv = KFold(n_splits=5, shuffle=True, random_state=i)
     outer_cv = KFold(n_splits=3, shuffle=True, random_state=i)
 

@@ -69,6 +69,10 @@ target_test = penguins_test[target_column]
 # algorithm.
 
 # %%
+import sklearn
+sklearn.set_config(display="diagram")
+
+# %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -105,6 +109,7 @@ DecisionBoundaryDisplay.from_estimator(
 sns.scatterplot(
     data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
     hue=target_column, palette=["tab:red", "tab:blue"])
+_ = plt.title("Decision boundary of the trained\n LogisticRegression")
 
 # %% [markdown]
 # Thus, we see that our decision function is represented by a line separating
@@ -120,7 +125,7 @@ weights = pd.Series(coefs, index=culmen_columns)
 
 # %%
 weights.plot.barh()
-plt.title("Weights of the logistic regression")
+_ = plt.title("Weights of the logistic regression")
 
 # %% [markdown]
 # Indeed, both coefficients are non-null.

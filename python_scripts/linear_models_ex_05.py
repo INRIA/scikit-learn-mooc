@@ -53,7 +53,9 @@ logistic_regression = make_pipeline(
 
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of
-# `C` on the classifier decision boundary.
+# `C` on the classifier decision boundary. You can import the helper class with
+# `from helpers.plotting import DecisionBoundaryDisplay` to plot the decision
+# function boundary. Use the method `from_estimator` from this class.
 
 # %%
 Cs = [0.01, 0.1, 1, 10]
@@ -62,9 +64,6 @@ Cs = [0.01, 0.1, 1, 10]
 
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.
-# You can import the helper class with
-# `from helpers.plotting import DecisionBoundaryDisplay` to plot the decision
-# function boundary. Use the method `from_estimator` from this class.
 
 
 # %%

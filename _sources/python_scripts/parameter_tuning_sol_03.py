@@ -23,6 +23,7 @@
 # is powerful enough.
 
 # %%
+
 import numpy as np
 import pandas as pd
 
@@ -74,8 +75,8 @@ from sklearn.compose import ColumnTransformer
 
 # solution
 preprocessor = ColumnTransformer(
-    [('cat-preprocessor', categorical_processor, categorical_columns),
-     ('num-preprocessor', numerical_processor, numerical_columns)]
+    [('cat_preprocessor', categorical_processor, categorical_columns),
+     ('num_preprocessor', numerical_processor, numerical_columns)]
 )
 
 # %% [markdown]
@@ -111,8 +112,8 @@ from scipy.stats import loguniform
 # solution
 param_distributions = {
     "logisticregression__C": loguniform(0.001, 10),
-    "columntransformer__num-preprocessor__with_mean": [True, False],
-    "columntransformer__num-preprocessor__with_std": [True, False],
+    "columntransformer__num_preprocessor__with_mean": [True, False],
+    "columntransformer__num_preprocessor__with_std": [True, False],
 }
 
 model_random_search = RandomizedSearchCV(
@@ -149,8 +150,8 @@ cv_results = pd.read_csv(
 # %% tags=["solution"]
 column_name_mapping = {
     "param_logisticregression__C": "C",
-    "param_columntransformer__num-preprocessor__with_mean": "centering",
-    "param_columntransformer__num-preprocessor__with_std": "scaling",
+    "param_columntransformer__num_preprocessor__with_mean": "centering",
+    "param_columntransformer__num_preprocessor__with_std": "scaling",
     "mean_test_score": "mean test accuracy",
 }
 

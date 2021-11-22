@@ -137,7 +137,7 @@ cv_results[[
 model_grid_search.best_params_
 
 # %% [markdown]
-# One important bottleneck here concerns the generalization performance.
+# One important caveat here concerns the evaluation of the generalization performance.
 # Indeed, the mean and standard deviation of the generalization score provided
 # by the cross-validation in the grid-search is potentially not a good estimate
 # of the generalization performance of the model refitted with the best

@@ -30,7 +30,7 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 # %% [markdown]
 # ## Our predictive model
 #
-# We will now create the predictive model that we want to optimize. Note that
+# We now create the predictive model that we want to optimize. Note that
 # this pipeline is identical to the one we used in the previous notebook.
 
 # %%

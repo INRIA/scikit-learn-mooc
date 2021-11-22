@@ -73,10 +73,9 @@ model
 # In the module "Selecting the best model", we saw that one must use
 # cross-validation to evaluate such a model. Cross-validation allows to get
 # a distribution of the scores of the model. Thus, having this distribution at
-# hand, we can get the variability of the generalization performance of the
-# model. Here, we recall the necessary `scikit-learn` functionality to use
-# to obtain the mean and standard deviation of the scores. We will use the
-# `cross_validate` function to evaluate our model.
+# hand, we can get the assess the variability of  our estimate of the generalization
+# performance of the model. Here, we recall the necessary `scikit-learn` tools
+# needed to obtain the mean and standard deviation of the scores.
 
 # %%
 from sklearn.model_selection import cross_validate

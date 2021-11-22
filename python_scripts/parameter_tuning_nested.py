@@ -207,7 +207,7 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
 
 # %% [markdown]
 # It is interesting to see whether the hyper-parameter tuning procedure always select
-# similar values for the hyper-parameters. If its the case, then all is fine. It means that
+# similar values for the hyperparameters. If its the case, then all is fine. It means that
 # we can deploy a model fit with those hyperparameters and expect that it will have
 # an actual predictive performance close to what we measured in the outer
 # cross-validation.

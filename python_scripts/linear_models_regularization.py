@@ -134,7 +134,7 @@ cv_results = cross_validate(ridge, data, target,
 # %% [markdown]
 # The code cell above will generate a couple of warnings because the features
 # included both extremely large and extremely small values, which are causing
-# problems with the underlying linear algebra solver used to fit the model.
+# numerical problems when training the predictive model.
 #
 # We can explore the train and test scores of this model.
 

@@ -151,19 +151,20 @@ n_runs = 3
 
 for run_idx in range(n_runs):
 
-    result_most_frequent = cross_validate(dummy_most_frequent, data, target,
-                              cv=cv,  n_jobs=2)
+    result_most_frequent = cross_validate(
+        dummy_most_frequent, data, target, cv=cv, n_jobs=2
+    )
 
-    result_stratified = cross_validate(dummy_stratified, data, target,
-                              cv=cv,  n_jobs=2)
+    result_stratified = cross_validate(dummy_stratified, data, target, cv=cv, n_jobs=2)
 
-    scores_most_frequent = pd.Series(result_most_frequent["test_score"],
-                                    name="Dummy 'most_frequent' score")
-    scores_stratified = pd.Series(result_stratified["test_score"],
-                                    name="Dummy 'stratify' score")
+    scores_most_frequent = pd.Series(
+        result_most_frequent["test_score"], name="Dummy 'most_frequent' score"
+    )
+    scores_stratified = pd.Series(
+        result_stratified["test_score"], name="Dummy 'stratify' score"
+    )
 
-    final_scores = pd.concat([scores_stratified, scores_most_frequent],
-                         axis=1)
+    final_scores = pd.concat([scores_stratified, scores_most_frequent], axis=1)
 
     final_scores.plot.hist(bins=50, density=True, edgecolor="black")
     plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

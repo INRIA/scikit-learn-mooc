@@ -168,7 +168,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 #
 # However, this evaluation only provides us a single point estimate of the
 # generalization performance. As recall at the beginning of this notebook,
-# it is beneficial to have an uncertainty measure of the generalization
+# it is beneficial to have a rough idea of the uncertainty of our estimate of the generalization
 # performance. Therefore, we should instead use a cross-validation for this
 # evaluation.
 #

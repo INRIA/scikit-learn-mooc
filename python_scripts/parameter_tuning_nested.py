@@ -147,7 +147,7 @@ model_grid_search.best_params_
 # `fit`. Therefore, this refitted model was trained with more data than the
 # different models trained during the cross-validation in the grid-search.
 #
-# Therefore, one must keep a test set to evaluate the refitted model. We
+# Therefore, one must keep an external, held-out test set for the final evaluation the refitted model. We
 # highlight here the process using a single train-test split.
 
 # %%

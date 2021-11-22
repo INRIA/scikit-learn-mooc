@@ -194,7 +194,7 @@ print(
 
 # %% [markdown]
 # In this case, we obtain a distribution of scores and therefore, we can
-# apprehend the variability of the generalization performance.
+# apprehend the variability of our estimate of the generalization performance.
 #
 # In addition, passing the parameter `return_estimator=True`, we can check the
 # value of the best hyperparameters for each fold of the outer

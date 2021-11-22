@@ -197,7 +197,7 @@ print(
 # apprehend the variability of our estimate of the generalization performance.
 #
 # In addition, passing the parameter `return_estimator=True`, we can check the
-# value of the best hyperparameters for each fold of the outer
+# value of the best hyperparameters obtained for each fold of the outer
 # cross-validation.
 
 # %%

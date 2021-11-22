@@ -138,7 +138,7 @@ model_grid_search.best_params_
 
 # %% [markdown]
 # One important caveat here concerns the evaluation of the generalization performance.
-# Indeed, the mean and standard deviation of the generalization score provided
+# Indeed, the mean and standard deviation of the scores computed
 # by the cross-validation in the grid-search is potentially not a good estimate
 # of the generalization performance of the model refitted with the best
 # parameters (i.e. the model at hand when using `model_grid_search.predict`).

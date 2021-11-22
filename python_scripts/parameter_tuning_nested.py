@@ -10,7 +10,7 @@
 # hyperparameters need to be tuned.
 #
 # Thus, we will first load the dataset and create the predictive model that
-# we want to optimize and later on evaluate.
+# we want to optimize and later on, evaluate.
 #
 # ## Loading the dataset
 #
@@ -71,7 +71,7 @@ model
 # In the module "Selecting the best model", we saw that one must use
 # cross-validation to evaluate such a model. Cross-validation allows to get
 # a distribution of the scores of the model. Thus, having this distribution at
-# hand, we can get the assess the variability of  our estimate of the generalization
+# hand, we can get to assess the variability of our estimate of the generalization
 # performance of the model. Here, we recall the necessary `scikit-learn` tools
 # needed to obtain the mean and standard deviation of the scores.
 
@@ -117,10 +117,10 @@ model_grid_search = GridSearchCV(
 model_grid_search.fit(data, target)
 
 # %% [markdown]
-# As previously saw, when calling the `fit` method, the model embedded in the
-# grid-search will be trained with every possible combinations of parameters
-# resulting from the parameter grid. The best combination was selected by
-# keeping the combination of the best mean accuracy score.
+# As previously seen, when calling the `fit` method, the model embedded in the
+# grid-search will be trained with every possible combination of parameters
+# resulting from the parameter grid. The best combination is selected by
+# keeping the combination leading to the best mean cross-validated score.
 
 # %%
 cv_results = pd.DataFrame(model_grid_search.cv_results_)
@@ -145,8 +145,8 @@ model_grid_search.best_params_
 # `fit`. Therefore, this refitted model was trained with more data than the
 # different models trained during the cross-validation in the grid-search.
 #
-# Therefore, one must keep an external, held-out test set for the final evaluation the refitted model. We
-# highlight here the process using a single train-test split.
+# Therefore, one must keep an external, held-out test set for the final evaluation
+# the refitted model. We highlight here the process using a single train-test split.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -166,9 +166,9 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 #
 # However, this evaluation only provides us a single point estimate of the
 # generalization performance. As recall at the beginning of this notebook,
-# it is beneficial to have a rough idea of the uncertainty of our estimate of the generalization
-# performance. Therefore, we should instead use a cross-validation for this
-# evaluation.
+# it is beneficial to have a rough idea of the uncertainty of our estimated
+# generalization performance. Therefore, we should instead use an additional
+# cross-validation for this evaluation.
 #
 # This pattern is called *nested cross-validation*. We use an inner
 # cross-validation for the selection of the hyperparameters and an outer
@@ -208,19 +208,19 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
 # %% [markdown]
 # It is interesting to see whether the hyper-parameter tuning procedure always select
 # similar values for the hyper-parameters. If its the case, then all is fine. It means that
-# we can deploy a model fit with those hyper-parameters and expect that it will have
+# we can deploy a model fit with those hyperparameters and expect that it will have
 # an actual predictive performance close to what we measured in the outer
 # cross-validation.
 #
-# But it is also possible that some hyper-parameters do not matter at all, and as a
+# But it is also possible that some hyperparameters do not matter at all, and as a
 # result in different tuning sessions give different results. In this case,
 # any value will do. This can typically be confirmed by doing a parallel coordinate plot
-# of the results of a large hyper-parameter search as seen in the exercises.
+# of the results of a large hyperparameter search as seen in the exercises.
 #
 # From a deployment, one could also chose to deploy all the models found by the outer
 # cross-validation loop and make them vote to get the final predictions. However this
 # can cause operational problems because it uses more memory and makes
-# computing prediction slower resulting in a higher computational resource usage
+# computing prediction slower, resulting in a higher computational resource usage
 # per prediction. 
 #
 # In this notebook, we have seen how to combine hyperparameters search with

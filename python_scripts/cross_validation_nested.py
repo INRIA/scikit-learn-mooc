@@ -152,8 +152,15 @@ _ = plt.title("Comparison of mean accuracy obtained on the test sets with\n"
               "and without nested cross-validation")
 
 # %% [markdown]
-# We observe that the model's generalization performance with the nested
-# cross-validation is not as good as the non-nested cross-validation.
+# We observe that the generalization performance estimated without using
+# nested CV is higher than what we obtain with nested CV. The reason is that
+# the tuning procedure itself selects the model with the highest inner CV score.
+# If there are many hyper-parameter combinations and the inner CV scores have
+# comparatively large standard deviations, taking the maximum value can lure
+# the naive data scientist into over-estimating the true generalization performance
+# of the result of the full learning procedure. By using an outer cross-validation
+# procedure one gets a more trustworthy estimate of the generalization performance
+# of the full learning procedure, including the effect of tuning the hyperparameters.
 #
 # As a conclusion, when optimizing parts of the machine learning pipeline (e.g.
 # hyperparameter, transform, etc.), one needs to use nested cross-validation to

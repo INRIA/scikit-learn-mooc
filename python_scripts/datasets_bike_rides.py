@@ -178,16 +178,10 @@ rng = np.random.RandomState(0)
 indices = rng.choice(np.arange(cycling_ride.shape[0]), size=500, replace=False)
 
 # %%
-import warnings
-
-subset = cycling_ride.iloc[indices]
+subset = cycling_ride.iloc[indices].copy()
 # Quantize the target and keep the midpoint for each interval
-with warnings.catch_warnings():
-    # call that will ignore the warning messages
-    warnings.filterwarnings('ignore')
-
-    subset["power"] = pd.qcut(subset["power"], 6, retbins=False)
-    subset["power"] = subset["power"].apply(lambda x: x.mid)
+subset["power"] = pd.qcut(subset["power"], 6, retbins=False)
+subset["power"] = subset["power"].apply(lambda x: x.mid)
 
 # %%
 import seaborn as sns

@@ -1,20 +1,20 @@
 # %% [markdown]
 # # Nested cross-validation
 #
-# Cross-validation can be used both for hyper-parameter tuning and for
-# estimating the generalization performance of a model. However using
-# it for both purpose at the same time is problematic because the resulting
-# evaluation is likely to under-estimate some over-fitting that results from
-# the hyper-parameter tuning procedure itself.
+# Cross-validation can be used both for hyperparameter tuning and for
+# estimating the generalization performance of a model. However, using
+# it for both purpose at the same time is problematic, as the resulting
+# evaluation is likely to underestimate some overfitting that results from
+# the hyperparameter tuning procedure itself.
 #
-# Philosophically, hyper-parameter tuning is a form of machine learning in
+# Philosophically, hyperparameter tuning is a form of machine learning
 # itself and therefore, we need another outer loop of cross-validation to
 # properly evaluate the generalization performance of the full modeling
 # procedure.
 #
 # This notebook introduces nested cross-validation and highlights its impact
-# on the the estimated generalization performance compared to naively using
-# a single level of cross-validation, both for hyper-parameter tuning and
+# on the estimated generalization performance compared to naively using
+# a single level of cross-validation, both for hyperparameter tuning and
 # evaluation of the generalization performance.
 #
 # We will illustrate this difference using the breast cancer dataset.
@@ -41,22 +41,22 @@ search = GridSearchCV(
 search.fit(data, target)
 
 # %% [markdown]
-# We recall that `GridSearchCV` will train a model with some specific parameter
-# on a training set and evaluate it on testing. However, this evaluation is
-# done via cross-validation using the `cv` parameter. This procedure is
+# We recall that `GridSearchCV` will train a model with some specific parameters
+# on a training set and evaluate it on a testing set. This evaluation is
+# done via cross-validation using the `cv` parameter. The procedure is then
 # repeated for all possible combinations of parameters given in `param_grid`.
 #
 # The attribute `best_params_` will give us the best set of parameters that
 # maximize the mean score on the internal test sets.
 
 # %%
-print(f"The best parameter found are: {search.best_params_}")
+print(f"The best parameters found are: {search.best_params_}")
 
 # %% [markdown]
-# We can now show the mean score obtained using the parameter `best_score_`.
+# We can also show the mean score obtained by using the parameters `best_params_`.
 
 # %%
-print(f"The mean score in CV is: {search.best_score_:.3f}")
+print(f"The mean CV score of the best model is: {search.best_score_:.3f}")
 
 # %% [markdown]
 # At this stage, one should be extremely careful using this score. The

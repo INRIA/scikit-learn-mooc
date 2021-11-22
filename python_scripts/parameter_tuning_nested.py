@@ -208,12 +208,22 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
     )
 
 # %% [markdown]
-# Such an analysis allows to see if only a single set of hyperparameters is
-# sufficient to obtain a good generalization performance or if there is some
-# variation in the hyperparameters used.
+# It is interesting to see whether the hyper-parameter tuning procedure always select
+# similar values for the hyper-parameters. If its the case, then all is fine. It means that
+# we can deploy a model fit with those hyper-parameters and expect that it will have
+# an actual predictive performance close to what we measured in the outer
+# cross-validation.
 #
-# Obtaining models with unstable hyperparameters would be an issue in practice.
-# Indeed, it would become difficult to set them.
+# But it is also possible that some hyper-parameters do not matter at all, and as a
+# result in different tuning sessions give different results. In this case,
+# any value will do. This can typically be confirmed by doing a parallel coordinate plot
+# of the results of a large hyper-parameter search as seen in the exercises.
+#
+# From a deployment, one could also chose to deploy all the models found by the outer
+# cross-validation loop and make them vote to get the final predictions. However this
+# can cause operational problems because it uses more memory and makes
+# computing prediction slower resulting in a higher computational resource usage
+# per prediction. 
 #
 # In this notebook, we have seen how to combine hyperparameters search with
 # cross-validation.

@@ -137,12 +137,12 @@ _ = plt.title("Distribution of the test scores")
 # predicting the most frequent involves that we will be right for the
 # proportion of this class (~75% of the samples). However, the `stratified`
 # strategy will randomly generate predictions by respecting the training
-# set’s class distribution, resulting in wrong predictions even for the most
-# frequent class, hence we obtain a lower accuracy.
+# set’s class distribution, resulting in some wrong predictions even for
+# the most frequent class, hence we obtain a lower accuracy.
 #
-# Notice that the `most_frequent` strategy is deterministic for a given
-# cross-validation split, whereas the `stratified` strategy will lead
-# to different results even for the same cv split due to the extra randomization.
+# Please refer to the scikit-learn documentation on [DummyClassifier
+# ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
+# for more details on the meaning of the `strategy="stratified"` parameter.
 
 # %% tags=["solution"]
 dummy_most_frequent = DummyClassifier(strategy="most_frequent")

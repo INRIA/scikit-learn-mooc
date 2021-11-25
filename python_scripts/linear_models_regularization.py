@@ -166,10 +166,15 @@ _ = plt.title("Ridge weights")
 #
 # ## Scale your data!
 #
-# This procedure should make us think about feature rescaling. Let's consider
-# the case where features have an identical data dispersion: if two features
-# are found equally important by the model, they will be affected similarly by
-# regularization strength.
+# Weights provide a link between features and the target. Regularization will
+# add constraints on the weights of the model through the `alpha` parameter.
+# This procedure should hint us the importance of feature rescaling, as a change
+# in a given feature will have an effect in all the weights and therefore, will
+# also impact the regularization.
+#
+# Let's consider the case where features have an identical data dispersion: if
+# two features are found to be equally important by the model, they will be
+# affected similarly by regularization strength.
 #
 # Now, let's consider the scenario where features have completely different
 # data dispersion (for instance age in years and annual revenue in dollars).

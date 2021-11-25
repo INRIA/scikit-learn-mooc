@@ -156,14 +156,9 @@ _ = plt.title("Ridge weights")
 
 # %% [markdown]
 # By comparing the magnitude of the weights on this plot compared to the
-# previous plot, we see that the magnitude of the weights are shrunk towards
-# zero in comparison with the linear regression model.
-#
-# Regularization will add constraints on weights of the model. We saw in the
-# previous example that a ridge model will enforce that all weights have a
-# similar magnitude by penalizing large values. In fact, the larger alpha is,
-# the larger this enforcement will be. A negative value for alpha would
-# actually enhance large weights and promote overfitting.
+# previous plot, we see that a ridge model will enforce all weights to have a
+# similar magnitude, while the overall magnitude of the weights is shrunk
+# towards zero with respect to the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization

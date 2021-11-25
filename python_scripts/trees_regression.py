@@ -41,6 +41,14 @@ data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
 # It should not be confused with data coming from a train-test split, as it
 # was generated in equally-spaced intervals for the visual evaluation of the
 # predictions.
+#
+# Note that this is methodologically valid here because our objective is to get
+# some intuitive understanding on the shape of the decision function of the
+# learned decision trees.
+#
+# However computing an evaluation metric on such a synthetic test set would
+# be meaningless since the synthetic dataset does not follow the same
+# distribution as the real world data on which the model will be deployed.
 
 # %%
 import matplotlib.pyplot as plt

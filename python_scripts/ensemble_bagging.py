@@ -60,10 +60,9 @@ tree.fit(data_train, target_train)
 y_pred = tree.predict(data_test)
 
 # %% [markdown]
-# Using the term "test" here refers to data that was not used for training.
-# It should not be confused with data coming from a train-test split, as it
-# was generated in equally-spaced intervals for the visual evaluation of the
-# predictions.
+# Remember that the term "test" here refers to data that was not used for
+# training and computing an evaluation metric on such a synthetic test set
+# would be meaningless.
 
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",

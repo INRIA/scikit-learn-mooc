@@ -232,7 +232,7 @@ weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
 _ = plt.title("Ridge weights with data scaling")
 
 # %% [markdown]
-# Compare to the previous plots, we see that now all weight manitudes are
+# Compare to the previous plots, we see that now all weight magnitudes are
 # closer and that all weights are more equally contributing.
 #
 # In the previous example, we fixed `alpha=0.5`. We will now check the impact

@@ -235,6 +235,30 @@ _ = plt.title("Ridge weights with data scaling")
 # Compare to the previous plots, we see that now all weight manitudes are
 # closer and that all weights are more equally contributing.
 #
+# In the previous example, we fixed `alpha=0.5`. We will now check the impact
+# of the value of `alpha` by increasing its value.
+
+# %%
+ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
+                      Ridge(alpha=500))
+cv_results = cross_validate(ridge, data, target,
+                            cv=10, scoring="neg_mean_squared_error",
+                            return_train_score=True,
+                            return_estimator=True)
+
+# %%
+coefs = [est[-1].coef_ for est in cv_results["estimator"]]
+weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+
+# %%
+weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
+_ = plt.title("Ridge weights with data scaling and large alpha")
+
+# %% [markdown]
+# Looking specifically to weights values, we observe that increasing the value
+# of `alpha` will decrease the weight values. A negative value of `alpha` would
+# actually enhance large weights and promote overfitting.
+#
 # In the previous analysis, we did not study if the parameter `alpha` will have
 # an effect on the performance. We chose the parameter beforehand and fix it
 # for the analysis.

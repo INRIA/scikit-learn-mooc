@@ -154,7 +154,6 @@ for run_idx in range(n_runs):
     result_most_frequent = cross_validate(
         dummy_most_frequent, data, target, cv=cv, n_jobs=2
     )
-
     result_stratified = cross_validate(dummy_stratified, data, target, cv=cv, n_jobs=2)
 
     scores_most_frequent = pd.Series(

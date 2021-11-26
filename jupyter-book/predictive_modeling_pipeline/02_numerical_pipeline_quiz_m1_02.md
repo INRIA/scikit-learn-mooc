@@ -13,12 +13,14 @@ Why do we need two sets: a train set and a test set?
 ```{admonition} Question
 The generalization performance of a scikit-learn model can be evaluated by:
 
-- a) calling `fit` to train the model on the training set, `predict` on the
-  test set to get the predictions, and compute the score by passing the
+- a) calling `fit` to train the model on the **training set**, `predict` on the
+  **test set** to get the predictions, and compute the score by passing the
   predictions and the true target values to some metric function
-- b) calling `fit` to train the model on the training set, `score` to compute
-  the score on the test set
+- b) calling `fit` to train the model on the **training set** and `score` to compute
+  the score on the **test set**
 - c) calling `cross_validate` by passing the model, the data and the target
+- d) calling `fit_transform` on the data and then `score` to compute
+  the score on the **test set**
 ```
 
 +++
@@ -33,9 +35,6 @@ When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
   array with 5 scores computed on the **train sets**
 - e) a Python dictionary is returned containing a key/value containing a NumPy
   array with 5 scores computed on the **test sets**
-- f) a single floating number corresponding to the average of 5 scores on the
-  test sets is returned
-- g) the 5 trained estimators are returned
 ```
 
 +++

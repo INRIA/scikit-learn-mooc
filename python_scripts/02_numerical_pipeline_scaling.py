@@ -329,7 +329,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # testing set. The score of a model will in general depend on the way we make 
 # such a split. One downside of doing a single split is that it does not give
 # any information about this variability. Another downside, in a setting where 
-# the amount of data is small, is that the the data available for training
+# the amount of data is small, is that the data available for training
 # and testing will be even smaller after splitting.
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating

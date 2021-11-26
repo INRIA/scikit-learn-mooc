@@ -81,7 +81,7 @@ print(f"Mean squared error of linear regression model on the test set:\n"
 #
 # Since we used a `PolynomialFeatures` to augment the data, we will create
 # feature names representative of the feature combination. Scikit-learn
-# provides a `get_feature_names` method for this purpose. First, let's get
+# provides a `get_feature_names_out` method for this purpose. First, let's get
 # the first fitted model from the cross-validation.
 
 # %%
@@ -92,7 +92,7 @@ model_first_fold = cv_results["estimator"][0]
 # names
 
 # %%
-feature_names = model_first_fold[0].get_feature_names(
+feature_names = model_first_fold[0].get_feature_names_out(
     input_features=data.columns)
 feature_names
 
@@ -130,6 +130,13 @@ cv_results = cross_validate(ridge, data, target,
                             cv=10, scoring="neg_mean_squared_error",
                             return_train_score=True,
                             return_estimator=True)
+
+# %% [markdown]
+# The code cell above will generate a couple of warnings because the features
+# included both extremely large and extremely small values, which are causing
+# numerical problems when training the predictive model.
+#
+# We can explore the train and test scores of this model.
 
 # %%
 train_error = -cv_results["train_score"]

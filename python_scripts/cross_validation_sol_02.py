@@ -145,27 +145,21 @@ _ = plt.title("Distribution of the test scores")
 # for more details on the meaning of the `strategy="stratified"` parameter.
 
 # %% tags=["solution"]
-dummy_most_frequent = DummyClassifier(strategy="most_frequent")
-dummy_stratified = DummyClassifier(strategy="stratified")
+from sklearn.model_selection import cross_val_score
+
+dummy_models = {
+    "Dummy 'most_frequent'": DummyClassifier(strategy="most_frequent"),
+    "Dummy 'stratified'": DummyClassifier(strategy="stratified"),
+    }
 n_runs = 3
 
 for run_idx in range(n_runs):
-
-    result_most_frequent = cross_validate(
-        dummy_most_frequent, data, target, cv=cv, n_jobs=2
-    )
-    result_stratified = cross_validate(dummy_stratified, data, target, cv=cv, n_jobs=2)
-
-    scores_most_frequent = pd.Series(
-        result_most_frequent["test_score"], name="Dummy 'most_frequent' score"
-    )
-    scores_stratified = pd.Series(
-        result_stratified["test_score"], name="Dummy 'stratify' score"
-    )
-
-    final_scores = pd.concat([scores_stratified, scores_most_frequent], axis=1)
+    final_scores = pd.DataFrame({
+        f"{name} score": cross_val_score(model, data, target, cv=cv, n_jobs=2)
+        for name, model in dummy_models.items()
+        })
 
     final_scores.plot.hist(bins=50, density=True, edgecolor="black")
-    plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+    plt.legend(bbox_to_anchor=(1.05, 0.8))
     plt.xlabel("Accuracy (%)")
     _ = plt.title(f"Distribution of scores in run #{run_idx}")

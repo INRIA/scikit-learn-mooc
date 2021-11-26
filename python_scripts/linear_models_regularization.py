@@ -171,13 +171,12 @@ _ = plt.title("Ridge weights")
 # scale the data and (ii) the need to search for the best regularization
 # parameter.
 #
-# ## Scale your data!
+# ## Feature scaling and regularization
 #
-# Weights provide a link between features and the target. Regularization will
-# add constraints on the weights of the model through the `alpha` parameter.
-# This procedure should hint us the importance of feature rescaling, as a change
-# in a given feature will have an effect in all the weights and therefore, will
-# also impact the regularization.
+# On the one hand, weights provide a link between features and the target.
+# On the other hand, regularization adds constraints on the weights of the
+# model through the `alpha` parameter. Therefore, the effect that feature
+# rescaling has in all the weights also impacts the regularization.
 #
 # Let's consider the case where features have an identical data dispersion: if
 # two features are found to be equally important by the model, they will be
@@ -247,7 +246,7 @@ _ = plt.title("Ridge weights with data scaling")
 
 # %%
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
-                      Ridge(alpha=1000000))
+                      Ridge(alpha=1_000_000))
 cv_results = cross_validate(ridge, data, target,
                             cv=10, scoring="neg_mean_squared_error",
                             return_train_score=True,

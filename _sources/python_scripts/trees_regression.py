@@ -36,6 +36,20 @@ data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
                                    data_train[data_columns[0]].max()),
                          columns=data_columns)
 
+# %% [markdown]
+# Using the term "test" here refers to data that was not used for training.
+# It should not be confused with data coming from a train-test split, as it
+# was generated in equally-spaced intervals for the visual evaluation of the
+# predictions.
+#
+# Note that this is methodologically valid here because our objective is to get
+# some intuitive understanding on the shape of the decision function of the
+# learned decision trees.
+#
+# However computing an evaluation metric on such a synthetic test set would
+# be meaningless since the synthetic dataset does not follow the same
+# distribution as the real world data on which the model will be deployed.
+
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -73,7 +87,7 @@ ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
                      color="black", alpha=0.5)
 plt.plot(data_test, target_predicted, label="Linear regression",
          linestyle="--")
-plt.scatter(data_test[::3], target_predicted[::3], label="Test predictions",
+plt.scatter(data_test[::3], target_predicted[::3], label="Predictions",
             color="tab:orange")
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")

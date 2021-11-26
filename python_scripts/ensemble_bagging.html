@@ -1511,6 +1511,9 @@ dependency:</p>
 </div>
 </div>
 </div>
+<p>Remember that the term “test” here refers to data that was not used for
+training and computing an evaluation metric on such a synthetic test set
+would be meaningless.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
@@ -1522,7 +1525,7 @@ dependency:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ensemble_bagging_5_0.png" src="../_images/ensemble_bagging_5_0.png" />
+<img alt="../_images/ensemble_bagging_6_0.png" src="../_images/ensemble_bagging_6_0.png" />
 </div>
 </div>
 <p>Let’s see how we can use bootstraping to learn several trees.</p>
@@ -1574,9 +1577,9 @@ with the original dataset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ensemble_bagging_9_0.png" src="../_images/ensemble_bagging_9_0.png" />
-<img alt="../_images/ensemble_bagging_9_1.png" src="../_images/ensemble_bagging_9_1.png" />
-<img alt="../_images/ensemble_bagging_9_2.png" src="../_images/ensemble_bagging_9_2.png" />
+<img alt="../_images/ensemble_bagging_10_0.png" src="../_images/ensemble_bagging_10_0.png" />
+<img alt="../_images/ensemble_bagging_10_1.png" src="../_images/ensemble_bagging_10_1.png" />
+<img alt="../_images/ensemble_bagging_10_2.png" src="../_images/ensemble_bagging_10_2.png" />
 </div>
 </div>
 <p>Observe that the 3 variations all share common points with the original
@@ -1627,8 +1630,9 @@ be slightly different as well.</p>
 </div>
 </div>
 </div>
-<p>Now that we created a bag of different trees, we can use each of the tree to
-predict on the testing data. They shall give slightly different predictions.</p>
+<p>Now that we created a bag of different trees, we can use each of the trees to
+predict the samples within the range of data. They shall give slightly
+different predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
@@ -1644,7 +1648,7 @@ predict on the testing data. They shall give slightly different predictions.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ensemble_bagging_15_0.png" src="../_images/ensemble_bagging_15_0.png" />
+<img alt="../_images/ensemble_bagging_16_0.png" src="../_images/ensemble_bagging_16_0.png" />
 </div>
 </div>
 </div>
@@ -1679,7 +1683,7 @@ prediction of the ensemble for the test data point is the average of those
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ensemble_bagging_17_0.png" src="../_images/ensemble_bagging_17_0.png" />
+<img alt="../_images/ensemble_bagging_18_0.png" src="../_images/ensemble_bagging_18_0.png" />
 </div>
 </div>
 <p>The unbroken red line shows the averaged predictions, which would be the
@@ -1709,7 +1713,7 @@ above to get a stronger smoothing effect.</p>
 </div>
 </div>
 </div>
-<p>Let us visualize the predictions of the ensemble on the same test data:</p>
+<p>Let us visualize the predictions of the ensemble on the same interval of data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
@@ -1723,7 +1727,7 @@ above to get a stronger smoothing effect.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ensemble_bagging_21_0.png" src="../_images/ensemble_bagging_21_0.png" />
+<img alt="../_images/ensemble_bagging_22_0.png" src="../_images/ensemble_bagging_22_0.png" />
 </div>
 </div>
 <p>Because we use 100 trees in the ensemble, the average prediction is indeed
@@ -1952,7 +1956,7 @@ Python list in the <code class="docutils literal notranslate"><span class="pre">
   f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
 </pre></div>
 </div>
-<img alt="../_images/ensemble_bagging_23_1.png" src="../_images/ensemble_bagging_23_1.png" />
+<img alt="../_images/ensemble_bagging_24_1.png" src="../_images/ensemble_bagging_24_1.png" />
 </div>
 </div>
 <p>We used a low value of the opacity parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> to better appreciate the
@@ -2233,7 +2237,7 @@ base models.</p>
   f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
 </pre></div>
 </div>
-<img alt="../_images/ensemble_bagging_28_2.png" src="../_images/ensemble_bagging_28_2.png" />
+<img alt="../_images/ensemble_bagging_29_2.png" src="../_images/ensemble_bagging_29_2.png" />
 </div>
 </div>
 <p>The predictions of this bagged polynomial regression model looks

@@ -240,7 +240,7 @@ _ = plt.title("Ridge weights with data scaling")
 
 # %%
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
-                      Ridge(alpha=1_000_000))
+                      Ridge(alpha=1000000))
 cv_results = cross_validate(ridge, data, target,
                             cv=10, scoring="neg_mean_squared_error",
                             return_train_score=True,

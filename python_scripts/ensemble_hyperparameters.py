@@ -62,9 +62,11 @@ cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
 # We can observe that in our grid-search, the largest `max_depth` together
-# with the largest `n_estimators` led to the best performance in the validation
-# set. Now we will estimate the generalization performance of the best model
-# using the test set.
+# with the largest `n_estimators` led in average to the best performance
+# on the validation sets. Now we will estimate the generalization performance
+# of the best model by refitting it with the full training set and using the test
+# set for scoring on unseen data. This is done by default by simply calling the
+# `.score` method.
 
 # %%
 score = -grid_search.score(data_test, target_test)
@@ -132,6 +134,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 # %% [markdown]
 # Now we estimate the generalization performance of the best model
 # using the test set.
+
 # %%
 score = -grid_search.score(data_test, target_test)
 print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")

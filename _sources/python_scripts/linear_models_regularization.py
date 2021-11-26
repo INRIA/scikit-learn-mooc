@@ -131,6 +131,13 @@ cv_results = cross_validate(ridge, data, target,
                             return_train_score=True,
                             return_estimator=True)
 
+# %% [markdown]
+# The code cell above will generate a couple of warnings because the features
+# included both extremely large and extremely small values, which are causing
+# numerical problems when training the predictive model.
+#
+# We can explore the train and test scores of this model.
+
 # %%
 train_error = -cv_results["train_score"]
 print(f"Mean squared error of linear regression model on the train set:\n"
@@ -156,7 +163,7 @@ _ = plt.title("Ridge weights")
 
 # %% [markdown]
 # By comparing the magnitude of the weights on this plot compared to the
-# previous plot, we see that the magnitude of the weights are shrunk towards
+# previous plot, we see that the magnitude of the weights is shrunk towards
 # zero in comparison with the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to

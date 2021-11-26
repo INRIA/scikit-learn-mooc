@@ -101,16 +101,14 @@ import seaborn as sns
 for C in Cs:
     logistic_regression.set_params(logisticregression__C=C)
     logistic_regression.fit(data_train, target_train)
+    accuracy = logistic_regression.score(data_test, target_test)
 
     plt.figure()
     ax = sns.scatterplot(
         data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
         hue=target_column, palette=["tab:red", "tab:blue"])
     plot_decision_function(logistic_regression, range_features, ax=ax)
-    plt.title(f"C: {C}")
-    plt.show()
-    accuracy = logistic_regression.score(data_test, target_test)
-    print(f"Accuracy on test set: {accuracy:.3f}")
+    plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.

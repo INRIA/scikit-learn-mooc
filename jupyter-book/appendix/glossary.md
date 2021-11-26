@@ -312,9 +312,9 @@ usually used in [classification](#classification) setting.
 
 ### test set
 
-The dataset used to evaluate the [generalization
-performance](#generalization-performance-predictive-performance-statistical-performance)
-of the [model](#model) after it is [trained](#train-learn-fit).
+The dataset used to make predictions of a [model](#model) after it is
+[trained](#train-learn-fit) and eventually evaluate its [generalization
+performance](#generalization-performance-predictive-performance-statistical-performance).
 
 ### train, learn, fit
 

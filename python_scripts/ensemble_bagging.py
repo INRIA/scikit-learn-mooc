@@ -59,6 +59,11 @@ tree = DecisionTreeRegressor(max_depth=3, random_state=0)
 tree.fit(data_train, target_train)
 y_pred = tree.predict(data_test)
 
+# %% [markdown]
+# Remember that the term "test" here refers to data that was not used for
+# training and computing an evaluation metric on such a synthetic test set
+# would be meaningless.
+
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
@@ -163,8 +168,9 @@ for bootstrap_idx in range(n_bootstraps):
 
 # %% [markdown]
 #
-# Now that we created a bag of different trees, we can use each of the tree to
-# predict on the testing data. They shall give slightly different predictions.
+# Now that we created a bag of different trees, we can use each of the trees to
+# predict the samples within the range of data. They shall give slightly
+# different predictions.
 
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
@@ -236,7 +242,7 @@ _ = bagged_trees.fit(data_train, target_train)
 
 # %% [markdown]
 #
-# Let us visualize the predictions of the ensemble on the same test data:
+# Let us visualize the predictions of the ensemble on the same interval of data:
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)

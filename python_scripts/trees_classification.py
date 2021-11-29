@@ -184,10 +184,7 @@ tree.predict(sample_1)
 
 # %%
 sample_2 = pd.DataFrame(
-    {
-        "Culmen Length (mm)": [0],
-        "Culmen Depth (mm)": [17],
-    }
+    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [17]}
 )
 tree.predict(sample_2)
 
@@ -232,10 +229,7 @@ print(
 
 # %%
 sample_3 = pd.DataFrame(
-    {
-        "Culmen Length (mm)": [10000],
-        "Culmen Depth (mm)": [17],
-    }
+    {"Culmen Length (mm)": [10_000], "Culmen Depth (mm)": [17]}
 )
 tree.predict_proba(sample_3)
 

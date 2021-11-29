@@ -84,8 +84,8 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 
     return ax
 
-# Make the plots and save them
 
+# Make the plots and save them
 Cs = [0.003, 1]
 
 for C in Cs:
@@ -94,6 +94,7 @@ for C in Cs:
     target_predicted = logistic_regression.predict(data_test)
     precision = precision_score(target_test, target_predicted, pos_label=1)
     recall = recall_score(target_test, target_predicted, pos_label=1)
+    print(f"C={C}, precision={precision:.3f}, recall={recall:.3f}")
 
     plt.figure()
     ax = sns.scatterplot(

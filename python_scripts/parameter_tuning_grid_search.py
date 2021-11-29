@@ -83,7 +83,7 @@ categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
 from sklearn.compose import ColumnTransformer
 
 preprocessor = ColumnTransformer([
-    ('cat-preprocessor', categorical_preprocessor, categorical_columns)],
+    ('cat_preprocessor', categorical_preprocessor, categorical_columns)],
     remainder='passthrough', sparse_threshold=0)
 
 # %% [markdown]
@@ -91,8 +91,6 @@ preprocessor = ColumnTransformer([
 # predict whether or not a person earns more than 50 k$ a year.
 
 # %%
-# for the moment this line is required to import HistGradientBoostingClassifier
-from sklearn.experimental import enable_hist_gradient_boosting
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 
@@ -136,13 +134,14 @@ print(
 
 # %% [markdown]
 # ```{warning}
-# Be aware that the evaluation should normally be performed in a
-# cross-validation framework by providing `model_grid_search` as a model to
-# the `cross_validate` function.
+# Be aware that the evaluation should normally be performed through
+# cross-validation by providing `model_grid_search` as a model to the
+# `cross_validate` function.
 #
-# Here, we are using a single train-test split to highlight the specificities
-# of the `model_grid_search` instance. We will show such examples in the last
-# section of this notebook.
+# Here, we used a single train-test split to to evaluate `model_grid_search`.
+# In a future notebook will go into more detail about nested cross-validation,
+# when you use cross-validation both for hyperparameter tuning and model
+# evaluation.
 # ```
 
 # %% [markdown]

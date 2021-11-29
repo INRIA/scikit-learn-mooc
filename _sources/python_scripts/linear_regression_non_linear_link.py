@@ -158,7 +158,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # additional features. Here, we created new features by knowing the way the
 # target was generated.
 #
-# Instead of manually creating such polynomial features on could directly use
+# Instead of manually creating such polynomial features one could directly use
 # [sklearn.preprocessing.PolynomialFeatures](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html).
 #
 # To demonstrate the use of the `PolynomialFeatures` class, we use a

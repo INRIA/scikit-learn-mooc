@@ -1430,13 +1430,32 @@
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>When errors are used in the function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> in scikit-learn, one
-should:</p>
+<p>If we observe that the values returned by
+<code class="docutils literal notranslate"><span class="pre">cross_val_scores(model,</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">scoring=&quot;r2&quot;)</span></code> increase after changing the model
+parameters, it means that the latest model:</p>
 <ul class="simple">
-<li><p>a) pass a callable that reverse the sign of the error</p></li>
-<li><p>b) create a scorer using <code class="docutils literal notranslate"><span class="pre">make_scorer</span></code> and pass the parameter <code class="docutils literal notranslate"><span class="pre">greater_is_better=False</span></code></p></li>
-<li><p>c) pass a string with the name of the metric which should start with the
-prefix <code class="docutils literal notranslate"><span class="pre">neg_</span></code></p></li>
+<li><p>a) generalizes better</p></li>
+<li><p>b) generalizes worse</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>If we observe that the values returned by
+<code class="docutils literal notranslate"><span class="pre">cross_val_scores(model,</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">scoring=&quot;neg_mean_squared_error&quot;)</span></code> increase after
+changing the model parameters, it means that the latest model:</p>
+<ul class="simple">
+<li><p>a) generalizes better</p></li>
+<li><p>b) generalizes worse</p></li>
+</ul>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Values returned by <code class="docutils literal notranslate"><span class="pre">cross_val_scores(model,</span> <span class="pre">X,</span> <span class="pre">y,</span> <span class="pre">scoring=&quot;neg_mean_squared_error&quot;)</span></code>
+are:</p>
+<ul class="simple">
+<li><p>a) guaranteed to be positive or zero</p></li>
+<li><p>b) guaranteed to be negative or zero</p></li>
+<li><p>c) can be either positive or negative depending on the data</p></li>
 </ul>
 </div>
 </div>

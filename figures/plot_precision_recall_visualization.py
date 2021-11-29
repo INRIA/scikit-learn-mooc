@@ -100,6 +100,7 @@ for C in Cs:
         data=data_clf_test, x=feature_columns[0], y=feature_columns[1],
         hue=target_column, palette=["tab:blue", "tab:red"])
     plot_decision_function(logistic_regression, range_features, ax=ax)
-    plt.title(f"C: {C}")
+    msg = "Weaker regularization" if C == 1 else "Stronger regularization"
+    plt.title(msg + f" (C={C})")
     plt.tight_layout()
     plt.savefig("evaluation_quiz_precision_recall_C" + str(C) + ".svg", facecolor="none", edgecolor="none")

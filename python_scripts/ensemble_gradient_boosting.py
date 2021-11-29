@@ -194,10 +194,10 @@ _ = plt.title("Prediction of the residuals")
 # and compare it with the true value.
 
 # %%
-print(f"True value to predict for f(x={data_max.["Feature"][0]:.3f}) = {target_true:.3f}")
+print(f"True value to predict for f(x={data_max['Feature'][0]:.3f}) = {target_true:.3f}")
 
 y_pred_first_tree = tree.predict(data_max)[0]
-print(f"Prediction of the first decision tree for x={data_max.Feature[0]:.3f}: "
+print(f"Prediction of the first decision tree for x={data_max['Feature'][0]:.3f}: "
       f"y={y_pred_first_tree:.3f}")
 print(f"Error of the tree: {target_true - y_pred_first_tree:.3f}")
 
@@ -206,7 +206,7 @@ print(f"Error of the tree: {target_true - y_pred_first_tree:.3f}")
 # tree to try to predict this residual.
 
 # %%
-print(f"Prediction of the residual for x={data_max.Feature[0]:.3f}: "
+print(f"Prediction of the residual for x={data_max['Feature'][0]:.3f}: "
       f"{tree_residuals.predict(data_max)[0]:.3f}")
 
 # %% [markdown]
@@ -219,7 +219,7 @@ y_pred_first_and_second_tree = (
     y_pred_first_tree + tree_residuals.predict(data_max)[0]
 )
 print(f"Prediction of the first and second decision trees combined for "
-      f"x={data_max.Feature[0]:.3f}: y={y_pred_first_and_second_tree:.3f}")
+      f"x={data_max['Feature'][0]:.3f}: y={y_pred_first_and_second_tree:.3f}")
 print(f"Error of the tree: {target_true - y_pred_first_and_second_tree:.3f}")
 
 # %% [markdown]

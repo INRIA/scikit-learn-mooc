@@ -174,10 +174,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 
 # %%
 sample_1 = pd.DataFrame(
-    {
-        "Culmen Length (mm)": [0],
-        "Culmen Depth (mm)": [15],
-    }
+    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [15]}
 )
 tree.predict(sample_1)
 

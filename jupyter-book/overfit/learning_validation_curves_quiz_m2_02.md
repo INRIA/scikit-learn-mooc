@@ -23,12 +23,12 @@ Assuming that we have a dataset with little noise, a model is underfitting when:
 +++
 
 ```{admonition} Question
-For a fixed training set, if we change a model parameter to give the model more
-flexibility, are we more likely to observe:
+For a fixed training set, by sequentially adding parameters to give more
+flexibility to the model, we are more likely to observe:
 
 - a) a wider difference between train and test errors
 - b) a reduction in the difference between train and test errors
-- c) an increase in the train error
+- c) an increased or steady train error
 - d) a decrease in the train error
 ```
 
@@ -40,7 +40,7 @@ observations in the training set, are we more likely to observe:
 
 - a) a wider difference between train and test errors
 - b) a reduction in the difference between train and test errors
-- c) an increase in the train error
+- c) an increased or steady train error
 - d) a decrease in the train error
 ```
 

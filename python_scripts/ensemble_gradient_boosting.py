@@ -194,7 +194,7 @@ _ = plt.title("Prediction of the residuals")
 # and compare it with the true value.
 
 # %%
-print(f"True value to predict for f(x={data_max.Feature[0]:.3f}) = {target_true:.3f}")
+print(f"True value to predict for f(x={data_max.["Feature"][0]:.3f}) = {target_true:.3f}")
 
 y_pred_first_tree = tree.predict(data_max)[0]
 print(f"Prediction of the first decision tree for x={data_max.Feature[0]:.3f}: "

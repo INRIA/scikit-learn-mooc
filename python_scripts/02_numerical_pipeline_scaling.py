@@ -380,18 +380,17 @@ cv_result
 #
 # Setting `cv=5` created 5 distinct splits to get 5 variations for the training
 # and testing sets. Each training set is used to fit one model which is then
-# scored on the matching test set. This strategy is called K-fold
-# cross-validation where `K` corresponds to the number of splits.
+# scored on the matching test set. The default strategy when setting `cv=int`
+# is the K-fold cross-validation where `K` corresponds to the (integer) number of
+# splits. Setting `cv=5` or `cv=10` is a common practice, as it is a good
+# trade-off between computation time and stability of the estimated variability.
 #
-# Note that by default the `cross_validate` function discards the 5 models that
+# Note that by default the `cross_validate` function discards the `K` models that
 # were trained on the different overlapping subset of the dataset. The goal of
 # cross-validation is not to train a model, but rather to estimate
 # approximately the generalization performance of a model that would have been
 # trained to the full training set, along with an estimate of the variability
 # (uncertainty on the generalization accuracy).
-#
-# Setting `cv=5` or `cv=10` is a common practice, as it is a good trade-off between
-# computation time and stability of the estimated variability.
 #
 # You can pass additional parameters to
 # [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)

@@ -255,66 +255,17 @@ cv_results["mean_test_score"][1] - cv_results["mean_test_score"][2]
 cv_results = pd.read_csv("../figures/randomized_search_results.csv",
                          index_col=0)
 
-# %% [markdown]
-# As we have more than 2 parameters in our grid-search, we cannot visualize the
-# results using a heatmap. However, we can us a parallel coordinates plot.
-
-# %%
 (cv_results[column_results].rename(
-    shorten_param, axis=1).sort_values("mean_test_score"))
+    shorten_param, axis=1).sort_values("mean_test_score", ascending=False))
 
-# %%
-import numpy as np
-import plotly.express as px
-
-fig = px.parallel_coordinates(
-    cv_results.rename(shorten_param, axis=1).apply({
-        "learning_rate": np.log10,
-        "max_leaf_nodes": np.log2,
-        "max_bins": np.log2,
-        "min_samples_leaf": np.log10,
-        "l2_regularization": np.log10,
-        "mean_test_score": lambda x: x}),
-    color="mean_test_score",
-    color_continuous_scale=px.colors.sequential.Viridis,
-)
-fig.show()
+# %% [markdown]
+# In this case the top performing models have test scores with a high
+# overlap between each other, meaning that indeed, the set of parameters
+# leading to the best generalization performance is not unique.
 
 # %% [markdown]
 #
-# The parallel coordinates plot will display the values of the hyperparameters
-# on different columns while the performance metric is color coded. Thus, we
-# are able to quickly inspect if there is a range of hyperparameters which is
-# working or not.
-#
-# ```{note}
-# We **transformed most axis values by taking a log10 or log2** to
-# spread the active ranges and improve the readability of the plot.
-# ```
-#
-# In particular for this hyper-parameter search, it is interesting to see that
-# the yellow lines (top performing models) all reach intermediate values for
-# the learning rate, that is, tick values between -2 and 0 which correspond to
-# learning rate values of 0.01 to 1.0 once we invert the log10 transform for
-# that axis.
-#
-# It is possible to **select a range of results by clicking and holding on any
-# axis** of the parallel coordinate plot. You can then slide (move) the range
-# selection and cross two selections to see the intersections. You can undo a
-# selection by clicking once again on the same axis.
-#
-# We also observe that it is not possible to select the highest performing
-# models by selecting lines of on the `max_bins` axis with tick values between
-# 1 and 3.
-#
-# The other hyper-parameters are not very sensitive. We can check that if we
-# select the `learning_rate` axis tick values between -1.5 and -0.5 and
-# `max_bins` tick values between 5 and 8, we always select top performing
-# models, whatever the values of the other hyper-parameters.
-
-# %% [markdown]
-#
-# In this notebook, we have seen how randomized search offer a valuable
+# In this notebook, we saw how a randomized search offers a valuable
 # alternative to grid-search when the number of hyperparameters to tune is more
 # than two. It also alleviates the regularity imposed by the grid that might be
 # problematic sometimes.

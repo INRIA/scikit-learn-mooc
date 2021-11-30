@@ -430,7 +430,7 @@ cv = ShuffleSplit(n_splits=2, test_size=0.2, random_state=0)
 
 .center[Fold 1]
 
-.center[<img src="../figures/shufflesplit_15.svg" width=80%>]
+.center[<img src="../figures/shufflesplit_2.svg" width=80%>]
 
 The test accuracy in this fold is 1.000
 
@@ -451,7 +451,7 @@ cv = ShuffleSplit(n_splits=2, test_size=0.2, random_state=0)
 
 .center[Fold 2]
 
-.center[<img src="../figures/shufflesplit_2.svg" width=80%>]
+.center[<img src="../figures/shufflesplit_3.svg" width=80%>]
 
 The test accuracy in this fold is 1.000
 

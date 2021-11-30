@@ -221,6 +221,23 @@ cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
 # %% [markdown]
+# The best model that we found with this search seems to have a substantially better
+# mean test score than the second to best model, as the difference of the mean test
+# scores of both models differs by more than three times the standard deviation of the
+# cross-validated test scores of the best model.
+
+# %%
+cv_results = cv_results.set_index("rank_test_score")
+cv_results["mean_test_score"][1] - cv_results["mean_test_score"][2]
+
+# %%
+3 * cv_results["std_test_score"][1]
+
+# %% [markdown]
+# Keep in mind that tunning is limited by the number of different combinations
+# of parameters that are scored by the randomized search. In fact, there might
+# be other sets of parameters leading to similar or better generalization
+# performances but that were not tested in the search.
 # In practice, a randomized hyperparameter search is usually run with a large
 # number of iterations. In order to avoid the computation cost and still make a
 # decent analysis, we load the results obtained from a similar search with 200

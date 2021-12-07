@@ -38,8 +38,7 @@ You can use the following snippet of code to visualize the data defined in this 
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots(5, 10, figsize=(18, 8),
-                       subplot_kw=dict(xticks=[], yticks=[])
-                      )
+                       subplot_kw=dict(xticks=[], yticks=[]))
 for j in range(10):
     ax[4, j].set_visible(False)
     for i in range(4):

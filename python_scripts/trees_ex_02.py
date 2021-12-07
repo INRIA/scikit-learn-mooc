@@ -15,10 +15,9 @@ import pandas as pd
 
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
-data_columns = ["Flipper Length (mm)"]
-target_column = "Body Mass (g)"
-
-data_train, target_train = penguins[data_columns], penguins[target_column]
+feature_name = "Flipper Length (mm)"
+target_name = "Body Mass (g)"
+data_train, target_train = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
 # ```{note}

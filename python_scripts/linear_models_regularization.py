@@ -358,5 +358,13 @@ best_alphas = [est[-1].alpha_ for est in cv_results["estimator"]]
 best_alphas
 
 # %% [markdown]
+# The optimal regularization strength is not unique. In fact, there is a set of
+# models leading to equivalent generalization performances.
+
+# %%
+print(f"The mean optimal alpha leading to the best generalization performance is:\n"
+      f"{np.mean(best_alphas):.2f} +/- {np.std(best_alphas):.2f}")
+
+# %% [markdown]
 # In this notebook, you learned about the concept of regularization and
 # the importance of preprocessing and parameter tuning.

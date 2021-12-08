@@ -17,17 +17,17 @@ data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
 target = (target > 200_000).astype(int)
 
 # %% [markdown]
-# We inspect the "head" of the dataframe
+# We inspect the first rows of the dataframe
 
 # %%
-data.head()
+data
 
 # %% [markdown]
 # We can cherry-pick some features and only retain this subset of data
 
 # %%
 numeric_features = ['LotArea', 'FullBath', 'HalfBath']
-categorical_features = ['Neighborhood','HouseStyle']
+categorical_features = ['Neighborhood', 'HouseStyle']
 data = data[numeric_features + categorical_features]
 
 # %% [markdown]

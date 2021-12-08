@@ -207,6 +207,16 @@ print(
 # In this case, we obtain a distribution of scores and therefore, we can
 # apprehend the variability of our estimate of the generalization performance.
 #
+# ![Nested cross-validation diagram](../figures/nested_cross_validation_diagram.png)
+#
+# ```{note}
+# This figure illustrates the nested cross-validation strategy using
+# `cv_inner = KFold(n_splits=4)` and `cv_outer = KFold(n_splits=5)`.
+# For each cross-validation split, the procedure trains a model on all the red
+# samples, validates the hyperparameters on the green samples
+# and estimates the model's generalization performance on the blue samples.
+# ```
+#
 # In addition, passing the parameter `return_estimator=True`, we can check the
 # value of the best hyperparameters obtained for each fold of the outer
 # cross-validation.

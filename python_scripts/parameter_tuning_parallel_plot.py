@@ -16,7 +16,7 @@ import pandas as pd
 
 cv_results = pd.read_csv("../figures/randomized_search_results.csv", index_col=0)
 
-cv_results.head()
+cv_results
 
 # %% [markdown]
 # We define a function to remove the prefixes in the hyperparameters
@@ -128,5 +128,8 @@ fig.show()
 
 # %% [markdown]
 #
-# In this notebook, we saw how to visualize a randomized search when the number
-# of hyperparameters to tune is more than two.
+# In this notebook, we saw how to interactively explore the results of a
+# large randomized search with multiple interacting hyperparameters.
+# In particular we observed that some hyperparameters have very little
+# impact on the cross-validation score, while others have to be adjusted
+# within a specific range to get models with good predictive accuracy.

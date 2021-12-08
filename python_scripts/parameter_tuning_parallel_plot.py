@@ -15,7 +15,6 @@
 import pandas as pd
 
 cv_results = pd.read_csv("../figures/randomized_search_results.csv", index_col=0)
-
 cv_results
 
 # %% [markdown]
@@ -31,7 +30,7 @@ def shorten_param(param_name):
 
 # %%
 cv_results = cv_results.rename(shorten_param, axis=1)
-cv_results.head()
+cv_results
 
 # %% [markdown]
 # As we have more than 2 parameters in our randomized-search, we

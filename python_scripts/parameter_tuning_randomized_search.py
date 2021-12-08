@@ -271,6 +271,6 @@ cv_results = pd.read_csv("../figures/randomized_search_results.csv",
 # problematic sometimes.
 #
 # In the following, we will see how to use interactive plotting tools to explore
-# the results of large hyper-parameter search sessions and gain some
+# the results of large hyperparameter search sessions and gain some
 # insights on range of parameter values that lead to the highest performing
-# models and how different hyper-parameter are coupled or not.
+# models and how different hyperparameter are coupled or not.

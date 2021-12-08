@@ -164,6 +164,19 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # the train set. Then, we evaluated the generalization performance of our
 # tuned model on the left out test set.
 #
+# ![Cross-validation tuning diagram](../figures/cross_validation_train_test_diagram.png)
+#
+# ```{note}
+# This figure shows the particular case of **K-fold** cross-validation
+# strategy using `n_splits=5` to further split the train set coming from a
+# train-test split.
+# For each cross-validation split, the procedure trains a model on all the red
+# samples, evaluates the score of a given set of hyperparameters on the green samples
+# and estimates the model's generalization performance on the blue samples.
+# The green samples are sometimes called a **validation set** to differentiate
+# them from the test set in blue.
+# ```
+#
 # However, this evaluation only provides us a single point estimate of the
 # generalization performance. As recall at the beginning of this notebook,
 # it is beneficial to have a rough idea of the uncertainty of our estimated

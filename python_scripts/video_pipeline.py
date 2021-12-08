@@ -27,7 +27,7 @@ data
 
 # %%
 numeric_features = ['LotArea', 'FullBath', 'HalfBath']
-categorical_features = ['Neighborhood','HouseStyle']
+categorical_features = ['Neighborhood', 'HouseStyle']
 data = data[numeric_features + categorical_features]
 
 # %% [markdown]

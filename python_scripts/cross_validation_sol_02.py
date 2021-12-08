@@ -1,11 +1,12 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M7.01
 #
-# This notebook aims at building baseline classifiers, which we'll use to
-# compare our predictive model. Besides, we will check the differences with
-# the baselines that we saw in regression.
+# This notebook aims at building some baseline classifiers, which we use as
+# references to assess the relative predictive performance of a given model of
+# interest.
 #
-# We will use the adult census dataset, using only the numerical features.
+# We illustrate those baselines with the help of the Adult Census dataset,
+# using only the numerical features for the sake of simplicity.
 
 # %%
 import pandas as pd
@@ -15,7 +16,7 @@ data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %% [markdown]
 # First, define a `ShuffleSplit` cross-validation strategy taking half of the
-# sample as a testing at each round.
+# samples as a testing at each round.
 
 # %%
 # solution
@@ -25,7 +26,7 @@ cv = ShuffleSplit(n_splits=10, test_size=0.5, random_state=0)
 
 # %% [markdown]
 # Next, create a machine learning pipeline composed of a transformer to
-# standardize the data followed by a logistic regression.
+# standardize the data followed by a logistic regression classifier.
 
 # %%
 # solution
@@ -36,42 +37,41 @@ from sklearn.linear_model import LogisticRegression
 classifier = make_pipeline(StandardScaler(), LogisticRegression())
 
 # %% [markdown]
-# Get the test score by using the model, the data, and the cross-validation
-# strategy that you defined above.
+# Compute the cross-validation (test) scores for the classifier on this
+# dataset. Keep the results in a numpy array or a pandas Series.
 
 # %%
 # solution
 from sklearn.model_selection import cross_validate
 
-result_classifier = cross_validate(classifier, data, target, cv=cv, n_jobs=2)
+cv_results_logistic_regression = cross_validate(
+    classifier, data, target, cv=cv, n_jobs=2
+)
 
-test_score_classifier = pd.Series(
-    result_classifier["test_score"], name="Classifier score")
+test_score_logistic_regression = pd.Series(
+    cv_results_logistic_regression["test_score"], name="Logistic Regression"
+)
 
-# %% [markdown]
-# Using the `sklearn.model_selection.permutation_test_score` function,
-# check the chance level of the previous model.
-
-# %%
-# solution
-from sklearn.model_selection import permutation_test_score
-
-score, permutation_score, pvalue = permutation_test_score(
-    classifier, data, target, cv=cv, n_jobs=2, n_permutations=10)
-test_score_permutation = pd.Series(permutation_score, name="Permuted score")
 
 # %% [markdown]
-# Finally, compute the test score of a dummy classifier which would predict
-# the most frequent class from the training set. You can look at the
-# `sklearn.dummy.DummyClassifier` class.
+# Now, compute the cross-validation scores of a dummy classifier that
+# constantly predicts the most frequent class observed the training set. Please
+# refer to the online documentation for the [sklearn.dummy.DummyClassifier
+# ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
+# class.
 
 # %%
 # solution
 from sklearn.dummy import DummyClassifier
 
-dummy = DummyClassifier(strategy="most_frequent")
-result_dummy = cross_validate(dummy, data, target, cv=cv, n_jobs=2)
-test_score_dummy = pd.Series(result_dummy["test_score"], name="Dummy score")
+most_frequent_classifier = DummyClassifier(strategy="most_frequent")
+cv_results_most_frequent = cross_validate(
+    most_frequent_classifier, data, target, cv=cv, n_jobs=2
+)
+test_score_most_frequent = pd.Series(
+    cv_results_most_frequent["test_score"],
+    name="Most frequent class predictor"
+)
 
 # %% [markdown]
 # Now that we collected the results from the baselines and the model, plot
@@ -83,7 +83,7 @@ test_score_dummy = pd.Series(result_dummy["test_score"], name="Dummy score")
 # %%
 # solution
 final_test_scores = pd.concat(
-    [test_score_classifier, test_score_permutation, test_score_dummy],
+    [test_score_logistic_regression, test_score_most_frequent],
     axis=1,
 )
 
@@ -114,13 +114,16 @@ _ = plt.title("Distribution of the test scores")
 dummy = DummyClassifier(strategy="stratified")
 result_dummy_stratify = cross_validate(dummy, data, target, cv=cv, n_jobs=2)
 test_score_dummy_stratify = pd.Series(
-    result_dummy_stratify["test_score"], name="Dummy 'stratify' score")
+    result_dummy_stratify["test_score"], name="Dummy 'stratify' score"
+)
 
 # %% tags=["solution"]
 final_test_scores = pd.concat(
     [
-        test_score_classifier, test_score_permutation,
-        test_score_dummy, test_score_dummy_stratify,
+        test_score_classifier,
+        test_score_permutation,
+        test_score_dummy,
+        test_score_dummy_stratify,
     ],
     axis=1,
 )
@@ -140,7 +143,7 @@ _ = plt.title("Distribution of the test scores")
 # set's class distribution, resulting in some wrong predictions even for
 # the most frequent class, hence we obtain a lower accuracy.
 #
-# Please refer to the scikit-learn documentation on [DummyClassifier
+# Please refer to the scikit-learn documentation on [sklearn.dummy.DummyClassifier
 # ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
 # for more details on the meaning of the `strategy="stratified"` parameter.
 
@@ -154,10 +157,12 @@ dummy_models = {
 n_runs = 3
 
 for run_idx in range(n_runs):
-    final_scores = pd.DataFrame({
-        f"{name} score": cross_val_score(model, data, target, cv=cv, n_jobs=2)
-        for name, model in dummy_models.items()
-    })
+    final_scores = pd.DataFrame(
+        {
+            f"{name} score": cross_val_score(model, data, target, cv=cv, n_jobs=2)
+            for name, model in dummy_models.items()
+        }
+    )
 
     final_scores.plot.hist(bins=50, density=True, edgecolor="black")
     plt.legend(bbox_to_anchor=(1.05, 0.8))

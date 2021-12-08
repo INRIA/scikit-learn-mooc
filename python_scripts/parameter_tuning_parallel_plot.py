@@ -102,8 +102,8 @@ fig.show()
 # ```
 #
 # The parallel coordinates plot will display the values of the hyperparameters
-# on different columns while the performance metric is color coded. Thus, we
-# are able to quickly inspect if there is a range of hyperparameters which is
+# on different columns while the performance metric is color coded. Thus, we are
+# able to quickly inspect if there is a range of hyperparameters which is
 # working or not.
 #
 # It is possible to **select a range of results by clicking and holding on any
@@ -111,20 +111,20 @@ fig.show()
 # selection and cross two selections to see the intersections. You can undo a
 # selection by clicking once again on the same axis.
 #
-# In particular for this hyperparameter search, it is interesting to see that
-# the yellow lines (top performing models) all reach intermediate values for
-# the learning rate, that is, tick values between -2 and 0 which correspond to
-# learning rate values of 0.01 to 1.0 once we invert back the log10 transform
+# In particular for this hyperparameter search, it is interesting to confirm
+# that the yellow lines (top performing models) all reach intermediate values
+# for the learning rate, that is, tick values between -2 and 0 which correspond
+# to learning rate values of 0.01 to 1.0 once we invert back the log10 transform
 # for that axis.
 #
-# We also observe that it is not possible to select the highest performing
-# models by selecting lines of on the `max_bins` axis with tick values between
-# 1 and 3.
+# But now we can also observe that it is not possible to select the highest
+# performing models by selecting lines of on the `max_bins` axis with tick
+# values between 1 and 3.
 #
 # The other hyperparameters are not very sensitive. We can check that if we
 # select the `learning_rate` axis tick values between -1.5 and -0.5 and
 # `max_bins` tick values between 5 and 8, we always select top performing
-# models, whatever the values of the other hyper-parameters.
+# models, whatever the values of the other hyperparameters.
 
 # %% [markdown]
 #

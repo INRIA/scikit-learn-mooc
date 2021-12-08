@@ -20,7 +20,7 @@ target = (target > 200_000).astype(int)
 # We inspect the first rows of the dataframe
 
 # %%
-data.head()
+data
 
 # %% [markdown]
 # We can cherry-pick some features and only retain this subset of data

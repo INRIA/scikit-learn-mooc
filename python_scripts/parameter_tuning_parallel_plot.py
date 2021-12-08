@@ -69,8 +69,11 @@ ax.set_yscale("log")
 _ = ax.legend(title="mean_test_score", loc="center left", bbox_to_anchor=(1, 0.5))
 
 # %% [markdown]
-# Instead, we can visualize all the hyperparameters at the same time
-# using a parallel coordinates plot.
+# In the previous plot we see that the top performing values are located in a
+# band of learning rate between 0.01 and 1.0, but we have no control in how the
+# other hyperparameters interact with such values for the learning rate.
+# Instead, we can visualize all the hyperparameters at the same time using a
+# parallel coordinates plot.
 
 # %%
 import numpy as np

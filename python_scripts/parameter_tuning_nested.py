@@ -136,16 +136,16 @@ model_grid_search.best_params_
 
 # %% [markdown]
 # One important caveat here concerns the evaluation of the generalization performance.
-# Indeed, the mean and standard deviation of the scores computed
-# by the cross-validation in the grid-search is potentially not a good estimate
-# of the generalization performance of the model refitted with the best
-# parameters (i.e. the model at hand when using `model_grid_search.predict`).
-#
-# The reason is that the model was refitted on the full dataset given during
-# `fit`. Therefore, this refitted model was trained with more data than the
+# Indeed, the mean and standard deviation of the scores computed by the cross-validation
+# in the grid-search are potentially not good estimates of the generalization performance
+# we would obtain by refitting the model on the full dataset with the best
+# found parameters (such refit is done by default when calling `model_grid_search.fit`
+# in scikit-learn). Therefore, this refitted model is trained with more data than the
 # different models trained during the cross-validation in the grid-search.
+# It also means that we used knowledge from the full dataset to decide our model’s training
+# parameter.
 #
-# Therefore, one must keep an external, held-out test set for the final evaluation
+# Because of the above, one must keep an external, held-out test set for the final evaluation
 # the refitted model. We highlight here the process using a single train-test split.
 
 # %%

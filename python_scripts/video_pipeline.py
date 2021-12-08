@@ -17,7 +17,7 @@ data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
 target = (target > 200_000).astype(int)
 
 # %% [markdown]
-# We inspect the "head" of the dataframe
+# We inspect the first rows of the dataframe
 
 # %%
 data.head()

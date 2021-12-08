@@ -269,3 +269,8 @@ cv_results = pd.read_csv("../figures/randomized_search_results.csv",
 # alternative to grid-search when the number of hyperparameters to tune is more
 # than two. It also alleviates the regularity imposed by the grid that might be
 # problematic sometimes.
+#
+# In the following, we will see how to use interactive plotting tools to explore
+# the results of large hyper-parameter search sessions and gain some
+# insights on range of parameter values that lead to the highest performing
+# models and how different hyper-parameter are coupled or not.

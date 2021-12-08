@@ -1578,9 +1578,42 @@ why the results get worse.</p>
 <p>We see that using <code class="docutils literal notranslate"><span class="pre">strategy=&quot;stratified&quot;</span></code>, the results are much worse than
 with the <code class="docutils literal notranslate"><span class="pre">most_frequent</span></code> strategy. Since the classes are imbalanced,
 predicting the most frequent involves that we will be right for the
-proportion of this class (~75% of the samples). However, by using the
-<code class="docutils literal notranslate"><span class="pre">stratified</span></code> strategy, wrong predictions will be made even for the most
-frequent class, hence we obtain a lower accuracy.</p>
+proportion of this class (~75% of the samples). However, the <code class="docutils literal notranslate"><span class="pre">&quot;stratified&quot;</span></code>
+strategy will randomly generate predictions by respecting the training
+set’s class distribution, resulting in some wrong predictions even for
+the most frequent class, hence we obtain a lower accuracy.</p>
+<p>Please refer to the scikit-learn documentation on <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html">DummyClassifier
+</a>
+for more details on the meaning of the <code class="docutils literal notranslate"><span class="pre">strategy=&quot;stratified&quot;</span></code> parameter.</p>
+<div class="cell tag_solution docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="n">dummy_models</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Dummy &#39;most_frequent&#39;&quot;</span><span class="p">:</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;Dummy &#39;stratified&#39;&quot;</span><span class="p">:</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;stratified&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">n_runs</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">for</span> <span class="n">run_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_runs</span><span class="p">):</span>
+    <span class="n">final_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> score&quot;</span><span class="p">:</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">dummy_models</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">})</span>
+
+    <span class="n">final_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy (%)&quot;</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribution of scores in run #</span><span class="si">{</span><span class="n">run_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cross_validation_sol_02_23_0.png" src="../_images/cross_validation_sol_02_23_0.png" />
+<img alt="../_images/cross_validation_sol_02_23_1.png" src="../_images/cross_validation_sol_02_23_1.png" />
+<img alt="../_images/cross_validation_sol_02_23_2.png" src="../_images/cross_validation_sol_02_23_2.png" />
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

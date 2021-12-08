@@ -14,10 +14,9 @@ import pandas as pd
 
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
-data_columns = ["Flipper Length (mm)"]
-target_column = "Body Mass (g)"
-
-data_train, target_train = penguins[data_columns], penguins[target_column]
+feature_name = "Flipper Length (mm)"
+target_name = "Body Mass (g)"
+data_train, target_train = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
 # ```{note}
@@ -50,9 +49,9 @@ tree.fit(data_train, target_train)
 # solution
 import numpy as np
 
-data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
-                                   data_train[data_columns[0]].max()),
-                         columns=data_columns)
+data_test = pd.DataFrame(np.arange(data_train[feature_name].min(),
+                                   data_train[feature_name].max()),
+                         columns=[feature_name])
 
 # %% tags=["solution"]
 target_predicted_linear_regression = linear_regression.predict(data_test)
@@ -67,7 +66,7 @@ target_predicted_tree = tree.predict(data_test)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
 plt.plot(data_test, target_predicted_linear_regression,
          label="Linear regression")
@@ -89,9 +88,9 @@ _ = plt.title("Prediction of linear model and a decision tree")
 # %%
 # solution
 offset = 30
-data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min() - offset,
-                                   data_train[data_columns[0]].max() + offset),
-                         columns=data_columns)
+data_test = pd.DataFrame(np.arange(data_train[feature_name].min() - offset,
+                                   data_train[feature_name].max() + offset),
+                         columns=[feature_name])
 
 # %% [markdown]
 # Finally, make predictions with both models on this new interval of data.
@@ -103,7 +102,7 @@ target_predicted_linear_regression = linear_regression.predict(data_test)
 target_predicted_tree = tree.predict(data_test)
 
 # %% tags=["solution"]
-sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
 plt.plot(data_test, target_predicted_linear_regression,
          label="Linear regression")

@@ -135,18 +135,19 @@ cv_results[[
 model_grid_search.best_params_
 
 # %% [markdown]
-# One important caveat here concerns the evaluation of the generalization performance.
-# Indeed, the mean and standard deviation of the scores computed by the cross-validation
-# in the grid-search are potentially not good estimates of the generalization performance
-# we would obtain by refitting the model on the full dataset with the best
-# found parameters (such refit is done by default when calling `model_grid_search.fit`
-# in scikit-learn). Therefore, this refitted model is trained with more data than the
-# different models trained during the cross-validation in the grid-search.
-# It also means that we used knowledge from the full dataset to decide our model’s training
-# parameter.
+# One important caveat here concerns the evaluation of the generalization
+# performance. Indeed, the mean and standard deviation of the scores computed by
+# the cross-validation in the grid-search are potentially not good estimates of
+# the generalization performance we would obtain by refitting the model on the
+# full dataset with the best found parameters (such refit is done by default
+# when calling `model_grid_search.fit` in scikit-learn). Therefore, this
+# refitted model is trained with more data than the different models trained
+# during the cross-validation in the grid-search. It also means that we used
+# knowledge from the full dataset to decide our model’s training parameter.
 #
-# Because of the above, one must keep an external, held-out test set for the final evaluation
-# the refitted model. We highlight here the process using a single train-test split.
+# Because of the above, one must keep an external, held-out test set for the
+# final evaluation the refitted model. We highlight here the process using a
+# single train-test split.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -161,8 +162,8 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
 # In the code above, the selection of the best hyperparameters was done only on
-# the train set. Then, we evaluated the generalization performance of our
-# tuned model on the left out test set.
+# the train set. Then, we evaluated the generalization performance of our tuned
+# model on the left out test set.
 #
 # ![Cross-validation tuning diagram](../figures/cross_validation_train_test_diagram.png)
 #
@@ -178,8 +179,8 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # ```
 #
 # However, this evaluation only provides us a single point estimate of the
-# generalization performance. As recall at the beginning of this notebook,
-# it is beneficial to have a rough idea of the uncertainty of our estimated
+# generalization performance. As recall at the beginning of this notebook, it is
+# beneficial to have a rough idea of the uncertainty of our estimated
 # generalization performance. Therefore, we should instead use an additional
 # cross-validation for this evaluation.
 #
@@ -229,22 +230,23 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
     )
 
 # %% [markdown]
-# It is interesting to see whether the hyper-parameter tuning procedure always select
-# similar values for the hyperparameters. If its the case, then all is fine. It means that
-# we can deploy a model fit with those hyperparameters and expect that it will have
-# an actual predictive performance close to what we measured in the outer
-# cross-validation.
+# It is interesting to see whether the hyper-parameter tuning procedure always
+# select similar values for the hyperparameters. If its the case, then all is
+# fine. It means that we can deploy a model fit with those hyperparameters and
+# expect that it will have an actual predictive performance close to what we
+# measured in the outer cross-validation.
 #
-# But it is also possible that some hyperparameters do not matter at all, and as a
-# result in different tuning sessions give different results. In this case,
-# any value will do. This can typically be confirmed by doing a parallel coordinate plot
-# of the results of a large hyperparameter search as seen in the exercises.
+# But it is also possible that some hyperparameters do not matter at all, and as
+# a result in different tuning sessions give different results. In this case,
+# any value will do. This can typically be confirmed by doing a parallel
+# coordinate plot of the results of a large hyperparameter search as seen in the
+# exercises.
 #
-# From a deployment, one could also chose to deploy all the models found by the outer
-# cross-validation loop and make them vote to get the final predictions. However this
-# can cause operational problems because it uses more memory and makes
-# computing prediction slower, resulting in a higher computational resource usage
-# per prediction. 
+# From a deployment, one could also chose to deploy all the models found by the
+# outer cross-validation loop and make them vote to get the final predictions.
+# However this can cause operational problems because it uses more memory and
+# makes computing prediction slower, resulting in a higher computational
+# resource usage per prediction.
 #
 # In this notebook, we have seen how to combine hyperparameters search with
 # cross-validation.

@@ -324,4 +324,4 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # In this notebook we:
 #
 # * saw the importance of **scaling numerical variables**;
-# * used a **pipeline** to chain scaling and logistic regression training;
+# * used a **pipeline** to chain scaling and logistic regression training.

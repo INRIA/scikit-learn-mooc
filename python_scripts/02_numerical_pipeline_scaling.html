@@ -2046,14 +2046,13 @@ figure below illustrates this K-fold strategy.</p>
 <p><img alt="Cross-validation diagram" src="../_images/cross_validation_diagram.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This figure shows the particular case of K-fold cross-validation strategy.
-As mentioned earlier, there are a variety of different cross-validation
-strategies. Some of these aspects will be covered in more details in future
-notebooks.</p>
-</div>
-<p>For each cross-validation split, the procedure trains a model on all the red
+<p>This figure shows the particular case of <strong>K-fold</strong> cross-validation strategy.
+For each cross-validation split, the procedure trains a model on all the red
 samples and evaluate the score of the model on the blue samples.
-Cross-validation is therefore computationally intensive because it requires
+As mentioned earlier, there is a variety of different cross-validation
+strategies. Some of these aspects will be covered in more detail in future notebooks.</p>
+</div>
+<p>Cross-validation is therefore computationally intensive because it requires
 training several models instead of one.</p>
 <p>In scikit-learn, the function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> allows to do cross-validation
 and you need to pass it the model, the data, and the target. Since there
@@ -2088,18 +2087,23 @@ for each fold, (ii) the time to predict with the model on the testing data
 for each fold, and (iii) the default score on the testing data for each fold.</p>
 <p>Setting <code class="docutils literal notranslate"><span class="pre">cv=5</span></code> created 5 distinct splits to get 5 variations for the training
 and testing sets. Each training set is used to fit one model which is then
-scored on the matching test set. This strategy is called K-fold
-cross-validation where <code class="docutils literal notranslate"><span class="pre">K</span></code> corresponds to the number of splits.</p>
-<p>Note that by default the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function discards the 5 models that
+scored on the matching test set. The default strategy when setting <code class="docutils literal notranslate"><span class="pre">cv=int</span></code>
+is the K-fold cross-validation where <code class="docutils literal notranslate"><span class="pre">K</span></code> corresponds to the (integer) number of
+splits. Setting <code class="docutils literal notranslate"><span class="pre">cv=5</span></code> or <code class="docutils literal notranslate"><span class="pre">cv=10</span></code> is a common practice, as it is a good
+trade-off between computation time and stability of the estimated variability.</p>
+<p>Note that by default the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function discards the <code class="docutils literal notranslate"><span class="pre">K</span></code> models that
 were trained on the different overlapping subset of the dataset. The goal of
 cross-validation is not to train a model, but rather to estimate
 approximately the generalization performance of a model that would have been
 trained to the full training set, along with an estimate of the variability
 (uncertainty on the generalization accuracy).</p>
-<p>You can pass additional parameters to <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> to get more
-information, for instance training scores. These features will be covered in
-a future notebook.</p>
-<p>Let’s extract the test scores from the <code class="docutils literal notranslate"><span class="pre">cv_result</span></code> dictionary and compute
+<p>You can pass additional parameters to
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code></a>
+to collect additional information, such as the training scores of the models
+obtained on each round or even return the models themselves instead of
+discarding them.  These features will be covered in a future notebook.</p>
+<p>Let’s extract the scores computed on the test fold of each
+cross-validation round from the <code class="docutils literal notranslate"><span class="pre">cv_result</span></code> dictionary and compute
 the mean accuracy and the variation of the accuracy across folds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

@@ -99,16 +99,6 @@ Evaluate the performance of a
 `sklearn.ensemble.HistGradientBoostingClassifier`. Enable early-stopping and
 add as many trees as needed.
 
-**Note**: Be aware that you need a specific import when importing the
-`HistGradientBoostingClassifier`:
-
-```python
-# explicitly require this experimental feature
-from sklearn.experimental import enable_hist_gradient_boosting
-# now you can import normally from ensemble
-from sklearn.ensemble import HistGradientBoostingClassifier
-```
-
 ```{admonition} Question
 Is histogram gradient boosting a better classifier considering the mean of
 the cross-validation test score?

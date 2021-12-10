@@ -64,7 +64,8 @@ A `StandardScaler` transformer with the default parameter will:
 
 - a) transforms the features so that they have similar ranges
 - b) transforms the features to lie in the [0.0, 1.0] range
-- c) transforms positive-only features into negative or positive values
+- c) transforms feature values that were originally positive-only into values that can
+  be negative or positive
 - d) can help logistic regression converge faster (fewer iterations)
 
 Hint: look at the plots and the answers of the previous question to eliminate

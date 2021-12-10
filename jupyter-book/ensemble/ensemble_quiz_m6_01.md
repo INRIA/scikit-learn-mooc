@@ -3,7 +3,7 @@
 ```{admonition} Question
 Select the correct answers:
 
-- a) Both bagging an boosting are combining predictors
+- a) Both bagging and boosting are combining predictors
 - b) Both bagging and boosting are only working with decision trees
 - c) Boosting combines predictors sequentially
 - d) Bagging combines predictors simultaneously

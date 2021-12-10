@@ -351,9 +351,8 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # This figure shows the particular case of **K-fold** cross-validation strategy.
 # For each cross-validation split, the procedure trains a model on all the red
 # samples and evaluate the score of the model on the blue samples.
-# As mentioned earlier, there are a variety of different cross-validation
-# strategies. Some of these aspects will be covered in more detail in future
-# notebooks.
+# As mentioned earlier, there is a variety of different cross-validation
+# strategies. Some of these aspects will be covered in more detail in future notebooks.
 # ```
 #
 # Cross-validation is therefore computationally intensive because it requires
@@ -380,21 +379,26 @@ cv_result
 #
 # Setting `cv=5` created 5 distinct splits to get 5 variations for the training
 # and testing sets. Each training set is used to fit one model which is then
-# scored on the matching test set. This strategy is called K-fold
-# cross-validation where `K` corresponds to the number of splits.
+# scored on the matching test set. The default strategy when setting `cv=int`
+# is the K-fold cross-validation where `K` corresponds to the (integer) number of
+# splits. Setting `cv=5` or `cv=10` is a common practice, as it is a good
+# trade-off between computation time and stability of the estimated variability.
 #
-# Note that by default the `cross_validate` function discards the 5 models that
+# Note that by default the `cross_validate` function discards the `K` models that
 # were trained on the different overlapping subset of the dataset. The goal of
 # cross-validation is not to train a model, but rather to estimate
 # approximately the generalization performance of a model that would have been
 # trained to the full training set, along with an estimate of the variability
 # (uncertainty on the generalization accuracy).
 #
-# You can pass additional parameters to `cross_validate` to get more
-# information, for instance training scores. These features will be covered in
-# a future notebook.
+# You can pass additional parameters to
+# [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
+# to collect additional information, such as the training scores of the models
+# obtained on each round or even return the models themselves instead of
+# discarding them.  These features will be covered in a future notebook.
 #
-# Let's extract the test scores from the `cv_result` dictionary and compute
+# Let's extract the scores computed on the test fold of each 
+# cross-validation round from the `cv_result` dictionary and compute
 # the mean accuracy and the variation of the accuracy across folds.
 
 # %%

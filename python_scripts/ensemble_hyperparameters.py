@@ -61,12 +61,12 @@ cv_results["mean_test_score"] = -cv_results["mean_test_score"]
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
-# We can observe that in our grid-search, the largest `max_depth` together
-# with the largest `n_estimators` led in average to the best performance
-# on the validation sets. Now we will estimate the generalization performance
-# of the best model by refitting it with the full training set and using the test
-# set for scoring on unseen data. This is done by default by simply calling the
-# `.score` method.
+# We can observe that in our grid-search, the largest `max_depth` together with
+# the largest `n_estimators` led in average to the best performance on the
+# validation sets. Now we will estimate the generalization performance of the
+# best model by refitting it with the full training set and using the test set
+# for scoring on unseen data. This is done by default when calling the `.fit`
+# method.
 
 # %%
 score = -grid_search.score(data_test, target_test)

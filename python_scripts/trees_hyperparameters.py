@@ -314,17 +314,16 @@ plot_classification(tree_clf, data_clf[data_clf_columns],
 accuracy = tree_clf.score(data_clf[data_clf_columns],
                           data_clf[target_clf_column])
 
-plt.title(
+_ = plt.title(
     f"Decision tree with leaf having at least {min_samples_leaf} samples"
     f"\n Accuracy of the fit: {accuracy:.2f}")
-plt.show()
 
 # %%
 _, ax = plt.subplots(figsize=(10, 7))
 _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 
 # %% [markdown]
-# This hyperparameter allows to have leaves with a minimum number of samples
-# and no further splits will be search otherwise. Therefore, these
-# hyperparameters could be an alternative to fix the `max_depth`
-# hyperparameter.
+# This hyperparameter allows to have leaves with a minimum number of samples and
+# no further splits will be search otherwise. Similarly, the rest of the above
+# mentioned hyperparameters can be tuned as an alternative to fixing the
+# `max_depth`.

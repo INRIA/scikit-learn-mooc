@@ -307,7 +307,7 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # ```
 
 # %% [markdown]
-# In this notebook we have:
+# In this notebook we:
 #
-# * seen the importance of **scaling numerical variables**;
+# * saw the importance of **scaling numerical variables**;
 # * used a **pipeline** to chain scaling and logistic regression training;

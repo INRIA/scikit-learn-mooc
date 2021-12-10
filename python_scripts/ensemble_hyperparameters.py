@@ -75,17 +75,15 @@ print(f"On average, our random forest regressor makes an error of {score:.2f} k$
 # %% [markdown]
 # ## Gradient-boosting decision trees
 #
-# For gradient-boosting, parameters are coupled, so we cannot set the
-# parameters one after the other anymore. The important parameters are
-# `n_estimators`, `max_depth`, and `learning_rate`.
+# For gradient-boosting, parameters are coupled, so we cannot set the parameters
+# one after the other anymore. The important parameters are `n_estimators`,
+# `max_depth`, and `learning_rate`.
 #
-# Let's first discuss the `max_depth` parameter.
-# We saw in the section on gradient-boosting that the algorithm fits the error
-# of the previous tree in the ensemble. Thus, fitting fully grown trees will
-# be detrimental.
-# Indeed, the first tree of the ensemble would perfectly fit (overfit) the data
-# and thus no subsequent tree would be required, since there would be no
-# residuals.
+# Let's first discuss the `max_depth` parameter. We saw in the section on
+# gradient-boosting that the algorithm fits the error of the previous tree in
+# the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed, the
+# first tree of the ensemble would perfectly fit (overfit) the data and thus no
+# subsequent tree would be required, since there would be no residuals.
 # Therefore, the tree used in gradient-boosting should have a low depth,
 # typically between 3 to 8 levels. Having very weak learners at each step will
 # help reducing overfitting.
@@ -94,16 +92,15 @@ print(f"On average, our random forest regressor makes an error of {score:.2f} k$
 # residuals will be corrected and less learners are required. Therefore,
 # `n_estimators` should be increased if `max_depth` is lower.
 #
-# Finally, we have overlooked the impact of the `learning_rate` parameter
-# until now. When fitting the residuals, we would like the tree
-# to try to correct all possible errors or only a fraction of them.
-# The learning-rate allows you to control this behaviour.
-# A small learning-rate value would only correct the residuals of very few
-# samples. If a large learning-rate is set (e.g., 1), we would fit the
-# residuals of all samples. So, with a very low learning-rate, we will need
-# more estimators to correct the overall error. However, a too large
-# learning-rate tends to obtain an overfitted ensemble,
-# similar to having a too large tree depth.
+# Finally, we have overlooked the impact of the `learning_rate` parameter until
+# now. When fitting the residuals, we would like the tree to try to correct all
+# possible errors or only a fraction of them. The learning-rate allows you to
+# control this behaviour. A small learning-rate value would only correct the
+# residuals of very few samples. If a large learning-rate is set (e.g., 1), we
+# would fit the residuals of all samples. So, with a very low learning-rate, we
+# will need more estimators to correct the overall error. However, a too large
+# learning-rate tends to obtain an overfitted ensemble, similar to having a too
+# large tree depth.
 
 # %%
 from sklearn.ensemble import GradientBoostingRegressor

@@ -78,7 +78,6 @@ for C in Cs:
     sns.scatterplot(
         data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
         hue=target_column, palette=["tab:red", "tab:blue"])
-    plot_decision_function(logistic_regression, range_features, ax=ax)
     plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
 # %% [markdown]

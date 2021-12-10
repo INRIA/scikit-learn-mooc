@@ -19,10 +19,9 @@ import pandas as pd
 
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
-data_columns = ["Flipper Length (mm)"]
-target_column = "Body Mass (g)"
-
-data_train, target_train = penguins[data_columns], penguins[target_column]
+feature_name = "Flipper Length (mm)"
+target_name = "Body Mass (g)"
+data_train, target_train = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
 # To illustrate how decision trees are predicting in a regression setting, we
@@ -32,15 +31,29 @@ data_train, target_train = penguins[data_columns], penguins[target_column]
 # %%
 import numpy as np
 
-data_test = pd.DataFrame(np.arange(data_train[data_columns[0]].min(),
-                                   data_train[data_columns[0]].max()),
-                         columns=data_columns)
+data_test = pd.DataFrame(np.arange(data_train[feature_name].min(),
+                                   data_train[feature_name].max()),
+                                   columns=[feature_name])
+
+# %% [markdown]
+# Using the term "test" here refers to data that was not used for training.
+# It should not be confused with data coming from a train-test split, as it
+# was generated in equally-spaced intervals for the visual evaluation of the
+# predictions.
+#
+# Note that this is methodologically valid here because our objective is to get
+# some intuitive understanding on the shape of the decision function of the
+# learned decision trees.
+#
+# However computing an evaluation metric on such a synthetic test set would
+# be meaningless since the synthetic dataset does not follow the same
+# distribution as the real world data on which the model will be deployed.
 
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
 _ = plt.title("Illustration of the regression dataset used")
 
@@ -56,7 +69,7 @@ linear_model.fit(data_train, target_train)
 target_predicted = linear_model.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
 plt.plot(data_test, target_predicted, label="Linear regression")
 plt.legend()
@@ -69,11 +82,11 @@ _ = plt.title("Prediction function using a LinearRegression")
 # will be on the line.
 
 # %%
-ax = sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+ax = sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                      color="black", alpha=0.5)
 plt.plot(data_test, target_predicted, label="Linear regression",
          linestyle="--")
-plt.scatter(data_test[::3], target_predicted[::3], label="Test predictions",
+plt.scatter(data_test[::3], target_predicted[::3], label="Predictions",
             color="tab:orange")
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")
@@ -92,7 +105,7 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
 plt.plot(data_test, target_predicted, label="Decision tree")
 plt.legend()
@@ -111,7 +124,7 @@ _ = plt.title("Prediction function using a DecisionTreeRegressor")
 from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(8, 6))
-_ = plot_tree(tree, feature_names=data_columns, ax=ax)
+_ = plot_tree(tree, feature_names=feature_name, ax=ax)
 
 # %% [markdown]
 # The threshold for our feature (flipper length) is 206.5 mm. The predicted
@@ -129,7 +142,7 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x="Flipper Length (mm)", y="Body Mass (g)",
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
 plt.plot(data_test, target_predicted, label="Decision tree")
 plt.legend()

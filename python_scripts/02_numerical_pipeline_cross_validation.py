@@ -72,7 +72,7 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 # Instead, we can use cross-validation. Cross-validation consists of repeating
 # the procedure such that the training and testing sets are different each time.
 # Generalization performance metrics are collected for each repetition and then
-# aggregated. As a result we can get an estimate of the variability of the
+# aggregated. As a result we can assess the variability of our measure of the
 # model's generalization performance.
 #
 # Note that there exists several cross-validation strategies, each of them
@@ -86,7 +86,7 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 #
 # ```{note}
 # This figure shows the particular case of **K-fold** cross-validation strategy.
-# For each cross-validation split, the procedure trains a model on all the red
+# For each cross-validation split, the procedure trains a clone of model on all the red
 # samples and evaluate the score of the model on the blue samples.
 # As mentioned earlier, there is a variety of different cross-validation
 # strategies. Some of these aspects will be covered in more detail in future notebooks.
@@ -110,9 +110,10 @@ cv_result
 
 # %% [markdown]
 # The output of `cross_validate` is a Python dictionary, which by default
-# contains three entries: (i) the time to train the model on the training data
-# for each fold, (ii) the time to predict with the model on the testing data for
-# each fold, and (iii) the default score on the testing data for each fold.
+# contains three entries:
+# - (i) the time to train the model on the training data for each fold,
+# - (ii) the time to predict with the model on the testing data for each fold,
+# - (iii) the default score on the testing data for each fold.
 #
 # Setting `cv=5` created 5 distinct splits to get 5 variations for the training
 # and testing sets. Each training set is used to fit one model which is then
@@ -150,8 +151,8 @@ print(
 # we can estimate the uncertainty of our model generalization performance. This
 # is the main advantage of cross-validation and can be crucial in practice, for
 # example when comparing different models to figure out whether one is better
-# than the other or whether the generalization performance differences are
-# within the uncertainty.
+# than the other or whether our measures of the generalization performance of each
+# model are within the error bars of one-another.
 #
 # In this particular case, only the first 2 decimals seem to be trustworthy. If
 # you go up in this notebook, you can check that the performance we get with

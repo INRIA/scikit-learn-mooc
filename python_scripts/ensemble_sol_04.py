@@ -116,3 +116,15 @@ gbdt.n_estimators_
 from sklearn.metrics import mean_absolute_error
 score = mean_absolute_error(target_test, gbdt.predict(data_test))
 print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")
+
+# %% [markdown] tags=["solution"]
+# We observe that the MAE value measure on the held out test set is close to the
+# validation error measured to the right hand side of the validation curve. This
+# is kind of reassuring, as it means that both the cross-validation procedure
+# and the outer train-test split roughly agree as approximations of the true
+# generalization performance of the model. We can observe that the final
+# evaluation of the test error seems to be even slightly below than the
+# cross-validated test scores. This can be explained because the final model has
+# been trained on the full training set while the cross-validation models have
+# been trained on smaller subsets: in general the larger the number of training
+# points, the lower the test error.

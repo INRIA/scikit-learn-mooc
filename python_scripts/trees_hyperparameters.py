@@ -118,21 +118,19 @@ accuracy = tree_clf.score(data_clf[data_clf_columns],
                           data_clf[target_clf_column])
 
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.title(
+_ = plt.title(
     f"Shallow classification tree with max-depth of {max_depth}"
     f"\n Accuracy of the fit: {accuracy:.2f}"
 )
-plt.show()
 
 # %%
 plot_regression(tree_reg, data_reg[data_reg_columns], data_reg[target_reg_column])
 accuracy = tree_reg.score(data_reg[data_reg_columns], data_reg[target_reg_column])
 
-plt.title(
+_ = plt.title(
     f"Shallow regression tree with max-depth of {max_depth}"
     f"\n R$^2$ of the fit: {accuracy:.2f}"
 )
-plt.show()
 
 # %% [markdown]
 # Now, let's increase the `max_depth` parameter value to check the difference
@@ -150,25 +148,20 @@ accuracy = tree_clf.score(data_clf[data_clf_columns],
                           data_clf[target_clf_column])
 
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.title(
+_ = plt.title(
     f"Shallow classification tree with max-depth of {max_depth}"
     f"\n Accuracy of the fit: {accuracy:.2f}"
 )
-plt.show()
 
 # %%
 plot_regression(tree_reg, data_reg[data_reg_columns],
                 data_reg[target_reg_column])
 accuracy = tree_reg.score(data_reg[data_reg_columns], data_reg[target_reg_column])
 
-plt.title(
+_ = plt.title(
     f"Shallow regression tree with max-depth of {max_depth}"
     f"\n R$^2$ of the fit: {accuracy:.2f}"
 )
-plt.show()
-accuracy = tree_reg.score(data_reg[data_reg_columns],
-                          data_reg[target_reg_column])
-print(f"Accuracy on train set: {accuracy:.3f}")
 
 # %% [markdown]
 # For both classification and regression setting, we observe that
@@ -192,10 +185,9 @@ accuracy = tree_clf.score(data_clf[data_clf_columns],
                           data_clf[target_clf_column])
 
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.title(f"Optimal depth found via CV: "
+_ = plt.title(f"Optimal depth found via CV: "
           f"{tree_clf.best_params_['max_depth']}"
           f"\n Accuracy of the fit: {accuracy:.2f}")
-plt.show()
 
 # %%
 plot_regression(tree_reg, data_reg[data_reg_columns],
@@ -203,10 +195,9 @@ plot_regression(tree_reg, data_reg[data_reg_columns],
 accuracy = tree_reg.score(data_reg[data_reg_columns],
                           data_reg[target_reg_column])
 
-plt.title(f"Optimal depth found via CV: "
+_ = plt.title(f"Optimal depth found via CV: "
           f"{tree_reg.best_params_['max_depth']}"
           f"\n R$^2$ of the fit: {accuracy:.2f}")
-plt.show()
 
 # %% [markdown]
 # With this example, we see that there is not a single value that is optimal
@@ -266,9 +257,8 @@ plot_classification(tree_clf, data_clf[data_clf_columns],
 accuracy = tree_clf.score(data_clf[data_clf_columns],
                           data_clf[target_clf_column])
 
-plt.title(f"Decision tree with max-depth of {max_depth}"
+_ = plt.title(f"Decision tree with max-depth of {max_depth}"
           f"\n Accuracy of the fit: {accuracy:.2f}")
-plt.show()
 
 # %% [markdown]
 # As expected, we see that the blue blob on the right and the red blob on the
@@ -298,10 +288,8 @@ plot_classification(tree_clf, data_clf[data_clf_columns],
 accuracy = tree_clf.score(data_clf[data_clf_columns],
                           data_clf[target_clf_column])
 
-plt.title(f"Decision tree with max-depth of {max_depth}"
+_ = plt.title(f"Decision tree with max-depth of {max_depth}"
           f"\n Accuracy of the fit: {accuracy:.2f}")
-plt.show()
-
 
 # %%
 _, ax = plt.subplots(figsize=(11, 7))

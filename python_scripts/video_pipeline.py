@@ -2,6 +2,13 @@
 # # How to define a scikit-learn pipeline and visualize it
 
 # %% [markdown]
+# The goal of keeping this notebook is to:
+
+# - make it available for users that want to reproduce it locally
+# - archive the script in the event we want to rerecord this video with an
+#   update in the UI of scikit-learn in a future release.
+
+# %% [markdown]
 # ### First we load the dataset
 
 # %% [markdown]

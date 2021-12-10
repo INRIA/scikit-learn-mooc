@@ -160,8 +160,10 @@ print(f"The testing error of our model is {score:.2f} k$")
 # testing errors and thus some **estimate of the variability of the
 # model generalization performance**.
 #
-# There are different cross-validation strategies, for now we are going to
-# focus on one called "shuffle-split". At each iteration of this strategy we:
+# There are [different cross-validation
+# strategies](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators),
+# for now we are going to focus on one called "shuffle-split". At each iteration
+# of this strategy we:
 #
 # - randomly shuffle the order of the samples of a copy of the full dataset;
 # - split the shuffled dataset into a train and a test set;

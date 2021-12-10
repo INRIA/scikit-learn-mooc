@@ -184,7 +184,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # generalization performance. Therefore, we should instead use an additional
 # cross-validation for this evaluation.
 #
-# This pattern is called *nested cross-validation*. We use an inner
+# This pattern is called **nested cross-validation**. We use an inner
 # cross-validation for the selection of the hyperparameters and an outer
 # cross-validation for the evaluation of generalization performance of the
 # refitted tuned model.

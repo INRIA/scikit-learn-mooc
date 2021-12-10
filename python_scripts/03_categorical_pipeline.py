@@ -133,9 +133,6 @@ data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
 
 # %%
-encoder.categories_
-
-# %%
 print(
     f"The dataset encoded contains {data_encoded.shape[1]} features")
 
@@ -203,7 +200,7 @@ education_encoded
 # names resulting from the transformation.
 
 # %%
-feature_names = encoder.get_feature_names(input_features=["education"])
+feature_names = encoder.get_feature_names_out(input_features=["education"])
 education_encoded = pd.DataFrame(education_encoded, columns=feature_names)
 education_encoded
 
@@ -231,7 +228,7 @@ print(
 # provided by the encoder object:
 
 # %%
-columns_encoded = encoder.get_feature_names(data_categorical.columns)
+columns_encoded = encoder.get_feature_names_out(data_categorical.columns)
 pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]

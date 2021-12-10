@@ -2,18 +2,19 @@
 
 **This quiz requires some programming to be answered.**
 
-Open the dataset `house_prices.csv` with the following command:
+Open the dataset `ames_housing_no_missing.csv` with the following command:
 
 ```python
-ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
+import pandas as pd
+
+ames_housing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
 target_name = "SalePrice"
 data = ames_housing.drop(columns=target_name)
 target = ames_housing[target_name]
 ```
 
 `ames_housing` is a pandas dataframe. The column "SalePrice" contains the
-target variable. Note that we instructed pandas to treat the character "?" as a
-marker for cells with missing values also known as "null" values.
+target variable.
 
 To simplify this exercise, we will only used the numerical features defined
 below:
@@ -35,17 +36,14 @@ Use a 10-fold cross-validation and pass the argument `return_estimator=True` in
 `sklearn.model_selection.cross_validate` to access all fitted estimators fitted
 on each fold. As we saw in the previous notebooks, you will have to use a
 `sklearn.preprocessing.StandardScaler` to scale the data before passing it to
-the regressor. Also, some missing data are present in the different columns.
-You can use a `sklearn.impute.SimpleImputer` with the default parameters to
-impute missing data. Thus, you can create a model that will **pipeline the
-scaler, followed by the imputer, followed by the linear regression**.
+the regressor.
 
 ```{admonition} Question
-What is the order of magnitude of the extremum weight values over all the features:
+How large is the weight with the largest absolute value in this model?
 
-- a) 1e4
-- b) 1e6
-- c) 1e18
+- a) Lower than 1.0
+- b) Between 1.0 and 1,000.0
+- c) Larger than 1,000.0
 
 _Select a single answer_
 ```
@@ -56,11 +54,11 @@ Repeat the same experiment by fitting a ridge regressor
 (`sklearn.linear_model.Ridge`) with the default parameter.
 
 ```{admonition} Question
-What magnitude of the extremum weight values for all features?
+What is the value of the weight with the largest absolute value in this model?
 
-- a) 1e4
-- b) 1e6
-- c) 1e18
+- a) Lower than 1.0
+- b) Between 1.0 and 100,000.0
+- c) Larger than 100,000.0
 
 _Select a single answer_
 ```
@@ -88,7 +86,7 @@ What is the impact on the weights of removing `"GarageArea"` from the dataset?
 
 - a) None
 - b) Change completely the order of the feature importance
-- c) The variability of the most important feature reduced
+- c) The standard deviation (across all folds) of the `"GarageCars"` coefficient decreased
 
 _Select a single answer_
 ```
@@ -165,19 +163,6 @@ _Select a single answer_
 
 +++
 
-```{admonition} Question
-Are there any missing values in the dataset contained in the variable `data`?
-
-- a) Yes
-- b) No
-
-_Select a single answer_
-
-Hint: you can use `df.info()` to get information regarding each column.
-```
-
-+++
-
 Fit a `sklearn.linear_model.LogisticRegression` classifier using a 10-fold
 cross-validation to assess the performance. Since we are dealing with a linear
 model, do not forget to scale the data with a `StandardScaler` before training
@@ -218,19 +203,6 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 target = adult_census["class"]
 data = adult_census.drop(columns=["class", "education-num"])
 ```
-
-```{admonition} Question
-Are there missing values in this dataset?
-
-- a) Yes
-- b) No
-
-_Select a single answer_
-
-Hint: you can use `df.info()` to get information regarding each column.
-```
-
-+++
 
 Create a predictive model where the categorical data should be one-hot encoded,
 the numerical data should be scaled, and the predictor used should be a

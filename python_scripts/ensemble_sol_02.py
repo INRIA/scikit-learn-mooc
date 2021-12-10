@@ -11,9 +11,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
-feature_names = ["Flipper Length (mm)"]
+feature_name = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-data, target = penguins[feature_names], penguins[target_name]
+data, target = penguins[[feature_name]], penguins[target_name]
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
 
@@ -62,13 +62,13 @@ print(f"Mean absolute error: "
 # solution
 import numpy as np
 
-data_ranges = pd.DataFrame(np.linspace(170, 235, num=300),
+data_range = pd.DataFrame(np.linspace(170, 235, num=300),
                            columns=data.columns)
 tree_predictions = []
 for tree in forest.estimators_:
-    tree_predictions.append(tree.predict(data_ranges))
+    tree_predictions.append(tree.predict(data_range))
 
-forest_predictions = forest.predict(data_ranges)
+forest_predictions = forest.predict(data_range)
 
 # %% [markdown] tags=["solution"]
 # Now, we can plot the predictions that we collected.
@@ -77,13 +77,13 @@ forest_predictions = forest.predict(data_ranges)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x=feature_names[0], y=target_name,
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
 
 # plot tree predictions
 for tree_idx, predictions in enumerate(tree_predictions):
-    plt.plot(data_ranges, predictions, label=f"Tree #{tree_idx}",
+    plt.plot(data_range, predictions, label=f"Tree #{tree_idx}",
              linestyle="--", alpha=0.8)
 
-plt.plot(data_ranges, forest_predictions, label=f"Random forest")
+plt.plot(data_range, forest_predictions, label=f"Random forest")
 _ = plt.legend()

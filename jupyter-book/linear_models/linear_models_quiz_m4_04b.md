@@ -29,7 +29,7 @@ the `Ridge` model:
 - a) is internally tuned when calling `fit` on the train set
 - b) should be tuned by running cross-validation on a **train set**
 - c) should be tuned by running cross-validation on a **test set**
-- d) can be chosen by hand a priori using expert knowledge of the problem at hand
+- d) must be a positive number
 ```
 
 +++

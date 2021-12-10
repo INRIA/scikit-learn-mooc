@@ -158,7 +158,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # additional features. Here, we created new features by knowing the way the
 # target was generated.
 #
-# Instead of manually creating such polynomial features on could directly use
+# Instead of manually creating such polynomial features one could directly use
 # [sklearn.preprocessing.PolynomialFeatures](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html).
 #
 # To demonstrate the use of the `PolynomialFeatures` class, we use a
@@ -191,7 +191,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 #
 # The last possibility is to make a linear model more expressive is to use a
 # "kernel". Instead of learning a weight per feature as we previously
-# emphasized, a weight will be assign by sample instead. However, not all
+# emphasized, a weight will be assigned to each sample. However, not all
 # samples will be used. This is the base of the support vector machine
 # algorithm.
 #

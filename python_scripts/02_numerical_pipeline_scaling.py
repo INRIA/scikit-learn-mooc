@@ -394,8 +394,9 @@ cv_result
 #
 # You can pass additional parameters to
 # [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
-# to get more information, for instance training scores. These features will be
-# covered in a future notebook.
+# to collect additional information, such as the training scores of the models
+# obtained on each round or even return the models themselves instead of
+# discarding them.  These features will be covered in a future notebook.
 #
 # Let's extract the test scores from the `cv_result` dictionary and compute
 # the mean accuracy and the variation of the accuracy across folds.

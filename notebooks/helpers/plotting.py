@@ -1,3 +1,7 @@
+# This helper code is adapted from:
+# https://github.com/scikit-learn/scikit-learn/pull/16061
+# TODO: remove this code from the MOOC when the feature is
+# made available in a stable version of scikit-learn itself.
 import numpy as np
 
 from sklearn.utils import check_matplotlib_support

@@ -1479,48 +1479,6 @@ we will create a training and a testing set.</p>
 
 <span class="n">target_train</span> <span class="o">=</span> <span class="n">penguins_train</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 <span class="n">target_test</span> <span class="o">=</span> <span class="n">penguins_test</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
-
-<span class="n">range_features</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">feature_name</span><span class="p">:</span> <span class="p">(</span><span class="n">penguins</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-                   <span class="n">penguins</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">culmen_columns</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>To visualize the separation found by our classifier, we will define a helper
-function <code class="docutils literal notranslate"><span class="pre">plot_decision_function</span></code>. In short, this function will plot the edge
-of the decision function, where the probability to be an Adelie or Chinstrap
-will be equal (p=0.5).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-
-<span class="k">def</span> <span class="nf">plot_decision_function</span><span class="p">(</span><span class="n">fitted_classifier</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot the boundary of the decision function of a classifier.&quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
-
-    <span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">range_features</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="c1"># create a grid to evaluate all possible samples</span>
-    <span class="n">plot_step</span> <span class="o">=</span> <span class="mf">0.02</span>
-    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">range_features</span><span class="p">[</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">plot_step</span><span class="p">),</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">range_features</span><span class="p">[</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">plot_step</span><span class="p">),</span>
-    <span class="p">)</span>
-
-    <span class="c1"># compute the associated prediction</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">fitted_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="c1"># make the plot of the boundary and the data samples</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">ax</span>
 </pre></div>
 </div>
 </div>
@@ -1531,6 +1489,14 @@ function to model the probability. This model is known as logistic
 regression.</p>
 <p>Scikit-learn provides the class <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> which implements this
 algorithm.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="n">sklearn</span><span class="o">.</span><span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
@@ -1545,29 +1511,38 @@ algorithm.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pipeline(steps=[(&#39;standardscaler&#39;, StandardScaler()),
-                (&#39;logisticregression&#39;, LogisticRegression(penalty=&#39;none&#39;))])
-</pre></div>
+<div class="output text_html"><style>#sk-541750ff-c7b2-41b0-89b9-d232a524a46c {color: black;background-color: white;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c pre{padding: 0;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-toggleable {background-color: white;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-estimator:hover {background-color: #d4ebff;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-item {z-index: 1;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-parallel-item:only-child::after {width: 0;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-541750ff-c7b2-41b0-89b9-d232a524a46c div.sk-container {display: inline-block;position: relative;}</style><div id="sk-541750ff-c7b2-41b0-89b9-d232a524a46c" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="92ac32b7-b7d6-4bd0-abdf-7dc710a78fad" type="checkbox" ><label class="sk-toggleable__label" for="92ac32b7-b7d6-4bd0-abdf-7dc710a78fad">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('standardscaler', StandardScaler()),
+                ('logisticregression', LogisticRegression(penalty='none'))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="6ce6b3bb-ea49-4e08-95d4-f75d83ec0670" type="checkbox" ><label class="sk-toggleable__label" for="6ce6b3bb-ea49-4e08-95d4-f75d83ec0670">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="45d00cc0-defb-4c65-9d8a-eb5314bb0779" type="checkbox" ><label class="sk-toggleable__label" for="45d00cc0-defb-4c65-9d8a-eb5314bb0779">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(penalty='none')</pre></div></div></div></div></div></div></div></div></div>
 </div>
-</div>
+<p>Since we are dealing with a classification problem containing only 2
+features, it is then possible to observe the decision function boundary.
+The boundary is the rule used by our predictive model to affect a class label
+given the feature values of the sample.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here, we will use the class <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code>. We provide this class
+to allow making plots of the decision function boundary in a 2 dimensional
+space. The implementation can be found <a class="reference external" href="https://github.com/INRIA/scikit-learn-mooc/blob/master/python_scripts/helpers/plotting.py">here</a>.
+This class is intended to be part of the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> package in the future
+as it is proposed in the following <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/pull/16061">Pull-Request</a>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">helpers.plotting</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">logistic_regression</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="n">penguins_test</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plot_decision_function</span><span class="p">(</span><span class="n">logistic_regression</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary of the trained</span><span class="se">\n</span><span class="s2"> LogisticRegression&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<img alt="../_images/logistic_regression_11_1.png" src="../_images/logistic_regression_11_1.png" />
+<img alt="../_images/logistic_regression_11_0.png" src="../_images/logistic_regression_11_0.png" />
 </div>
 </div>
 <p>Thus, we see that our decision function is represented by a line separating
@@ -1586,15 +1561,12 @@ features:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Weights of the logistic regression&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Weights of the logistic regression&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Weights of the logistic regression&#39;)
-</pre></div>
-</div>
-<img alt="../_images/logistic_regression_14_1.png" src="../_images/logistic_regression_14_1.png" />
+<img alt="../_images/logistic_regression_14_0.png" src="../_images/logistic_regression_14_0.png" />
 </div>
 </div>
 <p>Indeed, both coefficients are non-null.</p>

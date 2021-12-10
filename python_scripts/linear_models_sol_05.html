@@ -1456,47 +1456,6 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 
 <span class="n">target_train</span> <span class="o">=</span> <span class="n">penguins_train</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 <span class="n">target_test</span> <span class="o">=</span> <span class="n">penguins_test</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
-
-<span class="n">range_features</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">feature_name</span><span class="p">:</span> <span class="p">(</span><span class="n">penguins</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-                   <span class="n">penguins</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">culmen_columns</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-
-<span class="k">def</span> <span class="nf">plot_decision_function</span><span class="p">(</span><span class="n">fitted_classifier</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot the boundary of the decision function of a classifier.&quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
-
-    <span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">range_features</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="c1"># create a grid to evaluate all possible samples</span>
-    <span class="n">plot_step</span> <span class="o">=</span> <span class="mf">0.02</span>
-    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">range_features</span><span class="p">[</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">plot_step</span><span class="p">),</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">range_features</span><span class="p">[</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">plot_step</span><span class="p">),</span>
-    <span class="p">)</span>
-
-    <span class="c1"># compute the associated prediction</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">fitted_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="c1"># make the plot of the boundary and the data samples</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-    <span class="k">return</span> <span class="n">ax</span>
 </pre></div>
 </div>
 </div>
@@ -1515,48 +1474,41 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 <p>Given the following candidates for the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter, find out the impact of
-<code class="docutils literal notranslate"><span class="pre">C</span></code> on the classifier decision boundary.</p>
+<code class="docutils literal notranslate"><span class="pre">C</span></code> on the classifier decision boundary. You can import the helper class with
+<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">helpers.plotting</span> <span class="pre">import</span> <span class="pre">DecisionBoundaryDisplay</span></code> to plot the decision
+function boundary. Use the method <code class="docutils literal notranslate"><span class="pre">from_estimator</span></code> from this class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
 
 <span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">helpers.plotting</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
 <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
     <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
     <span class="n">logistic_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">logistic_regression</span><span class="p">,</span>
+        <span class="n">data_test</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
         <span class="n">data</span><span class="o">=</span><span class="n">penguins_test</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
         <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
-    <span class="n">plot_decision_function</span><span class="p">(</span><span class="n">logistic_regression</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;C: </span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<img alt="../_images/linear_models_sol_05_8_4.png" src="../_images/linear_models_sol_05_8_4.png" />
-<img alt="../_images/linear_models_sol_05_8_5.png" src="../_images/linear_models_sol_05_8_5.png" />
-<img alt="../_images/linear_models_sol_05_8_6.png" src="../_images/linear_models_sol_05_8_6.png" />
-<img alt="../_images/linear_models_sol_05_8_7.png" src="../_images/linear_models_sol_05_8_7.png" />
+<img alt="../_images/linear_models_sol_05_7_0.png" src="../_images/linear_models_sol_05_7_0.png" />
+<img alt="../_images/linear_models_sol_05_7_1.png" src="../_images/linear_models_sol_05_7_1.png" />
+<img alt="../_images/linear_models_sol_05_7_2.png" src="../_images/linear_models_sol_05_7_2.png" />
+<img alt="../_images/linear_models_sol_05_7_3.png" src="../_images/linear_models_sol_05_7_3.png" />
 </div>
 </div>
 <p>Look at the impact of the <code class="docutils literal notranslate"><span class="pre">C</span></code> hyperparameter on the magnitude of the weights.</p>
@@ -1583,7 +1535,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_sol_05_11_0.png" src="../_images/linear_models_sol_05_11_0.png" />
+<img alt="../_images/linear_models_sol_05_10_0.png" src="../_images/linear_models_sol_05_10_0.png" />
 </div>
 </div>
 <p>We see that a small <code class="docutils literal notranslate"><span class="pre">C</span></code> will shrink the weights values toward zero. It means

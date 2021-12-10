@@ -1426,47 +1426,13 @@ kernel-based method.</p>
 <p>We will provide examples where we will use a kernel support vector machine
 to perform classification on some toy-datasets where it is impossible to
 find a perfect linear separation.</p>
-<p>First, we redefine our plotting utility to show the decision boundary of a
-classifier.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-
-<span class="k">def</span> <span class="nf">plot_decision_function</span><span class="p">(</span><span class="n">fitted_classifier</span><span class="p">,</span> <span class="n">range_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot the boundary of the decision function of a classifier.&quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
-
-    <span class="n">feature_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">range_features</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="c1"># create a grid to evaluate all possible samples</span>
-    <span class="n">plot_step</span> <span class="o">=</span> <span class="mf">0.02</span>
-    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">range_features</span><span class="p">[</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">plot_step</span><span class="p">),</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">*</span><span class="n">range_features</span><span class="p">[</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">plot_step</span><span class="p">),</span>
-    <span class="p">)</span>
-
-    <span class="c1"># compute the associated prediction</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">fitted_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="c1"># make the plot of the boundary and the data samples</span>
-    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">ax</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>We will generate a first dataset where the data are represented as two
 interlaced half circle. This dataset is generated using the function
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html"><code class="docutils literal notranslate"><span class="pre">sklearn.datasets.make_moons</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
 
 <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">,</span> <span class="s2">&quot;Features #1&quot;</span><span class="p">]</span>
@@ -1478,8 +1444,6 @@ interlaced half circle. This dataset is generated using the function
 <span class="n">moons</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
                      <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
 <span class="n">data_moons</span><span class="p">,</span> <span class="n">target_moons</span> <span class="o">=</span> <span class="n">moons</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">moons</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-
-<span class="n">range_features_moons</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="s2">&quot;Feature #1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)}</span>
 </pre></div>
 </div>
 </div>
@@ -1488,7 +1452,8 @@ interlaced half circle. This dataset is generated using the function
 have a look at it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                 <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
@@ -1497,7 +1462,7 @@ have a look at it.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/logistic_regression_non_linear_5_0.png" src="../_images/logistic_regression_non_linear_5_0.png" />
+<img alt="../_images/logistic_regression_non_linear_3_0.png" src="../_images/logistic_regression_non_linear_3_0.png" />
 </div>
 </div>
 <p>From the intuitions that we got by studying linear model, it should be
@@ -1506,6 +1471,14 @@ function to separate the two classes.</p>
 <p>Let’s try to see what is the decision boundary of such a linear classifier.
 We will create a predictive model by standardizing the dataset followed by
 a linear support vector machine classifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="n">sklearn</span><span class="o">.</span><span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
@@ -1518,11 +1491,8 @@ a linear support vector machine classifier.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pipeline(steps=[(&#39;standardscaler&#39;, StandardScaler()),
-                (&#39;svc&#39;, SVC(kernel=&#39;linear&#39;))])
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><style>#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 {color: black;background-color: white;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 pre{padding: 0;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-toggleable {background-color: white;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-estimator:hover {background-color: #d4ebff;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-item {z-index: 1;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-parallel-item:only-child::after {width: 0;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-d9dd7ad6-0564-4602-bf88-cedd974fee88 div.sk-container {display: inline-block;position: relative;}</style><div id="sk-d9dd7ad6-0564-4602-bf88-cedd974fee88" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d274eefd-411c-4ef9-95c1-aaa77f0a5708" type="checkbox" ><label class="sk-toggleable__label" for="d274eefd-411c-4ef9-95c1-aaa77f0a5708">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('standardscaler', StandardScaler()),
+                ('svc', SVC(kernel='linear'))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9e336058-08e9-4353-aa2c-28004fd570fd" type="checkbox" ><label class="sk-toggleable__label" for="9e336058-08e9-4353-aa2c-28004fd570fd">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="5e228994-ac12-4684-8266-c7367db7da22" type="checkbox" ><label class="sk-toggleable__label" for="5e228994-ac12-4684-8266-c7367db7da22">SVC</label><div class="sk-toggleable__content"><pre>SVC(kernel='linear')</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1535,19 +1505,19 @@ you want to assess the generalization performance of a machine-learning model.</
 <p>Let’s check the decision boundary of such a linear model on this dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                     <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
-<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">linear_model</span><span class="p">,</span> <span class="n">range_features_moons</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">helpers.plotting</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
+
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">linear_model</span><span class="p">,</span> <span class="n">data_moons</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary of a linear model&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<img alt="../_images/logistic_regression_non_linear_10_1.png" src="../_images/logistic_regression_non_linear_10_1.png" />
+<img alt="../_images/logistic_regression_non_linear_9_0.png" src="../_images/logistic_regression_non_linear_9_0.png" />
 </div>
 </div>
 <p>As expected, a linear decision boundary is not enough flexible to split the
@@ -1566,8 +1536,6 @@ samples of a class will be surrounded by samples from the other class.</p>
 <span class="n">gauss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
                      <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
 <span class="n">data_gauss</span><span class="p">,</span> <span class="n">target_gauss</span> <span class="o">=</span> <span class="n">gauss</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">gauss</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-
-<span class="n">range_features_gauss</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="s2">&quot;Feature #1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)}</span>
 </pre></div>
 </div>
 </div>
@@ -1581,7 +1549,7 @@ samples of a class will be surrounded by samples from the other class.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/logistic_regression_non_linear_13_0.png" src="../_images/logistic_regression_non_linear_13_0.png" />
+<img alt="../_images/logistic_regression_non_linear_12_0.png" src="../_images/logistic_regression_non_linear_12_0.png" />
 </div>
 </div>
 <p>Here, this is even more obvious that a linear decision function is not
@@ -1590,19 +1558,17 @@ will find.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">linear_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_gauss</span><span class="p">,</span> <span class="n">target_gauss</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gauss</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                     <span class="n">hue</span><span class="o">=</span><span class="n">target_gauss</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
-<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">linear_model</span><span class="p">,</span> <span class="n">range_features_gauss</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">linear_model</span><span class="p">,</span> <span class="n">data_gauss</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gauss</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_gauss</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary of a linear model&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<img alt="../_images/logistic_regression_non_linear_15_1.png" src="../_images/logistic_regression_non_linear_15_1.png" />
+<img alt="../_images/logistic_regression_non_linear_14_0.png" src="../_images/logistic_regression_non_linear_14_0.png" />
 </div>
 </div>
 <p>As expected, a linear separation cannot be used to separate the classes
@@ -1624,19 +1590,17 @@ function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_moons</span><span class="p">,</span> <span class="n">target_moons</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                     <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
-<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">kernel_model</span><span class="p">,</span> <span class="n">range_features_moons</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">kernel_model</span><span class="p">,</span> <span class="n">data_moons</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary with a model using an RBF kernel&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<img alt="../_images/logistic_regression_non_linear_18_1.png" src="../_images/logistic_regression_non_linear_18_1.png" />
+<img alt="../_images/logistic_regression_non_linear_17_0.png" src="../_images/logistic_regression_non_linear_17_0.png" />
 </div>
 </div>
 <p>We see that the decision boundary is not anymore a straight line. Indeed,
@@ -1646,19 +1610,17 @@ classifier should be able to generalize on unseen data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_gauss</span><span class="p">,</span> <span class="n">target_gauss</span><span class="p">)</span>
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">kernel_model</span><span class="p">,</span> <span class="n">data_gauss</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gauss</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                      <span class="n">hue</span><span class="o">=</span><span class="n">target_gauss</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
-<span class="n">plot_decision_function</span><span class="p">(</span><span class="n">kernel_model</span><span class="p">,</span> <span class="n">range_features_gauss</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary with a model using an RBF kernel&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:446: UserWarning: X does not have valid feature names, but StandardScaler was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
-<img alt="../_images/logistic_regression_non_linear_20_1.png" src="../_images/logistic_regression_non_linear_20_1.png" />
+<img alt="../_images/logistic_regression_non_linear_19_0.png" src="../_images/logistic_regression_non_linear_19_0.png" />
 </div>
 </div>
 <p>We observe something similar than in the previous case. The decision function

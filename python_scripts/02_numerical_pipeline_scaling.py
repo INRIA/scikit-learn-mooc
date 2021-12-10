@@ -352,8 +352,8 @@ print(f"The accuracy using a {model_name} is {score:.3f} "
 # For each cross-validation split, the procedure trains a model on all the red
 # samples and evaluate the score of the model on the blue samples.
 # As mentioned earlier, there is a variety of different cross-validation
-# strategies. Some of these aspects will be covered in more detail in future
-# notebooks.
+# strategies. Some of these aspects will be covered in more detail in the
+# next video and future notebooks.
 # ```
 #
 # Cross-validation is therefore computationally intensive because it requires

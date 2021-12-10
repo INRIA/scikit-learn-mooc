@@ -135,3 +135,9 @@ cv_results[columns].sort_values(by="rank_test_score")
 # %%
 score = -grid_search.score(data_test, target_test)
 print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")
+
+# %% [markdown]
+# The mean test score in the held-out test set is slightly better than the score
+# of the best model. The reason is that the final model is refitted on the whole
+# training set and therefore, on more data than the inner cross-validated models
+# of the grid search procedure.

@@ -398,7 +398,8 @@ cv_result
 # obtained on each round or even return the models themselves instead of
 # discarding them.  These features will be covered in a future notebook.
 #
-# Let's extract the test scores from the `cv_result` dictionary and compute
+# Let's extract the scores computed on the test fold of each 
+# cross-validation round from the `cv_result` dictionary and compute
 # the mean accuracy and the variation of the accuracy across folds.
 
 # %%

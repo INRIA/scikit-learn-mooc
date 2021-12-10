@@ -14,16 +14,19 @@ GITLAB_REPO_JUPYTERBOOK_DIR = ../mooc-scikit-learn-coordination/jupyter-book
 
 all: $(NOTEBOOKS_DIR)
 
-.PHONY: $(NOTEBOOKS_DIR) copy_matplotlibrc sanity_check_$(NOTEBOOKS_DIR) all \
+.PHONY: $(NOTEBOOKS_DIR) copy_matplotlibrc copy_helpers sanity_check_$(NOTEBOOKS_DIR) all \
         exercises quizzes $(JUPYTER_BOOK_DIR) $(JUPYTER_BOOK_DIR)-clean $(JUPYTER_BOOK_DIR)-full-clean
 
-$(NOTEBOOKS_DIR): $(MINIMAL_NOTEBOOK_FILES) copy_matplotlibrc sanity_check_$(NOTEBOOKS_DIR)
+$(NOTEBOOKS_DIR): $(MINIMAL_NOTEBOOK_FILES) copy_matplotlibrc copy_helpers sanity_check_$(NOTEBOOKS_DIR)
 
 $(NOTEBOOKS_DIR)/%.ipynb: $(PYTHON_SCRIPTS_DIR)/%.py
 	python build_tools/convert-python-script-to-notebook.py $< $@
 
 copy_matplotlibrc:
 	cp $(PYTHON_SCRIPTS_DIR)/matplotlibrc $(NOTEBOOKS_DIR)/
+
+copy_helpers:
+	cp -r $(PYTHON_SCRIPTS_DIR)/helpers $(NOTEBOOKS_DIR)/
 
 sanity_check_$(NOTEBOOKS_DIR):
 	python build_tools/sanity-check.py $(PYTHON_SCRIPTS_DIR) $(NOTEBOOKS_DIR)

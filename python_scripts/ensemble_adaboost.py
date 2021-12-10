@@ -16,49 +16,12 @@ culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
 data, target = penguins[culmen_columns], penguins[target_column]
-range_features = {
-    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
-    for feature_name in data.columns}
 
 # %% [markdown]
 # ```{note}
 # If you want a deeper overview regarding this dataset, you can refer to the
 # Appendix - Datasets description section at the end of this MOOC.
 # ```
-
-# %% [markdown]
-# In addition, we are also using the function used in the previous notebook
-# to plot the decision function of the tree.
-
-# %%
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def plot_decision_function(fitted_classifier, range_features, ax=None):
-    """Plot the boundary of the decision function of a classifier."""
-    from sklearn.preprocessing import LabelEncoder
-
-    feature_names = list(range_features.keys())
-    # create a grid to evaluate all possible samples
-    plot_step = 0.02
-    xx, yy = np.meshgrid(
-        np.arange(*range_features[feature_names[0]], plot_step),
-        np.arange(*range_features[feature_names[1]], plot_step),
-    )
-
-    # compute the associated prediction
-    Z = fitted_classifier.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = LabelEncoder().fit_transform(Z)
-    Z = Z.reshape(xx.shape)
-
-    # make the plot of the boundary and the data samples
-    if ax is None:
-        _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
-
-    return ax
-
 
 # %% [markdown]
 # We will purposefully train a shallow decision tree. Since it is shallow,
@@ -78,19 +41,27 @@ tree.fit(data, target)
 # We can predict on the same dataset and check which samples are misclassified.
 
 # %%
+import numpy as np
+
 target_predicted = tree.predict(data)
 misclassified_samples_idx = np.flatnonzero(target != target_predicted)
 data_misclassified = data.iloc[misclassified_samples_idx]
 
 # %%
+import matplotlib.pyplot as plt
+from helpers.plotting import DecisionBoundaryDisplay
+
+DecisionBoundaryDisplay.from_estimator(
+    tree, data, response_method="predict", cmap="RdBu", alpha=0.5
+)
+
 # plot the original dataset
 sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
                 hue=target_column, palette=palette)
 # plot the misclassified samples
-ax = sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
-                     y=culmen_columns[1], label="Misclassified samples",
-                     marker="+", s=150, color="k")
-plot_decision_function(tree, range_features, ax=ax)
+sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
+                y=culmen_columns[1], label="Misclassified samples",
+                marker="+", s=150, color="k")
 
 plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
 _ = plt.title("Decision tree predictions \nwith misclassified samples "
@@ -119,13 +90,15 @@ tree = DecisionTreeClassifier(max_depth=2, random_state=0)
 tree.fit(data, target, sample_weight=sample_weight)
 
 # %%
+DecisionBoundaryDisplay.from_estimator(
+    tree, data, response_method="predict", cmap="RdBu", alpha=0.5
+)
 sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
                 hue=target_column, palette=palette)
-ax = sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
-                     y=culmen_columns[1],
-                     label="Previously misclassified samples",
-                     marker="+", s=150, color="k")
-plot_decision_function(tree, range_features, ax=ax)
+sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
+                y=culmen_columns[1],
+                label="Previously misclassified samples",
+                marker="+", s=150, color="k")
 
 plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
 _ = plt.title("Decision tree by changing sample weights")
@@ -195,10 +168,12 @@ adaboost.fit(data, target)
 # %%
 for boosting_round, tree in enumerate(adaboost.estimators_):
     plt.figure()
-    ax = sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
-                         hue=target_column, data=penguins,
-                         palette=palette)
-    plot_decision_function(tree, range_features, ax=ax)
+    DecisionBoundaryDisplay.from_estimator(
+        tree, data, response_method="predict", cmap="RdBu", alpha=0.5
+    )
+    sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
+                    hue=target_column, data=penguins,
+                    palette=palette)
     plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
     _ = plt.title(f"Decision tree trained at round {boosting_round}")
 

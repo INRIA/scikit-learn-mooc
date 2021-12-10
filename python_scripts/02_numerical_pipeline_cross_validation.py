@@ -49,7 +49,7 @@ numerical_columns = ["age", "capital-gain", "capital-loss", "hours-per-week"]
 data_numeric = data[numerical_columns]
 
 # %% [markdown]
-# Finally, we can now create a model using the `make_pipeline` tool to chain the
+# We can now create a model using the `make_pipeline` tool to chain the
 # preprocessing and the estimator in every iteration of the cross-validation.
 
 # %%
@@ -63,16 +63,16 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 # ## The need for cross-validation
 #
 # In the previous notebook, we split the original data into a training set and a
-# testing set. But the score of a model will in general depend on the way we make
+# testing set. The score of a model will in general depend on the way we make
 # such a split. One downside of doing a single split is that it does not give
-# any information about the variability of the score. Another downside is that, in
-# a setting where the amount of data is small, the data available for training
-# and testing will be even smaller after splitting.
+# any information about this variability. Another downside, in a setting where
+# the amount of data is small, is that the data available for training and
+# testing will be even smaller after splitting.
 #
 # Instead, we can use cross-validation. Cross-validation consists of repeating
-# the procedure such that the training and testing sets are different each
-# time. Generalization performance metrics are collected for each repetition and
-# then aggregated. As a result we can get an estimate of the variability of the
+# the procedure such that the training and testing sets are different each time.
+# Generalization performance metrics are collected for each repetition and then
+# aggregated. As a result we can get an estimate of the variability of the
 # model's generalization performance.
 #
 # Note that there exists several cross-validation strategies, each of them
@@ -89,19 +89,16 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 # For each cross-validation split, the procedure trains a model on all the red
 # samples and evaluate the score of the model on the blue samples.
 # As mentioned earlier, there is a variety of different cross-validation
-# strategies. Some of these aspects will be covered in more detail in future
-# notebooks.
+# strategies. Some of these aspects will be covered in more detail in future notebooks.
 # ```
 #
-# For each cross-validation split, the procedure trains a model on all the red
-# samples and evaluate the score of the model on the blue samples.
 # Cross-validation is therefore computationally intensive because it requires
 # training several models instead of one.
 #
 # In scikit-learn, the function `cross_validate` allows to do cross-validation
 # and you need to pass it the model, the data, and the target. Since there
-# exists several cross-validation strategies, `cross_validate` takes a
-# parameter `cv` which defines the splitting strategy.
+# exists several cross-validation strategies, `cross_validate` takes a parameter
+# `cv` which defines the splitting strategy.
 
 # %%
 # %%time
@@ -114,31 +111,32 @@ cv_result
 # %% [markdown]
 # The output of `cross_validate` is a Python dictionary, which by default
 # contains three entries: (i) the time to train the model on the training data
-# for each fold, (ii) the time to predict with the model on the testing data
-# for each fold, and (iii) the default score on the testing data for each fold.
-
-# %% [markdown]
+# for each fold, (ii) the time to predict with the model on the testing data for
+# each fold, and (iii) the default score on the testing data for each fold.
+#
 # Setting `cv=5` created 5 distinct splits to get 5 variations for the training
 # and testing sets. Each training set is used to fit one model which is then
-# scored on the matching test set. The default strategy when setting `cv=int`
-# is the K-fold cross-validation where `K` corresponds to the (integer) number of
+# scored on the matching test set. The default strategy when setting `cv=int` is
+# the K-fold cross-validation where `K` corresponds to the (integer) number of
 # splits. Setting `cv=5` or `cv=10` is a common practice, as it is a good
 # trade-off between computation time and stability of the estimated variability.
 #
-# Note that by default the `cross_validate` function discards the `K` models that
-# were trained on the different overlapping subset of the dataset. The goal of
-# cross-validation is not to train a model, but rather to estimate
+# Note that by default the `cross_validate` function discards the `K` models
+# that were trained on the different overlapping subset of the dataset. The goal
+# of cross-validation is not to train a model, but rather to estimate
 # approximately the generalization performance of a model that would have been
 # trained to the full training set, along with an estimate of the variability
 # (uncertainty on the generalization accuracy).
 #
 # You can pass additional parameters to
 # [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
-# to get more information, for instance training scores. These features will be
-# covered in a future notebook.
+# to collect additional information, such as the training scores of the models
+# obtained on each round or even return the models themselves instead of
+# discarding them.  These features will be covered in a future notebook.
 #
-# Let's extract the test scores from the `cv_result` dictionary and compute
-# the mean accuracy and the variation of the accuracy across folds.
+# Let's extract the scores computed on the test fold of each cross-validation
+# round from the `cv_result` dictionary and compute the mean accuracy and the
+# variation of the accuracy across folds.
 
 # %%
 scores = cv_result["test_score"]
@@ -149,16 +147,15 @@ print(
 
 # %% [markdown]
 # Note that by computing the standard-deviation of the cross-validation scores,
-# we can estimate the uncertainty of our model generalization performance. This is
-# the main advantage of cross-validation and can be crucial in practice, for
+# we can estimate the uncertainty of our model generalization performance. This
+# is the main advantage of cross-validation and can be crucial in practice, for
 # example when comparing different models to figure out whether one is better
-# than the other or whether the generalization performance differences are within
-# the uncertainty.
+# than the other or whether the generalization performance differences are
+# within the uncertainty.
 #
 # In this particular case, only the first 2 decimals seem to be trustworthy. If
-# you go back to the previous notebook, you can check that the performance we get
-# with cross-validation is compatible with the one from a single train-test
-# split.
+# you go up in this notebook, you can check that the performance we get with
+# cross-validation is compatible with the one from a single train-test split.
 
 # %% [markdown]
 # In this notebook we assessed the generalization performance of our model via

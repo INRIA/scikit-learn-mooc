@@ -131,7 +131,7 @@ _ = plt.title("Prediction of the previous residuals")
 # %% [markdown]
 # We see that this new tree only manages to fit some of the residuals. We will
 # focus on a specific sample from the training set (i.e. we know that the
-# sample will be well classified using to successive trees). We will use this
+# sample will be well predicted using two successive trees). We will use this
 # sample to explain how the predictions of both trees are combined. Let's first
 # select this sample in `data_train`.
 

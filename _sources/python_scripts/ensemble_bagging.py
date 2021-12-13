@@ -266,7 +266,7 @@ _ = plt.title("Predictions from a bagging classifier")
 import warnings
 
 with warnings.catch_warnings():
-    # ignore scikit-learn warning when accesing bagged estimators
+    # ignore scikit-learn warning when accessing bagged estimators
     warnings.filterwarnings(
         "ignore",
         message="X has feature names, but DecisionTreeRegressor was fitted without feature names",

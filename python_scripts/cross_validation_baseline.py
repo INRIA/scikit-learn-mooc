@@ -2,16 +2,12 @@
 # # Comparing results with baseline and chance level
 #
 # In this notebook, we present how to compare the generalization performance of
-# a model to a minimal baseline.
+# a model to a minimal baseline. In regression, we can use the `DummyRegressor`
+# class to predict the mean target value observed on the training set without
+# using the input features.
 #
-# Indeed, in the previous notebook, we compared the testing error by taking
-# into account the target distribution. A good practice is to compare the
-# testing error with a dummy baseline to define a chance level. In regression,
-# we could use the `DummyRegressor` and predict the mean target value observed
-# on the training set without using the input features.
-#
-# This notebook demonstrates how to compute the the score of a regression model
-# and the baseline on the California housing dataset.
+# We now demonstrate how to compute the score of a regression model compare it
+# to such a baseline on the California housing dataset.
 
 # %% [markdown]
 # ```{note}
@@ -52,6 +48,7 @@ cv_results_tree_regressor = cross_validate(
 errors_tree_regressor = pd.Series(
     -cv_results_tree_regressor["test_score"], name="Decision tree regressor"
 )
+errors_tree_regressor.describe()
 
 # %% [markdown]
 # Then, we evaluate our baseline. This baseline is called a dummy regressor.
@@ -69,33 +66,43 @@ result_dummy = cross_validate(
 errors_dummy_regressor = pd.Series(
     -result_dummy["test_score"], name="Dummy regressor"
 )
+errors_dummy_regressor.describe()
 
 
 # %% [markdown]
-# We now plot the testing errors for the mean target baseline and the actual
-# decision tree regressor.
+# We now plot the cross-validation testing errors for the mean target baseline
+# and the actual decision tree regressor.
 
 # %%
 all_errors = pd.concat(
     [errors_tree_regressor, errors_dummy_regressor],
     axis=1,
 )
+all_errors
 
 # %%
 import matplotlib.pyplot as plt
+import numpy as np
 
-all_errors.plot.hist(bins=50, density=True, edgecolor="black")
+bins = np.linspace(start=0, stop=100, num=80)
+all_errors.plot.hist(bins=bins, density=True, edgecolor="black")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.xlabel("Mean absolute error (k$)")
-_ = plt.title("Distribution of the testing errors")
+_ = plt.title("Cross-validation testing errors")
 
 # %% [markdown]
-# We see that even if the generalization performance of our model is far from
-# being perfect (price predictions are off by more than 25,000 US dollars on
-# average), it is much better than the mean price baseline.
+# We see that the generalization performance of our decision tree is far from
+# being perfect: the price predictions are off by more than 45,000 US dollars
+# on average. However it is much better than the mean price baseline. So this
+# confirms that it is possible to predict the housing price much better by
+# using a model that takes into account the values of the input features
+# (housing location, size, neighborhood income...). Such a model makes more
+# informed predictions and approximately divide the error rate by a factor of 2
+# compared to the baseline that ignores the input features.
 #
 # Note that here we used the mean price as the baseline prediction. We could
-# have used the median or an arbitrary constant instead. See the online
-# documentation of the
+# have used the median instead. See the online documentation of the
 # [sklearn.dummy.DummyRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyRegressor.html)
-# class for other options.
+# class for other options. For this particular example, using the mean instead
+# of the median does not make much of a difference but this could have been the
+# case for dataset with extreme outliers.

@@ -1,5 +1,5 @@
 from pathlib import Path
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, ShuffleSplit
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -57,4 +57,10 @@ cv = KFold(5)
 _ = plot_cv_indices(cv, X, y, ax)
 plt.tight_layout()
 fig.savefig(FIGURES_FOLDER / "cross_validation_diagram.png")
+
+fig, ax = plt.subplots(figsize=(10, 4))
+cv = ShuffleSplit(n_splits=5, test_size=0.2, random_state=0)
+_ = plot_cv_indices(cv, X, y, ax)
+plt.tight_layout()
+fig.savefig(FIGURES_FOLDER / "shufflesplit_diagram.png")
 # -

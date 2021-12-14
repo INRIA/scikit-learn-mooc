@@ -3,15 +3,15 @@
 # TODO: remove this code from the MOOC when the feature is
 # made available in a stable version of scikit-learn itself.
 import numpy as np
+import pandas as pd
 
+from sklearn.preprocessing import LabelEncoder
 from sklearn.utils import check_matplotlib_support
 from sklearn.utils import _safe_indexing
 
 
 def _check_boundary_response_method(estimator, response_method):
     """Return prediction method from the `response_method` for decision boundary.
-
-    This is used in `DecisionBoundaryDisplay`.
 
     Parameters
     ----------
@@ -70,9 +70,9 @@ class DecisionBoundaryDisplay:
     to create a :class:`DecisionBoundaryDisplay`. All parameters are stored as
     attributes.
 
-    This function is a port of the following PR and will be removed when
-    the following will be merged upstream:
-    https://github.com/scikit-learn/scikit-learn/pull/16061
+    Read more in the :ref:`User Guide <visualizations>`.
+
+    .. versionadded:: 1.0
 
     Parameters
     ----------
@@ -298,9 +298,17 @@ class DecisionBoundaryDisplay:
             np.linspace(x0_min, x0_max, grid_resolution),
             np.linspace(x1_min, x1_max, grid_resolution),
         )
+        X_for_pred = np.c_[xx0.ravel(), xx1.ravel()]
+        if isinstance(X, pd.DataFrame):
+            X_for_pred = pd.DataFrame(X_for_pred, columns=X.columns)
 
         pred_func = _check_boundary_response_method(estimator, response_method)
-        response = pred_func(np.c_[xx0.ravel(), xx1.ravel()])
+        response = pred_func(X_for_pred)
+
+        if response_method == "predict":
+            label_encoder = LabelEncoder()
+            label_encoder.classes_ = estimator.classes_
+            response = label_encoder.transform(response)
 
         if response.ndim != 1:
             if response.shape[1] != 2:

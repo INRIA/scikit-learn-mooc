@@ -14,10 +14,10 @@
 #
 # ## Loading the dataset
 #
-# As in the previous notebook, we load the Adult census dataset. The
-# loaded dataframe is first divided to separate the input features and the target into two
-# separated variables. In addition, we drop the column `"education-num"`
-# as previously done.
+# As in the previous notebook, we load the Adult census dataset. The loaded
+# dataframe is first divided to separate the input features and the target into
+# two separated variables. In addition, we drop the column `"education-num"` as
+# previously done.
 
 # %%
 import pandas as pd
@@ -69,11 +69,12 @@ model
 # ### Without hyperparameter tuning
 #
 # In the module "Selecting the best model", we saw that one must use
-# cross-validation to evaluate such a model. Cross-validation allows to get
-# a distribution of the scores of the model. Thus, having this distribution at
-# hand, we can get to assess the variability of our estimate of the generalization
-# performance of the model. Here, we recall the necessary `scikit-learn` tools
-# needed to obtain the mean and standard deviation of the scores.
+# cross-validation to evaluate such a model. Cross-validation allows to get a
+# distribution of the scores of the model. Thus, having this distribution at
+# hand, we can get to assess the variability of our estimate of the
+# generalization performance of the model. Here, we recall the necessary
+# `scikit-learn` tools needed to obtain the mean and standard deviation of the
+# scores.
 
 # %%
 from sklearn.model_selection import cross_validate
@@ -128,6 +129,7 @@ cv_results[[
     "param_classifier__learning_rate",
     "param_classifier__max_leaf_nodes",
     "mean_test_score",
+    "std_test_score",
     "rank_test_score"
 ]]
 
@@ -136,14 +138,17 @@ model_grid_search.best_params_
 
 # %% [markdown]
 # One important caveat here concerns the evaluation of the generalization
-# performance. Indeed, the mean and standard deviation of the scores computed by
-# the cross-validation in the grid-search are potentially not good estimates of
-# the generalization performance we would obtain by refitting the model on the
-# full dataset with the best found parameters (such refit is done by default
-# when calling `model_grid_search.fit` in scikit-learn). Therefore, this
-# refitted model is trained with more data than the different models trained
-# during the cross-validation in the grid-search. It also means that we used
-# knowledge from the full dataset to decide our model’s training parameter.
+# performance. Indeed, the mean and standard deviation of the scores computed
+# by the cross-validation in the grid-search are potentially not good estimates
+# of the generalization performance we would obtain by refitting a model with
+# the best combination of hyper-parameter values on the full dataset. Note that
+# scikit-learn automatically performs this refit by default when calling
+# `model_grid_search.fit`. This refitted model is trained with more data than
+# the different models trained internally during the cross-validation of the
+# grid-search.
+#
+# We therefore used knowledge from the full dataset to both decide our model’s
+# hyper-parameters and to train the refitted model.
 #
 # Because of the above, one must keep an external, held-out test set for the
 # final evaluation the refitted model. We highlight here the process using a
@@ -161,9 +166,22 @@ accuracy = model_grid_search.score(data_test, target_test)
 print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
+# The score measure on the final test set is almost with the range of the
+# internal CV score for the best hyper-paramter combination. This is reassuring
+# as it means that the tuning procedure did not cause significant overfitting
+# in itself (other-wise the final test score would have been lower than the
+# internal CV scores). That is expected because our grid search explored very
+# few hyper-parameter combinations for the sake of speed. The test score of the
+# final model is actually a bit higher that what we could have expected from
+# the internal cross-validation. This is also expected because the refitted
+# model is trained on a larger dataset than the models evaluated in the
+# internal CV loop of the grid-search procedure. This is often the case that
+# models trained on a larger number of samples tend to generalize better.
+#
 # In the code above, the selection of the best hyperparameters was done only on
-# the train set. Then, we evaluated the generalization performance of our tuned
-# model on the left out test set.
+# the train set from the initial train-test split. Then, we evaluated the
+# generalization performance of our tuned model on the left out test set. This
+# can be shown schematically as follows
 #
 # ![Cross-validation tuning diagram](../figures/cross_validation_train_test_diagram.png)
 #
@@ -172,15 +190,17 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # strategy using `n_splits=5` to further split the train set coming from a
 # train-test split.
 # For each cross-validation split, the procedure trains a model on all the red
-# samples, evaluates the score of a given set of hyperparameters on the green samples
-# and estimates the model's generalization performance on the blue samples.
-# The green samples are sometimes called a **validation set** to differentiate
-# them from the test set in blue.
+# samples, evaluates the score of a given set of hyperparameters on the green
+# samples and estimates the model's generalization performance on the blue
+# samples.
+#
+# The green samples are sometimes called a **validation sets** to differentiate
+# them from the final test set in blue.
 # ```
 #
 # However, this evaluation only provides us a single point estimate of the
-# generalization performance. As recall at the beginning of this notebook, it is
-# beneficial to have a rough idea of the uncertainty of our estimated
+# generalization performance. As recall at the beginning of this notebook, it
+# is beneficial to have a rough idea of the uncertainty of our estimated
 # generalization performance. Therefore, we should instead use an additional
 # cross-validation for this evaluation.
 #
@@ -236,11 +256,11 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
 # expect that it will have an actual predictive performance close to what we
 # measured in the outer cross-validation.
 #
-# But it is also possible that some hyperparameters do not matter at all, and as
-# a result in different tuning sessions give different results. In this case,
-# any value will do. This can typically be confirmed by doing a parallel
-# coordinate plot of the results of a large hyperparameter search as seen in the
-# exercises.
+# But it is also possible that some hyperparameters do not matter at all, and
+# as a result in different tuning sessions give different results. In this
+# case, any value will do. This can typically be confirmed by doing a parallel
+# coordinate plot of the results of a large hyperparameter search as seen in
+# the exercises.
 #
 # From a deployment, one could also chose to deploy all the models found by the
 # outer cross-validation loop and make them vote to get the final predictions.

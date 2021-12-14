@@ -1443,8 +1443,8 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#scale-your-data">
-   Scale your data!
+  <a class="reference internal nav-link" href="#feature-scaling-and-regularization">
+   Feature scaling and regularization
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1743,11 +1743,11 @@ model which enforces such behavior.</p>
   return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=2.82401e-17): result may not be accurate.
   return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=4.96672e-17): result may not be accurate.
+  return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=4.96672e-17): result may not be accurate.
-  return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=2.68318e-17): result may not be accurate.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=2.68318e-17): result may not be accurate.
   return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/linear_model/_ridge.py:156: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
   return linalg.solve(A, Xy, sym_pos=True, overwrite_a=True).T
@@ -1812,22 +1812,23 @@ ridge with the un-regularized linear regression.</p>
 </div>
 </div>
 <p>By comparing the magnitude of the weights on this plot compared to the
-previous plot, we see that the magnitude of the weights is shrunk towards
-zero in comparison with the linear regression model.</p>
+previous plot, we see that a ridge model will enforce all weights to have a
+similar magnitude, while the overall magnitude of the weights is shrunk
+towards zero with respect to the linear regression model.</p>
 <p>However, in this example, we omitted two important aspects: (i) the need to
 scale the data and (ii) the need to search for the best regularization
 parameter.</p>
 </div>
-<div class="section" id="scale-your-data">
-<h2>Scale your data!<a class="headerlink" href="#scale-your-data" title="Permalink to this headline">¶</a></h2>
-<p>Regularization will add constraints on weights of the model. We saw in the
-previous example that a ridge model will enforce that all weights have a
-similar magnitude. Indeed, the larger alpha is, the larger this enforcement
-will be.</p>
-<p>This procedure should make us think about feature rescaling. Let’s consider
-the case where features have an identical data dispersion: if two features
-are found equally important by the model, they will be affected similarly by
-regularization strength.</p>
+<div class="section" id="feature-scaling-and-regularization">
+<h2>Feature scaling and regularization<a class="headerlink" href="#feature-scaling-and-regularization" title="Permalink to this headline">¶</a></h2>
+<p>On the one hand, weights define the link between feature values and the
+predicted target.
+On the other hand, regularization adds constraints on the weights of the
+model through the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter. Therefore, the effect that feature
+rescaling has on the final weights also interacts with regularization.</p>
+<p>Let’s consider the case where features have an identical data dispersion: if
+two features are found to be equally important by the model, they will be
+affected similarly by regularization strength.</p>
 <p>Now, let’s consider the scenario where features have completely different
 data dispersion (for instance age in years and annual revenue in dollars).
 If two features are as important, our model will boost the weights of
@@ -1911,8 +1912,44 @@ spot.</p>
 <img alt="../_images/linear_models_regularization_30_0.png" src="../_images/linear_models_regularization_30_0.png" />
 </div>
 </div>
-<p>Compare to the previous plots, we see that now all weight manitudes are
-closer and that all weights are more equally contributing.</p>
+<p>Compare to the previous plots, we see that now all weight magnitudes are
+closer and that all features are more equally contributing.</p>
+<p>In the previous example, we fixed <code class="docutils literal notranslate"><span class="pre">alpha=0.5</span></code>. We will now check the impact
+of the value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> by increasing its value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span>
+                      <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">))</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
+                            <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights with data scaling and large alpha&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/linear_models_regularization_34_0.png" src="../_images/linear_models_regularization_34_0.png" />
+</div>
+</div>
+<p>Looking specifically to weights values, we observe that increasing the value
+of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> will decrease the weight values. A negative value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> would
+actually enhance large weights and promote overfitting.</p>
 <p>In the previous analysis, we did not study if the parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> will have
 an effect on the performance. We chose the parameter beforehand and fix it
 for the analysis.</p>
@@ -2183,7 +2220,7 @@ strength that we tried.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/linear_models_regularization_38_0.png" src="../_images/linear_models_regularization_38_0.png" />
+<img alt="../_images/linear_models_regularization_42_0.png" src="../_images/linear_models_regularization_42_0.png" />
 </div>
 </div>
 <p>As we can see, regularization is just like salt in cooking: one must balance
@@ -2202,6 +2239,25 @@ its amount to get the best generalization performance. We can check if the best
  0.37926901907322497,
  0.14384498882876628,
  0.11288378916846889]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The optimal regularization strength is not necessarily the same on all
+cross-validation iterations. But since we expect each cross-validation
+resampling to stem from the same data distribution, it is common practice
+to use the average value of the best <code class="docutils literal notranslate"><span class="pre">alpha</span></code> found on different
+cross-validation folds as our final estimate for the tuned <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean optimal alpha leading to the best generalization performance is:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean optimal alpha leading to the best generalization performance is:
+0.17 +/- 0.11
 </pre></div>
 </div>
 </div>

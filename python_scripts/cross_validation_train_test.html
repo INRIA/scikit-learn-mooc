@@ -1795,28 +1795,40 @@ it was used in a production environment.</p>
 <h2>Stability of the cross-validation estimates<a class="headerlink" href="#stability-of-the-cross-validation-estimates" title="Permalink to this headline">¶</a></h2>
 <p>When doing a single train-test split we don’t give any indication regarding
 the robustness of the evaluation of our predictive model: in particular, if
-the test set is small, this estimate of the testing error will be
-unstable and wouldn’t reflect the “true error rate” we would have observed
-with the same model on an unlimited amount of test data.</p>
+the test set is small, this estimate of the testing error will be unstable and
+wouldn’t reflect the “true error rate” we would have observed with the same
+model on an unlimited amount of test data.</p>
 <p>For instance, we could have been lucky when we did our random split of our
 limited dataset and isolated some of the easiest cases to predict in the
 testing set just by chance: the estimation of the testing error would be
 overly optimistic, in this case.</p>
-<p><strong>Cross-validation</strong> allows estimating the robustness of a predictive model
-by repeating the splitting procedure. It will give several training and
-testing errors and thus some <strong>estimate of the variability of the
-model generalization performance</strong>.</p>
-<p>There are different cross-validation strategies, for now we are going to
-focus on one called “shuffle-split”. At each iteration of this strategy we:</p>
+<p><strong>Cross-validation</strong> allows estimating the robustness of a predictive model by
+repeating the splitting procedure. It will give several training and testing
+errors and thus some <strong>estimate of the variability of the model generalization
+performance</strong>.</p>
+<p>There are <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators">different cross-validation
+strategies</a>,
+for now we are going to focus on one called “shuffle-split”. At each iteration
+of this strategy we:</p>
 <ul class="simple">
 <li><p>randomly shuffle the order of the samples of a copy of the full dataset;</p></li>
 <li><p>split the shuffled dataset into a train and a test set;</p></li>
 <li><p>train a new model on the train set;</p></li>
 <li><p>evaluate the testing error on the test set.</p></li>
 </ul>
-<p>We repeat this procedure <code class="docutils literal notranslate"><span class="pre">n_splits</span></code> times. Using <code class="docutils literal notranslate"><span class="pre">n_splits=40</span></code> means that we
-will train 40 models in total and all of them will be discarded: we just
-record their generalization performance on each variant of the test set.</p>
+<p>We repeat this procedure <code class="docutils literal notranslate"><span class="pre">n_splits</span></code> times. Keep in mind that the computational
+cost increases with <code class="docutils literal notranslate"><span class="pre">n_splits</span></code>.</p>
+<p><img alt="Cross-validation diagram" src="../_images/shufflesplit_diagram.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This figure shows the particular case of <strong>shuffle-split</strong> cross-validation
+strategy using <code class="docutils literal notranslate"><span class="pre">n_splits=5</span></code>.
+For each cross-validation split, the procedure trains a model on all the red
+samples and evaluate the score of the model on the blue samples.</p>
+</div>
+<p>In this case we will set <code class="docutils literal notranslate"><span class="pre">n_splits=40</span></code>, meaning that we will train 40 models
+in total and all of them will be discarded: we just record their
+generalization performance on each variant of the test set.</p>
 <p>To evaluate the generalization performance of our regressor, we can use
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code></a>
 with a
@@ -2034,8 +2046,8 @@ score.</p>
 </div></div></div>
 </div>
 <p>We get timing information to fit and predict at each cross-validation
-iteration. Also, we get the test score, which corresponds to the testing
-error on each of the splits.</p>
+iteration. Also, we get the test score, which corresponds to the testing error
+on each of the splits.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
@@ -2048,9 +2060,9 @@ error on each of the splits.</p>
 </div>
 </div>
 </div>
-<p>We get 40 entries in our resulting dataframe because we performed 40
-splits. Therefore, we can show the testing error distribution and thus, have
-an estimate of its variability.</p>
+<p>We get 40 entries in our resulting dataframe because we performed 40 splits.
+Therefore, we can show the testing error distribution and thus, have an
+estimate of its variability.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -2065,8 +2077,8 @@ an estimate of its variability.</p>
 <img alt="../_images/cross_validation_train_test_32_0.png" src="../_images/cross_validation_train_test_32_0.png" />
 </div>
 </div>
-<p>We observe that the testing error is clustered around 47 k$ and
-ranges from 43 k$ to 50 k$.</p>
+<p>We observe that the testing error is clustered around 47 k$ and ranges from
+43 k$ to 50 k$.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean cross-validated testing error is: &quot;</span>
@@ -2094,12 +2106,11 @@ ranges from 43 k$ to 50 k$.</p>
 </div>
 </div>
 <p>Note that the standard deviation is much smaller than the mean: we could
-summarize that our cross-validation estimate of the testing error is
-46.36 +/- 1.17 k$.</p>
+summarize that our cross-validation estimate of the testing error is 46.36 +/-
+1.17 k$.</p>
 <p>If we were to train a single model on the full dataset (without
 cross-validation) and then later had access to an unlimited amount of test
-data, we would expect its true testing error to fall close to that
-region.</p>
+data, we would expect its true testing error to fall close to that region.</p>
 <p>While this information is interesting in itself, it should be contrasted to
 the scale of the natural variability of the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> in our dataset.</p>
 <p>Let us plot the distribution of the target variable:</p>

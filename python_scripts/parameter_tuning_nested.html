@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cross-validation and hyperparameter tuning &#8212; Scikit-learn course</title>
+    <title>Evaluation and hyperparameter tuning &#8212; Scikit-learn course</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -454,7 +454,7 @@
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Cross-validation and hyperparameter tuning
+     Evaluation and hyperparameter tuning
     </a>
    </li>
    <li class="toctree-l2">
@@ -1418,14 +1418,31 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-dataset">
+   Loading the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#our-predictive-model">
    Our predictive model
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#include-a-hyperparameter-search-within-a-cross-validation">
-   Include a hyperparameter search within a cross-validation
+  <a class="reference internal nav-link" href="#evaluation">
+   Evaluation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#without-hyperparameter-tuning">
+     Without hyperparameter tuning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#with-hyperparameter-tuning">
+     With hyperparameter tuning
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -1438,19 +1455,44 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="cross-validation-and-hyperparameter-tuning">
-<h1>Cross-validation and hyperparameter tuning<a class="headerlink" href="#cross-validation-and-hyperparameter-tuning" title="Permalink to this headline">¶</a></h1>
-<p>In the previous notebooks, we saw two approaches to tune hyperparameters:
-via grid-search and randomized-search.</p>
-<p>In this notebook, we will show how to combine such hyperparameters search
-with a cross-validation.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="evaluation-and-hyperparameter-tuning">
+<h1>Evaluation and hyperparameter tuning<a class="headerlink" href="#evaluation-and-hyperparameter-tuning" title="Permalink to this headline">¶</a></h1>
+<p>In the previous notebook, we saw two approaches to tune hyperparameters.
+However, we did not present a proper framework to evaluate the tuned models.
+Instead, we focused on the mechanism used to find the best set of parameters.</p>
+<p>In this notebook, we will reuse some knowledge presented in the module
+“Selecting the best model” to show how to evaluate models where
+hyperparameters need to be tuned.</p>
+<p>Thus, we will first load the dataset and create the predictive model that
+we want to optimize and later on, evaluate.</p>
+<div class="section" id="loading-the-dataset">
+<h2>Loading the dataset<a class="headerlink" href="#loading-the-dataset" title="Permalink to this headline">¶</a></h2>
+<p>As in the previous notebook, we load the Adult census dataset. The loaded
+dataframe is first divided to separate the input features and the target into
+two separated variables. In addition, we drop the column <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> as
+previously done.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="our-predictive-model">
 <h2>Our predictive model<a class="headerlink" href="#our-predictive-model" title="Permalink to this headline">¶</a></h2>
-<p>Let us reload the dataset as we did previously:</p>
+<p>We now create the predictive model that we want to optimize. Note that
+this pipeline is identical to the one we used in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
 
+<span class="c1"># To get a diagram visualization of the pipeline</span>
 <span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1458,45 +1500,85 @@ with a cross-validation.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
+    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span>
+    <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>We extract the column containing the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">target</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+    <span class="p">(</span>
+        <span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
+        <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+<span class="p">])</span>
+<span class="n">model</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0         &lt;=50K
-1         &lt;=50K
-2          &gt;50K
-3          &gt;50K
-4         &lt;=50K
-          ...  
-48837     &lt;=50K
-48838      &gt;50K
-48839     &lt;=50K
-48840     &lt;=50K
-48841      &gt;50K
-Name: class, Length: 48842, dtype: object
-</pre></div>
+<div class="output text_html"><style>#sk-ac503a13-8665-4409-9792-9f6318e195d8 {color: black;background-color: white;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 pre{padding: 0;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-toggleable {background-color: white;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-estimator:hover {background-color: #d4ebff;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-item {z-index: 1;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-parallel-item:only-child::after {width: 0;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-ac503a13-8665-4409-9792-9f6318e195d8 div.sk-container {display: inline-block;position: relative;}</style><div id="sk-ac503a13-8665-4409-9792-9f6318e195d8" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="7e13259e-7dca-4b76-8975-c5c4c7c832e1" type="checkbox" ><label class="sk-toggleable__label" for="7e13259e-7dca-4b76-8975-c5c4c7c832e1">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('preprocessor',
+                 ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                                   transformers=[('cat_preprocessor',
+                                                  OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                                 unknown_value=-1),
+                                                  ['workclass', 'education',
+                                                   'marital-status',
+                                                   'occupation', 'relationship',
+                                                   'race', 'sex',
+                                                   'native-country'])])),
+                ('classifier',
+                 HistGradientBoostingClassifier(max_leaf_nodes=4,
+                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="632cd464-d3e3-4e5c-820a-64400f0a2c95" type="checkbox" ><label class="sk-toggleable__label" for="632cd464-d3e3-4e5c-820a-64400f0a2c95">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+                  transformers=[('cat_preprocessor',
+                                 OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                unknown_value=-1),
+                                 ['workclass', 'education', 'marital-status',
+                                  'occupation', 'relationship', 'race', 'sex',
+                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="4a04a52c-51ef-48b0-829b-8f22936a8013" type="checkbox" ><label class="sk-toggleable__label" for="4a04a52c-51ef-48b0-829b-8f22936a8013">cat_preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="6c7dcc3e-ca90-4897-8968-df35a7af0879" type="checkbox" ><label class="sk-toggleable__label" for="6c7dcc3e-ca90-4897-8968-df35a7af0879">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="cf83f9af-4817-413f-a00c-ec99b96809ed" type="checkbox" ><label class="sk-toggleable__label" for="cf83f9af-4817-413f-a00c-ec99b96809ed">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="bd5aa7fa-4b73-4d02-968a-1a44b85e56f8" type="checkbox" ><label class="sk-toggleable__label" for="bd5aa7fa-4b73-4d02-968a-1a44b85e56f8">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="e8295f0a-26cc-442a-a9ab-6e5cc56e017a" type="checkbox" ><label class="sk-toggleable__label" for="e8295f0a-26cc-442a-a9ab-6e5cc56e017a">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 </div>
-</div>
-<p>We drop from our data the target and the <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> column which
-duplicates the information from the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> column.</p>
+<div class="section" id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="without-hyperparameter-tuning">
+<h3>Without hyperparameter tuning<a class="headerlink" href="#without-hyperparameter-tuning" title="Permalink to this headline">¶</a></h3>
+<p>In the module “Selecting the best model”, we saw that one must use
+cross-validation to evaluate such a model. Cross-validation allows to get a
+distribution of the scores of the model. Thus, having this distribution at
+hand, we can get to assess the variability of our estimate of the
+generalization performance of the model. Here, we recall the necessary
+<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> tools needed to obtain the mean and standard deviation of the
+scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="n">cv_results</span>
 </pre></div>
 </div>
 </div>
@@ -1519,227 +1601,381 @@ duplicates the information from the <code class="docutils literal notranslate"><
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>age</th>
-      <th>workclass</th>
-      <th>education</th>
-      <th>marital-status</th>
-      <th>occupation</th>
-      <th>relationship</th>
-      <th>race</th>
-      <th>sex</th>
-      <th>capital-gain</th>
-      <th>capital-loss</th>
-      <th>hours-per-week</th>
-      <th>native-country</th>
+      <th>fit_time</th>
+      <th>score_time</th>
+      <th>test_score</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>25</td>
-      <td>Private</td>
-      <td>11th</td>
-      <td>Never-married</td>
-      <td>Machine-op-inspct</td>
-      <td>Own-child</td>
-      <td>Black</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
+      <td>0.660530</td>
+      <td>0.096146</td>
+      <td>0.863241</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>38</td>
-      <td>Private</td>
-      <td>HS-grad</td>
-      <td>Married-civ-spouse</td>
-      <td>Farming-fishing</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>50</td>
-      <td>United-States</td>
+      <td>0.671525</td>
+      <td>0.100452</td>
+      <td>0.860784</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>28</td>
-      <td>Local-gov</td>
-      <td>Assoc-acdm</td>
-      <td>Married-civ-spouse</td>
-      <td>Protective-serv</td>
-      <td>Husband</td>
-      <td>White</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
+      <td>0.676861</td>
+      <td>0.099045</td>
+      <td>0.860360</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>44</td>
-      <td>Private</td>
-      <td>Some-college</td>
-      <td>Married-civ-spouse</td>
-      <td>Machine-op-inspct</td>
-      <td>Husband</td>
-      <td>Black</td>
-      <td>Male</td>
-      <td>7688</td>
-      <td>0</td>
-      <td>40</td>
-      <td>United-States</td>
+      <td>0.683242</td>
+      <td>0.115077</td>
+      <td>0.862408</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>18</td>
-      <td>?</td>
-      <td>Some-college</td>
-      <td>Never-married</td>
-      <td>?</td>
-      <td>Own-child</td>
-      <td>White</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>0</td>
-      <td>30</td>
-      <td>United-States</td>
+      <td>0.682875</td>
+      <td>0.098150</td>
+      <td>0.866912</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We will create the same predictive pipeline as seen in the grid-search
-section.</p>
+<p>The cross-validation scores are coming from a 5-fold cross-validation. So
+we can compute the mean and standard deviation of the generalization score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
-
-<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
-                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span> <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
-     <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">))])</span>
-<span class="n">model</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Generalization score without hyperparameters tuning:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d {color: black;background-color: white;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d pre{padding: 0;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-toggleable {background-color: white;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-estimator:hover {background-color: #d4ebff;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-item {z-index: 1;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-parallel-item:only-child::after {width: 0;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d div.sk-container {display: inline-block;position: relative;}</style><div id="sk-0b22eb7d-2e42-4e17-93a8-4f56d80df65d" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d19f10c9-a1e9-4002-b6f4-bca9b570568a" type="checkbox" ><label class="sk-toggleable__label" for="d19f10c9-a1e9-4002-b6f4-bca9b570568a">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('preprocessor',
-                 ColumnTransformer(remainder='passthrough', sparse_threshold=0,
-                                   transformers=[('cat_preprocessor',
-                                                  OrdinalEncoder(handle_unknown='use_encoded_value',
-                                                                 unknown_value=-1),
-                                                  ['workclass', 'education',
-                                                   'marital-status',
-                                                   'occupation', 'relationship',
-                                                   'race', 'sex',
-                                                   'native-country'])])),
-                ('classifier',
-                 HistGradientBoostingClassifier(max_leaf_nodes=4,
-                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="f59ff054-e2de-4063-9169-bea825ce99ca" type="checkbox" ><label class="sk-toggleable__label" for="f59ff054-e2de-4063-9169-bea825ce99ca">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generalization score without hyperparameters tuning:
+0.863 +/- 0.003
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now present how to evaluate the model with hyperparameter tuning,
+where an extra step is required to select the best set of parameters.</p>
+</div>
+<div class="section" id="with-hyperparameter-tuning">
+<h3>With hyperparameter tuning<a class="headerlink" href="#with-hyperparameter-tuning" title="Permalink to this headline">¶</a></h3>
+<p>As we shown in the previous notebook, one can use a search strategy that uses
+cross-validation to find the best set of parameters. Here, we will use a
+grid-search strategy and reproduce the steps done in the previous notebook.</p>
+<p>First, we have to embed our model into a grid-search and specify the
+parameters and the parameter values that we want to explore.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-13874988-f4b6-4329-9372-69f9a8b4f12b {color: black;background-color: white;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b pre{padding: 0;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-toggleable {background-color: white;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-estimator:hover {background-color: #d4ebff;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-item {z-index: 1;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-parallel-item:only-child::after {width: 0;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-13874988-f4b6-4329-9372-69f9a8b4f12b div.sk-container {display: inline-block;position: relative;}</style><div id="sk-13874988-f4b6-4329-9372-69f9a8b4f12b" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="5e1b7b12-9bcf-4950-bb82-f8b62ce714a5" type="checkbox" ><label class="sk-toggleable__label" for="5e1b7b12-9bcf-4950-bb82-f8b62ce714a5">GridSearchCV</label><div class="sk-toggleable__content"><pre>GridSearchCV(cv=2,
+             estimator=Pipeline(steps=[('preprocessor',
+                                        ColumnTransformer(remainder='passthrough',
+                                                          sparse_threshold=0,
+                                                          transformers=[('cat_preprocessor',
+                                                                         OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                                                        unknown_value=-1),
+                                                                         ['workclass',
+                                                                          'education',
+                                                                          'marital-status',
+                                                                          'occupation',
+                                                                          'relationship',
+                                                                          'race',
+                                                                          'sex',
+                                                                          'native-country'])])),
+                                       ('classifier',
+                                        HistGradientBoostingClassifier(max_leaf_nodes=4,
+                                                                       random_state=42))]),
+             n_jobs=2,
+             param_grid={'classifier__learning_rate': (0.05, 0.5),
+                         'classifier__max_leaf_nodes': (10, 30)})</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="951f0741-01b0-4b78-aed6-aa87a5d39d2f" type="checkbox" ><label class="sk-toggleable__label" for="951f0741-01b0-4b78-aed6-aa87a5d39d2f">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
                   transformers=[('cat_preprocessor',
                                  OrdinalEncoder(handle_unknown='use_encoded_value',
                                                 unknown_value=-1),
                                  ['workclass', 'education', 'marital-status',
                                   'occupation', 'relationship', 'race', 'sex',
-                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ca704612-f9e1-4cb4-b0e6-c552cb90c0c2" type="checkbox" ><label class="sk-toggleable__label" for="ca704612-f9e1-4cb4-b0e6-c552cb90c0c2">cat_preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d514de08-1dbf-4beb-9db4-00a5fed05078" type="checkbox" ><label class="sk-toggleable__label" for="d514de08-1dbf-4beb-9db4-00a5fed05078">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="7d237372-c82f-43c4-9040-363a8fcf1ec1" type="checkbox" ><label class="sk-toggleable__label" for="7d237372-c82f-43c4-9040-363a8fcf1ec1">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9dc9322b-6782-4cb1-9675-6504df577d4f" type="checkbox" ><label class="sk-toggleable__label" for="9dc9322b-6782-4cb1-9675-6504df577d4f">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="77ad5b34-d3a3-46c5-94d1-e408eb515092" type="checkbox" ><label class="sk-toggleable__label" for="77ad5b34-d3a3-46c5-94d1-e408eb515092">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div>
+                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="50272906-a2fb-4f1f-b5d4-ace309770b1d" type="checkbox" ><label class="sk-toggleable__label" for="50272906-a2fb-4f1f-b5d4-ace309770b1d">cat_preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="fb7dff34-626a-42b0-87c6-fcaf08d1fd55" type="checkbox" ><label class="sk-toggleable__label" for="fb7dff34-626a-42b0-87c6-fcaf08d1fd55">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8fcdd3af-f3a6-421d-b20d-ea1ae602a867" type="checkbox" ><label class="sk-toggleable__label" for="8fcdd3af-f3a6-421d-b20d-ea1ae602a867">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="40782c62-0b63-465b-b046-999cd9675499" type="checkbox" ><label class="sk-toggleable__label" for="40782c62-0b63-465b-b046-999cd9675499">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8c4b73c0-bb73-40a1-8132-94711bf559d6" type="checkbox" ><label class="sk-toggleable__label" for="8c4b73c0-bb73-40a1-8132-94711bf559d6">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+</div>
+<p>As previously seen, when calling the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method, the model embedded in the
+grid-search is trained with every possible combination of parameters
+resulting from the parameter grid. The best combination is selected by
+keeping the combination leading to the best mean cross-validated score.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span><span class="p">[[</span>
+    <span class="s2">&quot;param_classifier__learning_rate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;param_classifier__max_leaf_nodes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rank_test_score&quot;</span>
+<span class="p">]]</span>
+</pre></div>
 </div>
 </div>
-<div class="section" id="include-a-hyperparameter-search-within-a-cross-validation">
-<h2>Include a hyperparameter search within a cross-validation<a class="headerlink" href="#include-a-hyperparameter-search-within-a-cross-validation" title="Permalink to this headline">¶</a></h2>
-<p>As mentioned earlier, using a single train-test split during the grid-search
-does not give any information regarding the different sources of variations:
-variations in terms of test score or hyperparameters values.</p>
-<p>To get reliable information, the hyperparameters search need to be nested
-within a cross-validation.</p>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>param_classifier__learning_rate</th>
+      <th>param_classifier__max_leaf_nodes</th>
+      <th>mean_test_score</th>
+      <th>std_test_score</th>
+      <th>rank_test_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.05</td>
+      <td>10</td>
+      <td>0.864195</td>
+      <td>0.000061</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.05</td>
+      <td>30</td>
+      <td>0.870910</td>
+      <td>0.000061</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.5</td>
+      <td>10</td>
+      <td>0.869457</td>
+      <td>0.000819</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.5</td>
+      <td>30</td>
+      <td>0.866365</td>
+      <td>0.001822</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">best_params_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_leaf_nodes&#39;: 30}
+</pre></div>
+</div>
+</div>
+</div>
+<p>One important caveat here concerns the evaluation of the generalization
+performance. Indeed, the mean and standard deviation of the scores computed
+by the cross-validation in the grid-search are potentially not good estimates
+of the generalization performance we would obtain by refitting a model with
+the best combination of hyper-parameter values on the full dataset. Note that
+scikit-learn automatically performs this refit by default when calling
+<code class="docutils literal notranslate"><span class="pre">model_grid_search.fit</span></code>. This refitted model is trained with more data than
+the different models trained internally during the cross-validation of the
+grid-search.</p>
+<p>We therefore used knowledge from the full dataset to both decide our model’s
+hyper-parameters and to train the refitted model.</p>
+<p>Because of the above, one must keep an external, held-out test set for the
+final evaluation the refitted model. We highlight here the process using a
+single train-test split.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on test set: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy on test set: 0.877
+</pre></div>
+</div>
+</div>
+</div>
+<p>The score measure on the final test set is almost with the range of the
+internal CV score for the best hyper-paramter combination. This is reassuring
+as it means that the tuning procedure did not cause significant overfitting
+in itself (other-wise the final test score would have been lower than the
+internal CV scores). That is expected because our grid search explored very
+few hyper-parameter combinations for the sake of speed. The test score of the
+final model is actually a bit higher that what we could have expected from
+the internal cross-validation. This is also expected because the refitted
+model is trained on a larger dataset than the models evaluated in the
+internal CV loop of the grid-search procedure. This is often the case that
+models trained on a larger number of samples tend to generalize better.</p>
+<p>In the code above, the selection of the best hyperparameters was done only on
+the train set from the initial train-test split. Then, we evaluated the
+generalization performance of our tuned model on the left out test set. This
+can be shown schematically as follows</p>
+<p><img alt="Cross-validation tuning diagram" src="../_images/cross_validation_train_test_diagram.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To limit the computational cost, we affect <code class="docutils literal notranslate"><span class="pre">cv</span></code> to a low integer. In
-practice, the number of fold should be much higher.</p>
+<p>This figure shows the particular case of <strong>K-fold</strong> cross-validation
+strategy using <code class="docutils literal notranslate"><span class="pre">n_splits=5</span></code> to further split the train set coming from a
+train-test split.
+For each cross-validation split, the procedure trains a model on all the red
+samples, evaluates the score of a given set of hyperparameters on the green
+samples. The best hyper-parameters are selected based on those intermediate
+scores.</p>
+<p>The a final model tuned with those hyper-parameters is fitted on the
+concatenation of the red and green samples and evaluated on the blue samples.</p>
+<p>The green samples are sometimes called a <strong>validation sets</strong> to differentiate
+them from the final test set in blue.</p>
 </div>
+<p>However, this evaluation only provides us a single point estimate of the
+generalization performance. As recall at the beginning of this notebook, it
+is beneficial to have a rough idea of the uncertainty of our estimated
+generalization performance. Therefore, we should instead use an additional
+cross-validation for this evaluation.</p>
+<p>This pattern is called <strong>nested cross-validation</strong>. We use an inner
+cross-validation for the selection of the hyperparameters and an outer
+cross-validation for the evaluation of generalization performance of the
+refitted tuned model.</p>
+<p>In practice, we only need to embed the grid-search in the function
+<code class="docutils literal notranslate"><span class="pre">cross-validate</span></code> to perform such evaluation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
-
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">)}</span>
-<span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
-                                 <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">model_grid_search</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">model_grid_search</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Running the above cross-validation will give us an estimate of the
-testing score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score by cross-validation combined with hyperparameters &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;search:</span><span class="se">\n</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="n">cv_test_scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Generalization score with hyperparameters tuning:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> +/- </span><span class="si">{</span><span class="n">cv_test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score by cross-validation combined with hyperparameters search:
-0.872 +/- 0.002
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Generalization score with hyperparameters tuning:
+0.871 +/- 0.003
 </pre></div>
 </div>
 </div>
 </div>
-<p>The hyperparameters on each fold are potentially different since we nested
-the grid-search in the cross-validation. Thus, checking the variation of the
-hyperparameters across folds should also be analyzed.</p>
+<p>This result is compatible with the test score measured with the string outer
+train-test split.</p>
+<p>However, in this case, we can apprehend the variability of our estimate of
+the generalization performance thanks to the measure of the
+standard-deviation of the scores measured in the outer cross-validation.</p>
+<p>Here is a schematic representation of the complete nested cross-validation
+procedure:</p>
+<p><img alt="Nested cross-validationdiagram" src="../_images/nested_cross_validation_diagram.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This figure illustrates the nested cross-validation strategy using
+<code class="docutils literal notranslate"><span class="pre">cv_inner</span> <span class="pre">=</span> <span class="pre">KFold(n_splits=4)</span></code> and <code class="docutils literal notranslate"><span class="pre">cv_outer</span> <span class="pre">=</span> <span class="pre">KFold(n_splits=5)</span></code>.</p>
+<p>For each inner cross-validation split (indexed on the left-hand side),
+the procedure trains a model on all the red samples and evaluate the quality
+of the hyperparameters on the green samples.</p>
+<p>For each outer cross-validation split (indexed on the right-hand side),
+the best hyper-parameters are selected based on the validation scores
+(computed on the greed samples) and a model is refitted on the concatenation
+of the red and green samples for that outer CV iteration.</p>
+<p>The generalization performance of the 5 refitted models from the outer CV
+loop are then evaluated on the blue samples to get the final scores.</p>
+</div>
+<p>In addition, passing the parameter <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code>, we can check the
+value of the best hyperparameters obtained for each fold of the outer
+cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">fold_idx</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best parameter found on fold #</span><span class="si">{</span><span class="n">fold_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">cv_fold</span><span class="p">,</span> <span class="n">estimator_in_fold</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Best hyperparameters for fold #</span><span class="si">{</span><span class="n">cv_fold</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">estimator_in_fold</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best parameter found on fold #1
-{&#39;classifier__learning_rate&#39;: 0.1, &#39;classifier__max_leaf_nodes&#39;: 40}
-Best parameter found on fold #2
-{&#39;classifier__learning_rate&#39;: 0.1, &#39;classifier__max_leaf_nodes&#39;: 30}
-Best parameter found on fold #3
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best hyperparameters for fold #1:
+{&#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_leaf_nodes&#39;: 30}
+Best hyperparameters for fold #2:
+{&#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_leaf_nodes&#39;: 30}
+Best hyperparameters for fold #3:
+{&#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_leaf_nodes&#39;: 30}
+Best hyperparameters for fold #4:
+{&#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_leaf_nodes&#39;: 30}
+Best hyperparameters for fold #5:
 {&#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_leaf_nodes&#39;: 30}
 </pre></div>
 </div>
 </div>
 </div>
-<p>Obtaining models with unstable hyperparameters would be an issue in practice.
-Indeed, it would become difficult to set them.</p>
-<p>In this notebook, we have seen how to combine hyperparameters search with
-cross-validation.</p>
+<p>It is interesting to see whether the hyper-parameter tuning procedure always
+select similar values for the hyperparameters. If its the case, then all is
+fine. It means that we can deploy a model fit with those hyperparameters and
+expect that it will have an actual predictive performance close to what we
+measured in the outer cross-validation.</p>
+<p>But it is also possible that some hyperparameters do not matter at all, and
+as a result in different tuning sessions give different results. In this
+case, any value will do. This can typically be confirmed by doing a parallel
+coordinate plot of the results of a large hyperparameter search as seen in
+the exercises.</p>
+<p>From a deployment point of view, one could also chose to deploy all the
+models found by the outer cross-validation loop and make them vote to get the
+final predictions. However this can cause operational problems because it
+uses more memory and makes computing prediction slower, resulting in a higher
+computational resource usage per prediction.</p>
+<p>In this notebook, we have seen how to evaluate the predictive performance of
+a model with tuned hyper-parameters using the nested cross-validation
+procedure.</p>
+</div>
 </div>
 </div>
 

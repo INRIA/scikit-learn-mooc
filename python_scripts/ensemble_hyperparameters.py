@@ -62,15 +62,15 @@ cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
 # We can observe that in our grid-search, the largest `max_depth` together with
-# the largest `n_estimators` led in average to the best performance on the
+# the largest `n_estimators` led, on average, to the best performance on the
 # validation sets. Now we will estimate the generalization performance of the
 # best model by refitting it with the full training set and using the test set
 # for scoring on unseen data. This is done by default when calling the `.fit`
 # method.
 
 # %%
-score = -grid_search.score(data_test, target_test)
-print(f"On average, our random forest regressor makes an error of {score:.2f} k$")
+error = -grid_search.score(data_test, target_test)
+print(f"On average, our random forest regressor makes an error of {error:.2f} k$")
 
 # %% [markdown]
 # ## Gradient-boosting decision trees
@@ -133,7 +133,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 # using the test set.
 
 # %%
-score = -grid_search.score(data_test, target_test)
+error = -grid_search.score(data_test, target_test)
 print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")
 
 # %% [markdown]

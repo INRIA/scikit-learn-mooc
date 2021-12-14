@@ -114,7 +114,7 @@ gbdt.n_estimators_
 # %%
 # solution
 from sklearn.metrics import mean_absolute_error
-score = mean_absolute_error(target_test, gbdt.predict(data_test))
+error = mean_absolute_error(target_test, gbdt.predict(data_test))
 print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")
 
 # %% [markdown] tags=["solution"]

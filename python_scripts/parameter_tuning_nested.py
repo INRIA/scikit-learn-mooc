@@ -202,8 +202,11 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # train-test split.
 # For each cross-validation split, the procedure trains a model on all the red
 # samples, evaluates the score of a given set of hyperparameters on the green
-# samples and estimates the model's generalization performance on the blue
-# samples.
+# samples. The best hyper-parameters are selected based on those intermediate
+# scores.
+#
+# The a final model tuned with those hyper-parameters is fitted on the
+# concatenation of the red and green samples and evaluated on the blue samples.
 #
 # The green samples are sometimes called a **validation sets** to differentiate
 # them from the final test set in blue.
@@ -253,9 +256,18 @@ print(
 # ```{note}
 # This figure illustrates the nested cross-validation strategy using
 # `cv_inner = KFold(n_splits=4)` and `cv_outer = KFold(n_splits=5)`.
-# For each cross-validation split, the procedure trains a model on all the red
-# samples, validates the hyperparameters on the green samples
-# and estimates the model's generalization performance on the blue samples.
+#
+# For each inner cross-validation split (indexed on the left-hand side),
+# the procedure trains a model on all the red samples and evaluate the quality
+# of the hyperparameters on the green samples.
+#
+# For each outer cross-validation split (indexed on the right-hand side),
+# the best hyper-parameters are selected based on the validation scores
+# (computed on the greed samples) and a model is refitted on the concatenation
+# of the red and green samples for that outer CV iteration.
+#
+# The generalization performance of the 5 refitted models from the outer CV
+# loop are then evaluated on the blue samples to get the final scores.
 # ```
 #
 # In addition, passing the parameter `return_estimator=True`, we can check the

@@ -41,12 +41,12 @@ search = GridSearchCV(
 search.fit(data, target)
 
 # %% [markdown]
-# We recall that `GridSearchCV` will train a model with some specific parameters
+# We recall that `GridSearchCV` trains a model with some specific parameters
 # on a training set and evaluate it on a testing set. This evaluation is
 # done via cross-validation using the `cv` parameter. The procedure is then
 # repeated for all possible combinations of parameters given in `param_grid`.
 #
-# The attribute `best_params_` will give us the best set of parameters that
+# The attribute `best_params_` gives us the best set of parameters that
 # maximize the mean score on the internal test sets.
 
 # %%
@@ -102,9 +102,9 @@ print(f"The mean score using nested cross-validation is: "
 # In the example above, the reported score is more trustworthy and should be close
 # to production's expected generalization performance.
 #
-# We will illustrate the difference between the nested and non-nested
+# We now illustrate the difference between the nested and non-nested
 # cross-validation scores to show that the latter are too optimistic in
-# practice. In this regard, we will repeat several times the experiment and
+# practice. In this regard, we repeat the experiment several times and
 # shuffle the data differently to ensure that our conclusion does not depend on
 # a particular resampling of the data.
 

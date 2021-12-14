@@ -14,9 +14,9 @@
 #
 # ## Loading the dataset
 #
-# As in the previous notebook, we will load the Adult census dataset. The
-# loaded dataframe will be split to get the data and the target into two
-# separated variables. In addition, we will drop the column `"education-num"`
+# As in the previous notebook, we load the Adult census dataset. The
+# loaded dataframe is first divided to separate the input features and the target into two
+# separated variables. In addition, we drop the column `"education-num"`
 # as previously done.
 
 # %%
@@ -93,7 +93,7 @@ print(
 )
 
 # %% [markdown]
-# Now, we will present how to evaluate the model with hyperparameter tuning,
+# We now present how to evaluate the model with hyperparameter tuning,
 # where an extra step is required to select the best set of parameters.
 #
 # ### With hyperparameter tuning
@@ -118,7 +118,7 @@ model_grid_search.fit(data, target)
 
 # %% [markdown]
 # As previously seen, when calling the `fit` method, the model embedded in the
-# grid-search will be trained with every possible combination of parameters
+# grid-search is trained with every possible combination of parameters
 # resulting from the parameter grid. The best combination is selected by
 # keeping the combination leading to the best mean cross-validated score.
 

@@ -173,10 +173,11 @@ _ = plt.title("Ridge weights")
 #
 # ## Feature scaling and regularization
 #
-# On the one hand, weights provide a link between features and the target.
+# On the one hand, weights define the link between feature values and the
+# predicted target.
 # On the other hand, regularization adds constraints on the weights of the
 # model through the `alpha` parameter. Therefore, the effect that feature
-# rescaling has in all the weights also impacts the regularization.
+# rescaling has on the final weights also interacts with regularization.
 #
 # Let's consider the case where features have an identical data dispersion: if
 # two features are found to be equally important by the model, they will be
@@ -239,7 +240,7 @@ _ = plt.title("Ridge weights with data scaling")
 
 # %% [markdown]
 # Compare to the previous plots, we see that now all weight magnitudes are
-# closer and that all weights are more equally contributing.
+# closer and that all features are more equally contributing.
 #
 # In the previous example, we fixed `alpha=0.5`. We will now check the impact
 # of the value of `alpha` by increasing its value.
@@ -358,8 +359,11 @@ best_alphas = [est[-1].alpha_ for est in cv_results["estimator"]]
 best_alphas
 
 # %% [markdown]
-# The optimal regularization strength is not unique. In fact, there is a set of
-# models leading to equivalent generalization performances.
+# The optimal regularization strength is not necessarily the same on all
+# cross-validation iterations. But since we expect each cross-validation
+# resampling to stem from the same data distribution, it is common practice
+# to use the average value of the best `alpha` found on different
+# cross-validation folds as our final estimate for the tuned `alpha`.
 
 # %%
 print(f"The mean optimal alpha leading to the best generalization performance is:\n"

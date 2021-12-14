@@ -65,6 +65,5 @@ Cs = [0.01, 0.1, 1, 10]
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.
 
-
 # %%
 # Write your code here.

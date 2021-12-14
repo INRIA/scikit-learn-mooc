@@ -132,8 +132,8 @@ data.index.normalize().nunique()
 
 # %%
 date_first_ride = "2020-08-18"
-cycling_ride = cycling[date_first_ride]
-data_ride, target_ride = data[date_first_ride], target[date_first_ride]
+cycling_ride = cycling.loc[date_first_ride]
+data_ride, target_ride = data.loc[date_first_ride], target.loc[date_first_ride]
 
 # %%
 data_ride.plot()
@@ -178,7 +178,7 @@ rng = np.random.RandomState(0)
 indices = rng.choice(np.arange(cycling_ride.shape[0]), size=500, replace=False)
 
 # %%
-subset = cycling_ride.iloc[indices]
+subset = cycling_ride.iloc[indices].copy()
 # Quantize the target and keep the midpoint for each interval
 subset["power"] = pd.qcut(subset["power"], 6, retbins=False)
 subset["power"] = subset["power"].apply(lambda x: x.mid)

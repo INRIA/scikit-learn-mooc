@@ -135,6 +135,31 @@ _ = plt.title("Distribution of the test scores")
 # We see that using `strategy="stratified"`, the results are much worse than
 # with the `most_frequent` strategy. Since the classes are imbalanced,
 # predicting the most frequent involves that we will be right for the
-# proportion of this class (~75% of the samples). However, by using the
-# `stratified` strategy, wrong predictions will be made even for the most
-# frequent class, hence we obtain a lower accuracy.
+# proportion of this class (~75% of the samples). However, the `"stratified"`
+# strategy will randomly generate predictions by respecting the training
+# set's class distribution, resulting in some wrong predictions even for
+# the most frequent class, hence we obtain a lower accuracy.
+#
+# Please refer to the scikit-learn documentation on [DummyClassifier
+# ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
+# for more details on the meaning of the `strategy="stratified"` parameter.
+
+# %% tags=["solution"]
+from sklearn.model_selection import cross_val_score
+
+dummy_models = {
+    "Dummy 'most_frequent'": DummyClassifier(strategy="most_frequent"),
+    "Dummy 'stratified'": DummyClassifier(strategy="stratified"),
+}
+n_runs = 3
+
+for run_idx in range(n_runs):
+    final_scores = pd.DataFrame({
+        f"{name} score": cross_val_score(model, data, target, cv=cv, n_jobs=2)
+        for name, model in dummy_models.items()
+    })
+
+    final_scores.plot.hist(bins=50, density=True, edgecolor="black")
+    plt.legend(bbox_to_anchor=(1.05, 0.8))
+    plt.xlabel("Accuracy (%)")
+    _ = plt.title(f"Distribution of scores in run #{run_idx}")

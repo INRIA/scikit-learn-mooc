@@ -13,12 +13,14 @@ Why do we need two sets: a train set and a test set?
 ```{admonition} Question
 The generalization performance of a scikit-learn model can be evaluated by:
 
-- a) calling `fit` to train the model on the training set, `predict` on the
-  test set to get the predictions, and compute the score by passing the
+- a) calling `fit` to train the model on the **training set**, `predict` on the
+  **test set** to get the predictions, and compute the score by passing the
   predictions and the true target values to some metric function
-- b) calling `fit` to train the model on the training set, `score` to compute
-  the score on the test set
+- b) calling `fit` to train the model on the **training set** and `score` to compute
+  the score on the **test set**
 - c) calling `cross_validate` by passing the model, the data and the target
+- d) calling `fit_transform` on the data and then `score` to compute
+  the score on the **test set**
 ```
 
 +++
@@ -33,9 +35,6 @@ When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
   array with 5 scores computed on the **train sets**
 - e) a Python dictionary is returned containing a key/value containing a NumPy
   array with 5 scores computed on the **test sets**
-- f) a single floating number corresponding to the average of 5 scores on the
-  test sets is returned
-- g) the 5 trained estimators are returned
 ```
 
 +++
@@ -65,7 +64,8 @@ A `StandardScaler` transformer with the default parameter will:
 
 - a) transforms the features so that they have similar ranges
 - b) transforms the features to lie in the [0.0, 1.0] range
-- c) transforms positive-only features into negative or positive values
+- c) transforms feature values that were originally positive-only into values that can
+  be negative or positive
 - d) can help logistic regression converge faster (fewer iterations)
 
 Hint: look at the plots and the answers of the previous question to eliminate

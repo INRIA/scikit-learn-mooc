@@ -64,6 +64,12 @@ tree.fit(data_train, target_train)
 target_train_predicted = tree.predict(data_train)
 target_test_predicted = tree.predict(data_test)
 
+# %% [markdown]
+# Using the term "test" here refers to data that was not used for training.
+# It should not be confused with data coming from a train-test split, as it
+# was generated in equally-spaced intervals for the visual evaluation of the
+# predictions.
+
 # %%
 # plot the data
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
@@ -125,7 +131,7 @@ _ = plt.title("Prediction of the previous residuals")
 # %% [markdown]
 # We see that this new tree only manages to fit some of the residuals. We will
 # focus on a specific sample from the training set (i.e. we know that the
-# sample will be well classified using to successive trees). We will use this
+# sample will be well predicted using two successive trees). We will use this
 # sample to explain how the predictions of both trees are combined. Let's first
 # select this sample in `data_train`.
 

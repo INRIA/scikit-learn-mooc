@@ -3,8 +3,8 @@
 #
 # Cross-validation can be used both for hyperparameter tuning and for
 # estimating the generalization performance of a model. However, using
-# it for both purpose at the same time is problematic, as the resulting
-# evaluation is likely to underestimate some overfitting that results from
+# it for both purposes at the same time is problematic, as the resulting
+# evaluation can underestimate some overfitting that results from
 # the hyperparameter tuning procedure itself.
 #
 # Philosophically, hyperparameter tuning is a form of machine learning
@@ -12,10 +12,10 @@
 # properly evaluate the generalization performance of the full modeling
 # procedure.
 #
-# This notebook introduces nested cross-validation and highlights its impact
-# on the estimated generalization performance compared to naively using
-# a single level of cross-validation, both for hyperparameter tuning and
-# evaluation of the generalization performance.
+# This notebook highlights nested cross-validation and its impact on the
+# estimated generalization performance compared to naively using a single level
+# of cross-validation, both for hyperparameter tuning and evaluation of the
+# generalization performance.
 #
 # We will illustrate this difference using the breast cancer dataset.
 
@@ -25,8 +25,8 @@ from sklearn.datasets import load_breast_cancer
 data, target = load_breast_cancer(return_X_y=True)
 
 # %% [markdown]
-# Now, we'll make a minimal example using the utility `GridSearchCV` to find
-# the best parameters via cross-validation.
+# First, we use `GridSearchCV` to find the best parameters via cross-validation
+# on a minal parameter grid.
 
 # %%
 from sklearn.model_selection import GridSearchCV
@@ -41,10 +41,11 @@ search = GridSearchCV(
 search.fit(data, target)
 
 # %% [markdown]
-# We recall that `GridSearchCV` trains a model with some specific parameters
-# on a training set and evaluate it on a testing set. This evaluation is
-# done via cross-validation using the `cv` parameter. The procedure is then
-# repeated for all possible combinations of parameters given in `param_grid`.
+# We recall that, internally, `GridSearchCV` trains several models for each on
+# sub-sampled training sets and evaluate each of them on the matching testing
+# sets using cross-validation. This evaluation procdure is controlled via
+# using the `cv` parameter. The procedure is then repeated for all possible
+# combinations of parameters given in `param_grid`.
 #
 # The attribute `best_params_` gives us the best set of parameters that
 # maximize the mean score on the internal test sets.
@@ -60,38 +61,43 @@ print(f"The mean CV score of the best model is: {search.best_score_:.3f}")
 
 # %% [markdown]
 # At this stage, one should be extremely careful using this score. The
-# misinterpretation would be the following: since the score was computed on a
-# test set, it could be considered our model's testing score.
+# misinterpretation would be the following: since this mean score was computed
+# using cross-validation test sets, we could use it to assess the
+# generalization performance of the model trained with the best
+# hyper-parameters.
 #
 # However, we should not forget that we used this score to pick-up the best
-# model. It means that we used knowledge from the test set (i.e. test score) to
-# decide our model's training parameter.
+# model. It means that we used knowledge from the test sets (i.e. test scores)
+# to select the hyper-parameter of the model it-self.
 #
-# Thus, this score is not a reasonable estimate of our testing error.
-# Indeed, we can show that it will be too optimistic in practice. The good way
-# is to use a "nested" cross-validation. We will use an inner cross-validation
-# corresponding to the previous procedure shown to optimize the
-# hyperparameters. We will also include this procedure within an outer
-# cross-validation, which will be used to estimate the testing error of
-# our tuned model.
+# Thus, this mean score is not a fair estimate of our testing error. Indeed, it
+# can be too optimistic, in particular when running a parameter search on a
+# large grid with many hyper-parameters and many possible values per
+# hyper-parameter. A way to avoid this pitfall is to use a "nested"
+# cross-validation.
 #
-# In this case, our inner cross-validation will always get the training set of
-# the outer cross-validation, making it possible to compute the testing
-# score on a completely independent set.
+# In the following, we will use an inner cross-validation corresponding to the
+# previous procedure above to only optimize the hyperparameters. We will also
+# embed this tuning procedure within an outer cross-validation, which is
+# dedicated to estimate the testing error of our tuned model.
 #
-# We will show below how we can create such nested cross-validation and obtain
-# the testing score.
+# In this case, our inner cross-validation always gets the training set of the
+# outer cross-validation, making it possible to always compute the final
+# testing scores on completely independent sets of samples.
+#
+# Let us do this in one go as follows:
 
 # %%
 from sklearn.model_selection import cross_val_score, KFold
 
-# Declare the inner and outer cross-validation
+# Declare the inner and outer cross-validation strategies
 inner_cv = KFold(n_splits=5, shuffle=True, random_state=0)
 outer_cv = KFold(n_splits=3, shuffle=True, random_state=0)
 
 # Inner cross-validation for parameter search
 model = GridSearchCV(
-    estimator=model_to_tune, param_grid=param_grid, cv=inner_cv, n_jobs=2)
+    estimator=model_to_tune, param_grid=param_grid, cv=inner_cv, n_jobs=2
+)
 
 # Outer cross-validation to compute the testing score
 test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=2)
@@ -99,14 +105,15 @@ print(f"The mean score using nested cross-validation is: "
       f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
 
 # %% [markdown]
-# In the example above, the reported score is more trustworthy and should be close
-# to production's expected generalization performance.
+# The reported score is more trustworthy and should be close to production's
+# expected generalization performance. Note that in this case, the two score
+# values are very close for this first trial.
 #
-# We now illustrate the difference between the nested and non-nested
-# cross-validation scores to show that the latter are too optimistic in
-# practice. In this regard, we repeat the experiment several times and
-# shuffle the data differently to ensure that our conclusion does not depend on
-# a particular resampling of the data.
+# We would like to better assess the difference between the nested and
+# non-nested cross-validation scores to show that the latter can be too
+# optimistic in practice. To do this, we repeat the experiment several times
+# and shuffle the data differently to ensure that our conclusion does not
+# depend on a particular resampling of the data.
 
 # %%
 test_score_not_nested = []
@@ -152,17 +159,19 @@ _ = plt.title("Comparison of mean accuracy obtained on the test sets with\n"
               "and without nested cross-validation")
 
 # %% [markdown]
-# We observe that the generalization performance estimated without using
-# nested CV is higher than what we obtain with nested CV. The reason is that
-# the tuning procedure itself selects the model with the highest inner CV score.
-# If there are many hyper-parameter combinations and the inner CV scores have
+# We observe that the generalization performance estimated without using nested
+# CV is higher than what we obtain with nested CV. The reason is that the
+# tuning procedure itself selects the model with the highest inner CV score. If
+# there are many hyper-parameter combinations and if the inner CV scores have
 # comparatively large standard deviations, taking the maximum value can lure
-# the naive data scientist into over-estimating the true generalization performance
-# of the result of the full learning procedure. By using an outer cross-validation
-# procedure one gets a more trustworthy estimate of the generalization performance
-# of the full learning procedure, including the effect of tuning the hyperparameters.
+# the naive data scientist into over-estimating the true generalization
+# performance of the result of the full learning procedure. By using an outer
+# cross-validation procedure one gets a more trustworthy estimate of the
+# generalization performance of the full learning procedure, including the
+# effect of tuning the hyperparameters.
 #
 # As a conclusion, when optimizing parts of the machine learning pipeline (e.g.
 # hyperparameter, transform, etc.), one needs to use nested cross-validation to
 # evaluate the generalization performance of the predictive model. Otherwise,
-# the results obtained without nested cross-validation are often overly optimistic.
+# the results obtained without nested cross-validation are often overly
+# optimistic.

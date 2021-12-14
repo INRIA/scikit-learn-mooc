@@ -47,11 +47,16 @@ from sklearn.compose import make_column_selector as selector
 categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
-categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
-                                          unknown_value=-1)
-preprocessor = ColumnTransformer([
-    ('cat_preprocessor', categorical_preprocessor, categorical_columns)],
-    remainder='passthrough', sparse_threshold=0)
+categorical_preprocessor = OrdinalEncoder(
+    handle_unknown="use_encoded_value", unknown_value=-1
+)
+preprocessor = ColumnTransformer(
+    [
+        ('cat_preprocessor', categorical_preprocessor, categorical_columns),
+    ],
+    remainder='passthrough',
+    sparse_threshold=0,
+)
 
 # %%
 from sklearn.ensemble import HistGradientBoostingClassifier
@@ -59,8 +64,13 @@ from sklearn.pipeline import Pipeline
 
 model = Pipeline([
     ("preprocessor", preprocessor),
-    ("classifier",
-     HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4))])
+    (
+        "classifier",
+        HistGradientBoostingClassifier(
+            random_state=42, max_leaf_nodes=4
+        )
+    ),
+])
 model
 
 # %% [markdown]
@@ -111,7 +121,8 @@ from sklearn.model_selection import GridSearchCV
 
 param_grid = {
     'classifier__learning_rate': (0.05, 0.5),
-    'classifier__max_leaf_nodes': (10, 30)}
+    'classifier__max_leaf_nodes': (10, 30),
+}
 model_grid_search = GridSearchCV(
     model, param_grid=param_grid, n_jobs=2, cv=2
 )
@@ -219,16 +230,25 @@ cv_results = cross_validate(
 
 # %%
 cv_results = pd.DataFrame(cv_results)
+cv_test_scores = cv_results['test_score']
 print(
     "Generalization score with hyperparameters tuning:\n"
-    f"{cv_results['test_score'].mean():.3f} +/- {cv_results['test_score'].std():.3f}"
+    f"{cv_test_scores.mean():.3f} +/- {cv_test_scores.std():.3f}"
 )
 
 # %% [markdown]
-# In this case, we obtain a distribution of scores and therefore, we can
-# apprehend the variability of our estimate of the generalization performance.
+# This result is compatible with the test score measured with the string outer
+# train-test split.
 #
-# ![Nested cross-validation diagram](../figures/nested_cross_validation_diagram.png)
+# However, in this case, we can apprehend the variability of our estimate of
+# the generalization performance thanks to the measure of the
+# standard-deviation of the scores measured in the outer cross-validation.
+#
+# Here is a schematic representation of the complete nested cross-validation
+# procedure:
+#
+# ![Nested cross-validation
+# diagram](../figures/nested_cross_validation_diagram.png)
 #
 # ```{note}
 # This figure illustrates the nested cross-validation strategy using
@@ -262,11 +282,12 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
 # coordinate plot of the results of a large hyperparameter search as seen in
 # the exercises.
 #
-# From a deployment, one could also chose to deploy all the models found by the
-# outer cross-validation loop and make them vote to get the final predictions.
-# However this can cause operational problems because it uses more memory and
-# makes computing prediction slower, resulting in a higher computational
-# resource usage per prediction.
+# From a deployment point of view, one could also chose to deploy all the
+# models found by the outer cross-validation loop and make them vote to get the
+# final predictions. However this can cause operational problems because it
+# uses more memory and makes computing prediction slower, resulting in a higher
+# computational resource usage per prediction.
 #
-# In this notebook, we have seen how to combine hyperparameters search with
-# cross-validation.
+# In this notebook, we have seen how to evaluate the predictive performance of
+# a model with tuned hyper-parameters using the nested cross-validation
+# procedure.

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Hyperparameter tuning visualization
+# # Interactive exploration of hyper-parameter search results
 
 # %% [markdown]
 # In the previous notebook we showed how to implement a randomized

@@ -134,7 +134,7 @@ cv_results[columns].sort_values(by="rank_test_score")
 
 # %%
 error = -grid_search.score(data_test, target_test)
-print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")
+print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
 
 # %% [markdown]
 # The mean test score in the held-out test set is slightly better than the score

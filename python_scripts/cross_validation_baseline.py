@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Comparing results with baseline and chance level
+# # Comparing model performance with a simple baseline
 #
 # In this notebook, we present how to compare the generalization performance of
 # a model to a minimal baseline. In regression, we can use the `DummyRegressor`

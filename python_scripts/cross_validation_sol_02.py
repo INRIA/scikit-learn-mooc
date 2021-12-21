@@ -120,8 +120,9 @@ _ = plt.title("Distribution of the CV scores")
 #
 # Are those new baselines better than the previous one? Why is this the case?
 #
-# # Please refer to the scikit-learn documentation on [sklearn.dummy.DummyClassifier
-# ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
+# Please refer to the scikit-learn documentation on
+# [sklearn.dummy.DummyClassifier](
+# https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
 # to find out about the meaning of the `"stratified"` and `"uniform"`
 # strategies.
 

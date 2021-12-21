@@ -1040,7 +1040,7 @@
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="cross_validation_baseline.html">
-     Comparing results with baseline and chance level
+     Comparing model performance with a simple baseline
     </a>
    </li>
    <li class="toctree-l2">
@@ -1442,10 +1442,11 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="solution-for-exercise-m7-01">
 <h1>📃 Solution for Exercise M7.01<a class="headerlink" href="#solution-for-exercise-m7-01" title="Permalink to this headline">¶</a></h1>
-<p>This notebook aims at building baseline classifiers, which we’ll use to
-compare our predictive model. Besides, we will check the differences with
-the baselines that we saw in regression.</p>
-<p>We will use the adult census dataset, using only the numerical features.</p>
+<p>In this exercise we will define dummy classification baselines and use them
+as reference to assess the relative predictive performance of a given model
+of interest.</p>
+<p>We illustrate those baselines with the help of the Adult Census dataset,
+using only the numerical features for the sake of simplicity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1457,7 +1458,7 @@ the baselines that we saw in regression.</p>
 </div>
 </div>
 <p>First, define a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation strategy taking half of the
-sample as a testing at each round.</p>
+samples as a testing at each round. Let us use 10 cross-validation rounds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1469,7 +1470,7 @@ sample as a testing at each round.</p>
 </div>
 </div>
 <p>Next, create a machine learning pipeline composed of a transformer to
-standardize the data followed by a logistic regression.</p>
+standardize the data followed by a logistic regression classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1482,106 +1483,227 @@ standardize the data followed by a logistic regression.</p>
 </div>
 </div>
 </div>
-<p>Get the test score by using the model, the data, and the cross-validation
-strategy that you defined above.</p>
+<p>Compute the cross-validation (test) scores for the classifier on this
+dataset. Store the results pandas Series as we did in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-<span class="n">result_classifier</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cv_results_logistic_regression</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
 
-<span class="n">test_score_classifier</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
-    <span class="n">result_classifier</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Classifier score&quot;</span><span class="p">)</span>
+<span class="n">test_score_logistic_regression</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_logistic_regression</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Logistic Regression&quot;</span>
+<span class="p">)</span>
+<span class="n">test_score_logistic_regression</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.815937
+1    0.813849
+2    0.815036
+3    0.815569
+4    0.810982
+5    0.814709
+6    0.813112
+7    0.810327
+8    0.812416
+9    0.816388
+Name: Logistic Regression, dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
-<p>Using the <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.permutation_test_score</span></code> function,
-check the chance level of the previous model.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">permutation_test_score</span>
-
-<span class="n">score</span><span class="p">,</span> <span class="n">permutation_score</span><span class="p">,</span> <span class="n">pvalue</span> <span class="o">=</span> <span class="n">permutation_test_score</span><span class="p">(</span>
-    <span class="n">classifier</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_permutations</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">test_score_permutation</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">permutation_score</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Permuted score&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Finally, compute the test score of a dummy classifier which would predict
-the most frequent class from the training set. You can look at the
-<code class="docutils literal notranslate"><span class="pre">sklearn.dummy.DummyClassifier</span></code> class.</p>
+<p>Now, compute the cross-validation scores of a dummy classifier that
+constantly predicts the most frequent class observed the training set. Please
+refer to the online documentation for the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html">sklearn.dummy.DummyClassifier
+</a>
+class.</p>
+<p>Store the results in a second pandas Series.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
-<span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
-<span class="n">result_dummy</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">dummy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">test_score_dummy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">result_dummy</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Dummy score&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now that we collected the results from the baselines and the model, plot
-the distributions of the different test scores.</p>
-<p>We concatenate the different test score in the same pandas dataframe.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">final_test_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">test_score_classifier</span><span class="p">,</span> <span class="n">test_score_permutation</span><span class="p">,</span> <span class="n">test_score_dummy</span><span class="p">],</span>
-    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="n">most_frequent_classifier</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<span class="n">cv_results_most_frequent</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">most_frequent_classifier</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
 <span class="p">)</span>
+<span class="n">test_score_most_frequent</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_most_frequent</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Most frequent class predictor&quot;</span>
+<span class="p">)</span>
+<span class="n">test_score_most_frequent</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.760329
+1    0.756808
+2    0.759142
+3    0.760739
+4    0.761681
+5    0.761885
+6    0.757463
+7    0.757176
+8    0.761885
+9    0.763114
+Name: Most frequent class predictor, dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
-<p>Next, plot the distributions of the test scores.</p>
+<p>Now that we collected the results from the baseline and the model,
+concatenate the test scores as columns a single pandas dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">all_test_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">test_score_logistic_regression</span><span class="p">,</span> <span class="n">test_score_most_frequent</span><span class="p">],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">all_test_scores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Logistic Regression</th>
+      <th>Most frequent class predictor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.815937</td>
+      <td>0.760329</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.813849</td>
+      <td>0.756808</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.815036</td>
+      <td>0.759142</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.815569</td>
+      <td>0.760739</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.810982</td>
+      <td>0.761681</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.814709</td>
+      <td>0.761885</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.813112</td>
+      <td>0.757463</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.810327</td>
+      <td>0.757176</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.812416</td>
+      <td>0.761885</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.816388</td>
+      <td>0.763114</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Next, plot the an histogram of the cross-validation test scores for both
+models with the help of <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#histograms">pandas built-in plotting
+function</a>.</p>
+<p>What conclusions do you draw from the results?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">final_test_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">all_test_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy (%)&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the test scores&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the CV scores&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cross_validation_sol_02_16_0.png" src="../_images/cross_validation_sol_02_16_0.png" />
+<img alt="../_images/cross_validation_sol_02_13_0.png" src="../_images/cross_validation_sol_02_13_0.png" />
 </div>
 </div>
-<p>We observe that the dummy classifier with the strategy <code class="docutils literal notranslate"><span class="pre">most_frequent</span></code> is
-equivalent to the permutation score. We can also conclude that our model
-is better than the other baseline.</p>
-<p>Change the strategy of the dummy classifier to <code class="docutils literal notranslate"><span class="pre">stratified</span></code>, compute the
-results and plot the distribution together with the other results. Explain
-why the results get worse.</p>
+<p>We observe that the two histograms are well separated. Therefore the dummy
+classifier with the strategy <code class="docutils literal notranslate"><span class="pre">most_frequent</span></code> has significantly lower accuracy
+than the logistic regression classifier. We conclude that the logistic
+regression model can successfully find predictive information in the input
+features to improve upon the baseline.</p>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> of the dummy classifier to <code class="docutils literal notranslate"><span class="pre">&quot;stratified&quot;</span></code>, compute the
+results. Similarly compute scores for <code class="docutils literal notranslate"><span class="pre">strategy=&quot;uniform&quot;</span></code> and then the  plot
+the distribution together with the other results.</p>
+<p>Are those new baselines better than the previous one? Why is this the case?</p>
+<p>Please refer to the scikit-learn documentation on
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html">sklearn.dummy.DummyClassifier</a>
+to find out about the meaning of the <code class="docutils literal notranslate"><span class="pre">&quot;stratified&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;uniform&quot;</span></code>
+strategies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;stratified&quot;</span><span class="p">)</span>
-<span class="n">result_dummy_stratify</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">dummy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">test_score_dummy_stratify</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
-    <span class="n">result_dummy_stratify</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Dummy &#39;stratify&#39; score&quot;</span><span class="p">)</span>
+<span class="n">stratified_dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;stratified&quot;</span><span class="p">)</span>
+<span class="n">cv_results_stratified</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">stratified_dummy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">test_score_dummy_stratified</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_stratified</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Stratified class predictor&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell tag_solution docutils container">
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_test_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-    <span class="p">[</span>
-        <span class="n">test_score_classifier</span><span class="p">,</span> <span class="n">test_score_permutation</span><span class="p">,</span>
-        <span class="n">test_score_dummy</span><span class="p">,</span> <span class="n">test_score_dummy_stratify</span><span class="p">,</span>
-    <span class="p">],</span>
-    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">uniform_dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<span class="n">cv_results_uniform</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">uniform_dummy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">test_score_dummy_uniform</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_uniform</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Uniform class predictor&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1589,7 +1711,22 @@ why the results get worse.</p>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_test_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_test_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">test_score_logistic_regression</span><span class="p">,</span>
+        <span class="n">test_score_most_frequent</span><span class="p">,</span>
+        <span class="n">test_score_dummy_stratified</span><span class="p">,</span>
+        <span class="n">test_score_dummy_uniform</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_solution docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_test_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy (%)&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the test scores&quot;</span><span class="p">)</span>
@@ -1597,7 +1734,7 @@ why the results get worse.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cross_validation_sol_02_21_0.png" src="../_images/cross_validation_sol_02_21_0.png" />
+<img alt="../_images/cross_validation_sol_02_19_0.png" src="../_images/cross_validation_sol_02_19_0.png" />
 </div>
 </div>
 <p>We see that using <code class="docutils literal notranslate"><span class="pre">strategy=&quot;stratified&quot;</span></code>, the results are much worse than
@@ -1607,38 +1744,33 @@ proportion of this class (~75% of the samples). However, the <code class="docuti
 strategy will randomly generate predictions by respecting the training
 set’s class distribution, resulting in some wrong predictions even for
 the most frequent class, hence we obtain a lower accuracy.</p>
-<p>Please refer to the scikit-learn documentation on <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html">DummyClassifier
-</a>
-for more details on the meaning of the <code class="docutils literal notranslate"><span class="pre">strategy=&quot;stratified&quot;</span></code> parameter.</p>
-<div class="cell tag_solution docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
-
-<span class="n">dummy_models</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;Dummy &#39;most_frequent&#39;&quot;</span><span class="p">:</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;Dummy &#39;stratified&#39;&quot;</span><span class="p">:</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;stratified&quot;</span><span class="p">),</span>
-<span class="p">}</span>
-<span class="n">n_runs</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="k">for</span> <span class="n">run_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_runs</span><span class="p">):</span>
-    <span class="n">final_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> score&quot;</span><span class="p">:</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">dummy_models</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-    <span class="p">})</span>
-
-    <span class="n">final_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy (%)&quot;</span><span class="p">)</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribution of scores in run #</span><span class="si">{</span><span class="n">run_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cross_validation_sol_02_23_0.png" src="../_images/cross_validation_sol_02_23_0.png" />
-<img alt="../_images/cross_validation_sol_02_23_1.png" src="../_images/cross_validation_sol_02_23_1.png" />
-<img alt="../_images/cross_validation_sol_02_23_2.png" src="../_images/cross_validation_sol_02_23_2.png" />
-</div>
-</div>
+<p>This is even more so for the <code class="docutils literal notranslate"><span class="pre">strategy=&quot;uniform&quot;</span></code>: this strategy assigns
+class labels uniformly at random. Therefore, on a binary classification
+problem, the cross-validation accuracy is 50% on average, which is the
+weakest of the three dummy baselines.</p>
+<p>Note: one could argue that the <code class="docutils literal notranslate"><span class="pre">&quot;uniform&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">strategy=&quot;stratified&quot;</span></code>
+strategies are both valid ways to define a “chance level” baseline accuracy
+for this classification problem, because they make predictions “by chance”.</p>
+<p>Another way to define a chance level would be to use the
+<a class="reference external" href="https://scikit-learn.org/stable/auto_examples/model_selection/plot_permutation_tests_for_classification.html">sklearn.model_selection.permutation_test_score</a>
+utility of scikit-learn. Instead of using a dummy classifier, this function
+compares the cross-validation accuracy of a model of interest to the
+cross-validation accuracy of this same model but trained on randomly permuted
+class labels. The <code class="docutils literal notranslate"><span class="pre">permutation_test_score</span></code> therefore defines a chance level
+that depends on the choice of the class and hyper-parameters of the estimator
+of interest. When training on such randomly permuted labels, many machine
+learning estimators would end up approximately behaving much like the
+<code class="docutils literal notranslate"><span class="pre">DummyClassifier(strategy=&quot;most_frequent&quot;)</span></code> by always predicting the majority
+class, irrespective of the input features. As a result, this
+<code class="docutils literal notranslate"><span class="pre">&quot;most_frequent&quot;</span></code> baseline is sometimes called the “chance level” for
+imbalanced classification problems, even though its predictions are
+completely deterministic and do not involve much “chance” anymore.</p>
+<p>Defining the chance level using <code class="docutils literal notranslate"><span class="pre">permutation_test_score</span></code> is quite
+computation-intensive because it requires fitting many non-dummy models on
+random permutations of the data. Using dummy classifiers as baselines is
+often enough for practical purposes. For imbalanced classification problems,
+the <code class="docutils literal notranslate"><span class="pre">&quot;most_frequent&quot;</span></code> strategy is the strongest of the three baselines and
+therefore the one we should use.</p>
 </div>
 
     <script type="text/x-thebe-config">

@@ -166,16 +166,24 @@ adaboost = AdaBoostClassifier(base_estimator=base_estimator,
 adaboost.fit(data, target)
 
 # %%
-for boosting_round, tree in enumerate(adaboost.estimators_):
-    plt.figure()
-    DecisionBoundaryDisplay.from_estimator(
-        tree, data, response_method="predict", cmap="RdBu", alpha=0.5
+import warnings
+
+with warnings.catch_warnings():
+    # ignore scikit-learn warning when accessing bagged estimators
+    warnings.filterwarnings(
+        "ignore",
+        message="X has feature names, but DecisionTreeClassifier was fitted without feature names",
     )
-    sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
-                    hue=target_column, data=penguins,
-                    palette=palette)
-    plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
-    _ = plt.title(f"Decision tree trained at round {boosting_round}")
+    for boosting_round, tree in enumerate(adaboost.estimators_):
+        plt.figure()
+        DecisionBoundaryDisplay.from_estimator(
+            tree, data, response_method="predict", cmap="RdBu", alpha=0.5
+        )
+        sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
+                        hue=target_column, data=penguins,
+                        palette=palette)
+        plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
+        _ = plt.title(f"Decision tree trained at round {boosting_round}")
 
 # %%
 print(f"Weight of each classifier: {adaboost.estimator_weights_}")

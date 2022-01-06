@@ -12,49 +12,12 @@
 # to perform classification on some toy-datasets where it is impossible to
 # find a perfect linear separation.
 #
-# First, we redefine our plotting utility to show the decision boundary of a
-# classifier.
-
-# %%
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def plot_decision_function(fitted_classifier, range_features, ax=None):
-    """Plot the boundary of the decision function of a classifier."""
-    from sklearn.preprocessing import LabelEncoder
-
-    feature_names = list(range_features.keys())
-    # create a grid to evaluate all possible samples
-    plot_step = 0.02
-    xx, yy = np.meshgrid(
-        np.arange(*range_features[feature_names[0]], plot_step),
-        np.arange(*range_features[feature_names[1]], plot_step),
-    )
-    grid = pd.DataFrame(
-        np.c_[xx.ravel(), yy.ravel()],
-        columns=[feature_names[0], feature_names[1]],
-    )
-
-    # compute the associated prediction
-    Z = fitted_classifier.predict(grid)
-    Z = LabelEncoder().fit_transform(Z)
-    Z = Z.reshape(xx.shape)
-
-    # make the plot of the boundary and the data samples
-    if ax is None:
-        _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
-
-    return ax
-
-
-# %% [markdown]
 # We will generate a first dataset where the data are represented as two
 # interlaced half circle. This dataset is generated using the function
 # [`sklearn.datasets.make_moons`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html).
 
 # %%
+import numpy as np
 import pandas as pd
 from sklearn.datasets import make_moons
 
@@ -68,13 +31,12 @@ moons = pd.DataFrame(np.concatenate([X, y[:, np.newaxis]], axis=1),
                      columns=feature_names + [target_name])
 data_moons, target_moons = moons[feature_names], moons[target_name]
 
-range_features_moons = {"Feature #0": (-2, 2.5), "Feature #1": (-2, 2)}
-
 # %% [markdown]
 # Since the dataset contains only two features, we can make a scatter plot to
 # have a look at it.
 
 # %%
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
@@ -89,6 +51,10 @@ _ = plt.title("Illustration of the moons dataset")
 # Let's try to see what is the decision boundary of such a linear classifier.
 # We will create a predictive model by standardizing the dataset followed by
 # a linear support vector machine classifier.
+
+# %%
+import sklearn
+sklearn.set_config(display="diagram")
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -111,9 +77,13 @@ linear_model.fit(data_moons, target_moons)
 # Let's check the decision boundary of such a linear model on this dataset.
 
 # %%
-ax = sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
-                     hue=target_moons, palette=["tab:red", "tab:blue"])
-plot_decision_function(linear_model, range_features_moons, ax=ax)
+from helpers.plotting import DecisionBoundaryDisplay
+
+DecisionBoundaryDisplay.from_estimator(
+    linear_model, data_moons, response_method="predict", cmap="RdBu", alpha=0.5
+)
+sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
+                hue=target_moons, palette=["tab:red", "tab:blue"])
 _ = plt.title("Decision boundary of a linear model")
 
 # %% [markdown]
@@ -135,8 +105,6 @@ gauss = pd.DataFrame(np.concatenate([X, y[:, np.newaxis]], axis=1),
                      columns=feature_names + [target_name])
 data_gauss, target_gauss = gauss[feature_names], gauss[target_name]
 
-range_features_gauss = {"Feature #0": (-4, 4), "Feature #1": (-4, 4)}
-
 # %%
 ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
                      hue=target_gauss, palette=["tab:red", "tab:blue"])
@@ -149,9 +117,11 @@ _ = plt.title("Illustration of the Gaussian quantiles dataset")
 
 # %%
 linear_model.fit(data_gauss, target_gauss)
-ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
-                     hue=target_gauss, palette=["tab:red", "tab:blue"])
-plot_decision_function(linear_model, range_features_gauss, ax=ax)
+DecisionBoundaryDisplay.from_estimator(
+    linear_model, data_gauss, response_method="predict", cmap="RdBu", alpha=0.5
+)
+sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
+                hue=target_gauss, palette=["tab:red", "tab:blue"])
 _ = plt.title("Decision boundary of a linear model")
 
 # %% [markdown]
@@ -172,9 +142,11 @@ kernel_model = make_pipeline(StandardScaler(), SVC(kernel="rbf", gamma=5))
 
 # %%
 kernel_model.fit(data_moons, target_moons)
-ax = sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
-                     hue=target_moons, palette=["tab:red", "tab:blue"])
-plot_decision_function(kernel_model, range_features_moons, ax=ax)
+DecisionBoundaryDisplay.from_estimator(
+    kernel_model, data_moons, response_method="predict", cmap="RdBu", alpha=0.5
+)
+sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
+                hue=target_moons, palette=["tab:red", "tab:blue"])
 _ = plt.title("Decision boundary with a model using an RBF kernel")
 
 # %% [markdown]
@@ -186,9 +158,11 @@ _ = plt.title("Decision boundary with a model using an RBF kernel")
 
 # %%
 kernel_model.fit(data_gauss, target_gauss)
+DecisionBoundaryDisplay.from_estimator(
+    kernel_model, data_gauss, response_method="predict", cmap="RdBu", alpha=0.5
+)
 ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
                      hue=target_gauss, palette=["tab:red", "tab:blue"])
-plot_decision_function(kernel_model, range_features_gauss, ax=ax)
 _ = plt.title("Decision boundary with a model using an RBF kernel")
 
 # %% [markdown]

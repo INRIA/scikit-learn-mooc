@@ -19,7 +19,6 @@
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes
@@ -40,44 +39,6 @@ data_test = penguins_test[culmen_columns]
 target_train = penguins_train[target_column]
 target_test = penguins_test[target_column]
 
-range_features = {
-    feature_name: (penguins[feature_name].min() - 1,
-                   penguins[feature_name].max() + 1)
-    for feature_name in culmen_columns
-}
-
-# %%
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def plot_decision_function(fitted_classifier, range_features, ax=None):
-    """Plot the boundary of the decision function of a classifier."""
-    from sklearn.preprocessing import LabelEncoder
-
-    feature_names = list(range_features.keys())
-    # create a grid to evaluate all possible samples
-    plot_step = 0.02
-    xx, yy = np.meshgrid(
-        np.arange(*range_features[feature_names[0]], plot_step),
-        np.arange(*range_features[feature_names[1]], plot_step),
-    )
-
-    # compute the associated prediction
-    Z = fitted_classifier.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = LabelEncoder().fit_transform(Z)
-    Z = Z.reshape(xx.shape)
-
-    # make the plot of the boundary and the data samples
-    if ax is None:
-        _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu_r")
-    ax.set_xlabel(feature_names[0])
-    ax.set_ylabel(feature_names[1])
-
-    return ax
-
-
 # %% [markdown]
 # First, let's create our predictive model.
 
@@ -91,7 +52,9 @@ logistic_regression = make_pipeline(
 
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of
-# `C` on the classifier decision boundary.
+# `C` on the classifier decision boundary. You can import the helper class with
+# `from helpers.plotting import DecisionBoundaryDisplay` to plot the decision
+# function boundary. Use the method `from_estimator` from this class.
 
 # %%
 Cs = [0.01, 0.1, 1, 10]

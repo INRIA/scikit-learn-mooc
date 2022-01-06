@@ -58,51 +58,8 @@ data_test = penguins_test[culmen_columns]
 target_train = penguins_train[target_column]
 target_test = penguins_test[target_column]
 
-range_features = {
-    feature_name: (penguins[feature_name].min() - 1,
-                   penguins[feature_name].max() + 1)
-    for feature_name in culmen_columns
-}
-
 # %% [markdown]
-# To visualize the separation found by our classifier, we will define a helper
-# function `plot_decision_function`. In short, this function will plot the edge
-# of the decision function, where the probability to be an Adelie or Chinstrap
-# will be equal (p=0.5).
-
-# %%
-import numpy as np
-
-
-def plot_decision_function(fitted_classifier, range_features, ax=None):
-    """Plot the boundary of the decision function of a classifier."""
-    from sklearn.preprocessing import LabelEncoder
-
-    feature_names = list(range_features.keys())
-    # create a grid to evaluate all possible samples
-    plot_step = 0.02
-    xx, yy = np.meshgrid(
-        np.arange(*range_features[feature_names[0]], plot_step),
-        np.arange(*range_features[feature_names[1]], plot_step),
-    )
-    grid = pd.DataFrame(
-        np.c_[xx.ravel(), yy.ravel()],
-        columns=[feature_names[0], feature_names[1]],
-    )
-
-    # compute the associated prediction
-    Z = fitted_classifier.predict(grid)
-    Z = LabelEncoder().fit_transform(Z)
-    Z = Z.reshape(xx.shape)
-
-    # make the plot of the boundary and the data samples
-    if ax is None:
-        _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu_r")
-
-    return ax
-
-# %% [markdown]
+#
 # The linear regression that we previously saw will predict a continuous
 # output. When the target is a binary outcome, one can use the logistic
 # function to model the probability. This model is known as logistic
@@ -110,6 +67,10 @@ def plot_decision_function(fitted_classifier, range_features, ax=None):
 #
 # Scikit-learn provides the class `LogisticRegression` which implements this
 # algorithm.
+
+# %%
+import sklearn
+sklearn.set_config(display="diagram")
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -120,14 +81,37 @@ logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="none")
 )
 logistic_regression.fit(data_train, target_train)
+accuracy = logistic_regression.score(data_test, target_test)
+print(f"Accuracy on test set: {accuracy:.3f}")
+
+# %% [markdown]
+#
+# Since we are dealing with a classification problem containing only 2
+# features, it is then possible to observe the decision function boundary.
+# The boundary is the rule used by our predictive model to affect a class label
+# given the feature values of the sample.
+#
+# ```{note}
+# Here, we will use the class `DecisionBoundaryDisplay`. We provide this class
+# to allow making plots of the decision function boundary in a 2 dimensional
+# space. The implementation can be found [here](
+# https://github.com/INRIA/scikit-learn-mooc/blob/master/python_scripts/helpers/plotting.py).
+# This class is intended to be part of the `scikit-learn` package in the future
+# as it is proposed in the following [Pull-Request](
+# https://github.com/scikit-learn/scikit-learn/pull/16061).
+# ```
 
 # %%
 import seaborn as sns
+from helpers.plotting import DecisionBoundaryDisplay
 
-ax = sns.scatterplot(
+DecisionBoundaryDisplay.from_estimator(
+    logistic_regression, data_test, response_method="predict", cmap="RdBu_r", alpha=0.5
+)
+sns.scatterplot(
     data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
     hue=target_column, palette=["tab:red", "tab:blue"])
-_ = plot_decision_function(logistic_regression, range_features, ax=ax)
+_ = plt.title("Decision boundary of the trained\n LogisticRegression")
 
 # %% [markdown]
 # Thus, we see that our decision function is represented by a line separating
@@ -143,7 +127,7 @@ weights = pd.Series(coefs, index=culmen_columns)
 
 # %%
 weights.plot.barh()
-plt.title("Weights of the logistic regression")
+_ = plt.title("Weights of the logistic regression")
 
 # %% [markdown]
 # Indeed, both coefficients are non-null.

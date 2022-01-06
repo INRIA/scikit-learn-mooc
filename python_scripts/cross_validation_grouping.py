@@ -112,14 +112,16 @@ target[:200]
 
 # %% [markdown]
 #
-# It might not be obvious at first, but a group in the target is always
-# starting by some series of ordered digits from 0 to 9 followed by random
-# digits at a certain point. If we look in details, we see that there is 14
-# such groups, always with around 130 samples each.
+# It might not be obvious at first, but there is a structure in the target:
+# there is multiple patterns that always starts by some series of ordered
+# digits from 0 to 9 followed by random digits at a certain point. If we look
+# in details, we see that there is 14 such groups, always with around 130
+# samples each.
 #
 # Even if it is not exactly corresponding to the 13 writers in the
-# documentation (maybe one writer wrote two series of digits), we can still use
-# this information to illustrate the problem.
+# documentation (maybe one writer wrote two series of digits), we can
+# make the hypothesis that each of these structure corresponds to a different
+# writer and thus a different group.
 
 # %%
 from itertools import count

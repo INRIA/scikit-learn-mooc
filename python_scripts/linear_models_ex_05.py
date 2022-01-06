@@ -19,7 +19,6 @@
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes
@@ -64,7 +63,6 @@ Cs = [0.01, 0.1, 1, 10]
 
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.
-
 
 # %%
 # Write your code here.

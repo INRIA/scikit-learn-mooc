@@ -81,6 +81,8 @@ logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="none")
 )
 logistic_regression.fit(data_train, target_train)
+accuracy = logistic_regression.score(data_test, target_test)
+print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
 #

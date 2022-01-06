@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="📃 Solution for Exercise M6.03" href="ensemble_sol_03.html" />
-    <link rel="prev" title="Adaptive Boosting (AdaBoost)" href="ensemble_adaboost.html" />
+    <link rel="prev" title="Gradient-boosting decision tree (GBDT)" href="ensemble_gradient_boosting.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -932,6 +932,11 @@
      Adaptive Boosting (AdaBoost)
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="ensemble_gradient_boosting.html">
+     Gradient-boosting decision tree (GBDT)
+    </a>
+   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      📝 Exercise M6.03
@@ -940,21 +945,6 @@
    <li class="toctree-l2">
     <a class="reference internal" href="ensemble_sol_03.html">
      📃 Solution for Exercise M6.03
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ensemble_gradient_boosting.html">
-     Gradient-boosting decision tree (GBDT)
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ensemble_ex_04.html">
-     📝 Exercise M6.04
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="ensemble_sol_04.html">
-     📃 Solution for Exercise M6.04
     </a>
    </li>
    <li class="toctree-l2">
@@ -1432,14 +1422,17 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="exercise-m6-03">
 <h1>📝 Exercise M6.03<a class="headerlink" href="#exercise-m6-03" title="Permalink to this headline">¶</a></h1>
-<p>This exercise aims at verifying if AdaBoost can over-fit.
-We will make a grid-search and check the scores by varying the
-number of estimators.</p>
-<p>We will first load the California housing dataset and split it into a
-training and a testing set.</p>
+<p>The aim of this exercise is to:</p>
+<ul class="simple">
+<li><p>verifying if a random forest or a gradient-boosting decision tree overfit
+if the number of estimators is not properly chosen;</p></li>
+<li><p>use the early-stopping strategy to avoid adding unnecessary trees, to
+get the best generalization performances.</p></li>
+</ul>
+<p>We will use the California housing dataset to conduct our experiments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1455,32 +1448,60 @@ training and a testing set.</p>
 <p>If you want a deeper overview regarding this dataset, you can refer to the
 Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
-<p>Then, create an <code class="docutils literal notranslate"><span class="pre">AdaBoostRegressor</span></code> instance. Use the function
-<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code> to get training and test scores
-by varying the number of estimators. Use the mean absolute error as a metric
-by passing <code class="docutils literal notranslate"><span class="pre">scoring=&quot;neg_mean_absolute_error&quot;</span></code>.
-<em>Hint: vary the number of estimators between 1 and 60.</em></p>
+<p>Create a gradient boosting decision tree with <code class="docutils literal notranslate"><span class="pre">max_depth=5</span></code> and
+<code class="docutils literal notranslate"><span class="pre">learning_rate=0.5</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Plot both the mean training and test errors. You can also plot the
-standard deviation of the errors.
-<em>Hint: you can use <code class="docutils literal notranslate"><span class="pre">plt.errorbar</span></code>.</em></p>
+<p>Also create a random forest with fully grown trees by setting <code class="docutils literal notranslate"><span class="pre">max_depth=None</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Repeat the experiment using a random forest instead of an AdaBoost regressor.</p>
+<p>For both the gradient-boosting and random forest models, create a validation
+curve using the training set to assess the impact of the number of trees on
+the performance of each model. Evaluate the list of parameters <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">100]</span></code> and use the mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Both gradient boosting and random forest models will always improve when
+increasing the number of trees in the ensemble. However, it will reach a
+plateau where adding new trees will just make fitting and scoring slower.</p>
+<p>To avoid adding new unnecessary tree, unlike random-forest gradient-boosting
+offers an early-stopping option. Internally, the algorithm will use an
+out-of-sample set to compute the generalization performance of the model at
+each addition of a tree. Thus, if the generalization performance is not
+improving for several iterations, it will stop adding trees.</p>
+<p>Now, create a gradient-boosting model with <code class="docutils literal notranslate"><span class="pre">n_estimators=1_000</span></code>. This number
+of trees will be too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such
+that the gradient boosting fitting will stop after adding 5 trees that do not
+improve the overall generalization performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Estimate the generalization performance of this model again using
+the <code class="docutils literal notranslate"><span class="pre">sklearn.metrics.mean_absolute_error</span></code> metric but this time using
+the test set that we held out at the beginning of the notebook.
+Compare the resulting value with the values observed in the validation
+curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1512,11 +1533,11 @@ standard deviation of the errors.
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="ensemble_adaboost.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="ensemble_gradient_boosting.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Adaptive Boosting (AdaBoost)</p>
+            <p class="prev-next-title">Gradient-boosting decision tree (GBDT)</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="ensemble_sol_03.html" title="next page">

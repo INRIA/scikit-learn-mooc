@@ -85,7 +85,7 @@ data_trans
 # for those features. The smallest bins will be removed.
 # ```
 # We see that the discretizer transforms the original data into integral
-# values (eventhough they are encoded using a floating-point precision).
+# values (eventhough they are encoded using a floating-point representation).
 # Each value represents the bin index when the distribution by quantile is
 # performed. We can check the number of bins per feature.
 
@@ -119,7 +119,7 @@ print(f"Average score time: "
 
 # %% [markdown]
 # Here, we see that the fit time has been reduced but that the
-# generalization performance of the model is identical. Scikit-learn provides a
+# generalization performance of the model is identical. Scikit-learn provides
 # specific classes which are even more optimized for large dataset, called
 # `HistGradientBoostingClassifier` and `HistGradientBoostingRegressor`. Each
 # feature in the dataset `data` is first binned by computing histograms, which

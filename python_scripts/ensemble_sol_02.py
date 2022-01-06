@@ -61,12 +61,19 @@ print(f"Mean absolute error: "
 # %%
 # solution
 import numpy as np
+import warnings
 
 data_range = pd.DataFrame(np.linspace(170, 235, num=300),
                            columns=data.columns)
 tree_predictions = []
-for tree in forest.estimators_:
-    tree_predictions.append(tree.predict(data_range))
+with warnings.catch_warnings():
+    # ignore scikit-learn warning when accessing bagged estimators
+    warnings.filterwarnings(
+        "ignore",
+        message="X has feature names, but DecisionTreeRegressor was fitted without feature names",
+    )
+    for tree in forest.estimators_:
+        tree_predictions.append(tree.predict(data_range))
 
 forest_predictions = forest.predict(data_range)
 

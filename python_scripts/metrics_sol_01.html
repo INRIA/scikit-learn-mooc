@@ -44,7 +44,7 @@
     <script src="../_static/sklearn_mooc.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1394,7 +1394,7 @@
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -1430,14 +1430,24 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
         </div>
     </div>
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>📃 Solution for Exercise M7.02</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="solution-for-exercise-m7-02">
@@ -1490,7 +1500,7 @@ score). Check its documentation to learn how to do that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.634 +/- 0.137
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.625 +/- 0.136
 </pre></div>
 </div>
 </div>
@@ -1506,7 +1516,7 @@ score). Check its documentation to learn how to do that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.508 +/- 0.105
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.502 +/- 0.115
 </pre></div>
 </div>
 </div>
@@ -1530,172 +1540,172 @@ label will not be supported by scikit-learn because it is indeed ambiguous.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   UserWarning,
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:775: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py:774: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 762, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/model_selection/_validation.py&quot;, line 761, in _score
     scores = scorer(estimator, X_test, y_test)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 103, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
   File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_scorer.py&quot;, line 264, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1746, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1765, in precision_score
     zero_division=zero_division,
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1534, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1544, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1347, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/metrics/_classification.py&quot;, line 1357, in _check_set_wise_labels
     f&quot;pos_label={pos_label} is not a valid label. It &quot;
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
@@ -1738,7 +1748,7 @@ in the <code class="docutils literal notranslate"><span class="pre">cross_val_sc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.245 +/- 0.181
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.268 +/- 0.173
 </pre></div>
 </div>
 </div>
@@ -1762,14 +1772,14 @@ for both metrics using a box plot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00342417, 0.00322008, 0.0032711 , 0.0031724 , 0.00310969,
-        0.00323677, 0.00308824, 0.00318265, 0.00326443, 0.00307941]),
- &#39;score_time&#39;: array([0.0023582 , 0.00222921, 0.00218797, 0.00216484, 0.00206852,
-        0.00219202, 0.00198555, 0.00216866, 0.00250864, 0.00203109]),
- &#39;test_accuracy&#39;: array([0.29333333, 0.53333333, 0.76      , 0.57333333, 0.57333333,
-        0.64      , 0.70666667, 0.77333333, 0.64864865, 0.75675676]),
- &#39;test_balanced_accuracy&#39;: array([0.42105263, 0.48391813, 0.63304094, 0.41520468, 0.39619883,
-        0.42105263, 0.55994152, 0.73684211, 0.4623323 , 0.51186791])}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00291038, 0.00275946, 0.00279593, 0.00283599, 0.00279117,
+        0.00276089, 0.00269604, 0.00277853, 0.00274849, 0.00278425]),
+ &#39;score_time&#39;: array([0.0019865 , 0.00192213, 0.00190616, 0.00192118, 0.00187993,
+        0.00191236, 0.00191426, 0.00190687, 0.00188899, 0.00191212]),
+ &#39;test_accuracy&#39;: array([0.29333333, 0.50666667, 0.77333333, 0.54666667, 0.65333333,
+        0.64      , 0.73333333, 0.76      , 0.64864865, 0.74324324]),
+ &#39;test_balanced_accuracy&#39;: array([0.42105263, 0.46637427, 0.66081871, 0.37865497, 0.48684211,
+        0.42105263, 0.59649123, 0.72807018, 0.48297214, 0.50309598])}
 </pre></div>
 </div>
 </div>
@@ -1825,8 +1835,8 @@ for both metrics using a box plot.</p>
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="metrics_ex_01.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1843,18 +1853,17 @@ for both metrics using a box plot.</p>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By scikit-learn developers<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            <div>
+  <p>
+    
+      By scikit-learn developers<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div>
    <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">Register</a>
   and get the full "Machine learning in Python with scikit-learn" MOOC experience!</br>
   Brought to you by
@@ -1864,10 +1873,9 @@ for both metrics using a box plot.</p>
   with many thanks to the <a href="https://scikit-learn.org">scikit-learn</a> community as a whole!
 </div>
 
-          </div>
-      </p>
-    </div>
-  </footer>
+      </div>
+  </p>
+</footer>
 </main>
 
 

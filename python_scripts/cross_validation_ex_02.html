@@ -44,7 +44,7 @@
     <script src="../_static/sklearn_mooc.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1394,7 +1394,7 @@
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -1430,22 +1430,33 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
         </div>
     </div>
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>📝 Exercise M7.01</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="exercise-m7-01">
 <h1>📝 Exercise M7.01<a class="headerlink" href="#exercise-m7-01" title="Permalink to this headline">¶</a></h1>
-<p>This notebook aims at building baseline classifiers, which we’ll use to
-compare our predictive model. Besides, we will check the differences with
-the baselines that we saw in regression.</p>
-<p>We will use the adult census dataset, using only the numerical features.</p>
+<p>In this exercise we will define dummy classification baselines and use them
+as reference to assess the relative predictive performance of a given model
+of interest.</p>
+<p>We illustrate those baselines with the help of the Adult Census dataset,
+using only the numerical features for the sake of simplicity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1457,7 +1468,7 @@ the baselines that we saw in regression.</p>
 </div>
 </div>
 <p>First, define a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation strategy taking half of the
-sample as a testing at each round.</p>
+samples as a testing at each round. Let us use 10 cross-validation rounds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1466,7 +1477,7 @@ sample as a testing at each round.</p>
 </div>
 </div>
 <p>Next, create a machine learning pipeline composed of a transformer to
-standardize the data followed by a logistic regression.</p>
+standardize the data followed by a logistic regression classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1474,8 +1485,8 @@ standardize the data followed by a logistic regression.</p>
 </div>
 </div>
 </div>
-<p>Get the test score by using the model, the data, and the cross-validation
-strategy that you defined above.</p>
+<p>Compute the cross-validation (test) scores for the classifier on this
+dataset. Store the results pandas Series as we did in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1483,8 +1494,12 @@ strategy that you defined above.</p>
 </div>
 </div>
 </div>
-<p>Using the <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.permutation_test_score</span></code> function,
-check the chance level of the previous model.</p>
+<p>Now, compute the cross-validation scores of a dummy classifier that
+constantly predicts the most frequent class observed the training set. Please
+refer to the online documentation for the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html">sklearn.dummy.DummyClassifier
+</a>
+class.</p>
+<p>Store the results in a second pandas Series.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1492,9 +1507,8 @@ check the chance level of the previous model.</p>
 </div>
 </div>
 </div>
-<p>Finally, compute the test score of a dummy classifier which would predict
-the most frequent class from the training set. You can look at the
-<code class="docutils literal notranslate"><span class="pre">sklearn.dummy.DummyClassifier</span></code> class.</p>
+<p>Now that we collected the results from the baseline and the model,
+concatenate the test scores as columns a single pandas dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1502,9 +1516,10 @@ the most frequent class from the training set. You can look at the
 </div>
 </div>
 </div>
-<p>Now that we collected the results from the baselines and the model, plot
-the distributions of the different test scores.</p>
-<p>We concatenate the different test score in the same pandas dataframe.</p>
+<p>Next, plot the an histogram of the cross-validation test scores for both
+models with the help of <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#histograms">pandas built-in plotting
+function</a>.</p>
+<p>What conclusions do you draw from the results?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1512,7 +1527,14 @@ the distributions of the different test scores.</p>
 </div>
 </div>
 </div>
-<p>Next, plot the distributions of the test scores.</p>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> of the dummy classifier to <code class="docutils literal notranslate"><span class="pre">&quot;stratified&quot;</span></code>, compute the
+results. Similarly compute scores for <code class="docutils literal notranslate"><span class="pre">strategy=&quot;uniform&quot;</span></code> and then the  plot
+the distribution together with the other results.</p>
+<p>Are those new baselines better than the previous one? Why is this the case?</p>
+<p>Please refer to the scikit-learn documentation on
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html">sklearn.dummy.DummyClassifier</a>
+to find out about the meaning of the <code class="docutils literal notranslate"><span class="pre">&quot;stratified&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;uniform&quot;</span></code>
+strategies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1520,9 +1542,6 @@ the distributions of the different test scores.</p>
 </div>
 </div>
 </div>
-<p>Change the strategy of the dummy classifier to <code class="docutils literal notranslate"><span class="pre">stratified</span></code>, compute the
-results and plot the distribution together with the other results. Explain
-why the results get worse.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1554,8 +1573,8 @@ why the results get worse.</p>
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="cross_validation_baseline.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1572,18 +1591,17 @@ why the results get worse.</p>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By scikit-learn developers<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            <div>
+  <p>
+    
+      By scikit-learn developers<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div>
    <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">Register</a>
   and get the full "Machine learning in Python with scikit-learn" MOOC experience!</br>
   Brought to you by
@@ -1593,10 +1611,9 @@ why the results get worse.</p>
   with many thanks to the <a href="https://scikit-learn.org">scikit-learn</a> community as a whole!
 </div>
 
-          </div>
-      </p>
-    </div>
-  </footer>
+      </div>
+  </p>
+</footer>
 </main>
 
 

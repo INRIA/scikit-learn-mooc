@@ -44,7 +44,7 @@
     <script src="../_static/sklearn_mooc.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1392,7 +1392,7 @@
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -1428,7 +1428,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -1458,7 +1458,40 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>How to define a scikit-learn pipeline and visualize it</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#first-we-load-the-dataset">
+   First we load the dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#then-we-create-the-pipeline">
+   Then we create the pipeline
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finally-we-score-the-model">
+   Finally we score the model
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="how-to-define-a-scikit-learn-pipeline-and-visualize-it">
@@ -1871,25 +1904,37 @@ update in the UI of scikit-learn in a future release.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 {color: black;background-color: white;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 pre{padding: 0;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-toggleable {background-color: white;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-estimator:hover {background-color: #d4ebff;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-item {z-index: 1;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-parallel-item:only-child::after {width: 0;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-9c66fb69-e685-42e3-8e28-0be16266bb34 div.sk-container {display: inline-block;position: relative;}</style><div id="sk-9c66fb69-e685-42e3-8e28-0be16266bb34" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a174e887-8ad9-4145-852e-5b41901f4b7f" type="checkbox" ><label class="sk-toggleable__label" for="a174e887-8ad9-4145-852e-5b41901f4b7f">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('preprocessor',
-                 ColumnTransformer(transformers=[('num',
-                                                  Pipeline(steps=[('imputer',
-                                                                   SimpleImputer(strategy='median')),
-                                                                  ('scaler',
+<div class="output text_html"><style>#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af {color: black;background-color: white;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af pre{padding: 0;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-toggleable {background-color: white;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-estimator:hover {background-color: #d4ebff;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-item {z-index: 1;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-parallel-item:only-child::after {width: 0;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af div.sk-text-repr-fallback {display: none;}</style><div id="sk-3bc7e8fa-216d-43e3-907d-3d90b895b1af" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                 ColumnTransformer(transformers=[(&#x27;num&#x27;,
+                                                  Pipeline(steps=[(&#x27;imputer&#x27;,
+                                                                   SimpleImputer(strategy=&#x27;median&#x27;)),
+                                                                  (&#x27;scaler&#x27;,
                                                                    StandardScaler())]),
-                                                  ['LotArea', 'FullBath',
-                                                   'HalfBath']),
-                                                 ('cat',
-                                                  OneHotEncoder(handle_unknown='ignore'),
-                                                  ['Neighborhood',
-                                                   'HouseStyle'])])),
-                ('classifier', LogisticRegression())])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9ca1b4bc-e27d-491c-8015-8a574c76374f" type="checkbox" ><label class="sk-toggleable__label" for="9ca1b4bc-e27d-491c-8015-8a574c76374f">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('num',
-                                 Pipeline(steps=[('imputer',
-                                                  SimpleImputer(strategy='median')),
-                                                 ('scaler', StandardScaler())]),
-                                 ['LotArea', 'FullBath', 'HalfBath']),
-                                ('cat', OneHotEncoder(handle_unknown='ignore'),
-                                 ['Neighborhood', 'HouseStyle'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="6543a83b-6d72-4c2f-ab38-12bf9649d18a" type="checkbox" ><label class="sk-toggleable__label" for="6543a83b-6d72-4c2f-ab38-12bf9649d18a">num</label><div class="sk-toggleable__content"><pre>['LotArea', 'FullBath', 'HalfBath']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="0fa1f2f2-7cc2-474e-b20a-bd2103d57945" type="checkbox" ><label class="sk-toggleable__label" for="0fa1f2f2-7cc2-474e-b20a-bd2103d57945">SimpleImputer</label><div class="sk-toggleable__content"><pre>SimpleImputer(strategy='median')</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="dc545f2c-777a-4a0c-b112-f387e47d132c" type="checkbox" ><label class="sk-toggleable__label" for="dc545f2c-777a-4a0c-b112-f387e47d132c">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d9b01ec5-d97f-449e-847b-026c400f2b70" type="checkbox" ><label class="sk-toggleable__label" for="d9b01ec5-d97f-449e-847b-026c400f2b70">cat</label><div class="sk-toggleable__content"><pre>['Neighborhood', 'HouseStyle']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a91e43e7-2d57-404b-b947-dc45559d4ec2" type="checkbox" ><label class="sk-toggleable__label" for="a91e43e7-2d57-404b-b947-dc45559d4ec2">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown='ignore')</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="31a578e8-e4fa-44ca-8e8f-77d5ad29c02f" type="checkbox" ><label class="sk-toggleable__label" for="31a578e8-e4fa-44ca-8e8f-77d5ad29c02f">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression()</pre></div></div></div></div></div></div></div></div></div>
+                                                  [&#x27;LotArea&#x27;, &#x27;FullBath&#x27;,
+                                                   &#x27;HalfBath&#x27;]),
+                                                 (&#x27;cat&#x27;,
+                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
+                                                  [&#x27;Neighborhood&#x27;,
+                                                   &#x27;HouseStyle&#x27;])])),
+                (&#x27;classifier&#x27;, LogisticRegression())])</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1a171c33-bc18-49c8-a4d0-1de8549f1579" type="checkbox" ><label for="1a171c33-bc18-49c8-a4d0-1de8549f1579" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                 ColumnTransformer(transformers=[(&#x27;num&#x27;,
+                                                  Pipeline(steps=[(&#x27;imputer&#x27;,
+                                                                   SimpleImputer(strategy=&#x27;median&#x27;)),
+                                                                  (&#x27;scaler&#x27;,
+                                                                   StandardScaler())]),
+                                                  [&#x27;LotArea&#x27;, &#x27;FullBath&#x27;,
+                                                   &#x27;HalfBath&#x27;]),
+                                                 (&#x27;cat&#x27;,
+                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
+                                                  [&#x27;Neighborhood&#x27;,
+                                                   &#x27;HouseStyle&#x27;])])),
+                (&#x27;classifier&#x27;, LogisticRegression())])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="96d10e87-684d-4822-a6b4-b9a147fd399d" type="checkbox" ><label for="96d10e87-684d-4822-a6b4-b9a147fd399d" class="sk-toggleable__label sk-toggleable__label-arrow">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[(&#x27;num&#x27;,
+                                 Pipeline(steps=[(&#x27;imputer&#x27;,
+                                                  SimpleImputer(strategy=&#x27;median&#x27;)),
+                                                 (&#x27;scaler&#x27;, StandardScaler())]),
+                                 [&#x27;LotArea&#x27;, &#x27;FullBath&#x27;, &#x27;HalfBath&#x27;]),
+                                (&#x27;cat&#x27;, OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
+                                 [&#x27;Neighborhood&#x27;, &#x27;HouseStyle&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="e91d7e4a-ec5a-4f94-8670-388751fc535e" type="checkbox" ><label for="e91d7e4a-ec5a-4f94-8670-388751fc535e" class="sk-toggleable__label sk-toggleable__label-arrow">num</label><div class="sk-toggleable__content"><pre>[&#x27;LotArea&#x27;, &#x27;FullBath&#x27;, &#x27;HalfBath&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="4d3f416c-fe62-4815-9461-f9b312d1d083" type="checkbox" ><label for="4d3f416c-fe62-4815-9461-f9b312d1d083" class="sk-toggleable__label sk-toggleable__label-arrow">SimpleImputer</label><div class="sk-toggleable__content"><pre>SimpleImputer(strategy=&#x27;median&#x27;)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="7a0ef465-5561-4717-a96c-89fab22736f4" type="checkbox" ><label for="7a0ef465-5561-4717-a96c-89fab22736f4" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="4cebe142-12cb-4b12-80de-00fec06123d3" type="checkbox" ><label for="4cebe142-12cb-4b12-80de-00fec06123d3" class="sk-toggleable__label sk-toggleable__label-arrow">cat</label><div class="sk-toggleable__content"><pre>[&#x27;Neighborhood&#x27;, &#x27;HouseStyle&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="bf6feca9-1f98-47c1-861f-218ed6593337" type="checkbox" ><label for="bf6feca9-1f98-47c1-861f-218ed6593337" class="sk-toggleable__label sk-toggleable__label-arrow">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;)</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3fbff5e0-1e0d-47cf-a547-12093bd11602" type="checkbox" ><label for="3fbff5e0-1e0d-47cf-a547-12093bd11602" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression()</pre></div></div></div></div></div></div></div></div></div>
 </div>
 </div>
 <div class="section" id="finally-we-score-the-model">
@@ -1936,22 +1981,21 @@ update in the UI of scikit-learn in a future release.</p></li>
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By scikit-learn developers<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            <div>
+  <p>
+    
+      By scikit-learn developers<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div>
    <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">Register</a>
   and get the full "Machine learning in Python with scikit-learn" MOOC experience!</br>
   Brought to you by
@@ -1961,10 +2005,9 @@ update in the UI of scikit-learn in a future release.</p></li>
   with many thanks to the <a href="https://scikit-learn.org">scikit-learn</a> community as a whole!
 </div>
 
-          </div>
-      </p>
-    </div>
-  </footer>
+      </div>
+  </p>
+</footer>
 </main>
 
 

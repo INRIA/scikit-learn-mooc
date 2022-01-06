@@ -44,7 +44,7 @@
     <script src="../_static/sklearn_mooc.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1394,7 +1394,7 @@
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -1430,7 +1430,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -1455,7 +1455,35 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Hyperparameter tuning by randomized-search</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#our-predictive-model">
+   Our predictive model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tuning-using-a-randomized-search">
+   Tuning using a randomized-search
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="hyperparameter-tuning-by-randomized-search">
@@ -1683,25 +1711,37 @@ section.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 {color: black;background-color: white;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 pre{padding: 0;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-toggleable {background-color: white;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-estimator:hover {background-color: #d4ebff;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-item {z-index: 1;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-parallel-item:only-child::after {width: 0;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9 div.sk-container {display: inline-block;position: relative;}</style><div id="sk-780b3dd0-fc7c-4ba4-b5fd-2f882189b2b9" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="c718329c-5d24-4e61-b80e-aecfd99cfec2" type="checkbox" ><label class="sk-toggleable__label" for="c718329c-5d24-4e61-b80e-aecfd99cfec2">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('preprocessor',
-                 ColumnTransformer(remainder='passthrough', sparse_threshold=0,
-                                   transformers=[('cat_preprocessor',
-                                                  OrdinalEncoder(handle_unknown='use_encoded_value',
+<div class="output text_html"><style>#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea {color: black;background-color: white;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea pre{padding: 0;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-toggleable {background-color: white;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-estimator:hover {background-color: #d4ebff;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-item {z-index: 1;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-parallel-item:only-child::after {width: 0;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea div.sk-text-repr-fallback {display: none;}</style><div id="sk-a3b29e94-8a4f-4feb-92a3-e1e0be9f13ea" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                 ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
+                                   transformers=[(&#x27;cat_preprocessor&#x27;,
+                                                  OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                                  unknown_value=-1),
-                                                  ['workclass', 'education',
-                                                   'marital-status',
-                                                   'occupation', 'relationship',
-                                                   'race', 'sex',
-                                                   'native-country'])])),
-                ('classifier',
+                                                  [&#x27;workclass&#x27;, &#x27;education&#x27;,
+                                                   &#x27;marital-status&#x27;,
+                                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;,
+                                                   &#x27;race&#x27;, &#x27;sex&#x27;,
+                                                   &#x27;native-country&#x27;])])),
+                (&#x27;classifier&#x27;,
                  HistGradientBoostingClassifier(max_leaf_nodes=4,
-                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a35f2f30-1a46-4491-9f7b-6da446c30d65" type="checkbox" ><label class="sk-toggleable__label" for="a35f2f30-1a46-4491-9f7b-6da446c30d65">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
-                  transformers=[('cat_preprocessor',
-                                 OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                random_state=42))])</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="cc8a06db-d736-4322-b53d-a2af9c98a193" type="checkbox" ><label for="cc8a06db-d736-4322-b53d-a2af9c98a193" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                 ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
+                                   transformers=[(&#x27;cat_preprocessor&#x27;,
+                                                  OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
+                                                                 unknown_value=-1),
+                                                  [&#x27;workclass&#x27;, &#x27;education&#x27;,
+                                                   &#x27;marital-status&#x27;,
+                                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;,
+                                                   &#x27;race&#x27;, &#x27;sex&#x27;,
+                                                   &#x27;native-country&#x27;])])),
+                (&#x27;classifier&#x27;,
+                 HistGradientBoostingClassifier(max_leaf_nodes=4,
+                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ceba8f47-245c-4b37-844b-0e79de623e1a" type="checkbox" ><label for="ceba8f47-245c-4b37-844b-0e79de623e1a" class="sk-toggleable__label sk-toggleable__label-arrow">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
+                  transformers=[(&#x27;cat_preprocessor&#x27;,
+                                 OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                 unknown_value=-1),
-                                 ['workclass', 'education', 'marital-status',
-                                  'occupation', 'relationship', 'race', 'sex',
-                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="f58c518c-a1af-441e-9143-4a4f11c66d12" type="checkbox" ><label class="sk-toggleable__label" for="f58c518c-a1af-441e-9143-4a4f11c66d12">cat_preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="2551615d-f31e-4d1b-92e3-f2764d174894" type="checkbox" ><label class="sk-toggleable__label" for="2551615d-f31e-4d1b-92e3-f2764d174894">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="5784c9d4-f9e5-4ab7-aef4-e259deb37b9b" type="checkbox" ><label class="sk-toggleable__label" for="5784c9d4-f9e5-4ab7-aef4-e259deb37b9b">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="e53955c7-6287-4904-9e21-5feaa036f9a0" type="checkbox" ><label class="sk-toggleable__label" for="e53955c7-6287-4904-9e21-5feaa036f9a0">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d0af66ad-6f79-4e9a-b050-e754fc08b4d7" type="checkbox" ><label class="sk-toggleable__label" for="d0af66ad-6f79-4e9a-b050-e754fc08b4d7">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div>
+                                 [&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;,
+                                  &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
+                                  &#x27;native-country&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="5652f1d2-101a-44fb-8d5b-c70cc87996cd" type="checkbox" ><label for="5652f1d2-101a-44fb-8d5b-c70cc87996cd" class="sk-toggleable__label sk-toggleable__label-arrow">cat_preprocessor</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d598de9b-fb9e-49c8-ac2f-7e710bb32902" type="checkbox" ><label for="d598de9b-fb9e-49c8-ac2f-7e710bb32902" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="da5b894f-35a8-471f-91f3-9e9bb253a28e" type="checkbox" ><label for="da5b894f-35a8-471f-91f3-9e9bb253a28e" class="sk-toggleable__label sk-toggleable__label-arrow">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="820b78d7-4da0-4c53-af0c-83b91c30023f" type="checkbox" ><label for="820b78d7-4da0-4c53-af0c-83b91c30023f" class="sk-toggleable__label sk-toggleable__label-arrow">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ef70c5db-4a64-4356-8562-285664a48b55" type="checkbox" ><label for="ef70c5db-4a64-4356-8562-285664a48b55" class="sk-toggleable__label sk-toggleable__label-arrow">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 </div>
 <div class="section" id="tuning-using-a-randomized-search">
@@ -1803,39 +1843,61 @@ of available processors.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 10 candidates, totalling 50 fits
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 35.9 s, sys: 801 ms, total: 36.7 s
-Wall time: 36.8 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 31.4 s, sys: 578 ms, total: 32 s
+Wall time: 32 s
 </pre></div>
 </div>
-<div class="output text_html"><style>#sk-75a93721-0991-4299-abbb-436d5ddab70f {color: black;background-color: white;}#sk-75a93721-0991-4299-abbb-436d5ddab70f pre{padding: 0;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-toggleable {background-color: white;}#sk-75a93721-0991-4299-abbb-436d5ddab70f label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-75a93721-0991-4299-abbb-436d5ddab70f input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-75a93721-0991-4299-abbb-436d5ddab70f input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-estimator:hover {background-color: #d4ebff;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-item {z-index: 1;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-parallel-item:only-child::after {width: 0;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-75a93721-0991-4299-abbb-436d5ddab70f div.sk-container {display: inline-block;position: relative;}</style><div id="sk-75a93721-0991-4299-abbb-436d5ddab70f" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d24d2be9-ac35-4184-a710-420eb932c6bb" type="checkbox" ><label class="sk-toggleable__label" for="d24d2be9-ac35-4184-a710-420eb932c6bb">RandomizedSearchCV</label><div class="sk-toggleable__content"><pre>RandomizedSearchCV(cv=5,
-                   estimator=Pipeline(steps=[('preprocessor',
-                                              ColumnTransformer(remainder='passthrough',
+<div class="output text_html"><style>#sk-5376fcc2-8929-45c3-a96c-9582687e1899 {color: black;background-color: white;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 pre{padding: 0;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-toggleable {background-color: white;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-estimator:hover {background-color: #d4ebff;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-item {z-index: 1;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-parallel-item:only-child::after {width: 0;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-5376fcc2-8929-45c3-a96c-9582687e1899 div.sk-text-repr-fallback {display: none;}</style><div id="sk-5376fcc2-8929-45c3-a96c-9582687e1899" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
+                   estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                                              ColumnTransformer(remainder=&#x27;passthrough&#x27;,
                                                                 sparse_threshold=0,
-                                                                transformers=[('cat_preprocessor',
-                                                                               OrdinalEncoder(handle_unknown='use_encoded_value',
+                                                                transformers=[(&#x27;cat_preprocessor&#x27;,
+                                                                               OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                                                               unknown_value=-1),
-                                                                               ['workclass',
-                                                                                'education',
-                                                                                'marital-status',
-                                                                                'occupation',
-                                                                                'relationship',
-                                                                                'race',
-                                                                                'sex',
-                                                                                'native-country'])])),
-                                             ('classifier',
+                                                                               [&#x27;workclass&#x27;,
+                                                                                &#x27;education&#x27;,
+                                                                                &#x27;marital-status&#x27;,
+                                                                                &#x27;occupation&#x27;,
+                                                                                &#x27;relationship&#x27;,
+                                                                                &#x27;race&#x27;,
+                                                                                &#x27;sex&#x27;,
+                                                                                &#x27;native-country&#x27;])])),
+                                             (&#x27;classifier&#x27;,
                                               Hi...
-                   param_distributions={'classifier__l2_regularization': <scipy.stats._distn_infrastructure.rv_frozen object at 0x7f8fd7233d90>,
-                                        'classifier__learning_rate': <scipy.stats._distn_infrastructure.rv_frozen object at 0x7f8fd7233e50>,
-                                        'classifier__max_bins': <__main__.loguniform_int object at 0x7f8fdd5655d0>,
-                                        'classifier__max_leaf_nodes': <__main__.loguniform_int object at 0x7f8fd7238110>,
-                                        'classifier__min_samples_leaf': <__main__.loguniform_int object at 0x7f8fd7238290>},
-                   verbose=1)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="445fb846-fdc5-4658-94da-5ffa6bdce353" type="checkbox" ><label class="sk-toggleable__label" for="445fb846-fdc5-4658-94da-5ffa6bdce353">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder='passthrough', sparse_threshold=0,
-                  transformers=[('cat_preprocessor',
-                                 OrdinalEncoder(handle_unknown='use_encoded_value',
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f0673c93350&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f0673c93650&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f0673c93e90&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f0673c939d0&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f0673c936d0&gt;},
+                   verbose=1)</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d1fd651c-06d8-42ff-a531-16d9ef44c946" type="checkbox" ><label for="d1fd651c-06d8-42ff-a531-16d9ef44c946" class="sk-toggleable__label sk-toggleable__label-arrow">RandomizedSearchCV</label><div class="sk-toggleable__content"><pre>RandomizedSearchCV(cv=5,
+                   estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                                              ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                                                                sparse_threshold=0,
+                                                                transformers=[(&#x27;cat_preprocessor&#x27;,
+                                                                               OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
+                                                                                              unknown_value=-1),
+                                                                               [&#x27;workclass&#x27;,
+                                                                                &#x27;education&#x27;,
+                                                                                &#x27;marital-status&#x27;,
+                                                                                &#x27;occupation&#x27;,
+                                                                                &#x27;relationship&#x27;,
+                                                                                &#x27;race&#x27;,
+                                                                                &#x27;sex&#x27;,
+                                                                                &#x27;native-country&#x27;])])),
+                                             (&#x27;classifier&#x27;,
+                                              Hi...
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f0673c93350&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f0673c93650&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f0673c93e90&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f0673c939d0&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f0673c936d0&gt;},
+                   verbose=1)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="81fefb42-ca0d-416b-a250-4aa31592376f" type="checkbox" ><label for="81fefb42-ca0d-416b-a250-4aa31592376f" class="sk-toggleable__label sk-toggleable__label-arrow">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
+                  transformers=[(&#x27;cat_preprocessor&#x27;,
+                                 OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                 unknown_value=-1),
-                                 ['workclass', 'education', 'marital-status',
-                                  'occupation', 'relationship', 'race', 'sex',
-                                  'native-country'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="fbdd8281-114a-4eb8-9497-4abf006bca55" type="checkbox" ><label class="sk-toggleable__label" for="fbdd8281-114a-4eb8-9497-4abf006bca55">cat_preprocessor</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9e748c20-e0b1-446a-929e-278fdb7df994" type="checkbox" ><label class="sk-toggleable__label" for="9e748c20-e0b1-446a-929e-278fdb7df994">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="031944b3-f44d-4d30-9c65-c6e56ef10d55" type="checkbox" ><label class="sk-toggleable__label" for="031944b3-f44d-4d30-9c65-c6e56ef10d55">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8fc86bce-de8a-4f07-874b-ba5fc8ce0272" type="checkbox" ><label class="sk-toggleable__label" for="8fc86bce-de8a-4f07-874b-ba5fc8ce0272">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1c3d0a5e-c846-46f0-9a10-4bf9d3fd7453" type="checkbox" ><label class="sk-toggleable__label" for="1c3d0a5e-c846-46f0-9a10-4bf9d3fd7453">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+                                 [&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;,
+                                  &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
+                                  &#x27;native-country&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="dbcb95cc-3b4c-4755-9052-9b9a4111af3f" type="checkbox" ><label for="dbcb95cc-3b4c-4755-9052-9b9a4111af3f" class="sk-toggleable__label sk-toggleable__label-arrow">cat_preprocessor</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="fc7099fa-b30f-494a-a632-f244b9d22f44" type="checkbox" ><label for="fc7099fa-b30f-494a-a632-f244b9d22f44" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3ff0f689-ee0f-4976-9903-49d80e8e27a9" type="checkbox" ><label for="3ff0f689-ee0f-4976-9903-49d80e8e27a9" class="sk-toggleable__label sk-toggleable__label-arrow">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="6e84e6c6-c160-4615-8528-c24058709057" type="checkbox" ><label for="6e84e6c6-c160-4615-8528-c24058709057" class="sk-toggleable__label sk-toggleable__label-arrow">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d9a1ed20-5484-4f26-9cc8-b3b90631ebbc" type="checkbox" ><label for="d9a1ed20-5484-4f26-9cc8-b3b90631ebbc" class="sk-toggleable__label sk-toggleable__label-arrow">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
 </div>
 <p>Then, we can compute the accuracy score on the test set.</p>
 <div class="cell docutils container">
@@ -1848,7 +1910,7 @@ Wall time: 36.8 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the best model is 0.88
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the best model is 0.86
 </pre></div>
 </div>
 </div>
@@ -1864,11 +1926,11 @@ Wall time: 36.8 s
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best parameters are:
-{&#39;classifier__l2_regularization&#39;: 0.7320768202042749,
- &#39;classifier__learning_rate&#39;: 0.11736804821280142,
- &#39;classifier__max_bins&#39;: 147,
- &#39;classifier__max_leaf_nodes&#39;: 29,
- &#39;classifier__min_samples_leaf&#39;: 2}
+{&#39;classifier__l2_regularization&#39;: 0.05835833051106124,
+ &#39;classifier__learning_rate&#39;: 0.03268356806451424,
+ &#39;classifier__max_bins&#39;: 19,
+ &#39;classifier__max_leaf_nodes&#39;: 27,
+ &#39;classifier__min_samples_leaf&#39;: 30}
 </pre></div>
 </div>
 </div>
@@ -1932,113 +1994,113 @@ previously.</p>
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>0.732077</td>
-      <td>0.117368</td>
-      <td>29</td>
-      <td>2</td>
-      <td>147</td>
-      <td>0.871966</td>
-      <td>0.001790</td>
-      <td>1</td>
-    </tr>
-    <tr>
       <th>7</th>
-      <td>0.000099</td>
-      <td>0.65031</td>
-      <td>81</td>
+      <td>0.058358</td>
+      <td>0.032684</td>
+      <td>27</td>
+      <td>30</td>
+      <td>19</td>
+      <td>0.852338</td>
+      <td>0.003587</td>
       <td>1</td>
-      <td>248</td>
-      <td>0.856952</td>
-      <td>0.002377</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.04218</td>
-      <td>0.089651</td>
-      <td>18</td>
-      <td>13</td>
-      <td>12</td>
-      <td>0.845841</td>
-      <td>0.003974</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.005836</td>
-      <td>0.710335</td>
-      <td>39</td>
-      <td>2</td>
-      <td>7</td>
-      <td>0.831509</td>
-      <td>0.003148</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>57.040387</td>
-      <td>0.006828</td>
-      <td>184</td>
-      <td>1</td>
-      <td>77</td>
-      <td>0.786847</td>
-      <td>0.001906</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.000005</td>
-      <td>0.004373</td>
-      <td>17</td>
-      <td>1</td>
-      <td>102</td>
-      <td>0.785374</td>
-      <td>0.013529</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.058721</td>
-      <td>0.010357</td>
-      <td>6</td>
-      <td>5</td>
-      <td>9</td>
-      <td>0.782889</td>
-      <td>0.001457</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>0.000176</td>
-      <td>0.002047</td>
-      <td>2</td>
-      <td>75</td>
-      <td>3</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
-      <td>8</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.000012</td>
-      <td>0.003073</td>
-      <td>81</td>
-      <td>21</td>
-      <td>18</td>
+      <td>0.584517</td>
+      <td>0.013084</td>
+      <td>85</td>
+      <td>62</td>
+      <td>13</td>
+      <td>0.836423</td>
+      <td>0.002489</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.000004</td>
+      <td>1.17592</td>
+      <td>225</td>
+      <td>5</td>
+      <td>162</td>
+      <td>0.826813</td>
+      <td>0.006328</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.000966</td>
+      <td>0.004721</td>
+      <td>26</td>
+      <td>1</td>
+      <td>182</td>
+      <td>0.817832</td>
+      <td>0.001850</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.877708</td>
+      <td>2.236914</td>
+      <td>93</td>
+      <td>13</td>
+      <td>11</td>
+      <td>0.763642</td>
+      <td>0.014880</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.435622</td>
+      <td>0.001707</td>
+      <td>7</td>
+      <td>2</td>
+      <td>2</td>
       <td>0.758947</td>
       <td>0.000013</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>323.826881</td>
+      <td>0.003701</td>
+      <td>103</td>
+      <td>1</td>
+      <td>12</td>
+      <td>0.758947</td>
+      <td>0.000013</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.00018</td>
+      <td>1.596745</td>
+      <td>2</td>
+      <td>2</td>
+      <td>149</td>
+      <td>0.677512</td>
+      <td>0.048861</td>
       <td>8</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>58.043957</td>
-      <td>8.293969</td>
-      <td>5</td>
-      <td>68</td>
-      <td>45</td>
-      <td>0.757855</td>
-      <td>0.019863</td>
+      <td>0.014461</td>
+      <td>9.373413</td>
+      <td>4</td>
+      <td>32</td>
+      <td>11</td>
+      <td>0.285824</td>
+      <td>0.005068</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.02607</td>
+      <td>8.927061</td>
+      <td>2</td>
+      <td>6</td>
+      <td>97</td>
+      <td>0.283476</td>
+      <td>0.005123</td>
       <td>10</td>
     </tr>
   </tbody>
@@ -2057,7 +2119,7 @@ cross-validated test scores of the best model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.01501463869417985
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.015915573128620797
 </pre></div>
 </div>
 </div>
@@ -2069,7 +2131,7 @@ cross-validated test scores of the best model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.005368754030713727
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.010761097099678422
 </pre></div>
 </div>
 </div>
@@ -2296,8 +2358,8 @@ models and how different hyperparameter are coupled or not.</p>
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="parameter_tuning_grid_search.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -2314,18 +2376,17 @@ models and how different hyperparameter are coupled or not.</p>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By scikit-learn developers<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            <div>
+  <p>
+    
+      By scikit-learn developers<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div>
    <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">Register</a>
   and get the full "Machine learning in Python with scikit-learn" MOOC experience!</br>
   Brought to you by
@@ -2335,10 +2396,9 @@ models and how different hyperparameter are coupled or not.</p>
   with many thanks to the <a href="https://scikit-learn.org">scikit-learn</a> community as a whole!
 </div>
 
-          </div>
-      </p>
-    </div>
-  </footer>
+      </div>
+  </p>
+</footer>
 </main>
 
 

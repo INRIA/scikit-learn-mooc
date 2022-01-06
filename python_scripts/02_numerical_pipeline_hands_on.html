@@ -44,7 +44,7 @@
     <script src="../_static/sklearn_mooc.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1394,7 +1394,7 @@
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -1430,7 +1430,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -1460,7 +1460,40 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Working with numerical data</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loading-the-entire-dataset">
+   Loading the entire dataset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#identify-numerical-data">
+   Identify numerical data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#train-test-split-the-dataset">
+   Train-test split the dataset
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="working-with-numerical-data">
@@ -2170,7 +2203,7 @@ data and labels:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-e3785387-90b1-46b9-a298-bbf3387c067f {color: black;background-color: white;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f pre{padding: 0;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-toggleable {background-color: white;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-estimator:hover {background-color: #d4ebff;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-item {z-index: 1;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-parallel-item:only-child::after {width: 0;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-e3785387-90b1-46b9-a298-bbf3387c067f div.sk-container {display: inline-block;position: relative;}</style><div id="sk-e3785387-90b1-46b9-a298-bbf3387c067f" class"sk-top-container"><div class="sk-container"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="67646c70-b860-45af-8bd4-6e435e94ed27" type="checkbox" checked><label class="sk-toggleable__label" for="67646c70-b860-45af-8bd4-6e435e94ed27">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression()</pre></div></div></div></div></div></div></div>
+<div class="output text_html"><style>#sk-067bc490-8e95-4485-be59-a96d3131eb60 {color: black;background-color: white;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 pre{padding: 0;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-toggleable {background-color: white;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-estimator:hover {background-color: #d4ebff;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-item {z-index: 1;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-parallel-item:only-child::after {width: 0;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-067bc490-8e95-4485-be59-a96d3131eb60 div.sk-text-repr-fallback {display: none;}</style><div id="sk-067bc490-8e95-4485-be59-a96d3131eb60" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LogisticRegression()</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3dc36649-b046-4e80-bdc6-e162a8970e15" type="checkbox" checked><label for="3dc36649-b046-4e80-bdc6-e162a8970e15" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression()</pre></div></div></div></div></div></div></div>
 </div>
 <p>We can also use the <code class="docutils literal notranslate"><span class="pre">score</span></code> method to check the model generalization performance
 on the test set.</p>
@@ -2222,8 +2255,8 @@ a train and a test set;</p></li>
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="02_numerical_pipeline_sol_00.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -2240,18 +2273,17 @@ a train and a test set;</p></li>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By scikit-learn developers<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            <div>
+  <p>
+    
+      By scikit-learn developers<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div>
    <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">Register</a>
   and get the full "Machine learning in Python with scikit-learn" MOOC experience!</br>
   Brought to you by
@@ -2261,10 +2293,9 @@ a train and a test set;</p></li>
   with many thanks to the <a href="https://scikit-learn.org">scikit-learn</a> community as a whole!
 </div>
 
-          </div>
-      </p>
-    </div>
-  </footer>
+      </div>
+  </p>
+</footer>
 </main>
 
 

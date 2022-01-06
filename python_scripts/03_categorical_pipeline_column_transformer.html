@@ -44,7 +44,7 @@
     <script src="../_static/sklearn_mooc.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1394,7 +1394,7 @@
                 data-placement="left">.py</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -1447,7 +1447,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -1482,7 +1482,45 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Using numerical and categorical variables together</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selection-based-on-data-types">
+   Selection based on data types
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dispatch-columns-to-a-specific-processor">
+   Dispatch columns to a specific processor
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation-of-the-model-with-cross-validation">
+   Evaluation of the model with cross-validation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fitting-a-more-powerful-model">
+   Fitting a more powerful model
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="using-numerical-and-categorical-variables-together">
@@ -1616,27 +1654,40 @@ in a <code class="docutils literal notranslate"><span class="pre">Pipeline</span
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 {color: black;background-color: white;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 pre{padding: 0;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-toggleable {background-color: white;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-estimator:hover {background-color: #d4ebff;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-item {z-index: 1;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-parallel-item:only-child::after {width: 0;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-51cfd1c2-8202-4058-98e5-f2791fc2f007 div.sk-container {display: inline-block;position: relative;}</style><div id="sk-51cfd1c2-8202-4058-98e5-f2791fc2f007" class"sk-top-container"><div class="sk-container"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="fbd11055-6075-4e7b-925e-621b30b05919" type="checkbox" ><label class="sk-toggleable__label" for="fbd11055-6075-4e7b-925e-621b30b05919">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[('columntransformer',
-                 ColumnTransformer(transformers=[('one-hot-encoder',
-                                                  OneHotEncoder(handle_unknown='ignore'),
-                                                  ['workclass', 'education',
-                                                   'marital-status',
-                                                   'occupation', 'relationship',
-                                                   'race', 'sex',
-                                                   'native-country']),
-                                                 ('standard_scaler',
+<div class="output text_html"><style>#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 {color: black;background-color: white;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 pre{padding: 0;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-toggleable {background-color: white;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-estimator:hover {background-color: #d4ebff;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-item {z-index: 1;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-parallel-item:only-child::after {width: 0;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-73f91ea7-b570-448e-b4a3-93ae75ea2441 div.sk-text-repr-fallback {display: none;}</style><div id="sk-73f91ea7-b570-448e-b4a3-93ae75ea2441" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;columntransformer&#x27;,
+                 ColumnTransformer(transformers=[(&#x27;one-hot-encoder&#x27;,
+                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
+                                                  [&#x27;workclass&#x27;, &#x27;education&#x27;,
+                                                   &#x27;marital-status&#x27;,
+                                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;,
+                                                   &#x27;race&#x27;, &#x27;sex&#x27;,
+                                                   &#x27;native-country&#x27;]),
+                                                 (&#x27;standard_scaler&#x27;,
                                                   StandardScaler(),
-                                                  ['age', 'capital-gain',
-                                                   'capital-loss',
-                                                   'hours-per-week'])])),
-                ('logisticregression', LogisticRegression(max_iter=500))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ea4e1d05-74d3-4cd4-9fba-d88612243662" type="checkbox" ><label class="sk-toggleable__label" for="ea4e1d05-74d3-4cd4-9fba-d88612243662">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[('one-hot-encoder',
-                                 OneHotEncoder(handle_unknown='ignore'),
-                                 ['workclass', 'education', 'marital-status',
-                                  'occupation', 'relationship', 'race', 'sex',
-                                  'native-country']),
-                                ('standard_scaler', StandardScaler(),
-                                 ['age', 'capital-gain', 'capital-loss',
-                                  'hours-per-week'])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="72d75f50-2d14-44a0-b312-87c5589c6586" type="checkbox" ><label class="sk-toggleable__label" for="72d75f50-2d14-44a0-b312-87c5589c6586">one-hot-encoder</label><div class="sk-toggleable__content"><pre>['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="f7a12a73-8288-4be8-b6dd-d0b76ac6181b" type="checkbox" ><label class="sk-toggleable__label" for="f7a12a73-8288-4be8-b6dd-d0b76ac6181b">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown='ignore')</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ae025df7-c63e-46e4-97ef-8c2022899ddb" type="checkbox" ><label class="sk-toggleable__label" for="ae025df7-c63e-46e4-97ef-8c2022899ddb">standard_scaler</label><div class="sk-toggleable__content"><pre>['age', 'capital-gain', 'capital-loss', 'hours-per-week']</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a8785f01-61de-405c-8ce4-7226e1eae53c" type="checkbox" ><label class="sk-toggleable__label" for="a8785f01-61de-405c-8ce4-7226e1eae53c">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="8a9903c4-ab31-404d-8a14-1c5ddd15953f" type="checkbox" ><label class="sk-toggleable__label" for="8a9903c4-ab31-404d-8a14-1c5ddd15953f">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=500)</pre></div></div></div></div></div></div></div></div></div>
+                                                  [&#x27;age&#x27;, &#x27;capital-gain&#x27;,
+                                                   &#x27;capital-loss&#x27;,
+                                                   &#x27;hours-per-week&#x27;])])),
+                (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=500))])</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="0482af9b-eb23-4466-a678-8691f43d435d" type="checkbox" ><label for="0482af9b-eb23-4466-a678-8691f43d435d" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;columntransformer&#x27;,
+                 ColumnTransformer(transformers=[(&#x27;one-hot-encoder&#x27;,
+                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
+                                                  [&#x27;workclass&#x27;, &#x27;education&#x27;,
+                                                   &#x27;marital-status&#x27;,
+                                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;,
+                                                   &#x27;race&#x27;, &#x27;sex&#x27;,
+                                                   &#x27;native-country&#x27;]),
+                                                 (&#x27;standard_scaler&#x27;,
+                                                  StandardScaler(),
+                                                  [&#x27;age&#x27;, &#x27;capital-gain&#x27;,
+                                                   &#x27;capital-loss&#x27;,
+                                                   &#x27;hours-per-week&#x27;])])),
+                (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=500))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="78fe7d7e-389d-49fa-b887-8761aef832dd" type="checkbox" ><label for="78fe7d7e-389d-49fa-b887-8761aef832dd" class="sk-toggleable__label sk-toggleable__label-arrow">columntransformer: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(transformers=[(&#x27;one-hot-encoder&#x27;,
+                                 OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
+                                 [&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;,
+                                  &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
+                                  &#x27;native-country&#x27;]),
+                                (&#x27;standard_scaler&#x27;, StandardScaler(),
+                                 [&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;,
+                                  &#x27;hours-per-week&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="9fbeddb7-6d78-4dbf-b726-4e57eeb876e1" type="checkbox" ><label for="9fbeddb7-6d78-4dbf-b726-4e57eeb876e1" class="sk-toggleable__label sk-toggleable__label-arrow">one-hot-encoder</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="6ed0a865-f326-4d67-bfc5-4b8557c18964" type="checkbox" ><label for="6ed0a865-f326-4d67-bfc5-4b8557c18964" class="sk-toggleable__label sk-toggleable__label-arrow">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="32ca2f0f-fadd-44d8-8a89-1bcedd72ee0c" type="checkbox" ><label for="32ca2f0f-fadd-44d8-8a89-1bcedd72ee0c" class="sk-toggleable__label sk-toggleable__label-arrow">standard_scaler</label><div class="sk-toggleable__content"><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="4ae319a1-16a0-4115-8f4d-b54b9b356e66" type="checkbox" ><label for="4ae319a1-16a0-4115-8f4d-b54b9b356e66" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="e1d0bcf2-16a6-4fa2-bea9-618af2e06fa1" type="checkbox" ><label for="e1d0bcf2-16a6-4fa2-bea9-618af2e06fa1" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=500)</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>The final model is more complex than the previous models but still follows
 the same API (the same set of methods that can be called by the user):</p>
@@ -1854,8 +1905,8 @@ scikit-learn as any other predictors:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.23666334, 1.21405578, 1.11802936, 1.20119405, 1.21108079]),
- &#39;score_time&#39;: array([0.04938269, 0.04738903, 0.04728222, 0.04942489, 0.04698229]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([1.02233291, 0.9907577 , 0.92373085, 0.99776101, 0.98704433]),
+ &#39;score_time&#39;: array([0.03981686, 0.0398941 , 0.04027557, 0.0416739 , 0.04033828]),
  &#39;test_score&#39;: array([0.8512642 , 0.8498311 , 0.84756347, 0.8523751 , 0.85503686])}
 </pre></div>
 </div>
@@ -1923,8 +1974,8 @@ is slightly simpler than the one we saw earlier for the <code class="docutils li
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.01 s, sys: 8.04 ms, total: 1.02 s
-Wall time: 1.02 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 858 ms, sys: 16 ms, total: 874 ms
+Wall time: 874 ms
 </pre></div>
 </div>
 </div>
@@ -1936,7 +1987,7 @@ Wall time: 1.02 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8796167390058144
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.881254606502334
 </pre></div>
 </div>
 </div>
@@ -1981,8 +2032,8 @@ models</strong>.</p></li>
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="03_categorical_pipeline_sol_01.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1999,18 +2050,17 @@ models</strong>.</p></li>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By scikit-learn developers<br/>
-        
-            &copy; Copyright 2021.<br/>
-          <div class="extra_footer">
-            <div>
+  <p>
+    
+      By scikit-learn developers<br/>
+    
+        &copy; Copyright 2021.<br/>
+      <div class="extra_footer">
+        <div>
    <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">Register</a>
   and get the full "Machine learning in Python with scikit-learn" MOOC experience!</br>
   Brought to you by
@@ -2020,10 +2070,9 @@ models</strong>.</p></li>
   with many thanks to the <a href="https://scikit-learn.org">scikit-learn</a> community as a whole!
 </div>
 
-          </div>
-      </p>
-    </div>
-  </footer>
+      </div>
+  </p>
+</footer>
 </main>
 
 

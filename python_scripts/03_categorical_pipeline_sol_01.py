@@ -74,6 +74,14 @@ model = make_pipeline(
 # %% [markdown]
 # Your model is now defined. Evaluate it using a cross-validation using
 # `sklearn.model_selection.cross_validate`.
+#
+# ```{note}
+# Be aware that if an error happened during the cross-validation,
+# `cross_validate` will raise a warning and will return NaN as scores. You can
+#  get instead a standard Python traceback, you can set the parameter
+# `error_score="raise"` in `cross_validate` that will raise the first exception
+# encountered. It is particularly handy when debugging your complex pipelines.
+# ```
 
 # %%
 from sklearn.model_selection import cross_validate

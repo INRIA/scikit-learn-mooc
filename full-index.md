@@ -226,11 +226,8 @@
 
 ### Choice of cross-validation
 
-* [📝 Introductory exercise regarding stratification](notebooks/cross_validation_ex_03.ipynb)
 * [Stratification](notebooks/cross_validation_stratification.ipynb)
-* [📝 Introductory exercise for sample grouping](notebooks/cross_validation_ex_04.ipynb)
 * [Sample grouping](notebooks/cross_validation_grouping.ipynb)
-* [📝 Introductory exercise for non i.i.d. data](notebooks/cross_validation_ex_05.ipynb)
 * [Non i.i.d. data](notebooks/cross_validation_time.ipynb)
 * [✅ Quiz M7.02](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_quiz_m7_02.html)
 

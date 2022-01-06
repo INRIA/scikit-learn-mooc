@@ -1,8 +1,14 @@
 # %% [markdown]
 # # Non i.i.d. data
+#
 # In machine learning, it is quite common to assume that the data are i.i.d,
 # meaning that the generative process does not have any memory of past samples
 # to generate new samples.
+#
+# ```{note}
+# i.i.d is the acronym of "independent and identically distributed"
+# (as in "independent and identically distributed random variables").
+# ```
 #
 # This assumption is usually violated when dealing with time series. A sample
 # depends on past information.

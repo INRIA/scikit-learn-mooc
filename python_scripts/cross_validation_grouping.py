@@ -15,11 +15,11 @@ data, target = digits.data, digits.target
 # a logistic regression classifier with preprocessor to scale the data.
 
 # %%
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-model = make_pipeline(StandardScaler(), LogisticRegression())
+model = make_pipeline(MinMaxScaler(), LogisticRegression(max_iter=1_000))
 
 # %% [markdown]
 # We will use the same baseline model. We will use a `KFold` cross-validation
@@ -105,7 +105,21 @@ print(digits.DESCR)
 # should either belong to the training or the testing set. Thus, we want to
 # group samples for each writer.
 #
-# Here, we will manually define the group for the 13 writers.
+# Indeed, we can recover the groups by looking at the target variable.
+
+# %%
+target[:200]
+
+# %% [markdown]
+#
+# It might not be obvious at first, but a group in the target is always
+# starting by some series of ordered digits from 0 to 9 followed by random
+# digits at a certain point. If we look in details, we see that there is 14
+# such groups, always with around 130 samples each.
+#
+# Even if it is not exactly corresponding to the 13 writers in the
+# documentation (maybe one writer wrote two series of digits), we can still use
+# this information to illustrate the problem.
 
 # %%
 from itertools import count

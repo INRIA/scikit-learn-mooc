@@ -120,7 +120,7 @@ target[:200]
 #
 # Even if it is not exactly corresponding to the 13 writers in the
 # documentation (maybe one writer wrote two series of digits), we can
-# make the hypothesis that each of these structure corresponds to a different
+# make the hypothesis that each of these patterns corresponds to a different
 # writer and thus a different group.
 
 # %%

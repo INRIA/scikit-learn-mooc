@@ -1454,11 +1454,11 @@ time, we will use the handwritten digits dataset.</p>
 a logistic regression classifier with preprocessor to scale the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">MinMaxScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1_000</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1479,7 +1479,7 @@ without shuffling the data at first.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.921 +/- 0.028
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.931 +/- 0.026
 </pre></div>
 </div>
 </div>
@@ -1498,7 +1498,7 @@ cross-validation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.968 +/- 0.007
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.968 +/- 0.010
 </pre></div>
 </div>
 </div>
@@ -1545,7 +1545,7 @@ specific fold leads to a low score in this case.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.92222222 0.88333333 0.94150418 0.96100279 0.89693593]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.94166667 0.89722222 0.94986072 0.9637883  0.90250696]
 </pre></div>
 </div>
 </div>
@@ -1623,7 +1623,37 @@ recognizing the digit itself.</p>
 <p>We can solve this problem by ensuring that the data associated with a writer
 should either belong to the training or the testing set. Thus, we want to
 group samples for each writer.</p>
-<p>Here, we will manually define the group for the 13 writers.</p>
+<p>Indeed, we can recover the groups by looking at the target variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1,
+       2, 3, 4, 5, 6, 7, 8, 9, 0, 9, 5, 5, 6, 5, 0, 9, 8, 9, 8, 4, 1, 7,
+       7, 3, 5, 1, 0, 0, 2, 2, 7, 8, 2, 0, 1, 2, 6, 3, 3, 7, 3, 3, 4, 6,
+       6, 6, 4, 9, 1, 5, 0, 9, 5, 2, 8, 2, 0, 0, 1, 7, 6, 3, 2, 1, 7, 4,
+       6, 3, 1, 3, 9, 1, 7, 6, 8, 4, 3, 1, 4, 0, 5, 3, 6, 9, 6, 1, 7, 5,
+       4, 4, 7, 2, 8, 2, 2, 5, 7, 9, 5, 4, 8, 8, 4, 9, 0, 8, 9, 8, 0, 1,
+       2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3,
+       4, 5, 6, 7, 8, 9, 0, 9, 5, 5, 6, 5, 0, 9, 8, 9, 8, 4, 1, 7, 7, 3,
+       5, 1, 0, 0, 2, 2, 7, 8, 2, 0, 1, 2, 6, 3, 3, 7, 3, 3, 4, 6, 6, 6,
+       4, 9])
+</pre></div>
+</div>
+</div>
+</div>
+<p>It might not be obvious at first, but there is a structure in the target:
+there is a repetitive pattern that always starts by some series of ordered
+digits from 0 to 9 followed by random digits at a certain point. If we look
+in details, we see that there is 14 such patterns, always with around 130
+samples each.</p>
+<p>Even if it is not exactly corresponding to the 13 writers in the
+documentation (maybe one writer wrote two series of digits), we can
+make the hypothesis that each of these structure corresponds to a different
+writer and thus a different group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
@@ -1656,7 +1686,7 @@ group samples for each writer.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cross_validation_grouping_19_0.png" src="../_images/cross_validation_grouping_19_0.png" />
+<img alt="../_images/cross_validation_grouping_21_0.png" src="../_images/cross_validation_grouping_21_0.png" />
 </div>
 </div>
 <p>Once we group the digits by writer, we can use cross-validation to take this
@@ -1675,7 +1705,7 @@ information into account: the class containing <code class="docutils literal not
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.919 +/- 0.015
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.920 +/- 0.021
 </pre></div>
 </div>
 </div>
@@ -1706,7 +1736,7 @@ see that the standard deviation was reduced.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cross_validation_grouping_24_0.png" src="../_images/cross_validation_grouping_24_0.png" />
+<img alt="../_images/cross_validation_grouping_26_0.png" src="../_images/cross_validation_grouping_26_0.png" />
 </div>
 </div>
 <p>As a conclusion, it is really important to take any sample grouping pattern

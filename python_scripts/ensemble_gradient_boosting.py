@@ -136,7 +136,8 @@ _ = plt.title("Prediction of the previous residuals")
 # select this sample in `data_train`.
 
 # %%
-data_max = data_train.iloc[[-2]]
+sample = data_train.iloc[[-2]]
+x_sample = sample['Feature'].iloc[0]
 target_true = target_train.iloc[-2]
 target_true_residual = residuals.iloc[-2]
 
@@ -160,7 +161,7 @@ for value, true, predicted in zip(data_train["Feature"],
     lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
 # Highlight the sample of interest
-plt.scatter(data_max, target_true, label="Sample of interest",
+plt.scatter(sample, target_true, label="Sample of interest",
             color="tab:orange", s=200)
 plt.xlim([-1, 0])
 plt.legend()
@@ -185,7 +186,7 @@ for value, true, predicted in zip(data_train["Feature"],
     lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
 # Highlight the sample of interest
-plt.scatter(data_max, target_true_residual, label="Sample of interest",
+plt.scatter(sample, target_true_residual, label="Sample of interest",
             color="tab:orange", s=200)
 plt.xlim([-1, 0])
 plt.legend()
@@ -199,11 +200,11 @@ _ = plt.title("Prediction of the residuals")
 # and compare it with the true value.
 
 # %%
-print(f"True value to predict for"
-      f"f(x={data_max['Feature'].iloc[0]:.3f}) = {target_true:.3f}")
+print(f"True value to predict for "
+      f"f(x={x_sample:.3f}) = {target_true:.3f}")
 
-y_pred_first_tree = tree.predict(data_max)[0]
-print(f"Prediction of the first decision tree for x={data_max['Feature'].iloc[0]:.3f}: "
+y_pred_first_tree = tree.predict(sample)[0]
+print(f"Prediction of the first decision tree for x={x_sample:.3f}: "
       f"y={y_pred_first_tree:.3f}")
 print(f"Error of the tree: {target_true - y_pred_first_tree:.3f}")
 
@@ -212,8 +213,8 @@ print(f"Error of the tree: {target_true - y_pred_first_tree:.3f}")
 # tree to try to predict this residual.
 
 # %%
-print(f"Prediction of the residual for x={data_max['Feature'].iloc[0]:.3f}: "
-      f"{tree_residuals.predict(data_max)[0]:.3f}")
+print(f"Prediction of the residual for x={x_sample:.3f}: "
+      f"{tree_residuals.predict(sample)[0]:.3f}")
 
 # %% [markdown]
 # We see that our second tree is capable of predicting the exact residual

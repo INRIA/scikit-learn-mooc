@@ -115,7 +115,7 @@ target[:200]
 # It might not be obvious at first, but there is a structure in the target:
 # there is multiple patterns that always starts by some series of ordered
 # digits from 0 to 9 followed by random digits at a certain point. If we look
-# in details, we see that there is 14 such groups, always with around 130
+# in details, we see that there is 14 such pattern, always with around 130
 # samples each.
 #
 # Even if it is not exactly corresponding to the 13 writers in the

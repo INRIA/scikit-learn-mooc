@@ -89,7 +89,7 @@ all_test_scores
 
 # %% [markdown]
 #
-# Next, plot the an histogram of the cross-validation test scores for both
+# Next, plot the histogram of the cross-validation test scores for both
 # models with the help of [pandas built-in plotting
 # function](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#histograms).
 #

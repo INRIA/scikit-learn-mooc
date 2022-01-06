@@ -1594,7 +1594,8 @@ sample to explain how the predictions of both trees are combined. Let’s first
 select this sample in <code class="docutils literal notranslate"><span class="pre">data_train</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_max</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
+<span class="n">x_sample</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;Feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">target_true</span> <span class="o">=</span> <span class="n">target_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 <span class="n">target_true_residual</span> <span class="o">=</span> <span class="n">residuals</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
@@ -1620,7 +1621,7 @@ decision tree.</p>
     <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
 
 <span class="c1"># Highlight the sample of interest</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_max</span><span class="p">,</span> <span class="n">target_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">target_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -1650,7 +1651,7 @@ computed from the first decision tree and show the residual predictions.</p>
     <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
 
 <span class="c1"># Highlight the sample of interest</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_max</span><span class="p">,</span> <span class="n">target_true_residual</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">target_true_residual</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -1669,10 +1670,11 @@ using the fitted tree. First, let’s check the prediction of the initial tree
 and compare it with the true value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True value to predict for f(x=</span><span class="si">{</span><span class="n">data_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">target_true</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True value to predict for &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;f(x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">target_true</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="n">y_pred_first_tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="n">data_max</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the first decision tree for x=</span><span class="si">{</span><span class="n">data_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
+<span class="n">y_pred_first_tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the first decision tree for x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
       <span class="sa">f</span><span class="s2">&quot;y=</span><span class="si">{</span><span class="n">y_pred_first_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of the tree: </span><span class="si">{</span><span class="n">target_true</span> <span class="o">-</span> <span class="n">y_pred_first_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1684,18 +1686,14 @@ Prediction of the first decision tree for x=-0.517: y=-0.145
 Error of the tree: -0.248
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:451: UserWarning: X does not have valid feature names, but DecisionTreeRegressor was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
 </div>
 </div>
 <p>As we visually observed, we have a small error. Now, we can use the second
 tree to try to predict this residual.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the residual for x=</span><span class="si">{</span><span class="n">data_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="n">data_max</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the residual for x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1703,22 +1701,18 @@ tree to try to predict this residual.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the residual for x=-0.517: -0.248
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:451: UserWarning: X does not have valid feature names, but DecisionTreeRegressor was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
 </div>
 </div>
 <p>We see that our second tree is capable of predicting the exact residual
 (error) of our first tree. Therefore, we can predict the value of <code class="docutils literal notranslate"><span class="pre">x</span></code> by
-summing the prediction of the all trees in the ensemble.</p>
+summing the prediction of all the trees in the ensemble.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_first_and_second_tree</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">y_pred_first_tree</span> <span class="o">+</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="n">data_max</span><span class="p">]])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y_pred_first_tree</span> <span class="o">+</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the first and second decision trees combined for &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;x=</span><span class="si">{</span><span class="n">data_max</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: y=</span><span class="si">{</span><span class="n">y_pred_first_and_second_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="sa">f</span><span class="s2">&quot;x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: y=</span><span class="si">{</span><span class="n">y_pred_first_and_second_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of the tree: </span><span class="si">{</span><span class="n">target_true</span> <span class="o">-</span> <span class="n">y_pred_first_and_second_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1728,18 +1722,14 @@ summing the prediction of the all trees in the ensemble.</p>
 Error of the tree: 0.000
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:451: UserWarning: X does not have valid feature names, but DecisionTreeRegressor was fitted with feature names
-  &quot;X does not have valid feature names, but&quot;
-</pre></div>
-</div>
 </div>
 </div>
 <p>We chose a sample for which only two trees were enough to make the perfect
 prediction. However, we saw in the previous plot that two trees were not
 enough to correct the residuals of all samples. Therefore, one needs to
-add several trees to the ensemble to successfully correct the error.
+add several trees to the ensemble to successfully correct the error
 (i.e. the second tree corrects the first tree’s error, while the third tree
-corrects the second tree’s error and so on.)</p>
+corrects the second tree’s error and so on).</p>
 <p>We will compare the generalization performance of random-forest and gradient
 boosting on the California housing dataset.</p>
 <div class="cell docutils container">
@@ -1781,9 +1771,9 @@ boosting on the California housing dataset.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree
-Mean absolute error via cross-validation: 46.442 +/- 2.913 k$
-Average fit time: 6.858 seconds
-Average score time: 0.009 seconds
+Mean absolute error via cross-validation: 46.397 +/- 2.916 k$
+Average fit time: 6.210 seconds
+Average score time: 0.010 seconds
 </pre></div>
 </div>
 </div>
@@ -1816,9 +1806,9 @@ Average score time: 0.009 seconds
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest
-Mean absolute error via cross-validation: 46.219 +/- 4.335 k$
-Average fit time: 18.388 seconds
-Average score time: 0.188 seconds
+Mean absolute error via cross-validation: 46.685 +/- 4.673 k$
+Average fit time: 18.111 seconds
+Average score time: 0.266 seconds
 </pre></div>
 </div>
 </div>

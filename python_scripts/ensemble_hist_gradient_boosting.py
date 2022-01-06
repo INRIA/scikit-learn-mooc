@@ -84,8 +84,8 @@ data_trans
 # the features, we requested too much bins in regard of the data dispersion
 # for those features. The smallest bins will be removed.
 # ```
-# We see that the discretizer transforms the original data into an integral
-# value (eventhough they are encoded using a floating-point precision).
+# We see that the discretizer transforms the original data into integral
+# values (eventhough they are encoded using a floating-point precision).
 # Each value represents the bin index when the distribution by quantile is
 # performed. We can check the number of bins per feature.
 

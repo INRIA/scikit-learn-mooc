@@ -2,11 +2,12 @@
 # %% [markdown]
 # # 📝 Exercise M7.01
 #
-# This notebook aims at building baseline classifiers, which we'll use to
-# compare our predictive model. Besides, we will check the differences with
-# the baselines that we saw in regression.
+# In this exercise we will define dummy classification baselines and use them
+# as reference to assess the relative predictive performance of a given model
+# of interest.
 #
-# We will use the adult census dataset, using only the numerical features.
+# We illustrate those baselines with the help of the Adult Census dataset,
+# using only the numerical features for the sake of simplicity.
 
 # %%
 import pandas as pd
@@ -16,60 +17,70 @@ data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %% [markdown]
 # First, define a `ShuffleSplit` cross-validation strategy taking half of the
-# sample as a testing at each round.
+# samples as a testing at each round. Let us use 10 cross-validation rounds.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
 # Next, create a machine learning pipeline composed of a transformer to
-# standardize the data followed by a logistic regression.
+# standardize the data followed by a logistic regression classifier.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Get the test score by using the model, the data, and the cross-validation
-# strategy that you defined above.
+# Compute the cross-validation (test) scores for the classifier on this
+# dataset. Store the results pandas Series as we did in the previous notebook.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Using the `sklearn.model_selection.permutation_test_score` function,
-# check the chance level of the previous model.
+# Now, compute the cross-validation scores of a dummy classifier that
+# constantly predicts the most frequent class observed the training set. Please
+# refer to the online documentation for the [sklearn.dummy.DummyClassifier
+# ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
+# class.
+#
+# Store the results in a second pandas Series.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Finally, compute the test score of a dummy classifier which would predict
-# the most frequent class from the training set. You can look at the
-# `sklearn.dummy.DummyClassifier` class.
+# Now that we collected the results from the baseline and the model,
+# concatenate the test scores as columns a single pandas dataframe.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Now that we collected the results from the baselines and the model, plot
-# the distributions of the different test scores.
-
-# %% [markdown]
-# We concatenate the different test score in the same pandas dataframe.
-
-# %%
-# Write your code here.
-
-# %% [markdown]
-# Next, plot the distributions of the test scores.
+#
+# Next, plot the histogram of the cross-validation test scores for both
+# models with the help of [pandas built-in plotting
+# function](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#histograms).
+#
+# What conclusions do you draw from the results?
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Change the strategy of the dummy classifier to `stratified`, compute the
-# results and plot the distribution together with the other results. Explain
-# why the results get worse.
+# Change the `strategy` of the dummy classifier to `"stratified"`, compute the
+# results. Similarly compute scores for `strategy="uniform"` and then the  plot
+# the distribution together with the other results.
+#
+# Are those new baselines better than the previous one? Why is this the case?
+#
+# Please refer to the scikit-learn documentation on
+# [sklearn.dummy.DummyClassifier](
+# https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
+# to find out about the meaning of the `"stratified"` and `"uniform"`
+# strategies.
+
+# %%
+# Write your code here.
 
 # %%
 # Write your code here.

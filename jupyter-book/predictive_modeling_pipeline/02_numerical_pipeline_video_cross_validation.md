@@ -1,4 +1,4 @@
-# 📰 Validation of a model
+# 🎥 Validation of a model
 
 TODO: insert video player here once ready
 

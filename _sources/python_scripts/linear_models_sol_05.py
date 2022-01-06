@@ -18,7 +18,6 @@
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes
@@ -67,6 +66,7 @@ from helpers.plotting import DecisionBoundaryDisplay
 for C in Cs:
     logistic_regression.set_params(logisticregression__C=C)
     logistic_regression.fit(data_train, target_train)
+    accuracy = logistic_regression.score(data_test, target_test)
 
     DecisionBoundaryDisplay.from_estimator(
         logistic_regression,
@@ -78,7 +78,7 @@ for C in Cs:
     sns.scatterplot(
         data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
         hue=target_column, palette=["tab:red", "tab:blue"])
-    plt.title(f"C: {C}")
+    plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.

@@ -1580,100 +1580,114 @@ underfitted forest.</p>
       <th>8</th>
       <td>30</td>
       <td>None</td>
-      <td>34.563739</td>
+      <td>34.460379</td>
       <td>1</td>
     </tr>
     <tr>
       <th>7</th>
       <td>20</td>
       <td>None</td>
-      <td>35.079868</td>
+      <td>34.981894</td>
       <td>2</td>
     </tr>
     <tr>
       <th>6</th>
       <td>10</td>
       <td>None</td>
-      <td>36.102773</td>
+      <td>36.054932</td>
       <td>3</td>
     </tr>
     <tr>
       <th>5</th>
       <td>30</td>
       <td>5</td>
-      <td>48.669452</td>
+      <td>48.598101</td>
       <td>4</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>20</td>
-      <td>5</td>
-      <td>48.715821</td>
-      <td>5</td>
     </tr>
     <tr>
       <th>3</th>
       <td>10</td>
       <td>5</td>
-      <td>48.761979</td>
+      <td>48.654920</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20</td>
+      <td>5</td>
+      <td>48.731442</td>
       <td>6</td>
     </tr>
     <tr>
       <th>2</th>
       <td>30</td>
       <td>3</td>
-      <td>56.961917</td>
+      <td>56.972045</td>
       <td>7</td>
     </tr>
     <tr>
       <th>1</th>
       <td>20</td>
       <td>3</td>
-      <td>57.288593</td>
+      <td>57.053682</td>
       <td>8</td>
     </tr>
     <tr>
       <th>0</th>
       <td>10</td>
       <td>3</td>
-      <td>57.374152</td>
+      <td>57.344630</td>
       <td>9</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We can observe that in our grid-search, the largest <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> together
-with the largest <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> led to the best generalization performance.</p>
+<p>We can observe that in our grid-search, the largest <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> together with
+the largest <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> led, on average, to the best performance on the
+validation sets. Now we will estimate the generalization performance of the
+best model by refitting it with the full training set and using the test set
+for scoring on unseen data. This is done by default when calling the <code class="docutils literal notranslate"><span class="pre">.fit</span></code>
+method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our random forest regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 34.54 k$
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="gradient-boosting-decision-trees">
 <h2>Gradient-boosting decision trees<a class="headerlink" href="#gradient-boosting-decision-trees" title="Permalink to this headline">¶</a></h2>
-<p>For gradient-boosting, parameters are coupled, so we cannot set the
-parameters one after the other anymore. The important parameters are
-<code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, and <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>.</p>
-<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter.
-We saw in the section on gradient-boosting that the algorithm fits the error
-of the previous tree in the ensemble. Thus, fitting fully grown trees will
-be detrimental.
-Indeed, the first tree of the ensemble would perfectly fit (overfit) the data
-and thus no subsequent tree would be required, since there would be no
-residuals.
+<p>For gradient-boosting, parameters are coupled, so we cannot set the parameters
+one after the other anymore. The important parameters are <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>,
+<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, and <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>.</p>
+<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter. We saw in the section on
+gradient-boosting that the algorithm fits the error of the previous tree in
+the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed, the
+first tree of the ensemble would perfectly fit (overfit) the data and thus no
+subsequent tree would be required, since there would be no residuals.
 Therefore, the tree used in gradient-boosting should have a low depth,
 typically between 3 to 8 levels. Having very weak learners at each step will
 help reducing overfitting.</p>
 <p>With this consideration in mind, the deeper the trees, the faster the
 residuals will be corrected and less learners are required. Therefore,
 <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> should be increased if <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is lower.</p>
-<p>Finally, we have overlooked the impact of the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> parameter
-until now. When fitting the residuals, we would like the tree
-to try to correct all possible errors or only a fraction of them.
-The learning-rate allows you to control this behaviour.
-A small learning-rate value would only correct the residuals of very few
-samples. If a large learning-rate is set (e.g., 1), we would fit the
-residuals of all samples. So, with a very low learning-rate, we will need
-more estimators to correct the overall error. However, a too large
-learning-rate tends to obtain an overfitted ensemble,
-similar to having a too large tree depth.</p>
+<p>Finally, we have overlooked the impact of the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> parameter until
+now. When fitting the residuals, we would like the tree to try to correct all
+possible errors or only a fraction of them. The learning-rate allows you to
+control this behaviour. A small learning-rate value would only correct the
+residuals of very few samples. If a large learning-rate is set (e.g., 1), we
+would fit the residuals of all samples. So, with a very low learning-rate, we
+will need more estimators to correct the overall error. However, a too large
+learning-rate tends to obtain an overfitted ensemble, similar to having a too
+large tree depth.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
@@ -1729,7 +1743,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>5</td>
       <td>0.1</td>
-      <td>35.649310</td>
+      <td>35.636996</td>
       <td>1</td>
     </tr>
     <tr>
@@ -1737,7 +1751,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>3</td>
       <td>1</td>
-      <td>36.672490</td>
+      <td>36.700591</td>
       <td>2</td>
     </tr>
     <tr>
@@ -1745,7 +1759,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>3</td>
       <td>1</td>
-      <td>37.493923</td>
+      <td>37.476886</td>
       <td>3</td>
     </tr>
     <tr>
@@ -1753,7 +1767,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>5</td>
       <td>1</td>
-      <td>39.053782</td>
+      <td>38.955393</td>
       <td>4</td>
     </tr>
     <tr>
@@ -1761,7 +1775,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>5</td>
       <td>0.1</td>
-      <td>39.275275</td>
+      <td>39.356668</td>
       <td>5</td>
     </tr>
     <tr>
@@ -1769,7 +1783,7 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>5</td>
       <td>1</td>
-      <td>39.442334</td>
+      <td>39.465293</td>
       <td>6</td>
     </tr>
     <tr>
@@ -1777,7 +1791,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>5</td>
       <td>1</td>
-      <td>39.848848</td>
+      <td>39.873233</td>
       <td>7</td>
     </tr>
     <tr>
@@ -1785,7 +1799,7 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>3</td>
       <td>0.1</td>
-      <td>40.601238</td>
+      <td>40.602496</td>
       <td>8</td>
     </tr>
     <tr>
@@ -1801,7 +1815,7 @@ similar to having a too large tree depth.</p>
       <td>30</td>
       <td>None</td>
       <td>0.1</td>
-      <td>45.525105</td>
+      <td>45.553467</td>
       <td>10</td>
     </tr>
     <tr>
@@ -1817,31 +1831,31 @@ similar to having a too large tree depth.</p>
       <td>50</td>
       <td>None</td>
       <td>0.1</td>
-      <td>45.850615</td>
+      <td>45.904124</td>
       <td>12</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>50</td>
-      <td>None</td>
-      <td>1</td>
-      <td>47.402238</td>
-      <td>13</td>
     </tr>
     <tr>
       <th>15</th>
       <td>10</td>
       <td>None</td>
       <td>1</td>
-      <td>47.450520</td>
-      <td>14</td>
+      <td>47.275585</td>
+      <td>13</td>
     </tr>
     <tr>
       <th>16</th>
       <td>30</td>
       <td>None</td>
       <td>1</td>
-      <td>47.643505</td>
+      <td>47.384299</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>50</td>
+      <td>None</td>
+      <td>1</td>
+      <td>47.668834</td>
       <td>15</td>
     </tr>
     <tr>
@@ -1849,7 +1863,7 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>None</td>
       <td>0.1</td>
-      <td>51.902613</td>
+      <td>51.885767</td>
       <td>16</td>
     </tr>
     <tr>
@@ -1857,7 +1871,7 @@ similar to having a too large tree depth.</p>
       <td>10</td>
       <td>5</td>
       <td>0.1</td>
-      <td>56.353659</td>
+      <td>56.349354</td>
       <td>17</td>
     </tr>
     <tr>
@@ -1877,6 +1891,25 @@ similar to having a too large tree depth.</p>
 <p>Here, we tune the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> but be aware that using early-stopping as
 in the previous exercise will be better.</p>
 </div>
+<p>Now we estimate the generalization performance of the best model
+using the test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our GBDT regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 35.58 k$
+</pre></div>
+</div>
+</div>
+</div>
+<p>The mean test score in the held-out test set is slightly better than the score
+of the best model. The reason is that the final model is refitted on the whole
+training set and therefore, on more data than the inner cross-validated models
+of the grid search procedure.</p>
 </div>
 </div>
 

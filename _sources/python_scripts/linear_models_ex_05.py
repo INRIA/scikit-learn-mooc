@@ -19,7 +19,6 @@
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes

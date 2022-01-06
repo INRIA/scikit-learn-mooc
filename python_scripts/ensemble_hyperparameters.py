@@ -45,13 +45,12 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %%
 import pandas as pd
-from scipy.stats import randint
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.ensemble import RandomForestRegressor
 
 param_distributions = {
-    "n_estimators": randint(10, 200),
-    "max_leaf_nodes": randint(3, 300),
+    "n_estimators": [1, 2, 5, 10, 20, 50, 100, 200, 500],
+    "max_leaf_nodes": [2, 5, 10, 20, 50, 100],
 }
 search_cv = RandomizedSearchCV(
     RandomForestRegressor(n_jobs=2), param_distributions=param_distributions,
@@ -95,7 +94,8 @@ print(f"On average, our random forest regressor makes an error of {error:.2f} k$
 # (overfit) the data and thus no subsequent tree would be required, since there
 # would be no residuals. Therefore, the tree used in gradient-boosting should
 # have a low depth, typically between 3 to 8 levels, or few leaves ($2^3=8$ to
-# $2^8$). Having very weak learners at each step will help reducing overfitting.
+# $2^8=256$). Having very weak learners at each step will help reducing
+# overfitting.
 #
 # With this consideration in mind, the deeper the trees, the faster the
 # residuals will be corrected and less learners are required. Therefore,
@@ -116,8 +116,8 @@ from scipy.stats import loguniform
 from sklearn.ensemble import GradientBoostingRegressor
 
 param_distributions = {
-    "n_estimators": randint(10, 200),
-    "max_leaf_nodes": randint(3, 300),
+    "n_estimators": [1, 2, 5, 10, 20, 50, 100, 200, 500],
+    "max_leaf_nodes": [2, 5, 10, 20, 50, 100],
     "learning_rate": loguniform(0.01, 1),
 }
 search_cv = RandomizedSearchCV(

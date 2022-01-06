@@ -1,4 +1,4 @@
-# 📰 Intuitions on ensemble of tree-based models
+# 🎥 Intuitions on ensemble of tree-based models
 
 <div class="video_player">
 <iframe width="640" height="480" src="https://www.youtube.com/embed/Gv1tPH08ciA?rel=0" title="YouTube video player" frameborder="0" rel="0" showinfo="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

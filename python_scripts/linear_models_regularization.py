@@ -287,6 +287,7 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # second category (i.e. "not married").
 
 # %%
+import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
 categories = np.array(

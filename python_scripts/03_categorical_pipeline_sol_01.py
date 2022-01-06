@@ -77,10 +77,13 @@ model = make_pipeline(
 #
 # ```{note}
 # Be aware that if an error happened during the cross-validation,
-# `cross_validate` will raise a warning and will return NaN as scores. You can
-#  get instead a standard Python traceback, you can set the parameter
-# `error_score="raise"` in `cross_validate` that will raise the first exception
-# encountered. It is particularly handy when debugging your complex pipelines.
+# `cross_validate` will raise a warning and return NaN (Not a Number)
+# as scores.  To make it raise a standard Python exception with a traceback,
+# you can pass the `error_score="raise"` argument in the call to
+# `cross_validate`. An exception will be raised instead of a warning at the first
+# encountered problem  and `cross_validate` will stop right away instead of
+# returning NaN values. This is particularly handy when developing
+# complex machine learning pipelines.
 # ```
 
 # %%

@@ -173,6 +173,8 @@ _ = plt.title("Ridge weights")
 #
 # ## Feature scaling and regularization
 #
+# ### With numerical features
+#
 # On the one hand, weights define the link between feature values and the
 # predicted target.
 # On the other hand, regularization adds constraints on the weights of the
@@ -269,6 +271,54 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # In the previous analysis, we did not study if the parameter `alpha` will have
 # an effect on the performance. We chose the parameter beforehand and fix it
 # for the analysis.
+#
+# ### With categorical features
+#
+# Most of the time, categorical features will be encoded with a `OneHotEncoder`
+# when using a linear model. In practice, scaling the encoded features by a
+# `OneHotEncoder` is generally omitted since the encoded features are already
+# on a similar scale.
+#
+# Another aspect to consider when using a `OneHotEncoder` with linear models is
+# the link to feature collinearity. Indeed, with this encoding, one of the
+# encoded feature can be computed given all other features. For instance, for a
+# feature with two categories (e.g. "married" vs. "not married"), the feature
+# of the first category (i.e. "married") is the inverse of the feature of the
+# second category (i.e. "not married").
+
+# %%
+from sklearn.preprocessing import OneHotEncoder
+
+categories = np.array(
+    ["married"] * 5 + ["not_married"] * 5, dtype=object
+)[:, np.newaxis]
+
+encoder = OneHotEncoder(sparse=False, dtype=int)
+categories_encoded = encoder.fit_transform(categories)
+categories_encoded = pd.DataFrame(
+    categories_encoded,
+    columns=encoder.get_feature_names_out(input_features=["marital_status"]),
+)
+categories_encoded
+
+# %% [markdown]
+#
+# At the beginning of this notebook, we saw that one should avoid such
+# collinearity when fitting a linear model.
+#
+# The `OneHotEncoder` provides a parameter `drop` that allows to drop a
+# the first feature (always or only in the binary case).
+
+# %%
+encoder = OneHotEncoder(drop="first", sparse=False, dtype=int)
+categories_encoded = encoder.fit_transform(categories)
+categories_encoded = pd.DataFrame(
+    categories_encoded,
+    columns=encoder.get_feature_names_out(input_features=["marital_status"]),
+)
+categories_encoded
+
+# %% [markdown]
 #
 # In the next section, we will check the impact of this hyperparameter and how
 # it should be tuned.

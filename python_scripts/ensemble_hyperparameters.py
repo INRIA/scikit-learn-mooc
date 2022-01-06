@@ -23,12 +23,16 @@
 # time. The goal is to balance computing time and generalization performance when
 # setting the number of estimators when putting such learner in production.
 #
-# The `max_depth` parameter could also be tuned. Sometimes, there is no need
-# to have fully grown trees. However, be aware that with random forest, trees
-# are generally deep since we are seeking to overfit the learners on the
-# bootstrap samples because this will be mitigated by combining them.
-# Assembling underfitted trees (i.e. shallow trees) might also lead to an
-# underfitted forest.
+# Then, we could also tune a parameter that control the depth of each tree in
+# the forest. Two parameters are important for this: `max_depth` and
+# `max_leaf_nodes`. They differ in the way they control the tree structure.
+# Indeed, `max_depth` will enforce to have a more symmetric tree, while
+# `max_leaf_nodes` does not impose such constraint.
+#
+# Be aware that with random forest, trees are generally deep since we are
+# seeking to overfit each tree on each bootstrap sample because this will be
+# mitigated by combining them altogether. Assembling underfitted trees (i.e.
+# shallow trees) might also lead to an underfitted forest.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -41,35 +45,39 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %%
 import pandas as pd
-from sklearn.model_selection import GridSearchCV
+from scipy.stats import randint
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.ensemble import RandomForestRegressor
 
-param_grid = {
-    "n_estimators": [10, 20, 30],
-    "max_depth": [3, 5, None],
+param_distributions = {
+    "n_estimators": randint(10, 200),
+    "max_leaf_nodes": randint(3, 300),
 }
-grid_search = GridSearchCV(
-    RandomForestRegressor(n_jobs=2), param_grid=param_grid,
-    scoring="neg_mean_absolute_error", n_jobs=2,
+search_cv = RandomizedSearchCV(
+    RandomForestRegressor(n_jobs=2), param_distributions=param_distributions,
+    scoring="neg_mean_absolute_error", n_iter=10, random_state=0, n_jobs=2,
 )
-grid_search.fit(data_train, target_train)
+search_cv.fit(data_train, target_train)
 
-columns = [f"param_{name}" for name in param_grid.keys()]
+columns = [f"param_{name}" for name in param_distributions.keys()]
 columns += ["mean_test_score", "rank_test_score"]
-cv_results = pd.DataFrame(grid_search.cv_results_)
+cv_results = pd.DataFrame(search_cv.cv_results_)
 cv_results["mean_test_score"] = -cv_results["mean_test_score"]
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
-# We can observe that in our grid-search, the largest `max_depth` together with
-# the largest `n_estimators` led, on average, to the best performance on the
-# validation sets. Now we will estimate the generalization performance of the
-# best model by refitting it with the full training set and using the test set
-# for scoring on unseen data. This is done by default when calling the `.fit`
-# method.
+# We can observe that in our search, that we are required to have a large
+# number of leaves and thus deep trees. This parameter seems particularly
+# impactful in comparison to the number of trees for this particular dataset:
+# with at least 50 trees, the generalization performance will be driven by the
+# number of leaves.
+#
+# Now we will estimate the generalization performance of the best model by
+# refitting it with the full training set and using the test set for scoring on
+# unseen data. This is done by default when calling the `.fit` method.
 
 # %%
-error = -grid_search.score(data_test, target_test)
+error = -search_cv.score(data_test, target_test)
 print(f"On average, our random forest regressor makes an error of {error:.2f} k$")
 
 # %% [markdown]
@@ -77,16 +85,17 @@ print(f"On average, our random forest regressor makes an error of {error:.2f} k$
 #
 # For gradient-boosting, parameters are coupled, so we cannot set the parameters
 # one after the other anymore. The important parameters are `n_estimators`,
-# `max_depth`, and `learning_rate`.
+# `learning_rate`, and `max_depth` or `max_leaf_nodes` (as previously discused
+# random forest).
 #
-# Let's first discuss the `max_depth` parameter. We saw in the section on
-# gradient-boosting that the algorithm fits the error of the previous tree in
-# the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed, the
-# first tree of the ensemble would perfectly fit (overfit) the data and thus no
-# subsequent tree would be required, since there would be no residuals.
-# Therefore, the tree used in gradient-boosting should have a low depth,
-# typically between 3 to 8 levels. Having very weak learners at each step will
-# help reducing overfitting.
+# Let's first discuss the `max_depth` (or `max_leaf_nodes`) parameter. We saw
+# in the section on gradient-boosting that the algorithm fits the error of the
+# previous tree in the ensemble. Thus, fitting fully grown trees will be
+# detrimental. Indeed, the first tree of the ensemble would perfectly fit
+# (overfit) the data and thus no subsequent tree would be required, since there
+# would be no residuals. Therefore, the tree used in gradient-boosting should
+# have a low depth, typically between 3 to 8 levels, or few leaves ($2^3=8$ to
+# $2^8$). Having very weak learners at each step will help reducing overfitting.
 #
 # With this consideration in mind, the deeper the trees, the faster the
 # residuals will be corrected and less learners are required. Therefore,
@@ -103,37 +112,46 @@ print(f"On average, our random forest regressor makes an error of {error:.2f} k$
 # large tree depth.
 
 # %%
+from scipy.stats import loguniform
 from sklearn.ensemble import GradientBoostingRegressor
 
-param_grid = {
-    "n_estimators": [10, 30, 50],
-    "max_depth": [3, 5, None],
-    "learning_rate": [0.1, 1],
+param_distributions = {
+    "n_estimators": randint(10, 200),
+    "max_leaf_nodes": randint(3, 300),
+    "learning_rate": loguniform(0.01, 1),
 }
-grid_search = GridSearchCV(
-    GradientBoostingRegressor(), param_grid=param_grid,
-    scoring="neg_mean_absolute_error", n_jobs=2
+search_cv = RandomizedSearchCV(
+    GradientBoostingRegressor(), param_distributions=param_distributions,
+    scoring="neg_mean_absolute_error", n_iter=20, random_state=0, n_jobs=2
 )
-grid_search.fit(data_train, target_train)
+search_cv.fit(data_train, target_train)
 
-columns = [f"param_{name}" for name in param_grid.keys()]
+columns = [f"param_{name}" for name in param_distributions.keys()]
 columns += ["mean_test_score", "rank_test_score"]
-cv_results = pd.DataFrame(grid_search.cv_results_)
+cv_results = pd.DataFrame(search_cv.cv_results_)
 cv_results["mean_test_score"] = -cv_results["mean_test_score"]
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
+#
 # ```{caution}
 # Here, we tune the `n_estimators` but be aware that using early-stopping as
 # in the previous exercise will be better.
 # ```
+#
+# In this search, we see that the `learning_rate` is required to be large
+# enough, i.e. > 0.1. We also observe that for the best ranked models, having a
+# smaller `learning_rate`, will required more trees or a larger number of
+# leaves for each tree. However, this is particularly to diffcult to draw
+# more detailed conclusions since the best value of an hyperparameter depends
+# on the other hyperparameter values.
 
 # %% [markdown]
 # Now we estimate the generalization performance of the best model
 # using the test set.
 
 # %%
-error = -grid_search.score(data_test, target_test)
+error = -search_cv.score(data_test, target_test)
 print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
 
 # %% [markdown]

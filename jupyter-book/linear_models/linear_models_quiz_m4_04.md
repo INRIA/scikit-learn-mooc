@@ -1,11 +1,14 @@
-# ✅ Quiz M4.04b
+# ✅ Quiz M4.04
 
 ```{admonition} Question
-Regularization refers to:
+Regularization allows:
 
-- a) constraining the intercept of the linear model to be zero
-- b) shrinking the weights of the linear model towards zero
-- c) using a subset of the available data when fitting a linear model
+- a) to create a model robust to outliers (samples that differ widely from
+  other observations)
+- b) to reduce overfitting by forcing the weights to stay close to zero
+- c) to reduce underfitting by making the problem linearly separable
+
+_Select single answer_
 ```
 
 +++

@@ -115,7 +115,7 @@ gbdt.n_estimators_
 # solution
 from sklearn.metrics import mean_absolute_error
 error = mean_absolute_error(target_test, gbdt.predict(data_test))
-print(f"On average, our GBDT regressor makes an error of {score:.2f} k$")
+print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
 
 # %% [markdown] tags=["solution"]
 # We observe that the MAE value measure on the held out test set is close to the

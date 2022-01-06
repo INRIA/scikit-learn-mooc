@@ -343,13 +343,19 @@ _ = bagging.fit(data_train, target_train)
 
 
 # %%
-for i, regressor in enumerate(bagging.estimators_):
-    regressor_predictions = regressor.predict(data_test)
-    base_model_line = plt.plot(
-        data_test, regressor_predictions, linestyle="--", alpha=0.2,
-        label="Predictions of base models" if i == 0 else None,
-        color="tab:blue"
+with warnings.catch_warnings():
+    # ignore scikit-learn warning when accessing bagged estimators
+    warnings.filterwarnings(
+        "ignore",
+        message="X has feature names, but MinMaxScaler was fitted without feature names",
     )
+    for i, regressor in enumerate(bagging.estimators_):
+        regressor_predictions = regressor.predict(data_test)
+        base_model_line = plt.plot(
+            data_test, regressor_predictions, linestyle="--", alpha=0.2,
+            label="Predictions of base models" if i == 0 else None,
+            color="tab:blue"
+        )
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)

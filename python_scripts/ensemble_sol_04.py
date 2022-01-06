@@ -36,17 +36,16 @@ from sklearn.ensemble import GradientBoostingRegressor
 gbdt = GradientBoostingRegressor(max_depth=5, learning_rate=0.5)
 
 # %% [markdown]
-# Create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Evaluate the list of parameters
-# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
-# to assess the generalization performance of the model.
+# Create a validation curve using the training set to assess the impact of the
+# number of trees on the performance of the model. Evaluate the list of parameters
+# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error.
 
 # %%
 # solution
 from sklearn.model_selection import validation_curve
 
 param_range = [1, 2, 5, 10, 20, 50, 100]
-gbdt_train_scores, gbdt_test_scores = validation_curve(
+gbdt_train_scores, gbdt_validation_scores = validation_curve(
     gbdt,
     data_train,
     target_train,
@@ -55,7 +54,7 @@ gbdt_train_scores, gbdt_test_scores = validation_curve(
     scoring="neg_mean_absolute_error",
     n_jobs=2,
 )
-gbdt_train_errors, gbdt_test_errors = -gbdt_train_scores, -gbdt_test_scores
+gbdt_train_errors, gbdt_validation_errors = -gbdt_train_scores, -gbdt_validation_scores
 
 # %% tags=["solution"]
 import matplotlib.pyplot as plt
@@ -68,8 +67,8 @@ plt.errorbar(
 )
 plt.errorbar(
     param_range,
-    gbdt_test_errors.mean(axis=1),
-    yerr=gbdt_test_errors.std(axis=1),
+    gbdt_validation_errors.mean(axis=1),
+    yerr=gbdt_validation_errors.std(axis=1),
     label="Cross-validation",
 )
 
@@ -104,3 +103,28 @@ gbdt.n_estimators_
 # We see that the number of trees used is far below 1000 with the current
 # dataset. Training the GBDT with the entire 1000 trees would have been
 # useless.
+
+# %% [markdown]
+# Estimate the generalization performance of this model again using
+# the `sklearn.metrics.mean_absolute_error` metric but this time using
+# the test set that we held out at the beginning of the notebook.
+# Compare the resulting value with the values observed in the validation
+# curve.
+
+# %%
+# solution
+from sklearn.metrics import mean_absolute_error
+error = mean_absolute_error(target_test, gbdt.predict(data_test))
+print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
+
+# %% [markdown] tags=["solution"]
+# We observe that the MAE value measure on the held out test set is close to the
+# validation error measured to the right hand side of the validation curve. This
+# is kind of reassuring, as it means that both the cross-validation procedure
+# and the outer train-test split roughly agree as approximations of the true
+# generalization performance of the model. We can observe that the final
+# evaluation of the test error seems to be even slightly below than the
+# cross-validated test scores. This can be explained because the final model has
+# been trained on the full training set while the cross-validation models have
+# been trained on smaller subsets: in general the larger the number of training
+# points, the lower the test error.

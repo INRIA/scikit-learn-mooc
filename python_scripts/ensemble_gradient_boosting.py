@@ -223,19 +223,19 @@ print(f"Prediction of the residual for x={x_sample:.3f}: "
 
 # %%
 y_pred_first_and_second_tree = (
-    y_pred_first_tree + tree_residuals.predict(data_max)[0]
+    y_pred_first_tree + tree_residuals.predict(sample)[0]
 )
 print(f"Prediction of the first and second decision trees combined for "
-      f"x={data_max['Feature'].iloc[0]:.3f}: y={y_pred_first_and_second_tree:.3f}")
+      f"x={x_sample:.3f}: y={y_pred_first_and_second_tree:.3f}")
 print(f"Error of the tree: {target_true - y_pred_first_and_second_tree:.3f}")
 
 # %% [markdown]
 # We chose a sample for which only two trees were enough to make the perfect
 # prediction. However, we saw in the previous plot that two trees were not
 # enough to correct the residuals of all samples. Therefore, one needs to
-# add several trees to the ensemble to successfully correct the error.
+# add several trees to the ensemble to successfully correct the error
 # (i.e. the second tree corrects the first tree's error, while the third tree
-# corrects the second tree's error and so on.)
+# corrects the second tree's error and so on).
 #
 # We will compare the generalization performance of random-forest and gradient
 # boosting on the California housing dataset.

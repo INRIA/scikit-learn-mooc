@@ -173,8 +173,6 @@ _ = plt.title("Ridge weights")
 #
 # ## Feature scaling and regularization
 #
-# ### With numerical features
-#
 # On the one hand, weights define the link between feature values and the
 # predicted target.
 # On the other hand, regularization adds constraints on the weights of the
@@ -268,58 +266,22 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # of `alpha` will decrease the weight values. A negative value of `alpha` would
 # actually enhance large weights and promote overfitting.
 #
+# ```{note}
+# Here, we only focus on numerical features. For categorical features, it is
+# generally common to omit scaling when features are encoded with a
+# `OneHotEncoder` since the feature values are already on a similar scale.
+#
+# However, there is no good practice since scaling has an interaction with the
+# regularization as well. For instance, scaling categorical features that are
+# imbalanced (e.g. more occurrences of a specific category) allows to apply a
+# similar penalty to each of the category. However, scaling such features in
+# presence of rare category could be problematic (i.e. division by a very
+# small std. dev.) and it will introduce some numerical issue.
+# ```
+#
 # In the previous analysis, we did not study if the parameter `alpha` will have
 # an effect on the performance. We chose the parameter beforehand and fix it
 # for the analysis.
-#
-# ### With categorical features
-#
-# Most of the time, categorical features will be encoded with a `OneHotEncoder`
-# when using a linear model. In practice, scaling the encoded features by a
-# `OneHotEncoder` is generally omitted since the encoded features are already
-# on a similar scale.
-#
-# Another aspect to consider when using a `OneHotEncoder` with linear models is
-# the link to feature collinearity. Indeed, with this encoding, one of the
-# encoded feature can be computed given all other features. For instance, for a
-# feature with two categories (e.g. "married" vs. "not married"), the feature
-# of the first category (i.e. "married") is the inverse of the feature of the
-# second category (i.e. "not married").
-
-# %%
-import numpy as np
-from sklearn.preprocessing import OneHotEncoder
-
-categories = np.array(
-    ["married"] * 5 + ["not_married"] * 5, dtype=object
-)[:, np.newaxis]
-
-encoder = OneHotEncoder(sparse=False, dtype=np.int32)
-categories_encoded = encoder.fit_transform(categories)
-categories_encoded = pd.DataFrame(
-    categories_encoded,
-    columns=encoder.get_feature_names_out(input_features=["marital_status"]),
-)
-categories_encoded
-
-# %% [markdown]
-#
-# At the beginning of this notebook, we saw that one should avoid such
-# collinearity when fitting a linear model.
-#
-# The `OneHotEncoder` provides a parameter `drop` that allows to drop
-# the first feature (always or only in the binary case).
-
-# %%
-encoder = OneHotEncoder(drop="first", sparse=False, dtype=int)
-categories_encoded = encoder.fit_transform(categories)
-categories_encoded = pd.DataFrame(
-    categories_encoded,
-    columns=encoder.get_feature_names_out(input_features=["marital_status"]),
-)
-categories_encoded
-
-# %% [markdown]
 #
 # In the next section, we will check the impact of the regularization
 # parameter `alpha `and how it should be tuned.
@@ -421,5 +383,10 @@ print(f"The mean optimal alpha leading to the best generalization performance is
       f"{np.mean(best_alphas):.2f} +/- {np.std(best_alphas):.2f}")
 
 # %% [markdown]
+#
+# It is therefore a good option to use the parameter `drop` whenever possible
+# if a linear model is used as a predictor.
+#
 # In this notebook, you learned about the concept of regularization and
-# the importance of preprocessing and parameter tuning.
+# the importance of preprocessing and parameter tuning. In addition, we gave
+# a small note regarding categorical features.

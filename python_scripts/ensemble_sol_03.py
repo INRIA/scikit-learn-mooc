@@ -117,7 +117,7 @@ axs[1].set_title("Random forest")
 axs[1].set_xlabel("# estimators")
 
 plt.legend()
-_ = fig.suptitle("Validation curves")
+_ = fig.suptitle("Validation curves", y=1.1)
 
 # %% [markdown]
 # Both gradient boosting and random forest models will always improve when

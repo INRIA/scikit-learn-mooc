@@ -290,6 +290,7 @@ disp = PrecisionRecallDisplay.from_estimator(
     classifier, data_test, target_test, pos_label='donated',
     marker="+"
 )
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = disp.ax_.set_title("Precision-recall curve")
 
 # %% [markdown]
@@ -329,6 +330,7 @@ disp = RocCurveDisplay.from_estimator(
 disp = RocCurveDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = disp.ax_.set_title("ROC AUC curve")
 
 # %% [markdown]

@@ -23,7 +23,7 @@
 # time. The goal is to balance computing time and generalization performance when
 # setting the number of estimators when putting such learner in production.
 #
-# Then, we could also tune a parameter that control the depth of each tree in
+# Then, we could also tune a parameter that controls the depth of each tree in
 # the forest. Two parameters are important for this: `max_depth` and
 # `max_leaf_nodes`. They differ in the way they control the tree structure.
 # Indeed, `max_depth` will enforce to have a more symmetric tree, while
@@ -65,7 +65,7 @@ cv_results["mean_test_score"] = -cv_results["mean_test_score"]
 cv_results[columns].sort_values(by="rank_test_score")
 
 # %% [markdown]
-# We can observe that in our search, that we are required to have a large
+# We can observe in our search that we are required to have a large
 # number of leaves and thus deep trees. This parameter seems particularly
 # impactful in comparison to the number of trees for this particular dataset:
 # with at least 50 trees, the generalization performance will be driven by the

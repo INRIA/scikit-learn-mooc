@@ -66,6 +66,7 @@ data_range = pd.DataFrame(np.linspace(170, 235, num=300),
                            columns=data.columns)
 tree_predictions = []
 for tree in forest.estimators_:
+    # we convert `data_range` into a NumPy array to avoid a warning raised in scikit-learn
     tree_predictions.append(tree.predict(data_range.to_numpy()))
 
 forest_predictions = forest.predict(data_range)

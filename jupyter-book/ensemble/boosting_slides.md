@@ -2,7 +2,6 @@
 
 TODO: insert video player here once ready
 
-<iframe src="../slides/index.html?file=../slides/boosting.md#p1"/>
 <iframe class="slides"
         src="../slides/index.html?file=../slides/boosting.md"></iframe>
 

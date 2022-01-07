@@ -294,7 +294,7 @@ categories = np.array(
     ["married"] * 5 + ["not_married"] * 5, dtype=object
 )[:, np.newaxis]
 
-encoder = OneHotEncoder(sparse=False, dtype=int)
+encoder = OneHotEncoder(sparse=False, dtype=np.int32)
 categories_encoded = encoder.fit_transform(categories)
 categories_encoded = pd.DataFrame(
     categories_encoded,
@@ -307,7 +307,7 @@ categories_encoded
 # At the beginning of this notebook, we saw that one should avoid such
 # collinearity when fitting a linear model.
 #
-# The `OneHotEncoder` provides a parameter `drop` that allows to drop a
+# The `OneHotEncoder` provides a parameter `drop` that allows to drop
 # the first feature (always or only in the binary case).
 
 # %%
@@ -321,8 +321,8 @@ categories_encoded
 
 # %% [markdown]
 #
-# In the next section, we will check the impact of this hyperparameter and how
-# it should be tuned.
+# In the next section, we will check the impact of the regularization
+# parameter `alpha `and how it should be tuned.
 #
 # ## Fine tuning the regularization parameter
 #

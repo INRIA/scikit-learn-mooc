@@ -336,6 +336,7 @@ _ = bagging.fit(data_train, target_train)
 
 # %%
 for i, regressor in enumerate(bagging.estimators_):
+    # we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn
     regressor_predictions = regressor.predict(data_test.to_numpy())
     base_model_line = plt.plot(
         data_test, regressor_predictions, linestyle="--", alpha=0.2,

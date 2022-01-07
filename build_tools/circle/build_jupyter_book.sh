@@ -25,7 +25,7 @@ conda activate scikit-learn-mooc
 pip install -r requirements-dev.txt
 
 affected_jupyter_book_paths() {
-    files=$(git diff --name-only origin/master...$CIRCLE_SHA1)
+    files=$(git diff --name-only origin/main...$CIRCLE_SHA1)
     # TODO: rather than the grep pattern below we could potentially look at
     # _toc.yml to know whether the file affects the JupyterBook
     echo "$files" | grep python_scripts | perl -pe 's@\.py$@.html@'
@@ -43,7 +43,7 @@ write_changed_html() {
             echo '<html><body>'
             echo 'Files changed by PR <a href="'"$CI_PULL_REQUEST"'">'"$CI_PULL_REQUEST</a>"
             echo '<ul>'
-            echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">master</a>]|'
+            echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">main</a>]|'
             echo '</ul><p>This PR JupyterBook <a href="index.html">index</a>'
             echo '</ul></body></html>'
         ) > "$jupyter_book_build_dir/_changed.html"

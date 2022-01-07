@@ -271,12 +271,12 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # generally common to omit scaling when features are encoded with a
 # `OneHotEncoder` since the feature values are already on a similar scale.
 #
-# However, there is no good practice since scaling has an interaction with the
+# However, this choice can be questioned since scaling interacts with
 # regularization as well. For instance, scaling categorical features that are
-# imbalanced (e.g. more occurrences of a specific category) allows to apply a
-# similar penalty to each of the category. However, scaling such features in
-# presence of rare category could be problematic (i.e. division by a very
-# small std. dev.) and it will introduce some numerical issue.
+# imbalanced (e.g. more occurrences of a specific category) would even out
+# the impact of regularization to each category. However, scaling such features
+# in the presence of rare categories could be problematic (i.e. division by a very
+# small standard deviation) and it can therefore introduce numerical issues.
 # ```
 #
 # In the previous analysis, we did not study if the parameter `alpha` will have
@@ -284,7 +284,7 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # for the analysis.
 #
 # In the next section, we will check the impact of the regularization
-# parameter `alpha `and how it should be tuned.
+# parameter `alpha` and how it should be tuned.
 #
 # ## Fine tuning the regularization parameter
 #

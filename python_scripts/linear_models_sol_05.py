@@ -78,6 +78,7 @@ for C in Cs:
     sns.scatterplot(
         data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
         hue=target_column, palette=["tab:red", "tab:blue"])
+    plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
     plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
 # %% [markdown]

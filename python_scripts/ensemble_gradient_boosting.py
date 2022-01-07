@@ -125,7 +125,8 @@ for value, true, predicted in zip(data_train["Feature"],
     lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
 plt.legend([line_predictions[0], lines_residuals[0]],
-           ["Fitted tree", "Residuals"])
+           ["Fitted tree", "Residuals"], bbox_to_anchor=(1.05, 0.8),
+           loc="upper left")
 _ = plt.title("Prediction of the previous residuals")
 
 # %% [markdown]
@@ -164,7 +165,7 @@ for value, true, predicted in zip(data_train["Feature"],
 plt.scatter(sample, target_true, label="Sample of interest",
             color="tab:orange", s=200)
 plt.xlim([-1, 0])
-plt.legend()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Tree predictions")
 
 # %% [markdown]

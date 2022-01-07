@@ -210,7 +210,7 @@ for tree_idx, tree in enumerate(bag_of_trees):
 bag_predictions = np.mean(bag_predictions, axis=0)
 plt.plot(data_test, bag_predictions, label="Averaged predictions",
          linestyle="-")
-plt.legend()
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Predictions of bagged trees")
 
 # %% [markdown]

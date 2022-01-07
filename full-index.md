@@ -194,11 +194,9 @@
 ### Ensemble based on boosting
 
 * [Adaptive Boosting (AdaBoost)](notebooks/ensemble_adaboost.ipynb)
+* [Gradient-boosting decision tree (GBDT)](notebooks/ensemble_gradient_boosting.ipynb)
 * [📝 Exercise M6.03](notebooks/ensemble_ex_03.ipynb)
 * [📃 Solution for Exercise M6.03](notebooks/ensemble_sol_03.ipynb)
-* [Gradient-boosting decision tree (GBDT)](notebooks/ensemble_gradient_boosting.ipynb)
-* [📝 Exercise M6.04](notebooks/ensemble_ex_04.ipynb)
-* [📃 Solution for Exercise M6.04](notebooks/ensemble_sol_04.ipynb)
 * [Speeding-up gradient-boosting](notebooks/ensemble_hist_gradient_boosting.ipynb)
 * [✅ Quiz M6.03](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_03.html)
 

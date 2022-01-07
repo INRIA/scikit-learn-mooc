@@ -143,14 +143,20 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # class predicted when the culmen depth is inferior to the threshold.
 
 # %%
-tree.predict([[0, 15]])
+sample_1 = pd.DataFrame(
+    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [15]}
+)
+tree.predict(sample_1)
 
 # %% [markdown]
 # The class predicted is the Gentoo. We can now check if we pass a culmen
 # depth superior to the threshold.
 
 # %%
-tree.predict([[0, 17]])
+sample_2 = pd.DataFrame(
+    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [17]}
+)
+tree.predict(sample_2)
 
 # %% [markdown]
 # In this case, the tree predicts the Adelie specie.
@@ -163,7 +169,7 @@ tree.predict([[0, 17]])
 # partition.
 
 # %%
-y_pred_proba = tree.predict_proba([[0, 17]])
+y_pred_proba = tree.predict_proba(sample_2)
 y_proba_class_0 = pd.Series(y_pred_proba[0], index=tree.classes_)
 
 # %%
@@ -179,10 +185,12 @@ _ = plt.title("Probability to belong to a penguin class")
 adelie_proba = 103 / 161
 chinstrap_proba = 52 / 161
 gentoo_proba = 6 / 161
-print(f"Probabilities for the different classes:\n"
-      f"Adelie: {adelie_proba:.3f}\n"
-      f"Chinstrap: {chinstrap_proba:.3f}\n"
-      f"Gentoo: {gentoo_proba:.3f}\n")
+print(
+    f"Probabilities for the different classes:\n"
+    f"Adelie: {adelie_proba:.3f}\n"
+    f"Chinstrap: {chinstrap_proba:.3f}\n"
+    f"Gentoo: {gentoo_proba:.3f}\n"
+)
 
 # %% [markdown]
 # It is also important to note that the culmen length has been disregarded for
@@ -190,7 +198,10 @@ print(f"Probabilities for the different classes:\n"
 # during the prediction.
 
 # %%
-tree.predict_proba([[10000, 17]])
+sample_3 = pd.DataFrame(
+    {"Culmen Length (mm)": [10_000], "Culmen Depth (mm)": [17]}
+)
+tree.predict_proba(sample_3)
 
 # %% [markdown]
 # Going back to our classification problem, the split found with a maximum

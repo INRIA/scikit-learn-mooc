@@ -11,7 +11,18 @@ What the benefit of using cross-validation?
 +++
 
 ```{admonition} Question
-Does a dummy classifier or regressor provides chance level performance?
+Does a dummy classifier or regressor rely on the input feature values in
+the input data `X` to make the predictions?
+
+- a) Yes
+- b) No
+```
+
++++
+
+```{admonition} Question
+Does a dummy classifier from scikit-learn always make constant predictions
+whatever the chosen strategy?
 
 - a) Yes
 - b) No

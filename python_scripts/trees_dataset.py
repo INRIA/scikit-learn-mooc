@@ -74,11 +74,11 @@ pairplot_figure.fig.set_size_inches(9, 6.5)
 # %%
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
 
-data_columns = ["Flipper Length (mm)"]
+feature_name = "Flipper Length (mm)"
 target_column = "Body Mass (g)"
 
 # %%
-_ = sns.scatterplot(data=penguins, x=data_columns[0], y=target_column)
+_ = sns.scatterplot(data=penguins, x=feature_name, y=target_column)
 
 # %% [markdown]
 # Here, we deal with a regression problem because our target is a continuous

@@ -11,11 +11,32 @@ What is the default score in scikit-learn when using a regressor?
 +++
 
 ```{admonition} Question
-When errors are used in the function `cross_validate` in scikit-learn, one
-should:
+If we observe that the values returned by
+`cross_val_scores(model, X, y, scoring="r2")` increase after changing the model
+parameters, it means that the latest model:
 
-- a) pass a callable that reverse the sign of the error
-- b) create a scorer using `make_scorer` and pass the parameter `greater_is_better=False`
-- c) pass a string with the name of the metric which should start with the
-  prefix `neg_`
+- a) generalizes better
+- b) generalizes worse
+```
+
++++
+
+```{admonition} Question
+If we observe that the values returned by
+`cross_val_scores(model, X, y, scoring="neg_mean_squared_error")` increase after
+changing the model parameters, it means that the latest model:
+
+- a) generalizes better
+- b) generalizes worse
+```
+
++++
+
+```{admonition} Question
+Values returned by `cross_val_scores(model, X, y, scoring="neg_mean_squared_error")`
+are:
+
+- a) guaranteed to be positive or zero
+- b) guaranteed to be negative or zero
+- c) can be either positive or negative depending on the data
 ```

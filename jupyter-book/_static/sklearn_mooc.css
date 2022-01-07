@@ -1,28 +1,28 @@
 
-/* Large slides iframes */
+/*
+Note: the video and slides iframes currently use the same CSS styles but use
+different classes to get future-proof flexibility.
+*/
 
-
-iframe {
-    /* The constant in these values must be adjusted if the theme changes */
-    height: calc(100vh - 14ex);
-    position: fixed;
-    z-index: 1000;
-    border-color: #AAA;
-    border-style: solid;
+iframe.video {
+    width: 100%;
+    aspect-ratio: 4/3;
+    margin-bottom: 1em;
 }
 
-@media only screen and (max-width : 768px) {
-    /* Small screen */
-    iframe {
-	width: 100%;
-	left: 0px;
-    }
+iframe.slides {
+    width: 100%;
+    aspect-ratio: 4/3;
+    margin-bottom: 1em;
 }
-
-@media only screen and (min-width : 768px) {
-    /* Large screen, the sidebar is on the side */
-    iframe {
-	max-width: calc(min(50vw + 380px, 100vw - 320px));
-	width: 1200px;
-    }
+  
+/*
+Better highlighting of modules in toc.html, for some reason modules
+are aria-level="2" rather than h2
+*/
+p[aria-level="2"] {
+    font-size: 1.2em;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
 }

@@ -58,9 +58,9 @@ Using python in /home/lesteve/miniconda3/envs/scikit-learn-course
 ```sh
 # Activate your conda environment
 conda activate scikit-learn-course
-jupyter notebook index.md
+jupyter notebook full-index.md
 ```
 
-`index.md` is an index file helping to navigate the notebooks.
+`full-index.md` is an index file helping to navigate the notebooks.
 All the Jupyter notebooks are located in the `notebooks` folder.
 

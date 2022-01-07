@@ -27,49 +27,16 @@ from sklearn.model_selection import train_test_split
 data, target = penguins[culmen_columns], penguins[target_column]
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
-range_features = {
-    feature_name: (data[feature_name].min() - 1, data[feature_name].max() + 1)
-    for feature_name in data.columns}
 
 # %% [markdown]
+#
 # In a previous notebook, we learnt that a linear classifier will define a
 # linear separation to split classes using a linear combination of the input
 # features. In our 2-dimensional space, it means that a linear classifier will
 # define some oblique lines that best separate our classes. We define a
 # function below that, given a set of data points and a classifier, will plot
 # the decision boundaries learnt by the classifier.
-
-# %%
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-def plot_decision_function(fitted_classifier, range_features, ax=None):
-    """Plot the boundary of the decision function of a classifier."""
-    from sklearn.preprocessing import LabelEncoder
-
-    feature_names = list(range_features.keys())
-    # create a grid to evaluate all possible samples
-    plot_step = 0.02
-    xx, yy = np.meshgrid(
-        np.arange(*range_features[feature_names[0]], plot_step),
-        np.arange(*range_features[feature_names[1]], plot_step),
-    )
-
-    # compute the associated prediction
-    Z = fitted_classifier.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = LabelEncoder().fit_transform(Z)
-    Z = Z.reshape(xx.shape)
-
-    # make the plot of the boundary and the data samples
-    if ax is None:
-        _, ax = plt.subplots()
-    ax.contourf(xx, yy, Z, alpha=0.4, cmap="RdBu")
-
-    return ax
-
-
-# %% [markdown]
+#
 # Thus, for a linear classifier, we will obtain the following decision
 # boundaries. These boundaries lines indicate where the model changes its
 # prediction from one class to another.
@@ -81,14 +48,19 @@ linear_model = LogisticRegression()
 linear_model.fit(data_train, target_train)
 
 # %%
+import matplotlib.pyplot as plt
 import seaborn as sns
+
+from helpers.plotting import DecisionBoundaryDisplay
 
 # create a palette to be used in the scatterplot
 palette = ["tab:red", "tab:blue", "black"]
 
-ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                     hue=target_column, palette=palette)
-plot_decision_function(linear_model, range_features, ax=ax)
+DecisionBoundaryDisplay.from_estimator(
+    linear_model, data_train, response_method="predict", cmap="RdBu", alpha=0.5
+)
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
 # put the legend outside the plot
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 _ = plt.title("Decision boundary using a logistic regression")
@@ -123,9 +95,11 @@ tree = DecisionTreeClassifier(max_depth=1)
 tree.fit(data_train, target_train)
 
 # %%
-ax = sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                     hue=target_column, palette=palette)
-plot_decision_function(tree, range_features, ax=ax)
+DecisionBoundaryDisplay.from_estimator(
+    tree, data_train, response_method="predict", cmap="RdBu", alpha=0.5
+)
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 _ = plt.title("Decision boundary using a decision tree")
 
@@ -169,14 +143,20 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # class predicted when the culmen depth is inferior to the threshold.
 
 # %%
-tree.predict([[0, 15]])
+sample_1 = pd.DataFrame(
+    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [15]}
+)
+tree.predict(sample_1)
 
 # %% [markdown]
 # The class predicted is the Gentoo. We can now check if we pass a culmen
 # depth superior to the threshold.
 
 # %%
-tree.predict([[0, 17]])
+sample_2 = pd.DataFrame(
+    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [17]}
+)
+tree.predict(sample_2)
 
 # %% [markdown]
 # In this case, the tree predicts the Adelie specie.
@@ -189,7 +169,7 @@ tree.predict([[0, 17]])
 # partition.
 
 # %%
-y_pred_proba = tree.predict_proba([[0, 17]])
+y_pred_proba = tree.predict_proba(sample_2)
 y_proba_class_0 = pd.Series(y_pred_proba[0], index=tree.classes_)
 
 # %%
@@ -205,10 +185,12 @@ _ = plt.title("Probability to belong to a penguin class")
 adelie_proba = 103 / 161
 chinstrap_proba = 52 / 161
 gentoo_proba = 6 / 161
-print(f"Probabilities for the different classes:\n"
-      f"Adelie: {adelie_proba:.3f}\n"
-      f"Chinstrap: {chinstrap_proba:.3f}\n"
-      f"Gentoo: {gentoo_proba:.3f}\n")
+print(
+    f"Probabilities for the different classes:\n"
+    f"Adelie: {adelie_proba:.3f}\n"
+    f"Chinstrap: {chinstrap_proba:.3f}\n"
+    f"Gentoo: {gentoo_proba:.3f}\n"
+)
 
 # %% [markdown]
 # It is also important to note that the culmen length has been disregarded for
@@ -216,7 +198,10 @@ print(f"Probabilities for the different classes:\n"
 # during the prediction.
 
 # %%
-tree.predict_proba([[10000, 17]])
+sample_3 = pd.DataFrame(
+    {"Culmen Length (mm)": [10_000], "Culmen Depth (mm)": [17]}
+)
+tree.predict_proba(sample_3)
 
 # %% [markdown]
 # Going back to our classification problem, the split found with a maximum

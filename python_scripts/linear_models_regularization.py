@@ -81,7 +81,7 @@ print(f"Mean squared error of linear regression model on the test set:\n"
 #
 # Since we used a `PolynomialFeatures` to augment the data, we will create
 # feature names representative of the feature combination. Scikit-learn
-# provides a `get_feature_names` method for this purpose. First, let's get
+# provides a `get_feature_names_out` method for this purpose. First, let's get
 # the first fitted model from the cross-validation.
 
 # %%
@@ -92,7 +92,7 @@ model_first_fold = cv_results["estimator"][0]
 # names
 
 # %%
-feature_names = model_first_fold[0].get_feature_names(
+feature_names = model_first_fold[0].get_feature_names_out(
     input_features=data.columns)
 feature_names
 
@@ -131,6 +131,13 @@ cv_results = cross_validate(ridge, data, target,
                             return_train_score=True,
                             return_estimator=True)
 
+# %% [markdown]
+# The code cell above will generate a couple of warnings because the features
+# included both extremely large and extremely small values, which are causing
+# numerical problems when training the predictive model.
+#
+# We can explore the train and test scores of this model.
+
 # %%
 train_error = -cv_results["train_score"]
 print(f"Mean squared error of linear regression model on the train set:\n"
@@ -156,30 +163,31 @@ _ = plt.title("Ridge weights")
 
 # %% [markdown]
 # By comparing the magnitude of the weights on this plot compared to the
-# previous plot, we see that the magnitude of the weights are shrunk towards
-# zero in comparison with the linear regression model.
+# previous plot, we see that a ridge model will enforce all weights to have a
+# similar magnitude, while the overall magnitude of the weights is shrunk
+# towards zero with respect to the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization
 # parameter.
 #
-# ## Scale your data!
+# ## Feature scaling and regularization
 #
-# Regularization will add constraints on weights of the model. We saw in the
-# previous example that a ridge model will enforce that all weights have a
-# similar magnitude. Indeed, the larger alpha is, the larger this enforcement
-# will be.
+# On the one hand, weights define the link between feature values and the
+# predicted target.
+# On the other hand, regularization adds constraints on the weights of the
+# model through the `alpha` parameter. Therefore, the effect that feature
+# rescaling has on the final weights also interacts with regularization.
 #
-# This procedure should make us think about feature rescaling. Let's consider
-# the case where features have an identical data dispersion: if two features
-# are found equally important by the model, they will be affected similarly by
-# regularization strength.
+# Let's consider the case where features live on the same scale/units: if
+# two features are found to be equally important by the model, they will be
+# affected similarly by regularization strength.
 #
 # Now, let's consider the scenario where features have completely different
-# data dispersion (for instance age in years and annual revenue in dollars).
+# data scale (for instance age in years and annual revenue in dollars).
 # If two features are as important, our model will boost the weights of
-# features with small dispersion and reduce the weights of features with
-# high dispersion.
+# features with small scale and reduce the weights of features with
+# high scale.
 #
 # We recall that regularization forces weights to be closer. Therefore, we get
 # an intuition that if we want to use regularization, dealing with rescaled
@@ -231,8 +239,32 @@ weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
 _ = plt.title("Ridge weights with data scaling")
 
 # %% [markdown]
-# Compare to the previous plots, we see that now all weight manitudes are
-# closer and that all weights are more equally contributing.
+# Compare to the previous plots, we see that now all weight magnitudes are
+# closer and that all features are more equally contributing.
+#
+# In the previous example, we fixed `alpha=0.5`. We will now check the impact
+# of the value of `alpha` by increasing its value.
+
+# %%
+ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
+                      Ridge(alpha=1_000_000))
+cv_results = cross_validate(ridge, data, target,
+                            cv=10, scoring="neg_mean_squared_error",
+                            return_train_score=True,
+                            return_estimator=True)
+
+# %%
+coefs = [est[-1].coef_ for est in cv_results["estimator"]]
+weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+
+# %%
+weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
+_ = plt.title("Ridge weights with data scaling and large alpha")
+
+# %% [markdown]
+# Looking specifically to weights values, we observe that increasing the value
+# of `alpha` will decrease the weight values. A negative value of `alpha` would
+# actually enhance large weights and promote overfitting.
 #
 # In the previous analysis, we did not study if the parameter `alpha` will have
 # an effect on the performance. We chose the parameter beforehand and fix it
@@ -325,6 +357,17 @@ _ = plt.title("Error obtained by cross-validation")
 # %%
 best_alphas = [est[-1].alpha_ for est in cv_results["estimator"]]
 best_alphas
+
+# %% [markdown]
+# The optimal regularization strength is not necessarily the same on all
+# cross-validation iterations. But since we expect each cross-validation
+# resampling to stem from the same data distribution, it is common practice
+# to use the average value of the best `alpha` found on different
+# cross-validation folds as our final estimate for the tuned `alpha`.
+
+# %%
+print(f"The mean optimal alpha leading to the best generalization performance is:\n"
+      f"{np.mean(best_alphas):.2f} +/- {np.std(best_alphas):.2f}")
 
 # %% [markdown]
 # In this notebook, you learned about the concept of regularization and

@@ -47,7 +47,7 @@
 ### Overfitting and underfitting
 
 * [📰 Overfitting and Underfitting](https://inria.github.io/scikit-learn-mooc/overfit/overfitting_vs_under_fitting_slides.html)
-* [The framework and why do we need it](notebooks/cross_validation_train_test.ipynb)
+* [Cross-validation framework](notebooks/cross_validation_train_test.ipynb)
 * [✅ Quiz M2.01](https://inria.github.io/scikit-learn-mooc/overfit/overfitting_vs_under_fitting_quiz_m2_01.html)
 
 ### Validation and learning curves
@@ -194,11 +194,9 @@
 ### Ensemble based on boosting
 
 * [Adaptive Boosting (AdaBoost)](notebooks/ensemble_adaboost.ipynb)
+* [Gradient-boosting decision tree (GBDT)](notebooks/ensemble_gradient_boosting.ipynb)
 * [📝 Exercise M6.03](notebooks/ensemble_ex_03.ipynb)
 * [📃 Solution for Exercise M6.03](notebooks/ensemble_sol_03.ipynb)
-* [Gradient-boosting decision tree (GBDT)](notebooks/ensemble_gradient_boosting.ipynb)
-* [📝 Exercise M6.04](notebooks/ensemble_ex_04.ipynb)
-* [📃 Solution for Exercise M6.04](notebooks/ensemble_sol_04.ipynb)
 * [Speeding-up gradient-boosting](notebooks/ensemble_hist_gradient_boosting.ipynb)
 * [✅ Quiz M6.03](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_03.html)
 
@@ -226,11 +224,8 @@
 
 ### Choice of cross-validation
 
-* [📝 Introductory exercise regarding stratification](notebooks/cross_validation_ex_03.ipynb)
 * [Stratification](notebooks/cross_validation_stratification.ipynb)
-* [📝 Introductory exercise for sample grouping](notebooks/cross_validation_ex_04.ipynb)
 * [Sample grouping](notebooks/cross_validation_grouping.ipynb)
-* [📝 Introductory exercise for non i.i.d. data](notebooks/cross_validation_ex_05.ipynb)
 * [Non i.i.d. data](notebooks/cross_validation_time.ipynb)
 * [✅ Quiz M7.02](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_quiz_m7_02.html)
 

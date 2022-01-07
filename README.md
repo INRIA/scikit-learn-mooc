@@ -1,12 +1,13 @@
 # scikit-learn course
 
-**NOTE**: You can [register](https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn)
-to the "Machine learning in Python with scikit-learn MOOC" which is based on
-this repo. The MOOC will run from May 18, 2021 to July 14, 2021.
+📢 📢 📢 In a few months, we will re-open the [Machine learning in Python with
+scikit-learn MOOC](https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn),
+for the full MOOC experience (quizz solutions, executable notebooks, discussion
+forum, etc ...) !
 
-The MOOC is hosted on the [FUN-MOOC](https://fun-mooc.fr/) platform which
-is free and does not use the student data for any other purpose than improving
-the educational material.
+The MOOC is free and hosted on the [FUN-MOOC](https://fun-mooc.fr/) platform
+which does not use the student data for any other purpose than improving the
+educational material.
 
 The static version of the course can be browsed online: https://inria.github.io/scikit-learn-mooc
 
@@ -19,7 +20,7 @@ https://inria.github.io/scikit-learn-mooc/index.html
 
 A few different ways are available:
 - Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
-               https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
+               https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
 - Browse [website](https://inria.github.io/scikit-learn-mooc) generated with
   [Jupyter Book](https://jupyterbook.org/)
 

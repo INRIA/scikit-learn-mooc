@@ -86,4 +86,4 @@ for tree_idx, predictions in enumerate(tree_predictions):
              linestyle="--", alpha=0.8)
 
 plt.plot(data_range, forest_predictions, label=f"Random forest")
-_ = plt.legend()
+_ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

@@ -263,20 +263,11 @@ _ = plt.title("Predictions from a bagging classifier")
 # Let us compare the based model predictions with their average:
 
 # %%
-import warnings
-
-with warnings.catch_warnings():
-    # ignore scikit-learn warning when accessing bagged estimators
-    warnings.filterwarnings(
-        "ignore",
-        message="X has feature names, but DecisionTreeRegressor was fitted without feature names",
-    )
-
-    for tree_idx, tree in enumerate(bagged_trees.estimators_):
-        label = "Predictions of individual trees" if tree_idx == 0 else None
-        tree_predictions = tree.predict(data_test)
-        plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.1,
-                 color="tab:blue", label=label)
+for tree_idx, tree in enumerate(bagged_trees.estimators_):
+    label = "Predictions of individual trees" if tree_idx == 0 else None
+    tree_predictions = tree.predict(data_test.to_numpy())
+    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.1,
+             color="tab:blue", label=label)
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
@@ -343,19 +334,13 @@ _ = bagging.fit(data_train, target_train)
 
 
 # %%
-with warnings.catch_warnings():
-    # ignore scikit-learn warning when accessing bagged estimators
-    warnings.filterwarnings(
-        "ignore",
-        message="X has feature names, but MinMaxScaler was fitted without feature names",
+for i, regressor in enumerate(bagging.estimators_):
+    regressor_predictions = regressor.predict(data_test.to_numpy())
+    base_model_line = plt.plot(
+        data_test, regressor_predictions, linestyle="--", alpha=0.2,
+        label="Predictions of base models" if i == 0 else None,
+        color="tab:blue"
     )
-    for i, regressor in enumerate(bagging.estimators_):
-        regressor_predictions = regressor.predict(data_test)
-        base_model_line = plt.plot(
-            data_test, regressor_predictions, linestyle="--", alpha=0.2,
-            label="Predictions of base models" if i == 0 else None,
-            color="tab:blue"
-        )
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)

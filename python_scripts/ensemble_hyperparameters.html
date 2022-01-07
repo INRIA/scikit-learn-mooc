@@ -45,6 +45,8 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1477,12 +1479,15 @@ In general, the more trees in the forest, the better the generalization
 performance will be. However, it will slow down the fitting and prediction
 time. The goal is to balance computing time and generalization performance when
 setting the number of estimators when putting such learner in production.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter could also be tuned. Sometimes, there is no need
-to have fully grown trees. However, be aware that with random forest, trees
-are generally deep since we are seeking to overfit the learners on the
-bootstrap samples because this will be mitigated by combining them.
-Assembling underfitted trees (i.e. shallow trees) might also lead to an
-underfitted forest.</p>
+<p>Then, we could also tune a parameter that controls the depth of each tree in
+the forest. Two parameters are important for this: <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> and
+<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>. They differ in the way they control the tree structure.
+Indeed, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> will enforce to have a more symmetric tree, while
+<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> does not impose such constraint.</p>
+<p>Be aware that with random forest, trees are generally deep since we are
+seeking to overfit each tree on each bootstrap sample because this will be
+mitigated by combining them altogether. Assembling underfitted trees (i.e.
+shallow trees) might also lead to an underfitted forest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -1499,22 +1504,22 @@ underfitted forest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
-    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+<span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
+    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
 <span class="p">}</span>
-<span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
-    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
+    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">search_cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">search_cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
 <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span>
 <span class="n">cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1540,94 +1545,103 @@ underfitted forest.</p>
     <tr style="text-align: right;">
       <th></th>
       <th>param_n_estimators</th>
-      <th>param_max_depth</th>
+      <th>param_max_leaf_nodes</th>
       <th>mean_test_score</th>
       <th>rank_test_score</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>8</th>
-      <td>30</td>
-      <td>None</td>
-      <td>34.343182</td>
+      <th>0</th>
+      <td>500</td>
+      <td>100</td>
+      <td>40.804626</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>20</td>
-      <td>None</td>
-      <td>34.997771</td>
+      <th>2</th>
+      <td>10</td>
+      <td>100</td>
+      <td>41.371876</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>10</td>
-      <td>None</td>
-      <td>36.278920</td>
+      <th>7</th>
+      <td>100</td>
+      <td>50</td>
+      <td>43.944888</td>
       <td>3</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>10</td>
-      <td>5</td>
-      <td>48.666002</td>
+      <th>8</th>
+      <td>1</td>
+      <td>100</td>
+      <td>46.575611</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>30</td>
-      <td>5</td>
-      <td>48.699702</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>4</th>
+      <th>6</th>
+      <td>50</td>
       <td>20</td>
+      <td>49.542340</td>
       <td>5</td>
-      <td>48.760718</td>
-      <td>6</td>
     </tr>
     <tr>
       <th>1</th>
+      <td>100</td>
       <td>20</td>
-      <td>3</td>
-      <td>57.008618</td>
+      <td>49.578853</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>20</td>
+      <td>50.185055</td>
       <td>7</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>30</td>
-      <td>3</td>
-      <td>57.068889</td>
+      <th>3</th>
+      <td>500</td>
+      <td>10</td>
+      <td>54.598031</td>
       <td>8</td>
     </tr>
     <tr>
-      <th>0</th>
-      <td>10</td>
-      <td>3</td>
-      <td>57.213853</td>
+      <th>4</th>
+      <td>5</td>
+      <td>5</td>
+      <td>61.481144</td>
       <td>9</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5</td>
+      <td>2</td>
+      <td>73.326003</td>
+      <td>10</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We can observe that in our grid-search, the largest <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> together with
-the largest <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> led, on average, to the best performance on the
-validation sets. Now we will estimate the generalization performance of the
-best model by refitting it with the full training set and using the test set
-for scoring on unseen data. This is done by default when calling the <code class="docutils literal notranslate"><span class="pre">.fit</span></code>
-method.</p>
+<p>We can observe in our search that we are required to have a large
+number of leaves and thus deep trees. This parameter seems particularly
+impactful in comparison to the number of trees for this particular dataset:
+with at least 50 trees, the generalization performance will be driven by the
+number of leaves.</p>
+<p>Now we will estimate the generalization performance of the best model by
+refitting it with the full training set and using the test set for scoring on
+unseen data. This is done by default when calling the <code class="docutils literal notranslate"><span class="pre">.fit</span></code> method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our random forest regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 34.82 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 42.04 k$
 </pre></div>
 </div>
 </div>
@@ -1637,15 +1651,17 @@ method.</p>
 <h2>Gradient-boosting decision trees<a class="headerlink" href="#gradient-boosting-decision-trees" title="Permalink to this headline">¶</a></h2>
 <p>For gradient-boosting, parameters are coupled, so we cannot set the parameters
 one after the other anymore. The important parameters are <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>,
-<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, and <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>.</p>
-<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter. We saw in the section on
-gradient-boosting that the algorithm fits the error of the previous tree in
-the ensemble. Thus, fitting fully grown trees will be detrimental. Indeed, the
-first tree of the ensemble would perfectly fit (overfit) the data and thus no
-subsequent tree would be required, since there would be no residuals.
-Therefore, the tree used in gradient-boosting should have a low depth,
-typically between 3 to 8 levels. Having very weak learners at each step will
-help reducing overfitting.</p>
+<code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> (as previously discused
+random forest).</p>
+<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> (or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>) parameter. We saw
+in the section on gradient-boosting that the algorithm fits the error of the
+previous tree in the ensemble. Thus, fitting fully grown trees would be
+detrimental. Indeed, the first tree of the ensemble would perfectly fit
+(overfit) the data and thus no subsequent tree would be required, since there
+would be no residuals. Therefore, the tree used in gradient-boosting should
+have a low depth, typically between 3 to 8 levels, or few leaves (<span class="math notranslate nohighlight">\(2^3=8\)</span> to
+<span class="math notranslate nohighlight">\(2^8=256\)</span>). Having very weak learners at each step will help reducing
+overfitting.</p>
 <p>With this consideration in mind, the deeper the trees, the faster the
 residuals will be corrected and less learners are required. Therefore,
 <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> should be increased if <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is lower.</p>
@@ -1660,22 +1676,23 @@ learning-rate tends to obtain an overfitted ensemble, similar to having a too
 large tree depth.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">loguniform</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
 
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
-    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
-    <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
+    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+    <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
 <span class="p">}</span>
-<span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
-    <span class="n">GradientBoostingRegressor</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
+    <span class="n">GradientBoostingRegressor</span><span class="p">(),</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
 <span class="p">)</span>
-<span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">search_cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 <span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">search_cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
 <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span>
 <span class="n">cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;rank_test_score&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1701,7 +1718,7 @@ large tree depth.</p>
     <tr style="text-align: right;">
       <th></th>
       <th>param_n_estimators</th>
-      <th>param_max_depth</th>
+      <th>param_max_leaf_nodes</th>
       <th>param_learning_rate</th>
       <th>mean_test_score</th>
       <th>rank_test_score</th>
@@ -1709,148 +1726,164 @@ large tree depth.</p>
   </thead>
   <tbody>
     <tr>
-      <th>5</th>
-      <td>50</td>
-      <td>5</td>
-      <td>0.1</td>
-      <td>35.643983</td>
+      <th>1</th>
+      <td>200</td>
+      <td>20</td>
+      <td>0.160519</td>
+      <td>33.894813</td>
       <td>1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>50</td>
-      <td>3</td>
-      <td>1</td>
-      <td>36.704958</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>30</td>
-      <td>3</td>
-      <td>1</td>
-      <td>37.496668</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>30</td>
-      <td>5</td>
-      <td>1</td>
-      <td>39.033899</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>30</td>
-      <td>5</td>
-      <td>0.1</td>
-      <td>39.275920</td>
-      <td>5</td>
     </tr>
     <tr>
       <th>12</th>
+      <td>200</td>
+      <td>50</td>
+      <td>0.110585</td>
+      <td>34.790734</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>500</td>
+      <td>5</td>
+      <td>0.771785</td>
+      <td>34.822388</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>200</td>
+      <td>20</td>
+      <td>0.109889</td>
+      <td>35.000218</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>500</td>
+      <td>100</td>
+      <td>0.709894</td>
+      <td>35.546382</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>18</th>
       <td>10</td>
       <td>5</td>
-      <td>1</td>
-      <td>39.387937</td>
+      <td>0.637819</td>
+      <td>42.535730</td>
       <td>6</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>50</td>
-      <td>5</td>
-      <td>1</td>
-      <td>39.822175</td>
+      <th>3</th>
+      <td>500</td>
+      <td>2</td>
+      <td>0.07502</td>
+      <td>43.457866</td>
       <td>7</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>50</td>
-      <td>3</td>
-      <td>0.1</td>
-      <td>40.602042</td>
+      <th>4</th>
+      <td>100</td>
+      <td>5</td>
+      <td>0.0351</td>
+      <td>46.558900</td>
       <td>8</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>5</td>
+      <td>20</td>
+      <td>0.202432</td>
+      <td>61.387176</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5</td>
+      <td>2</td>
+      <td>0.462636</td>
+      <td>65.114017</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>9</th>
       <td>10</td>
-      <td>3</td>
-      <td>1</td>
-      <td>41.602175</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>30</td>
-      <td>None</td>
-      <td>0.1</td>
-      <td>45.615171</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>30</td>
-      <td>3</td>
-      <td>0.1</td>
-      <td>45.756084</td>
+      <td>5</td>
+      <td>0.088556</td>
+      <td>66.243538</td>
       <td>11</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>15</th>
       <td>50</td>
-      <td>None</td>
-      <td>0.1</td>
-      <td>45.842565</td>
+      <td>100</td>
+      <td>0.010904</td>
+      <td>71.847050</td>
       <td>12</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>50</td>
-      <td>None</td>
-      <td>1</td>
-      <td>47.281101</td>
+      <th>5</th>
+      <td>2</td>
+      <td>2</td>
+      <td>0.421054</td>
+      <td>74.384704</td>
       <td>13</td>
     </tr>
     <tr>
-      <th>15</th>
-      <td>10</td>
-      <td>None</td>
-      <td>1</td>
-      <td>47.413938</td>
+      <th>2</th>
+      <td>5</td>
+      <td>100</td>
+      <td>0.070357</td>
+      <td>77.007841</td>
       <td>14</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>30</td>
-      <td>None</td>
-      <td>1</td>
-      <td>47.479875</td>
+      <td>2</td>
+      <td>50</td>
+      <td>0.167568</td>
+      <td>77.131005</td>
       <td>15</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>10</td>
-      <td>None</td>
-      <td>0.1</td>
-      <td>51.912058</td>
+      <th>11</th>
+      <td>1</td>
+      <td>5</td>
+      <td>0.190477</td>
+      <td>82.819015</td>
       <td>16</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>10</td>
+      <th>13</th>
       <td>5</td>
-      <td>0.1</td>
-      <td>56.359947</td>
+      <td>20</td>
+      <td>0.033815</td>
+      <td>83.765509</td>
       <td>17</td>
     </tr>
     <tr>
       <th>0</th>
-      <td>10</td>
-      <td>3</td>
-      <td>0.1</td>
-      <td>62.270268</td>
+      <td>1</td>
+      <td>100</td>
+      <td>0.125207</td>
+      <td>85.363288</td>
       <td>18</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>10</td>
+      <td>0.081715</td>
+      <td>87.373374</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>20</td>
+      <td>0.014937</td>
+      <td>90.531295</td>
+      <td>20</td>
     </tr>
   </tbody>
 </table>
@@ -1861,17 +1894,23 @@ large tree depth.</p>
 <p>Here, we tune the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> but be aware that using early-stopping as
 in the previous exercise will be better.</p>
 </div>
+<p>In this search, we see that the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> is required to be large
+enough, i.e. &gt; 0.1. We also observe that for the best ranked models, having a
+smaller <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, will require more trees or a larger number of
+leaves for each tree. However, it is particularly difficult to draw
+more detailed conclusions since the best value of an hyperparameter depends
+on the other hyperparameter values.</p>
 <p>Now we estimate the generalization performance of the best model
 using the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our GBDT regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 35.57 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 33.00 k$
 </pre></div>
 </div>
 </div>

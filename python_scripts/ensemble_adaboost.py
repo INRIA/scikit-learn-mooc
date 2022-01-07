@@ -168,8 +168,9 @@ adaboost.fit(data, target)
 # %%
 for boosting_round, tree in enumerate(adaboost.estimators_):
     plt.figure()
+    # we convert `data` into a NumPy array to avoid a warning raised in scikit-learn
     DecisionBoundaryDisplay.from_estimator(
-        tree, data, response_method="predict", cmap="RdBu", alpha=0.5
+        tree, data.to_numpy(), response_method="predict", cmap="RdBu", alpha=0.5
     )
     sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
                     hue=target_column, data=penguins,

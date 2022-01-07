@@ -130,7 +130,7 @@ We are using app.diagrams.net to create and update some diagrams in `figures`,
 notably the API ones.
 
 To edit the diagrams:
-https://app.diagrams.net/#HINRIA%2Fscikit-learn-mooc%2Fmaster%2Ffigures%2Fapi_diagram.drawio
+https://app.diagrams.net/#HINRIA%2Fscikit-learn-mooc%2Fmain%2Ffigures%2Fapi_diagram.drawio
 
 All the diagrams are in the same project, you can use the tabs at the bottom
 (Google-sheet style).
@@ -150,7 +150,7 @@ New modal (Save as):
 
 Once you have done this, the SVG should have been updated in the github repo.
 Make sure the github svg looks the way you want:
-https://github.com/INRIA/scikit-learn-mooc/tree/master/figures
+https://github.com/INRIA/scikit-learn-mooc/tree/main/figures
 
 ## Jupytext useful use cases
 
@@ -187,8 +187,8 @@ See [this](./workflow-notes.md).
 ## Direct binder links to OVH, GESIS and GKE to trigger and cache builds
 
 
-- [OVH Binder](https://ovh.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
+- [OVH Binder](https://ovh.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
 
-- [GESIS Binder](https://gesis.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
+- [GESIS Binder](https://gesis.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
 
-- [GKE Binder](https://gke.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/master)
+- [GKE Binder](https://gke.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)

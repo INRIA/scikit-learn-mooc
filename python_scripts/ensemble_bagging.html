@@ -1770,20 +1770,12 @@ Python list in the <code class="docutils literal notranslate"><span class="pre">
 <p>Let us compare the based model predictions with their average:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
-
-<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
-    <span class="c1"># ignore scikit-learn warning when accessing bagged estimators</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-        <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
-        <span class="n">message</span><span class="o">=</span><span class="s2">&quot;X has feature names, but DecisionTreeRegressor was fitted without feature names&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bagged_trees</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
-        <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Predictions of individual trees&quot;</span> <span class="k">if</span> <span class="n">tree_idx</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">tree_predictions</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">tree_predictions</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bagged_trees</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Predictions of individual trees&quot;</span> <span class="k">if</span> <span class="n">tree_idx</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="c1"># we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn</span>
+    <span class="n">tree_predictions</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">tree_predictions</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -1854,7 +1846,8 @@ base models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">regressor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bagging</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
-    <span class="n">regressor_predictions</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+    <span class="c1"># we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn</span>
+    <span class="n">regressor_predictions</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
     <span class="n">base_model_line</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">data_test</span><span class="p">,</span> <span class="n">regressor_predictions</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predictions of base models&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
@@ -1873,211 +1866,7 @@ base models.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-</pre></div>
-</div>
-<img alt="../_images/ensemble_bagging_29_2.png" src="../_images/ensemble_bagging_29_2.png" />
+<img alt="../_images/ensemble_bagging_29_0.png" src="../_images/ensemble_bagging_29_0.png" />
 </div>
 </div>
 <p>The predictions of this bagged polynomial regression model looks

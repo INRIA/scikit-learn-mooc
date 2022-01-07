@@ -1639,8 +1639,9 @@ look at the underlying decision tree classifiers trained.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">boosting_round</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">adaboost</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="c1"># we convert `data` into a NumPy array to avoid a warning raised in scikit-learn</span>
     <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-        <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
     <span class="p">)</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                     <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span>
@@ -1651,26 +1652,18 @@ look at the underlying decision tree classifiers trained.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but DecisionTreeClassifier was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but DecisionTreeClassifier was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-/opt/hostedtoolcache/Python/3.7.12/x64/lib/python3.7/site-packages/sklearn/base.py:444: UserWarning: X has feature names, but DecisionTreeClassifier was fitted without feature names
-  f&quot;X has feature names, but {self.__class__.__name__} was fitted without&quot;
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="../_images/ensemble_adaboost_17_2.png" src="../_images/ensemble_adaboost_17_2.png" />
+<img alt="../_images/ensemble_adaboost_17_1.png" src="../_images/ensemble_adaboost_17_1.png" />
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="../_images/ensemble_adaboost_17_4.png" src="../_images/ensemble_adaboost_17_4.png" />
+<img alt="../_images/ensemble_adaboost_17_3.png" src="../_images/ensemble_adaboost_17_3.png" />
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
 </pre></div>
 </div>
-<img alt="../_images/ensemble_adaboost_17_6.png" src="../_images/ensemble_adaboost_17_6.png" />
+<img alt="../_images/ensemble_adaboost_17_5.png" src="../_images/ensemble_adaboost_17_5.png" />
 </div>
 </div>
 <div class="cell docutils container">

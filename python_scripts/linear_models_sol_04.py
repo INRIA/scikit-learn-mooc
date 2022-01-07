@@ -136,3 +136,101 @@ ridge.coef_[:5] * 3
 # by default. However, one needs to use `Ridge` (and even `RidgeCV` to tune
 # the parameter `alpha`) instead of `LinearRegression`.
 # ```
+#
+# ## Note on encoded categorical features
+#
+# We will finish this exercise by showing the effect of using a `OneHotEncoder`
+# to encode categorical features and how it would affect the linear models.
+#
+# Let's first load the Ames housing dataset and take a subset of features that
+# are only categorical features.
+
+# %%
+# solution
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values='?')
+ames_housing = ames_housing.drop(columns="Id")
+
+categorical_columns = ["Street", "Foundation", "CentralAir", "PavedDrive"]
+target_name = "SalePrice"
+X, y = ames_housing[categorical_columns], ames_housing[target_name]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=0
+)
+
+# %% [markdown] tags=["solution"]
+#
+# We previously presented that a `OneHotEncoder` creates as many columns as
+# categories. Therefore, there is always one column (i.e. one encoded category)
+# that can be inferred from the others. Thus, a `OneHotEncoder` is creating
+# some collinear features.
+#
+# We will illustrate such a behaviour by taking a feature containing only two
+# categories.
+
+# %%
+# solution
+from sklearn.preprocessing import OneHotEncoder
+
+single_feature = ["CentralAir"]
+encoder = OneHotEncoder(sparse=False, dtype=np.int32)
+X_trans = encoder.fit_transform(X_train[single_feature])
+X_trans = pd.DataFrame(
+    X_trans,
+    columns=encoder.get_feature_names_out(input_features=single_feature),
+)
+X_trans
+
+# %% [markdown] tags=["solution"]
+#
+# Here, we see that the encoded category "CentralAir_N" is the opposite of the
+# encoded category "CentralAir_Y". Therefore, we observe that using a
+# `OneHotEncder` creates features having the problematic pattern observe
+# earlier in this exercise. Training a linear model, only one of the feature
+# is therefore informative because they carry the same information.
+#
+# Using regularization will thus help to overcome the issues that we spotted
+# earlier in this exercise.
+#
+# Another strategy is to arbitrary drop one of the encoded categories.
+# Scikit-learn provides such an option by setting the parameter `drop` in the
+# `OneHotEncoder`. This parameter can be set to `first` to always drop the
+# first encoded category or `binary_only` to only drop a column in the case of
+# binary categories.
+
+# %%
+# solution
+encoder = OneHotEncoder(drop="first", sparse=False, dtype=np.int32)
+X_trans = encoder.fit_transform(X_train[single_feature])
+X_trans = pd.DataFrame(
+    X_trans,
+    columns=encoder.get_feature_names_out(input_features=single_feature),
+)
+X_trans
+
+# %% [markdown] tags=["solution"]
+#
+# We see that only the second column of the previous encoded data is kept.
+# This preprocessing is commonly used. However, you should notice that it
+# break feature symmetry and will impact the number of coefficients of the
+# model, their values, and thus their meaning.
+#
+# Note that we can use this option is a machine-learning pipeline.
+
+# %%
+# solution
+from sklearn.pipeline import make_pipeline
+
+model = make_pipeline(OneHotEncoder(drop="first", dtype=np.int32), Ridge())
+model.fit(X_train, y_train)
+n_categories = [X_train[col].nunique() for col in X_train.columns]
+print(
+    f"R2 score on the testing set: {model.score(X_test, y_test):.2f}"
+)
+print(
+    f"Our model contains {model[-1].coef_.size} features while "
+    f"{sum(n_categories)} categories are originally available."
+)

@@ -89,7 +89,7 @@ print(f"On average, our random forest regressor makes an error of {error:.2f} k$
 #
 # Let's first discuss the `max_depth` (or `max_leaf_nodes`) parameter. We saw
 # in the section on gradient-boosting that the algorithm fits the error of the
-# previous tree in the ensemble. Thus, fitting fully grown trees will be
+# previous tree in the ensemble. Thus, fitting fully grown trees would be
 # detrimental. Indeed, the first tree of the ensemble would perfectly fit
 # (overfit) the data and thus no subsequent tree would be required, since there
 # would be no residuals. Therefore, the tree used in gradient-boosting should
@@ -141,8 +141,8 @@ cv_results[columns].sort_values(by="rank_test_score")
 #
 # In this search, we see that the `learning_rate` is required to be large
 # enough, i.e. > 0.1. We also observe that for the best ranked models, having a
-# smaller `learning_rate`, will required more trees or a larger number of
-# leaves for each tree. However, this is particularly to diffcult to draw
+# smaller `learning_rate`, will require more trees or a larger number of
+# leaves for each tree. However, it is particularly difficult to draw
 # more detailed conclusions since the best value of an hyperparameter depends
 # on the other hyperparameter values.
 

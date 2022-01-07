@@ -265,6 +265,7 @@ _ = plt.title("Predictions from a bagging classifier")
 # %%
 for tree_idx, tree in enumerate(bagged_trees.estimators_):
     label = "Predictions of individual trees" if tree_idx == 0 else None
+    # we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn
     tree_predictions = tree.predict(data_test.to_numpy())
     plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.1,
              color="tab:blue", label=label)

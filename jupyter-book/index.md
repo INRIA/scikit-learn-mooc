@@ -72,7 +72,7 @@ or use the following resources:
 ## MOOC material
 
 The MOOC material is developed publicly under the [CC-By license](
-https://github.com/INRIA/scikit-learn-mooc/blob/master/LICENSE),
+https://github.com/INRIA/scikit-learn-mooc/blob/main/LICENSE),
 including the notebooks, exercises and solutions to the exercises
 (but not the quizz solutions ;) via the following GitHub
 repository:

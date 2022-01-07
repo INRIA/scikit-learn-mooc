@@ -3,7 +3,7 @@ name: deploy-gh-pages
 on:
   push:
     branches:
-    - master
+    - main
     - test-ci*
 
 jobs:
@@ -33,11 +33,11 @@ jobs:
         cache-name: jupyter-cache
       with:
         path: jupyter-book/_build/.jupyter_cache
-        key: v1-${{ github.ref }}-${{ hashFiles('python_scripts/**/*.py') }}
+        key: v2-${{ github.ref }}-${{ hashFiles('python_scripts/**/*.py') }}
         restore-keys: |
-          v1-${{ github.ref }}-${{ hashFiles('python_scripts/**/*.py') }}
-          v1-${{ github.ref }}
-          v1-refs/heads/master
+          v2-${{ github.ref }}-${{ hashFiles('python_scripts/**/*.py') }}
+          v2-${{ github.ref }}
+          v2-refs/heads/main
 
     - name: Build the JupyterBook
       run: |
@@ -48,7 +48,7 @@ jobs:
         cp -r jupyter-book/_build/html gh-pages
 
     - name: GitHub Pages action
-      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       uses: peaceiris/actions-gh-pages@v3.6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

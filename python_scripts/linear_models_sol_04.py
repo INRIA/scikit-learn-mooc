@@ -98,10 +98,10 @@ feature_names = [
     "Noisy feature #0",
     "Noisy feature #1",
     "Noisy feature #2",
-    "Repeated feature #0",
-    "Repeated feature #1",
-    "Repeated feature #0",
-    "Repeated feature #1",
+    "First repetition of feature #0",
+    "First repetition of  feature #1",
+    "Second repetition of  feature #0",
+    "Second repetition of  feature #1",
 ]
 coef = pd.Series(linear_regression.coef_, index=feature_names)
 _ = coef.plot.barh()
@@ -218,10 +218,10 @@ X_trans
 # earlier in this exercise. Training a linear regression model on such a
 # of one-hot encoded binary feature can therefore lead to numerical
 # problems, especially without regularization. Furthermore, the two one-hot
-# feature are redundant as they encode exactly the same information in
+# features are redundant as they encode exactly the same information in
 # opposite ways.
 #
-# Using regularization will helps to overcome the numerical issues that we highlighted
+# Using regularization helps to overcome the numerical issues that we highlighted
 # earlier in this exercise.
 #
 # Another strategy is to arbitrarily drop one of the encoded categories.

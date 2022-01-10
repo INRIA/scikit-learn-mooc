@@ -139,7 +139,7 @@ ridge.coef_[:5] * 3
 #
 # ## Note on encoded categorical features
 #
-# We will finish this exercise by showing the effect of using a `OneHotEncoder`
+# We will finish this exercise by showing the effect of using `OneHotEncoder`
 # to encode categorical features and how it would affect the linear models.
 #
 # Let's first load the Ames housing dataset and take a subset of features that
@@ -165,11 +165,15 @@ X_train, X_test, y_train, y_test = train_test_split(
 #
 # We previously presented that a `OneHotEncoder` creates as many columns as
 # categories. Therefore, there is always one column (i.e. one encoded category)
-# that can be inferred from the others. Thus, a `OneHotEncoder` is creating
-# some collinear features.
+# that can be inferred from the others. Thus, `OneHotEncoder` creates
+# collinear features.
 #
-# We will illustrate such a behaviour by taking a feature containing only two
-# categories.
+# We illustrate this behaviour by considering the "CentralAir" feature that
+# contains only two categories:
+
+# %%
+# solution
+X_train["CentralAir"]
 
 # %%
 # solution
@@ -188,14 +192,17 @@ X_trans
 #
 # Here, we see that the encoded category "CentralAir_N" is the opposite of the
 # encoded category "CentralAir_Y". Therefore, we observe that using a
-# `OneHotEncder` creates features having the problematic pattern observe
-# earlier in this exercise. Training a linear model, only one of the feature
-# is therefore informative because they carry the same information.
+# `OneHotEncoder` creates two features having the problematic pattern observed
+# earlier in this exercise. Training a linear regression model on such a
+# of one-hot encoded binary feature can therefore lead to numerical
+# problems, especially without regularization. Furthermore, the two one-hot
+# feature are redundant as they encode exactly the same information in
+# opposite ways.
 #
-# Using regularization will thus help to overcome the issues that we spotted
+# Using regularization will helps to overcome the numerical issues that we highlighted
 # earlier in this exercise.
 #
-# Another strategy is to arbitrary drop one of the encoded categories.
+# Another strategy is to arbitrarily drop one of the encoded categories.
 # Scikit-learn provides such an option by setting the parameter `drop` in the
 # `OneHotEncoder`. This parameter can be set to `first` to always drop the
 # first encoded category or `binary_only` to only drop a column in the case of
@@ -214,11 +221,13 @@ X_trans
 # %% [markdown] tags=["solution"]
 #
 # We see that only the second column of the previous encoded data is kept.
-# This preprocessing is commonly used. However, you should notice that it
-# break feature symmetry and will impact the number of coefficients of the
-# model, their values, and thus their meaning.
+# Dropping one of the one-hot encoded column is a common practice,
+# especially for binary categorical features. Note however that this breaks
+# symmetry between categories and impacts the number of coefficients of the
+# model, their values, and thus their meaning, especially when applying
+# strong regularization.
 #
-# Note that we can use this option is a machine-learning pipeline.
+# Let's finally illustrate how to use this option is a machine-learning pipeline:
 
 # %%
 # solution

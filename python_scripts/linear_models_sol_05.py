@@ -48,7 +48,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty="none"))
+    StandardScaler(), LogisticRegression(penalty="l2"))
 
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of

@@ -51,8 +51,6 @@ def plot_classification(model, data, feature_names, target_names):
                     hue=target_names, palette=palette)
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 
-    return ax
-
 
 def plot_regression(model, data, target):
     data_test = pd.DataFrame(
@@ -63,8 +61,6 @@ def plot_regression(model, data, target):
 
     sns.scatterplot(x=data.iloc[:, 0], y=target, color="black", alpha=0.5)
     plt.plot(data_test, target_predicted, linewidth=4)
-
-    return ax
 
 
 # %% [markdown]

@@ -22,12 +22,13 @@ import pandas as pd
 
 symbols = {"TOT": "Total", "XOM": "Exxon", "CVX": "Chevron",
            "COP": "ConocoPhillips", "VLO": "Valero Energy"}
-url = ("https://raw.githubusercontent.com/scikit-learn/examples-data/"
-       "master/financial-data/{}.csv")
+template_name = ("../datasets/financial-data/{}.csv")
 
 quotes = {}
 for symbol in symbols:
-    data = pd.read_csv(url.format(symbol), index_col=0, parse_dates=True)
+    data = pd.read_csv(
+        template_name.format(symbol), index_col=0, parse_dates=True
+    )
     quotes[symbols[symbol]] = data["open"]
 quotes = pd.DataFrame(quotes)
 

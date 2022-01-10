@@ -1,12 +1,12 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.05
-# In the previous notebook we presented the `penalty` parameter of a logistic
-# regression classifier. It controls the **type** of regularization to use,
-# whereas the regularization **strength** is set using the parameter `C`. In
-# that case we set `penalty="none"`, which is equivalent to an infinitely large
-# value of `C`. In this exercise, we ask you to train a logistic regression
-# classifier using the default `penalty="l2"` regularization to find by yourself
-# the effect of the parameter `C`.
+# In the previous notebook we set `penalty="none"` to disable regularization
+# entirely. This parameter can also control the **type** of regularization to use,
+# whereas the regularization **strength** is set using the parameter `C`.
+# Setting`penalty="none"` is equivalent to an infinitely large value of `C`.
+# In this exercise, we ask you to train a logistic regression classifier using the
+# `penalty="l2"` regularization (which happens to be the default in scikit-learn)
+# to find by yourself the effect of the parameter `C`.
 #
 # We will start by loading the dataset and create the helper function to show
 # the decision separation as in the previous code.

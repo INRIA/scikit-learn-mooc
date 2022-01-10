@@ -26,10 +26,10 @@ data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 # ```
 
 # %% [markdown]
-# ## Create helper function
+# ## Create helper functions
 #
-# We will create a small helper function to plot the results of the regression
-# trees.
+# We will create some helper functions to plot the data samples as well as the
+# decision boundary for classification and the regression line for regression.
 
 # %%
 import numpy as np

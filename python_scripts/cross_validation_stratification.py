@@ -1,5 +1,13 @@
 # %% [markdown]
+#
 # # Stratification
+#
+# In the previous notebooks, we always used either a default `KFold` or a
+# `ShuffleSplit` cross-validation strategies to iteratively split our dataset.
+# However, you should not assume that these approaches are always the best
+# option: some other cross-validation strategies might be better adapted to
+# your problem.
+#
 # Let's start with the concept of stratification by giving an example where
 # we can get into trouble if we are not careful. Let's load the iris dataset.
 

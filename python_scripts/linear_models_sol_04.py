@@ -30,7 +30,13 @@ data, target, coef = make_regression(
 # %%
 import pandas as pd
 
-feature_names = [f"Features {i}" for i in range(data.shape[1])]
+feature_names = [
+    "Relevant feature #0",
+    "Relevant feature #1",
+    "Noisy feature #0",
+    "Noisy feature #1",
+    "Noisy feature #2",
+]
 coef = pd.Series(coef, index=feature_names)
 coef.plot.barh()
 coef
@@ -49,7 +55,13 @@ linear_regression.fit(data, target)
 linear_regression.coef_
 
 # %% tags=["solution"]
-feature_names = [f"Features {i}" for i in range(data.shape[1])]
+feature_names = [
+    "Relevant feature #0",
+    "Relevant feature #1",
+    "Noisy feature #0",
+    "Noisy feature #1",
+    "Noisy feature #2",
+]
 coef = pd.Series(linear_regression.coef_, index=feature_names)
 _ = coef.plot.barh()
 
@@ -80,7 +92,17 @@ linear_regression.fit(data, target)
 linear_regression.coef_
 
 # %% tags=["solution"]
-feature_names = [f"Features {i}" for i in range(data.shape[1])]
+feature_names = [
+    "Relevant feature #0",
+    "Relevant feature #1",
+    "Noisy feature #0",
+    "Noisy feature #1",
+    "Noisy feature #2",
+    "Repeated feature #0",
+    "Repeated feature #1",
+    "Repeated feature #0",
+    "Repeated feature #1",
+]
 coef = pd.Series(linear_regression.coef_, index=feature_names)
 _ = coef.plot.barh()
 

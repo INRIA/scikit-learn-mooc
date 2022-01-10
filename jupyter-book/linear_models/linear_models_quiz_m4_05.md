@@ -4,8 +4,8 @@
 By default, a `LogisticRegression` in scikit-learn applies:
 
 - a) no penalty
-- b) a l2 penalty
-- c) a l1 penalty
+- b) a penalty whose strength can be tuned by the user
+- c) a cross-validation to select the penalty strength
 ```
 
 +++

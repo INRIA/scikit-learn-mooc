@@ -38,7 +38,8 @@ import seaborn as sns
 from helpers.plotting import DecisionBoundaryDisplay
 
 
-def plot_classification(model, data, feature_names, target_names):
+def fit_and_plot_classification(model, data, feature_names, target_names):
+    model.fit(data[feature_names], data[target_names])
     if data[target_names].nunique() == 2:
         palette = ["tab:red", "tab:blue"]
     else:
@@ -52,14 +53,16 @@ def plot_classification(model, data, feature_names, target_names):
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 
 
-def plot_regression(model, data, target):
+def fit_and_plot_regression(model, data, feature_names, target_names):
+    model.fit(data[feature_names], data[target_names])
     data_test = pd.DataFrame(
         np.arange(data.iloc[:, 0].min(), data.iloc[:, 0].max()),
-        columns=data.columns,
+        columns=data[feature_names].columns,
     )
     target_predicted = model.predict(data_test)
 
-    sns.scatterplot(x=data.iloc[:, 0], y=target, color="black", alpha=0.5)
+    sns.scatterplot(
+        x=data.iloc[:, 0], y=data[target_names], color="black", alpha=0.5)
     plt.plot(data_test, target_predicted, linewidth=4)
 
 
@@ -78,20 +81,17 @@ def plot_regression(model, data, target):
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 
 max_depth = 2
-tree_clf = DecisionTreeClassifier(max_depth=max_depth).fit(
-    data_clf[data_clf_columns], data_clf[target_clf_column]
-)
-tree_reg = DecisionTreeRegressor(max_depth=max_depth).fit(
-    data_reg[data_reg_columns], data_reg[target_reg_column]
-)
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
 # %%
-plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
+fit_and_plot_classification(
+    tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Shallow classification tree with max-depth of {max_depth}")
 
 # %%
-plot_regression(tree_reg, data_reg[data_reg_columns],
-                data_reg[target_reg_column])
+fit_and_plot_regression(
+    tree_reg, data_reg, data_reg_columns, target_reg_column)
 _ = plt.title(f"Shallow regression tree with max-depth of {max_depth}")
 
 # %% [markdown]
@@ -100,20 +100,17 @@ _ = plt.title(f"Shallow regression tree with max-depth of {max_depth}")
 
 # %%
 max_depth = 30
-tree_clf = DecisionTreeClassifier(max_depth=max_depth).fit(
-    data_clf[data_clf_columns], data_clf[target_clf_column]
-)
-tree_reg = DecisionTreeRegressor(max_depth=max_depth).fit(
-    data_reg[data_reg_columns], data_reg[target_reg_column]
-)
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+tree_reg = DecisionTreeRegressor(max_depth=max_depth)
 
 # %%
-plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
+fit_and_plot_classification(
+    tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Deep classification tree with max-depth of {max_depth}")
 
 # %%
-plot_regression(tree_reg, data_reg[data_reg_columns],
-                data_reg[target_reg_column])
+fit_and_plot_regression(
+    tree_reg, data_reg, data_reg_columns, target_reg_column)
 _ = plt.title(f"Deep regression tree with max-depth of {max_depth}")
 
 # %% [markdown]
@@ -128,21 +125,18 @@ _ = plt.title(f"Deep regression tree with max-depth of {max_depth}")
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {"max_depth": np.arange(2, 10, 1)}
-tree_clf = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid).fit(
-    data_clf[data_clf_columns], data_clf[target_clf_column]
-)
-tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid).fit(
-    data_reg[data_reg_columns], data_reg[target_reg_column]
-)
+tree_clf = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid)
+tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid)
 
 # %%
-plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
+fit_and_plot_classification(
+    tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Optimal depth found via CV: "
               f"{tree_clf.best_params_['max_depth']}")
 
 # %%
-plot_regression(tree_reg, data_reg[data_reg_columns],
-                data_reg[target_reg_column])
+fit_and_plot_regression(
+    tree_reg, data_reg, data_reg_columns, target_reg_column)
 _ = plt.title(f"Optimal depth found via CV: "
               f"{tree_reg.best_params_['max_depth']}")
 
@@ -198,10 +192,9 @@ _ = plt.title("Synthetic dataset")
 
 # %%
 max_depth = 2
-tree_clf = DecisionTreeClassifier(max_depth=max_depth).fit(
-    data_clf[data_clf_columns], data_clf[target_clf_column]
-)
-plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+fit_and_plot_classification(
+    tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %% [markdown]
@@ -226,10 +219,9 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 
 # %%
 max_depth = 6
-tree_clf = DecisionTreeClassifier(max_depth=max_depth).fit(
-    data_clf[data_clf_columns], data_clf[target_clf_column]
-)
-plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
+tree_clf = DecisionTreeClassifier(max_depth=max_depth)
+fit_and_plot_classification(
+    tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %%
@@ -249,10 +241,9 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 
 # %%
 min_samples_leaf = 60
-tree_clf = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf).fit(
-    data_clf[data_clf_columns], data_clf[target_clf_column]
-)
-plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
+tree_clf = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf)
+fit_and_plot_classification(
+    tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(
     f"Decision tree with leaf having at least {min_samples_leaf} samples")
 

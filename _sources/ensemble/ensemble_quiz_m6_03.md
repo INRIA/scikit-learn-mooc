@@ -17,13 +17,3 @@ Histogram gradient boosting is an accelerated gradient boosting algorithm that:
 - b) bin the original dataset
 - c) take a subsample of the original features
 ```
-
-+++
-
-```{admonition} Question
-AdaBoost tends to overfit when increasing the number of predictors:
-
-- a) true
-- b) false
-- c) it depends on the data
-```

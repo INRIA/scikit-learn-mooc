@@ -49,7 +49,7 @@ Scaling the data before fitting a model:
 +++
 
 ```{admonition} Question
-The effect of an l2-regularization (as done in ridge) is to:
+The effect of increasing the regularization strength in a ridge model is to:
 
 - a) shrink all weights towards zero
 - b) make all weights equal

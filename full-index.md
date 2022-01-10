@@ -234,8 +234,6 @@
 * [Nested cross-validation](notebooks/cross_validation_nested.ipynb)
 * [✅ Quiz M7.03](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_quiz_m7_03.html)
 
-[Introduction of the evaluation metrics](https://inria.github.io/scikit-learn-mooc/evaluation/02_metrics.html)
-
 ### Classification metrics
 
 * [Classification](notebooks/metrics_classification.ipynb)

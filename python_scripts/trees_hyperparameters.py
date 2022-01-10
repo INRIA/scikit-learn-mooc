@@ -35,19 +35,34 @@ data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from helpers.plotting import DecisionBoundaryDisplay
 
 
-def plot_regression(model, X, y, ax=None):
-    X_test = pd.DataFrame(
-        np.arange(X.iloc[:, 0].min(), X.iloc[:, 0].max()),
-        columns=X.columns,
+def plot_classification(model, data, feature_names, target_names):
+    if data[target_names].nunique() == 2:
+        palette = ["tab:red", "tab:blue"]
+    else:
+        palette = ["tab:red", "tab:blue", "black"]
+    DecisionBoundaryDisplay.from_estimator(
+        model, data[feature_names], response_method="predict",
+        cmap="RdBu", alpha=0.5
     )
-    y_pred = model.predict(X_test)
+    sns.scatterplot(data=data, x=feature_names[0], y=feature_names[1],
+                    hue=target_names, palette=palette)
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 
-    if ax is None:
-        _, ax = plt.subplots()
-    sns.scatterplot(x=X.iloc[:, 0], y=y, color="black", alpha=0.5, ax=ax)
-    ax.plot(X_test, y_pred, linewidth=4)
+    return ax
+
+
+def plot_regression(model, data, target):
+    data_test = pd.DataFrame(
+        np.arange(data.iloc[:, 0].min(), data.iloc[:, 0].max()),
+        columns=data.columns,
+    )
+    target_predicted = model.predict(data_test)
+
+    sns.scatterplot(x=data.iloc[:, 0], y=target, color="black", alpha=0.5)
+    plt.plot(data_test, target_predicted, linewidth=4)
 
     return ax
 
@@ -75,16 +90,7 @@ tree_reg = DecisionTreeRegressor(max_depth=max_depth).fit(
 )
 
 # %%
-from helpers.plotting import DecisionBoundaryDisplay
-
-palette = ["tab:red", "tab:blue", "black"]
-DecisionBoundaryDisplay.from_estimator(
-    tree_clf, data_clf[data_clf_columns], response_method="predict",
-    cmap="RdBu", alpha=0.5
-)
-sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
-                hue=target_clf_column, palette=palette)
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Shallow classification tree with max-depth of {max_depth}")
 
 # %%
@@ -106,13 +112,7 @@ tree_reg = DecisionTreeRegressor(max_depth=max_depth).fit(
 )
 
 # %%
-DecisionBoundaryDisplay.from_estimator(
-    tree_clf, data_clf[data_clf_columns], response_method="predict",
-    cmap="RdBu", alpha=0.5
-)
-sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
-                hue=target_clf_column, palette=palette)
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Deep classification tree with max-depth of {max_depth}")
 
 # %%
@@ -140,13 +140,7 @@ tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid).fit(
 )
 
 # %%
-DecisionBoundaryDisplay.from_estimator(
-    tree_clf, data_clf[data_clf_columns], response_method="predict",
-    cmap="RdBu", alpha=0.5
-)
-sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
-                hue=target_clf_column, palette=palette)
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Optimal depth found via CV: "
               f"{tree_clf.best_params_['max_depth']}")
 
@@ -211,13 +205,7 @@ max_depth = 2
 tree_clf = DecisionTreeClassifier(max_depth=max_depth).fit(
     data_clf[data_clf_columns], data_clf[target_clf_column]
 )
-palette = ["tab:red", "tab:blue"]
-DecisionBoundaryDisplay.from_estimator(
-    tree_clf, data_clf[data_clf_columns], response_method="predict",
-    cmap="RdBu", alpha=0.5
-)
-sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
-                hue=target_clf_column, palette=palette)
+plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %% [markdown]
@@ -245,12 +233,7 @@ max_depth = 6
 tree_clf = DecisionTreeClassifier(max_depth=max_depth).fit(
     data_clf[data_clf_columns], data_clf[target_clf_column]
 )
-DecisionBoundaryDisplay.from_estimator(
-    tree_clf, data_clf[data_clf_columns], response_method="predict",
-    cmap="RdBu", alpha=0.5
-)
-sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
-                hue=target_clf_column, palette=palette)
+plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %%
@@ -273,12 +256,7 @@ min_samples_leaf = 60
 tree_clf = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf).fit(
     data_clf[data_clf_columns], data_clf[target_clf_column]
 )
-DecisionBoundaryDisplay.from_estimator(
-    tree_clf, data_clf[data_clf_columns], response_method="predict",
-    cmap="RdBu", alpha=0.5
-)
-sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
-                hue=target_clf_column, palette=palette)
+plot_classification(tree_clf, data_clf, data_clf_columns, target_clf_column)
 _ = plt.title(
     f"Decision tree with leaf having at least {min_samples_leaf} samples")
 

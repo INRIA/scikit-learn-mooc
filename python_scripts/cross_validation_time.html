@@ -1443,12 +1443,13 @@ financial quotations from some energy companies.</p>
 
 <span class="n">symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;TOT&quot;</span><span class="p">:</span> <span class="s2">&quot;Total&quot;</span><span class="p">,</span> <span class="s2">&quot;XOM&quot;</span><span class="p">:</span> <span class="s2">&quot;Exxon&quot;</span><span class="p">,</span> <span class="s2">&quot;CVX&quot;</span><span class="p">:</span> <span class="s2">&quot;Chevron&quot;</span><span class="p">,</span>
            <span class="s2">&quot;COP&quot;</span><span class="p">:</span> <span class="s2">&quot;ConocoPhillips&quot;</span><span class="p">,</span> <span class="s2">&quot;VLO&quot;</span><span class="p">:</span> <span class="s2">&quot;Valero Energy&quot;</span><span class="p">}</span>
-<span class="n">url</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;https://raw.githubusercontent.com/scikit-learn/examples-data/&quot;</span>
-       <span class="s2">&quot;master/financial-data/</span><span class="si">{}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
+<span class="n">template_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;../datasets/financial-data/</span><span class="si">{}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
 
 <span class="n">quotes</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">symbol</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="n">template_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">symbol</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
     <span class="n">quotes</span><span class="p">[</span><span class="n">symbols</span><span class="p">[</span><span class="n">symbol</span><span class="p">]]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;open&quot;</span><span class="p">]</span>
 <span class="n">quotes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span>
 </pre></div>
@@ -1557,7 +1558,7 @@ procedure with a single split and plot the prediction. We can use
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: 0.82
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: 0.83
 </pre></div>
 </div>
 </div>
@@ -1611,7 +1612,7 @@ the remaining data to test.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.22
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.20
 </pre></div>
 </div>
 </div>
@@ -1655,7 +1656,7 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -0.86 +/- 1.75
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -0.97 +/- 2.00
 </pre></div>
 </div>
 </div>
@@ -1680,7 +1681,7 @@ behaviour.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -2.33 +/- 3.43
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.54 +/- 2.34
 </pre></div>
 </div>
 </div>

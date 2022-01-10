@@ -119,8 +119,7 @@ model
 # We will optimize 3 other parameters in addition to the ones we
 # optimized in the notebook presenting the `GridSearchCV`:
 #
-# * `l2_regularization`: it corresponds to the constant that regularizes the loss
-#   function;
+# * `l2_regularization`: it corresponds to the strength of the regularization;
 # * `min_samples_leaf`: it corresponds to the minimum number of samples
 #   required in a leaf;
 # * `max_bins`: it corresponds to the maximum number of bins to construct the

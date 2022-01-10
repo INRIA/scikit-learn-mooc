@@ -108,7 +108,7 @@ _ = plt.title("Distribution of the CV scores")
 
 # %% [markdown] tags=["solution"]
 # We observe that the two histograms are well separated. Therefore the dummy
-# classifier with the strategy `most_frequent` has significantly lower accuracy
+# classifier with the strategy `most_frequent` has much lower accuracy
 # than the logistic regression classifier. We conclude that the logistic
 # regression model can successfully find predictive information in the input
 # features to improve upon the baseline.

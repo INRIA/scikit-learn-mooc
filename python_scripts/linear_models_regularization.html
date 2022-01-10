@@ -1948,11 +1948,23 @@ of the value of <code class="docutils literal notranslate"><span class="pre">alp
 <p>Looking specifically to weights values, we observe that increasing the value
 of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> will decrease the weight values. A negative value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> would
 actually enhance large weights and promote overfitting.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here, we only focus on numerical features. For categorical features, it is
+generally common to omit scaling when features are encoded with a
+<code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> since the feature values are already on a similar scale.</p>
+<p>However, this choice can be questioned since scaling interacts with
+regularization as well. For instance, scaling categorical features that are
+imbalanced (e.g. more occurrences of a specific category) would even out
+the impact of regularization to each category. However, scaling such features
+in the presence of rare categories could be problematic (i.e. division by a very
+small standard deviation) and it can therefore introduce numerical issues.</p>
+</div>
 <p>In the previous analysis, we did not study if the parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> will have
 an effect on the performance. We chose the parameter beforehand and fix it
 for the analysis.</p>
-<p>In the next section, we will check the impact of this hyperparameter and how
-it should be tuned.</p>
+<p>In the next section, we will check the impact of the regularization
+parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and how it should be tuned.</p>
 </div>
 <div class="section" id="fine-tuning-the-regularization-parameter">
 <h2>Fine tuning the regularization parameter<a class="headerlink" href="#fine-tuning-the-regularization-parameter" title="Permalink to this headline">¶</a></h2>

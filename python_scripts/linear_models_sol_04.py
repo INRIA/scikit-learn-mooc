@@ -131,7 +131,7 @@ ridge.coef_[:5] * 3
 
 # %% [markdown] tags=["solution"]
 # ```{tip}
-# We always advise to use l2-penalized model instead of non-penalized model
+# We advise to always use penalized models instead of non-penalized models
 # in practice. In scikit-learn, `LogisticRegression` applies such penalty
 # by default. However, one needs to use `Ridge` (and even `RidgeCV` to tune
 # the parameter `alpha`) instead of `LinearRegression`.

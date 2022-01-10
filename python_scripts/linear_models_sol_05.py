@@ -1,11 +1,12 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.05
-# In the previous notebook, we presented a non-penalized logistic regression
-# classifier. This classifier accepts a parameter `penalty` to add a
-# regularization. The regularization strength is set using the parameter `C`.
-#
-# In this exercise, we ask you to train a l2-penalized logistic regression
-# classifier and to find by yourself the effect of the parameter `C`.
+# In the previous notebook we presented the `penalty` parameter of a logistic
+# regression classifier. It controls the **type** of regularization to use,
+# whereas the regularization **strength** is set using the parameter `C`. In
+# that case we set `penalty="none"`, which is equivalent to an infinitely large
+# value of `C`. In this exercise, we ask you to train a logistic regression
+# classifier using the default regularization to find by yourself the effect of
+# the parameter `C`.
 #
 # We will start by loading the dataset and create the helper function to show
 # the decision separation as in the previous code.
@@ -47,7 +48,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty="l2"))
+    StandardScaler(), LogisticRegression())
 
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of

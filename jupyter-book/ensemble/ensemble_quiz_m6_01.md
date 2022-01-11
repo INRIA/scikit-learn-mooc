@@ -12,7 +12,7 @@ draw:
 - d) random samples without replacement over features
 
 Hint: it is possible to access the documentation for those classes by
-clicking on the links on their name.
+clicking on the links on their names.
 ```
 
 +++
@@ -21,7 +21,7 @@ clicking on the links on their name.
 In a
 [`BaggingClassifier`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingClassifier.html)
 or [`BaggingRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.BaggingRegressor.html),
-the parameter `base_estimator` is:
+the parameter `base_estimator` can be:
 
 - a) any predictor
 - b) a decision tree predictor
@@ -40,4 +40,6 @@ bagging classifier and a random forest classifier:
   random
 - c) in a random forest, a random resampling is performed both over features
   as well as over samples
+
+_Select several answers_
 ```

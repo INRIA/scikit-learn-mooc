@@ -1,12 +1,14 @@
 # ✅ Quiz M6.03
 
 ```{admonition} Question
-Gradient boosting are usually composed of (in comparison to random forest):
+When compared to random forests, gradient boosting is usually trained using:
 
-- a) shallow trees
-- b) deep trees
-- c) using a subset of features
-- d) using all features
+- a) shallower trees
+- b) deeper trees
+- c) a subset of features
+- d) all features
+
+_Select several answers_
 ```
 
 +++
@@ -17,6 +19,7 @@ Which of the hyperparameter(s) do not exist in random forest but exists in gradi
 - a) number of estimators
 - b) maximum depth
 - c) learning rate
+
 ```
 
 +++
@@ -25,6 +28,8 @@ Which of the hyperparameter(s) do not exist in random forest but exists in gradi
 Which of the following options are correct about the benefits of ensemble models?
 
 - a) Better generalization performance
-- b) Reduced sensitivity to hyper-parameter tuning of individual predictors
+- b) Reduced sensitivity to hyperparameter tuning of individual predictors
 - c) Better interpretability
+
+_Select several answers_
 ```

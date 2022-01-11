@@ -1,19 +1,35 @@
 # ✅ Quiz M6.03
 
 ```{admonition} Question
-Boosting algorithms are building a predictor:
+When compared to random forests, gradient boosting is usually trained using:
 
-- a) by training predictors in parallel on slightly different datasets
-- b) by training predictors sequentially which will correct errors successively
-- c) by taking a linear combination of weak predictors
+- a) shallower trees
+- b) deeper trees
+- c) a subset of features
+- d) all features
+
+_Select several answers_
 ```
 
 +++
 
 ```{admonition} Question
-Histogram gradient boosting is an accelerated gradient boosting algorithm that:
+Which of the hyperparameter(s) do not exist in random forest but exists in gradient boosting:
 
-- a) takes a subsample of the original samples
-- b) bin the original dataset
-- c) take a subsample of the original features
+- a) number of estimators
+- b) maximum depth
+- c) learning rate
+
+```
+
++++
+
+```{admonition} Question
+Which of the following options are correct about the benefits of ensemble models?
+
+- a) Better generalization performance
+- b) Reduced sensitivity to hyperparameter tuning of individual predictors
+- c) Better interpretability
+
+_Select several answers_
 ```

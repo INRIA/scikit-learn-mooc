@@ -1,8 +1,8 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import Patch
 from pathlib import Path
 from sklearn.model_selection import KFold, ShuffleSplit
-import matplotlib.pyplot as plt
-from matplotlib.patches import Patch
-import numpy as np
 
 
 FIGURES_FOLDER = Path(__file__).parent
@@ -45,9 +45,11 @@ def plot_cv_indices(cv, X, y, ax, lw=50):
         ylim=[n_splits + 0.2, -0.2],
         xlim=[0, 50],
     )
-    ax.legend([Patch(color=cmap_cv(.8)), Patch(color=cmap_cv(.02))],
-            ['Training samples', 'Testing samples'], loc=(1.02, .8)
-            )
+    ax.legend(
+        [Patch(color=cmap_cv(0.8)), Patch(color=cmap_cv(0.02))],
+        ["Training samples", "Testing samples"],
+        loc=(1.02, 0.8),
+    )
     ax.set_title("{}".format(type(cv).__name__))
     return ax
 

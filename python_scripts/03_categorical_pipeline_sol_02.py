@@ -169,7 +169,7 @@ print("The mean cross-validation accuracy is: "
 # categories (which was not the case for linear models).
 #
 # However from a computation point of view, the training time is
-# significantly longer: this is caused by the fact that `OneHotEncoder`
+# much longer: this is caused by the fact that `OneHotEncoder`
 # generates approximately 10 times more features than `OrdinalEncoder`.
 #
 # Note that the current implementation `HistGradientBoostingClassifier`

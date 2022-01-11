@@ -1,6 +1,13 @@
 # %% [markdown]
 # # Classification
 #
+# Machine learning models rely on optimizing an objective function, by seeking
+# its minimum or maximum. It is important to understand that this objective
+# function is usually decoupled from the evaluation metric that we want to
+# optimize in practice. The objective function serves as a proxy for the
+# evaluation metric. Therefore, in the upcoming notebooks, we will present
+# the different evaluation metrics used in machine learning.
+#
 # This notebook aims at giving an overview of the classification metrics that
 # can be used to evaluate the predictive model generalization performance. We can
 # recall that in a classification setting, the vector `target` is categorical
@@ -290,6 +297,7 @@ disp = PrecisionRecallDisplay.from_estimator(
     classifier, data_test, target_test, pos_label='donated',
     marker="+"
 )
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = disp.ax_.set_title("Precision-recall curve")
 
 # %% [markdown]
@@ -329,6 +337,7 @@ disp = RocCurveDisplay.from_estimator(
 disp = RocCurveDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = disp.ax_.set_title("ROC AUC curve")
 
 # %% [markdown]

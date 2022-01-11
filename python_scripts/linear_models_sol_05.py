@@ -1,11 +1,12 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.05
-# In the previous notebook, we presented a non-penalized logistic regression
-# classifier. This classifier accepts a parameter `penalty` to add a
-# regularization. The regularization strength is set using the parameter `C`.
-#
-# In this exercise, we ask you to train a l2-penalized logistic regression
-# classifier and to find by yourself the effect of the parameter `C`.
+# In the previous notebook we set `penalty="none"` to disable regularization
+# entirely. This parameter can also control the **type** of regularization to use,
+# whereas the regularization **strength** is set using the parameter `C`.
+# Setting`penalty="none"` is equivalent to an infinitely large value of `C`.
+# In this exercise, we ask you to train a logistic regression classifier using the
+# `penalty="l2"` regularization (which happens to be the default in scikit-learn)
+# to find by yourself the effect of the parameter `C`.
 #
 # We will start by loading the dataset and create the helper function to show
 # the decision separation as in the previous code.
@@ -78,6 +79,7 @@ for C in Cs:
     sns.scatterplot(
         data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
         hue=target_column, palette=["tab:red", "tab:blue"])
+    plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
     plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
 # %% [markdown]

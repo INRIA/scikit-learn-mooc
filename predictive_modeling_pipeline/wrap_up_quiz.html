@@ -1491,8 +1491,8 @@ to scale these numerical data and a
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html"><code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression</span></code></a>.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What is the accuracy score obtained by 5-fold cross-validation of this
-pipeline?</p>
+<p>What is the accuracy score obtained by 10-fold cross-validation (you can set
+the parameter <code class="docutils literal notranslate"><span class="pre">cv=10</span></code> when calling <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>) of this pipeline?</p>
 <ul class="simple">
 <li><p>a) ~0.5</p></li>
 <li><p>b) ~0.7</p></li>
@@ -1511,20 +1511,22 @@ To avoid any issue with rare categories that could only be present during
 the prediction, you can pass the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code> to the
 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>.</p></li>
 </ul>
-<p>Let us now define a <strong>substantial</strong> improvement or deterioration as an
-increase or decrease of the mean test score (<strong>difference of the mean
-test scores</strong> of models using only numerical features and numerical
-together with categorical features) of <strong>at least three times the
-standard deviation</strong> of the cross-validated test scores of the model
-using both categorical and numerical features.</p>
+<p>Let us now define a <strong>substantial</strong> improvement or deterioration. We define a
+substantial improvement if the model of reference is performing better 7 times
+or more in term of test score on the 10 cross-validation folds. Similarly, we
+define a substantial deterioration if the model of reference is performing
+worse 3 times or less in term of test score on the 10 cross-validation folds.
+In-between, the improvement or deterioration are only consider slightly better
+or worse.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>With this heterogeneous pipeline, the accuracy score:</p>
+<p>The heterogeneous pipeline, using both categorical and numerical features, is
+performing:</p>
 <ul class="simple">
-<li><p>a) worsens substantially</p></li>
-<li><p>b) worsens slightly</p></li>
-<li><p>c) improves slightly</p></li>
-<li><p>d) improves substantially</p></li>
+<li><p>a) <strong>substantially worse</strong> than the pipeline using only numerical feature</p></li>
+<li><p>b) <strong>slightly worse</strong> than the pipeline using only numerical feature</p></li>
+<li><p>c) <strong>slightly better</strong> than the pipeline using only numerical feature</p></li>
+<li><p>d) <strong>substantially better</strong> than the pipeline using only numerical feature</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>

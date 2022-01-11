@@ -103,8 +103,8 @@ to scale these numerical data and a
 [`sklearn.linear_model.LogisticRegression`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html).
 
 ```{admonition} Question
-What is the accuracy score obtained by 5-fold cross-validation of this
-pipeline?
+What is the accuracy score obtained by 10-fold cross-validation (you can set
+the parameter `cv=10` when calling `cross_validate`) of this pipeline?
 
 - a) ~0.5
 - b) ~0.7
@@ -126,20 +126,22 @@ can process both the numerical and categorical features together as follows:
   the prediction, you can pass the parameter `handle_unknown="ignore"` to the
   `OneHotEncoder`.
 
-Let us now define a **substantial** improvement or deterioration as an
-increase or decrease of the mean test score (**difference of the mean
-test scores** of models using only numerical features and numerical
-together with categorical features) of **at least three times the
-standard deviation** of the cross-validated test scores of the model
-using both categorical and numerical features.
+Let us now define a **substantial** improvement or deterioration. We define a
+substantial improvement if the model of reference is performing better 7 times
+or more in term of test score on the 10 cross-validation folds. Similarly, we
+define a substantial deterioration if the model of reference is performing
+worse 3 times or less in term of test score on the 10 cross-validation folds.
+In-between, the improvement or deterioration are only consider slightly better
+or worse.
 
 ```{admonition} Question
-With this heterogeneous pipeline, the accuracy score:
+The heterogeneous pipeline, using both categorical and numerical features, is
+performing:
 
-- a) worsens substantially
-- b) worsens slightly
-- c) improves slightly
-- d) improves substantially
+- a) **substantially worse** than the pipeline using only numerical feature
+- b) **slightly worse** than the pipeline using only numerical feature
+- c) **slightly better** than the pipeline using only numerical feature
+- d) **substantially better** than the pipeline using only numerical feature
 
 _Select a single answer_
 ```

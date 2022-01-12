@@ -1,7 +1,8 @@
-from pathlib import Path
-from sklearn.model_selection import KFold, ShuffleSplit
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.patches import Patch
+from pathlib import Path
+from sklearn.model_selection import KFold, ShuffleSplit
 
 
 FIGURES_FOLDER = Path(__file__).parent
@@ -44,6 +45,11 @@ def plot_cv_indices(cv, X, y, ax, lw=50):
         ylim=[n_splits + 0.2, -0.2],
         xlim=[0, 50],
     )
+    ax.legend(
+        [Patch(color=cmap_cv(0.8)), Patch(color=cmap_cv(0.02))],
+        ["Training samples", "Testing samples"],
+        loc=(1.02, 0.8),
+    )
     ax.set_title("{}".format(type(cv).__name__))
     return ax
 
@@ -52,15 +58,14 @@ n_points = 50
 X = np.random.randn(n_points, 10)
 y = np.random.randn(n_points)
 
-fig, ax = plt.subplots(figsize=(10, 4))
+fig, ax = plt.subplots(figsize=(12, 4))
 cv = KFold(5)
 _ = plot_cv_indices(cv, X, y, ax)
 plt.tight_layout()
 fig.savefig(FIGURES_FOLDER / "cross_validation_diagram.png")
 
-fig, ax = plt.subplots(figsize=(10, 4))
+fig, ax = plt.subplots(figsize=(12, 4))
 cv = ShuffleSplit(n_splits=5, test_size=0.2, random_state=0)
 _ = plot_cv_indices(cv, X, y, ax)
 plt.tight_layout()
 fig.savefig(FIGURES_FOLDER / "shufflesplit_diagram.png")
-# -

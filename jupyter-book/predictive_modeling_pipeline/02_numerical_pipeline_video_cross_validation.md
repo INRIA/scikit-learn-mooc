@@ -1,6 +1,8 @@
 # 🎥 Validation of a model
 
-TODO: insert video player here once ready
+<iframe class="video" width="640px" height="480px"
+        src="https://www.youtube.com/embed/kLWvI9fSnKc?rel=0"
+        allowfullscreen></iframe>
 
 <iframe class="slides"
         src="../slides/index.html?file=../slides/intro_cross_validation.md"></iframe>

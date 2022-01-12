@@ -1,8 +1,9 @@
-from pathlib import Path
-from sklearn.model_selection import KFold
-from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.patches import Patch
+from pathlib import Path
+from sklearn.model_selection import KFold
 
 
 FIGURES_FOLDER = Path(__file__).parent
@@ -51,6 +52,15 @@ def plot_cv_indices(cv, X, y, ax, lw=50):
             type(cv).__name__
         )
     )
+    ax.legend(
+        [
+            Patch(color=cmap_cv(0.9)),
+            Patch(color=cmap_cv(0.5)),
+            Patch(color=cmap_cv(0.02)),
+        ],
+        ["Testing samples", "Training samples", "Validation samples"],
+        loc=(1.02, 0.7),
+    )
     return ax
 
 
@@ -58,7 +68,7 @@ n_points = 40
 X = np.random.randn(n_points, 10)
 y = np.random.randn(n_points)
 
-fig, ax = plt.subplots(figsize=(10, 4))
+fig, ax = plt.subplots(figsize=(12, 4))
 cv = KFold(5)
 _ = plot_cv_indices(cv, X, y, ax)
 plt.tight_layout()
@@ -103,9 +113,7 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, ax, lw=50):
         xlim=[0, 50],
     )
 
-    ax.set_title(
-        "{} nested cross-validation".format(type(cv_outer).__name__)
-    )
+    ax.set_title("{} nested cross-validation".format(type(cv_outer).__name__))
     ax1 = ax.twinx()
     yticklabels = list(range(n_splits_outer))
     ax1.set(
@@ -116,7 +124,15 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, ax, lw=50):
         ylim=[n_splits_outer + 0.2, 0.08],
         xlim=[0, 50],
     )
-
+    ax.legend(
+        [
+            Patch(color=cmap_cv(0.9)),
+            Patch(color=cmap_cv(0.5)),
+            Patch(color=cmap_cv(0.02)),
+        ],
+        ["Testing samples", "Training samples", "Validation samples"],
+        loc=(1.06, .93),
+    )
     return ax
 
 

@@ -126,22 +126,14 @@ can process both the numerical and categorical features together as follows:
   the prediction, you can pass the parameter `handle_unknown="ignore"` to the
   `OneHotEncoder`.
 
-Let us now define a **substantial** improvement or deterioration. We define a
-substantial improvement if the model of reference is performing better 7 times
-or more in term of test score on the 10 cross-validation folds. Similarly, we
-define a substantial deterioration if the model of reference is performing
-worse 3 times or less in term of test score on the 10 cross-validation folds.
-In-between, the improvement or deterioration are only consider slightly better
-or worse.
-
 ```{admonition} Question
-The heterogeneous pipeline, using both categorical and numerical features, is
-performing:
+Look at the cross-validation scores for both pipelines, and count the number of
+times the model using all features has a better test score than the pipeline
+with only numerical features. Select the range which this number belongs to:
 
-- a) **substantially worse** than the pipeline using only numerical feature
-- b) **slightly worse** than the pipeline using only numerical feature
-- c) **slightly better** than the pipeline using only numerical feature
-- d) **substantially better** than the pipeline using only numerical feature
+- a) [0, 3]: the pipeline using all features is substantially worse than the pipeline using only numerical feature
+- b) [4, 6]: both pipelines are almost equivalent
+- c) [7, 10]: the pipeline using all features is substantially better than the pipeline using only numerical feature
 
 _Select a single answer_
 ```

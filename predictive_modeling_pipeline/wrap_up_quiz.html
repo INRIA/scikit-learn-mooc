@@ -1511,22 +1511,15 @@ To avoid any issue with rare categories that could only be present during
 the prediction, you can pass the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code> to the
 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>.</p></li>
 </ul>
-<p>Let us now define a <strong>substantial</strong> improvement or deterioration. We define a
-substantial improvement if the model of reference is performing better 7 times
-or more in term of test score on the 10 cross-validation folds. Similarly, we
-define a substantial deterioration if the model of reference is performing
-worse 3 times or less in term of test score on the 10 cross-validation folds.
-In-between, the improvement or deterioration are only consider slightly better
-or worse.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>The heterogeneous pipeline, using both categorical and numerical features, is
-performing:</p>
+<p>Look at the cross-validation scores for both pipelines, and count the number of
+times the model using all features has a better test score than the pipeline
+with only numerical features. Select the range which this number belongs to:</p>
 <ul class="simple">
-<li><p>a) <strong>substantially worse</strong> than the pipeline using only numerical feature</p></li>
-<li><p>b) <strong>slightly worse</strong> than the pipeline using only numerical feature</p></li>
-<li><p>c) <strong>slightly better</strong> than the pipeline using only numerical feature</p></li>
-<li><p>d) <strong>substantially better</strong> than the pipeline using only numerical feature</p></li>
+<li><p>a) [0, 3]: the pipeline using all features is substantially worse than the pipeline using only numerical feature</p></li>
+<li><p>b) [4, 6]: both pipelines are almost equivalent</p></li>
+<li><p>c) [7, 10]: the pipeline using all features is substantially better than the pipeline using only numerical feature</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>

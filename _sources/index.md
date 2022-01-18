@@ -26,18 +26,18 @@ step of the design of a predictive modeling pipeline: from choices in data
 preprocessing, to choosing models, gaining insights on their failure modes and
 interpreting their predictions.
 
-```{admonition} Soon the MOOC will be back
+```{admonition} Follow the MOOC
 :class: remove-from-content-only tip
 
 <div class="container">
   <div class="row">
     <div class="col-xl">
-      In a few months, we will re-open the
+      Register to the
       <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
         "Machine learning in Python with scikit-learn MOOC"
       </a>,
-      for the full MOOC experience (quizz solutions, executable notebooks,
-      discussion forum, etc ...) !
+      to have the full MOOC experience (quizz solutions, executable notebooks,
+      discussion forum, etc ...)!
       </br>
       The MOOC is free and the platform does not use the student data for any other purpose
       than improving the educational material.
@@ -72,7 +72,7 @@ or use the following resources:
 ## MOOC material
 
 The MOOC material is developed publicly under the [CC-By license](
-https://github.com/INRIA/scikit-learn-mooc/blob/main/LICENSE),
+https://github.com/INRIA/scikit-learn-mooc/blob/master/LICENSE),
 including the notebooks, exercises and solutions to the exercises
 (but not the quizz solutions ;) via the following GitHub
 repository:

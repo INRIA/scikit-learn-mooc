@@ -89,7 +89,7 @@ print(
 # You can leave the default `scoring=None` which is equivalent to
 # `scoring="accuracy"` for classification problems. You can vary `gamma`
 # between `10e-3` and `10e2` by generating samples on a logarithmic scale
-# with the help of `np.logspace(-3, 2, num=30)`.
+# with the help of `np.logspace(-3, 2, num=30)`. 
 #
 # Since we are manipulating a `Pipeline` the parameter name will be set to
 # `svc__gamma` instead of only `gamma`. You can retrieve the parameter name
@@ -153,7 +153,7 @@ plt.errorbar(train_size, train_scores.mean(axis=1),
              yerr=train_scores.std(axis=1), label='Training score')
 plt.errorbar(train_size, test_scores.mean(axis=1),
              yerr=test_scores.std(axis=1), label='Testing score')
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.legend()
 
 plt.xlabel("Number of samples in the training set")
 plt.ylabel("Accuracy")

@@ -79,6 +79,6 @@ cv_results = cross_validate(model, data, target, scoring=scoring)
 import pandas as pd
 
 scores = {"R2": cv_results["test_r2"],
-          "MAE": -cv_results["test_neg_mean_absolute_error"]}
+          "MSE": -cv_results["test_neg_mean_absolute_error"]}
 scores = pd.DataFrame(scores)
 scores

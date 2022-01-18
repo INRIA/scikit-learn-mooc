@@ -71,8 +71,7 @@ from sklearn.compose import ColumnTransformer
 
 # %% [markdown]
 # Assemble the final pipeline by combining the above preprocessor
-# with a logistic regression classifier. Force the maximum number of
-# iterations to `10_000` to ensure that the model will converge.
+# with a logistic regression classifier.
 
 # %%
 from sklearn.pipeline import make_pipeline

@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Cross-validation framework
+# # The framework and why do we need it
 #
 # In the previous notebooks, we introduce some concepts regarding the
 # evaluation of predictive models. While this section could be slightly

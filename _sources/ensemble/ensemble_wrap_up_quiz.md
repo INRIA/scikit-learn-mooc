@@ -127,3 +127,43 @@ With the early stopping activated, how many trees on average the
 
 _Select a single answer_
 ```
+
++++
+
+[Imbalanced-learn](https://imbalanced-learn.org/stable/) is an open-source
+library relying on scikit-learn and provides methods to deal with
+classification with imbalanced classes.
+
+Here, we will be using the class
+[`imblearn.ensemble.BalancedBaggingClassifier`](https://imbalanced-learn.org/stable/references/generated/imblearn.ensemble.BalancedBaggingClassifier.html)
+to alleviate the issue of class imbalance.
+
+Use the `BalancedBaggingClassifier` and pass an
+`HistGradientBoostingClassifier` as a `base_estimator`. Fix the hyperparameter
+`n_estimators` to 50.
+
+```{admonition} Question
+What is a [`BalancedBaggingClassifier`](https://imbalanced-learn.org/stable/ensemble.html#bagging)?
+
+- a) Is a classifier that make sure that each tree leaves belong to the same
+  depth level
+- b) Is a classifier that explicitly maximizes the balanced accuracy score
+- c) Equivalent to a `sklearn.ensemble.BaggingClassifier` with a resampling of
+     each bootstrap sample to contain a many samples from each class.
+
+_Select a single answer_
+```
+
++++
+
+```{admonition} Question
+Compared to the balanced accuracy of a `HistGradientBoostingClassifier` alone
+(computed in one of the previous questions), the balanced accuracy of the
+`BalancedBaggingClassifier` is:
+
+- a) Worse
+- b) Better
+- c) Equivalent
+
+_Select a single answer_
+```

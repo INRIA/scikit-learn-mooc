@@ -92,7 +92,6 @@ Create a preprocessor by dealing separately with the numerical and categorical
 columns. For the sake of simplicity, we will assume the following:
 
 - categorical columns can be selected if they have an `object` data type;
-- use an `OrdinalEncoder` to encode the categorical columns;
 - numerical columns can be selected if they do not have an `object` data type.
   It will be the complement of the numerical columns.
 

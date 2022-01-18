@@ -178,7 +178,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
 # The score measure on the final test set is almost with the range of the
-# internal CV score for the best hyper-parameter combination. This is reassuring
+# internal CV score for the best hyper-paramter combination. This is reassuring
 # as it means that the tuning procedure did not cause significant overfitting
 # in itself (other-wise the final test score would have been lower than the
 # internal CV scores). That is expected because our grid search explored very

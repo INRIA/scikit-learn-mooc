@@ -1,35 +1,29 @@
 # ✅ Quiz M6.03
 
 ```{admonition} Question
-When compared to random forests, gradient boosting is usually trained using:
+Boosting algorithms are building a predictor:
 
-- a) shallower trees
-- b) deeper trees
-- c) a subset of features
-- d) all features
-
-_Select several answers_
+- a) by training predictors in parallel on slightly different datasets
+- b) by training predictors sequentially which will correct errors successively
+- c) by taking a linear combination of weak predictors
 ```
 
 +++
 
 ```{admonition} Question
-Which of the hyperparameter(s) do not exist in random forest but exists in gradient boosting:
+Histogram gradient boosting is an accelerated gradient boosting algorithm that:
 
-- a) number of estimators
-- b) maximum depth
-- c) learning rate
-
+- a) takes a subsample of the original samples
+- b) bin the original dataset
+- c) take a subsample of the original features
 ```
 
 +++
 
 ```{admonition} Question
-Which of the following options are correct about the benefits of ensemble models?
+AdaBoost tends to overfit when increasing the number of predictors:
 
-- a) Better generalization performance
-- b) Reduced sensitivity to hyperparameter tuning of individual predictors
-- c) Better interpretability
-
-_Select several answers_
+- a) true
+- b) false
+- c) it depends on the data
 ```

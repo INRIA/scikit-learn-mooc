@@ -40,7 +40,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # In this exercise, we will progressively define the classification pipeline
 # and later tune its hyperparameters.
-#
+# 
 # Our pipeline should:
 # * preprocess the categorical columns using a `OneHotEncoder` and use a
 #   `StandardScaler` to normalize the numerical data.
@@ -81,15 +81,14 @@ preprocessor = ColumnTransformer(
 
 # %% [markdown]
 # Assemble the final pipeline by combining the above preprocessor
-# with a logistic regression classifier. Force the maximum number of
-# iterations to `10_000` to ensure that the model will converge.
+# with a logistic regression classifier.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
 
 # solution
-model = make_pipeline(preprocessor, LogisticRegression(max_iter=10_000))
+model = make_pipeline(preprocessor, LogisticRegression())
 
 # %% [markdown]
 # Use `RandomizedSearchCV` with `n_iter=20` to find the best set of

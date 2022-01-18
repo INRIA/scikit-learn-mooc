@@ -179,15 +179,15 @@ _ = plt.title("Ridge weights")
 # model through the `alpha` parameter. Therefore, the effect that feature
 # rescaling has on the final weights also interacts with regularization.
 #
-# Let's consider the case where features live on the same scale/units: if
+# Let's consider the case where features have an identical data dispersion: if
 # two features are found to be equally important by the model, they will be
 # affected similarly by regularization strength.
 #
 # Now, let's consider the scenario where features have completely different
-# data scale (for instance age in years and annual revenue in dollars).
+# data dispersion (for instance age in years and annual revenue in dollars).
 # If two features are as important, our model will boost the weights of
-# features with small scale and reduce the weights of features with
-# high scale.
+# features with small dispersion and reduce the weights of features with
+# high dispersion.
 #
 # We recall that regularization forces weights to be closer. Therefore, we get
 # an intuition that if we want to use regularization, dealing with rescaled
@@ -266,25 +266,12 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # of `alpha` will decrease the weight values. A negative value of `alpha` would
 # actually enhance large weights and promote overfitting.
 #
-# ```{note}
-# Here, we only focus on numerical features. For categorical features, it is
-# generally common to omit scaling when features are encoded with a
-# `OneHotEncoder` since the feature values are already on a similar scale.
-#
-# However, this choice can be questioned since scaling interacts with
-# regularization as well. For instance, scaling categorical features that are
-# imbalanced (e.g. more occurrences of a specific category) would even out
-# the impact of regularization to each category. However, scaling such features
-# in the presence of rare categories could be problematic (i.e. division by a very
-# small standard deviation) and it can therefore introduce numerical issues.
-# ```
-#
 # In the previous analysis, we did not study if the parameter `alpha` will have
 # an effect on the performance. We chose the parameter beforehand and fix it
 # for the analysis.
 #
-# In the next section, we will check the impact of the regularization
-# parameter `alpha` and how it should be tuned.
+# In the next section, we will check the impact of this hyperparameter and how
+# it should be tuned.
 #
 # ## Fine tuning the regularization parameter
 #
@@ -383,6 +370,5 @@ print(f"The mean optimal alpha leading to the best generalization performance is
       f"{np.mean(best_alphas):.2f} +/- {np.std(best_alphas):.2f}")
 
 # %% [markdown]
-#
 # In this notebook, you learned about the concept of regularization and
 # the importance of preprocessing and parameter tuning.

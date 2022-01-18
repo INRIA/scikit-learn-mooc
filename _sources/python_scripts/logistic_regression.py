@@ -81,8 +81,6 @@ logistic_regression = make_pipeline(
     StandardScaler(), LogisticRegression(penalty="none")
 )
 logistic_regression.fit(data_train, target_train)
-accuracy = logistic_regression.score(data_test, target_test)
-print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
 #
@@ -95,7 +93,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # Here, we will use the class `DecisionBoundaryDisplay`. We provide this class
 # to allow making plots of the decision function boundary in a 2 dimensional
 # space. The implementation can be found [here](
-# https://github.com/INRIA/scikit-learn-mooc/blob/main/python_scripts/helpers/plotting.py).
+# https://github.com/INRIA/scikit-learn-mooc/blob/master/python_scripts/helpers/plotting.py).
 # This class is intended to be part of the `scikit-learn` package in the future
 # as it is proposed in the following [Pull-Request](
 # https://github.com/scikit-learn/scikit-learn/pull/16061).

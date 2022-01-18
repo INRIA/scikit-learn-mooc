@@ -1,14 +1,11 @@
-# ✅ Quiz M4.04
+# ✅ Quiz M4.04b
 
 ```{admonition} Question
-Regularization allows:
+Regularization refers to:
 
-- a) to create a model robust to outliers (samples that differ widely from
-  other observations)
-- b) to reduce overfitting by forcing the weights to stay close to zero
-- c) to reduce underfitting by making the problem linearly separable
-
-_Select single answer_
+- a) constraining the intercept of the linear model to be zero
+- b) shrinking the weights of the linear model towards zero
+- c) using a subset of the available data when fitting a linear model
 ```
 
 +++
@@ -49,7 +46,7 @@ Scaling the data before fitting a model:
 +++
 
 ```{admonition} Question
-The effect of increasing the regularization strength in a ridge model is to:
+The effect of an l2-regularization (as done in ridge) is to:
 
 - a) shrink all weights towards zero
 - b) make all weights equal

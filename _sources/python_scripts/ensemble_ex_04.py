@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # %% [markdown]
-# # 📝 Exercise M6.05
+# # 📝 Exercise M6.04
 #
 # The aim of the exercise is to get familiar with the histogram
 # gradient-boosting in scikit-learn. Besides, we will use this model within

@@ -1,6 +1,6 @@
 # Machine Learning Concepts
 
-[📰 Introducing machine-learning concepts](https://inria.github.io/scikit-learn-mooc/ml_concepts/slides.html)
+[🎥 Introducing machine-learning concepts](https://inria.github.io/scikit-learn-mooc/ml_concepts/slides.html)
 
 [✅ Quiz Intro.01](https://inria.github.io/scikit-learn-mooc/ml_concepts/quiz_intro_01.html)
 
@@ -24,6 +24,8 @@
 * [📝 Exercise M1.03](notebooks/02_numerical_pipeline_ex_01.ipynb)
 * [📃 Solution for Exercise M1.03](notebooks/02_numerical_pipeline_sol_01.ipynb)
 * [Preprocessing for numerical features](notebooks/02_numerical_pipeline_scaling.ipynb)
+* [🎥 Validation of a model](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/02_numerical_pipeline_video_cross_validation.html)
+* [Model evaluation using cross-validation](notebooks/02_numerical_pipeline_cross_validation.ipynb)
 * [✅ Quiz M1.02](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/02_numerical_pipeline_quiz_m1_02.html)
 
 ### Handling categorical data
@@ -34,6 +36,7 @@
 * [Using numerical and categorical variables together](notebooks/03_categorical_pipeline_column_transformer.ipynb)
 * [📝 Exercise M1.05](notebooks/03_categorical_pipeline_ex_02.ipynb)
 * [📃 Solution for Exercise M1.05](notebooks/03_categorical_pipeline_sol_02.ipynb)
+* [🎥 Visualizing scikit-learn pipelines in Jupyter](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/03_categorical_pipeline_video.html)
 * [✅ Quiz M1.03](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/03_categorical_pipeline_quiz_m1_03.html)
 
 [🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/wrap_up_quiz.html)
@@ -46,13 +49,13 @@
 
 ### Overfitting and underfitting
 
-* [📰 Overfitting and Underfitting](https://inria.github.io/scikit-learn-mooc/overfit/overfitting_vs_under_fitting_slides.html)
+* [🎥 Overfitting and Underfitting](https://inria.github.io/scikit-learn-mooc/overfit/overfitting_vs_under_fitting_slides.html)
 * [Cross-validation framework](notebooks/cross_validation_train_test.ipynb)
 * [✅ Quiz M2.01](https://inria.github.io/scikit-learn-mooc/overfit/overfitting_vs_under_fitting_quiz_m2_01.html)
 
 ### Validation and learning curves
 
-* [📰 Comparing train and test errors](https://inria.github.io/scikit-learn-mooc/overfit/learning_validation_curves_slides.html)
+* [🎥 Comparing train and test errors](https://inria.github.io/scikit-learn-mooc/overfit/learning_validation_curves_slides.html)
 * [Overfit-generalization-underfit](notebooks/cross_validation_validation_curve.ipynb)
 * [Effect of the sample size in cross-validation](notebooks/cross_validation_learning_curve.ipynb)
 * [📝 Exercise M2.01](notebooks/cross_validation_ex_01.ipynb)
@@ -61,7 +64,7 @@
 
 ### Bias versus variance trade-off
 
-* [📰 Bias versus Variance](https://inria.github.io/scikit-learn-mooc/overfit/bias_vs_variance_slides.html)
+* [🎥 Bias versus Variance](https://inria.github.io/scikit-learn-mooc/overfit/bias_vs_variance_slides.html)
 * [✅ Quiz M2.03](https://inria.github.io/scikit-learn-mooc/overfit/bias_vs_variance_quiz_m2_03.html)
 
 [🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/overfit/overfit_wrap_up_quiz.html)
@@ -83,7 +86,9 @@
 
 * [Hyperparameter tuning by grid-search](notebooks/parameter_tuning_grid_search.ipynb)
 * [Hyperparameter tuning by randomized-search](notebooks/parameter_tuning_randomized_search.ipynb)
-* [Cross-validation and hyperparameter tuning](notebooks/parameter_tuning_nested.ipynb)
+* [🎥 Interactive exploration of hyper-parameter search results](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_parallel_plot_video.html)
+* [Analysis of hyperparameter search results](notebooks/parameter_tuning_parallel_plot.ipynb)
+* [Evaluation and hyperparameter tuning](notebooks/parameter_tuning_nested.ipynb)
 * [📝 Exercise M3.02](notebooks/parameter_tuning_ex_03.ipynb)
 * [📃 Solution for Exercise M3.02](notebooks/parameter_tuning_sol_03.ipynb)
 * [✅ Quiz M3.02](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_automated_quiz_m3_02.html)
@@ -98,7 +103,7 @@
 
 ### Intuitions on linear models
 
-* [📰 Intuitions on linear models](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_slides.html)
+* [🎥 Intuitions on linear models](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_slides.html)
 * [✅ Quiz M4.01](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_quiz_m4_01.html)
 
 ### Linear regression
@@ -120,12 +125,11 @@
 
 ### Regularization in linear model
 
-* [📰 Intuitions on regularized linear models](https://inria.github.io/scikit-learn-mooc/linear_models/regularized_linear_models_slides.html)
-* [✅ Quiz M4.04a](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_quiz_m4_04a.html)
+* [🎥 Intuitions on regularized linear models](https://inria.github.io/scikit-learn-mooc/linear_models/regularized_linear_models_slides.html)
 * [Regularization of linear regression model](notebooks/linear_models_regularization.ipynb)
 * [📝 Exercise M4.04](notebooks/linear_models_ex_04.ipynb)
 * [📃 Solution for Exercise M4.04](notebooks/linear_models_sol_04.ipynb)
-* [✅ Quiz M4.04b](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_quiz_m4_04b.html)
+* [✅ Quiz M4.04](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_quiz_m4_04.html)
 
 ### Linear model for classification
 
@@ -145,7 +149,7 @@
 
 ### Intuitions on tree-based models
 
-* [📰 Intuitions on tree-based models](https://inria.github.io/scikit-learn-mooc/trees/slides.html)
+* [🎥 Intuitions on tree-based models](https://inria.github.io/scikit-learn-mooc/trees/slides.html)
 * [✅ Quiz M5.01](https://inria.github.io/scikit-learn-mooc/trees/trees_quiz_m5_01.html)
 
 ### Decision tree in classification
@@ -175,37 +179,34 @@
 
 [Module overview](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_module_intro.html)
 
-### Intuitions on ensemble methods
-
-* [📰 Intuitions on ensemble of tree-based models](https://inria.github.io/scikit-learn-mooc/ensemble/slides.html)
-* [✅ Quiz M6.01](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_01.html)
-* [Introductory example to ensemble models](notebooks/ensemble_introduction.ipynb)
-
 ### Ensemble method using bootstrapping
 
+* [🎥 Intuitions on ensemble models: bagging](https://inria.github.io/scikit-learn-mooc/ensemble/bagging_slides.html)
+* [Introductory example to ensemble models](notebooks/ensemble_introduction.ipynb)
 * [Bagging](notebooks/ensemble_bagging.ipynb)
 * [📝 Exercise M6.01](notebooks/ensemble_ex_01.ipynb)
 * [📃 Solution for Exercise M6.01](notebooks/ensemble_sol_01.ipynb)
 * [Random forests](notebooks/ensemble_random_forest.ipynb)
 * [📝 Exercise M6.02](notebooks/ensemble_ex_02.ipynb)
 * [📃 Solution for Exercise M6.02](notebooks/ensemble_sol_02.ipynb)
-* [✅ Quiz M6.02](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_02.html)
+* [✅ Quiz M6.01](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_01.html)
 
 ### Ensemble based on boosting
 
+* [🎥 Intuitions on ensemble models: boosting](https://inria.github.io/scikit-learn-mooc/ensemble/boosting_slides.html)
 * [Adaptive Boosting (AdaBoost)](notebooks/ensemble_adaboost.ipynb)
 * [Gradient-boosting decision tree (GBDT)](notebooks/ensemble_gradient_boosting.ipynb)
 * [📝 Exercise M6.03](notebooks/ensemble_ex_03.ipynb)
 * [📃 Solution for Exercise M6.03](notebooks/ensemble_sol_03.ipynb)
 * [Speeding-up gradient-boosting](notebooks/ensemble_hist_gradient_boosting.ipynb)
-* [✅ Quiz M6.03](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_03.html)
+* [✅ Quiz M6.02](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_02.html)
 
 ### Hyperparameter tuning with ensemble methods
 
 * [Hyperparameter tuning](notebooks/ensemble_hyperparameters.ipynb)
 * [📝 Exercise M6.05](notebooks/ensemble_ex_05.ipynb)
 * [📃 Solution for Exercise M6.05](notebooks/ensemble_sol_05.ipynb)
-* [✅ Quiz M6.04](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_04.html)
+* [✅ Quiz M6.03](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_03.html)
 
 [🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_wrap_up_quiz.html)
 
@@ -217,7 +218,7 @@
 
 ### Comparing a model with simple baselines
 
-* [Comparing results with baseline and chance level](notebooks/cross_validation_baseline.ipynb)
+* [Comparing model performance with a simple baseline](notebooks/cross_validation_baseline.ipynb)
 * [📝 Exercise M7.01](notebooks/cross_validation_ex_02.ipynb)
 * [📃 Solution for Exercise M7.01](notebooks/cross_validation_sol_02.ipynb)
 * [✅ Quiz M7.01](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_quiz_m7_01.html)

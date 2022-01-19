@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M4.05
-# In the previous notebook, we presented a non-penalized logistic regression
-# classifier. This classifier accepts a parameter `penalty` to add a
-# regularization. The regularization strength is set using the parameter `C`.
-#
-# In this exercise, we ask you to train a l2-penalized logistic regression
-# classifier and to find by yourself the effect of the parameter `C`.
+# In the previous notebook we set `penalty="none"` to disable regularization
+# entirely. This parameter can also control the **type** of regularization to use,
+# whereas the regularization **strength** is set using the parameter `C`.
+# Setting`penalty="none"` is equivalent to an infinitely large value of `C`.
+# In this exercise, we ask you to train a logistic regression classifier using the
+# `penalty="l2"` regularization (which happens to be the default in scikit-learn)
+# to find by yourself the effect of the parameter `C`.
 #
 # We will start by loading the dataset and create the helper function to show
 # the decision separation as in the previous code.
@@ -19,7 +20,6 @@
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes

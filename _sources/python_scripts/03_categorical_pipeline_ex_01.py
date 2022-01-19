@@ -72,6 +72,17 @@ from sklearn.linear_model import LogisticRegression
 # %% [markdown]
 # Your model is now defined. Evaluate it using a cross-validation using
 # `sklearn.model_selection.cross_validate`.
+#
+# ```{note}
+# Be aware that if an error happened during the cross-validation,
+# `cross_validate` will raise a warning and return NaN (Not a Number)
+# as scores.  To make it raise a standard Python exception with a traceback,
+# you can pass the `error_score="raise"` argument in the call to
+# `cross_validate`. An exception will be raised instead of a warning at the first
+# encountered problem  and `cross_validate` will stop right away instead of
+# returning NaN values. This is particularly handy when developing
+# complex machine learning pipelines.
+# ```
 
 # %%
 from sklearn.model_selection import cross_validate

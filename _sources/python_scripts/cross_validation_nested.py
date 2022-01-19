@@ -43,7 +43,7 @@ search.fit(data, target)
 # %% [markdown]
 # We recall that, internally, `GridSearchCV` trains several models for each on
 # sub-sampled training sets and evaluate each of them on the matching testing
-# sets using cross-validation. This evaluation procdure is controlled via
+# sets using cross-validation. This evaluation procedure is controlled via
 # using the `cv` parameter. The procedure is then repeated for all possible
 # combinations of parameters given in `param_grid`.
 #

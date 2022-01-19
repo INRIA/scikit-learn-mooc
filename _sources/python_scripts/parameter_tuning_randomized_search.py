@@ -119,8 +119,7 @@ model
 # We will optimize 3 other parameters in addition to the ones we
 # optimized in the notebook presenting the `GridSearchCV`:
 #
-# * `l2_regularization`: it corresponds to the constant to regularized the loss
-#   function
+# * `l2_regularization`: it corresponds to the strength of the regularization;
 # * `min_samples_leaf`: it corresponds to the minimum number of samples
 #   required in a leaf;
 # * `max_bins`: it corresponds to the maximum number of bins to construct the
@@ -234,7 +233,7 @@ cv_results["mean_test_score"][1] - cv_results["mean_test_score"][2]
 3 * cv_results["std_test_score"][1]
 
 # %% [markdown]
-# Keep in mind that tunning is limited by the number of different combinations
+# Keep in mind that tuning is limited by the number of different combinations
 # of parameters that are scored by the randomized search. In fact, there might
 # be other sets of parameters leading to similar or better generalization
 # performances but that were not tested in the search.

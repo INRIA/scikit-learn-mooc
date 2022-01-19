@@ -31,7 +31,13 @@ data, target, coef = make_regression(
 # %%
 import pandas as pd
 
-feature_names = [f"Features {i}" for i in range(data.shape[1])]
+feature_names = [
+    "Relevant feature #0",
+    "Relevant feature #1",
+    "Noisy feature #0",
+    "Noisy feature #1",
+    "Noisy feature #2",
+]
 coef = pd.Series(coef, index=feature_names)
 coef.plot.barh()
 coef
@@ -69,6 +75,21 @@ coef
 # %% [markdown]
 # Can you find the relationship between the ridge coefficients and the original
 # coefficients?
+
+# %%
+# Write your code here.
+
+# %%
+# Write your code here.
+
+# %%
+# Write your code here.
+
+# %%
+# Write your code here.
+
+# %%
+# Write your code here.
 
 # %%
 # Write your code here.

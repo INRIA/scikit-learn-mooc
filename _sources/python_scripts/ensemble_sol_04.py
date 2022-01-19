@@ -1,106 +1,126 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M6.04
 #
-# The aim of this exercise is to:
+# The aim of the exercise is to get familiar with the histogram
+# gradient-boosting in scikit-learn. Besides, we will use this model within
+# a cross-validation framework in order to inspect internal parameters found
+# via grid-search.
 #
-# * verify if a GBDT tends to overfit if the number of estimators is not
-#   appropriate as previously seen for AdaBoost;
-# * use the early-stopping strategy to avoid adding unnecessary trees, to
-#   get the best generalization performances.
-#
-# We will use the California housing dataset to conduct our experiments.
+# We will use the California housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
 
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5)
 
 # %% [markdown]
-# ```{note}
-# If you want a deeper overview regarding this dataset, you can refer to the
-# Appendix - Datasets description section at the end of this MOOC.
-# ```
-
-# %% [markdown]
-# Create a gradient boosting decision tree with `max_depth=5` and
-# `learning_rate=0.5`.
+# First, create a histogram gradient boosting regressor. You can set the
+# trees number to be large, and configure the model to use early-stopping.
 
 # %%
 # solution
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import HistGradientBoostingRegressor
 
-gbdt = GradientBoostingRegressor(max_depth=5, learning_rate=0.5)
+hist_gbdt = HistGradientBoostingRegressor(
+    max_iter=1000, early_stopping=True, random_state=0)
 
 # %% [markdown]
-# Create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Evaluate the list of parameters
-# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
-# to assess the generalization performance of the model.
+# We will use a grid-search to find some optimal parameter for this model.
+# In this grid-search, you should search for the following parameters:
+#
+# * `max_depth: [3, 8]`;
+# * `max_leaf_nodes: [15, 31]`;
+# * `learning_rate: [0.1, 1]`.
+#
+# Feel free to explore the space with additional values. Create the
+# grid-search providing the previous gradient boosting instance as the model.
 
 # %%
 # solution
-from sklearn.model_selection import validation_curve
+from sklearn.model_selection import GridSearchCV
 
-param_range = [1, 2, 5, 10, 20, 50, 100]
-gbdt_train_scores, gbdt_test_scores = validation_curve(
-    gbdt,
-    data_train,
-    target_train,
-    param_name="n_estimators",
-    param_range=param_range,
-    scoring="neg_mean_absolute_error",
-    n_jobs=2,
-)
-gbdt_train_errors, gbdt_test_errors = -gbdt_train_scores, -gbdt_test_scores
+params = {
+    "max_depth": [3, 8],
+    "max_leaf_nodes": [15, 31],
+    "learning_rate": [0.1, 1],
+}
+
+search = GridSearchCV(hist_gbdt, params)
+
+# %% [markdown]
+# Finally, we will run our experiment through cross-validation. In this regard,
+# define a 5-fold cross-validation. Besides, be sure to shuffle the data.
+# Subsequently, use the function `sklearn.model_selection.cross_validate`
+# to run the cross-validation. You should also set `return_estimator=True`,
+# so that we can investigate the inner model trained via cross-validation.
+
+# %%
+# solution
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import KFold
+
+cv = KFold(n_splits=5, shuffle=True, random_state=0)
+results = cross_validate(
+    search, data, target, cv=cv, return_estimator=True, n_jobs=2)
+
+# %% [markdown]
+# Now that we got the cross-validation results, print out the mean and
+# standard deviation score.
+
+# %%
+# solution
+print(f"R2 score with cross-validation:\n"
+      f"{results['test_score'].mean():.3f} +/- "
+      f"{results['test_score'].std():.3f}")
+
+# %% [markdown]
+# Then inspect the `estimator` entry of the results and check the best
+# parameters values. Besides, check the number of trees used by the model.
+
+# %%
+# solution
+for estimator in results["estimator"]:
+    print(estimator.best_params_)
+    print(f"# trees: {estimator.best_estimator_.n_iter_}")
+
+# %% [markdown] tags=["solution"]
+# We observe that the parameters are varying. We can get the intuition that
+# results of the inner CV are very close for certain set of parameters.
+
+# %% [markdown]
+# Inspect the results of the inner CV for each estimator of the outer CV.
+# Aggregate the mean test score for each parameter combination and make a box
+# plot of these scores.
+
+# %%
+# solution
+import pandas as pd
+
+index_columns = [f"param_{name}" for name in params.keys()]
+columns = index_columns + ["mean_test_score"]
+
+inner_cv_results = []
+for cv_idx, estimator in enumerate(results["estimator"]):
+    search_cv_results = pd.DataFrame(estimator.cv_results_)
+    search_cv_results = search_cv_results[columns].set_index(index_columns)
+    search_cv_results = search_cv_results.rename(
+        columns={"mean_test_score": f"CV {cv_idx}"})
+    inner_cv_results.append(search_cv_results)
+inner_cv_results = pd.concat(inner_cv_results, axis=1).T
 
 # %% tags=["solution"]
 import matplotlib.pyplot as plt
 
-plt.errorbar(
-    param_range,
-    gbdt_train_errors.mean(axis=1),
-    yerr=gbdt_train_errors.std(axis=1),
-    label="Training",
-)
-plt.errorbar(
-    param_range,
-    gbdt_test_errors.mean(axis=1),
-    yerr=gbdt_test_errors.std(axis=1),
-    label="Cross-validation",
-)
-
-plt.legend()
-plt.ylabel("Mean absolute error in k$\n(smaller is better)")
-plt.xlabel("# estimators")
-_ = plt.title("Validation curve for GBDT regressor")
-
-# %% [markdown]
-# Unlike AdaBoost, the gradient boosting model will always improve when
-# increasing the number of trees in the ensemble. However, it will reach a
-# plateau where adding new trees will just make fitting and scoring slower.
-#
-# To avoid adding new unnecessary tree, gradient boosting offers an
-# early-stopping option. Internally, the algorithm will use an out-of-sample
-# set to compute the generalization performance of the model at each addition of a
-# tree. Thus, if the generalization performance is not improving for several
-# iterations, it will stop adding trees.
-#
-# Now, create a gradient-boosting model with `n_estimators=1000`. This number
-# of trees will be too large. Change the parameter `n_iter_no_change` such
-# that the gradient boosting fitting will stop after adding 5 trees that do not
-# improve the overall generalization performance.
-
-# %%
-# solution
-gbdt = GradientBoostingRegressor(n_estimators=1000, n_iter_no_change=5)
-gbdt.fit(data_train, target_train)
-gbdt.n_estimators_
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+inner_cv_results.plot.box(vert=False, color=color)
+plt.xlabel("R2 score")
+plt.ylabel("Parameters")
+_ = plt.title("Inner CV results with parameters\n"
+              "(max_depth, max_leaf_nodes, learning_rate)")
 
 # %% [markdown] tags=["solution"]
-# We see that the number of trees used is far below 1000 with the current
-# dataset. Training the GBDT with the entire 1000 trees would have been
-# useless.
+# We see that the first 4 ranked set of parameters are very close.
+# We could select any of these 4 combinations.
+# It coincides with the results we observe when inspecting the
+# best parameters of the outer CV.

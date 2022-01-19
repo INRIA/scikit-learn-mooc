@@ -2,61 +2,68 @@
 # %% [markdown]
 # # 📝 Exercise M6.04
 #
-# The aim of this exercise is to:
+# The aim of the exercise is to get familiar with the histogram
+# gradient-boosting in scikit-learn. Besides, we will use this model within
+# a cross-validation framework in order to inspect internal parameters found
+# via grid-search.
 #
-# * verify if a GBDT tends to overfit if the number of estimators is not
-#   appropriate as previously seen for AdaBoost;
-# * use the early-stopping strategy to avoid adding unnecessary trees, to
-#   get the best generalization performances.
-#
-# We will use the California housing dataset to conduct our experiments.
+# We will use the California housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
 
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5)
 
 # %% [markdown]
-# ```{note}
-# If you want a deeper overview regarding this dataset, you can refer to the
-# Appendix - Datasets description section at the end of this MOOC.
-# ```
-
-# %% [markdown]
-# Create a gradient boosting decision tree with `max_depth=5` and
-# `learning_rate=0.5`.
+# First, create a histogram gradient boosting regressor. You can set the
+# trees number to be large, and configure the model to use early-stopping.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Create a validation curve to assess the impact of the number of trees
-# on the generalization performance of the model. Evaluate the list of parameters
-# `param_range = [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error
-# to assess the generalization performance of the model.
+# We will use a grid-search to find some optimal parameter for this model.
+# In this grid-search, you should search for the following parameters:
+#
+# * `max_depth: [3, 8]`;
+# * `max_leaf_nodes: [15, 31]`;
+# * `learning_rate: [0.1, 1]`.
+#
+# Feel free to explore the space with additional values. Create the
+# grid-search providing the previous gradient boosting instance as the model.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Unlike AdaBoost, the gradient boosting model will always improve when
-# increasing the number of trees in the ensemble. However, it will reach a
-# plateau where adding new trees will just make fitting and scoring slower.
-#
-# To avoid adding new unnecessary tree, gradient boosting offers an
-# early-stopping option. Internally, the algorithm will use an out-of-sample
-# set to compute the generalization performance of the model at each addition of a
-# tree. Thus, if the generalization performance is not improving for several
-# iterations, it will stop adding trees.
-#
-# Now, create a gradient-boosting model with `n_estimators=1000`. This number
-# of trees will be too large. Change the parameter `n_iter_no_change` such
-# that the gradient boosting fitting will stop after adding 5 trees that do not
-# improve the overall generalization performance.
+# Finally, we will run our experiment through cross-validation. In this regard,
+# define a 5-fold cross-validation. Besides, be sure to shuffle the data.
+# Subsequently, use the function `sklearn.model_selection.cross_validate`
+# to run the cross-validation. You should also set `return_estimator=True`,
+# so that we can investigate the inner model trained via cross-validation.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Now that we got the cross-validation results, print out the mean and
+# standard deviation score.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Then inspect the `estimator` entry of the results and check the best
+# parameters values. Besides, check the number of trees used by the model.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Inspect the results of the inner CV for each estimator of the outer CV.
+# Aggregate the mean test score for each parameter combination and make a box
+# plot of these scores.
 
 # %%
 # Write your code here.

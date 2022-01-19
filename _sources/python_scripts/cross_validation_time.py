@@ -1,8 +1,14 @@
 # %% [markdown]
 # # Non i.i.d. data
+#
 # In machine learning, it is quite common to assume that the data are i.i.d,
 # meaning that the generative process does not have any memory of past samples
 # to generate new samples.
+#
+# ```{note}
+# i.i.d is the acronym of "independent and identically distributed"
+# (as in "independent and identically distributed random variables").
+# ```
 #
 # This assumption is usually violated when dealing with time series. A sample
 # depends on past information.
@@ -16,12 +22,13 @@ import pandas as pd
 
 symbols = {"TOT": "Total", "XOM": "Exxon", "CVX": "Chevron",
            "COP": "ConocoPhillips", "VLO": "Valero Energy"}
-url = ("https://raw.githubusercontent.com/scikit-learn/examples-data/"
-       "master/financial-data/{}.csv")
+template_name = ("../datasets/financial-data/{}.csv")
 
 quotes = {}
 for symbol in symbols:
-    data = pd.read_csv(url.format(symbol), index_col=0, parse_dates=True)
+    data = pd.read_csv(
+        template_name.format(symbol), index_col=0, parse_dates=True
+    )
     quotes[symbols[symbol]] = data["open"]
 quotes = pd.DataFrame(quotes)
 

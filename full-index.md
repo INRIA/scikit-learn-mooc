@@ -204,8 +204,8 @@
 ### Hyperparameter tuning with ensemble methods
 
 * [Hyperparameter tuning](notebooks/ensemble_hyperparameters.ipynb)
-* [📝 Exercise M6.05](notebooks/ensemble_ex_05.ipynb)
-* [📃 Solution for Exercise M6.05](notebooks/ensemble_sol_05.ipynb)
+* [📝 Exercise M6.04](notebooks/ensemble_ex_04.ipynb)
+* [📃 Solution for Exercise M6.04](notebooks/ensemble_sol_04.ipynb)
 * [✅ Quiz M6.03](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_03.html)
 
 [🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_wrap_up_quiz.html)

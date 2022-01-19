@@ -57,13 +57,13 @@ learning with scikit-learn.
 
 ---
 
-# In a nutshell
+# Machine learning in a nutshell
 
 - Learned on a train set; applied to test set
 
 ???
 
-In a nutshell, we have seen that
+Machine learning in a nutshell, we have seen that
 
 - A predictive model is learned on a train set and then applied to new data, a "test set"
 
@@ -91,7 +91,7 @@ In a nutshell, we have seen that
 
 ---
 
-# In a nutshell
+# Machine learning in a nutshell
 
 - Minimize the error on the test set
     - train error can detect underfit: models too simple for the data
@@ -117,7 +117,7 @@ In a nutshell, we have seen that
 
 ---
 
-# In a nutshell
+# Machine learning in a nutshell
 
 - Understanding the models
     - know when they are suited to the data 
@@ -141,7 +141,7 @@ In a nutshell, we have seen that
 
 - Tree-based
     - A series of binary choices (thresholds)
-    - For tabular data where columns are quantity of different nature 
+    - For tabular data, columns are quantity of different nature 
     - Gradient boosted trees (HistGradientBoostingRegressor and Classifier) are goto methods
 
 ???
@@ -225,7 +225,22 @@ challenges is a great way to learn.
 
 - Unsupervised learning
     - Finding order and structure in the data, for instance to group samples, or to transform features
-    - Can be particularly useful because it does not need labels
+    - Particularly useful because it does not need labels
+    - But given labels, supervised learning not unsupervised learning, is more likely to recover the link
+- Model inspection
+    - Understanding what drives a prediction
+    - Useful for debuging, for reasonning
+    - Requires a lot of nuance
+- Deep learning
+    - For images, text, voice: use pretrained models
+    - Comes with great computational and human costs, as well as large maintenance costs
+    - Not in scikit-learn
+
+???
+
+- Unsupervised learning
+    - Finding order and structure in the data, for instance to group samples, or to transform features
+    - Particularly useful because it does not need labels
     - But given labels, supervised learning not unsupervised learning, is more likely to recover the link
 - Model inspection
     - Understanding what drives a prediction
@@ -281,10 +296,12 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
 
 # Technical craft is not all
 
-We gave methodological elements, but these are not enough to always have solid conclusion from a statistical standpoint
+We gave methodological elements, but these are not enough to always have solid conclusion from a statistical standpoint.
+
 
 Once you know how to run the software, the biggest challenges are understanding the data, its shortcomings, and what can and cannot be concluded from an analysis
-  - Automating machine learning does not solve data science: people have domain knowledge and responsibility
+  - Automating machine learning does not solve data science
+  - Domain knowledge and critical thinking about the data
 
 ---
 
@@ -301,8 +318,8 @@ Errors mean different things
 
 ???
 
-When decision a machine-learning system, we need to think about how the
-predictions are used. Errors mean different things in different
+First, when designing a machine-learning system, we need to think about
+how the predictions are used. Errors mean different things in different
 application contexts.
 
 The amount of operational risk changes the deal. When decided which
@@ -338,15 +355,19 @@ The predictions may modify how the system is functions:
 # Biases in the data
 
 - The data may not reflect the ground truth
-    - The test strategy to follow a disease propagation, for instance
-    - Not only may it change with time, but it may be uneven across the population (higher quality data for rich people, for instance)
+    - Disease monitoring is function of testing policy
+    - It may change with time, it may be uneven across the population (eg higher quality data for rich people)
 - The state of affaires may not be the desired one
     - For equal qualifications and responsibilities, women are typically payed less than men. A learner will pick this up and perpetuate inequalities
-- Interpretations in causal terms
-    - People that go to the hospital die more than people who do not:
-        - Fallacy: comparing different populations
-    - Having a heart pressure greater than a threshold triggers specific care which is good. A learner will pick up above-threshold heart pressure as good for you
-    - In a pure predictive settings, these learners are correct to use these informations for their predictions. However 1) they should not be trusted when designing interventions on the systems 2) interpretation is subject to caution
+
+---
+
+# Prediction models versus causal models
+
+- People that go to the hospital die more than people who do not:
+    - Fallacy: comparing different populations
+- Having a heart pressure greater than a threshold triggers specific care which is good. A learner will pick up above-threshold heart pressure as good for you
+- In a pure predictive settings, these learners are correct to use these informations for their predictions. However 1) they should not be trusted when designing interventions on the systems 2) interpretation is subject to caution
 
 ---
 

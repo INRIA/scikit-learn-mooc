@@ -230,7 +230,7 @@ challenges is a great way to learn.
 - Unsupervised learning
     - Finding order and structure in the data, for instance to group samples, or to transform features
     - Particularly useful because it does not need labels
-    - But given labels, supervised learning not unsupervised learning, is more likely to recover the link
+    - But given labels, supervised learning is more likely to recover the link
 - Model inspection
     - Understanding what drives a prediction
     - Useful for debuging, for reasonning

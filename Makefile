@@ -49,7 +49,5 @@ $(JUPYTER_BOOK_DIR)-clean:
 	jupyter-book clean $(JUPYTER_BOOK_DIR)
 
 $(JUPYTER_BOOK_DIR)-full-clean:
-  # deletes jupyter-cache cache folder
+	# deletes jupyter-cache cache folder
 	rm -rf $(JUPYTER_BOOK_DIR)/_build
-
-

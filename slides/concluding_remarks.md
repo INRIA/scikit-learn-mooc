@@ -57,14 +57,101 @@ learning with scikit-learn.
 
 ---
 
-    - A predictive model is learned on a train set and then applied to new data, a "test set"
-    - Scikit-learn models are built from a data matrix, of a given number of features for each observation
-    - Transformations of the data, such as encoding of the categorical variables, prior the predictive model, are often important. Care must be done to use only information available at train time. For this, you need to use a scikit-learn Pipeline object to chain the data transformation with the predictive model
-    - The best predictive model is selected to minimize the error on the test set, but monitoring the train error can be useful to detect underfit: models too simple for the data
-    - Models in scikit-learn come with multiple hyper-parameters that can control model complexity. Selecting model hyper-parameter is important. It can be done with objects such as GridSearchCV, RandomSearchCV and the like
-    - Understanding the models, in the sens of how the build their predictive functions, helps knowing when they are suited to the data and having intuitions on how to debug them
-    - Linear models make decisions by combining the values of each feature. They are particularly suited when the number of features is large or the number of observations is small
-    - Tree-based models combine a series of binary choices, such as thresholds on the values of various attributes. They are particularly suited to tabular data where columns are quantity of different nature (age, height, job title), a mixing of categorical and continuous variables, or have missing values. The gradient boosted trees (HistGradientBoostingRegressor and Classifier) are typically goto methods when there are more than a few thousands of samples
+# In a nutshell
+
+- Learned on a train set; applied to test set
+
+???
+
+In a nutshell, we have seen that
+
+- A predictive model is learned on a train set and then applied to new data, a "test set"
+
+--
+
+- Built from a data matrix, a given number of features for each observation
+
+???
+
+- Scikit-learn models are built from a data matrix, of a given number of features for each observation
+
+--
+
+- Transformations of the data
+    - Encoding of the categorical variables
+    - Only using information available at train time
+    - The scikit-learn Pipeline object
+
+???
+
+- Transformations of the data, such as encoding of the categorical variables, prior the predictive model, are often important.
+    - Care must be done to use only information available at train time.
+    - For this, you need to use a scikit-learn Pipeline object to chain the data transformation with the predictive model
+
+
+---
+
+# In a nutshell
+
+- Minimize the error on the test set
+    - train error can detect underfit: models too simple for the data
+
+???
+
+- The best predictive model is selected to minimize the error on the test set, but monitoring the train error can be useful to detect underfit: models too simple for the data
+
+--
+
+- Multiple hyper-parameters
+    - Control model complexity
+    - Selecting hyper-parameters is important
+    - GridSearchCV, RandomSearchCV...
+
+???
+
+- Models in scikit-learn come with multiple hyper-parameters
+    - These can control model complexity.
+    - Selecting model hyper-parameter is important.
+    - It can be done with objects such as GridSearchCV, RandomSearchCV and the like
+
+
+---
+
+# In a nutshell
+
+- Understanding the models
+    - know when they are suited to the data 
+    - intuitions on how to debug them
+
+???
+
+- Understanding the models, in the sens of how the build their predictive functions, helps knowing when they are suited to the data and having intuitions on how to debug them
+
+--
+
+- Linear models
+  - Combining the values of features
+  - For many features or few observations
+
+???
+
+- Linear models make decisions by combining the values of each feature. They are particularly suited when the number of features is large or the number of observations is small
+
+--
+
+- Tree-based
+    - A series of binary choices (thresholds)
+    - For tabular data where columns are quantity of different nature 
+    - Gradient boosted trees (HistGradientBoostingRegressor and Classifier) are goto methods
+
+???
+
+- Tree-based models
+  - combine a series of binary choices, such as thresholds on the values of 
+    various attributes.
+  - They are particularly suited to tabular data where columns are quantity of different nature (age, height, job title), a mixing of categorical and continuous
+variables, or have missing values.
+  - The gradient boosted trees (HistGradientBoostingRegressor and Classifier) are typically goto methods when there are more than a few thousands of samples
 
 ---
 class: middle
@@ -107,13 +194,32 @@ Now, let me give a few pointers on going further with machine learning.
 
 # Studying machine learning further
 
-- Introduction to Machine Learning with Python by Andreas C. Müller, Sarah Guido
-  https://www.oreilly.com/library/view/introduction-to-machine/9781449369880/
-- Jake van der Plas Python Data Science Handbook https://jakevdp.github.io/PythonDataScienceHandbook/
-- An Introduction to Statistical Learning, by James, Witten, Hastie, Tibshirani https://www.statlearning.com/, for a view on the statistical theory behind the concepts that we have explored
-- Kaggle has good introduction materials and participating in challenges is a great way to learn
+- [Introduction to Machine Learning with Python](https://www.oreilly.com/library/view/introduction-to-machine/9781449369880/) by Andreas C. Müller, Sarah Guido
+  
+- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/) by Jake van der Plas 
+- [An Introduction to Statistical Learning](https://www.statlearning.com/), by James, Witten, Hastie, Tibshirani: statistical theory
+- [Kaggle](http://kaggle.com):
+    - introduction materials
+    - participating in challenges way to learn
 
-----
+???
+
+If you want to study machine learning further, there are many excellent
+resources.
+
+First the book "Introduction Machine Learning with Python" by scikit-learn core developer Andreas C. Müller and Sarah Guido goes deeper with scikit-learn
+ 
+Then, the Python Data Science Handbook by Jake van der Plas gives a
+broader picture of data science beyond machine learning
+
+The book An Introduction to Statistical Learning, by James, Witten,
+Hastie, Tibshirani, gives a view on the statistical theory behind the
+concepts that we have explored.
+
+And finally, Kaggle has good introduction materials and participating in
+challenges is a great way to learn.
+
+---
 
 # Topics we have not covered
 
@@ -246,12 +352,30 @@ The predictions may modify how the system is functions:
 
 # Societal impact
 
-Today, AI systems can be used to allocate loans, screen job applicants, prioritise medical treatement, help law enforcement or court decisions.
+AI systems = loans, jobs, medical treatement, law enforcement
 
-https://fairlearn.org/ give a practical intro to some problems caused by a too naive application of machine learning methods
+https://fairlearn.org/: intro to some problems 
+
+ML can shift decision logic, power structures, operational costs
+  - It induces changes in our society. Let us make it better
+  - Challenges at the intersection of technology and society. No solution will be purely technical
+
+???
+
+These challenges with biases in the data, feedback loops of the
+predictions, can be very important, because prediction models may affect
+people's lives.
+
+Today, AI systems can be used to allocate loans, screen job applicants,
+prioritise medical treatement, help law enforcement or court decisions.
+
+If you know scikit-learn, [fairlearn](https://fairlearn.org) is a simple
+resource to understand some problems caused by
+a too naive application of machine learning methods.
 
 ML or AI can shift decision logic, power structures, operational costs
-  - As all technology, it induces changes in our society. Engineers should work for the betterment of society, even though this is a difficult question
+  - As all technology, it induces changes in our society. Let us think
+    about how to make it better, even though this is a difficult question
   - Responsible use of machine learning involves challenges at the intersection of technology and society. No solution will be purely technical
 
 ---
@@ -262,5 +386,16 @@ ML or AI can shift decision logic, power structures, operational costs
 
 
 - Machine learning drives one of the most important technological revolution of our time.
+- It is a fantastic opportunity to improve our world
+- Scikit-learn: lifting technical roadblocks as much as possible
+    - empower people
+    - to solve the problems that matters to them
+
+???
+
+- Machine learning drives one of the most important technological revolution of our time.
 - It is a fantastic opportunity to improve human condition
-- We hope that simplifying the technical roadblocks as much as possible, with scikit-learn and this MOOC, we can empower a great variety of people, with different mindsets and dreams, to solve the problems that matters to them
+- With scikit-learn, and this MOOC, we try to lift as much as possible
+  the technical roadblocks, and  wee hope that we can empower a great variety of people, with different mindsets and dreams, to solve the problems that matters to them
+
+Thank you for being part of this adventure!

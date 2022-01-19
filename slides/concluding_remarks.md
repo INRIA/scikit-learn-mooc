@@ -44,6 +44,14 @@ hard work!
 - Going further with machine learning
 - Beyond machine-learning: The bigger picture
 
+???
+
+In this course, I'd like to wrap up and take a step back. I'll start by
+quickly summarizing the big messages of the MOOC, then I'll give pointers
+to go further with machine learning, and finally, I'll talk about how
+machine learning fits in a bigger picture, how to make sure that it
+brings value.
+
 
 ---
 class: middle
@@ -129,8 +137,7 @@ Machine learning in a nutshell, we have seen that
 
 --
 
-- Linear models
-  - Combining the values of features
+- Linear models: combining the values of features
   - For many features or few observations
 
 ???
@@ -139,8 +146,7 @@ Machine learning in a nutshell, we have seen that
 
 --
 
-- Tree-based
-    - A series of binary choices (thresholds)
+- Tree-based: a series of binary choices (thresholds)
     - For tabular data, columns of different nature 
     - Gradient boosted trees (HistGradientBoostingRegressor and Classifier) are goto methods
 
@@ -180,15 +186,13 @@ Now, let me give a few pointers on going further with machine learning.
 
 # We are an open-source community
 
-- Free, open, driven by a community spirit, trying to be inclusive
-- How to contribute
+- Free, open, driven by a community, trying to be inclusive
+- You can contribute
     - Build a community: helping each other, helping training, communication, advocacy
-    - We are developed on github:
-	- Curate information: one of our challenges is the information overflow
-	- Contributing code is technical
-	    - Learn software engineering:
-		- Learn git, learn the github workflow
-		- https://lab.github.com/
+    - Curate information: our developers have information overflow
+    - Contributing code is technical
+	- Learn software engineering:
+	- Learn git, github (https://lab.github.com/)
 
 ---
 

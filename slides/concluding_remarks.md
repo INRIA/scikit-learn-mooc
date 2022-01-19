@@ -231,14 +231,6 @@ challenges is a great way to learn.
     - Finding order and structure in the data, for instance to group samples, or to transform features
     - Particularly useful because it does not need labels
     - But given labels, supervised learning is more likely to recover the link
-- Model inspection
-    - Understanding what drives a prediction
-    - Useful for debuging, for reasonning
-    - Requires a lot of nuance
-- Deep learning
-    - For images, text, voice: use pretrained models
-    - Comes with great computational and human costs, as well as large maintenance costs
-    - Not in scikit-learn
 
 ???
 
@@ -246,14 +238,42 @@ challenges is a great way to learn.
     - Finding order and structure in the data, for instance to group samples, or to transform features
     - Particularly useful because it does not need labels
     - But given labels, supervised learning not unsupervised learning, is more likely to recover the link
+
+---
+
+# Topics we have not covered
+
+- Unsupervised learning
+- Model inspection
+    - Understanding what drives a prediction
+    - Useful for debuging, for reasonning
+    - Requires a lot of nuance
+
+???
+
 - Model inspection
     - Understanding what drives a prediction
     - Useful for debuging, for reasonning on the system at hand
     - Requires a lot of nuance
+
+---
+
+# Topics we have not covered
+
+- Unsupervised learning
+- Model inspection
 - Deep learning
     - For images, text, voice: use pretrained models
     - Comes with great computational and human costs, as well as large maintenance costs
     - Not in scikit-learn
+
+???
+
+- Deep learning
+    - For images, text, voice: use pretrained models
+    - Comes with great computational and human costs, as well as large maintenance costs
+    - Not in scikit-learn
+
 
 ---
 class: middle
@@ -291,8 +311,7 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
 
 - How to approach the full problem (the full value chain)
 - Acquiring more/better data is often more important than using fancy models
-- Challenges to put it in production
-    - Define put in production
+- Putting in production: when the model is used routinely
     - Technical debt (simpler models are easier to maintain, require less compute power)
     - Drifts of the data distribution (require monitoring)
 
@@ -362,7 +381,7 @@ The predictions may modify how the system is functions:
     - Disease monitoring is function of testing policy
     - It may change with time, it may be uneven across the population (eg higher quality data for rich people)
 - The state of affaires may not be the desired one
-    - For equal qualifications and responsibilities, women are typically payed less than men. A learner will pick this up and perpetuate inequalities
+    - For equal qualifications and responsibilities, women are typically payed less than men. A learner will pick this up and amplify inequalities
 
 ---
 

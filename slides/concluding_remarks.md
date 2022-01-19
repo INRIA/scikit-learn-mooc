@@ -160,120 +160,19 @@ variables, or have missing values.
   - The gradient boosted trees (HistGradientBoostingRegressor and Classifier) are typically goto methods when there are more than a few thousands of samples
 
 ---
-class: middle
-
-# Going further with machine learning
-
-???
-
-Now, let me give a few pointers on going further with machine learning.
-
----
 
 
 # Learning more about scikit-learn
 
 - The scikit-learn doc
     - The documentation is rich, didactic, continuously improving
-- These docs comprise
-  - An user guide
-  - API docs
-  - Examples
+    - These docs comprise a user guide
 - Where to ask questions:
     - Stackoverflow
 
----
-
-# We are an open-source community
-
-- Free, open, driven by a community, trying to be inclusive
-- You can contribute
-    - Build a community: helping each other, helping training, communication, advocacy
-    - Curate information: our developers have information overflow
-    - Contributing code is technical
-	- Learn software engineering:
-	- Learn git, github (https://lab.github.com/)
-
----
-
-# Studying machine learning further
-
-- [Introduction to Machine Learning with Python](https://www.oreilly.com/library/view/introduction-to-machine/9781449369880/) by Andreas C. Müller, Sarah Guido
-  
-- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/) by Jake van der Plas 
-- [An Introduction to Statistical Learning](https://www.statlearning.com/), by James, Witten, Hastie, Tibshirani: statistical theory
-- [Kaggle](http://kaggle.com):
-    - introduction materials
-    - participating in challenges way to learn
-
-???
-
-If you want to study machine learning further, there are many excellent
-resources.
-
-First the book "Introduction Machine Learning with Python" by scikit-learn core developer Andreas C. Müller and Sarah Guido goes deeper with scikit-learn
- 
-Then, the Python Data Science Handbook by Jake van der Plas gives a
-broader picture of data science beyond machine learning
-
-The book An Introduction to Statistical Learning, by James, Witten,
-Hastie, Tibshirani, gives a view on the statistical theory behind the
-concepts that we have explored.
-
-And finally, Kaggle has good introduction materials and participating in
-challenges is a great way to learn.
-
----
-
-# Topics we have not covered
-
-- Unsupervised learning
-    - Finding order and structure in the data, for instance to group samples, or to transform features
-    - Particularly useful because it does not need labels
-    - But given labels, supervised learning is more likely to recover the link
-
-???
-
-- Unsupervised learning
-    - Finding order and structure in the data, for instance to group samples, or to transform features
-    - Particularly useful because it does not need labels
-    - But given labels, supervised learning not unsupervised learning, is more likely to recover the link
-
----
-
-# Topics we have not covered
-
-- Unsupervised learning
-- Model inspection
-    - Understanding what drives a prediction
-    - Useful for debuging, for reasonning
-    - Requires a lot of nuance
-
-???
-
-- Model inspection
-    - Understanding what drives a prediction
-    - Useful for debuging, for reasonning on the system at hand
-    - Requires a lot of nuance
-
----
-
-# Topics we have not covered
-
-- Unsupervised learning
-- Model inspection
-- Deep learning
-    - For images, text, voice: use pretrained models
-    - Comes with great computational and human costs, as well as large maintenance costs
-    - Not in scikit-learn
-
-???
-
-- Deep learning
-    - For images, text, voice: use pretrained models
-    - Comes with great computational and human costs, as well as large maintenance costs
-    - Not in scikit-learn
-
+- We are an open-source community
+  - Free, open, driven by a community, trying to be inclusive
+  - Help us building a community: training others, communication, advocacy
 
 ---
 class: middle

@@ -148,7 +148,7 @@ Machine learning in a nutshell, we have seen that
 
 - Tree-based: a series of binary choices (thresholds)
     - For tabular data, columns of different nature 
-    - Gradient boosted trees (HistGradientBoostingRegressor and Classifier) are goto methods
+    - HistGradientBoostingRegressor and Classifier are goto methods
 
 ???
 
@@ -390,7 +390,22 @@ The predictions may modify how the system is functions:
 - People that go to the hospital die more than people who do not:
     - Fallacy: comparing different populations
 - Having a heart pressure greater than a threshold triggers specific care which is good. A learner will pick up above-threshold heart pressure as good for you
-- In a pure predictive settings, these learners are correct to use these informations for their predictions. However 1) they should not be trusted when designing interventions on the systems 2) interpretation is subject to caution
+- Pure predictive settings, beneficial these informations for their predictions. However
+ - should not be trusted when designing interventions
+ - interpretation is subject to caution
+
+???
+
+- People that go to the hospital die more than people who do not:
+    - So going to the hospital is bad for health?
+    - The fallacy under such a conclusion is that we are comparing
+      different populations: people who go to the hospital have a
+      different baseline health condition than people who do not.
+- Having a heart pressure greater than a threshold triggers specific care which is good. A learner will pick up above-threshold heart pressure as good for you
+- In a pure predictive settings, these learners are correct to use these informations for their predictions. However:
+    - they should not be trusted when designing interventions on the systems. In particular, predictive models may stop giving good predictions when the systems change slightly as they have not picked up fundamental causal mechanisms
+    - in addition, interpretation is subject to caution
+
 
 ---
 

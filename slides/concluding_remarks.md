@@ -141,7 +141,7 @@ Machine learning in a nutshell, we have seen that
 
 - Tree-based
     - A series of binary choices (thresholds)
-    - For tabular data, columns are quantity of different nature 
+    - For tabular data, columns of different nature 
     - Gradient boosted trees (HistGradientBoostingRegressor and Classifier) are goto methods
 
 ???

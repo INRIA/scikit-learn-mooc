@@ -89,6 +89,15 @@ quizzes (quizzes with solutions).
 make quizzes
 ```
 
+### Generating full-index.md
+
+full-index.md is useful when giving the course live. It makes it easier to guide people
+through the notebooks.
+
+```
+make full-index
+```
+
 ## JupyterBook
 
 JupyterBook is the tool we use to generate our .github.io website from our

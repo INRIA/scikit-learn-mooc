@@ -37,6 +37,9 @@ exercises:
 quizzes:
 	python build_tools/generate-quizzes.py $(GITLAB_REPO_JUPYTERBOOK_DIR) $(JUPYTER_BOOK_DIR)
 
+full-index:
+	python build_tools/generate-md-index.py
+
 $(JUPYTER_BOOK_DIR):
 	jupyter-book build $(JUPYTER_BOOK_DIR)
 	rm -rf $(JUPYTER_BOOK_DIR)/_build/html/{slides,figures} && cp -r slides figures $(JUPYTER_BOOK_DIR)/_build/html
@@ -48,4 +51,5 @@ $(JUPYTER_BOOK_DIR)-clean:
 $(JUPYTER_BOOK_DIR)-full-clean:
   # deletes jupyter-cache cache folder
 	rm -rf $(JUPYTER_BOOK_DIR)/_build
+
 

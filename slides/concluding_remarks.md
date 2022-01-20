@@ -40,9 +40,10 @@ hard work!
 
 # Stepping back
 
+Today's messages:
+
 - The big messages of the MOOC
-- Going further with machine learning
-- Beyond machine-learning: The bigger picture
+- From machine learning to society
 
 ???
 
@@ -65,9 +66,9 @@ learning with scikit-learn.
 
 ---
 
-# Machine learning in a nutshell
+# 1. The machine learning pipeline
 
-- Learned on a train set; applied to test set
+* Learned on a train set; applied to test set
 
 ???
 
@@ -77,7 +78,7 @@ Machine learning in a nutshell, we have seen that
 
 --
 
-- Built from a data matrix, a given number of features for each observation
+* Built from a data matrix, a given number of features for each observation
 
 ???
 
@@ -85,23 +86,23 @@ Machine learning in a nutshell, we have seen that
 
 --
 
-- Transformations of the data
+* Transformations of the data
     - Encoding of the categorical variables
     - Only using information available at train time
     - The scikit-learn Pipeline object
 
 ???
 
-- Transformations of the data, such as encoding of the categorical variables, prior the predictive model, are often important.
+* Transformations of the data, such as encoding of the categorical variables, prior the predictive model, are often important.
     - Care must be done to use only information available at train time.
     - For this, you need to use a scikit-learn Pipeline object to chain the data transformation with the predictive model
 
 
 ---
 
-# Machine learning in a nutshell
+# 2. Adapting model complexity to the data
 
-- Minimize the error on the test set
+* Minimize the error on the test set
     - train error can detect underfit: models too simple for the data
 
 ???
@@ -117,7 +118,7 @@ Machine learning in a nutshell, we have seen that
 
 ???
 
-- Models in scikit-learn come with multiple hyper-parameters
+* Models in scikit-learn come with multiple hyper-parameters
     - These can control model complexity.
     - Selecting model hyper-parameter is important.
     - It can be done with objects such as GridSearchCV, RandomSearchCV and the like
@@ -125,9 +126,9 @@ Machine learning in a nutshell, we have seen that
 
 ---
 
-# Machine learning in a nutshell
+# 3. Specific models
 
-- Understanding the models
+* Understanding the models
     - know when they are suited to the data 
     - intuitions on how to debug them
 
@@ -137,7 +138,7 @@ Machine learning in a nutshell, we have seen that
 
 --
 
-- Linear models: combining the values of features
+* Linear models: combining the values of features
   - For many features or few observations
 
 ???
@@ -146,7 +147,7 @@ Machine learning in a nutshell, we have seen that
 
 --
 
-- Tree-based: a series of binary choices (thresholds)
+* Tree-based: a series of binary choices (thresholds)
     - For tabular data, columns of different nature 
     - HistGradientBoostingRegressor and Classifier are goto methods
 
@@ -167,8 +168,7 @@ variables, or have missing values.
 - The scikit-learn doc
     - The documentation is rich, didactic, continuously improving
     - These docs comprise a user guide
-- Where to ask questions:
-    - Stackoverflow
+- Where to ask questions: Stackoverflow
 
 - We are an open-source community
   - Free, open, driven by a community, trying to be inclusive
@@ -206,7 +206,7 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
 
 ---
   
-# Machine learning as a small part of the problem most of the times. 
+# Machine learning is a small part of the problem most of the times
 
 - How to approach the full problem (the full value chain)
 - Acquiring more/better data is often more important than using fancy models
@@ -289,7 +289,7 @@ The predictions may modify how the system is functions:
 - People that go to the hospital die more than people who do not:
     - Fallacy: comparing different populations
 - Having a heart pressure greater than a threshold triggers specific care which is good. A learner will pick up above-threshold heart pressure as good for you
-- Pure predictive settings, beneficial these informations for their predictions. However
+- Pure predictive settings, these informations are beneficial for their predictions. However
  - should not be trusted when designing interventions
  - interpretation is subject to caution
 

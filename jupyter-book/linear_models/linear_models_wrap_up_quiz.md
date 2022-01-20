@@ -106,17 +106,21 @@ _Select a single answer_
 
 +++
 
-Now, we will search for the regularization strength that will maximize the
+Now, we will search for the regularization strength that maximizes the
 generalization performance of our predictive model. Fit a
 [`sklearn.linear_model.RidgeCV`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html)
-instead of a `Ridge` regressor pass `alphas=np.logspace(-1, 3, num=30)` to
-explore the effect of changing the regularization strength.
+instead of a `Ridge` regressor on the numerical data without the `"GarageArea"`
+column. Pass `alphas=np.logspace(-1, 3, num=30)` to explore the effect of
+changing the regularization strength.
 
 ```{admonition} Question
-Are there major differences regarding the most important weights?
+What is the effect of tuning `alpha` on the variability of the weights of the
+feature `"GarageCars"`? Remember that the variability can be assessed by
+computing the standard deviation.
 
-- a) Yes, the weights order is completely different
-- b) No, the weights order is very similar
+- a) The variability does not change after tuning `alpha`
+- b) The variability decreased after tuning alpha
+- c) The variability increased after tuning alpha
 
 _Select a single answer_
 ```

@@ -29,7 +29,7 @@ the dataframe. The dataset contains:
 - b) only categorical features
 - c) both numerical and categorical features
 
-_Select several answers_
+_Select a single answer_
 ```
 
 +++

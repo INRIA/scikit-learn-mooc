@@ -1,16 +1,9 @@
 
 # Concluding remarks
 
-**This course:**
+```{admonition} The last course!
 
-- Summarizing the big messages of the MOOC
-- Going further with machine learning
-- Bringing value: The bigger picture beyond machine-learning
-
-
-```{admonition} Welcome!
-
-- A lot of material so far
+- We have covered a lot of material so far
 
 - Congratulations for getting there!
 
@@ -19,10 +12,17 @@
   the hard work!
 ```
 
+**This course:**
+
+- Summarizing the big messages of the MOOC
+- Going further with machine learning
+- Bringing value: The bigger picture beyond machine-learning
+
+
 ## The big messages of the mooc
 
 
-## 1. The machine learning pipeline
+### 1. The machine learning pipeline
 
 - Predictive models are learned on a train set and then applied to new
   data, a "test set"
@@ -35,7 +35,7 @@
   - They must only use information available at train time
   - For this, use the scikit-learn Pipeline object
 
-## 2. Adapting model complexity to the data
+### 2. Adapting model complexity to the data
 
 - Models seek to minimize the error on the test set
   - Minimizing error on the train set does no suffice
@@ -48,7 +48,7 @@
   - In scikit-learn this is done with objects such as GridSearchCV,
     RandomSearchCV...
 
-## 3. Specific models
+### 3. Specific models
 
 - Understanding the models
   - Helps knowing when they are suited to the data 
@@ -68,11 +68,11 @@
     you are strongly advised to check out
 
 
-# Going further with machine learning
+## Going further with machine learning
 
 Let us give a few pointers on going further with machine learning.
 
-## Learning more about scikit-learn
+### Learning more about scikit-learn
 
 - The [scikit-learn doc](http://scikit-learn.org)
     - The documentation is rich, didactic, continuously improving
@@ -84,7 +84,7 @@ Let us give a few pointers on going further with machine learning.
 - Where to ask questions:
     - Stackoverflow
 
-## We are an open-source community
+### We are an open-source community
 
 - Free, open, driven by a community, trying to be inclusive
 - You can contribute
@@ -95,22 +95,7 @@ Let us give a few pointers on going further with machine learning.
 	- Learn software engineering:
 	- Learn git, github (https://lab.github.com/)
 
-## Studying machine learning further
-
-- [Introduction to Machine Learning with
-  Python](https://www.oreilly.com/library/view/introduction-to-machine/9781449369880/)
-  by Andreas C. Müller, Sarah Guido: explains more advanced use of
-  scikit-learn
-- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/) by Jake van der Plas, a broader picture of data science,
-  beyond scikit-learn
-- [An Introduction to Statistical Learning](https://www.statlearning.com/),
-  by James, Witten, Hastie, Tibshirani: statistical theory 
-  behind the concepts that we have explored
-- [Kaggle](http://kaggle.com):
-    - Good introduction materials
-    - Participating in challenges is a good way to learn
-
-## Topics we have not covered
+### Topics we have not covered
 
 - Unsupervised learning
     - Finding order and structure in the data, for instance to group samples, or to transform features
@@ -127,14 +112,28 @@ Let us give a few pointers on going further with machine learning.
     - Comes with great computational and human costs, as well as large maintenance costs
     - Not in scikit-learn
 
+### Studying machine learning further
 
-# Bringing value: The bigger picture beyond machine-learning
+- [Introduction to Machine Learning with
+  Python](https://www.oreilly.com/library/view/introduction-to-machine/9781449369880/)
+  by Andreas C. Müller, Sarah Guido: explains more advanced use of
+  scikit-learn
+- [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/) by Jake van der Plas, a broader picture of data science,
+  beyond scikit-learn
+- [An Introduction to Statistical Learning](https://www.statlearning.com/),
+  by James, Witten, Hastie, Tibshirani: statistical theory 
+  behind the concepts that we have explored
+- [Kaggle](http://kaggle.com):
+    - Good introduction materials
+    - Participating in challenges is a good way to learn
 
-How machine learning fits in wider questions; how it may fail, and
-societal aspects.
+## Bringing value: The bigger picture beyond machine-learning
+
+We will now touch briefly how machine learning fits in wider questions,
+how it may fail, and societal aspects.
 
 
-## Validation and evaluation matter
+### Validation and evaluation matter
 
 Validation and evaluation are often the weak point of an analysis. They
 are key to achieving reliable predictive models.
@@ -147,7 +146,7 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
 - Many splits in your cross-validation. This brings computational cost, but if you can't afford to evaluate it, you can't afford to use it or trust it
 
 
-## Machine learning is a small part of the problem most of the times 
+### Machine learning is a small part of the problem most of the times 
 
 - How to approach the full problem (the full value chain)
 - Acquiring more/better data is often more important than using fancy models
@@ -155,7 +154,7 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
     - Technical debt (simpler models are easier to maintain, require less compute power)
     - Drifts of the data distribution (require monitoring)
 
-## Technical craft is not all
+### Technical craft is not all
 
 We gave methodological elements, but these are not enough to always have
 solid conclusion from a statistical standpoint.
@@ -166,7 +165,7 @@ Once you know how to run the software, the biggest challenges are understanding 
   - Domain knowledge and critical thinking about the data
 
 
-## How the predictions are used
+### How the predictions are used
 
 When designing a machine-learning system, we need to think about
 how the predictions are used.
@@ -185,7 +184,7 @@ Errors mean different things in different application contexts.
 The predictions may modify how the system is functions:
   - Predicting who will benefit from an hospital stay may overcrowd some units of the hospital, and thus change the positive impact of hospitals on inpatients
 
-## Choice of the output/the labeled dataset
+### Choice of the output/the labeled dataset
 
 - What we chose to predict is a very loaded choice
 - Interesting labels are often hard to get, focusing on the "easy" ways
@@ -193,7 +192,7 @@ The predictions may modify how the system is functions:
 - Our target may be a proxy of the quantity of interest
 
 
-## Biases in the data
+### Biases in the data
 
 All data come with biases.
 
@@ -203,7 +202,7 @@ All data come with biases.
 - The state of affaires may not be the desired one
     - For equal qualifications and responsibilities, women are typically payed less than men. A learner will pick this up and amplify inequalities
 
-## Prediction models versus causal models
+### Prediction models versus causal models
 
 Machine learner models are not driven by causal mechanisms.
 
@@ -223,7 +222,7 @@ Machine learner models are not driven by causal mechanisms.
  - interpretation is subject to caution
 
 
-## Societal impact
+### Societal impact
 
 These challenges with biases in the data, feedback loops of the
 predictions, can be very important, because **prediction models may affect

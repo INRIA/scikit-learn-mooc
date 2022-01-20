@@ -1,6 +1,18 @@
 # ✅ Quiz M4.04
 
 ```{admonition} Question
+Which of the following estimators can solve linear regression problems?
+
+- a) sklearn.linear_model.LinearRegression
+- b) sklearn.linear_model.LogisticRegression
+- c) sklearn.linear_model.Ridge
+
+_Select several answers_
+```
+
++++
+
+```{admonition} Question
 Regularization allows:
 
 - a) to create a model robust to outliers (samples that differ widely from

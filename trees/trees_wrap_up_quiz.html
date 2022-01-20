@@ -1450,11 +1450,11 @@ regression?</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Instead of using the default parameter for decision tree regressor, we will
-optimize the depth of the tree. Using a grid-search
-(<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.GridSearchCV</span></code>) with a 10-fold cross-validation,
-answer to the questions below. Vary the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> from 1
-level up to 15 levels.</p>
+<p>Instead of using the default parameters for the decision tree regressor, we will
+optimize the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> of the tree. Vary the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> from 1 level up to 15
+levels. Use nested cross-validation to evaluate a grid-search
+(<code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.GridSearchCV</span></code>). Set <code class="docutils literal notranslate"><span class="pre">cv=10</span></code> for both the inner and
+outer cross-validations, then answer the questions below.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>What is the optimal tree depth for the current problem?</p>
@@ -1474,8 +1474,8 @@ b) ~0.72 and is equal to the linear model
 c) ~0.7 and is worse than the linear model</p>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Instead of using only the numerical dataset you will now use the entire
-dataset available in the variable <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+<p>Instead of using only the numerical dataset you will now use the entire dataset
+available in the variable <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <p>Create a preprocessor by dealing separately with the numerical and categorical
 columns. For the sake of simplicity, we will assume the following:</p>
 <ul class="simple">
@@ -1485,12 +1485,13 @@ columns. For the sake of simplicity, we will assume the following:</p>
 It will be the complement of the numerical columns.</p></li>
 </ul>
 <p><strong>Do not optimize the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter for this exercise.</strong> Keep the
-default value (<code class="docutils literal notranslate"><span class="pre">None</span></code>) for this parameter.</p>
+default value (<code class="docutils literal notranslate"><span class="pre">None</span></code>) for this parameter. This means a single cross-validation
+is needed for evaluating the generalization performance.</p>
 <p><strong>Fix the random state of the tree by passing the parameter <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code></strong></p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Are the performance in terms of <span class="math notranslate nohighlight">\(R^2\)</span> better by incorporating the categorical
-features in comparison with the previous tree with the optimal depth?</p>
+<p>Is the <span class="math notranslate nohighlight">\(R^2\)</span> score better when incorporating the categorical features than the
+model with numerical features only and optimal <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>?</p>
 <ul class="simple">
 <li><p>a) No, the generalization performance is the same: ~0.7</p></li>
 <li><p>b) The generalization performance is slightly better: ~0.72</p></li>

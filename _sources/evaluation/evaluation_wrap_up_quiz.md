@@ -175,7 +175,7 @@ in the dictionaries returned by the `cross_validate` function.
 
 In the previous cross-validation, we made the choice of using a `ShuffleSplit`
 cross-validation strategy. It means that randomly selected samples were
-selected as a testing test ignoring any time dependency between the lines of
+selected as testing set ignoring any time dependency between the lines of
 the dataframe.
 
 We would like to have a cross-validation strategy that evaluates the capacity
@@ -341,10 +341,6 @@ By using the previous plot, select the correct statements:
   regressor
 - b) the histogram gradient boosting regressor is more accurate than the linear
   model
-- c) the linear model predicts smoother outputs than the histogram gradient
-  boosting regressor
-- d) the histogram gradient boosting regressor predicts smoother outputs
-  than the linear model
 
-_Select several answers_
+_Select a single answer_
 ```

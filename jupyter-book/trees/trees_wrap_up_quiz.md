@@ -54,11 +54,11 @@ _Select a single answer_
 
 +++
 
-Instead of using the default parameter for decision tree regressor, we will
-optimize the depth of the tree. Using a grid-search
-(`sklearn.model_selection.GridSearchCV`) with a 10-fold cross-validation,
-answer to the questions below. Vary the `max_depth` from 1
-level up to 15 levels.
+Instead of using the default parameters for the decision tree regressor, we will
+optimize the `max_depth` of the tree. Vary the `max_depth` from 1 level up to 15
+levels. Use nested cross-validation to evaluate a grid-search
+(`sklearn.model_selection.GridSearchCV`). Set `cv=10` for both the inner and
+outer cross-validations, then answer the questions below.
 
 ```{admonition} Question
 What is the optimal tree depth for the current problem?
@@ -85,8 +85,8 @@ _Select a single answer_
 
 +++
 
-Instead of using only the numerical dataset you will now use the entire
-dataset available in the variable `data`.
+Instead of using only the numerical dataset you will now use the entire dataset
+available in the variable `data`.
 
 Create a preprocessor by dealing separately with the numerical and categorical
 columns. For the sake of simplicity, we will assume the following:
@@ -97,13 +97,14 @@ columns. For the sake of simplicity, we will assume the following:
   It will be the complement of the numerical columns.
 
 **Do not optimize the `max_depth` parameter for this exercise.** Keep the
-default value (`None`) for this parameter.
+default value (`None`) for this parameter. This means a single cross-validation
+is needed for evaluating the generalization performance.
 
 **Fix the random state of the tree by passing the parameter `random_state=0`**
 
 ```{admonition} Question
-Are the performance in terms of $R^2$ better by incorporating the categorical
-features in comparison with the previous tree with the optimal depth?
+Is the $R^2$ score better when incorporating the categorical features than the
+model with numerical features only and optimal `max_depth`?
 
 - a) No, the generalization performance is the same: ~0.7
 - b) The generalization performance is slightly better: ~0.72

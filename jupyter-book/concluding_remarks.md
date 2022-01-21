@@ -82,7 +82,8 @@ Let us give a few pointers on going further with machine learning.
   - API docs: Every function, every parameter is explained
   - Examples: each example tries to demonstrate the good use of the software
 - Where to ask questions:
-    - Stackoverflow
+    - [Stackoverflow](https://stackoverflow.com/)
+    - [GitHub discussions for scikit-learn](https://github.com/scikit-learn/scikit-learn/discussions)
 
 ### We are an open-source community
 

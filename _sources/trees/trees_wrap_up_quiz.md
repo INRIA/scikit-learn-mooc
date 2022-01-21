@@ -39,15 +39,19 @@ Thus, use `sklearn.linear_model.LinearRegression` and
 `sklearn.tree.DecisionTreeRegressor` to create the model. Use the default
 parameters for both models.
 
-Be aware that a linear model requires to scale the data. You can use a
-`sklearn.preprocessing.StandardScaler`.
+Be aware that a linear model requires to scale numerical features.
+Please use `sklearn.preprocessing.StandardScaler` so that your
+linear regression model behaves the same way as the quiz author
+intended ;)
 
 ```{admonition} Question
-Is the decision tree model better in terms of $R^2$ score than the linear
-regression?
+By comparing the cross-validation test scores for both models fold-to-fold, count the number of
+times the linear model has a better test score than the decision tree model.
+Select the range which this number belongs to:
 
-- a) Yes
-- b) No
+- a) [0, 3]: the linear model is substantially worse than the decision tree
+- b) [4, 6]: both models are almost equivalent
+- c) [7, 10]: the linear model is substantially better than the decision tree
 
 _Select a single answer_
 ```
@@ -73,19 +77,30 @@ _Select a single answer_
 
 +++
 
-```{admonition} Question
-A tree with an optimal depth has a score of:
+Now, we want to evaluate the generalization performance of the decision tree
+while taking into account the fact that we tune the depth for this specific
+dataset. Use the grid-search as an estimator inside a `cross_validate` to
+automatically tune the `max_depth` parameter on each cross-validation
+fold.
 
-a) ~0.74 and is better than the linear model
-b) ~0.72 and is equal to the linear model
-c) ~0.7 and is worse than the linear model
+```{admonition} Question
+A tree with tuned depth
+
+a) is always worse than the linear models on all CV folds
+b) is often but not always worse than the linear model
+c) is often but not always better than the linear model
+d) is always better than the linear models on all CV folds
 
 _Select a single answer_
+
+Note: Try to set the random_state of the decision tree to different values
+e.g. random_state=1 or random_state=2 and re-run the nested cross-validation
+to check that your answer is stable enough.
 ```
 
 +++
 
-Instead of using only the numerical dataset you will now use the entire dataset
+Instead of using only the numerical features you will now use the entire dataset
 available in the variable `data`.
 
 Create a preprocessor by dealing separately with the numerical and categorical
@@ -96,19 +111,20 @@ columns. For the sake of simplicity, we will assume the following:
 - numerical columns can be selected if they do not have an `object` data type.
   It will be the complement of the numerical columns.
 
-**Do not optimize the `max_depth` parameter for this exercise.** Keep the
-default value (`None`) for this parameter. This means a single cross-validation
-is needed for evaluating the generalization performance.
+In addition, set the `max_depth` of the decision tree to `7` (fixed, no need
+to tune it with a grid-search).
 
-**Fix the random state of the tree by passing the parameter `random_state=0`**
+Evaluate this model using `cross_validate` as in the previous questions.
 
 ```{admonition} Question
-Is the $R^2$ score better when incorporating the categorical features than the
-model with numerical features only and optimal `max_depth`?
+A tree model trained with both numerical and categorical features
 
-- a) No, the generalization performance is the same: ~0.7
-- b) The generalization performance is slightly better: ~0.72
-- c) The generalization performance is better: ~0.74
+a) is most often worse than the tree model using only the numerical features
+b) is most often better than the tree model using only the numerical features
 
 _Select a single answer_
+
+Note: Try to set the random_state of the decision tree to different values
+e.g. random_state=1 or random_state=2 and re-run the (this time single) cross-validation
+to check that your answer is stable enough.
 ```

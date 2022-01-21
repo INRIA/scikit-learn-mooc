@@ -45,8 +45,6 @@
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -1438,15 +1436,19 @@ and evaluate them by 10-fold cross-validation.</p>
 <p>Thus, use <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code> and
 <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code> to create the model. Use the default
 parameters for both models.</p>
-<p>Be aware that a linear model requires to scale the data. You can use a
-<code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code>.</p>
+<p>Be aware that a linear model requires to scale numerical features.
+Please use <code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code> so that your
+linear regression model behaves the same way as the quiz author
+intended ;)</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Is the decision tree model better in terms of <span class="math notranslate nohighlight">\(R^2\)</span> score than the linear
-regression?</p>
+<p>By comparing the cross-validation test scores for both models fold-to-fold, count the number of
+times the linear model has a better test score than the decision tree model.
+Select the range which this number belongs to:</p>
 <ul class="simple">
-<li><p>a) Yes</p></li>
-<li><p>b) No</p></li>
+<li><p>a) [0, 3]: the linear model is substantially worse than the decision tree</p></li>
+<li><p>b) [4, 6]: both models are almost equivalent</p></li>
+<li><p>c) [7, 10]: the linear model is substantially better than the decision tree</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
@@ -1466,15 +1468,24 @@ outer cross-validations, then answer the questions below.</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
+<p>Now, we want to evaluate the generalization performance of the decision tree
+while taking into account the fact that we tune the depth for this specific
+dataset. Use the grid-search as an estimator inside a <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> to
+automatically tune the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter on each cross-validation
+fold.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>A tree with an optimal depth has a score of:</p>
-<p>a) ~0.74 and is better than the linear model
-b) ~0.72 and is equal to the linear model
-c) ~0.7 and is worse than the linear model</p>
+<p>A tree with tuned depth</p>
+<p>a) is always worse than the linear models on all CV folds
+b) is often but not always worse than the linear model
+c) is often but not always better than the linear model
+d) is always better than the linear models on all CV folds</p>
 <p><em>Select a single answer</em></p>
+<p>Note: Try to set the random_state of the decision tree to different values
+e.g. random_state=1 or random_state=2 and re-run the nested cross-validation
+to check that your answer is stable enough.</p>
 </div>
-<p>Instead of using only the numerical dataset you will now use the entire dataset
+<p>Instead of using only the numerical features you will now use the entire dataset
 available in the variable <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <p>Create a preprocessor by dealing separately with the numerical and categorical
 columns. For the sake of simplicity, we will assume the following:</p>
@@ -1484,20 +1495,18 @@ columns. For the sake of simplicity, we will assume the following:</p>
 <li><p>numerical columns can be selected if they do not have an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.
 It will be the complement of the numerical columns.</p></li>
 </ul>
-<p><strong>Do not optimize the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter for this exercise.</strong> Keep the
-default value (<code class="docutils literal notranslate"><span class="pre">None</span></code>) for this parameter. This means a single cross-validation
-is needed for evaluating the generalization performance.</p>
-<p><strong>Fix the random state of the tree by passing the parameter <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code></strong></p>
+<p>In addition, set the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> of the decision tree to <code class="docutils literal notranslate"><span class="pre">7</span></code> (fixed, no need
+to tune it with a grid-search).</p>
+<p>Evaluate this model using <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> as in the previous questions.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Is the <span class="math notranslate nohighlight">\(R^2\)</span> score better when incorporating the categorical features than the
-model with numerical features only and optimal <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>?</p>
-<ul class="simple">
-<li><p>a) No, the generalization performance is the same: ~0.7</p></li>
-<li><p>b) The generalization performance is slightly better: ~0.72</p></li>
-<li><p>c) The generalization performance is better: ~0.74</p></li>
-</ul>
+<p>A tree model trained with both numerical and categorical features</p>
+<p>a) is most often worse than the tree model using only the numerical features
+b) is most often better than the tree model using only the numerical features</p>
 <p><em>Select a single answer</em></p>
+<p>Note: Try to set the random_state of the decision tree to different values
+e.g. random_state=1 or random_state=2 and re-run the (this time single) cross-validation
+to check that your answer is stable enough.</p>
 </div>
 </div>
 

@@ -111,7 +111,7 @@ Let us give a few pointers on going further with machine learning.
 - Deep learning
     - For images, text, voice: use pretrained models
     - Comes with great computational and human costs, as well as large maintenance costs
-    - Not in scikit-learn
+    - Not in scikit-learn: have a look at resources on pytorch and tensorflow to get started!
 
 ### Studying machine learning further
 

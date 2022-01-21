@@ -109,6 +109,10 @@ Let us give a few pointers on going further with machine learning.
     - Requires a lot of nuance
 
 - Deep learning
+    - Often not better than gradient boosting trees for classification or regression
+      on tabular data
+    - But more flexible: can work natively with tasks that involve variable length
+      structures in the input and output of the model (e.g. speech to text)
     - For images, text, voice: use pretrained models
     - Comes with great computational and human costs, as well as large maintenance costs
     - Not in scikit-learn: have a look at resources on pytorch and tensorflow to get started!

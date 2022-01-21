@@ -128,6 +128,7 @@ Let us give a few pointers on going further with machine learning.
 - [An Introduction to Statistical Learning](https://www.statlearning.com/),
   by James, Witten, Hastie, Tibshirani: statistical theory 
   behind the concepts that we have explored
+- [Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) by Aurélien Géron
 - [Kaggle](http://kaggle.com):
     - Good introduction materials
     - Participating in challenges is a good way to learn

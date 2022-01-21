@@ -135,3 +135,39 @@ Hint: pass `{"preprocessor": all_preprocessors, "classifier__n_neighbors": [5, 5
 
 _Select several answers_
 ```
+
++++
+
+```{admonition} Question
+
+Evaluate the generalization performance of the best models found in each fold
+using nested cross-validation. Set `return_estimator=True` and `cv=10` for the
+outer loop. The scoring metric must be the `balanced-accuracy`. The mean
+generalization performance is
+
+- a) better than 0.97
+- b) between 0.92 and 0.97
+- c) below 0.92
+
+_Select a single answer_
+```
+
++++
+
+```{admonition} Question
+
+Explore the set of best parameters that the different grid search models found
+in each fold of the outer cross-validation. Remember that you can access them
+with the `best_params_` attribute of the estimator.
+
+Hint: it is important to pass `return_estimator=True` to the `cross_validate`
+function to be able to introspect trained model saved in the `"estimator"`
+field of the CV results. If you forgot to do for the previous question,
+please re-run the cross-validation with that option enabled.
+- a) The tuned number of nearest neighbors is stable across all folds
+- b) The tuned number of nearest neighbors changes often across all folds
+- c) The optimal scaler is stable across all folds
+- d) The optimal scaler changes often across all folds
+
+_Select several answers_
+```

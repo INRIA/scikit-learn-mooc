@@ -57,7 +57,7 @@
 - Linear models
   - build predictions by combining the values of features
   - Particularly useful for data with many features or few observations
-
+  - Can benefit from non-linear feature engineering
 
 - Tree-based models:
   - Build predictions by combining a series of binary choices (such as

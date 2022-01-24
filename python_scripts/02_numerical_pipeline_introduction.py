@@ -172,7 +172,10 @@ print(f"Number of correct prediction: "
 (target == target_predicted).mean()
 
 # %% [markdown]
-# But, can this evaluation be trusted, or is it too good to be true?
+# This result means that the model makes a correct _prediction_ for
+# approximately every 82 / 100 samples. But, can a model _predict_ something
+# that it already saw? In other words, can this evaluation be trusted, or is it
+# too good to be true?
 #
 # ## Train-test data split
 #

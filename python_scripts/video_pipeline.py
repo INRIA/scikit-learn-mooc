@@ -30,7 +30,8 @@ target = (target > 200_000).astype(int)
 data
 
 # %% [markdown]
-# We can cherry-pick some features and only retain this subset of data
+# For the sake of simplicity, we can cherry-pick some features and only retain
+# this subset of data
 
 # %%
 numeric_features = ['LotArea', 'FullBath', 'HalfBath']
@@ -96,3 +97,13 @@ cv_results = cross_validate(model, data, target, cv=5)
 scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
       f"{scores.mean():.3f} +/- {scores.std():.3f}")
+
+# %% [markdown]
+# ```{note}
+# In this case, around 86% of the times the pipeline correctly predicts whether
+# if the price of a house is above or below the 200_000 dollars threshold. But
+# be aware that this score was obtained by picking some features by hand, which
+# is in general a bad practice. As we will see later in the course, a good score
+# does not mean that the model is immune to other drawbacks such as the bias we
+# are probably introducing by ignoring the rest of the features.
+# ```

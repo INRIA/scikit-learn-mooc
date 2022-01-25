@@ -347,7 +347,7 @@ ML or AI can shift decision logic, power structures, operational costs
 - It is a fantastic opportunity to improve our world
 - Scikit-learn: lifting technical roadblocks as much as possible
     - empower people
-    - to solve the problems that matters to them
+    - to solve the problems that matter to them
 
 ???
 

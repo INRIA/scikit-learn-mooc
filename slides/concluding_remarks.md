@@ -156,7 +156,7 @@ Machine learning in a nutshell, we have seen that
 - Tree-based models
   - combine a series of binary choices, such as thresholds on the values of 
     various attributes.
-  - They are particularly suited to tabular data where columns are quantity of different nature (age, height, job title), a mixing of categorical and continuous
+  - They are particularly suited to tabular data where columns are quantities of different nature (age, height, job title), a mixing of categorical and continuous
 variables, or have missing values.
   - The gradient boosted trees (HistGradientBoostingRegressor and Classifier) are typically goto methods when there are more than a few thousands of samples
 

@@ -94,7 +94,7 @@ Machine learning in a nutshell, we have seen that
 ???
 
 * Transformations of the data, such as encoding of the categorical variables, prior the predictive model, are often important.
-    - Care must be done to use only information available at train time.
+    - Care must be taken to use only information available at train time.
     - For this, you need to use a scikit-learn Pipeline object to chain the data transformation with the predictive model
 
 

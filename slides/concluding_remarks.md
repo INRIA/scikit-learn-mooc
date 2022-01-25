@@ -134,7 +134,7 @@ Machine learning in a nutshell, we have seen that
 
 ???
 
-- Understanding the models, in the sens of how the build their predictive functions, helps knowing when they are suited to the data and having intuitions on how to debug them
+- Understanding the models, in the sense of how they build their predictive functions, helps knowing when they are suited to the data and having intuitions on how to debug them
 
 --
 

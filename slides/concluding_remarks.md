@@ -167,7 +167,7 @@ variables, or have missing values.
 
 - The scikit-learn doc
     - The documentation is rich, didactic, continuously improving
-    - These docs comprise a user guide
+    - These docs comprise an user guide
 - Where to ask questions: Stackoverflow
 
 - We are an open-source community

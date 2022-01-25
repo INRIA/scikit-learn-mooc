@@ -354,6 +354,6 @@ ML or AI can shift decision logic, power structures, operational costs
 - Machine learning drives one of the most important technological revolution of our time.
 - It is a fantastic opportunity to improve human condition
 - With scikit-learn, and this MOOC, we try to lift as much as possible
-  the technical roadblocks, and  wee hope that we can empower a great variety of people, with different mindsets and dreams, to solve the problems that matters to them
+  the technical roadblocks, and  wee hope that we can empower a great variety of people, with different mindsets and dreams, to solve the problems that matter to them
 
 Thank you for being part of this adventure!

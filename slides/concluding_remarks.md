@@ -61,7 +61,7 @@ class: middle
 
 ???
 
-Let me start by summarizing the what we have learned about machine
+Let me start by summarizing what we have learned about machine
 learning with scikit-learn.
 
 ---

@@ -63,7 +63,7 @@ def fit_and_plot_regression(model, data, feature_names, target_names):
 
     sns.scatterplot(
         x=data.iloc[:, 0], y=data[target_names], color="black", alpha=0.5)
-    plt.plot(data_test, target_predicted, linewidth=4)
+    plt.plot(data_test.iloc[:, 0], target_predicted, linewidth=4)
 
 
 # %% [markdown]

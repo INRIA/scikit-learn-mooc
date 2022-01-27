@@ -75,7 +75,7 @@ target_test_predicted = tree.predict(data_test)
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 # plot the predictions
-line_predictions = plt.plot(data_test, target_test_predicted, "--")
+line_predictions = plt.plot(data_test["Feature"], target_test_predicted, "--")
 
 # plot the residuals
 for value, true, predicted in zip(data_train["Feature"],
@@ -116,7 +116,8 @@ target_test_predicted_residuals = tree_residuals.predict(data_test)
 
 # %%
 sns.scatterplot(x=data_train["Feature"], y=residuals, color="black", alpha=0.5)
-line_predictions = plt.plot(data_test, target_test_predicted_residuals, "--")
+line_predictions = plt.plot(
+    data_test["Feature"], target_test_predicted_residuals, "--")
 
 # plot the residuals of the predicted residuals
 for value, true, predicted in zip(data_train["Feature"],
@@ -155,7 +156,7 @@ target_true_residual = residuals.iloc[-2]
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-plt.plot(data_test, target_test_predicted, "--")
+plt.plot(data_test["Feature"], target_test_predicted, "--")
 for value, true, predicted in zip(data_train["Feature"],
                                   target_train,
                                   target_train_predicted):
@@ -180,7 +181,7 @@ _ = plt.title("Tree predictions")
 
 sns.scatterplot(x=data_train["Feature"], y=residuals,
                 color="black", alpha=0.5)
-plt.plot(data_test, target_test_predicted_residuals, "--")
+plt.plot(data_test["Feature"], target_test_predicted_residuals, "--")
 for value, true, predicted in zip(data_train["Feature"],
                                   residuals,
                                   target_train_predicted_residuals):

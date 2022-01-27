@@ -68,9 +68,9 @@ import seaborn as sns
 
 sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
-plt.plot(data_test, target_predicted_linear_regression,
+plt.plot(data_test[feature_name], target_predicted_linear_regression,
          label="Linear regression")
-plt.plot(data_test, target_predicted_tree, label="Decision tree")
+plt.plot(data_test[feature_name], target_predicted_tree, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction of linear model and a decision tree")
 
@@ -104,9 +104,9 @@ target_predicted_tree = tree.predict(data_test)
 # %% tags=["solution"]
 sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                 color="black", alpha=0.5)
-plt.plot(data_test, target_predicted_linear_regression,
+plt.plot(data_test[feature_name], target_predicted_linear_regression,
          label="Linear regression")
-plt.plot(data_test, target_predicted_tree, label="Decision tree")
+plt.plot(data_test[feature_name], target_predicted_tree, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction of linear model and a decision tree")
 

@@ -249,7 +249,7 @@ advertisement should be presented, the error is rather harmless. On the
 opposite, in medicine, errors can kill.
 
 What is done with a prediction also matters, in particular it can tell us
-if a false detection or a miss is less coslty. For instance, when
+if a false detection or a miss is less costly. For instance, when
 detecting brain tumors, if the patient is sent to surgery given a
 detection, false detections are very dangerous. On the opposite, if the
 patent is a given an MR scan to confirm the prediction, misses should

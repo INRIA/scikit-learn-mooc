@@ -213,7 +213,7 @@ All data come with biases.
 Machine learner models are not driven by causal mechanisms.
 
 - For example people that go to the hospital die more than people who do not:
-    - Naive data analysis might conclude that hospital are bad for health
+    - Naive data analysis might conclude that hospitals are bad for the health
     - The fallacy is that we are comparing different populations: people
       who go to the hospital typically have a worse baseline health than
       people who do not.

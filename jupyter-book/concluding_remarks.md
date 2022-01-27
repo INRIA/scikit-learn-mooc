@@ -248,6 +248,10 @@ ML or AI can shift decision logic, power structures, operational costs
     intersection of technology and society. No solution will be
     purely technical
 
+A good discussion on these topic can be found in the short article:
+[Medicine’s Machine Learning Problem](https://bostonreview.net/articles/rachel-thomas-medicines-machine-learning-problem).
+
+
 ----
 
 **Your move: choose what you will do with machine learning**

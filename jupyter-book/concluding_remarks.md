@@ -105,7 +105,7 @@ Let us give a few pointers on going further with machine learning.
 
 - Model inspection
     - Understanding what drives a prediction
-    - Useful for debuging, for reasonning on the system at hand
+    - Useful for debugging, for reasoning on the system at hand
     - Requires a lot of nuance
 
 - Deep learning

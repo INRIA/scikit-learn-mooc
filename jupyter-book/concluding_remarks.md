@@ -101,7 +101,7 @@ Let us give a few pointers on going further with machine learning.
 - Unsupervised learning
     - Finding order and structure in the data, for instance to group samples, or to transform features
     - Particularly useful because it does not need labels
-    - But given labels, supervised learning not unsupervised learning, is more likely to recover the link
+    - But given labels, supervised learning not unsupervised learning, is more likely to recover the link between data and labels
 
 - Model inspection
     - Understanding what drives a prediction
@@ -213,7 +213,7 @@ All data come with biases.
 Machine learner models are not driven by causal mechanisms.
 
 - For example people that go to the hospital die more than people who do not:
-    - Naive data analysis might conclude that hospitals are bad for the health
+    - Naive data analysis might conclude that hospitals are bad for health
     - The fallacy is that we are comparing different populations: people
       who go to the hospital typically have a worse baseline health than
       people who do not.

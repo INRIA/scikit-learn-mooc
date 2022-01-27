@@ -63,7 +63,7 @@ print(f"Mean absolute error: "
 import numpy as np
 
 data_range = pd.DataFrame(np.linspace(170, 235, num=300),
-                           columns=data.columns)
+                          columns=data.columns)
 tree_predictions = []
 for tree in forest.estimators_:
     # we convert `data_range` into a NumPy array to avoid a warning raised in scikit-learn
@@ -83,8 +83,8 @@ sns.scatterplot(data=penguins, x=feature_name, y=target_name,
 
 # plot tree predictions
 for tree_idx, predictions in enumerate(tree_predictions):
-    plt.plot(data_range, predictions, label=f"Tree #{tree_idx}",
+    plt.plot(data_range[feature_name], predictions, label=f"Tree #{tree_idx}",
              linestyle="--", alpha=0.8)
 
-plt.plot(data_range, forest_predictions, label=f"Random forest")
+plt.plot(data_range[feature_name], forest_predictions, label=f"Random forest")
 _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

@@ -67,7 +67,7 @@ y_pred = tree.predict(data_test)
 # %%
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
-plt.plot(data_test, y_pred, label="Fitted tree")
+plt.plot(data_test["Feature"], y_pred, label="Fitted tree")
 plt.legend()
 _ = plt.title("Predictions by a single decision tree")
 
@@ -177,7 +177,7 @@ sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 for tree_idx, tree in enumerate(bag_of_trees):
     tree_predictions = tree.predict(data_test)
-    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.8,
+    plt.plot(data_test["Feature"], tree_predictions, linestyle="--", alpha=0.8,
              label=f"Tree #{tree_idx} predictions")
 
 plt.legend()
@@ -203,12 +203,12 @@ sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
 bag_predictions = []
 for tree_idx, tree in enumerate(bag_of_trees):
     tree_predictions = tree.predict(data_test)
-    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.8,
+    plt.plot(data_test["Feature"], tree_predictions, linestyle="--", alpha=0.8,
              label=f"Tree #{tree_idx} predictions")
     bag_predictions.append(tree_predictions)
 
 bag_predictions = np.mean(bag_predictions, axis=0)
-plt.plot(data_test, bag_predictions, label="Averaged predictions",
+plt.plot(data_test["Feature"], bag_predictions, label="Averaged predictions",
          linestyle="-")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Predictions of bagged trees")
@@ -248,7 +248,7 @@ sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 
 bagged_trees_predictions = bagged_trees.predict(data_test)
-plt.plot(data_test, bagged_trees_predictions)
+plt.plot(data_test["Feature"], bagged_trees_predictions)
 
 _ = plt.title("Predictions from a bagging classifier")
 
@@ -267,14 +267,14 @@ for tree_idx, tree in enumerate(bagged_trees.estimators_):
     label = "Predictions of individual trees" if tree_idx == 0 else None
     # we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn
     tree_predictions = tree.predict(data_test.to_numpy())
-    plt.plot(data_test, tree_predictions, linestyle="--", alpha=0.1,
+    plt.plot(data_test["Feature"], tree_predictions, linestyle="--", alpha=0.1,
              color="tab:blue", label=label)
 
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 
 bagged_trees_predictions = bagged_trees.predict(data_test)
-plt.plot(data_test, bagged_trees_predictions,
+plt.plot(data_test["Feature"], bagged_trees_predictions,
          color="tab:orange", label="Predictions of ensemble")
 _ = plt.legend()
 
@@ -339,7 +339,7 @@ for i, regressor in enumerate(bagging.estimators_):
     # we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn
     regressor_predictions = regressor.predict(data_test.to_numpy())
     base_model_line = plt.plot(
-        data_test, regressor_predictions, linestyle="--", alpha=0.2,
+        data_test["Feature"], regressor_predictions, linestyle="--", alpha=0.2,
         label="Predictions of base models" if i == 0 else None,
         color="tab:blue"
     )
@@ -347,7 +347,7 @@ for i, regressor in enumerate(bagging.estimators_):
 sns.scatterplot(x=data_train["Feature"], y=target_train, color="black",
                 alpha=0.5)
 bagging_predictions = bagging.predict(data_test)
-plt.plot(data_test, bagging_predictions,
+plt.plot(data_test["Feature"], bagging_predictions,
          color="tab:orange", label="Predictions of ensemble")
 plt.ylim(target_train.min(), target_train.max())
 plt.legend()

@@ -38,7 +38,7 @@
 ### 2. Adapting model complexity to the data
 
 - Models seek to minimize the error on the test set
-  - Minimizing error on the train set does no suffice
+  - Minimizing error on the train set does not suffice
   - But too large train error can detect underfit: models too simple for
     the data
 

@@ -218,7 +218,7 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
 
 # Technical craft is not all
 
-We gave methodological elements, but these are not enough to always have solid conclusion from a statistical standpoint.
+We gave methodological elements, but these are not enough to always have solid conclusions from a statistical standpoint.
 
 
 Once you know how to run the software, the biggest challenges are understanding the data, its shortcomings, and what can and cannot be concluded from an analysis

@@ -290,8 +290,8 @@ The predictions may modify how the system functions:
     - Fallacy: comparing different populations
 - Having a heart pressure greater than a threshold triggers specific care which is good. A learner will pick up above-threshold heart pressure as good for you
 - Pure predictive settings, these informations are beneficial for their predictions. However
- - should not be trusted when designing interventions
- - interpretation is subject to caution
+    - should not be trusted when designing interventions
+    - interpretation must be subject to caution
 
 ???
 

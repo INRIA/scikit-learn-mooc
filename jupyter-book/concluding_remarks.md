@@ -187,8 +187,8 @@ Errors mean different things in different application contexts.
         - If a patient given an MR scan to confirm the detection:
 	  misses should be avoided, as an MR scan is harmless
 
-The predictions may modify how the system is functions:
-  - Predicting who will benefit from an hospital stay may overcrowd some units of the hospital, and thus change the positive impact of hospitals on inpatients
+The predictions may modify how the system functions:
+  - Predicting who will benefit from a hospital stay may overcrowd some units of the hospital, and thus change the positive impact of hospitals on inpatients
 
 ### Choice of the output/the labeled dataset
 

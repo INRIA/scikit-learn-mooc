@@ -169,7 +169,7 @@ any sampling bias in the data acquisition process.
 - Acquiring more/better data is often more important than using fancy models
 - Putting in production: when the model is used routinely
     - Technical debt (simpler models are easier to maintain, require less compute power)
-    - Drifts of the data distribution (require monitoring)
+    - Drifts of the data distribution (requires monitoring)
 
 ### Technical craft is not all
 

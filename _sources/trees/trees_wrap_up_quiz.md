@@ -86,10 +86,10 @@ fold.
 ```{admonition} Question
 A tree with tuned depth
 
-a) is always worse than the linear models on all CV folds
-b) is often but not always worse than the linear model
-c) is often but not always better than the linear model
-d) is always better than the linear models on all CV folds
+- a) is always worse than the linear models on all CV folds
+- b) is often but not always worse than the linear model
+- c) is often but not always better than the linear model
+- d) is always better than the linear models on all CV folds
 
 _Select a single answer_
 
@@ -119,8 +119,8 @@ Evaluate this model using `cross_validate` as in the previous questions.
 ```{admonition} Question
 A tree model trained with both numerical and categorical features
 
-a) is most often worse than the tree model using only the numerical features
-b) is most often better than the tree model using only the numerical features
+- a) is most often worse than the tree model using only the numerical features
+- b) is most often better than the tree model using only the numerical features
 
 _Select a single answer_
 

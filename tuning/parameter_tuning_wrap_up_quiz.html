@@ -1415,7 +1415,7 @@
 <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Body Mass (g)&quot;</span><span class="p">,</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">]</span>
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
 
-<span class="c1"># Remove lines with missing values for the columns of interestes</span>
+<span class="c1"># Remove lines with missing values for the columns of interest</span>
 <span class="n">penguins_non_missing</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[</span><span class="n">columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">penguins_non_missing</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span>
@@ -1429,20 +1429,30 @@ those attributes stored in the dataframe named <code class="docutils literal not
 <p>Inspect the loaded data to select the correct assertions:</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Select the correct assertions from the following proposals.</p>
+<p>Inspect the target variable and select the correct assertions from the
+following proposals.</p>
 <ul class="simple">
 <li><p>a) The problem to be solved is a regression problem</p></li>
 <li><p>b) The problem to be solved is a binary classification problem
 (exactly 2 possible classes)</p></li>
 <li><p>c) The problem to be solved is a multiclass classification problem
 (more than 2 possible classes)</p></li>
-<li><p>d) The proportions of the class counts are balanced: there are approximately
-the same number of rows for each class</p></li>
-<li><p>e) The proportions of the class counts are imbalanced: some classes have more
-than twice as many rows than others)</p></li>
-<li><p>f) The input features have similar dynamic ranges (or scales)</p></li>
 </ul>
-<p><em>Select several answers</em></p>
+<p><em>Select a single answer</em></p>
+<p>Hint: <code class="docutils literal notranslate"><span class="pre">target.nunique()</span></code>is a helpful method to answer to this question.</p>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Inspect the statistics of the target and individual features to
+select the correct statements.</p>
+<ul class="simple">
+<li><p>a) The proportions of the class counts are balanced: there are approximately
+the same number of rows for each class</p></li>
+<li><p>b) The proportions of the class counts are imbalanced: some classes have more
+than twice as many rows than others</p></li>
+<li><p>c) The input features have similar scales (ranges of values)</p></li>
+</ul>
+<p><em>Several answers possible</em></p>
 <p>Hint: <code class="docutils literal notranslate"><span class="pre">data.describe()</span></code>, and <code class="docutils literal notranslate"><span class="pre">target.value_counts()</span></code> are methods
 that are helpful to answer to this question.</p>
 </div>
@@ -1460,24 +1470,22 @@ that are helpful to answer to this question.</p>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Evaluate the pipeline using 10-fold cross-validation using the
-<code class="docutils literal notranslate"><span class="pre">balanced-accuracy</span></code> scoring metric to choose the correct statements.
-Use <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> with
-<code class="docutils literal notranslate"><span class="pre">scoring=&quot;balanced_accuracy&quot;</span></code>.
-Use <code class="docutils literal notranslate"><span class="pre">model.get_params()</span></code> to list the parameters of the pipeline and use
-<code class="docutils literal notranslate"><span class="pre">model.set_params(param_name=param_value)</span></code> to update them.
-For this question, we consider a model is <strong>better</strong> if its mean
-cross-validation score is larger than the mean plus the standard deviation
-of the cross-validation score of the model that we compare to.</p>
+<p>Evaluate the pipeline using stratified 10-fold cross-validation
+using the <code class="docutils literal notranslate"><span class="pre">balanced-accuracy</span></code> scoring metric to choose the correct
+statement in the list below.</p>
+<p>You can use:</p>
 <ul class="simple">
-<li><p>a) The average cross-validated test <code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code> of the above pipeline is between 0.9 and 1.0</p></li>
-<li><p>b) The average cross-validated test <code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code> of the above pipeline is between 0.8 and 0.9</p></li>
-<li><p>c) The average cross-validated test <code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code> of the above pipeline is between 0.5 and 0.8</p></li>
-<li><p>d) Using <code class="docutils literal notranslate"><span class="pre">n_neighbors=5</span></code> is much better than <code class="docutils literal notranslate"><span class="pre">n_neighbors=51</span></code></p></li>
-<li><p>e) Preprocessing with <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is much better than using the
-raw features (with <code class="docutils literal notranslate"><span class="pre">n_neighbors=5</span></code>)</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code></a>
+to perform the cross-validation routine;</p></li>
+<li><p>provide an integer <code class="docutils literal notranslate"><span class="pre">10</span></code> to the parameter <code class="docutils literal notranslate"><span class="pre">cv</span></code> of <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> to use
+the cross-validation with 10 folds;</p></li>
+<li><p>provide the string <code class="docutils literal notranslate"><span class="pre">&quot;balanced_accuracy&quot;</span></code> to the parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code> of
+<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>.</p></li>
+<li><p>a) The average cross-validated test balanced accuracy of the above pipeline is between 0.9 and 1.0</p></li>
+<li><p>b) The average cross-validated test balanced accuracy of the above pipeline is between 0.8 and 0.9</p></li>
+<li><p>c) The average cross-validated test balanced accuracy of the above pipeline is between 0.5 and 0.8</p></li>
 </ul>
-<p><em>Select several answers</em></p>
+<p><em>Select one answer</em></p>
 </div>
 <p>We will now study the impact of different preprocessors defined in the list below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
@@ -1505,18 +1513,23 @@ scikit-learn user guide but this is not required to answer the quiz questions.</
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>Use <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.GridSearchCV</span></code> to study the impact of the choice of
-the preprocessor and the number of neighbors on the 10-fold cross-validated
-<code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code> metric. We want to study the <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code> in the range
-<code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">51,</span> <span class="pre">101]</span></code> and <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> in the range <code class="docutils literal notranslate"><span class="pre">all_preprocessors</span></code>.</p>
-<p>Let us consider that a model is significantly better than another if the its
-mean test score is better than the mean test score of the alternative by more
-than the standard deviation of its test score.</p>
+the preprocessor and the number of neighbors on the stratified 10-fold
+cross-validated <code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code> metric. We want to study the <code class="docutils literal notranslate"><span class="pre">n_neighbors</span></code>
+in the range <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">51,</span> <span class="pre">101]</span></code> and <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code> in the range
+<code class="docutils literal notranslate"><span class="pre">all_preprocessors</span></code>.</p>
 <p>Which of the following statements hold:</p>
 <ul class="simple">
-<li><p>a) The best model with <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is significantly better than using any other processor</p></li>
-<li><p>b) Using any of the preprocessors has always a better ranking than using no processor, irrespective of the value <code class="docutils literal notranslate"><span class="pre">of</span> <span class="pre">n_neighbors</span></code></p></li>
-<li><p>c) The model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=5</span></code> and <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is significantly better than the model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=51</span></code> and <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>.</p></li>
-<li><p>d) The model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=51</span></code> and <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is significantly better than the model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=101</span></code> and <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>.</p></li>
+<li><p>a) Looking at the individual cross-validation scores, the best ranked model using a
+<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is substantially better (at least 7 of the cross-validations scores are better)
+than using any other processor</p></li>
+<li><p>b) Using any of the preprocessors has always a better ranking than using no processor, irrespective
+of the value <code class="docutils literal notranslate"><span class="pre">of</span> <span class="pre">n_neighbors</span></code></p></li>
+<li><p>c) Looking at the individual cross-validation scores, the model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=5</span></code> and
+<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is substantially better (at least 7 of the cross-validations scores are better)
+than the model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=51</span></code> and <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code></p></li>
+<li><p>d) Looking at the individual cross-validation scores, the model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=51</span></code> and
+<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> is substantially better (at least 7 of the cross-validations scores are better)
+than the model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=101</span></code> and <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code></p></li>
 </ul>
 <p>Hint: pass <code class="docutils literal notranslate"><span class="pre">{&quot;preprocessor&quot;:</span> <span class="pre">all_preprocessors,</span> <span class="pre">&quot;classifier__n_neighbors&quot;:</span> <span class="pre">[5,</span> <span class="pre">51,</span> <span class="pre">101]}</span></code> for the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> class.</p>
 <p><em>Select several answers</em></p>
@@ -1538,7 +1551,7 @@ generalization performance is</p>
 <p class="admonition-title">Question</p>
 <p>Explore the set of best parameters that the different grid search models found
 in each fold of the outer cross-validation. Remember that you can access them
-with the <code class="docutils literal notranslate"><span class="pre">best_params_</span></code> attribute of the estimator.</p>
+with the <code class="docutils literal notranslate"><span class="pre">best_params_</span></code> attribute of the estimator. Select all the statements that are true.</p>
 <p>Hint: it is important to pass <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> to the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>
 function to be able to introspect trained model saved in the <code class="docutils literal notranslate"><span class="pre">&quot;estimator&quot;</span></code>
 field of the CV results. If you forgot to do for the previous question,

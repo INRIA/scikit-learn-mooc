@@ -6,6 +6,8 @@ What the benefit of using cross-validation?
 - a) Give information about performance variability
 - b) Remove the need to use a baseline algorithm
 - c) Give information regarding under- or over-fitting of a model
+
+_Several answers possible_
 ```
 
 +++
@@ -16,6 +18,8 @@ the input data `X` to make the predictions?
 
 - a) Yes
 - b) No
+
+_Select a single answer_
 ```
 
 +++
@@ -26,4 +30,6 @@ whatever the chosen strategy?
 
 - a) Yes
 - b) No
+
+_Select a single answer_
 ```

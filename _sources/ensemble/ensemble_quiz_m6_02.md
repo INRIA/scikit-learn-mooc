@@ -31,6 +31,8 @@ Histogram gradient boosting is an accelerated gradient boosting algorithm that:
 - a) takes a subsample of the original samples
 - b) bins the numerical features
 - c) takes a subsample of the original features
+
+_Select a single answer_
 ```
 
 +++
@@ -40,4 +42,6 @@ Boosting tends to overfit when increasing the number of predictors:
 
 - a) true
 - b) false
+
+_Select a single answer_
 ```

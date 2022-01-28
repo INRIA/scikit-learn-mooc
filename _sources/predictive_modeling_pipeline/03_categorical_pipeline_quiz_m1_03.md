@@ -6,6 +6,8 @@ How are categorical variables represented?
 - a) categorical feature is only represented by non-numerical data
 - b) categorical feature represents a finite number of values called categories
 - c) categorical feature can either be represented by numerical or non-numerical values
+
+_Several answers possible_
 ```
 
 +++
@@ -16,6 +18,8 @@ Ordinal variables are:
 - a) categorical variables with a large number of possible categories
 - b) typically represented by integers or string labels
 - c) categorical variables with a meaningful order
+
+_Several answers possible_
 ```
 
 +++
@@ -27,6 +31,8 @@ One-hot encoding will:
 - b) transform a numerical variable into a categorical variable
 - c) create one additional column for each possible category
 - d) transform string variable onto numerical representation
+
+_Several answers possible_
 ```
 
 +++
@@ -42,4 +48,6 @@ train a machine learning model to classify companies:
 - c) the number of employees
 - d) the profits of the last quarter
 - e) the post code of the head quarters
+
+_Several answers possible_
 ```

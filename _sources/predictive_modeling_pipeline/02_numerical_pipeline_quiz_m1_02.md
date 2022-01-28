@@ -6,6 +6,8 @@ Why do we need two sets: a train set and a test set?
 - a) to train the model faster
 - b) to validate the model on unseen data
 - c) to improve the accuracy of the model
+
+_Several answers possible_
 ```
 
 +++
@@ -21,6 +23,8 @@ The generalization performance of a scikit-learn model can be evaluated by:
 - c) calling `cross_validate` by passing the model, the data and the target
 - d) calling `fit_transform` on the data and then `score` to compute
   the score on the **test set**
+
+_Several answers possible_
 ```
 
 +++
@@ -35,6 +39,8 @@ When calling `cross_validate(estimator, X, y, cv=5)`, the following happens:
   array with 5 scores computed on the **train sets**
 - e) a Python dictionary is returned containing a key/value containing a NumPy
   array with 5 scores computed on the **test sets**
+
+_Several answers possible_
 ```
 
 +++
@@ -68,6 +74,8 @@ A `StandardScaler` transformer with the default parameter will:
   be negative or positive
 - d) can help logistic regression converge faster (fewer iterations)
 
+_Several answers possible_
+
 Hint: look at the plots and the answers of the previous question to eliminate
 some of the wrong answers.
 ```
@@ -81,6 +89,8 @@ Cross-validation allows us to:
 - b) measure the generalization performance of the model
 - c) reach better generalization performance
 - d) estimate the variability of the generalization score
+
+_Several answers possible_
 ```
 
 +++
@@ -93,4 +103,6 @@ Cross-validation allows us to:
 - b) combines one or several transformers and a predictor
 - c) tries several models at the same time
 - d) plots feature histogram automatically
+
+_Several answers possible_
 ```

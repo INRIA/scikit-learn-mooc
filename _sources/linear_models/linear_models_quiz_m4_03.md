@@ -9,6 +9,7 @@ on a dataset with a single input feature is a straight line:
 - a) yes
 - b) no
 
+_Select a single answer_
 ```
 
 +++
@@ -21,4 +22,6 @@ and `intercept_`?
 - a) it is not possible to fit a linear regression in dimension higher than 2
 - b) array of shape (`n_features`,) and a float
 - c) array of shape (1, `n_features`) and an array of shape (1,)
+
+_Select a single answer_
 ```

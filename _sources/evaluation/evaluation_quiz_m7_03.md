@@ -10,4 +10,6 @@ How to evaluate and tune the hyperparameters' model?
 - c) use a nested cross-validation, with an inner cross-validation to tune the
   parameters' model and an outer cross-validation to evaluate the model's
   performance
+
+_Several answers possible_
 ```

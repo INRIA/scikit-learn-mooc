@@ -13,7 +13,7 @@ penguins = pd.read_csv("../datasets/penguins.csv")
 columns = ["Body Mass (g)", "Flipper Length (mm)", "Culmen Length (mm)"]
 target_name = "Species"
 
-# Remove lines with missing values for the columns of interestes
+# Remove lines with missing values for the columns of interest
 penguins_non_missing = penguins[columns + [target_name]].dropna()
 
 data = penguins_non_missing[columns]
@@ -28,20 +28,33 @@ those attributes stored in the dataframe named `data`.
 Inspect the loaded data to select the correct assertions:
 
 ```{admonition} Question
-Select the correct assertions from the following proposals.
+Inspect the target variable and select the correct assertions from the
+following proposals.
 
 - a) The problem to be solved is a regression problem
 - b) The problem to be solved is a binary classification problem
   (exactly 2 possible classes)
 - c) The problem to be solved is a multiclass classification problem
   (more than 2 possible classes)
-- d) The proportions of the class counts are balanced: there are approximately
-  the same number of rows for each class
-- e) The proportions of the class counts are imbalanced: some classes have more
-  than twice as many rows than others)
-- f) The input features have similar dynamic ranges (or scales)
 
-_Select several answers_
+_Select a single answer_
+
+Hint: `target.nunique()`is a helpful method to answer to this question.
+```
+
++++
+
+```{admonition} Question
+Inspect the statistics of the target and individual features to
+select the correct statements.
+
+- a) The proportions of the class counts are balanced: there are approximately
+  the same number of rows for each class
+- b) The proportions of the class counts are imbalanced: some classes have more
+  than twice as many rows than others
+- c) The input features have similar scales (ranges of values)
+
+_Several answers possible_
 
 Hint: `data.describe()`, and `target.value_counts()` are methods
 that are helpful to answer to this question.
@@ -65,24 +78,24 @@ model = Pipeline(steps=[
 
 ```{admonition} Question
 
-Evaluate the pipeline using 10-fold cross-validation using the
-`balanced-accuracy` scoring metric to choose the correct statements.
-Use `sklearn.model_selection.cross_validate` with
-`scoring="balanced_accuracy"`.
-Use `model.get_params()` to list the parameters of the pipeline and use
-`model.set_params(param_name=param_value)` to update them.
-For this question, we consider a model is **better** if its mean
-cross-validation score is larger than the mean plus the standard deviation
-of the cross-validation score of the model that we compare to.
+Evaluate the pipeline using stratified 10-fold cross-validation
+using the `balanced-accuracy` scoring metric to choose the correct
+statement in the list below.
 
-- a) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.9 and 1.0
-- b) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.8 and 0.9
-- c) The average cross-validated test `balanced_accuracy` of the above pipeline is between 0.5 and 0.8
-- d) Using `n_neighbors=5` is much better than `n_neighbors=51`
-- e) Preprocessing with `StandardScaler` is much better than using the
-     raw features (with `n_neighbors=5`)
+You can use:
 
-_Select several answers_
+- [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
+  to perform the cross-validation routine;
+- provide an integer `10` to the parameter `cv` of `cross_validate` to use
+  the cross-validation with 10 folds;
+- provide the string `"balanced_accuracy"` to the parameter `scoring` of
+  `cross_validate`.
+
+- a) The average cross-validated test balanced accuracy of the above pipeline is between 0.9 and 1.0
+- b) The average cross-validated test balanced accuracy of the above pipeline is between 0.8 and 0.9
+- c) The average cross-validated test balanced accuracy of the above pipeline is between 0.5 and 0.8
+
+_Select one answer_
 ```
 
 +++
@@ -116,20 +129,24 @@ scikit-learn user guide but this is not required to answer the quiz questions.
 ```{admonition} Question
 
 Use `sklearn.model_selection.GridSearchCV` to study the impact of the choice of
-the preprocessor and the number of neighbors on the 10-fold cross-validated
-`balanced_accuracy` metric. We want to study the `n_neighbors` in the range
-`[5, 51, 101]` and `preprocessor` in the range `all_preprocessors`.
-
-Let us consider that a model is significantly better than another if the its
-mean test score is better than the mean test score of the alternative by more
-than the standard deviation of its test score.
+the preprocessor and the number of neighbors on the stratified 10-fold
+cross-validated `balanced_accuracy` metric. We want to study the `n_neighbors`
+in the range `[5, 51, 101]` and `preprocessor` in the range
+`all_preprocessors`.
 
 Which of the following statements hold:
 
-- a) The best model with `StandardScaler` is significantly better than using any other processor
-- b) Using any of the preprocessors has always a better ranking than using no processor, irrespective of the value `of n_neighbors`
-- c) The model with `n_neighbors=5` and `StandardScaler` is significantly better than the model with `n_neighbors=51` and `StandardScaler`.
-- d) The model with `n_neighbors=51` and `StandardScaler` is significantly better than the model with `n_neighbors=101` and `StandardScaler`.
+- a) Looking at the individual cross-validation scores, the best ranked model using a
+  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
+  than using any other processor
+- b) Using any of the preprocessors has always a better ranking than using no processor, irrespective
+  of the value `of n_neighbors`
+- c) Looking at the individual cross-validation scores, the model with `n_neighbors=5` and
+  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
+  than the model with `n_neighbors=51` and `StandardScaler`
+- d) Looking at the individual cross-validation scores, the model with `n_neighbors=51` and
+  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
+  than the model with `n_neighbors=101` and `StandardScaler`
 
 Hint: pass `{"preprocessor": all_preprocessors, "classifier__n_neighbors": [5, 51, 101]}` for the `param_grid` argument to the `GridSearchCV` class.
 
@@ -158,7 +175,7 @@ _Select a single answer_
 
 Explore the set of best parameters that the different grid search models found
 in each fold of the outer cross-validation. Remember that you can access them
-with the `best_params_` attribute of the estimator.
+with the `best_params_` attribute of the estimator. Select all the statements that are true.
 
 Hint: it is important to pass `return_estimator=True` to the `cross_validate`
 function to be able to introspect trained model saved in the `"estimator"`

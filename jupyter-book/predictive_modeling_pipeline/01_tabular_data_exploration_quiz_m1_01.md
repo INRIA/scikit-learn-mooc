@@ -26,6 +26,8 @@ In the previous notebook, we used:
 - c) numpy and scipy to perform numerical inspection (for instance using
   `scipy.optimize.minimize`)
 - d) scikit-learn to fit some machine learning models
+
+_Several answers possible_
 ```
 
 +++
@@ -37,6 +39,8 @@ How is a tabular dataset organized?
 - b) a column represents a feature and a row represents a sample
 - c) the target variable is represented by a row
 - d) the target variable is represented by a column
+
+_Several answers possible_
 ```
 
 +++
@@ -47,4 +51,6 @@ A categorical variable is:
 - a) a variable with only two different possible values
 - b) a variable with continuous numerical values
 - c) a variable with a finite set of possible values
+
+_Select a single answer_
 ```

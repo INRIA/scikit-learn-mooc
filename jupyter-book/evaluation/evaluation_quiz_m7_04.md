@@ -6,6 +6,8 @@ What is the default score in scikit-learn when using a classifier?
 - a) balanced accuracy
 - b) ROC-AUC
 - c) accuracy
+
+_Select a single answer_
 ```
 
 +++
@@ -23,4 +25,6 @@ this particular logistic regression model:
 - b) stronger regularization leads to lower precision
 - c) stronger regularization leads to higher recall
 - d) stronger regularization leads to lower recall
+
+_Several answers possible_
 ```

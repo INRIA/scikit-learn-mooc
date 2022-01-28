@@ -86,6 +86,8 @@ $\sin(\alpha) V_{d}$?
 
 ```
 
+_Select a single answer_
+
 +++
 
 ```{admonition} Question

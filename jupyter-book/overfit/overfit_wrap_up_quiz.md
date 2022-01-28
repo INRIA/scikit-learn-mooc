@@ -152,6 +152,8 @@ Select the true affirmations stated below:
 - c) The model underfits for a range of `n_neighbors` values between 100 to 500
 ```
 
+_Select a single answer_
+
 +++
 
 ```{admonition} Question
@@ -162,6 +164,8 @@ Select the true affirmations stated below:
 - c) The model overfits for a range of `n_neighbors` values between 100 to 500
 ```
 
+_Select a single answer_
+
 +++
 
 ```{admonition} Question
@@ -171,3 +175,5 @@ Select the true affirmations stated below:
 - b) The model best generalizes for a range of `n_neighbors` values between 10 to 100
 - c) The model best generalizes for a range of `n_neighbors` values between 100 to 500
 ```
+
+_Select a single answer_

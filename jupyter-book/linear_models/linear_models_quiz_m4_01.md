@@ -21,4 +21,6 @@ with a linear classifier on a non-linearly separable dataset?
 
 - a) yes
 - b) no
+
+_Select a single answer_
 ```

@@ -6,6 +6,8 @@ What is the default score in scikit-learn when using a regressor?
 - a) $R^2$
 - b) mean absolute error
 - c) median absolute error
+
+_Select a single answer_
 ```
 
 +++
@@ -17,6 +19,8 @@ parameters, it means that the latest model:
 
 - a) generalizes better
 - b) generalizes worse
+
+_Select a single answer_
 ```
 
 +++
@@ -28,6 +32,8 @@ changing the model parameters, it means that the latest model:
 
 - a) generalizes better
 - b) generalizes worse
+
+_Select a single answer_
 ```
 
 +++
@@ -39,4 +45,6 @@ are:
 - a) guaranteed to be positive or zero
 - b) guaranteed to be negative or zero
 - c) can be either positive or negative depending on the data
+
+_Select a single answer_
 ```

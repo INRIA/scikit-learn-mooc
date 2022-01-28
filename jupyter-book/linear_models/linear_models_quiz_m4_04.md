@@ -20,7 +20,7 @@ Regularization allows:
 - b) to reduce overfitting by forcing the weights to stay close to zero
 - c) to reduce underfitting by making the problem linearly separable
 
-_Select single answer_
+_Select a single answer_
 ```
 
 +++
@@ -32,6 +32,8 @@ A ridge model is:
 - b) the same as logistic regression with penalized weights
 - c) a linear model
 - d) a non linear model
+
+_Several answers possible_
 ```
 
 +++
@@ -45,6 +47,8 @@ the `Ridge` model:
 - b) should be tuned by running cross-validation on a **train set**
 - c) should be tuned by running cross-validation on a **test set**
 - d) must be a positive number
+
+_Several answers possible_
 ```
 
 +++
@@ -56,6 +60,8 @@ Scaling the data before fitting a model:
 - b) is always necessary
 - c) may speed-up fitting
 - d) has no impact on the regularization parameter
+
+_Several answers possible_
 ```
 
 +++
@@ -67,4 +73,6 @@ The effect of increasing the regularization strength in a ridge model is to:
 - b) make all weights equal
 - c) set a subset of the weights to exactly zero
 - d) constrain all the weights to be positive
+
+_Several answers possible_
 ```

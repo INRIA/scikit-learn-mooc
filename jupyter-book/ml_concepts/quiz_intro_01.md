@@ -19,6 +19,8 @@ What kind of problem is it?
 - b) an unsupervised problem
 - c) a classification problem
 - d) a regression problem
+
+_Several answers possible_
 ```
 
 +++
@@ -29,6 +31,8 @@ What are the features?
 - a) the number of rooms might be a feature
 - b) the post code of the house might be a feature
 - c) the price of the house might be a feature
+
+_Several answers possible_
 ```
 
 +++
@@ -39,6 +43,8 @@ What is the target variable?
 - a) the full text description is the target
 - b) the price of the house is the target
 - c) only house description with no price mentioned are the target
+
+_Select a single answer_
 ```
 
 +++
@@ -49,4 +55,6 @@ What is a record (a sample)?
 - a) each house description is a record
 - b) each house price is a record
 - c) each kind of description (as the house size) is a record
+
+_Select a single answer_
 ```

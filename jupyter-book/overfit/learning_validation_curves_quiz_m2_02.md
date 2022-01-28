@@ -7,6 +7,8 @@ A model is overfitting when:
 - b) train error is low but test error is high
 - c) train error is high but the test error is low
 - d) both train and test errors are low
+
+_Select a single answer_
 ```
 
 +++
@@ -18,6 +20,8 @@ Assuming that we have a dataset with little noise, a model is underfitting when:
 - b) train error is low but test error is high
 - c) train error is high but the test error is low
 - d) both train and test errors are low
+
+_Select a single answer_
 ```
 
 +++
@@ -30,6 +34,8 @@ flexibility to the model, we are more likely to observe:
 - b) a reduction in the difference between train and test errors
 - c) an increased or steady train error
 - d) a decrease in the train error
+
+_Several answers possible_
 ```
 
 +++
@@ -42,6 +48,8 @@ observations in the training set, are we more likely to observe:
 - b) a reduction in the difference between train and test errors
 - c) an increased or steady train error
 - d) a decrease in the train error
+
+_Several answers possible_
 ```
 
 +++
@@ -53,6 +61,8 @@ Polynomial models with a high degree parameter:
 - b) underfit more than linear regression models
 - c) get lower training error than lower degree polynomial models
 - d) are more likely to overfit than lower degree polynomial models
+
+_Several answers possible_
 ```
 
 +++
@@ -62,4 +72,6 @@ One can always reach zero test error by:
 
 - a) choosing the model parameters to find the best overfitting/underfitting tradeoff
 - b) day-dreaming ;)
+
+_Select a single answer_
 ```

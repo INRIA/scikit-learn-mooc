@@ -20,6 +20,7 @@ Which of the hyperparameter(s) do not exist in random forest but exists in gradi
 - b) maximum depth
 - c) learning rate
 
+_Several answers possible_
 ```
 
 +++

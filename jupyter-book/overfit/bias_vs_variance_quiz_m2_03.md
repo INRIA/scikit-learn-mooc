@@ -7,6 +7,8 @@ Fitting a model with a high bias:
 - b) causes an overfitted model?
 - c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
 - d) causes the learned prediction function to make systematic errors?
+
+_Several answers possible_
 ```
 
 +++
@@ -18,4 +20,6 @@ Fitting a high variance model:
 - b) causes an overfitted model?
 - c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
 - d) causes the learned prediction function to make systematic errors?
+
+_Several answers possible_
 ```

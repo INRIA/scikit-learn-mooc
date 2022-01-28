@@ -11,6 +11,8 @@ draw:
 - c) random samples without replacement over training points
 - d) random samples without replacement over features
 
+_Several answers possible_
+
 Hint: it is possible to access the documentation for those classes by
 clicking on the links on their names.
 ```
@@ -26,6 +28,8 @@ the parameter `base_estimator` can be:
 - a) any predictor
 - b) a decision tree predictor
 - c) a linear model predictor
+
+_Select a single answer_
 ```
 
 +++

@@ -245,7 +245,7 @@ These challenges with biases in the data, feedback loops of the
 predictions, can be very important, because **prediction models may affect
 people's lives**.
 
-Today, AI systems can be used to allocate loans, screen job applicants,
+Today, AI systems are sometimes used to allocate loans, screen job applicants,
 prioritise medical treatement, help law enforcement or court decisions.
 
 If you know scikit-learn, [fairlearn](https://fairlearn.org) is a simple

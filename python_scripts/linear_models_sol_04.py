@@ -161,16 +161,15 @@ ridge.coef_[:5] * 3
 # Other kinds of regularizations exist but will not be covered in this course.
 # ```
 #
-# ## Note on encoded categorical features
+# ## Dealing with correlation between one-hot encoded features
 #
-# We will finish this exercise by showing the effect of using `OneHotEncoder`
-# to encode categorical features and how it would affect the linear models.
+# In this section, we will focus on how to deal with correlated features that
+# arise naturally when one-hot encoding categorical features.
 #
 # Let's first load the Ames housing dataset and take a subset of features that
 # are only categorical features.
 
-# %%
-# solution
+# %% tags=["solution"]
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -195,12 +194,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 # We illustrate this behaviour by considering the "CentralAir" feature that
 # contains only two categories:
 
-# %%
-# solution
+# %% tags=["solution"]
 X_train["CentralAir"]
 
-# %%
-# solution
+# %% tags=["solution"]
 from sklearn.preprocessing import OneHotEncoder
 
 single_feature = ["CentralAir"]
@@ -232,8 +229,7 @@ X_trans
 # first encoded category or `binary_only` to only drop a column in the case of
 # binary categories.
 
-# %%
-# solution
+# %% tags=["solution"]
 encoder = OneHotEncoder(drop="first", sparse=False, dtype=np.int32)
 X_trans = encoder.fit_transform(X_train[single_feature])
 X_trans = pd.DataFrame(
@@ -253,8 +249,7 @@ X_trans
 #
 # Let's finally illustrate how to use this option is a machine-learning pipeline:
 
-# %%
-# solution
+# %% tags=["solution"]
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(OneHotEncoder(drop="first", dtype=np.int32), Ridge())

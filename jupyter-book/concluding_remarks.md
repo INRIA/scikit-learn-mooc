@@ -153,7 +153,16 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
 - As you narrow down on a solution, spend increasingly more effort on validating it
 - Many splits in your cross-validation. This brings computational cost, but if you can't afford to evaluate it, you can't afford to use it or trust it
 
+Try to think carefully about ways the training set
+might not be completely representatives of the future data the
+model will make predictions upon. In particular if the model
+makes predictions that affect people's lives, are you sure
+the training and evaluation data you collected cover a diverse
+enough set of different demographics? What can you do
+to increase coverage of diverse groups?
 
+Another way to phrase this recommendation is to try to identify
+any sampling bias in the data acquisition process.
 ### Machine learning is a small part of the problem most of the times 
 
 - How to approach the full problem (the full value chain)

@@ -249,8 +249,9 @@ Today, AI systems are sometimes used to allocate loans, screen job applicants,
 prioritise medical treatement, help law enforcement or court decisions.
 
 If you know scikit-learn, [fairlearn](https://fairlearn.org) is a simple
-resource to understand some problems caused by a too naive application of
-machine learning methods.
+resource to help you understand, assess and sometimes mitigate some
+problems caused by a too naive application of machine learning
+methods.
 
 ML or AI can shift decision logic, power structures, operational costs
   - As all technology, it induces changes in our society. Let us think

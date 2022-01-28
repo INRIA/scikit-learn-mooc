@@ -229,7 +229,7 @@ Machine learner models are not driven by causal mechanisms.
       who go to the hospital typically have a worse baseline health than
       people who do not.
 - Another example: having a heart pressure greater than a threshold
-  may trigger specific care which is good. A learner will pick up
+  may trigger specific care which is good. An automated learner will pick up
   above-threshold heart pressure as predictor of a health improvement
 - In pure predictive settings, these informations are beneficial for the
   predictions. However:

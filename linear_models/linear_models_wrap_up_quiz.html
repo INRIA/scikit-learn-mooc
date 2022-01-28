@@ -1430,27 +1430,88 @@ below:</p>
 <span class="n">data_numerical</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_features</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>Start by fitting a linear regression (<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code>).
+<p>Start by fitting a ridge regressor (<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code>) fixing the
+penalty <code class="docutils literal notranslate"><span class="pre">alpha</span></code> to 0 to not regularize the model.
 Use a 10-fold cross-validation and pass the argument <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> in
 <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> to access all fitted estimators fitted
-on each fold. As we saw in the previous notebooks, you will have to use a
+on each fold. As discussed in the previous notebooks, use an instance of
 <code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code> to scale the data before passing it to
 the regressor.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>How large is the weight with the largest absolute value in this model?</p>
+<p>How large is the largest absolute value of the weight (coefficient)
+in this trained model?</p>
 <ul class="simple">
-<li><p>a) Lower than 1.0</p></li>
-<li><p>b) Between 1.0 and 1,000.0</p></li>
-<li><p>c) Larger than 1,000.0</p></li>
+<li><p>a) Lower than 1.0 (1e0)</p></li>
+<li><p>b) Between 1.0 (1e0) and 100,000.0 (1e5)</p></li>
+<li><p>c) Larger than 100,000.0 (1e5)</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
+<p>Hint: Note that the estimator fitted in each fold of the cross-validation
+procedure is a pipeline object. To access the coefficients of the
+<code class="docutils literal notranslate"><span class="pre">Ridge</span></code> model at the last position in a pipeline object, you can
+use the expression <code class="docutils literal notranslate"><span class="pre">pipeline[-1].coef_</span></code> for each pipeline object
+fitted in the cross-validation procedure. The <code class="docutils literal notranslate"><span class="pre">-1</span></code> notation is a
+negative index meaning “last position”.</p>
+<p>solution: c)</p>
+<p>The following code create a predictive pipeline using a linear regression as a
+predictor. It is evaluate via cross-validation evaluation. The coefficients can
+be found by inspecting the last step of each fitted pipeline stored in the key
+<code class="docutils literal notranslate"><span class="pre">&quot;estimator&quot;</span></code> from the dictionary returned by <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">data_numerical</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pipeline</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">numerical_features</span><span class="p">)</span>
+<span class="n">coefs</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">]]</span>
+</pre></div>
 </div>
+</div>
+<p>Here, we use <code class="docutils literal notranslate"><span class="pre">coefs.describe()</span></code> to compute the minimum and maximum but note
+that this is not the only solution.</p>
+<p>Note that sometimes using models without regularization (e.g. <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> with
+<code class="docutils literal notranslate"><span class="pre">alpha=0</span></code> or <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>) can be problematic. The problem to be
+solved can be ill-conditioned and the coefficients can be very large
+(e.g. ~1e18). This is due to some numerical errors and we should not use this
+model in practice. A model adding some regularization should be used instead.</p>
+<p>For visually inspecting the coefficients, you could use a boxplot:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+<span class="c1"># Define the style of the box style</span>
+<span class="n">boxplot_property</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;vert&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;whis&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">&quot;patch_artist&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;widths&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;rot&quot;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span>
+    <span class="s2">&quot;boxprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
+    <span class="s2">&quot;medianprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
+    <span class="s2">&quot;whiskerprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
+    <span class="s2">&quot;capprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="o">**</span><span class="n">boxplot_property</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This plot gives us the information that some coefficients are really large
+(outlier dots on the plot). Note that the scale of the y axis is huge (1e19)
+and the “bodies” of the boxplots are shrunk seemingly close to zero and we
+can only visualize the numerically unstable outliers.</p>
 <p>Repeat the same experiment by fitting a ridge regressor
-(<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code>) with the default parameter.</p>
+(<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code>) with the default parameter (i.e. <code class="docutils literal notranslate"><span class="pre">alpha=1.0</span></code>).</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What is the value of the weight with the largest absolute value in this model?</p>
+<p>How large is the largest absolute value of the weight (coefficient)
+in this trained model?</p>
 <ul class="simple">
 <li><p>a) Lower than 1.0</p></li>
 <li><p>b) Between 1.0 and 100,000.0</p></li>
@@ -1476,18 +1537,18 @@ experiment.</p>
 <p>What is the impact on the weights of removing <code class="docutils literal notranslate"><span class="pre">&quot;GarageArea&quot;</span></code> from the dataset?</p>
 <ul class="simple">
 <li><p>a) None</p></li>
-<li><p>b) Change completely the order of the feature importance</p></li>
-<li><p>c) The standard deviation (across all folds) of the <code class="docutils literal notranslate"><span class="pre">&quot;GarageCars&quot;</span></code> coefficient decreased</p></li>
+<li><p>b) Completely changes the order of the most important features</p></li>
+<li><p>c) Decreases the standard deviation (across CV folds) of the <code class="docutils literal notranslate"><span class="pre">&quot;GarageCars&quot;</span></code> coefficient</p></li>
 </ul>
-<p><em>Select a single answer</em></p>
+<p><em>Several answers possible</em></p>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What is the reason for observing the previous impact on the most important
-weight?</p>
+<p>What is the main reason for observing the previous impact on the most
+important weight(s)?</p>
 <ul class="simple">
-<li><p>a) Both features are correlated and are carrying similar information</p></li>
-<li><p>b) Removing a feature reduce the noise in the dataset</p></li>
+<li><p>a) Both garage features are correlated and are carrying similar information</p></li>
+<li><p>b) Removing the “GarageArea” feature reduces the noise in the dataset</p></li>
 <li><p>c) Just some random effects</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
@@ -1496,7 +1557,7 @@ weight?</p>
 generalization performance of our predictive model. Fit a
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html"><code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.RidgeCV</span></code></a>
 instead of a <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> regressor on the numerical data without the <code class="docutils literal notranslate"><span class="pre">&quot;GarageArea&quot;</span></code>
-column. Pass <code class="docutils literal notranslate"><span class="pre">alphas=np.logspace(-1,</span> <span class="pre">3,</span> <span class="pre">num=30)</span></code> to explore the effect of
+column. Pass <code class="docutils literal notranslate"><span class="pre">alphas=np.logspace(-3,</span> <span class="pre">3,</span> <span class="pre">num=101)</span></code> to explore the effect of
 changing the regularization strength.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
@@ -1543,19 +1604,21 @@ variable <code class="docutils literal notranslate"><span class="pre">data</span
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Fit a <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LogisticRegression</span></code> classifier using a 10-fold
-cross-validation to assess the performance. Since we are dealing with a linear
-model, do not forget to scale the data with a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> before training
-the model.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>On average, how much better/worse/similar is the logistic regression to a dummy
-classifier that would predict the most frequent class? We will consider an
-increase or decrease of the accuracy score.</p>
+<p>Compare the generalization performance using the accuracy of the two following
+predictive models using a 10-fold cross-validation:</p>
 <ul class="simple">
-<li><p>a) Worse than a dummy classifier with a decrease of 0.04</p></li>
-<li><p>b) Similar to a dummy classifier</p></li>
-<li><p>c) Better than a dummy classifier with an increase 0.04</p></li>
+<li><p>a linear model composed of a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> and a <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></p></li>
+<li><p>a <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> predicting the most frequent class</p></li>
+</ul>
+<p>By comparing the cross-validation test scores of both models fold-to-fold, count the number
+of times the linear model has a better test score than the dummy classifier
+Select the range which this number belongs to:</p>
+<ul class="simple">
+<li><p>a) [0, 3]: the linear model is substantially worse than the dummy classifier</p></li>
+<li><p>b) [4, 6]: both models are almost equivalent</p></li>
+<li><p>c) [7, 10]: the linear model is substantially better than the dummy classifier</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
@@ -1577,19 +1640,23 @@ load Adult Census with the following snippet:</p>
 <span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>Create a predictive model where the categorical data should be one-hot encoded,
-the numerical data should be scaled, and the predictor used should be a
+<p>Create a predictive model where the categorical data must be one-hot encoded,
+the numerical data must be scaled, and the predictor is a
 logistic regression classifier.</p>
+<p>Use the same 10-fold cross-validation strategy as above to evaluate this
+complex pipeline.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>On average, what is the increase in terms of accuracy by using the categorical
-features?</p>
+<p>Look at the cross-validation test scores for both models and count the number of
+times the model using both numerical and categorical features has a better
+test score than the model using only numerical features.
+Select the range which this number belongs to:</p>
 <ul class="simple">
-<li><p>a) It gives similar results</p></li>
-<li><p>b) It increases the generalization performance by 0.025</p></li>
-<li><p>c) It increases the generalization performance by 0.05</p></li>
-<li><p>d) It increases the generalization performance by 0.075</p></li>
-<li><p>e) It increases the generalization performance by 0.1</p></li>
+<li><p>a) [0, 3]: the model using both numerical and categorical features is
+substantially worse than the model using only numerical features</p></li>
+<li><p>b) [4, 6]: both models are almost equivalent</p></li>
+<li><p>c) [7, 10]: the model using both numerical and categorical features is
+substantially better than the model using only numerical features</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
@@ -1597,18 +1664,21 @@ features?</p>
 feature names after the preprocessing performed.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">feature_names</span> <span class="o">=</span> <span class="p">(</span><span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s2">&quot;onehotencoder&quot;</span><span class="p">]</span>
-                             <span class="o">.</span><span class="n">get_feature_names</span><span class="p">(</span><span class="n">categorical_columns</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                             <span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span><span class="n">categorical_columns</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">feature_names</span> <span class="o">+=</span> <span class="n">numerical_columns</span>
+<span class="n">feature_names</span>
 </pre></div>
 </div>
 <p>There is as many feature names as coefficients in the last step of your
 predictive pipeline.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What are the two most important features used by the logistic regressor?</p>
+<p>Which of the following pair of features is most impacting the
+predictions of the logistic regression classifier based on
+the relative magnitude of its coefficients?</p>
 <ul class="simple">
 <li><p>a) <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;native-country_Columbia&quot;</span></code></p></li>
-<li><p>b) <code class="docutils literal notranslate"><span class="pre">&quot;workclass_?&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;naitive_country_?&quot;</span></code></p></li>
+<li><p>b) <code class="docutils literal notranslate"><span class="pre">&quot;workclass_?&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;native_country_?&quot;</span></code></p></li>
 <li><p>c) <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education_Doctorate&quot;</span></code></p></li>
 </ul>
 <p><em>Select a single answer</em></p>

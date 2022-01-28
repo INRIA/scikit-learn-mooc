@@ -68,10 +68,11 @@ _Several answers possible_
 +++
 
 ```{admonition} Question
-One can always reach zero test error by:
+If we chose the parameters of a model to get the best overfitting/underfitting
+tradeoff, we will always get a zero test error.
 
-- a) choosing the model parameters to find the best overfitting/underfitting tradeoff
-- b) day-dreaming ;)
+- a) True
+- b) False
 
 _Select a single answer_
 ```

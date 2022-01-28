@@ -190,7 +190,7 @@ how the predictions are used.
 Errors mean different things in different application contexts.
 
 - Operational risk:
-    - Advertisement: errors are often harmless
+    - Advertisement: individual errors can cause wasting a bit of money and annoy people but are otherwise mostly harmless
     - Medicine: errors can kill
 - Operational logic: Better a false detection or a miss?
     - Detecting brain tumors:

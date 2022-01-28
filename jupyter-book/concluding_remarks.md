@@ -131,7 +131,9 @@ Let us give a few pointers on going further with machine learning.
 - [Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) by Aurélien Géron
 - [Kaggle](http://kaggle.com):
     - Good introduction materials
-    - Participating in challenges is a good way to learn
+    - Participating in challenges, teaming with others and reading
+      the solutions shared by the winners in the discussions is a
+      good way to learn
 
 ## Bringing value: The bigger picture beyond machine-learning
 

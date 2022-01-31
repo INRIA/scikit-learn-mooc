@@ -101,7 +101,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 bins = np.linspace(start=0.5, stop=1.0, num=100)
-all_test_scores.plot.hist(bins=bins, density=True, edgecolor="black")
+all_test_scores.plot.hist(bins=bins, edgecolor="black")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.xlabel("Accuracy (%)")
 _ = plt.title("Distribution of the CV scores")

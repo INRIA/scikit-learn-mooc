@@ -127,9 +127,11 @@ can process both the numerical and categorical features together as follows:
   `OneHotEncoder`.
 
 ```{admonition} Question
-Look at the cross-validation scores for both pipelines, and count the number of
-times the model using all features has a better test score than the pipeline
-with only numerical features. Select the range which this number belongs to:
+One way to compare two models is by comparing the cross-validation test scores
+of both models fold-to-fold, i.e. counting the number of folds where one model
+has a better test score than the other. Let's compare the model using all
+features with the model consisting of only numerical features. Select the range
+of folds where the former has a better test score than the latter:
 
 - a) [0, 3]: the pipeline using all features is substantially worse than the pipeline using only numerical feature
 - b) [4, 6]: both pipelines are almost equivalent

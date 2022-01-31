@@ -148,9 +148,9 @@ Which of the following statements hold:
   `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
   than the model with `n_neighbors=101` and `StandardScaler`
 
-Hint: pass `{"preprocessor": all_preprocessors, "classifier__n_neighbors": [5, 51, 101]}` for the `param_grid` argument to the `GridSearchCV` class.
-
 _Select several answers_
+
+Hint: pass `{"preprocessor": all_preprocessors, "classifier__n_neighbors": [5, 51, 101]}` for the `param_grid` argument to the `GridSearchCV` class.
 ```
 
 +++
@@ -177,14 +177,15 @@ Explore the set of best parameters that the different grid search models found
 in each fold of the outer cross-validation. Remember that you can access them
 with the `best_params_` attribute of the estimator. Select all the statements that are true.
 
-Hint: it is important to pass `return_estimator=True` to the `cross_validate`
-function to be able to introspect trained model saved in the `"estimator"`
-field of the CV results. If you forgot to do for the previous question,
-please re-run the cross-validation with that option enabled.
 - a) The tuned number of nearest neighbors is stable across all folds
 - b) The tuned number of nearest neighbors changes often across all folds
 - c) The optimal scaler is stable across all folds
 - d) The optimal scaler changes often across all folds
 
 _Select several answers_
+
+Hint: it is important to pass `return_estimator=True` to the `cross_validate`
+function to be able to introspect trained model saved in the `"estimator"`
+field of the CV results. If you forgot to do for the previous question,
+please re-run the cross-validation with that option enabled.
 ```

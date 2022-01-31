@@ -1406,110 +1406,173 @@
   <div class="tex2jax_ignore mathjax_ignore section" id="wrap-up-quiz">
 <h1>🏁 Wrap-up quiz<a class="headerlink" href="#wrap-up-quiz" title="Permalink to this headline">¶</a></h1>
 <p><strong>This quiz requires some programming to be answered.</strong></p>
-<p>Open the dataset <code class="docutils literal notranslate"><span class="pre">blood_transfusion.csv</span></code>.</p>
+<p>This wrap-up quiz uses the penguins dataset, but not that <strong>we do not use the traditional <code class="docutils literal notranslate"><span class="pre">Species</span></code> column</strong> as predictive target:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">blood_transfusion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/blood_transfusion.csv&quot;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">]</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;rows&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;any&quot;</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>In this dataset, the column <code class="docutils literal notranslate"><span class="pre">&quot;Class&quot;</span></code> is the target vector containing the
-labels that our model should predict.</p>
-<p>For all the questions below, make a cross-validation evaluation using a
-10-fold cross-validation strategy.</p>
-<p>Evaluate the performance of a <code class="docutils literal notranslate"><span class="pre">sklearn.dummy.DummyClassifier</span></code> that always
-predict the most frequent class seen during the training. Be aware that you can
-pass a list of score to compute in <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> by
-setting the parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code>.</p>
+<p>We therefore define our problem as a regression problem: we want to predict the
+body mass of a penguin given its culmen and flipper measurements.</p>
+<p>Note that we randomly shuffled the rows of the dataset
+after loading it (<code class="docutils literal notranslate"><span class="pre">dataset.sample(frac=1,</span> <span class="pre">random_state=0)</span></code>). The
+reason is to break a spurious order-related statistical
+dependency that would otherwise cause trouble with the naive
+cross-validation procedure we use in this notebook. The problem
+of order-dependent samples will be discussed in more details in
+the module on model evaluation and is outside of the scope of
+this quiz for now.
+Now, evaluate the following tree-based models:</p>
+<ul class="simple">
+<li><p>a decision tree regressor, i.e. <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code></p></li>
+<li><p>a random forest regressor, i.e. <code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.RandomForestRegressor</span></code></p></li>
+</ul>
+<p>Use the default hyper-parameter settings for both models. The only exception
+is to pass <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code> for all models to be sure to recover the exact
+same performance scores as the solutions to this quiz.</p>
+<p>Evaluate the generalization performance of these models using a 10-fold
+cross-validation:</p>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> to run the cross-validation routine</p></li>
+<li><p>set the parameter <code class="docutils literal notranslate"><span class="pre">cv=10</span></code> to use a 10-fold cross-validation strategy. Store the
+training score of the cross-validation by setting the parameter
+<code class="docutils literal notranslate"><span class="pre">return_train_score=True</span></code> in the function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>
+as we will use it later on.</p></li>
+</ul>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What the accuracy of this dummy classifier?</p>
+<p>By comparing the cross-validation test scores fold-to-fold, count the number of times
+a random forest is better than a single decision tree.
+Select the range which this number belongs to:</p>
 <ul class="simple">
-<li><p>a) ~0.5</p></li>
-<li><p>b) ~0.62</p></li>
-<li><p>c) ~0.75</p></li>
+<li><p>a) [0, 3]: the random forest model is substantially worse than the single decision tree regressor</p></li>
+<li><p>b) [4, 6]: both models are almost equivalent</p></li>
+<li><p>c) [7, 10]: the random forest model is substantially better than the single decision tree regressor</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
+<p>Now, train and evaluate with the same cross-validation strategy a random forest
+with 5 decision trees and another containing 100 decision trees. Once again
+store the training score.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What the balanced accuracy of this dummy classifier?</p>
+<p>By comparing the cross-validation test scores fold-to-fold, count the number of times
+a random forest with 100 decision trees is better than a random forest with
+5 decision trees.
+Select the range which this number belongs to:</p>
 <ul class="simple">
-<li><p>a) ~0.5</p></li>
-<li><p>b) ~0.62</p></li>
-<li><p>c) ~0.75</p></li>
+<li><p>a) [0, 3]: the random forest model with 100 decision trees is substantially worse than the random forest model with 5 decision trees</p></li>
+<li><p>b) [4, 6]: both models are almost equivalent</p></li>
+<li><p>c) [7, 10]: the random forest model with 100 decision trees is substantially better than the random forest model with 5 decision trees</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Replace the <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> by a <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeClassifier</span></code> and
-check the generalization performance to answer the question below.</p>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Is a single decision classifier better than a dummy classifier, by an increase
-of at least 0.04 of the balanced accuracy?</p>
-<ul class="simple">
-<li><p>a) Yes</p></li>
-<li><p>b) No</p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-</div>
-<p>Evaluate the performance of a <code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code> using
-300 trees.</p>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Is random forest better than a dummy classifier, by an increase of at least
-0.04 of the balanced accuracy?</p>
-<ul class="simple">
-<li><p>a) Yes</p></li>
-<li><p>b) No</p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-</div>
-<p>Compare a <code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.GradientBoostingClassifier</span></code> and a
-<code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.RandomForestClassifier</span></code> with both 300 trees. To do so, repeat
-10 times a 10-fold cross-validation by using the balanced accuracy as metric.
-For each of the ten try, compute the average of the cross-validation score
-for both models. Count how many times a model is better than the other.</p>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>On average, is the gradient boosting better than the random forest?</p>
-<ul class="simple">
-<li><p>a) Yes</p></li>
-<li><p>b) No</p></li>
-<li><p>c) Equivalent</p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-</div>
-<p>Evaluate the performance of a
-<code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.HistGradientBoostingClassifier</span></code>. Enable early-stopping and
-add as many trees as needed.</p>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Is histogram gradient boosting a better classifier considering the mean of
-the cross-validation test score?</p>
-<ul class="simple">
-<li><p>a) Histogram gradient boosting is the best estimator</p></li>
-<li><p>b) Histogram gradient boosting is better than random forest but worse than
-the exact gradient boosting</p></li>
-<li><p>c) Histogram gradient boosting is better than the exact gradient boosting but
-worse than the random forest</p></li>
-<li><p>d) Histogram gradient boosting is the worst estimator</p></li>
-</ul>
-<p><em>Select a single answer</em></p>
+<p>Plot the validation curve of the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> parameters defined by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_estimators</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">]</span>
+</pre></div>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>With the early stopping activated, how many trees on average the
-<code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> needed to converge?</p>
+<p>Select the correct statements below.</p>
 <ul class="simple">
-<li><p>a) ~30</p></li>
-<li><p>b) ~100</p></li>
-<li><p>c) ~150</p></li>
-<li><p>d) ~200</p></li>
-<li><p>e) ~300</p></li>
+<li><p>a) the <strong>train score</strong> decreases when <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> become large (above 500 trees)</p></li>
+<li><p>b) the <strong>train score</strong> reaches a plateau when <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> become large (above 500 trees)</p></li>
+<li><p>c) the <strong>train score</strong> increases when <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> become large (above 500 trees)</p></li>
+<li><p>d) the <strong>test score</strong> decreases when <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> become large (above 500 trees)</p></li>
+<li><p>e) the <strong>test score</strong> reaches a plateau when <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> become large (above 500 trees)</p></li>
+<li><p>f) the <strong>test score</strong> increases when <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> become large (above 500 trees)</p></li>
+</ul>
+<p><em>Select several answers</em></p>
+</div>
+<p>Repeat the previous experiment but this time, instead of choosing the default
+parameters for the random forest, set the parameter <code class="docutils literal notranslate"><span class="pre">max_depth=5</span></code> and build
+the validation curve.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Comparing the validation curve (train and test scores) of the random forest
+with a full depth and the random forest with a limited depth, select the correct
+statements.</p>
+<ul class="simple">
+<li><p>a) the <strong>test score</strong> of the random forest with a full depth is (almost) always better than the <strong>test score</strong> of the random forest with a limited depth</p></li>
+<li><p>b) the <strong>train score</strong> of the random forest with a full depth is (almost) always better than the <strong>train score</strong> of the random forest with a limited depth</p></li>
+<li><p>c) the gap between the train and test scores decreases when reducing the depth of the trees of the random forest</p></li>
+<li><p>d) the gap between the train and test scores increases when reducing the depth of the trees of the random forest</p></li>
+</ul>
+<p><em>Select several answers</em></p>
+</div>
+<p>Let us now focus at the very beginning of the validation curves, and
+consider the training score of a random forests with a single tree
+while using the default <code class="docutils literal notranslate"><span class="pre">max_depth=None</span></code> parameter setting:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rf_1_tree</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv_results_tree</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">rf_1_tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">cv_results_tree</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>should return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">0.83120264</span><span class="p">,</span> <span class="mf">0.83309064</span><span class="p">,</span> <span class="mf">0.83195043</span><span class="p">,</span> <span class="mf">0.84834224</span><span class="p">,</span> <span class="mf">0.85790323</span><span class="p">,</span>
+       <span class="mf">0.86235297</span><span class="p">,</span> <span class="mf">0.84791111</span><span class="p">,</span> <span class="mf">0.85183089</span><span class="p">,</span> <span class="mf">0.82241954</span><span class="p">,</span> <span class="mf">0.85045978</span><span class="p">])</span>
+
+</pre></div>
+</div>
+<p>The fact that this single-tree Random Forest can never reach
+a perfect R2 score of 1.0 on the training can be surprising.</p>
+<p>Indeed, if you we evaluate the training accuracy of the single
+<code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code> one gets perfect memorization of the
+training data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv_results_tree</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">cv_results_tree</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>which outputs the expected perfect score:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>From the following statements, select the one that explains
+that a single-tree random forest cannot achieve perfect
+training scores.</p>
+<ul class="simple">
+<li><p>a) the single tree in the random forest is trained using a bootstrap of the training set and not the training set itself (because <code class="docutils literal notranslate"><span class="pre">bootstrap=True</span></code> by default)</p></li>
+<li><p>b) for a given feature, the single tree in the random forest uses random splits while the single decision tree uses the best split</p></li>
+<li><p>c) the random forest automatically limits the depth of the single decision tree, which prevents overfitting</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
+</div>
+<p>Build a validation curve for a <code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.HistGradientBoostingRegressor</span></code>
+varying <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">max_iter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We recall that <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> corresponds to the number of trees in the boosted
+model.</p>
+<p>Plot the average train and test score for each value of <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>.</p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Select the correct statements.</p>
+<ul class="simple">
+<li><p>a) for a small number of trees (between 5 and 10 trees), the gradient boosting model behave like the random forest algorithm: the train scores are high while the test scores are not optimum</p></li>
+<li><p>b) for a small number of trees (between 5 and 10 trees), the gradient boosting model behave differently to the random forest algorithm: both the train and test scores are small</p></li>
+<li><p>c) with a large number of trees (&gt; 100 trees) adding more trees in the ensemble causes the gradient boosting model overfit (increasing the gap between the train score and  test score)</p></li>
+<li><p>d) with a large number of trees (&gt; 100 trees) adding more trees in the ensemble does not impact the generalization performance of the gradient boosting model</p></li>
+</ul>
+<p><em>Select several answers</em></p>
 </div>
 </div>
 

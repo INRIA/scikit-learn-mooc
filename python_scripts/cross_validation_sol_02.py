@@ -136,8 +136,7 @@ test_score_dummy_stratified = pd.Series(
     cv_results_stratified["test_score"], name="Stratified class predictor"
 )
 
-# %%
-# solution
+# %% tags=["solution"]
 uniform_dummy = DummyClassifier(strategy="uniform")
 cv_results_uniform = cross_validate(
     uniform_dummy, data, target, cv=cv, n_jobs=2

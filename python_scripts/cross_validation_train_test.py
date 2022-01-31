@@ -258,6 +258,10 @@ plt.xlabel("Mean absolute error (k$)")
 _ = plt.title("Test error distribution")
 
 # %% [markdown]
+# The argument `density=True` in the plot above normalizes the histogram such
+# that the sum of the histogram areas is one, i.e. the probability to be in a
+# bin can be obtained by multiplying the height by the width of the bin.
+#
 # We observe that the testing error is clustered around 47 k\$ and ranges from
 # 43 k\$ to 50 k\$.
 

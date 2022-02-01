@@ -217,7 +217,7 @@ All data come with biases.
     - Disease monitoring is function of testing policy
     - It may change with time, it may be uneven across the population (eg higher quality data for rich people)
 - The state of affairs may not be the desired one
-    - For equal qualifications and responsibilities, women are typically payed less than men. A learner will pick this up and amplify inequalities
+    - For equal qualifications and responsibilities, women are typically payed less than men. A machine learning model will pick this up and amplify inequalities
 
 ### Prediction models versus causal models
 

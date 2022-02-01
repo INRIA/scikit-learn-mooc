@@ -131,7 +131,7 @@ Let us give a few pointers on going further with machine learning.
 - [Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) by Aurélien Géron
 - [Kaggle](http://kaggle.com):
     - Good introduction materials
-    - Participating in challenges, teaming with others and reading
+    - Participating in challenges, teaming with others, and reading
       the solutions shared by the winners in the discussions is a
       good way to learn
 
@@ -163,6 +163,7 @@ to increase coverage of diverse groups?
 
 Another way to phrase this recommendation is to try to identify
 any sampling bias in the data acquisition process.
+
 ### Machine learning is a small part of the problem most of the times 
 
 - How to approach the full problem (the full value chain)
@@ -196,7 +197,8 @@ Errors mean different things in different application contexts.
     - Detecting brain tumors:
         - If a patient is sent to surgery: false detections are very dangerous
         - If a patient given an MR scan to confirm the detection:
-	  misses should be avoided, as an MR scan is harmless
+	  misses should be avoided, as an MR scan is harmless, but
+	  missing a person with a brain tumor may delay life-saving treatment
 
 The predictions may modify how the system functions:
   - Predicting who will benefit from a hospital stay may overcrowd some units of the hospital, and thus change the positive impact of hospitals on inpatients
@@ -249,7 +251,7 @@ Today, AI systems are sometimes used to allocate loans, screen job applicants,
 prioritise medical treatement, help law enforcement or court decisions.
 
 If you know scikit-learn, [fairlearn](https://fairlearn.org) is a simple
-resource to help you understand, assess and sometimes mitigate some
+resource to help you understand and assess some
 problems caused by a too naive application of machine learning
 methods.
 

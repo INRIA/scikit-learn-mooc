@@ -221,7 +221,7 @@ All data come with biases.
 
 ### Prediction models versus causal models
 
-Machine learner models are not driven by causal mechanisms.
+Machine learning models are not driven by causal mechanisms.
 
 - For example people that go to the hospital die more than people who do not:
     - Naive data analysis might conclude that hospitals are bad for health

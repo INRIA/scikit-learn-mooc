@@ -146,8 +146,6 @@ how it may fail, and societal aspects.
 Validation and evaluation are often the weak point of an analysis. They
 are key to achieving reliable predictive models.
 
-A measure of prediction accuracy is an imperfect estimate of how the model will actually generalize to new data.
-
 Even with cross-validation, a measure of prediction accuracy is an imperfect estimate of how the model will actually generalize to new data
 
 - As you narrow down on a solution, spend increasingly more effort on validating it

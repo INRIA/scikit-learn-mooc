@@ -146,8 +146,6 @@ how it may fail, and societal aspects.
 Validation and evaluation are often the weak point of an analysis. They
 are key to achieving reliable predictive models.
 
-A measure of prediction accuracy is an imperfect estimate of how the model will actually generalize to new data.
-
 Even with cross-validation, a measure of prediction accuracy is an imperfect estimate of how the model will actually generalize to new data
 
 - As you narrow down on a solution, spend increasingly more effort on validating it
@@ -218,12 +216,12 @@ All data come with biases.
 - The data may not reflect the ground truth
     - Disease monitoring is function of testing policy
     - It may change with time, it may be uneven across the population (eg higher quality data for rich people)
-- The state of affaires may not be the desired one
-    - For equal qualifications and responsibilities, women are typically payed less than men. A learner will pick this up and amplify inequalities
+- The state of affairs may not be the desired one
+    - For equal qualifications and responsibilities, women are typically payed less than men. A machine learning model will pick this up and amplify inequalities
 
 ### Prediction models versus causal models
 
-Machine learner models are not driven by causal mechanisms.
+Machine learning models are not driven by causal mechanisms.
 
 - For example people that go to the hospital die more than people who do not:
     - Naive data analysis might conclude that hospitals are bad for health
@@ -273,7 +271,7 @@ A good discussion on these topic can be found in the short article:
 
 - Machine learning drives one of the most important technological revolutions of our time.
 - It is a fantastic opportunity to improve human condition
-- With scikit-learn, and this MOOC, we try to lift as much as possible
-  the technical roadblocks, and  wee hope that we can empower a great variety of people, with different mindsets and dreams, to solve the problems that matter to them
+- With scikit-learn, and this MOOC, we try to lift as many technical roadblocks
+  as possible, and  we hope that we can empower a great variety of people, with different mindsets and dreams, to solve the problems that matter to them
 
 Thank you for being part of this adventure!

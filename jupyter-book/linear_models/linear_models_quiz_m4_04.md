@@ -7,7 +7,7 @@ Which of the following estimators can solve linear regression problems?
 - b) sklearn.linear_model.LogisticRegression
 - c) sklearn.linear_model.Ridge
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++

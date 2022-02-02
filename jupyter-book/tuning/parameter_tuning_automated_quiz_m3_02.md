@@ -125,7 +125,7 @@ Looking at this plot, which parameter values always cause the model to perform b
 - e) too large `max_bins`
 - f) too small `max_bins`
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -147,5 +147,5 @@ words, which hyperparameters values are never used to get a good model
 - e) too large `max_bins`
 - f) too low `max_bins`
 
-_Select several answers_
+_Select all answers that apply_
 ```

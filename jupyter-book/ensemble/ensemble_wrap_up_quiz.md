@@ -99,7 +99,7 @@ Select the correct statements below.
 - e) the **test score** reaches a plateau when `n_estimators` become large (above 500 trees)
 - f) the **test score** increases when `n_estimators` become large (above 500 trees)
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -119,7 +119,7 @@ statements.
 - d) the gap between the train and test scores increases when reducing the depth of the trees of the random forest
 
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -199,5 +199,5 @@ Select the correct statements.
 - c) with a large number of trees (> 100 trees) adding more trees in the ensemble causes the gradient boosting model overfit (increasing the gap between the train score and  test score)
 - d) with a large number of trees (> 100 trees) adding more trees in the ensemble does not impact the generalization performance of the gradient boosting model
 
-_Select several answers_
+_Select all answers that apply_
 ```

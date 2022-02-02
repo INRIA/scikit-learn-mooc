@@ -45,5 +45,5 @@ bagging classifier and a random forest classifier:
 - c) in a random forest, a random resampling is performed both over features
   as well as over samples
 
-_Select several answers_
+_Select all answers that apply_
 ```

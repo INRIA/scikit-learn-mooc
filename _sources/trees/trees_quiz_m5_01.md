@@ -8,7 +8,7 @@ tasks decision trees can be applied to:
 - b) regression tasks
 - c) clustering tasks
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++

@@ -12,7 +12,7 @@ In the notebook "First look at our dataset", we used pandas and specifically
 - e) load a file containing both the features and the target for our classification
   problem
 
-_Select multiple answers_
+_Select all answers that apply_
 ```
 
 +++

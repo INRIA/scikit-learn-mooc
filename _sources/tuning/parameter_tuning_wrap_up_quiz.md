@@ -95,7 +95,7 @@ You can use:
 - b) The average cross-validated test balanced accuracy of the above pipeline is between 0.8 and 0.9
 - c) The average cross-validated test balanced accuracy of the above pipeline is between 0.5 and 0.8
 
-_Select one answer_
+_Select a single answer_
 ```
 
 +++
@@ -148,7 +148,7 @@ Which of the following statements hold:
   `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
   than the model with `n_neighbors=101` and `StandardScaler`
 
-_Select several answers_
+_Select all answers that apply_
 
 Hint: pass `{"preprocessor": all_preprocessors, "classifier__n_neighbors": [5, 51, 101]}` for the `param_grid` argument to the `GridSearchCV` class.
 ```
@@ -182,7 +182,7 @@ with the `best_params_` attribute of the estimator. Select all the statements th
 - c) The optimal scaler is stable across all folds
 - d) The optimal scaler changes often across all folds
 
-_Select several answers_
+_Select all answers that apply_
 
 Hint: it is important to pass `return_estimator=True` to the `cross_validate`
 function to be able to introspect trained model saved in the `"estimator"`

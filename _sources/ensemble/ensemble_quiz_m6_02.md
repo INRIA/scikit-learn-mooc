@@ -8,7 +8,7 @@ Select the correct statements:
 - c) Boosting combines predictors sequentially
 - d) Bagging combines predictors simultaneously
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -20,7 +20,7 @@ Boosting algorithms learn their predictor:
 - b) by training predictors sequentially which correct previous prediction errors
 - c) by taking a linear combination of weak predictors
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++

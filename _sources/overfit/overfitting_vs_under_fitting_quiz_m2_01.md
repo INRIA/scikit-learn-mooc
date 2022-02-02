@@ -8,7 +8,7 @@ A model that is underfitting:
 - c) often makes prediction errors, even on training samples
 - d) focuses too much on noisy details of the training set
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -21,5 +21,5 @@ A model that is overfitting:
 - c) often makes prediction errors, even on training samples
 - d) focuses too much on noisy details of the training set
 
-_Select several answers_
+_Select all answers that apply_
 ```

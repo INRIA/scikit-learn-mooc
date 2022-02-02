@@ -79,7 +79,7 @@ value (excluding ordinal categories)?
 - d) "OverallCond"
 - e) "YearBuilt"
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++

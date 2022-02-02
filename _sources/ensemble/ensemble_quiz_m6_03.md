@@ -8,7 +8,7 @@ When compared to random forests, gradient boosting is usually trained using:
 - c) a subset of features
 - d) all features
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -32,5 +32,5 @@ Which of the following options are correct about the benefits of ensemble models
 - b) Reduced sensitivity to hyperparameter tuning of individual predictors
 - c) Better interpretability
 
-_Select several answers_
+_Select all answers that apply_
 ```

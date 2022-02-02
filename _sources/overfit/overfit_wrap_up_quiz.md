@@ -27,7 +27,7 @@ Select the correct answers from the following proposals.
 - d) The proportions of the class counts are imbalanced: some classes have more
   than twice as many rows than others)
 
-_Select several answers_
+_Select all answers that apply_
 
 Hint: `target.unique()`, and `target.value_counts()` are methods
 that are helpful to answer to this question.

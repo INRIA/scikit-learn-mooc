@@ -341,5 +341,5 @@ What is the effect of decreasing the `C` parameter on the coefficients?
 - d) increasing the weights' variance
 - e) it has no influence on the weights' variance
 
-_Select several answers_
+_Select all answers that apply_
 ```

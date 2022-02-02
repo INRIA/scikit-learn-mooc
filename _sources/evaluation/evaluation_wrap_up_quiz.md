@@ -124,7 +124,7 @@ cross-validation and select the correct statements:
 - g) $\beta_{4} < 0$
 - h) All $\beta$s are $> 0$
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -167,7 +167,7 @@ select the correct statements:
 - d) the generalization performance of the linear model is limited by its
   overfitting
 
-_Select several answers_
+_Select all answers that apply_
 
 Hint: look at the values of the `train_score` and the `test_score` collected
 in the dictionaries returned by the `cross_validate` function.
@@ -242,7 +242,7 @@ select the correct statements:
 - d) the generalization performance of the linear model is limited by its
   overfitting
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++
@@ -259,7 +259,7 @@ select the correct statements:
 - e) `LeaveOneGroupOut` is giving over-optimistic results for the gradient-boosting model
 - f) both cross-validation strategies are equivalent for the gradient-boosting model
 
-_Select several answer_
+_Select all answers that apply_
 ```
 
 +++
@@ -316,7 +316,7 @@ By analysing the plots, select the correct statements:
 - f) the histogram gradient boosting makes catastrophic predictions for samples
   with low power
 
-_Select several answers_
+_Select all answers that apply_
 ```
 
 +++

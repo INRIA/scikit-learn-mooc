@@ -157,7 +157,7 @@ all_test_scores = pd.concat(
 )
 
 # %% tags=["solution"]
-all_test_scores.plot.hist(bins=bins, density=True, edgecolor="black")
+all_test_scores.plot.hist(bins=bins, edgecolor="black")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.xlabel("Accuracy (%)")
 _ = plt.title("Distribution of the test scores")

@@ -121,10 +121,8 @@ adult_census = adult_census[all_columns]
 # dataset:
 
 # %%
-print(
-    f"The dataset contains {adult_census.shape[0]} samples and "
-    f"{adult_census.shape[1]} columns"
-)
+print(f"The dataset contains {adult_census.shape[0]} samples and "
+      f"{adult_census.shape[1]} columns")
 
 # %% [markdown]
 # We can compute the number of features by counting the number of columns and

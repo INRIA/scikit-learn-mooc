@@ -1530,14 +1530,14 @@ information, etc.</p>
 </div>
 <div class="section" id="the-variables-columns-in-the-dataset">
 <h2>The variables (columns) in the dataset<a class="headerlink" href="#the-variables-columns-in-the-dataset" title="Permalink to this headline">¶</a></h2>
-<p>The data are stored in a pandas dataframe. A dataframe is a type of
-structured data composed of 2 dimensions. This type of data is also referred
-as tabular data.</p>
-<p>Each row represents a sample. In the field of machine learning or descriptive
-statistics, commonly used equivalent terms are “record”, “instance”, or
-“observation”.</p>
+<p>The data are stored in a pandas dataframe. A dataframe is a type of structured
+data composed of 2 dimensions. This type of data is also referred as tabular
+data.</p>
+<p>Each row represents a “sample”. In the field of machine learning or
+descriptive statistics, commonly used equivalent terms are “record”,
+“instance”, or “observation”.</p>
 <p>Each column represents a type of information that has been collected and is
-called a feature. In the field of machine learning and descriptive
+called a “feature”. In the field of machine learning and descriptive
 statistics, commonly used equivalent terms are “variable”, “attribute”, or
 “covariate”.</p>
 <p>A quick way to inspect the dataframe is to show the first few lines with the
@@ -1680,7 +1680,7 @@ binary classification problem, while we will use the other columns as input
 variables for our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_column</span> <span class="o">=</span> <span class="s1">&#39;class&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 <span class="n">adult_census</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1703,26 +1703,25 @@ subjects will develop a rare disease, there will be a lot more healthy
 subjects than ill subjects in the dataset.</p>
 </div>
 <p>The dataset contains both numerical and categorical data. Numerical values
-take continuous values, for example <code class="docutils literal notranslate"><span class="pre">age</span></code>. Categorical values can have a
-finite number of values, for example <code class="docutils literal notranslate"><span class="pre">native-country</span></code>.</p>
+take continuous values, for example <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code>. Categorical values can have a
+finite number of values, for example <code class="docutils literal notranslate"><span class="pre">&quot;native-country&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;education-num&#39;</span><span class="p">,</span> <span class="s1">&#39;capital-gain&#39;</span><span class="p">,</span> <span class="s1">&#39;capital-loss&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;hours-per-week&#39;</span><span class="p">]</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
 <span class="n">categorical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;workclass&#39;</span><span class="p">,</span> <span class="s1">&#39;education&#39;</span><span class="p">,</span> <span class="s1">&#39;marital-status&#39;</span><span class="p">,</span> <span class="s1">&#39;occupation&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;relationship&#39;</span><span class="p">,</span> <span class="s1">&#39;race&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;native-country&#39;</span><span class="p">]</span>
-<span class="n">all_columns</span> <span class="o">=</span> <span class="n">numerical_columns</span> <span class="o">+</span> <span class="n">categorical_columns</span> <span class="o">+</span> <span class="p">[</span>
-    <span class="n">target_column</span><span class="p">]</span>
+    <span class="s2">&quot;workclass&quot;</span><span class="p">,</span> <span class="s2">&quot;education&quot;</span><span class="p">,</span> <span class="s2">&quot;marital-status&quot;</span><span class="p">,</span> <span class="s2">&quot;occupation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;relationship&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;native-country&quot;</span><span class="p">]</span>
+<span class="n">all_columns</span> <span class="o">=</span> <span class="n">numerical_columns</span> <span class="o">+</span> <span class="n">categorical_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">all_columns</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can check the number of samples and the number of columns available in
-the dataset:</p>
+<p>We can check the number of samples and the number of columns available in the
+dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
@@ -1759,14 +1758,14 @@ subtract 1, since one of the columns is the target.</p>
 learning;</p></li>
 <li><p>you need to check that the information you need for your task is actually
 present in the dataset;</p></li>
-<li><p>inspecting the data is a good way to find peculiarities. These can
-arise during data collection (for example, malfunctioning sensor or missing
+<li><p>inspecting the data is a good way to find peculiarities. These can arise
+during data collection (for example, malfunctioning sensor or missing
 values), or from the way the data is processed afterwards (for example
 capped values).</p></li>
 </ul>
 <p>Let’s look at the distribution of individual features, to get some insights
-about the data. We can start by plotting histograms, note that this only
-works for features containing numerical values:</p>
+about the data. We can start by plotting histograms, note that this only works
+for features containing numerical values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
@@ -1787,19 +1786,19 @@ as a “garbage” variable to store results that we are not interested in.</p>
 </div>
 <p>We can already make a few comments about some of the variables:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">age</span></code>: there are not that many points for <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">70</span></code>. The dataset
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code>: there are not that many points for <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">70</span></code>. The dataset
 description does indicate that retired people have been filtered out
 (<code class="docutils literal notranslate"><span class="pre">hours-per-week</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>);</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">education-num</span></code>: peak at 10 and 13, hard to tell what it corresponds to
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>: peak at 10 and 13, hard to tell what it corresponds to
 without looking much further. We’ll do that later in this notebook;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hours-per-week</span></code> peaks at 40, this was very likely the standard number of
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> peaks at 40, this was very likely the standard number of
 working hours at the time of the data collection;</p></li>
-<li><p>most values of <code class="docutils literal notranslate"><span class="pre">capital-gain</span></code> and <code class="docutils literal notranslate"><span class="pre">capital-loss</span></code> are close to zero.</p></li>
+<li><p>most values of <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;capital-loss&quot;</span></code> are close to zero.</p></li>
 </ul>
 <p>For categorical variables, we can look at the distribution of values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1813,7 +1812,7 @@ Name: sex, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1839,14 +1838,13 @@ Name: education, dtype: int64
 </div>
 </div>
 </div>
-<p>As noted above, <code class="docutils literal notranslate"><span class="pre">education-num</span></code> distribution has two clear peaks around 10
-and 13. It would be reasonable to expect that <code class="docutils literal notranslate"><span class="pre">education-num</span></code> is the number
-of years of education.</p>
-<p>Let’s look at the relationship between <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">education-num</span></code>.</p>
+<p>As noted above, <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> distribution has two clear peaks around 10 and
+13. It would be reasonable to expect that <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> is the number of
+years of education.</p>
+<p>Let’s look at the relationship between <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">],</span>
-            <span class="n">columns</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[</span><span class="s1">&#39;education-num&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2215,20 +2213,20 @@ of years of education.</p>
 </table>
 </div></div></div>
 </div>
-<p>This shows that <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">education-num</span></code> give you the same
-information. For example, <code class="docutils literal notranslate"><span class="pre">education-num=2</span></code> is equivalent to
-<code class="docutils literal notranslate"><span class="pre">education='1st-4th'</span></code>. In practice that means we can remove <code class="docutils literal notranslate"><span class="pre">education-num</span></code>
-without losing information. Note that having redundant (or highly correlated)
-columns can be a problem for machine learning algorithms.</p>
+<p>This shows that <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> give you the same
+information. For example, <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;=2</span></code> is equivalent to
+<code class="docutils literal notranslate"><span class="pre">&quot;education&quot;=&quot;1st-4th&quot;</span></code>. In practice that means we can remove
+<code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> without losing information. Note that having redundant (or
+highly correlated) columns can be a problem for machine learning algorithms.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In the upcoming notebooks, we will only keep the <code class="docutils literal notranslate"><span class="pre">education</span></code> variable,
-excluding the <code class="docutils literal notranslate"><span class="pre">education-num</span></code> variable since the latter is redundant with the
-former.</p>
+<p>In the upcoming notebooks, we will only keep the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> variable,
+excluding the <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> variable since the latter is redundant with
+the former.</p>
 </div>
 <p>Another way to inspect the data is to do a <code class="docutils literal notranslate"><span class="pre">pairplot</span></code> and show how each
-variable differs according to our target, i.e. <code class="docutils literal notranslate"><span class="pre">class</span></code>. Plots along the
-diagonal show the distribution of individual variables for each <code class="docutils literal notranslate"><span class="pre">class</span></code>. The
+variable differs according to our target, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;class&quot;</span></code>. Plots along the
+diagonal show the distribution of individual variables for each <code class="docutils literal notranslate"><span class="pre">&quot;class&quot;</span></code>. The
 plots on the off-diagonal can reveal interesting interactions between
 variables.</p>
 <div class="cell docutils container">
@@ -2238,10 +2236,16 @@ variables.</p>
 <span class="c1"># We will plot a subset of the data to keep the plot readable and make the</span>
 <span class="c1"># plotting faster</span>
 <span class="n">n_samples_to_plot</span> <span class="o">=</span> <span class="mi">5000</span>
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;education-num&#39;</span><span class="p">,</span> <span class="s1">&#39;hours-per-week&#39;</span><span class="p">]</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span> <span class="nb">vars</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
-                 <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span>
-                 <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">diag_kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">diag_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;bins&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="nb">vars</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+    <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">diag_kind</span><span class="o">=</span><span class="s2">&quot;hist&quot;</span><span class="p">,</span>
+    <span class="n">diag_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2252,14 +2256,17 @@ variables.</p>
 </div>
 <div class="section" id="creating-decision-rules-by-hand">
 <h2>Creating decision rules by hand<a class="headerlink" href="#creating-decision-rules-by-hand" title="Permalink to this headline">¶</a></h2>
-<p>By looking at the previous plots, we could create some hand-written rules
-that predicts whether someone has a high- or low-income. For instance, we
-could focus on the combination of the <code class="docutils literal notranslate"><span class="pre">hours-per-week</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code> features.</p>
+<p>By looking at the previous plots, we could create some hand-written rules that
+predict whether someone has a high- or low-income. For instance, we could
+focus on the combination of the <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code> features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
-    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2268,29 +2275,30 @@ could focus on the combination of the <code class="docutils literal notranslate"
 <img alt="../_images/01_tabular_data_exploration_30_0.png" src="../_images/01_tabular_data_exploration_30_0.png" />
 </div>
 </div>
-<p>The data points (circles) show the distribution of <code class="docutils literal notranslate"><span class="pre">hours-per-week</span></code> and <code class="docutils literal notranslate"><span class="pre">age</span></code>
-in the dataset. Blue points mean low-income and orange points mean
-high-income. This part of the plot is the same as the bottom-left plot in
-the pairplot above.</p>
+<p>The data points (circles) show the distribution of <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code> in the dataset. Blue points mean low-income and orange points mean
+high-income. This part of the plot is the same as the bottom-left plot in the
+pairplot above.</p>
 <p>In this plot, we can try to find regions that mainly contains a single class
-such that we can easily decide what class one should predict. We could come
-up with hand-written rules as shown in this plot:</p>
+such that we can easily decide what class one should predict. We could come up
+with hand-written rules as shown in this plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
-    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">age_limit</span> <span class="o">=</span> <span class="mi">27</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">age_limit</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
 <span class="n">hours_per_week_limit</span> <span class="o">=</span> <span class="mi">40</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
-    <span class="n">y</span><span class="o">=</span><span class="n">hours_per_week_limit</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span>
-<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">hours_per_week_limit</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&lt;=50K&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&lt;=50K&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
@@ -2303,21 +2311,21 @@ up with hand-written rules as shown in this plot:</p>
 </div>
 </div>
 <ul class="simple">
-<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&lt;</span> <span class="pre">27</span></code> (left region) the prediction is low-income.
-Indeed, there are many blue points and we cannot see any orange points.</p></li>
-<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">27</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&lt;</span> <span class="pre">40</span></code>
-(bottom-right region), the prediction is low-income. Indeed, there are
-many blue points and only a few orange points.</p></li>
-<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">27</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&gt;</span> <span class="pre">40</span></code> (top-right region),
-we see a mix of blue points and orange points. It seems complicated to
-chose which class we should predict in this region.</p></li>
+<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&lt;</span> <span class="pre">27</span></code> (left region) the prediction is low-income. Indeed,
+there are many blue points and we cannot see any orange points.</p></li>
+<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">27</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&lt;</span> <span class="pre">40</span></code> (bottom-right region), the
+prediction is low-income. Indeed, there are many blue points and only a few
+orange points.</p></li>
+<li><p>In the region <code class="docutils literal notranslate"><span class="pre">age</span> <span class="pre">&gt;</span> <span class="pre">27</span> <span class="pre">AND</span> <span class="pre">hours-per-week</span> <span class="pre">&gt;</span> <span class="pre">40</span></code> (top-right region), we see
+a mix of blue points and orange points. It seems complicated to chose which
+class we should predict in this region.</p></li>
 </ul>
 <p>It is interesting to note that some machine learning models will work
 similarly to what we did: they are known as decision tree models. The two
 thresholds that we chose (27 years and 40 hours) are somewhat arbitrary, i.e.
 we chose them by only looking at the pairplot. In contrast, a decision tree
 will chose the “best” splits based on data without human intervention or
-inspection. Decision trees will be covered in more details in a future module.</p>
+inspection. Decision trees will be covered more in detail in a future module.</p>
 <p>Note that machine learning is really interesting when creating rules by hand
 is not straightforward, for example because we are in high dimension (many
 features) or because there are no simple and obvious rules that separate the
@@ -2325,7 +2333,7 @@ two classes as in the top-right region of the previous plot.</p>
 <p>To sum up, the important thing to remember is that in a machine-learning
 setting, a model automatically creates the “rules” from the data in order to
 make predictions on new unseen data.</p>
-<p>In this notebook we have:</p>
+<p>In this notebook we:</p>
 <ul class="simple">
 <li><p>loaded the data from a CSV file using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>;</p></li>
 <li><p>looked at the different kind of variables to differentiate between
@@ -2334,15 +2342,15 @@ categorical and numerical variables;</p></li>
 you to decide whether using machine learning is appropriate for your data
 and to highlight potential peculiarities in your data.</p></li>
 </ul>
-<p>Ideas which will be discussed more in details later:</p>
+<p>Ideas which will be discussed more in detail later:</p>
 <ul class="simple">
 <li><p>if your target variable is imbalanced (e.g., you have more samples from one
 target category than another), you may need special techniques for training
 and evaluating your machine learning model;</p></li>
-<li><p>having redundant (or highly correlated) columns can be a problem for
-some machine learning algorithms;</p></li>
+<li><p>having redundant (or highly correlated) columns can be a problem for some
+machine learning algorithms;</p></li>
 <li><p>contrary to decision tree, linear models can only capture linear
-interaction, so be aware of non-linear relationships in your data.</p></li>
+interactions, so be aware of non-linear relationships in your data.</p></li>
 </ul>
 </div>
 </div>

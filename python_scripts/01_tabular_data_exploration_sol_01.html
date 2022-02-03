@@ -1434,14 +1434,14 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="solution-for-exercise-m1-01">
 <h1>📃 Solution for Exercise M1.01<a class="headerlink" href="#solution-for-exercise-m1-01" title="Permalink to this headline">¶</a></h1>
-<p>Imagine we are interested in predicting penguins species based on two of
-their body measurements: culmen length and culmen depth. First we want to do
-some data exploration to get a feel for the data.</p>
+<p>Imagine we are interested in predicting penguins species based on two of their
+body measurements: culmen length and culmen depth. First we want to do some
+data exploration to get a feel for the data.</p>
 <p>What are the features? What is the target?</p>
-<p>The features are “culmen length” and “culmen depth”.
-The target is the penguin species.</p>
-<p>The data is located in <code class="docutils literal notranslate"><span class="pre">../datasets/penguins_classification.csv</span></code>, load it
-with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> into a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+<p>The features are <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">length&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">depth&quot;</span></code>. The target is the
+penguin species.</p>
+<p>The data is located in <code class="docutils literal notranslate"><span class="pre">../datasets/penguins_classification.csv</span></code>, load it with
+<code class="docutils literal notranslate"><span class="pre">pandas</span></code> into a <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1452,10 +1452,10 @@ with <code class="docutils literal notranslate"><span class="pre">pandas</span><
 </div>
 </div>
 </div>
-<p>Show a few samples of the data</p>
+<p>Show a few samples of the data.</p>
 <p>How many features are numerical? How many features are categorical?</p>
-<p>Both features, “culmen length” and “culmen depth” are numerical. There are no
-categorical features in this dataset.</p>
+<p>Both features, <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">length&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">depth&quot;</span></code> are numerical. There are
+no categorical features in this dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1523,8 +1523,9 @@ categorical features in this dataset.</p>
 </div></div></div>
 </div>
 <p>What are the different penguins species available in the dataset and how many
-samples of each species are there? Hint: select the right column and use
-the <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.value_counts.html"><code class="docutils literal notranslate"><span class="pre">value_counts</span></code></a> method.</p>
+samples of each species are there? Hint: select the right column and use the
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.value_counts.html"><code class="docutils literal notranslate"><span class="pre">value_counts</span></code></a>
+method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1568,13 +1569,12 @@ Name: Species, dtype: int64
 <img alt="../_images/01_tabular_data_exploration_sol_01_13_0.png" src="../_images/01_tabular_data_exploration_sol_01_13_0.png" />
 </div>
 </div>
-<p>We observe that the labels on the axis are overlapping. Even if it is not
-the priority of this notebook, one can tweak the by increasing the height
-of each subfigure.</p>
+<p>We observe that the labels on the axis are overlapping. Even if it is not the
+priority of this notebook, one can tweak them by increasing the height of each
+subfigure.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairplot_figure</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
-    <span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairplot_figure</span> <span class="o">=</span> <span class="n">seaborn</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Species&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1583,9 +1583,8 @@ of each subfigure.</p>
 </div>
 </div>
 <p>Looking at these distributions, how hard do you think it will be to classify
-the penguins only using “culmen depth” and “culmen length”?</p>
-<p>Looking at the previous scatter-plot showing “culmen length” and “culmen
-depth”, the species are reasonably well separated:</p>
+the penguins only using <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">depth&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">length&quot;</span></code>?</p>
+<p>Looking at the previous scatter-plot showing <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">length&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;culmen</span> <span class="pre">depth&quot;</span></code>, the species are reasonably well separated:</p>
 <ul class="simple">
 <li><p>low culmen length -&gt; Adelie</p></li>
 <li><p>low culmen depth -&gt; Gentoo</p></li>

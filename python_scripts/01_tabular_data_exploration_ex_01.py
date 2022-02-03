@@ -17,21 +17,21 @@
 # # 📝 Exercise M1.01
 
 # %% [markdown]
-# Imagine we are interested in predicting penguins species based on two of
-# their body measurements: culmen length and culmen depth. First we want to do
-# some data exploration to get a feel for the data.
+# Imagine we are interested in predicting penguins species based on two of their
+# body measurements: culmen length and culmen depth. First we want to do some
+# data exploration to get a feel for the data.
 #
 # What are the features? What is the target?
 
 # %% [markdown]
-# The data is located in `../datasets/penguins_classification.csv`, load it
-# with `pandas` into a `DataFrame`.
+# The data is located in `../datasets/penguins_classification.csv`, load it with
+# `pandas` into a `DataFrame`.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Show a few samples of the data
+# Show a few samples of the data.
 #
 # How many features are numerical? How many features are categorical?
 
@@ -40,8 +40,9 @@
 
 # %% [markdown]
 # What are the different penguins species available in the dataset and how many
-# samples of each species are there? Hint: select the right column and use
-# the [`value_counts`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.value_counts.html) method.
+# samples of each species are there? Hint: select the right column and use the
+# [`value_counts`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.value_counts.html)
+# method.
 
 # %%
 # Write your code here.
@@ -61,4 +62,4 @@
 
 # %% [markdown]
 # Looking at these distributions, how hard do you think it will be to classify
-# the penguins only using "culmen depth" and "culmen length"?
+# the penguins only using `"culmen depth"` and `"culmen length"`?

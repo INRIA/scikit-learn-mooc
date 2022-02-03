@@ -81,6 +81,3 @@ data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %%
 # Write your code here.
-
-# %%
-# Write your code here.

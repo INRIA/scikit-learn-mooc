@@ -101,18 +101,17 @@ adult_census[target_column].value_counts()
 
 # %% [markdown]
 # The dataset contains both numerical and categorical data. Numerical values
-# take continuous values, for example `age`. Categorical values can have a
-# finite number of values, for example `native-country`.
+# take continuous values, for example `"age"`. Categorical values can have a
+# finite number of values, for example `"native-country"`.
 
 # %%
 numerical_columns = [
-    'age', 'education-num', 'capital-gain', 'capital-loss',
-    'hours-per-week']
+    "age", "education-num", "capital-gain", "capital-loss",
+    "hours-per-week"]
 categorical_columns = [
-    'workclass', 'education', 'marital-status', 'occupation',
-    'relationship', 'race', 'sex', 'native-country']
-all_columns = numerical_columns + categorical_columns + [
-    target_column]
+    "workclass", "education", "marital-status", "occupation",
+    "relationship", "race", "sex", "native-country"]
+all_columns = numerical_columns + categorical_columns + [target_column]
 
 adult_census = adult_census[all_columns]
 
@@ -163,14 +162,14 @@ _ = adult_census.hist(figsize=(20, 14))
 #
 # We can already make a few comments about some of the variables:
 #
-# * `age`: there are not that many points for `age > 70`. The dataset
+# * `"age"`: there are not that many points for `age > 70`. The dataset
 #   description does indicate that retired people have been filtered out
 #   (`hours-per-week > 0`);
-# * `education-num`: peak at 10 and 13, hard to tell what it corresponds to
+# * `"education-num"`: peak at 10 and 13, hard to tell what it corresponds to
 #   without looking much further. We'll do that later in this notebook;
-# * `hours-per-week` peaks at 40, this was very likely the standard number of
+# * `"hours-per-week"` peaks at 40, this was very likely the standard number of
 #   working hours at the time of the data collection;
-# * most values of `capital-gain` and `capital-loss` are close to zero.
+# * most values of `"capital-gain"` and `"capital-loss"` are close to zero.
 
 # %% [markdown]
 # For categorical variables, we can look at the distribution of values:
@@ -182,11 +181,11 @@ adult_census["sex"].value_counts()
 adult_census["education"].value_counts()
 
 # %% [markdown]
-# As noted above, `education-num` distribution has two clear peaks around 10 and
-# 13. It would be reasonable to expect that `education-num` is the number of
+# As noted above, `"education-num"` distribution has two clear peaks around 10 and
+# 13. It would be reasonable to expect that `"education-num"` is the number of
 # years of education.
 #
-# Let's look at the relationship between `education` and `education-num`.
+# Let's look at the relationship between `"education"` and `"education-num"`.
 # %%
 pd.crosstab(index=adult_census["education"], columns=adult_census["education-num"])
 

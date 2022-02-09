@@ -1403,8 +1403,8 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#note-on-encoded-categorical-features">
-   Note on encoded categorical features
+  <a class="reference internal nav-link" href="#dealing-with-correlation-between-one-hot-encoded-features">
+   Dealing with correlation between one-hot encoded features
   </a>
  </li>
 </ul>
@@ -1428,8 +1428,8 @@
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#note-on-encoded-categorical-features">
-   Note on encoded categorical features
+  <a class="reference internal nav-link" href="#dealing-with-correlation-between-one-hot-encoded-features">
+   Dealing with correlation between one-hot encoded features
   </a>
  </li>
 </ul>
@@ -1660,16 +1660,15 @@ applies such penalty by default. However, one needs to use <code class="docutils
 <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> to tune the parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code>) instead of <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>.</p>
 <p>Other kinds of regularizations exist but will not be covered in this course.</p>
 </div>
-<div class="section" id="note-on-encoded-categorical-features">
-<h2>Note on encoded categorical features<a class="headerlink" href="#note-on-encoded-categorical-features" title="Permalink to this headline">¶</a></h2>
-<p>We will finish this exercise by showing the effect of using <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>
-to encode categorical features and how it would affect the linear models.</p>
+<div class="section" id="dealing-with-correlation-between-one-hot-encoded-features">
+<h2>Dealing with correlation between one-hot encoded features<a class="headerlink" href="#dealing-with-correlation-between-one-hot-encoded-features" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will focus on how to deal with correlated features that
+arise naturally when one-hot encoding categorical features.</p>
 <p>Let’s first load the Ames housing dataset and take a subset of features that
 are only categorical features.</p>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
@@ -1692,10 +1691,9 @@ that can be inferred from the others. Thus, <code class="docutils literal notran
 collinear features.</p>
 <p>We illustrate this behaviour by considering the “CentralAir” feature that
 contains only two categories:</p>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;CentralAir&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;CentralAir&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1716,10 +1714,9 @@ Name: CentralAir, Length: 1168, dtype: object
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
 
 <span class="n">single_feature</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CentralAir&quot;</span><span class="p">]</span>
 <span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
@@ -1831,10 +1828,9 @@ Scikit-learn provides such an option by setting the parameter <code class="docut
 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>. This parameter can be set to <code class="docutils literal notranslate"><span class="pre">first</span></code> to always drop the
 first encoded category or <code class="docutils literal notranslate"><span class="pre">binary_only</span></code> to only drop a column in the case of
 binary categories.</p>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="n">X_trans</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">single_feature</span><span class="p">])</span>
 <span class="n">X_trans</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="n">X_trans</span><span class="p">,</span>
@@ -1923,10 +1919,9 @@ symmetry between categories and impacts the number of coefficients of the
 model, their values, and thus their meaning, especially when applying
 strong regularization.</p>
 <p>Let’s finally illustrate how to use this option is a machine-learning pipeline:</p>
-<div class="cell docutils container">
+<div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="n">Ridge</span><span class="p">())</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>

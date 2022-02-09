@@ -101,7 +101,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 bins = np.linspace(start=0.5, stop=1.0, num=100)
-all_test_scores.plot.hist(bins=bins, density=True, edgecolor="black")
+all_test_scores.plot.hist(bins=bins, edgecolor="black")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.xlabel("Accuracy (%)")
 _ = plt.title("Distribution of the CV scores")
@@ -136,8 +136,7 @@ test_score_dummy_stratified = pd.Series(
     cv_results_stratified["test_score"], name="Stratified class predictor"
 )
 
-# %%
-# solution
+# %% tags=["solution"]
 uniform_dummy = DummyClassifier(strategy="uniform")
 cv_results_uniform = cross_validate(
     uniform_dummy, data, target, cv=cv, n_jobs=2
@@ -158,7 +157,7 @@ all_test_scores = pd.concat(
 )
 
 # %% tags=["solution"]
-all_test_scores.plot.hist(bins=bins, density=True, edgecolor="black")
+all_test_scores.plot.hist(bins=bins, edgecolor="black")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.xlabel("Accuracy (%)")
 _ = plt.title("Distribution of the test scores")

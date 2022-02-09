@@ -85,7 +85,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 bins = np.linspace(start=0, stop=100, num=80)
-all_errors.plot.hist(bins=bins, density=True, edgecolor="black")
+all_errors.plot.hist(bins=bins, edgecolor="black")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.xlabel("Mean absolute error (k$)")
 _ = plt.title("Cross-validation testing errors")

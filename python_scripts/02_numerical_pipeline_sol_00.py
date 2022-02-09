@@ -38,19 +38,24 @@ target = adult_census["class"]
 # data point.
 #
 # What is the default value of the `n_neighbors` parameter? Hint: Look at the
-# help inside your notebook `KNeighborsClassifier?` or on the [scikit-learn
+# documentation on the [scikit-learn
 # website](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)
+# or directly access the description inside your notebook by running the
+# following cell. This will open a pager pointing to the documentation.
+
+# %%
+from sklearn.neighbors import KNeighborsClassifier
+
+KNeighborsClassifier?
 
 # %% [markdown] tags=["solution"]
-# The default value for `n_neighbors` is 5
+# We can see that the default value for `n_neighbors` is 5.
 
 # %% [markdown]
 # Create a `KNeighborsClassifier` model with `n_neighbors=50`
 
 # %%
 # solution
-from sklearn.neighbors import KNeighborsClassifier
-
 model = KNeighborsClassifier(n_neighbors=50)
 
 # %% [markdown]

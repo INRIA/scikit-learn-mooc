@@ -56,7 +56,7 @@ data.info()
 # distributions.
 
 # %%
-_ = data.hist(figsize=(12, 10), bins=30, edgecolor="black", density=True)
+_ = data.hist(figsize=(12, 10), bins=30, edgecolor="black")
 
 # %% [markdown]
 # There is nothing shocking regarding the distributions. We only observe a high

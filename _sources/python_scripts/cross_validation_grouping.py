@@ -66,7 +66,7 @@ all_scores = pd.DataFrame(
 # %%
 import matplotlib.pyplot as plt
 
-all_scores.plot.hist(bins=10, edgecolor="black", density=True, alpha=0.7)
+all_scores.plot.hist(bins=10, edgecolor="black", alpha=0.7)
 plt.xlim([0.8, 1.0])
 plt.xlabel("Accuracy score")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
@@ -177,7 +177,7 @@ all_scores = pd.DataFrame(
 ).T
 
 # %%
-all_scores.plot.hist(bins=10, edgecolor="black", density=True, alpha=0.7)
+all_scores.plot.hist(bins=10, edgecolor="black", alpha=0.7)
 plt.xlim([0.8, 1.0])
 plt.xlabel("Accuracy score")
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

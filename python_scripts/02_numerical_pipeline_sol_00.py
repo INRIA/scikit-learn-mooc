@@ -41,16 +41,15 @@ target = adult_census["class"]
 # documentation on the [scikit-learn
 # website](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)
 # or directly access the description inside your notebook by running the
-# following cell:
+# following cell. This will open a pager pointing to the documentation.
 
 # %%
 from sklearn.neighbors import KNeighborsClassifier
 
 KNeighborsClassifier?
 
-# %% [markdown]
-# This will open a pager pointing to the documentation, where we can see that
-# the default value for `n_neighbors` is 5.
+# %% [markdown] tags=["solution"]
+# We can see that the default value for `n_neighbors` is 5.
 
 # %% [markdown]
 # Create a `KNeighborsClassifier` model with `n_neighbors=50`

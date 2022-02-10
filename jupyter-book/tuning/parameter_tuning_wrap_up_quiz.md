@@ -76,6 +76,8 @@ model = Pipeline(steps=[
 ])
 ```
 
++++
+
 ```{admonition} Question
 
 Evaluate the pipeline using stratified 10-fold cross-validation
@@ -96,6 +98,29 @@ You can use:
 - c) The average cross-validated test balanced accuracy of the above pipeline is between 0.5 and 0.8
 
 _Select a single answer_
+```
+
++++
+
+```{admonition} Question
+Repeat the evaluation by setting the parameters in order to select the correct
+statements in the list below. We recall that you can use `model.get_params()`
+to list the parameters of the pipeline and use
+`model.set_params(param_name=param_value)` to update them.
+Remember that one way to compare two models is comparing the cross-validation test scores of both models fold-to-fold,
+i.e. counting the number of folds where one model has a better test score than the other
+
+- a) Looking at the individual cross-validation scores, using a model with `n_neighbors=5` is
+  substantially better (at least 7 of the cross-validations scores are better) than a model with
+  `n_neighbors=51`
+- b) Looking at the individual cross-validation scores, using a model with `n_neighbors=5` is
+  substantially better (at least 7 of the cross-validations scores are better) than a model with
+  `n_neighbors=101`
+- c) Looking at the individual cross-validation scores, a 5 nearest neighbors using a `StandardScaler`
+  is substantially better (at least 7 of the cross-validations scores are better) than a 5 nearest
+  neighbors using the raw features (without scaling).
+
+_Select all answers that apply_
 ```
 
 +++

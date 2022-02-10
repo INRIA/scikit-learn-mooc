@@ -1465,59 +1465,7 @@ procedure is a pipeline object. To access the coefficients of the
 use the expression <code class="docutils literal notranslate"><span class="pre">pipeline[-1].coef_</span></code> for each pipeline object
 fitted in the cross-validation procedure. The <code class="docutils literal notranslate"><span class="pre">-1</span></code> notation is a
 negative index meaning “last position”.</p>
-<p>solution: c)</p>
-<p>The following code create a predictive pipeline using a linear regression as a
-predictor. It is evaluate via cross-validation evaluation. The coefficients can
-be found by inspecting the last step of each fitted pipeline stored in the key
-<code class="docutils literal notranslate"><span class="pre">&quot;estimator&quot;</span></code> from the dictionary returned by <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">data_numerical</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pipeline</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
-<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">numerical_features</span><span class="p">)</span>
-<span class="n">coefs</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">]]</span>
-</pre></div>
 </div>
-</div>
-<p>Here, we use <code class="docutils literal notranslate"><span class="pre">coefs.describe()</span></code> to compute the minimum and maximum but note
-that this is not the only solution.</p>
-<p>Note that sometimes using models without regularization (e.g. <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> with
-<code class="docutils literal notranslate"><span class="pre">alpha=0</span></code> or <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>) can be problematic. The problem to be
-solved can be ill-conditioned and the coefficients can be very large
-(e.g. ~1e18). This is due to some numerical errors and we should not use this
-model in practice. A model adding some regularization should be used instead.</p>
-<p>For visually inspecting the coefficients, you could use a boxplot:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
-<span class="c1"># Define the style of the box style</span>
-<span class="n">boxplot_property</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;vert&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s2">&quot;whis&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="s2">&quot;patch_artist&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s2">&quot;widths&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="s2">&quot;rot&quot;</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span>
-    <span class="s2">&quot;boxprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-    <span class="s2">&quot;medianprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-    <span class="s2">&quot;whiskerprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-    <span class="s2">&quot;capprops&quot;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span>
-<span class="p">}</span>
-
-<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="o">**</span><span class="n">boxplot_property</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>This plot gives us the information that some coefficients are really large
-(outlier dots on the plot). Note that the scale of the y axis is huge (1e19)
-and the “bodies” of the boxplots are shrunk seemingly close to zero and we
-can only visualize the numerically unstable outliers.</p>
 <p>Repeat the same experiment by fitting a ridge regressor
 (<code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.Ridge</span></code>) with the default parameter (i.e. <code class="docutils literal notranslate"><span class="pre">alpha=1.0</span></code>).</p>
 <div class="admonition-question admonition">

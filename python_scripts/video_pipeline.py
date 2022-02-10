@@ -31,7 +31,7 @@ data
 
 # %% [markdown]
 # For the sake of simplicity, we can cherry-pick some features and only retain
-# this subset of data
+# this arbitrary subset of data:
 
 # %%
 numeric_features = ['LotArea', 'FullBath', 'HalfBath']

@@ -12,14 +12,14 @@ cycling = pd.read_csv("../datasets/bike_rides.csv", index_col=0,
 cycling.index.name = ""
 target_name = "power"
 data, target = cycling.drop(columns=target_name), cycling[target_name]
-data.head()
+data
 ```
 
 A detailed description of this dataset is given in the appendix. As a reminder,
-the problem we are trying to solve with this dataset is to use measurements
-from cheap sensors (GPS, heart-rate monitor, etc.) in order to predict a
-cyclist power. Power can indeed be recorded via a cycling power meter device,
-but this device is rather expensive.
+the problem we are trying to solve with this dataset is to use measurements from
+cheap sensors (GPS, heart-rate monitor, etc.) in order to predict a cyclist
+power. Power can indeed be recorded via a cycling power meter device, but this
+device is rather expensive.
 
 Instead of using blindly machine learning, we will first introduce some flavor of
 classic mechanics: the Newton's second law.
@@ -36,12 +36,13 @@ in m.s$^{-1}$, and $a$ is the rider acceleration in m.s$^{-2}$.
 This equation might look a bit complex at first but we can explain with words
 what the different terms within the parenthesis are:
 
-- the first term is the power that a cyclist is required to produce to fight wind
+- the first term is the power that a cyclist is required to produce to fight
+  wind
 - the second term is the power that a cyclist is required to produce to fight
   the rolling resistance created by the tires on the floor
-- the third term is the power that a cyclist is required to produce to go up a hill if the
-  slope is positive. If the slope is negative the cyclist does not need to
-  produce any power to go forward
+- the third term is the power that a cyclist is required to produce to go up a
+  hill if the slope is positive. If the slope is negative the cyclist does not
+  need to produce any power to go forward
 - the fourth and last term is the power that a cyclist requires to change his
   speed (i.e. acceleration).
 
@@ -50,17 +51,17 @@ would look like the following.
 
 $P_{meca} = \beta_{1} V_{d}^{3} + \beta_{2} V_{d} + \beta_{3} \sin(\alpha) V_{d} + \beta_{4} a V_{d}$
 
-This model is closer to what we saw previously: it is a linear model trained
-on a non-linear feature transformation. We will build, train and evaluate
-such a model as part of this exercise. Thus, you need to:
+This model is closer to what we saw previously: it is a linear model trained on
+a non-linear feature transformation. We will build, train and evaluate such a
+model as part of this exercise. Thus, you need to:
 
 - create a new data matrix containing the cube of the speed, the speed, the
   speed multiplied by the sine of the angle of the slope, and the speed
-  multiplied by the acceleration. To compute the angle of the slope, you need
-  to take the arc tangent of the slope (`alpha = np.arctan(slope)`). In
-  addition, we can limit ourself to positive acceleration only by clipping to 0
-  the negative acceleration values (they would correspond to some power created
-  by the braking that we are not modeling here).
+  multiplied by the acceleration. To compute the angle of the slope, you need to
+  take the arc tangent of the slope (`alpha = np.arctan(slope)`). In addition,
+  we can limit ourself to positive acceleration only by clipping to 0 the
+  negative acceleration values (they would correspond to some power created by
+  the braking that we are not modeling here).
 - using the new data matrix, create a linear predictive model based on a
   [`sklearn.preprocessing.StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
   and a
@@ -68,12 +69,12 @@ such a model as part of this exercise. Thus, you need to:
 - use a
   [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
   cross-validation strategy with only 4 splits (`n_splits=4`) to evaluate the
-  generalization performance of the model. Use the mean absolute error (MAE) as a
-  generalization performance metric. Also, pass the parameter
-  `return_estimator=True` and `return_train_score=True` to answer the
-  subsequent questions. Be aware that the `ShuffleSplit` strategy is a naive
-  strategy and we will investigate the consequence of making this choice in the
-  subsequent questions.
+  generalization performance of the model. Use the mean absolute error (MAE) as
+  a generalization performance metric. Also, pass the parameter
+  `return_estimator=True` and `return_train_score=True` to answer the subsequent
+  questions. Be aware that the `ShuffleSplit` strategy is a naive strategy and
+  we will investigate the consequence of making this choice in the subsequent
+  questions.
 
 ```{admonition} Question
 What is the mean value of the column containing the information of
@@ -129,15 +130,15 @@ _Select all answers that apply_
 
 +++
 
-Now, we will create a predictive model that uses all available sensor
-measurements such as cadence (the speed at which a cyclist turns pedals
+Now, we will create a predictive model that uses all `data`, including available
+sensor measurements such as cadence (the speed at which a cyclist turns pedals
 measured in rotation per minute) and heart-rate (the number of beat per minute
 of the heart of the cyclist while exercising). Also, we will use a non-linear
 regressor, a
 [`sklearn.ensemble.HistGradientBoostingRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html).
-Fix the number of maximum iterations to 1000 (`max_iter=1_000`) and activate
-the early stopping (`early_stopping=True`). Repeat the previous evaluation
-using this regressor.
+Fix the number of maximum iterations to 1000 (`max_iter=1_000`) and activate the
+early stopping (`early_stopping=True`). Repeat the previous evaluation using
+this regressor.
 
 ```{admonition} Question
 On average, the Mean Absolute Error on the test sets obtained through
@@ -176,12 +177,11 @@ in the dictionaries returned by the `cross_validate` function.
 +++
 
 In the previous cross-validation, we made the choice of using a `ShuffleSplit`
-cross-validation strategy. It means that randomly selected samples were
-selected as testing set ignoring any time dependency between the lines of
-the dataframe.
+cross-validation strategy. It means that randomly selected samples were selected
+as testing set ignoring any time dependency between the lines of the dataframe.
 
-We would like to have a cross-validation strategy that evaluates the capacity
-of our model to predict on a completely new bike ride: the samples in the
+We would like to have a cross-validation strategy that evaluates the capacity of
+our model to predict on a completely new bike ride: the samples in the
 validation set should only come from rides not present in the training set.
 
 ```{admonition} Question
@@ -229,9 +229,9 @@ Thus, you concretely need to:
   strategy.
 
 ```{admonition} Question
-Using the previous evaluations (with both `ShuffleSplit` and
-`LeaveOneGroupOut`) and looking at the train and test errors for both models,
-select the correct statements:
+Using the previous evaluations (with the `LeaveOneGroupOut` strategy)
+and looking at the train and test errors for both models, select the
+correct statements:
 
 - a) the generalization performance of the gradient-boosting model is
   limited by its underfitting
@@ -248,18 +248,39 @@ _Select all answers that apply_
 +++
 
 ```{admonition} Question
-Using the previous evaluations (with both `ShuffleSplit` and
-`LeaveOneGroupOut`) and looking at the train and test errors for both models,
-select the correct statements:
+In this case we cannot compare cross-validation scores fold-to-fold as the folds
+are not aligned (they are not generated by the exact same strategy). Instead,
+compare the mean of the cross-validation test errors in the evaluations of the
+**linear model** to select the correct statement.
 
-- a) `ShuffleSplit` is giving over-optimistic results for the linear model
-- b) `LeaveOneGroupOut` is giving over-optimistic results for the linear model
-- c) both cross-validation strategies are equivalent for the linear model
-- d) `ShuffleSplit` is giving over-optimistic results for the gradient-boosting model
-- e) `LeaveOneGroupOut` is giving over-optimistic results for the gradient-boosting model
-- f) both cross-validation strategies are equivalent for the gradient-boosting model
+When using the `ShuffleSplit` strategy, the mean test error:
 
-_Select all answers that apply_
+- a) is greater than the `LeaveOneGroupOut` mean test error by more than 3 Watts,
+  i.e. `ShuffleSplit` is giving over-pessimistic results
+- b) differs from the `LeaveOneGroupOut` mean test error by less than 3 Watts,
+  i.e. both cross-validation strategies are equivalent
+- c) is lower than the `LeaveOneGroupOut` mean test error by more than 3 Watts,
+  i.e. `ShuffleSplit` is giving over-optimistic results
+
+_Select a single answer_
+```
+
++++
+
+```{admonition} Question
+Compare the mean of the cross-validation test errors in the evaluations of the
+**gradient-boosting model** to select the correct statement.
+
+When using the `ShuffleSplit` strategy, the mean test error:
+
+- a) is greater than the `LeaveOneGroupOut` mean test error by more than 3 Watts,
+  i.e. `ShuffleSplit` is giving over-pessimistic results
+- b) differs from the `LeaveOneGroupOut` mean test error by less than 3 Watts,
+  i.e. both cross-validation strategies are equivalent
+- c) is lower than the `LeaveOneGroupOut` mean test error by more than 3 Watts,
+  i.e. `ShuffleSplit` is giving over-optimistic results
+
+_Select a single answer_
 ```
 
 +++
@@ -298,23 +319,23 @@ target_test = target.iloc[test_indices]
 
 Now, fit both the linear model and the histogram gradient boosting regressor
 models on the training data and collect the predictions on the testing data.
-Make a scatter plot where on the x-axis, you will plot the measured powers
-(true target) and on the y-axis, you will plot the predicted powers
-(predicted target). Do two separated plots for each model.
+Make a scatter plot where on the x-axis, you will plot the measured powers (true
+target) and on the y-axis, you will plot the predicted powers (predicted
+target). Do two separated plots for each model.
 
 ```{admonition} Question
 By analysing the plots, select the correct statements:
 
 - a) the linear regressor tends to under-predict samples with high power
 - b) the linear regressor tends to over-predict samples with high power
-- c) the linear regressor makes catastrophic predictions for samples with low
-  power
+- c) the linear regressor makes catastrophic predictions for samples with power
+  close to zero
 - d) the histogram gradient boosting regressor tends to under-predict samples
   with high power
 - e) the histogram gradient boosting regressor tends to over-predict samples
   with high power
 - f) the histogram gradient boosting makes catastrophic predictions for samples
-  with low power
+  with power close to zero
 
 _Select all answers that apply_
 ```
@@ -332,9 +353,9 @@ target_test_subset = target_test[time_slice]
 ```
 
 It allows to select data from 5.00 pm until 5.05 pm. Used the previous fitted
-models (linear and gradient-boosting regressor) to predict on this portion
-of the test data. Draw on the same plot the true targets and the predictions
-of each model.
+models (linear and gradient-boosting regressor) to predict on this portion of
+the test data. Draw on the same plot the true targets and the predictions of
+each model.
 
 ```{admonition} Question
 By using the previous plot, select the correct statements:

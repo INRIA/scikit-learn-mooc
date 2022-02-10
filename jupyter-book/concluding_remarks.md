@@ -2,6 +2,7 @@
 # Concluding remarks
 
 ```{admonition} Last lesson!
+:class: remove-from-content-only
 
 - We have covered a lot of material so far
 
@@ -13,6 +14,8 @@
 ```
 
 ```{admonition} Goals of this lesson
+:class: remove-from-content-only
+
 - Summarizing the big messages of the MOOC
 - Going further with machine learning
 - Bringing value: The bigger picture beyond machine-learning

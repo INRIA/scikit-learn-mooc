@@ -218,8 +218,8 @@ accuracy = model.score(data_test, target_test)
 print(f"Accuracy of logistic regression: {accuracy:.3f}")
 
 # %% [markdown]
-# When calling the `score` method on a classification problem, the output by
-# default is the fraction of correctly classified samples. In this case, around
+# In scikit-learn, the `score` method of a classification model returns the accuracy,
+# i.e. the fraction of correctly classified samples. In this case, around
 # 8 / 10 of the times, the logistic regression predicts the right income of a
 # person. Now the real question is: is this generalization performance relevant
 # of a good predictive model? Find out by solving the next exercise!

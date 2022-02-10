@@ -1,7 +1,7 @@
 
 # Concluding remarks
 
-```{admonition} The last course!
+```{admonition} Last lesson!
 
 - We have covered a lot of material so far
 
@@ -12,12 +12,11 @@
   the hard work!
 ```
 
-**This course:**
-
+```{admonition} Goals of this lesson
 - Summarizing the big messages of the MOOC
 - Going further with machine learning
 - Bringing value: The bigger picture beyond machine-learning
-
+```
 
 ## The big messages of the mooc
 

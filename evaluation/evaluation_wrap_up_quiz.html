@@ -1428,14 +1428,14 @@
 <span class="n">cycling</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;power&quot;</span>
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">cycling</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">),</span> <span class="n">cycling</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">data</span>
 </pre></div>
 </div>
 <p>A detailed description of this dataset is given in the appendix. As a reminder,
-the problem we are trying to solve with this dataset is to use measurements
-from cheap sensors (GPS, heart-rate monitor, etc.) in order to predict a
-cyclist power. Power can indeed be recorded via a cycling power meter device,
-but this device is rather expensive.</p>
+the problem we are trying to solve with this dataset is to use measurements from
+cheap sensors (GPS, heart-rate monitor, etc.) in order to predict a cyclist
+power. Power can indeed be recorded via a cycling power meter device, but this
+device is rather expensive.</p>
 <p>Instead of using blindly machine learning, we will first introduce some flavor of
 classic mechanics: the Newton’s second law.</p>
 <p><span class="math notranslate nohighlight">\(P_{meca} = (\frac{1}{2} \rho . SC_x . V_{a}^{2} + C_r . mg . \cos \alpha + mg . \sin \alpha + ma) V_d\)</span></p>
@@ -1448,29 +1448,30 @@ in m.s<span class="math notranslate nohighlight">\(^{-1}\)</span>, and <span cla
 <p>This equation might look a bit complex at first but we can explain with words
 what the different terms within the parenthesis are:</p>
 <ul class="simple">
-<li><p>the first term is the power that a cyclist is required to produce to fight wind</p></li>
+<li><p>the first term is the power that a cyclist is required to produce to fight
+wind</p></li>
 <li><p>the second term is the power that a cyclist is required to produce to fight
 the rolling resistance created by the tires on the floor</p></li>
-<li><p>the third term is the power that a cyclist is required to produce to go up a hill if the
-slope is positive. If the slope is negative the cyclist does not need to
-produce any power to go forward</p></li>
+<li><p>the third term is the power that a cyclist is required to produce to go up a
+hill if the slope is positive. If the slope is negative the cyclist does not
+need to produce any power to go forward</p></li>
 <li><p>the fourth and last term is the power that a cyclist requires to change his
 speed (i.e. acceleration).</p></li>
 </ul>
 <p>We can simplify the model above by using the data that we have at hand. It
 would look like the following.</p>
 <p><span class="math notranslate nohighlight">\(P_{meca} = \beta_{1} V_{d}^{3} + \beta_{2} V_{d} + \beta_{3} \sin(\alpha) V_{d} + \beta_{4} a V_{d}\)</span></p>
-<p>This model is closer to what we saw previously: it is a linear model trained
-on a non-linear feature transformation. We will build, train and evaluate
-such a model as part of this exercise. Thus, you need to:</p>
+<p>This model is closer to what we saw previously: it is a linear model trained on
+a non-linear feature transformation. We will build, train and evaluate such a
+model as part of this exercise. Thus, you need to:</p>
 <ul class="simple">
 <li><p>create a new data matrix containing the cube of the speed, the speed, the
 speed multiplied by the sine of the angle of the slope, and the speed
-multiplied by the acceleration. To compute the angle of the slope, you need
-to take the arc tangent of the slope (<code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">=</span> <span class="pre">np.arctan(slope)</span></code>). In
-addition, we can limit ourself to positive acceleration only by clipping to 0
-the negative acceleration values (they would correspond to some power created
-by the braking that we are not modeling here).</p></li>
+multiplied by the acceleration. To compute the angle of the slope, you need to
+take the arc tangent of the slope (<code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">=</span> <span class="pre">np.arctan(slope)</span></code>). In addition,
+we can limit ourself to positive acceleration only by clipping to 0 the
+negative acceleration values (they would correspond to some power created by
+the braking that we are not modeling here).</p></li>
 <li><p>using the new data matrix, create a linear predictive model based on a
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"><code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code></a>
 and a
@@ -1478,12 +1479,12 @@ and a
 <li><p>use a
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ShuffleSplit</span></code></a>
 cross-validation strategy with only 4 splits (<code class="docutils literal notranslate"><span class="pre">n_splits=4</span></code>) to evaluate the
-generalization performance of the model. Use the mean absolute error (MAE) as a
-generalization performance metric. Also, pass the parameter
-<code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> and <code class="docutils literal notranslate"><span class="pre">return_train_score=True</span></code> to answer the
-subsequent questions. Be aware that the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> strategy is a naive
-strategy and we will investigate the consequence of making this choice in the
-subsequent questions.</p></li>
+generalization performance of the model. Use the mean absolute error (MAE) as
+a generalization performance metric. Also, pass the parameter
+<code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> and <code class="docutils literal notranslate"><span class="pre">return_train_score=True</span></code> to answer the subsequent
+questions. Be aware that the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> strategy is a naive strategy and
+we will investigate the consequence of making this choice in the subsequent
+questions.</p></li>
 </ul>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
@@ -1531,15 +1532,15 @@ cross-validation and select the correct statements:</p>
 </ul>
 <p><em>Select all answers that apply</em></p>
 </div>
-<p>Now, we will create a predictive model that uses all available sensor
-measurements such as cadence (the speed at which a cyclist turns pedals
+<p>Now, we will create a predictive model that uses all <code class="docutils literal notranslate"><span class="pre">data</span></code>, including available
+sensor measurements such as cadence (the speed at which a cyclist turns pedals
 measured in rotation per minute) and heart-rate (the number of beat per minute
 of the heart of the cyclist while exercising). Also, we will use a non-linear
 regressor, a
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingRegressor.html"><code class="docutils literal notranslate"><span class="pre">sklearn.ensemble.HistGradientBoostingRegressor</span></code></a>.
-Fix the number of maximum iterations to 1000 (<code class="docutils literal notranslate"><span class="pre">max_iter=1_000</span></code>) and activate
-the early stopping (<code class="docutils literal notranslate"><span class="pre">early_stopping=True</span></code>). Repeat the previous evaluation
-using this regressor.</p>
+Fix the number of maximum iterations to 1000 (<code class="docutils literal notranslate"><span class="pre">max_iter=1_000</span></code>) and activate the
+early stopping (<code class="docutils literal notranslate"><span class="pre">early_stopping=True</span></code>). Repeat the previous evaluation using
+this regressor.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>On average, the Mean Absolute Error on the test sets obtained through
@@ -1572,11 +1573,10 @@ overfitting</p></li>
 in the dictionaries returned by the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
 </div>
 <p>In the previous cross-validation, we made the choice of using a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
-cross-validation strategy. It means that randomly selected samples were
-selected as testing set ignoring any time dependency between the lines of
-the dataframe.</p>
-<p>We would like to have a cross-validation strategy that evaluates the capacity
-of our model to predict on a completely new bike ride: the samples in the
+cross-validation strategy. It means that randomly selected samples were selected
+as testing set ignoring any time dependency between the lines of the dataframe.</p>
+<p>We would like to have a cross-validation strategy that evaluates the capacity of
+our model to predict on a completely new bike ride: the samples in the
 validation set should only come from rides not present in the training set.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
@@ -1620,9 +1620,9 @@ strategy.</p></li>
 </ul>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Using the previous evaluations (with both <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> and
-<code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code>) and looking at the train and test errors for both models,
-select the correct statements:</p>
+<p>Using the previous evaluations (with the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> strategy)
+and looking at the train and test errors for both models, select the
+correct statements:</p>
 <ul class="simple">
 <li><p>a) the generalization performance of the gradient-boosting model is
 limited by its underfitting</p></li>
@@ -1637,18 +1637,35 @@ overfitting</p></li>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>Using the previous evaluations (with both <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> and
-<code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code>) and looking at the train and test errors for both models,
-select the correct statements:</p>
+<p>In this case we cannot compare cross-validation scores fold-to-fold as the folds
+are not aligned (they are not generated by the exact same strategy). Instead,
+compare the mean of the cross-validation test errors in the evaluations of the
+<strong>linear model</strong> to select the correct statement.</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> strategy, the mean test error:</p>
 <ul class="simple">
-<li><p>a) <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is giving over-optimistic results for the linear model</p></li>
-<li><p>b) <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> is giving over-optimistic results for the linear model</p></li>
-<li><p>c) both cross-validation strategies are equivalent for the linear model</p></li>
-<li><p>d) <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is giving over-optimistic results for the gradient-boosting model</p></li>
-<li><p>e) <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> is giving over-optimistic results for the gradient-boosting model</p></li>
-<li><p>f) both cross-validation strategies are equivalent for the gradient-boosting model</p></li>
+<li><p>a) is greater than the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> mean test error by more than 3 Watts,
+i.e. <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is giving over-pessimistic results</p></li>
+<li><p>b) differs from the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> mean test error by less than 3 Watts,
+i.e. both cross-validation strategies are equivalent</p></li>
+<li><p>c) is lower than the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> mean test error by more than 3 Watts,
+i.e. <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is giving over-optimistic results</p></li>
 </ul>
-<p><em>Select all answers that apply</em></p>
+<p><em>Select a single answer</em></p>
+</div>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Compare the mean of the cross-validation test errors in the evaluations of the
+<strong>gradient-boosting model</strong> to select the correct statement.</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> strategy, the mean test error:</p>
+<ul class="simple">
+<li><p>a) is greater than the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> mean test error by more than 3 Watts,
+i.e. <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is giving over-pessimistic results</p></li>
+<li><p>b) differs from the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> mean test error by less than 3 Watts,
+i.e. both cross-validation strategies are equivalent</p></li>
+<li><p>c) is lower than the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> mean test error by more than 3 Watts,
+i.e. <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is giving over-optimistic results</p></li>
+</ul>
+<p><em>Select a single answer</em></p>
 </div>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
@@ -1680,23 +1697,23 @@ the predictions of the models for this test ride. To do so, we can reuse the
 </div>
 <p>Now, fit both the linear model and the histogram gradient boosting regressor
 models on the training data and collect the predictions on the testing data.
-Make a scatter plot where on the x-axis, you will plot the measured powers
-(true target) and on the y-axis, you will plot the predicted powers
-(predicted target). Do two separated plots for each model.</p>
+Make a scatter plot where on the x-axis, you will plot the measured powers (true
+target) and on the y-axis, you will plot the predicted powers (predicted
+target). Do two separated plots for each model.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>By analysing the plots, select the correct statements:</p>
 <ul class="simple">
 <li><p>a) the linear regressor tends to under-predict samples with high power</p></li>
 <li><p>b) the linear regressor tends to over-predict samples with high power</p></li>
-<li><p>c) the linear regressor makes catastrophic predictions for samples with low
-power</p></li>
+<li><p>c) the linear regressor makes catastrophic predictions for samples with power
+close to zero</p></li>
 <li><p>d) the histogram gradient boosting regressor tends to under-predict samples
 with high power</p></li>
 <li><p>e) the histogram gradient boosting regressor tends to over-predict samples
 with high power</p></li>
 <li><p>f) the histogram gradient boosting makes catastrophic predictions for samples
-with low power</p></li>
+with power close to zero</p></li>
 </ul>
 <p><em>Select all answers that apply</em></p>
 </div>
@@ -1709,9 +1726,9 @@ with low power</p></li>
 </pre></div>
 </div>
 <p>It allows to select data from 5.00 pm until 5.05 pm. Used the previous fitted
-models (linear and gradient-boosting regressor) to predict on this portion
-of the test data. Draw on the same plot the true targets and the predictions
-of each model.</p>
+models (linear and gradient-boosting regressor) to predict on this portion of
+the test data. Draw on the same plot the true targets and the predictions of
+each model.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>By using the previous plot, select the correct statements:</p>

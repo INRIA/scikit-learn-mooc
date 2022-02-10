@@ -173,8 +173,8 @@ print(f"Number of correct prediction: "
 
 # %% [markdown]
 # This result means that the model makes a correct _prediction_ for
-# approximately 82 samples out of 100. But, can a model _predict_ something
-# that it already saw? In other words, can this evaluation be trusted, or is it
+# approximately 82 samples out of 100. But, can this really be called a _prediction_ if we are predicting 
+# already learned data? In other words, can this evaluation be trusted, or is it
 # too good to be true?
 #
 # ## Train-test data split

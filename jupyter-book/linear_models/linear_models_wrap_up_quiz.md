@@ -55,68 +55,7 @@ procedure is a pipeline object. To access the coefficients of the
 use the expression `pipeline[-1].coef_` for each pipeline object
 fitted in the cross-validation procedure. The `-1` notation is a
 negative index meaning "last position".
-
-+++ {"tags": ["solution"]}
-
-solution: c)
-
-The following code create a predictive pipeline using a linear regression as a
-predictor. It is evaluate via cross-validation evaluation. The coefficients can
-be found by inspecting the last step of each fitted pipeline stored in the key
-`"estimator"` from the dictionary returned by `cross_validate`.
-
-```python
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import Ridge
-from sklearn.pipeline import make_pipeline
-from sklearn.model_selection import cross_validate
-
-model = make_pipeline(StandardScaler(), Ridge(alpha=0))
-cv_results = cross_validate(
-    model, data_numerical, target, cv=10, return_estimator=True
-)
-coefs = [pipeline[-1].coef_ for pipeline in cv_results["estimator"]]
-coefs = pd.DataFrame(coefs, columns=numerical_features)
-coefs.describe().loc[["min", "max"]]
 ```
-
-Here, we use `coefs.describe()` to compute the minimum and maximum but note
-that this is not the only solution.
-
-Note that sometimes using models without regularization (e.g. `Ridge` with
-`alpha=0` or `LinearRegression`) can be problematic. The problem to be
-solved can be ill-conditioned and the coefficients can be very large
-(e.g. ~1e18). This is due to some numerical errors and we should not use this
-model in practice. A model adding some regularization should be used instead.
-
-For visually inspecting the coefficients, you could use a boxplot:
-
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-sns.set_context("talk")
-# Define the style of the box style
-boxplot_property = {
-    "vert": True,
-    "whis": 100,
-    "patch_artist": True,
-    "widths": 0.5,
-    "rot": 90,
-    "boxprops": dict(linewidth=3, color="black", alpha=0.9),
-    "medianprops": dict(linewidth=2.5, color="black", alpha=0.9),
-    "whiskerprops": dict(linewidth=3, color="black", alpha=0.9),
-    "capprops": dict(linewidth=3, color="black", alpha=0.9),
-}
-
-_, ax = plt.subplots(figsize=(15, 10))
-_ = coefs.plot.box(**boxplot_property, ax=ax)
-```
-
-This plot gives us the information that some coefficients are really large
-(outlier dots on the plot). Note that the scale of the y axis is huge (1e19)
-and the "bodies" of the boxplots are shrunk seemingly close to zero and we
-can only visualize the numerically unstable outliers.
 
 +++
 

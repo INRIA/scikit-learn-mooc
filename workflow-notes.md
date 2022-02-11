@@ -74,14 +74,18 @@ There are two ways this can be applied on the FUN side:
   https://inria.github.io/scikit-learn-mooc/). The javascript logic come from
   `jupyter-book/_static/sklearn_mooc.js`.
 - manually including HTML with some javascript magic on the FUN-MOOC side e.g.
-  the glossary that excludes content based on CSS classes.
+  the concluding remarks that excludes content based on CSS classes.
   ```html
-  <div class="external-resource" data-hide="h1, .topbar, .prev-next-bottom, .footer, .site-navigation, .headerlink"
-  data-url="https://inria.github.io/scikit-learn-mooc/appendix/glossary.html?content_only">
+  <div class="external-resource"
+       data-hide="h1,.topbar, .prev-next-area, .footer, .site-navigation, .headerlink, .remove-from-content-only"
+       data-url="https://inria.github.io/scikit-learn-mooc/concluding_remarks.html">
   ```
-  it seems like the glossary mixes both this magic js way and the next way
-  of adding `?content_only` at the end ...
-
+  Note that in this case they can not use `?content_only` because this method is based on some js
+  code that loads the HTML without loading the js in sklearn_mooc.js. This means there is some
+  duplication of logic between data-hide and sklearn_mooc.js (e.g. to remove navigation items from
+  JupyterBook) but oh well 🤷‍♂️ ... the best we can do is to use the `remove-from-content-only`
+  class in JupyterBook.
+  
 ### Notebooks
 
 Note: FUN use notebooks so if you only update the `.py` files, FUN participants

@@ -6,7 +6,9 @@ class: titlepage
 
 Combine many decision trees into powerful models!
 
-Gradient-boosting and random forests
+Bagging and Random Forests
+
+Boosting and Gradient Boosting
 
 For classification and regression
 

@@ -1,3 +1,10 @@
+# ---
+# jupyter:
+#   kernelspec:
+#     display_name: Python 3
+#     name: python3
+# ---
+
 # %% [markdown]
 # # 📃 Solution for Exercise M6.03
 #

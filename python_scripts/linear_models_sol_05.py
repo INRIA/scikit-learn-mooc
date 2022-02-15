@@ -1,3 +1,10 @@
+# ---
+# jupyter:
+#   kernelspec:
+#     display_name: Python 3
+#     name: python3
+# ---
+
 # %% [markdown]
 # # 📃 Solution for Exercise M4.05
 # In the previous notebook we set `penalty="none"` to disable regularization

@@ -15,7 +15,7 @@ _Several answers possible_
 +++
 
 ````{admonition} Question
-Given `model` defined by:
+Given an instance named `model` as defined by:
 ```python
 from sklearn.linear_model import LogisticRegression
 model = LogisticRegression()

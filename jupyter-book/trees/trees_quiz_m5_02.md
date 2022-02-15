@@ -16,7 +16,7 @@ _Select a single answer_
 Trees are built incrementally:
 
 - a) by splitting data over and over
-- b) by refining the rules of each nodes
+- b) by refining the rules of each node
 - c) by refining the rules of each leaf
 
 _Select a single answer_

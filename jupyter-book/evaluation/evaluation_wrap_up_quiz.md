@@ -1,4 +1,4 @@
-# 🏁 Wrap-up quiz
+# 🏁 Wrap-up quiz 7
 
 **This quiz requires some programming to be answered.**
 
@@ -299,9 +299,9 @@ _Select a single answer_
 
 +++
 
-Now, we will go in details by picking a single ride for the testing and analyse
-the predictions of the models for this test ride. To do so, we can reuse the
-`LeaveOneGroupOut` cross-validation object in the following manner:
+Now, we will go more into details by picking a single ride for the testing and
+analyse the predictions of the models for this test ride. To do so, we can reuse
+the `LeaveOneGroupOut` cross-validation object in the following manner:
 
 ```python
 cv = LeaveOneGroupOut()

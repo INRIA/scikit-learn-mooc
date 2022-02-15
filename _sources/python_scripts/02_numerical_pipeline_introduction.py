@@ -92,11 +92,6 @@ print(f"The dataset contains {data.shape[0]} samples and "
 # The `fit` method is called to train the model from the input (features) and
 # target data.
 
-# %%/
-# to display nice model diagram
-from sklearn import set_config
-set_config(display='diagram')
-
 # %%
 from sklearn.neighbors import KNeighborsClassifier
 

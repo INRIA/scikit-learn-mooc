@@ -1,4 +1,4 @@
-# 🏁 Wrap-up quiz
+# 🏁 Wrap-up quiz 5
 
 **This quiz requires some programming to be answered.**
 
@@ -36,7 +36,7 @@ regression. For this purpose, we will create two separate predictive models
 and evaluate them by 10-fold cross-validation.
 
 Thus, use `sklearn.linear_model.LinearRegression` and
-`sklearn.tree.DecisionTreeRegressor` to create the model. Use the default
+`sklearn.tree.DecisionTreeRegressor` to create the models. Use the default
 parameters for both models.
 
 Be aware that a linear model requires to scale numerical features.

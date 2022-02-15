@@ -1,4 +1,4 @@
-# 🏁 Wrap-up quiz
+# 🏁 Wrap-up quiz 3
 
 **This quiz requires some programming to be answered.**
 
@@ -21,9 +21,9 @@ target = penguins_non_missing[target_name]
 ```
 
 `penguins` is a pandas dataframe. The column "Species" contains the target
-variable. We extract through numerical columns that quantify various attributes
-of animals and our goal is try to predict the species of the animal based on
-those attributes stored in the dataframe named `data`.
+variable. We extract the numerical columns that quantify some attributes of such
+animals and our goal is to predict their species based on those attributes
+stored in the dataframe named `data`.
 
 Inspect the loaded data to select the correct assertions:
 
@@ -81,7 +81,7 @@ model = Pipeline(steps=[
 ```{admonition} Question
 
 Evaluate the pipeline using stratified 10-fold cross-validation
-using the `balanced-accuracy` scoring metric to choose the correct
+with the `balanced-accuracy` scoring metric to choose the correct
 statement in the list below.
 
 You can use:

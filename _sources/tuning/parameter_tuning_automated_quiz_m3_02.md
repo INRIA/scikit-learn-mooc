@@ -33,7 +33,7 @@ pipeline = Pipeline([
 ])
 ```
 
-We want do find the best `C` through a grid-search where `C` takes the values 0.1, 1, and 10:
+We want to find the best `C` through a grid-search where `C` takes the values 0.1, 1, and 10:
 ```
 param_grid = ...  # complete this line in your answer
 model = GridSearchCV(

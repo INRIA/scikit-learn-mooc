@@ -1,8 +1,9 @@
-# 🏁 Wrap-up quiz
+# 🏁 Wrap-up quiz 6
 
 **This quiz requires some programming to be answered.**
 
-This wrap-up quiz uses the penguins dataset, but not that **we do not use the traditional `Species` column** as predictive target:
+This wrap-up quiz uses the penguins dataset, but notice that **we do not use the
+traditional `Species` column** as predictive target:
 
 ```python
 import pandas as pd
@@ -24,14 +25,12 @@ data, target = dataset[feature_names], dataset[target_name]
 We therefore define our problem as a regression problem: we want to predict the
 body mass of a penguin given its culmen and flipper measurements.
 
-Note that we randomly shuffled the rows of the dataset
-after loading it (`dataset.sample(frac=1, random_state=0)`). The
-reason is to break a spurious order-related statistical
-dependency that would otherwise cause trouble with the naive
-cross-validation procedure we use in this notebook. The problem
-of order-dependent samples will be discussed in more details in
-the module on model evaluation and is outside of the scope of
-this quiz for now.
+Notice that we randomly shuffled the rows of the dataset after loading it
+(`dataset.sample(frac=1, random_state=0)`). The reason is to break a spurious
+order-related statistical dependency that would otherwise cause trouble with the
+naive cross-validation procedure we use in this notebook. The problem of
+order-dependent samples will be discussed more in detail on the model evaluation
+module and is outside of the scope of this quiz for now.
 Now, evaluate the following tree-based models:
 
 - a decision tree regressor, i.e. `sklearn.tree.DecisionTreeRegressor`

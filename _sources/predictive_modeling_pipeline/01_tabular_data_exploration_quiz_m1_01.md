@@ -48,7 +48,7 @@ _Several answers possible_
 ```{admonition} Question
 A categorical variable is:
 
-- a) a variable with only two different possible values
+- a) a variable with **only two** different possible values
 - b) a variable with continuous numerical values
 - c) a variable with a finite set of possible values
 

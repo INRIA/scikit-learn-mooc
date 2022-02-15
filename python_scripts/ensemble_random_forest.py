@@ -57,7 +57,7 @@ target = adult_census[target_name]
 # encode unknown categories at prediction time in order to be able to use
 # cross-validation. Otherwise some rare categories could only be present on the
 # validation side of the cross-validation split and the `OrdinalEncoder` would
-# raise an error when calling the its `transform` method with the data points
+# raise an error when calling its `transform` method with the data points
 # of the validation set.
 
 # %%

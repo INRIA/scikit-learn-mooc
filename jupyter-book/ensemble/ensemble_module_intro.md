@@ -6,7 +6,7 @@
 
 This module will go into details regarding algorithms that are combining
 several models together, also called ensemble of models. We will present two
-families of such technique: (i) based on bootstrapping and (ii) based
+families of such techniques: (i) based on bootstrapping and (ii) based
 on boosting. We will present bagging and random forest that belong to the
 former strategy and AdaBoost and gradient boosting decision tree that belong
 to the later strategy. Finally, we will go into details regarding the

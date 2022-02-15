@@ -201,4 +201,4 @@ print(f"Error of each classifier: {adaboost.estimator_errors_}")
 # While AdaBoost is a nice algorithm to demonstrate the internal machinery of
 # boosting algorithms, it is not the most efficient.
 # This title is handed to the gradient-boosting decision tree (GBDT) algorithm,
-# which we will discuss after a short exercise.
+# which we will discuss in the next unit.

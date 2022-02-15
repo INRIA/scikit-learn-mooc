@@ -10,11 +10,11 @@
 #
 # The aim of this exercise is to highlight caveats to have in mind when using
 # feature selection. You have to be extremely careful regarding the set of
-# data on which you will compute the statistic that help you feature algorithm
-# to decide which feature to select.
+# data on which you will compute the statistic that helps your feature
+# selection algorithm to decide which feature to select.
 #
 # On purpose, we will make you program the wrong way of doing feature selection
-# to insights.
+# to gain insights.
 #
 # First, you will create a completely random dataset using NumPy. Using the
 # function `np.random.randn`, generate a matrix `data` containing 100 samples
@@ -36,7 +36,7 @@ data, target = rng.randn(100, 100000), rng.randint(0, 2, size=100)
 
 # %% [markdown]
 # Now, create a logistic regression model and use cross-validation to check
-# the score of such model. It will allow use to confirm that our model cannot
+# the score of such a model. It will allow use to confirm that our model cannot
 # predict anything meaningful from random data.
 
 # %%
@@ -74,20 +74,20 @@ print(f"The mean accuracy is: {test_score.mean():.3f}")
 
 # %% [markdown] tags=["solution"]
 # Surprisingly, the logistic regression succeeded in having a fantastic
-# accuracy using data with no link with the target, initially. We, therefore,
-# know that these results are not legit.
+# accuracy using data that did not have any link with the target in the first
+# place. We therefore know that these results are not legit.
 #
 # The reasons for obtaining these results are two folds: the pool of available
 # features is large compared to the number of samples. It is possible to find a
 # subset of features that will link the data and the target. By not splitting
 # the data, we leak knowledge from the entire dataset and could use this
-# knowledge will evaluating our model.
+# knowledge while evaluating our model.
 
 # %% [markdown]
 # Now, we will make you program the **right** way to do the feature selection.
 # First, split the dataset into a training and testing set. Then, fit the
 # feature selector on the training set. Then, transform both the training and
-# testing sets before to train and test the logistic regression.
+# testing sets before you train and test the logistic regression.
 
 # %%
 # solution
@@ -134,6 +134,6 @@ test_score = cross_val_score(model, data, target)
 print(f"The mean accuracy is: {test_score.mean():.3f}")
 
 # %% [markdown] tags=["solution"]
-# We see that using a scikit-learn pipeline is removing a lot of boilerplate
-# code and avoiding to make mistake while calling `fit` and `transform` on the
+# We see that using a scikit-learn pipeline removes a lot of boilerplate
+# code and helps avoid mistakes when calling `fit` and `transform` on the
 # different set of data.

@@ -155,8 +155,8 @@ _ = plt.title(f"Optimal depth found via CV: "
 # ## Other hyperparameters in decision trees
 #
 # The `max_depth` hyperparameter controls the overall complexity of the tree.
-# This parameter is adequate under the assumption that a tree is built is
-# symmetric. However, there is no guarantee that a tree will be symmetric.
+# This parameter is adequate under the assumption that a tree is built
+# symmetrically. However, there is no guarantee that a tree will be symmetrical.
 # Indeed, optimal generalization performance could be reached by growing some of
 # the branches deeper than some others.
 #
@@ -260,6 +260,6 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 
 # %% [markdown]
 # This hyperparameter allows to have leaves with a minimum number of samples
-# and no further splits will be search otherwise. Therefore, these
+# and no further splits will be searched otherwise. Therefore, these
 # hyperparameters could be an alternative to fix the `max_depth`
 # hyperparameter.

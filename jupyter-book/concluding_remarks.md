@@ -21,7 +21,7 @@
 - Bringing value: The bigger picture beyond machine-learning
 ```
 
-## The big messages of the mooc
+## The big messages of the MOOC
 
 
 ### 1. The machine learning pipeline
@@ -95,7 +95,9 @@ Let us give a few pointers on going further with machine learning.
       advocacy
     - Curate information: our developers have information overflow
     - Contributing code is technical
-	- Learn software engineering:
+	- Learn software engineering (if you don't know where to start,
+     [Software Carpentry](https://software-carpentry.org/lessons) is a good
+     resource)
 	- Learn git, github (https://lab.github.com/)
 
 ### Topics we have not covered

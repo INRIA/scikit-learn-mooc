@@ -1,3 +1,10 @@
+# ---
+# jupyter:
+#   kernelspec:
+#     display_name: Python 3
+#     name: python3
+# ---
+
 # %% [markdown]
 # # Speeding-up gradient-boosting
 # In this notebook, we present a modified version of gradient boosting which

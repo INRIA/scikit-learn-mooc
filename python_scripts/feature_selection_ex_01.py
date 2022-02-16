@@ -66,7 +66,7 @@ import numpy as np
 # to perform cross-validation, the manual `fit`/`transform` of the datasets
 # will make our life hard. Indeed, the solution here is to use a scikit-learn
 # pipeline in which the feature selection will be a pre processing stage
-# before the model is trained.
+# before to train the model.
 #
 # Thus, start by creating a pipeline with the feature selector and the logistic
 # regression. Then, use cross-validation to get an estimate of the uncertainty

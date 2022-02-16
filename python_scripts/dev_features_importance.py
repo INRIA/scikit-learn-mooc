@@ -348,7 +348,7 @@ plt.subplots_adjust(left=.3)
 # %% [markdown]
 # ## 2. RandomForest `feature_importances_`
 #
-# On some algorithms, there pre-exist some feature importance methods,
+# On some algorithms, there are some feature importance methods,
 # inherently built within the model. It is the case in RandomForest models.
 # Let's investigate the built-in `feature_importances_` attribute.
 

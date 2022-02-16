@@ -1,6 +1,8 @@
 # 🎥 Intuitions on ensemble models: bagging
 
-TODO: insert video player here once ready
+<iframe class="video" width="640px" height="480px"
+        src="https://www.youtube.com/embed/dqnPOlPYA4s?rel=0"
+        allowfullscreen></iframe>
 
 <iframe class="slides"
         src="../slides/index.html?file=../slides/bagging.md"></iframe>

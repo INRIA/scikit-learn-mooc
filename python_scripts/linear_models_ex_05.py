@@ -5,7 +5,6 @@
 #     name: python3
 # ---
 
-# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M4.05
 # In the previous notebook we set `penalty="none"` to disable regularization

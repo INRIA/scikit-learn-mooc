@@ -131,7 +131,7 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # ```
 
 # %% [markdown]
-# We see that the split was done the culmen depth feature. The original
+# We see that the split was done on the culmen depth feature. The original
 # dataset was subdivided into 2 sets based on the culmen depth
 # (inferior or superior to 16.45 mm).
 #
@@ -146,8 +146,8 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # partition defined by a threshold inferior to 16.45mm. In this case, the most
 # represented class is the Gentoo species.
 #
-# Let's see how our tree would work as a predictor. Let's start to see the
-# class predicted when the culmen depth is inferior to the threshold.
+# Let's see how our tree would work as a predictor. Let's start with a case
+# where the culmen depth is inferior to the threshold.
 
 # %%
 sample_1 = pd.DataFrame(
@@ -156,8 +156,8 @@ sample_1 = pd.DataFrame(
 tree.predict(sample_1)
 
 # %% [markdown]
-# The class predicted is the Gentoo. We can now check if we pass a culmen
-# depth superior to the threshold.
+# The class predicted is the Gentoo. We can now check what happens if we pass
+# a culmen depth superior to the threshold.
 
 # %%
 sample_2 = pd.DataFrame(
@@ -185,7 +185,7 @@ plt.ylabel("Probability")
 _ = plt.title("Probability to belong to a penguin class")
 
 # %% [markdown]
-# We will manually compute the different probability directly from the tree
+# We can also compute the different probabilities manually directly from the tree
 # structure.
 
 # %%

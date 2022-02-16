@@ -115,11 +115,11 @@ def bootstrap_sample(data, target):
 n_bootstraps = 3
 for bootstrap_idx in range(n_bootstraps):
     # draw a bootstrap from the original data
-    data_bootstrap, target_booststrap = bootstrap_sample(
+    data_bootstrap, target_bootstrap = bootstrap_sample(
         data_train, target_train,
     )
     plt.figure()
-    plt.scatter(data_bootstrap["Feature"], target_booststrap,
+    plt.scatter(data_bootstrap["Feature"], target_bootstrap,
                 color="tab:blue", facecolors="none",
                 alpha=0.5, label="Resampled data", s=180, linewidth=5)
     plt.scatter(data_train["Feature"], target_train,
@@ -193,7 +193,7 @@ _ = plt.title("Predictions of trees trained on different bootstraps")
 # %% [markdown]
 # ## Aggregating
 #
-# Once our trees are fitted and we are able to get predictions for each of
+# Once our trees are fitted, we are able to get predictions for each of
 # them. In regression, the most straightforward way to combine those
 # predictions is just to average them: for a given test data point, we feed the
 # input feature values to each of the `n` trained models in the ensemble and as
@@ -364,7 +364,7 @@ _ = plt.title("Bagged polynomial regression")
 #
 # The predictions of this bagged polynomial regression model looks
 # qualitatively better than the bagged trees. This is somewhat expected since
-# the base model better reflects our knowldege of the true data generating
+# the base model better reflects our knowledge of the true data generating
 # process.
 #
 # Again the different shades induced by the overlapping blue lines let us

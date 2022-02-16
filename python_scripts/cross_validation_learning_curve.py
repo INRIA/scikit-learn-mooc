@@ -9,7 +9,7 @@
 # # Effect of the sample size in cross-validation
 #
 # In the previous notebook, we presented the general cross-validation framework
-# and how to assess if a predictive model is underfiting, overfitting, or
+# and how to assess if a predictive model is underfitting, overfitting, or
 # generalizing. Besides these aspects, it is also important to understand how
 # the different errors are influenced by the number of samples available.
 #

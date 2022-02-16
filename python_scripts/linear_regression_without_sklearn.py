@@ -41,7 +41,7 @@ ax.set_title("Flipper length in function of the body mass")
 
 # %% [markdown]
 # ```{tip}
-# The function `scatterplot` from searborn take as input the full dataframe
+# The function `scatterplot` from seaborn take as input the full dataframe
 # and the parameter `x` and `y` allows to specify the name of the columns to
 # be plotted. Note that this function returns a matplotlib axis
 # (named `ax` in the example above) that can be further used to add elements on

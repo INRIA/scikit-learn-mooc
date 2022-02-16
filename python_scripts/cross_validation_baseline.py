@@ -13,8 +13,8 @@
 # class to predict the mean target value observed on the training set without
 # using the input features.
 #
-# We now demonstrate how to compute the score of a regression model compare it
-# to such a baseline on the California housing dataset.
+# We now demonstrate how to compute the score of a regression model and then
+# compare it to such a baseline on the California housing dataset.
 
 # %% [markdown]
 # ```{note}
@@ -104,7 +104,7 @@ _ = plt.title("Cross-validation testing errors")
 # confirms that it is possible to predict the housing price much better by
 # using a model that takes into account the values of the input features
 # (housing location, size, neighborhood income...). Such a model makes more
-# informed predictions and approximately divide the error rate by a factor of 2
+# informed predictions and approximately divides the error rate by a factor of 2
 # compared to the baseline that ignores the input features.
 #
 # Note that here we used the mean price as the baseline prediction. We could

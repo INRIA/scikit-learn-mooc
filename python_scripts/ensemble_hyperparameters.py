@@ -92,7 +92,7 @@ print(f"On average, our random forest regressor makes an error of {error:.2f} k$
 #
 # For gradient-boosting, parameters are coupled, so we cannot set the parameters
 # one after the other anymore. The important parameters are `n_estimators`,
-# `learning_rate`, and `max_depth` or `max_leaf_nodes` (as previously discused
+# `learning_rate`, and `max_depth` or `max_leaf_nodes` (as previously discussed
 # random forest).
 #
 # Let's first discuss the `max_depth` (or `max_leaf_nodes`) parameter. We saw

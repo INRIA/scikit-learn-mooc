@@ -92,7 +92,7 @@ data_trans
 # for those features. The smallest bins will be removed.
 # ```
 # We see that the discretizer transforms the original data into integral
-# values (eventhough they are encoded using a floating-point representation).
+# values (even though they are encoded using a floating-point representation).
 # Each value represents the bin index when the distribution by quantile is
 # performed. We can check the number of bins per feature.
 

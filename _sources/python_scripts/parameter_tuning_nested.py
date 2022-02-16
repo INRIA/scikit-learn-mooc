@@ -190,7 +190,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # in itself (other-wise the final test score would have been lower than the
 # internal CV scores). That is expected because our grid search explored very
 # few hyper-parameter combinations for the sake of speed. The test score of the
-# final model is actually a bit higher that what we could have expected from
+# final model is actually a bit higher than what we could have expected from
 # the internal cross-validation. This is also expected because the refitted
 # model is trained on a larger dataset than the models evaluated in the
 # internal CV loop of the grid-search procedure. This is often the case that
@@ -212,7 +212,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # samples. The best hyper-parameters are selected based on those intermediate
 # scores.
 #
-# The a final model tuned with those hyper-parameters is fitted on the
+# Then a final model tuned with those hyper-parameters is fitted on the
 # concatenation of the red and green samples and evaluated on the blue samples.
 #
 # The green samples are sometimes called a **validation sets** to differentiate
@@ -290,7 +290,7 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
 
 # %% [markdown]
 # It is interesting to see whether the hyper-parameter tuning procedure always
-# select similar values for the hyperparameters. If its the case, then all is
+# select similar values for the hyperparameters. If it is the case, then all is
 # fine. It means that we can deploy a model fit with those hyperparameters and
 # expect that it will have an actual predictive performance close to what we
 # measured in the outer cross-validation.

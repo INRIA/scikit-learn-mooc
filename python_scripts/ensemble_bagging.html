@@ -1617,11 +1617,11 @@ with the original dataset.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_bootstraps</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="k">for</span> <span class="n">bootstrap_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstraps</span><span class="p">):</span>
     <span class="c1"># draw a bootstrap from the original data</span>
-    <span class="n">data_bootstrap</span><span class="p">,</span> <span class="n">target_booststrap</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span>
+    <span class="n">data_bootstrap</span><span class="p">,</span> <span class="n">target_bootstrap</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span>
         <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_bootstrap</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_booststrap</span><span class="p">,</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_bootstrap</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_bootstrap</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Resampled data&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_train</span><span class="p">,</span>
@@ -1710,7 +1710,7 @@ different predictions.</p>
 </div>
 <div class="section" id="aggregating">
 <h2>Aggregating<a class="headerlink" href="#aggregating" title="Permalink to this headline">¶</a></h2>
-<p>Once our trees are fitted and we are able to get predictions for each of
+<p>Once our trees are fitted, we are able to get predictions for each of
 them. In regression, the most straightforward way to combine those
 predictions is just to average them: for a given test data point, we feed the
 input feature values to each of the <code class="docutils literal notranslate"><span class="pre">n</span></code> trained models in the ensemble and as
@@ -1894,7 +1894,7 @@ base models.</p>
 </div>
 <p>The predictions of this bagged polynomial regression model looks
 qualitatively better than the bagged trees. This is somewhat expected since
-the base model better reflects our knowldege of the true data generating
+the base model better reflects our knowledge of the true data generating
 process.</p>
 <p>Again the different shades induced by the overlapping blue lines let us
 appreciate the uncertainty in the prediction of the bagged ensemble.</p>

@@ -72,7 +72,7 @@ data.info()
 
 # %% [markdown]
 # Looking at the dataframe general information, we can see that 79 features are
-# availables and that the dataset contains 1460 samples. However, some features
+# available and that the dataset contains 1460 samples. However, some features
 # contains missing values. Also, the type of data is heterogeneous: both
 # numerical and categorical data are available.
 #

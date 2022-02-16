@@ -43,15 +43,15 @@ X.head()
 
 # %% [markdown]
 # The feature reads as follow:
-# - MedInc median income in block
-# - HouseAge median house age in block
-# - AveRooms average number of rooms
-# - AveBedrms average number of bedrooms
-# - Population block population
-# - AveOccup average house occupancy
-# - Latitude house block latitude
-# - Longitude house block longitude
-# - MedHouseVal Median house value in 100k$ *(target)*
+# - MedInc: median income in block
+# - HouseAge: median house age in block
+# - AveRooms: average number of rooms
+# - AveBedrms: average number of bedrooms
+# - Population: block population
+# - AveOccup: average house occupancy
+# - Latitude: house block latitude
+# - Longitude: house block longitude
+# - MedHouseVal: Median house value in 100k$ *(target)*
 
 # %% [markdown]
 # To assert the quality of our inspection technique, let's add some random
@@ -100,7 +100,7 @@ _ = sns.pairplot(
 
 # %% [markdown]
 # In linear models, the target value is modeled as a linear combination of the
-# features
+# features.
 #
 # Coefficients represent the relationship between the given feature $X_i$ and
 # the target $y$, assuming that all the other features remain constant
@@ -348,7 +348,7 @@ plt.subplots_adjust(left=.3)
 # %% [markdown]
 # ## 2. RandomForest `feature_importances_`
 #
-# On some algorithms, there pre-exist some feature importance method,
+# On some algorithms, there are some feature importance methods,
 # inherently built within the model. It is the case in RandomForest models.
 # Let's investigate the built-in `feature_importances_` attribute.
 
@@ -394,7 +394,7 @@ _ = ax.set_yticklabels(np.array(X_train.columns)[indices])
 #
 # We introduce here a new technique to evaluate the feature importance of any
 # given fitted model. It basically shuffles a feature and sees how the model
-# changes its prediction. Thus, the change in prediction will be correspond to
+# changes its prediction. Thus, the change in prediction will correspond to
 # the feature importance.
 
 # %%
@@ -427,7 +427,7 @@ print(f'model score on testing data: {model.score(X_test, y_test)}')
 # is, and run our same model (already fitted) to predict the outcome. The
 # decrease of the score shall indicate how the model had used this feature to
 # predict the target. The permutation feature importance is defined to be the
-# decrease in a model score when a single feature value is randomly shuffled
+# decrease in a model score when a single feature value is randomly shuffled.
 #
 # For instance, if the feature is crucial for the model, the outcome would also
 # be permuted (just as the feature), thus the score would be close to zero.
@@ -465,12 +465,12 @@ def get_feature_importance(model, X, y, curr_feat):
 curr_feat = 'MedInc'
 
 feature_importance = get_feature_importance(model, X_train, y_train, curr_feat)
-print(f'feature importance of "{curr_feat}" on train set is'
+print(f'feature importance of "{curr_feat}" on train set is '
       f'{feature_importance:.3}')
 
 # %% [markdown]
-# Since there are some randomness, it is advice to run multiple times and
-# inspect the mean and the standard deviation of the feature importance
+# Since there is some randomness, it is advisable to run it multiple times and
+# inspect the mean and the standard deviation of the feature importance.
 
 # %%
 n_repeats = 10
@@ -487,9 +487,9 @@ print(
 
 
 # %% [markdown]
-# 0.86 over .97 is very relevant (note the $R^2$ score could go below 0). So we
-# can imagine our model relies heavily on this feature to predict the class.
-# We can now compute the feature permutation importance for all the features
+# 0.67 over 0.98 is very relevant (note the $R^2$ score could go below 0). So
+# we can imagine our model relies heavily on this feature to predict the class.
+# We can now compute the feature permutation importance for all the features.
 
 # %%
 def permutation_importance(model, X, y, n_repeats=10):
@@ -513,7 +513,7 @@ def permutation_importance(model, X, y, n_repeats=10):
 
 
 # %%
-def plot_importantes_features(perm_importance_result, feat_name):
+def plot_feature_importances(perm_importance_result, feat_name):
     """ bar plot the feature importance """
 
     fig, ax = plt.subplots()
@@ -534,7 +534,7 @@ def plot_importantes_features(perm_importance_result, feat_name):
 perm_importance_result_train = permutation_importance(
     model, X_train, y_train, n_repeats=10)
 
-plot_importantes_features(perm_importance_result_train, X_train.columns)
+plot_feature_importances(perm_importance_result_train, X_train.columns)
 
 # %% [markdown]
 # We see again that the feature `MedInc`, `Latitude` and `Longitude` are very

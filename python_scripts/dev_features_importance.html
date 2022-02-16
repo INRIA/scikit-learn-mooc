@@ -1745,15 +1745,15 @@ the median income of people in the neighborhoods (block).</p>
 </div>
 <p>The feature reads as follow:</p>
 <ul class="simple">
-<li><p>MedInc median income in block</p></li>
-<li><p>HouseAge median house age in block</p></li>
-<li><p>AveRooms average number of rooms</p></li>
-<li><p>AveBedrms average number of bedrooms</p></li>
-<li><p>Population block population</p></li>
-<li><p>AveOccup average house occupancy</p></li>
-<li><p>Latitude house block latitude</p></li>
-<li><p>Longitude house block longitude</p></li>
-<li><p>MedHouseVal Median house value in 100k$ <em>(target)</em></p></li>
+<li><p>MedInc: median income in block</p></li>
+<li><p>HouseAge: median house age in block</p></li>
+<li><p>AveRooms: average number of rooms</p></li>
+<li><p>AveBedrms: average number of bedrooms</p></li>
+<li><p>Population: block population</p></li>
+<li><p>AveOccup: average house occupancy</p></li>
+<li><p>Latitude: house block latitude</p></li>
+<li><p>Longitude: house block longitude</p></li>
+<li><p>MedHouseVal: Median house value in 100k$ <em>(target)</em></p></li>
 </ul>
 <p>To assert the quality of our inspection technique, let’s add some random
 feature that won’t help the prediction (un-informative feature)</p>
@@ -1806,7 +1806,7 @@ correlated to the average number of bedrooms <code class="docutils literal notra
 <div class="section" id="linear-model-inspection">
 <h2>1. Linear model inspection<a class="headerlink" href="#linear-model-inspection" title="Permalink to this headline">¶</a></h2>
 <p>In linear models, the target value is modeled as a linear combination of the
-features</p>
+features.</p>
 <p>Coefficients represent the relationship between the given feature <span class="math notranslate nohighlight">\(X_i\)</span> and
 the target <span class="math notranslate nohighlight">\(y\)</span>, assuming that all the other features remain constant
 (conditional dependence). This is different from plotting <span class="math notranslate nohighlight">\(X_i\)</span> versus <span class="math notranslate nohighlight">\(y\)</span>
@@ -1827,8 +1827,8 @@ dependence).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6013466090490024
-model score on testing data: 0.5975757793803438
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.601346608762656
+model score on testing data: 0.5975758297241913
 </pre></div>
 </div>
 </div>
@@ -1925,8 +1925,8 @@ and scaling the variance to 1).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6013157556102924
-model score on testing data: 0.5972410717953726
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.6013157556102935
+model score on testing data: 0.5972410717953789
 </pre></div>
 </div>
 </div>
@@ -2093,7 +2093,7 @@ idea of their stability.</p>
 </div>
 <div class="section" id="randomforest-feature-importances">
 <h2>2. RandomForest <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code><a class="headerlink" href="#randomforest-feature-importances" title="Permalink to this headline">¶</a></h2>
-<p>On some algorithms, there pre-exist some feature importance method,
+<p>On some algorithms, there are some feature importance methods,
 inherently built within the model. It is the case in RandomForest models.
 Let’s investigate the built-in <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code> attribute.</p>
 <div class="cell docutils container">
@@ -2110,8 +2110,8 @@ Let’s investigate the built-in <code class="docutils literal notranslate"><spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9797928688731595
-model score on testing data: 0.8471786250646006
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9795873431655048
+model score on testing data: 0.8473614159902905
 </pre></div>
 </div>
 </div>
@@ -2152,7 +2152,7 @@ feature <code class="docutils literal notranslate"><span class="pre">rnd_num</sp
 <h2>3. Feature importance by permutation<a class="headerlink" href="#feature-importance-by-permutation" title="Permalink to this headline">¶</a></h2>
 <p>We introduce here a new technique to evaluate the feature importance of any
 given fitted model. It basically shuffles a feature and sees how the model
-changes its prediction. Thus, the change in prediction will be correspond to
+changes its prediction. Thus, the change in prediction will correspond to
 the feature importance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2175,8 +2175,8 @@ the feature importance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9799362150913526
-model score on testing data: 0.8486332611132756
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9801029012359561
+model score on testing data: 0.8484822181001828
 </pre></div>
 </div>
 </div>
@@ -2192,7 +2192,7 @@ feature.</p>
 is, and run our same model (already fitted) to predict the outcome. The
 decrease of the score shall indicate how the model had used this feature to
 predict the target. The permutation feature importance is defined to be the
-decrease in a model score when a single feature value is randomly shuffled</p>
+decrease in a model score when a single feature value is randomly shuffled.</p>
 <p>For instance, if the feature is crucial for the model, the outcome would also
 be permuted (just as the feature), thus the score would be close to zero.
 Afterward, the feature importance is the decrease in score. So in that case,
@@ -2228,19 +2228,19 @@ remain the same, thus the feature importance will be close to 0.</p>
 <span class="n">curr_feat</span> <span class="o">=</span> <span class="s1">&#39;MedInc&#39;</span>
 
 <span class="n">feature_importance</span> <span class="o">=</span> <span class="n">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;feature importance of &quot;</span><span class="si">{</span><span class="n">curr_feat</span><span class="si">}</span><span class="s1">&quot; on train set is&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;feature importance of &quot;</span><span class="si">{</span><span class="n">curr_feat</span><span class="si">}</span><span class="s1">&quot; on train set is &#39;</span>
       <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">feature_importance</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is0.679
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.696
 </pre></div>
 </div>
 </div>
 </div>
-<p>Since there are some randomness, it is advice to run multiple times and
-inspect the mean and the standard deviation of the feature importance</p>
+<p>Since there is some randomness, it is advisable to run it multiple times and
+inspect the mean and the standard deviation of the feature importance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10</span>
@@ -2258,14 +2258,14 @@ inspect the mean and the standard deviation of the feature importance</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.667 +/- 0.00988
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.679 +/- 0.0105
 </pre></div>
 </div>
 </div>
 </div>
-<p>0.86 over .97 is very relevant (note the <span class="math notranslate nohighlight">\(R^2\)</span> score could go below 0). So we
-can imagine our model relies heavily on this feature to predict the class.
-We can now compute the feature permutation importance for all the features</p>
+<p>0.67 over 0.98 is very relevant (note the <span class="math notranslate nohighlight">\(R^2\)</span> score could go below 0). So
+we can imagine our model relies heavily on this feature to predict the class.
+We can now compute the feature permutation importance for all the features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">permutation_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -2292,7 +2292,7 @@ We can now compute the feature permutation importance for all the features</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_importantes_features</span><span class="p">(</span><span class="n">perm_importance_result</span><span class="p">,</span> <span class="n">feat_name</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_feature_importances</span><span class="p">(</span><span class="n">perm_importance_result</span><span class="p">,</span> <span class="n">feat_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; bar plot the feature importance &quot;&quot;&quot;</span>
 
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -2314,7 +2314,7 @@ We can now compute the feature permutation importance for all the features</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perm_importance_result_train</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="n">plot_importantes_features</span><span class="p">(</span><span class="n">perm_importance_result_train</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">plot_feature_importances</span><span class="p">(</span><span class="n">perm_importance_result_train</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

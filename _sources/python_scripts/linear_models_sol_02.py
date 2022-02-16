@@ -51,7 +51,7 @@ _ = sns.scatterplot(data=full_data, x="data", y="target", color="black",
 
 # %% [markdown]
 # We observe that the link between the data `data` and vector `target` is
-# non-linear. For instance, `data` could represent to be the years of
+# non-linear. For instance, `data` could represent the years of
 # experience (normalized) and `target` the salary (normalized). Therefore, the
 # problem here would be to infer the salary given the years of experience.
 #

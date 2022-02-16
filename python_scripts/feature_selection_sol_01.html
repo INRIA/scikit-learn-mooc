@@ -1447,10 +1447,10 @@
 <h1>📃 Solution for Exercise 01<a class="headerlink" href="#solution-for-exercise-01" title="Permalink to this headline">¶</a></h1>
 <p>The aim of this exercise is to highlight caveats to have in mind when using
 feature selection. You have to be extremely careful regarding the set of
-data on which you will compute the statistic that help you feature algorithm
-to decide which feature to select.</p>
+data on which you will compute the statistic that helps your feature
+selection algorithm to decide which feature to select.</p>
 <p>On purpose, we will make you program the wrong way of doing feature selection
-to insights.</p>
+to gain insights.</p>
 <p>First, you will create a completely random dataset using NumPy. Using the
 function <code class="docutils literal notranslate"><span class="pre">np.random.randn</span></code>, generate a matrix <code class="docutils literal notranslate"><span class="pre">data</span></code> containing 100 samples
 and 100,000 features. Then, using the function <code class="docutils literal notranslate"><span class="pre">np.random.randint</span></code>, generate
@@ -1472,7 +1472,7 @@ chance-level.</p>
 </div>
 </div>
 <p>Now, create a logistic regression model and use cross-validation to check
-the score of such model. It will allow use to confirm that our model cannot
+the score of such a model. It will allow use to confirm that our model cannot
 predict anything meaningful from random data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1521,17 +1521,17 @@ train and test a logistic regression model.</p>
 </div>
 </div>
 <p>Surprisingly, the logistic regression succeeded in having a fantastic
-accuracy using data with no link with the target, initially. We, therefore,
-know that these results are not legit.</p>
+accuracy using data that did not have any link with the target in the first
+place. We therefore know that these results are not legit.</p>
 <p>The reasons for obtaining these results are two folds: the pool of available
 features is large compared to the number of samples. It is possible to find a
 subset of features that will link the data and the target. By not splitting
 the data, we leak knowledge from the entire dataset and could use this
-knowledge will evaluating our model.</p>
+knowledge while evaluating our model.</p>
 <p>Now, we will make you program the <strong>right</strong> way to do the feature selection.
 First, split the dataset into a training and testing set. Then, fit the
 feature selector on the training set. Then, transform both the training and
-testing sets before to train and test the logistic regression.</p>
+testing sets before you train and test the logistic regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1587,8 +1587,8 @@ of your model generalization performance.</p>
 </div>
 </div>
 </div>
-<p>We see that using a scikit-learn pipeline is removing a lot of boilerplate
-code and avoiding to make mistake while calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">transform</span></code> on the
+<p>We see that using a scikit-learn pipeline removes a lot of boilerplate
+code and helps avoid mistakes when calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">transform</span></code> on the
 different set of data.</p>
 </div>
 

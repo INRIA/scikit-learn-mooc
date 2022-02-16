@@ -5,7 +5,6 @@
 #     name: python3
 # ---
 
-# -*- coding: utf-8 -*-
 # %% [markdown]
 # # 📝 Exercise M6.04
 #

@@ -51,7 +51,3 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %%
 # Write your code here.
-
-# %% [markdown]
-# We see that the predictor provided by the bagging regressor does not need
-# much hyperparameter tuning compared to a single decision tree.

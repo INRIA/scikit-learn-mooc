@@ -2,9 +2,9 @@
 
 ```{admonition} Question
 
-Let us consider a pipeline that combines a polynomial feature extraction step
-and a linear regression model. Is the prediction function of this pipeline on a
-dataset with a single input feature always a straight line?
+Let us consider a pipeline that combines a **by default** polynomial feature
+extraction step and a linear regression model. Is the prediction function of
+this pipeline on a dataset with a single input feature a straight line?
 
 - a) yes
 - b) no

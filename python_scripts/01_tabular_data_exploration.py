@@ -170,6 +170,15 @@ _ = adult_census.hist(figsize=(20, 14))
 # %%
 adult_census["sex"].value_counts()
 
+# %% [markdown]
+# Notice that there is an important imbalance on the data collection concerning
+# the number of male/female samples. This dataset can potentially lead to
+# [fairness](https://docs.microsoft.com/en-us/azure/machine-learning/concept-fairness-ml#what-is-machine-learning-fairness)
+# problems because of this imbalance if it were used as it is to train a
+# component of an automated decision system deployed in a real life setting.
+# Later in this course we will see how to decompose performance metrics to take
+# into account such data imbalances.
+
 # %%
 adult_census["education"].value_counts()
 

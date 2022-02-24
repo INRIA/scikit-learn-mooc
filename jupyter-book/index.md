@@ -88,8 +88,39 @@ It is possible to use the rocket icon at the top of each notebook
 page to interactively execute the code cells via the Binder
 service.
 
-Note however that it is required to use the
+Notice however that it is required to use the
 [version hosted on the fun-mooc platform](
 https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn/)
 to complete the quizzes.
 
+## Follow scikit-learn social networks
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+          <a href="https://www.facebook.com/ScikitLearn/">
+            <img src="figures/icon_facebook.svg" style="width:100%">
+          </a>
+        </div>
+        <div class="col">
+          <a href="https://github.com/scikit-learn/scikit-learn">
+            <img src="figures/icon_github.svg" style="width:100%">
+          </a>
+        </div>
+        <div class="col">
+          <a href="https://www.instagram.com/scikitlearnofficial/">
+            <img src="figures/icon_instagram.svg" style="width:100%">
+          </a>
+        </div>
+        <div class="col">
+          <a href="https://twitter.com/scikit_learn">
+            <img src="figures/icon_twitter.svg" style="width:100%">
+          </a>
+        </div>
+        <div class="col">
+          <a href="https://www.youtube.com/playlist?list=PL2okA_2qDJ-m44KooOI7x8tu85wr4ez4f">
+            <img src="figures/icon_youtube.svg" style="width:100%">
+          </a>
+        </div>
+    </div>
+</div>

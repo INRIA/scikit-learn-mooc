@@ -172,12 +172,13 @@ adult_census["sex"].value_counts()
 
 # %% [markdown]
 # Notice that there is an important imbalance on the data collection concerning
-# the number of male/female samples. This dataset can potentially lead to
+# the number of male/female samples. Be aware that any kind of data imbalance
+# will impact the generalizability of a model trained on it. Moreover, it can
+# lead to
 # [fairness](https://docs.microsoft.com/en-us/azure/machine-learning/concept-fairness-ml#what-is-machine-learning-fairness)
-# problems because of this imbalance if it were used as it is to train a
-# component of an automated decision system deployed in a real life setting.
-# Later in this course we will see how to decompose performance metrics to take
-# into account such data imbalances.
+# problems if used naively when deploying a real life setting. Later in this
+# course we will see how to decompose performance metrics to take into account
+# such data imbalances.
 
 # %%
 adult_census["education"].value_counts()

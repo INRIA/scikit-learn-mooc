@@ -118,7 +118,7 @@ to complete the quizzes.
           </a>
         </div>
         <div class="col">
-          <a href="https://www.youtube.com/playlist?list=PL2okA_2qDJ-m44KooOI7x8tu85wr4ez4f">
+          <a href="https://www.youtube.com/channel/UCJosFjYm0ZYVUARxuOZqnnw">
             <img src="figures/icon_youtube.svg" style="width:100%">
           </a>
         </div>

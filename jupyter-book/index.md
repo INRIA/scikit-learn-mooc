@@ -99,27 +99,27 @@ to complete the quizzes.
     <div class="row">
         <div class="col">
           <a href="https://www.facebook.com/ScikitLearn/">
-            <img src="figures/icon_facebook.svg" style="width:100%">
+            <img src="figures/icon_facebook.svg" style="width:75%">
           </a>
         </div>
         <div class="col">
           <a href="https://github.com/scikit-learn/scikit-learn">
-            <img src="figures/icon_github.svg" style="width:100%">
+            <img src="figures/icon_github.svg" style="width:75%">
           </a>
         </div>
         <div class="col">
           <a href="https://www.instagram.com/scikitlearnofficial/">
-            <img src="figures/icon_instagram.svg" style="width:100%">
+            <img src="figures/icon_instagram.svg" style="width:75%">
           </a>
         </div>
         <div class="col">
           <a href="https://twitter.com/scikit_learn">
-            <img src="figures/icon_twitter.svg" style="width:100%">
+            <img src="figures/icon_twitter.svg" style="width:75%">
           </a>
         </div>
         <div class="col">
           <a href="https://www.youtube.com/channel/UCJosFjYm0ZYVUARxuOZqnnw">
-            <img src="figures/icon_youtube.svg" style="width:100%">
+            <img src="figures/icon_youtube.svg" style="width:75%">
           </a>
         </div>
     </div>

@@ -171,7 +171,7 @@ _ = adult_census.hist(figsize=(20, 14))
 adult_census["sex"].value_counts()
 
 # %% [markdown]
-# Notice that there is an important imbalance on the data collection concerning
+# Note that there is an important imbalance on the data collection concerning
 # the number of male/female samples. Be aware that any kind of data imbalance
 # will impact the generalizability of a model trained on it. Moreover, it can
 # lead to

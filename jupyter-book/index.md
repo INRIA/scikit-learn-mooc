@@ -97,3 +97,4 @@ Note however that it is required to use the
 https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn/)
 to complete the quizzes.
 
+<i class="fab fa-twitter"></i>

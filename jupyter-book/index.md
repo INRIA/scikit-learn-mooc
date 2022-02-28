@@ -88,7 +88,11 @@ It is possible to use the rocket icon at the top of each notebook
 page to interactively execute the code cells via the Binder
 service.
 
-Notice however that it is required to use the
+The videos are available as YouTube playlist at the Inria Learning Lab channel:
+
+  https://www.youtube.com/playlist?list=PL2okA_2qDJ-m44KooOI7x8tu85wr4ez4f
+
+Note however that it is required to use the
 [version hosted on the fun-mooc platform](
 https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn/)
 to complete the quizzes.

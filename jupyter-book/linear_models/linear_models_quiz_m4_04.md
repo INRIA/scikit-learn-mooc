@@ -56,10 +56,10 @@ _Several answers possible_
 ```{admonition} Question
 Scaling the data before fitting a model:
 
-- a) is necessary when using a regularized model
-- b) is always necessary
+- a) is often useful for regularized linear models
+- b) is always necessary for regularized linear models
 - c) may speed-up fitting
-- d) has no impact on the regularization parameter
+- d) has no impact on the optimal choice of the value of a regularization parameter
 
 _Several answers possible_
 ```

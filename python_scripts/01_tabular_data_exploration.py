@@ -292,7 +292,7 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 #
 # It is interesting to note that some machine learning models will work
 # similarly to what we did: they are known as decision tree models. The two
-# thresholds that we choose (27 years and 40 hours) are somewhat arbitrary, i.e.
+# thresholds that we chose (27 years and 40 hours) are somewhat arbitrary, i.e.
 # we choose them by only looking at the pairplot. In contrast, a decision tree
 # will choose the "best" splits based on data without human intervention or
 # inspection. Decision trees will be covered more in detail in a future module.

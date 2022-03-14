@@ -121,9 +121,9 @@ train_scores, test_scores = validation_curve(
 import matplotlib.pyplot as plt
 
 plt.errorbar(gammas, train_scores.mean(axis=1),
-             yerr=train_scores.std(axis=1), label='Training score')
+             yerr=train_scores.std(axis=1), alpha = 0.95, label='Training score')
 plt.errorbar(gammas, test_scores.mean(axis=1),
-             yerr=test_scores.std(axis=1), label='Testing score')
+             yerr=test_scores.std(axis=1), alpha = 0.5, label='Testing score')
 plt.legend()
 
 plt.xscale("log")
@@ -156,9 +156,9 @@ train_size, train_scores, test_scores = results[:3]
 
 # %% tags=["solution"]
 plt.errorbar(train_size, train_scores.mean(axis=1),
-             yerr=train_scores.std(axis=1), label='Training score')
+             yerr=train_scores.std(axis=1), alpha = 0.95, label='Training score')
 plt.errorbar(train_size, test_scores.mean(axis=1),
-             yerr=test_scores.std(axis=1), label='Testing score')
+             yerr=test_scores.std(axis=1), alpha = 0.5, label='Testing score')
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 
 plt.xlabel("Number of samples in the training set")

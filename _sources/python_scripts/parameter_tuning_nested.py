@@ -301,7 +301,7 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
 # coordinate plot of the results of a large hyperparameter search as seen in
 # the exercises.
 #
-# From a deployment point of view, one could also chose to deploy all the
+# From a deployment point of view, one could also choose to deploy all the
 # models found by the outer cross-validation loop and make them vote to get the
 # final predictions. However this can cause operational problems because it
 # uses more memory and makes computing prediction slower, resulting in a higher

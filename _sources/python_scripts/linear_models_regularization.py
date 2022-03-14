@@ -287,7 +287,7 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # ```
 #
 # In the previous analysis, we did not study if the parameter `alpha` will have
-# an effect on the performance. We chose the parameter beforehand and fix it
+# an effect on the performance. We chose the parameter beforehand and fixed it
 # for the analysis.
 #
 # In the next section, we will check the impact of the regularization

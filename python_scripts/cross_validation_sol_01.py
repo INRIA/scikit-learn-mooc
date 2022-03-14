@@ -185,6 +185,23 @@ plt.ylabel("Accuracy")
 _ = plt.title("Learning curve for support vector machine")
 
 # %% [markdown] tags=["solution"]
-# We observe that adding new samples in the dataset does not improve the testing
-# score. We can only conclude that the standard deviation of the training error
-# is decreasing when adding more samples which is not a surprise.
+# We observe that adding new samples to the training dataset does
+# not seem to improve the training and testing scores.
+#
+# In particular, 76% accuracy is the score of a model that
+# always predicts the majority class `"not donated"`. This can
+# mean that our small pipeline is not able to use input features
+# to improve upon that simplistic baseline, and increasing the
+# training set size does not help either.
+#
+# It could be the case that the input features are fundamentally
+# not very informative and the classification problem is
+# fundamentally impossible to solve to a high accuracy. But it
+# could also be the case that our choice of using the default
+# hyperparameter value of the `SVC` class was a bad idea, or that
+# the choice of the `SVC` class is itself sub-optimal.
+#
+# Later in this MOOC we will see how to better tune the
+# hyper-parameters of a model and explore how to compare the
+# predictive performance of different model classes in a more
+# systematic way.

@@ -185,23 +185,21 @@ plt.ylabel("Accuracy")
 _ = plt.title("Learning curve for support vector machine")
 
 # %% [markdown] tags=["solution"]
-# We observe that adding new samples to the training dataset does
-# not seem to improve the training and testing scores.
+# We observe that adding new samples to the training dataset does not seem to
+# improve the training and testing scores. In particular, the testing score
+# oscillates around 76% accuracy. Indeed, ~76% of the samples belong to the
+# class `"not donated"``. Notice then that a classifier that always predicts the
+# `"not donated"`` class would achieve an accuracy of 76% without using any
+# information from the data itself. This can mean that our small pipeline is not
+# able to use the input features to improve upon that simplistic baseline, and
+# increasing the training set size does not help either.
 #
-# In particular, 76% accuracy is the score of a model that
-# always predicts the majority class `"not donated"`. This can
-# mean that our small pipeline is not able to use input features
-# to improve upon that simplistic baseline, and increasing the
-# training set size does not help either.
+# It could be the case that the input features are fundamentally not very
+# informative and the classification problem is fundamentally impossible to
+# solve to a high accuracy. But it could also be the case that our choice of
+# using the default hyperparameter value of the `SVC` class was a bad idea, or
+# that the choice of the `SVC` class is itself sub-optimal.
 #
-# It could be the case that the input features are fundamentally
-# not very informative and the classification problem is
-# fundamentally impossible to solve to a high accuracy. But it
-# could also be the case that our choice of using the default
-# hyperparameter value of the `SVC` class was a bad idea, or that
-# the choice of the `SVC` class is itself sub-optimal.
-#
-# Later in this MOOC we will see how to better tune the
-# hyper-parameters of a model and explore how to compare the
-# predictive performance of different model classes in a more
-# systematic way.
+# Later in this MOOC we will see how to better tune the hyperparameters of a
+# model and explore how to compare the predictive performance of different model
+# classes in a more systematic way.

@@ -1447,12 +1447,11 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>📃 Solution for Exercise M2.01<a class="headerlink" href="#solution-for-exercise-m2-01" title="Permalink to this headline">¶</a></h1>
 <p>The aim of this exercise is to make the following experiments:</p>
 <ul class="simple">
-<li><p>train and test a support vector machine classifier through
-cross-validation;</p></li>
+<li><p>train and test a support vector machine classifier through cross-validation;</p></li>
 <li><p>study the effect of the parameter gamma of this classifier using a
 validation curve;</p></li>
-<li><p>use a learning curve to determine the usefulness of adding new
-samples in the dataset when building a classifier.</p></li>
+<li><p>use a learning curve to determine the usefulness of adding new samples in
+the dataset when building a classifier.</p></li>
 </ul>
 <p>To make these experiments we will first load the blood transfusion dataset.</p>
 <div class="admonition note">
@@ -1472,13 +1471,13 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 <p>We will use a support vector machine classifier (SVM). In its most simple
-form, a SVM classifier is a linear classifier behaving similarly to a
-logistic regression. Indeed, the optimization used to find the optimal
-weights of the linear model are different but we don’t need to know these
-details for the exercise.</p>
-<p>Also, this classifier can become more flexible/expressive by using a
-so-called kernel that makes the model become non-linear. Again, no requirement
-regarding the mathematics is required to accomplish this exercise.</p>
+form, a SVM classifier is a linear classifier behaving similarly to a logistic
+regression. Indeed, the optimization used to find the optimal weights of the
+linear model are different but we don’t need to know these details for the
+exercise.</p>
+<p>Also, this classifier can become more flexible/expressive by using a so-called
+kernel that makes the model become non-linear. Again, no requirement regarding
+the mathematics is required to accomplish this exercise.</p>
 <p>We will use an RBF kernel where a parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> allows to tune the
 flexibility of the model.</p>
 <p>First let’s create a predictive pipeline made of:</p>
@@ -1501,12 +1500,13 @@ default.</p></li>
 </div>
 </div>
 </div>
-<p>Evaluate the generalization performance of your model by cross-validation with a
-<code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> scheme. Thus, you can use
+<p>Evaluate the generalization performance of your model by cross-validation with
+a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> scheme. Thus, you can use
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code></a>
-and pass a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ShuffleSplit</span></code></a>
-to the <code class="docutils literal notranslate"><span class="pre">cv</span></code> parameter. Only fix the <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code> in the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
-and let the other parameters to the default.</p>
+and pass a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ShuffleSplit</span></code></a>
+to the <code class="docutils literal notranslate"><span class="pre">cv</span></code> parameter. Only fix the <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code> in the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> and
+let the other parameters to the default.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1546,62 +1546,62 @@ and let the other parameters to the default.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.019961</td>
-      <td>0.003230</td>
+      <td>0.020276</td>
+      <td>0.003668</td>
       <td>0.680000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.019307</td>
-      <td>0.003026</td>
+      <td>0.019224</td>
+      <td>0.003298</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.018753</td>
-      <td>0.003284</td>
+      <td>0.019359</td>
+      <td>0.003392</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.017546</td>
-      <td>0.003450</td>
+      <td>0.018980</td>
+      <td>0.003545</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.020249</td>
-      <td>0.003303</td>
+      <td>0.019511</td>
+      <td>0.003406</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.018806</td>
-      <td>0.003327</td>
+      <td>0.018801</td>
+      <td>0.003342</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.018397</td>
-      <td>0.003093</td>
+      <td>0.018860</td>
+      <td>0.003586</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.017705</td>
-      <td>0.003046</td>
+      <td>0.018824</td>
+      <td>0.003708</td>
       <td>0.826667</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.017943</td>
-      <td>0.002851</td>
+      <td>0.018667</td>
+      <td>0.003930</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.017519</td>
-      <td>0.003061</td>
+      <td>0.018379</td>
+      <td>0.003164</td>
       <td>0.733333</td>
     </tr>
   </tbody>
@@ -1628,11 +1628,11 @@ and let the other parameters to the default.</p>
 <p>As previously mentioned, the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameters
 controlling under/over-fitting in support vector machine with an RBF kernel.</p>
 <p>Evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> by using the
-<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a> function.
-You can leave the default <code class="docutils literal notranslate"><span class="pre">scoring=None</span></code> which is equivalent to
-<code class="docutils literal notranslate"><span class="pre">scoring=&quot;accuracy&quot;</span></code> for classification problems. You can vary <code class="docutils literal notranslate"><span class="pre">gamma</span></code>
-between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale
-with the help of <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a>
+function. You can leave the default <code class="docutils literal notranslate"><span class="pre">scoring=None</span></code> which is equivalent to
+<code class="docutils literal notranslate"><span class="pre">scoring=&quot;accuracy&quot;</span></code> for classification problems. You can vary <code class="docutils literal notranslate"><span class="pre">gamma</span></code> between
+<code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale with the help
+of <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
 <p>Since we are manipulating a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> the parameter name will be set to
 <code class="docutils literal notranslate"><span class="pre">svc__gamma</span></code> instead of only <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can retrieve the parameter name
 using <code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into detail regarding
@@ -1658,10 +1658,20 @@ accessing and setting hyperparameter in the next section.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">gammas</span><span class="p">,</span> <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training score&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">gammas</span><span class="p">,</span> <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Testing score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">gammas</span><span class="p">,</span>
+    <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">gammas</span><span class="p">,</span>
+    <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
@@ -1675,11 +1685,10 @@ accessing and setting hyperparameter in the next section.</p>
 <img alt="../_images/cross_validation_sol_01_11_0.png" src="../_images/cross_validation_sol_01_11_0.png" />
 </div>
 </div>
-<p>Looking at the curve, we can clearly identify the over-fitting regime of
-the SVC classifier when <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>.
-The best setting is around <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code> while for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>,
-it is not very clear if the classifier is under-fitting but the
-testing score is worse than for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p>Looking at the curve, we can clearly identify the over-fitting regime of the
+SVC classifier when <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>. The best setting is around <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code> while
+for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>, it is not very clear if the classifier is under-fitting but
+the testing score is worse than for <code class="docutils literal notranslate"><span class="pre">gamma</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
 <p>Now, you can perform an analysis to check whether adding new samples to the
 dataset could help our model to better generalize. Compute the learning curve
 (using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.learning_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.learning_curve</span></code></a>)
@@ -1700,10 +1709,20 @@ Plot the train and test scores with respect to the number of samples.</p>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">train_size</span><span class="p">,</span> <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training score&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">train_size</span><span class="p">,</span> <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Testing score&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">train_size</span><span class="p">,</span>
+    <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">train_size</span><span class="p">,</span>
+    <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples in the training set&quot;</span><span class="p">)</span>
@@ -1716,10 +1735,21 @@ Plot the train and test scores with respect to the number of samples.</p>
 <img alt="../_images/cross_validation_sol_01_15_0.png" src="../_images/cross_validation_sol_01_15_0.png" />
 </div>
 </div>
-<p>We observe that adding new samples in the dataset does not improve the
-testing score. We can only conclude that the standard deviation of
-the training error is decreasing when adding more samples which is not a
-surprise.</p>
+<p>We observe that adding new samples to the training dataset does not seem to
+improve the training and testing scores. In particular, the testing score
+oscillates around 76% accuracy. Indeed, ~76% of the samples belong to the
+class <code class="docutils literal notranslate"><span class="pre">&quot;not</span> <span class="pre">donated&quot;``.</span> <span class="pre">Notice</span> <span class="pre">then</span> <span class="pre">that</span> <span class="pre">a</span> <span class="pre">classifier</span> <span class="pre">that</span> <span class="pre">always</span> <span class="pre">predicts</span> <span class="pre">the</span> </code>“not donated”`` class would achieve an accuracy of 76% without using any
+information from the data itself. This can mean that our small pipeline is not
+able to use the input features to improve upon that simplistic baseline, and
+increasing the training set size does not help either.</p>
+<p>It could be the case that the input features are fundamentally not very
+informative and the classification problem is fundamentally impossible to
+solve to a high accuracy. But it could also be the case that our choice of
+using the default hyperparameter value of the <code class="docutils literal notranslate"><span class="pre">SVC</span></code> class was a bad idea, or
+that the choice of the <code class="docutils literal notranslate"><span class="pre">SVC</span></code> class is itself sub-optimal.</p>
+<p>Later in this MOOC we will see how to better tune the hyperparameters of a
+model and explore how to compare the predictive performance of different model
+classes in a more systematic way.</p>
 </div>
 
     <script type="text/x-thebe-config">

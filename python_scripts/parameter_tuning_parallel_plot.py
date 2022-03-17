@@ -34,8 +34,6 @@ def shorten_param(param_name):
         return param_name.rsplit("__", 1)[1]
     return param_name
 
-
-# %%
 cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 

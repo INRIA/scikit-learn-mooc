@@ -19,5 +19,5 @@ How should you choose the maximum depth of a decision tree?
 - b) choosing the depth maximizing the score on the train set
 - c) choosing the depth maximizing the score on the test set
 
-_Several answers possible_
+_Select all answers that apply_
 ```

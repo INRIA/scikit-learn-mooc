@@ -7,7 +7,7 @@ What the benefit of using cross-validation?
 - b) Remove the need to use a baseline algorithm
 - c) Give information regarding under- or over-fitting of a model
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++

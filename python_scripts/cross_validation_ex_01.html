@@ -1447,12 +1447,11 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>📝 Exercise M2.01<a class="headerlink" href="#exercise-m2-01" title="Permalink to this headline">¶</a></h1>
 <p>The aim of this exercise is to make the following experiments:</p>
 <ul class="simple">
-<li><p>train and test a support vector machine classifier through
-cross-validation;</p></li>
+<li><p>train and test a support vector machine classifier through cross-validation;</p></li>
 <li><p>study the effect of the parameter gamma of this classifier using a
 validation curve;</p></li>
-<li><p>use a learning curve to determine the usefulness of adding new
-samples in the dataset when building a classifier.</p></li>
+<li><p>use a learning curve to determine the usefulness of adding new samples in
+the dataset when building a classifier.</p></li>
 </ul>
 <p>To make these experiments we will first load the blood transfusion dataset.</p>
 <div class="admonition note">
@@ -1472,13 +1471,13 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 <p>We will use a support vector machine classifier (SVM). In its most simple
-form, a SVM classifier is a linear classifier behaving similarly to a
-logistic regression. Indeed, the optimization used to find the optimal
-weights of the linear model are different but we don’t need to know these
-details for the exercise.</p>
-<p>Also, this classifier can become more flexible/expressive by using a
-so-called kernel that makes the model become non-linear. Again, no requirement
-regarding the mathematics is required to accomplish this exercise.</p>
+form, a SVM classifier is a linear classifier behaving similarly to a logistic
+regression. Indeed, the optimization used to find the optimal weights of the
+linear model are different but we don’t need to know these details for the
+exercise.</p>
+<p>Also, this classifier can become more flexible/expressive by using a so-called
+kernel that makes the model become non-linear. Again, no requirement regarding
+the mathematics is required to accomplish this exercise.</p>
 <p>We will use an RBF kernel where a parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> allows to tune the
 flexibility of the model.</p>
 <p>First let’s create a predictive pipeline made of:</p>
@@ -1496,12 +1495,13 @@ default.</p></li>
 </div>
 </div>
 </div>
-<p>Evaluate the generalization performance of your model by cross-validation with a
-<code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> scheme. Thus, you can use
+<p>Evaluate the generalization performance of your model by cross-validation with
+a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> scheme. Thus, you can use
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code></a>
-and pass a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ShuffleSplit</span></code></a>
-to the <code class="docutils literal notranslate"><span class="pre">cv</span></code> parameter. Only fix the <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code> in the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
-and let the other parameters to the default.</p>
+and pass a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ShuffleSplit</span></code></a>
+to the <code class="docutils literal notranslate"><span class="pre">cv</span></code> parameter. Only fix the <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code> in the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> and
+let the other parameters to the default.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -1512,11 +1512,11 @@ and let the other parameters to the default.</p>
 <p>As previously mentioned, the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameters
 controlling under/over-fitting in support vector machine with an RBF kernel.</p>
 <p>Evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> by using the
-<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a> function.
-You can leave the default <code class="docutils literal notranslate"><span class="pre">scoring=None</span></code> which is equivalent to
-<code class="docutils literal notranslate"><span class="pre">scoring=&quot;accuracy&quot;</span></code> for classification problems. You can vary <code class="docutils literal notranslate"><span class="pre">gamma</span></code>
-between <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale
-with the help of <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a>
+function. You can leave the default <code class="docutils literal notranslate"><span class="pre">scoring=None</span></code> which is equivalent to
+<code class="docutils literal notranslate"><span class="pre">scoring=&quot;accuracy&quot;</span></code> for classification problems. You can vary <code class="docutils literal notranslate"><span class="pre">gamma</span></code> between
+<code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale with the help
+of <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
 <p>Since we are manipulating a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> the parameter name will be set to
 <code class="docutils literal notranslate"><span class="pre">svc__gamma</span></code> instead of only <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can retrieve the parameter name
 using <code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into detail regarding

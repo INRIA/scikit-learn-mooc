@@ -16,7 +16,7 @@
 
 # %% [markdown]
 # In order to avoid the computational cost and still make a decent analysis,
-# we load the results obtained from a similar search with 200 iterations.
+# we load the results obtained from a similar search with 500 iterations.
 
 # %%
 import pandas as pd

@@ -26,5 +26,5 @@ this particular logistic regression model:
 - c) stronger regularization leads to higher recall
 - d) stronger regularization leads to lower recall
 
-_Several answers possible_
+_Select all answers that apply_
 ```

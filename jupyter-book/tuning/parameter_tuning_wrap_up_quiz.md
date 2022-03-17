@@ -54,7 +54,7 @@ select the correct statements.
   than twice as many rows than others
 - c) The input features have similar scales (ranges of values)
 
-_Several answers possible_
+_Select all answers that apply_
 
 Hint: `data.describe()`, and `target.value_counts()` are methods
 that are helpful to answer to this question.

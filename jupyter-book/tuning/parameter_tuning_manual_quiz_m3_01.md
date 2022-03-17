@@ -9,7 +9,7 @@ Which parameters below are hyperparameters of `HistGradientBosstingClassifier`?
 - d) `classes_`
 - e) `learning_rate`
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++

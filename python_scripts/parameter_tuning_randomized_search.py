@@ -207,13 +207,6 @@ pprint(model_random_search.best_params_)
 
 
 # %%
-def shorten_param(param_name):
-    if "__" in param_name:
-        return param_name.rsplit("__", 1)[1]
-    return param_name
-
-
-# %%
 # get the parameter names
 column_results = [
     f"param_{name}" for name in param_distributions.keys()]
@@ -223,6 +216,12 @@ column_results += [
 cv_results = pd.DataFrame(model_random_search.cv_results_)
 cv_results = cv_results[column_results].sort_values(
     "mean_test_score", ascending=False)
+
+def shorten_param(param_name):
+    if "__" in param_name:
+        return param_name.rsplit("__", 1)[1]
+    return param_name
+
 cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
@@ -233,12 +232,12 @@ cv_results
 # performances but that were not tested in the search.
 # In practice, a randomized hyperparameter search is usually run with a large
 # number of iterations. In order to avoid the computation cost and still make a
-# decent analysis, we load the results obtained from a similar search with 200
+# decent analysis, we load the results obtained from a similar search with 500
 # iterations.
 
 # %%
 # model_random_search = RandomizedSearchCV(
-#     model, param_distributions=param_distributions, n_iter=200,
+#     model, param_distributions=param_distributions, n_iter=500,
 #     n_jobs=2, cv=5)
 # model_random_search.fit(data_train, target_train)
 # cv_results =  pd.DataFrame(model_random_search.cv_results_)

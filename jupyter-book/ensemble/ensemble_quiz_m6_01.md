@@ -11,7 +11,7 @@ draw:
 - c) random samples without replacement over training points
 - d) random samples without replacement over features
 
-_Several answers possible_
+_Select all answers that apply_
 
 Hint: it is possible to access the documentation for those classes by
 clicking on the links on their names.

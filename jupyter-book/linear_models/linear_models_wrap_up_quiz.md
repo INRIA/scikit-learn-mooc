@@ -98,7 +98,7 @@ What is the impact on the weights of removing `"GarageArea"` from the dataset?
 - b) Completely changes the order of the most important features
 - c) Decreases the standard deviation (across CV folds) of the `"GarageCars"` coefficient
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++

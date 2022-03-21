@@ -31,5 +31,5 @@ A decision tree split is built:
 - b) using the median value of a single feature as a threshold
 - c) using a threshold that minimizes an error
 
-_Several answers possible_
+_Select all answers that apply_
 ```

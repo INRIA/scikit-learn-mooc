@@ -11,5 +11,5 @@ How to evaluate and tune the hyperparameters of a model?
   parameters of the model and an outer cross-validation to evaluate the model's
   performance
 
-_Several answers possible_
+_Select all answers that apply_
 ```

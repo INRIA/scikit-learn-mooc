@@ -51,11 +51,8 @@ plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Stock values over time")
 
 # %% [markdown]
-# We will repeat the experiment asked during the exercise. Instead of using
-# random data, we will use real quotations this time. While it was obvious that
-# a predictive model could not work in practice on random data, this is the
-# same on these real data. So here, we want to predict the quotation of Chevron
-# using all other energy companies' quotes.
+# We want to predict the quotation of Chevron using all other energy companies'
+# quotes.
 #
 # To make explanatory plots, we will use a single split in addition to the
 # cross-validation that you used in the introductory exercise.

@@ -51,11 +51,9 @@ plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Stock values over time")
 
 # %% [markdown]
-# We want to predict the quotation of Chevron using all other energy companies'
-# quotes.
-#
-# To make explanatory plots, we will use a single split in addition to the
-# cross-validation that you used in the introductory exercise.
+# Here, we want to predict the quotation of Chevron using all other energy
+# companies' quotes. To make explanatory plots, we first use a train-test split
+# and then we evaluate other cross-validation methods.
 
 # %%
 from sklearn.model_selection import train_test_split

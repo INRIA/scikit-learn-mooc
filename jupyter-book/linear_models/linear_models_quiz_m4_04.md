@@ -33,7 +33,7 @@ A ridge model is:
 - c) a linear model
 - d) a non linear model
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -48,7 +48,7 @@ the `Ridge` model:
 - c) should be tuned by running cross-validation on a **test set**
 - d) must be a positive number
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -56,12 +56,12 @@ _Several answers possible_
 ```{admonition} Question
 Scaling the data before fitting a model:
 
-- a) is necessary when using a regularized model
-- b) is always necessary
+- a) is often useful for regularized linear models
+- b) is always necessary for regularized linear models
 - c) may speed-up fitting
-- d) has no impact on the regularization parameter
+- d) has no impact on the optimal choice of the value of a regularization parameter
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -74,5 +74,5 @@ The effect of increasing the regularization strength in a ridge model is to:
 - c) set a subset of the weights to exactly zero
 - d) constrain all the weights to be positive
 
-_Several answers possible_
+_Select all answers that apply_
 ```

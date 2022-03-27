@@ -27,7 +27,7 @@ In the previous notebook, we used:
   `scipy.optimize.minimize`)
 - d) scikit-learn to fit some machine learning models
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -40,7 +40,7 @@ How is a tabular dataset organized?
 - c) the target variable is represented by a row
 - d) the target variable is represented by a column
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++

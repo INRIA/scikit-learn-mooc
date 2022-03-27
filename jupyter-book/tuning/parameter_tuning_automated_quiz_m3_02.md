@@ -64,7 +64,7 @@ Select the true statements about `RandomizedSearchCV` and `GridSearchCV` below:
 - e) both `GridSearchCV` and `RandomizedSearchCV` can use probability
      distributions to draw parameter values from
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++

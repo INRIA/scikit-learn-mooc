@@ -170,6 +170,19 @@ _ = adult_census.hist(figsize=(20, 14))
 # %%
 adult_census["sex"].value_counts()
 
+# %% [markdown]
+# Note that there is an important imbalance on the data collection concerning
+# the number of male/female samples. Be aware that any kind of data imbalance
+# will impact the generalizability of a model trained on it. Moreover, it can
+# lead to
+# [fairness](https://docs.microsoft.com/en-us/azure/machine-learning/concept-fairness-ml#what-is-machine-learning-fairness)
+# problems if used naively when deploying a real life setting.
+#
+# We recommend our readers to refer to [fairlearn.org](https://fairlearn.org)
+# for resources on how to quantify and potentially mitigate fairness
+# issues related to the deployment of automated decision making
+# systems that relying on machine learning components.
+
 # %%
 adult_census["education"].value_counts()
 
@@ -274,14 +287,14 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 #   prediction is low-income. Indeed, there are many blue points and only a few
 #   orange points.
 # * In the region `age > 27 AND hours-per-week > 40` (top-right region), we see
-#   a mix of blue points and orange points. It seems complicated to chose which
+#   a mix of blue points and orange points. It seems complicated to choose which
 #   class we should predict in this region.
 #
 # It is interesting to note that some machine learning models will work
 # similarly to what we did: they are known as decision tree models. The two
 # thresholds that we chose (27 years and 40 hours) are somewhat arbitrary, i.e.
 # we chose them by only looking at the pairplot. In contrast, a decision tree
-# will chose the "best" splits based on data without human intervention or
+# will choose the "best" splits based on data without human intervention or
 # inspection. Decision trees will be covered more in detail in a future module.
 #
 # Note that machine learning is really interesting when creating rules by hand

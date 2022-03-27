@@ -37,7 +37,7 @@ data, target = penguins[[feature_name]], penguins[target_name]
 
 ax = sns.scatterplot(data=penguins, x=feature_name, y=target_name,
                      color="black", alpha=0.5)
-ax.set_title("Flipper length in function of the body mass")
+ax.set_title("Body Mass as a function of the Flipper Length")
 
 # %% [markdown]
 # ```{tip}

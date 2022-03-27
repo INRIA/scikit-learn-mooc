@@ -39,7 +39,7 @@
 * [🎥 Visualizing scikit-learn pipelines in Jupyter](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/03_categorical_pipeline_video.html)
 * [✅ Quiz M1.03](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/03_categorical_pipeline_quiz_m1_03.html)
 
-[🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/wrap_up_quiz.html)
+[🏁 Wrap-up quiz 1](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/wrap_up_quiz.html)
 
 [Main take-away](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/predictive_modeling_module_take_away.html)
 
@@ -67,7 +67,7 @@
 * [🎥 Bias versus Variance](https://inria.github.io/scikit-learn-mooc/overfit/bias_vs_variance_slides.html)
 * [✅ Quiz M2.03](https://inria.github.io/scikit-learn-mooc/overfit/bias_vs_variance_quiz_m2_03.html)
 
-[🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/overfit/overfit_wrap_up_quiz.html)
+[🏁 Wrap-up quiz 2](https://inria.github.io/scikit-learn-mooc/overfit/overfit_wrap_up_quiz.html)
 
 [Main take-away](https://inria.github.io/scikit-learn-mooc/overfit/overfit_take_away.html)
 
@@ -86,14 +86,14 @@
 
 * [Hyperparameter tuning by grid-search](notebooks/parameter_tuning_grid_search.ipynb)
 * [Hyperparameter tuning by randomized-search](notebooks/parameter_tuning_randomized_search.ipynb)
-* [🎥 Interactive exploration of hyper-parameter search results](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_parallel_plot_video.html)
+* [🎥 Analysis of hyperparameter search results](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_parallel_plot_video.html)
 * [Analysis of hyperparameter search results](notebooks/parameter_tuning_parallel_plot.ipynb)
 * [Evaluation and hyperparameter tuning](notebooks/parameter_tuning_nested.ipynb)
 * [📝 Exercise M3.02](notebooks/parameter_tuning_ex_03.ipynb)
 * [📃 Solution for Exercise M3.02](notebooks/parameter_tuning_sol_03.ipynb)
 * [✅ Quiz M3.02](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_automated_quiz_m3_02.html)
 
-[🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_wrap_up_quiz.html)
+[🏁 Wrap-up quiz 3](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_wrap_up_quiz.html)
 
 [Main take-away](https://inria.github.io/scikit-learn-mooc/tuning/parameter_tuning_module_take_away.html)
 
@@ -139,7 +139,7 @@
 * [Beyond linear separation in classification](notebooks/logistic_regression_non_linear.ipynb)
 * [✅ Quiz M4.05](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_quiz_m4_05.html)
 
-[🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_wrap_up_quiz.html)
+[🏁 Wrap-up quiz 4](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_wrap_up_quiz.html)
 
 [Main take-away](https://inria.github.io/scikit-learn-mooc/linear_models/linear_models_module_take_away.html)
 
@@ -171,7 +171,7 @@
 * [Importance of decision tree hyperparameters on generalization](notebooks/trees_hyperparameters.ipynb)
 * [✅ Quiz M5.04](https://inria.github.io/scikit-learn-mooc/trees/trees_quiz_m5_04.html)
 
-[🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/trees/trees_wrap_up_quiz.html)
+[🏁 Wrap-up quiz 5](https://inria.github.io/scikit-learn-mooc/trees/trees_wrap_up_quiz.html)
 
 [Main take-away](https://inria.github.io/scikit-learn-mooc/trees/trees_module_take_away.html)
 
@@ -208,7 +208,7 @@
 * [📃 Solution for Exercise M6.04](notebooks/ensemble_sol_04.ipynb)
 * [✅ Quiz M6.03](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_quiz_m6_03.html)
 
-[🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_wrap_up_quiz.html)
+[🏁 Wrap-up quiz 6](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_wrap_up_quiz.html)
 
 [Main take-away](https://inria.github.io/scikit-learn-mooc/ensemble/ensemble_module_take_away.html)
 
@@ -249,6 +249,12 @@
 * [📃 Solution for Exercise M7.03](notebooks/metrics_sol_02.ipynb)
 * [✅ Quiz M7.05](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_quiz_m7_05.html)
 
-[🏁 Wrap-up quiz](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_wrap_up_quiz.html)
+[🏁 Wrap-up quiz 7](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_wrap_up_quiz.html)
 
 [Main take-away](https://inria.github.io/scikit-learn-mooc/evaluation/evaluation_module_take_away.html)
+
+# Concluding remarks
+
+[🎥 Concluding remarks](https://inria.github.io/scikit-learn-mooc/concluding_remarks_video.html)
+
+[Concluding remarks](https://inria.github.io/scikit-learn-mooc/concluding_remarks.html)

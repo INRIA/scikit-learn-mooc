@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
+#   jupytext:
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.11.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -51,7 +58,3 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %%
 # Write your code here.
-
-# %% [markdown]
-# We see that the predictor provided by the bagging regressor does not need
-# much hyperparameter tuning compared to a single decision tree.

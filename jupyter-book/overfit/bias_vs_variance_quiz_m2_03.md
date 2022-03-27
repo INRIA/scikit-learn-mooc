@@ -8,7 +8,7 @@ Fitting a model with a high bias:
 - c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
 - d) causes the learned prediction function to make systematic errors?
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -21,5 +21,5 @@ Fitting a high variance model:
 - c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
 - d) causes the learned prediction function to make systematic errors?
 
-_Several answers possible_
+_Select all answers that apply_
 ```

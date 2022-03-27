@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
 # ---
 # jupyter:
+#   jupytext:
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.11.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -10,12 +17,11 @@
 #
 # The aim of this exercise is to make the following experiments:
 #
-# * train and test a support vector machine classifier through
-#   cross-validation;
+# * train and test a support vector machine classifier through cross-validation;
 # * study the effect of the parameter gamma of this classifier using a
 #   validation curve;
-# * use a learning curve to determine the usefulness of adding new
-#   samples in the dataset when building a classifier.
+# * use a learning curve to determine the usefulness of adding new samples in
+#   the dataset when building a classifier.
 #
 # To make these experiments we will first load the blood transfusion dataset.
 
@@ -34,14 +40,14 @@ target = blood_transfusion["Class"]
 
 # %% [markdown]
 # We will use a support vector machine classifier (SVM). In its most simple
-# form, a SVM classifier is a linear classifier behaving similarly to a
-# logistic regression. Indeed, the optimization used to find the optimal
-# weights of the linear model are different but we don't need to know these
-# details for the exercise.
+# form, a SVM classifier is a linear classifier behaving similarly to a logistic
+# regression. Indeed, the optimization used to find the optimal weights of the
+# linear model are different but we don't need to know these details for the
+# exercise.
 #
-# Also, this classifier can become more flexible/expressive by using a
-# so-called kernel that makes the model become non-linear. Again, no requirement
-# regarding the mathematics is required to accomplish this exercise.
+# Also, this classifier can become more flexible/expressive by using a so-called
+# kernel that makes the model become non-linear. Again, no requirement regarding
+# the mathematics is required to accomplish this exercise.
 #
 # We will use an RBF kernel where a parameter `gamma` allows to tune the
 # flexibility of the model.
@@ -58,12 +64,13 @@ target = blood_transfusion["Class"]
 # Write your code here.
 
 # %% [markdown]
-# Evaluate the generalization performance of your model by cross-validation with a
-# `ShuffleSplit` scheme. Thus, you can use
+# Evaluate the generalization performance of your model by cross-validation with
+# a `ShuffleSplit` scheme. Thus, you can use
 # [`sklearn.model_selection.cross_validate`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html)
-# and pass a [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
-# to the `cv` parameter. Only fix the `random_state=0` in the `ShuffleSplit`
-# and let the other parameters to the default.
+# and pass a
+# [`sklearn.model_selection.ShuffleSplit`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ShuffleSplit.html)
+# to the `cv` parameter. Only fix the `random_state=0` in the `ShuffleSplit` and
+# let the other parameters to the default.
 
 # %%
 # Write your code here.
@@ -73,11 +80,11 @@ target = blood_transfusion["Class"]
 # controlling under/over-fitting in support vector machine with an RBF kernel.
 #
 # Evaluate the effect of the parameter `gamma` by using the
-# [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html) function.
-# You can leave the default `scoring=None` which is equivalent to
-# `scoring="accuracy"` for classification problems. You can vary `gamma`
-# between `10e-3` and `10e2` by generating samples on a logarithmic scale
-# with the help of `np.logspace(-3, 2, num=30)`.
+# [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html)
+# function. You can leave the default `scoring=None` which is equivalent to
+# `scoring="accuracy"` for classification problems. You can vary `gamma` between
+# `10e-3` and `10e2` by generating samples on a logarithmic scale with the help
+# of `np.logspace(-3, 2, num=30)`.
 #
 # Since we are manipulating a `Pipeline` the parameter name will be set to
 # `svc__gamma` instead of only `gamma`. You can retrieve the parameter name

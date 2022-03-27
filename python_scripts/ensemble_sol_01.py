@@ -94,6 +94,6 @@ target_predicted = search.predict(data_test)
 print(f"Mean absolute error after tuning of the bagging regressor:\n"
       f"{mean_absolute_error(target_test, target_predicted):.2f} k$")
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # We see that the predictor provided by the bagging regressor does not need
 # much hyperparameter tuning compared to a single decision tree.

@@ -20,7 +20,7 @@ What kind of problem is it?
 - c) a classification problem
 - d) a regression problem
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -32,7 +32,7 @@ What are the features?
 - b) the post code of the house might be a feature
 - c) the price of the house might be a feature
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++

@@ -13,5 +13,5 @@ good predictions on patients from unseen hospitals.
 - c) Stratified k-fold cross-validation
 - d) Leave-one-out cross-validation
 
-_Several answers possible_
+_Select all answers that apply_
 ```

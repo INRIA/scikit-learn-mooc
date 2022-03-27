@@ -35,7 +35,7 @@ flexibility to the model, we are more likely to observe:
 - c) an increased or steady train error
 - d) a decrease in the train error
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -49,7 +49,7 @@ observations in the training set, are we more likely to observe:
 - c) an increased or steady train error
 - d) a decrease in the train error
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++
@@ -62,7 +62,7 @@ Polynomial models with a high degree parameter:
 - c) get lower training error than lower degree polynomial models
 - d) are more likely to overfit than lower degree polynomial models
 
-_Several answers possible_
+_Select all answers that apply_
 ```
 
 +++

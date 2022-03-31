@@ -135,7 +135,7 @@ _ = plot_tree(tree, feature_names=feature_name, ax=ax)
 
 # %% [markdown]
 # The threshold for our feature (flipper length) is 206.5 mm. The predicted
-# values on each side of the split are two constants: 3683.50 g and 5023.62 g.
+# values on each side of the split are two constants: 3698.71 g and 5032.36 g.
 # These values corresponds to the mean values of the training samples in each
 # partition.
 #

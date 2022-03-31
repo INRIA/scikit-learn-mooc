@@ -1458,8 +1458,8 @@ to generate new samples.</p>
 <p>This assumption is usually violated when dealing with time series. A sample
 depends on past information.</p>
 <p>We will take an example to highlight such issues with non-i.i.d. data in the
-previous cross-validation strategies presented. We are going to load
-financial quotations from some energy companies.</p>
+previous cross-validation strategies presented. We are going to load financial
+quotations from some energy companies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1495,13 +1495,9 @@ financial quotations from some energy companies.</p>
 <img alt="../_images/cross_validation_time_3_0.png" src="../_images/cross_validation_time_3_0.png" />
 </div>
 </div>
-<p>We will repeat the experiment asked during the exercise. Instead of using
-random data, we will use real quotations this time. While it was obvious that
-a predictive model could not work in practice on random data, this is the
-same on these real data. So here, we want to predict the quotation of Chevron
-using all other energy companies’ quotes.</p>
-<p>To make explanatory plots, we will use a single split in addition to the
-cross-validation that you used in the introductory exercise.</p>
+<p>Here, we want to predict the quotation of Chevron using all other energy
+companies’ quotes. To make explanatory plots, we first use a train-test split
+and then we evaluate other cross-validation methods.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -1554,9 +1550,9 @@ check the generalization performance of our model.</p>
 </div>
 </div>
 </div>
-<p>Surprisingly, we get outstanding generalization performance. We will investigate
-and find the reason for such good results with a model that is expected to
-fail. We previously mentioned that <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is an iterative
+<p>Surprisingly, we get outstanding generalization performance. We will
+investigate and find the reason for such good results with a model that is
+expected to fail. We previously mentioned that <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is an iterative
 cross-validation scheme that shuffles data and split. We will simplify this
 procedure with a single split and plot the prediction. We can use
 <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> for this purpose.</p>
@@ -1608,10 +1604,10 @@ We will plot the training, testing and prediction samples.</p>
 testing. But we can also see that the testing samples are next to some
 training sample. And with these time-series, we see a relationship between a
 sample at the time <code class="docutils literal notranslate"><span class="pre">t</span></code> and a sample at <code class="docutils literal notranslate"><span class="pre">t+1</span></code>. In this case, we are violating
-the i.i.d. assumption. The insight to get is the following: a model can
-output of its training set at the time <code class="docutils literal notranslate"><span class="pre">t</span></code> for a testing sample at the time
-<code class="docutils literal notranslate"><span class="pre">t+1</span></code>. This prediction would be close to the true value even if our model
-did not learn anything, but just memorized the training dataset.</p>
+the i.i.d. assumption. The insight to get is the following: a model can output
+of its training set at the time <code class="docutils literal notranslate"><span class="pre">t</span></code> for a testing sample at the time <code class="docutils literal notranslate"><span class="pre">t+1</span></code>.
+This prediction would be close to the true value even if our model did not
+learn anything, but just memorized the training dataset.</p>
 <p>An easy way to verify this hypothesis is to not shuffle the data when doing
 the split. In this case, we will use the first 75% of the data to train and
 the remaining data to test.</p>
@@ -1635,7 +1631,7 @@ the remaining data to test.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.19
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.10
 </pre></div>
 </div>
 </div>
@@ -1661,7 +1657,8 @@ check what we are predicting.</p>
 </div>
 <p>We see that our model cannot predict anything because it doesn’t have samples
 around the testing sample. Let’s check how we could have made a proper
-cross-validation scheme to get a reasonable generalization performance estimate.</p>
+cross-validation scheme to get a reasonable generalization performance
+estimate.</p>
 <p>One solution would be to group the samples into time blocks, e.g. by quarter,
 and predict each group’s information by using information from the other
 groups. We can use the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> cross-validation for this purpose.</p>
@@ -1679,7 +1676,7 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.11 +/- 1.92
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.17 +/- 1.99
 </pre></div>
 </div>
 </div>
@@ -1688,8 +1685,8 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 surprising than our original results.</p>
 <p>Another thing to consider is the actual application of our solution. If our
 model is aimed at forecasting (i.e., predicting future data from past data),
-we should not use training data that are ulterior to the testing data. In
-this case, we can use the <code class="docutils literal notranslate"><span class="pre">TimeSeriesSplit</span></code> cross-validation to enforce this
+we should not use training data that are ulterior to the testing data. In this
+case, we can use the <code class="docutils literal notranslate"><span class="pre">TimeSeriesSplit</span></code> cross-validation to enforce this
 behaviour.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1704,15 +1701,15 @@ behaviour.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -2.21 +/- 3.40
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.49 +/- 2.24
 </pre></div>
 </div>
 </div>
 </div>
 <p>In conclusion, it is really important to not use an out of the shelves
-cross-validation strategy which do not respect some assumptions such as
-having i.i.d data. It might lead to absurd results which could make think
-that a predictive model might work.</p>
+cross-validation strategy which do not respect some assumptions such as having
+i.i.d data. It might lead to absurd results which could make think that a
+predictive model might work.</p>
 </div>
 
     <script type="text/x-thebe-config">

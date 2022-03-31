@@ -1458,8 +1458,8 @@ time, we will use the handwritten digits dataset.</p>
 </div>
 </div>
 </div>
-<p>We will recreate the same model used in the previous exercise:
-a logistic regression classifier with preprocessor to scale the data.</p>
+<p>We will recreate the same model used in the previous notebook:
+a logistic regression classifier with a preprocessor to scale the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
@@ -1506,7 +1506,7 @@ cross-validation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.968 +/- 0.005
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.965 +/- 0.013
 </pre></div>
 </div>
 </div>
@@ -1543,9 +1543,9 @@ score. We can first concatenate the test scores.</p>
 <img alt="../_images/cross_validation_grouping_11_0.png" src="../_images/cross_validation_grouping_11_0.png" />
 </div>
 </div>
-<p>The cross-validation testing error that uses the shuffling has less
-variance than the one that does not impose any shuffling. It means that some
-specific fold leads to a low score in this case.</p>
+<p>The cross-validation testing error that uses the shuffling has less variance
+than the one that does not impose any shuffling. It means that some specific
+fold leads to a low score in this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">test_score_no_shuffling</span><span class="p">)</span>
@@ -1620,11 +1620,11 @@ L. Wilson, NIST Form-Based Handprint Recognition System, NISTIR 5469,
 </div>
 <p>If we read carefully, 13 writers wrote the digits of our dataset, accounting
 for a total amount of 1797 samples. Thus, a writer wrote several times the
-same numbers. Let’s suppose that the writer samples are grouped.
-Subsequently, not shuffling the data will keep all writer samples together
-either in the training or the testing sets. Mixing the data will break this
-structure, and therefore digits written by the same writer will be available
-in both the training and testing sets.</p>
+same numbers. Let’s suppose that the writer samples are grouped. Subsequently,
+not shuffling the data will keep all writer samples together either in the
+training or the testing sets. Mixing the data will break this structure, and
+therefore digits written by the same writer will be available in both the
+training and testing sets.</p>
 <p>Besides, a writer will usually tend to write digits in the same manner. Thus,
 our model will learn to identify a writer’s pattern for each digit instead of
 recognizing the digit itself.</p>
@@ -1655,13 +1655,13 @@ group samples for each writer.</p>
 </div>
 <p>It might not be obvious at first, but there is a structure in the target:
 there is a repetitive pattern that always starts by some series of ordered
-digits from 0 to 9 followed by random digits at a certain point. If we look
-in details, we see that there is 14 such patterns, always with around 130
-samples each.</p>
-<p>Even if it is not exactly corresponding to the 13 writers in the
-documentation (maybe one writer wrote two series of digits), we can
-make the hypothesis that each of these patterns corresponds to a different
-writer and thus a different group.</p>
+digits from 0 to 9 followed by random digits at a certain point. If we look in
+detail, we see that there are 14 such patterns, always with around 130 samples
+each.</p>
+<p>Even if it is not exactly corresponding to the 13 writers in the documentation
+(maybe one writer wrote two series of digits), we can make the hypothesis that
+each of these patterns corresponds to a different writer and thus a different
+group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
@@ -1748,8 +1748,8 @@ see that the standard deviation was reduced.</p>
 </div>
 </div>
 <p>As a conclusion, it is really important to take any sample grouping pattern
-into account when evaluating a model. Otherwise, the results obtained will
-be over-optimistic in regards with reality.</p>
+into account when evaluating a model. Otherwise, the results obtained will be
+over-optimistic in regards with reality.</p>
 </div>
 
     <script type="text/x-thebe-config">

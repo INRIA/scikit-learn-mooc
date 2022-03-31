@@ -21,8 +21,8 @@
 # depends on past information.
 #
 # We will take an example to highlight such issues with non-i.i.d. data in the
-# previous cross-validation strategies presented. We are going to load
-# financial quotations from some energy companies.
+# previous cross-validation strategies presented. We are going to load financial
+# quotations from some energy companies.
 
 # %%
 import pandas as pd
@@ -51,14 +51,9 @@ plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Stock values over time")
 
 # %% [markdown]
-# We will repeat the experiment asked during the exercise. Instead of using
-# random data, we will use real quotations this time. While it was obvious that
-# a predictive model could not work in practice on random data, this is the
-# same on these real data. So here, we want to predict the quotation of Chevron
-# using all other energy companies' quotes.
-#
-# To make explanatory plots, we will use a single split in addition to the
-# cross-validation that you used in the introductory exercise.
+# Here, we want to predict the quotation of Chevron using all other energy
+# companies' quotes. To make explanatory plots, we first use a train-test split
+# and then we evaluate other cross-validation methods.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -99,9 +94,9 @@ print(f"The mean R2 is: "
       f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
 
 # %% [markdown]
-# Surprisingly, we get outstanding generalization performance. We will investigate
-# and find the reason for such good results with a model that is expected to
-# fail. We previously mentioned that `ShuffleSplit` is an iterative
+# Surprisingly, we get outstanding generalization performance. We will
+# investigate and find the reason for such good results with a model that is
+# expected to fail. We previously mentioned that `ShuffleSplit` is an iterative
 # cross-validation scheme that shuffles data and split. We will simplify this
 # procedure with a single split and plot the prediction. We can use
 # `train_test_split` for this purpose.
@@ -139,10 +134,10 @@ _ = plt.title("Model predictions using a ShuffleSplit strategy")
 # testing. But we can also see that the testing samples are next to some
 # training sample. And with these time-series, we see a relationship between a
 # sample at the time `t` and a sample at `t+1`. In this case, we are violating
-# the i.i.d. assumption. The insight to get is the following: a model can
-# output of its training set at the time `t` for a testing sample at the time
-# `t+1`. This prediction would be close to the true value even if our model
-# did not learn anything, but just memorized the training dataset.
+# the i.i.d. assumption. The insight to get is the following: a model can output
+# of its training set at the time `t` for a testing sample at the time `t+1`.
+# This prediction would be close to the true value even if our model did not
+# learn anything, but just memorized the training dataset.
 #
 # An easy way to verify this hypothesis is to not shuffle the data when doing
 # the split. In this case, we will use the first 75% of the data to train and
@@ -177,7 +172,8 @@ _ = plt.title("Model predictions using a split without shuffling")
 # %% [markdown]
 # We see that our model cannot predict anything because it doesn't have samples
 # around the testing sample. Let's check how we could have made a proper
-# cross-validation scheme to get a reasonable generalization performance estimate.
+# cross-validation scheme to get a reasonable generalization performance
+# estimate.
 #
 # One solution would be to group the samples into time blocks, e.g. by quarter,
 # and predict each group's information by using information from the other
@@ -199,8 +195,8 @@ print(f"The mean R2 is: "
 #
 # Another thing to consider is the actual application of our solution. If our
 # model is aimed at forecasting (i.e., predicting future data from past data),
-# we should not use training data that are ulterior to the testing data. In
-# this case, we can use the `TimeSeriesSplit` cross-validation to enforce this
+# we should not use training data that are ulterior to the testing data. In this
+# case, we can use the `TimeSeriesSplit` cross-validation to enforce this
 # behaviour.
 
 # %%
@@ -214,6 +210,6 @@ print(f"The mean R2 is: "
 
 # %% [markdown]
 # In conclusion, it is really important to not use an out of the shelves
-# cross-validation strategy which do not respect some assumptions such as
-# having i.i.d data. It might lead to absurd results which could make think
-# that a predictive model might work.
+# cross-validation strategy which do not respect some assumptions such as having
+# i.i.d data. It might lead to absurd results which could make think that a
+# predictive model might work.

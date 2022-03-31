@@ -169,7 +169,7 @@ model_grid_search.best_params_
 # hyper-parameters and to train the refitted model.
 #
 # Because of the above, one must keep an external, held-out test set for the
-# final evaluation the refitted model. We highlight here the process using a
+# final evaluation of the refitted model. We highlight here the process using a
 # single train-test split.
 
 # %%
@@ -231,7 +231,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # refitted tuned model.
 #
 # In practice, we only need to embed the grid-search in the function
-# `cross-validate` to perform such evaluation.
+# `cross_validate` to perform such evaluation.
 
 # %%
 cv_results = cross_validate(

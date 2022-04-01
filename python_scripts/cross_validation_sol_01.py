@@ -188,8 +188,8 @@ _ = plt.title("Learning curve for support vector machine")
 # We observe that adding new samples to the training dataset does not seem to
 # improve the training and testing scores. In particular, the testing score
 # oscillates around 76% accuracy. Indeed, ~76% of the samples belong to the
-# class `"not donated"``. Notice then that a classifier that always predicts the
-# `"not donated"`` class would achieve an accuracy of 76% without using any
+# class `"not donated"`. Notice then that a classifier that always predicts the
+# `"not donated"` class would achieve an accuracy of 76% without using any
 # information from the data itself. This can mean that our small pipeline is not
 # able to use the input features to improve upon that simplistic baseline, and
 # increasing the training set size does not help either.

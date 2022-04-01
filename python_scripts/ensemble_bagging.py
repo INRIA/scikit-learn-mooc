@@ -83,10 +83,11 @@ _ = plt.title("Predictions by a single decision tree")
 #
 # ## Bootstrap resampling
 #
-# A bootstrap sample corresponds to a resampling with replacement, of the
-# original dataset, a sample that is the same size as the original dataset.
-# Thus, the bootstrap sample will contain some data points several times while
-# some of the original data points will not be present.
+# Bootstrapping corresponds to a resampling with replacement of the original
+# dataset. A bootstrap sample is then a sample that has the same values of the
+# input features and target as a given sample in the original dataset. Thus, the
+# bootstrap resampling will contain some data points several times while some of
+# the original data points will not be present.
 #
 # We will create a function that given `data` and `target` will return a
 # resampled variation `data_bootstrap` and `target_bootstrap`.

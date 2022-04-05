@@ -83,10 +83,16 @@ _ = plt.title("Predictions by a single decision tree")
 #
 # ## Bootstrap resampling
 #
-# A bootstrap sample corresponds to a resampling with replacement, of the
-# original dataset, a sample that is the same size as the original dataset.
-# Thus, the bootstrap sample will contain some data points several times while
-# some of the original data points will not be present.
+# Bootstrapping is a resampling "with replacement" of the original
+# dataset. It corresponds to sampling n out of n data points with
+# replacement uniformly at random from the original dataset. n is the
+# number of data points in the original dataset.
+#
+# As a result, the output of the bootstrap sampling procedure is another
+# dataset with also n data points, but likely with duplicates. As a consequence,
+# there are also data points from the original dataset that are never selected to
+# appear in a bootstrap sample (by chance). Those data points that are left away
+# are often referred to as the out-of-bag sample.
 #
 # We will create a function that given `data` and `target` will return a
 # resampled variation `data_bootstrap` and `target_bootstrap`.

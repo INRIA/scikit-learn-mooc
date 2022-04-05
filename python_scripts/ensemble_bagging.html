@@ -1587,10 +1587,15 @@ would be meaningless.</p>
 <p>Let’s see how we can use bootstraping to learn several trees.</p>
 <div class="section" id="bootstrap-resampling">
 <h2>Bootstrap resampling<a class="headerlink" href="#bootstrap-resampling" title="Permalink to this headline">¶</a></h2>
-<p>A bootstrap sample corresponds to a resampling with replacement, of the
-original dataset, a sample that is the same size as the original dataset.
-Thus, the bootstrap sample will contain some data points several times while
-some of the original data points will not be present.</p>
+<p>Bootstrapping is a resampling “with replacement” of the original
+dataset. It corresponds to sampling n out of n data points with
+replacement uniformly at random from the original dataset. n is the
+number of data points in the original dataset.</p>
+<p>As a result, the output of the bootstrap sampling procedure is another
+dataset with also n data points, but likely with duplicates. As a consequence,
+there are also data points from the original dataset that are never selected to
+appear in a bootstrap sample (by chance). Those data points that are left away
+are often referred to as the out-of-bag sample.</p>
 <p>We will create a function that given <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> will return a
 resampled variation <code class="docutils literal notranslate"><span class="pre">data_bootstrap</span></code> and <code class="docutils literal notranslate"><span class="pre">target_bootstrap</span></code>.</p>
 <div class="cell docutils container">

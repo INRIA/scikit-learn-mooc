@@ -245,7 +245,7 @@ _ = sns.scatterplot(
     x="age",
     y="hours-per-week",
     data=adult_census[:n_samples_to_plot],
-    hue="class",
+    hue=target_column,
     alpha=0.5,
 )
 
@@ -266,7 +266,7 @@ ax = sns.scatterplot(
     x="age",
     y="hours-per-week",
     data=adult_census[:n_samples_to_plot],
-    hue="class",
+    hue=target_column,
     alpha=0.5,
 )
 

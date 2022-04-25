@@ -89,7 +89,7 @@ print(f"The dataset contains {data.shape[0]} samples and "
 from sklearn.neighbors import KNeighborsClassifier
 
 model = KNeighborsClassifier()
-model.fit(data, target)
+_ = model.fit(data, target)
 
 # %% [markdown]
 # Learning can be represented as follows:
@@ -163,7 +163,7 @@ print(f"Number of correct prediction: "
 # This result means that the model makes a correct prediction for
 # approximately 82 samples out of 100. Note that we used the same data
 # to train and evaluate our model. Can this evaluation be trusted or is
-# it to good to be true?
+# it too good to be true?
 #
 # ## Train-test data split
 #

@@ -5,7 +5,7 @@
 <!-- Give in plain English what the module is about -->
 
 In the previous modules, we showed how to create, train, predict, and even
-evaluate a predictive model. However, we did not change on the models'
+evaluate a predictive model. However, we did not change the models'
 parameters that can be given when creating an instance. For example,
 for k-nearest neighbors, we initially used this default parameter:
 `n_neighbors=5` before trying other model parameters.

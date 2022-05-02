@@ -116,7 +116,7 @@ print(
 #
 # ### With hyperparameter tuning
 #
-# As we shown in the previous notebook, one can use a search strategy that uses
+# As shown in the previous notebook, one can use a search strategy that uses
 # cross-validation to find the best set of parameters. Here, we will use a
 # grid-search strategy and reproduce the steps done in the previous notebook.
 #
@@ -184,7 +184,7 @@ accuracy = model_grid_search.score(data_test, target_test)
 print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
-# The score measure on the final test set is almost with the range of the
+# The score measure on the final test set is almost within the range of the
 # internal CV score for the best hyper-parameter combination. This is reassuring
 # as it means that the tuning procedure did not cause significant overfitting
 # in itself (other-wise the final test score would have been lower than the

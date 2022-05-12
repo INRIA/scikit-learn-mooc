@@ -33,7 +33,7 @@ data, target = load_breast_cancer(return_X_y=True)
 
 # %% [markdown]
 # First, we use `GridSearchCV` to find the best parameters via cross-validation
-# on a minal parameter grid.
+# on a minimal parameter grid.
 
 # %%
 from sklearn.model_selection import GridSearchCV

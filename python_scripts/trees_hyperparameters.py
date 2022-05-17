@@ -160,7 +160,7 @@ _ = plt.title(f"Optimal depth found via CV: "
 # Indeed, optimal generalization performance could be reached by growing some of
 # the branches deeper than some others.
 #
-# We will built a dataset where we will illustrate this asymmetry. We will
+# We will build a dataset where we will illustrate this asymmetry. We will
 # generate a dataset composed of 2 subsets: one subset where a clear separation
 # should be found by the tree and another subset where samples from both
 # classes will be mixed. It implies that a decision tree will need more splits

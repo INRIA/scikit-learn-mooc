@@ -72,12 +72,12 @@ classifier.fit(data_train, target_train)
 
 # %% [markdown]
 # ## Classifier predictions
-# Before we go into details regarding the metrics, we will recall what type
-# of predictions a classifier can provide.
+# Before we go into details regarding the metrics, we will recall what type of
+# predictions a classifier can provide.
 #
 # For this reason, we will create a synthetic sample for a new potential donor:
-# he/she donated blood twice in the past (1000 c.c. each time). The last time
-# was 6 months ago, and the first time goes back to 20 months ago.
+# they donated blood twice in the past (1000 c.c. each time). The last time was
+# 6 months ago, and the first time goes back to 20 months ago.
 
 # %%
 new_donor = pd.DataFrame(
@@ -151,13 +151,13 @@ classifier.score(data_test, target_test)
 # %% [markdown]
 # ## Confusion matrix and derived metrics
 # The comparison that we did above and the accuracy that we calculated did not
-# take into account the type of error our classifier was making. Accuracy
-# is an aggregate of the errors made by the classifier. We may be interested
-# in finer granularity - to know independently what the error is for each of
-# the two following cases:
+# take into account the type of error our classifier was making. Accuracy is an
+# aggregate of the errors made by the classifier. We may be interested in finer
+# granularity - to know independently what the error is for each of the two
+# following cases:
 #
-# - we predicted that a person will give blood but she/he did not;
-# - we predicted that a person will not give blood but she/he did.
+# - we predicted that a person will give blood but they did not;
+# - we predicted that a person will not give blood but they did.
 
 # %%
 from sklearn.metrics import ConfusionMatrixDisplay

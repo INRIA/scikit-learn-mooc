@@ -100,7 +100,8 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # ```{note}
 # Here, we will use the class `DecisionBoundaryDisplay`. We provide this class
 # to allow making plots of the decision function boundary in a 2 dimensional
-# space.
+# space. This educational utility allows us to gain some insights on
+# the shape of the class decision boundary learned by the classifier.
 # ```
 
 # %%

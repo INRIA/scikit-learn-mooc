@@ -94,7 +94,7 @@ Let us give a few pointers on going further with machine learning.
     - Build a community: helping each other, helping training, communication,
       advocacy
     - Curate information: our developers have information overflow
-    - Contributing code is technical
+    - [Contributing code](https://scikit-learn.org/stable/developers/contributing.html#contributing-code) is technical
 	- Learn software engineering (if you don't know where to start,
      [Software Carpentry](https://software-carpentry.org/lessons) is a good
      resource)

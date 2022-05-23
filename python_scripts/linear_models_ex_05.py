@@ -67,7 +67,7 @@ logistic_regression = make_pipeline(
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of
 # `C` on the classifier decision boundary. You can import the helper class with
-# `from helpers.plotting import DecisionBoundaryDisplay` to plot the decision
+# `from sklearn.inspection import DecisionBoundaryDisplay` to plot the decision
 # function boundary. Use the method `from_estimator` from this class.
 
 # %%

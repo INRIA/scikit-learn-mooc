@@ -58,7 +58,7 @@ linear_model.fit(data_train, target_train)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from helpers.plotting import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 
 # create a palette to be used in the scatterplot
 palette = ["tab:red", "tab:blue", "black"]

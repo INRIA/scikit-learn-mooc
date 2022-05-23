@@ -42,7 +42,7 @@ data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from helpers.plotting import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 
 
 def fit_and_plot_classification(model, data, feature_names, target_names):

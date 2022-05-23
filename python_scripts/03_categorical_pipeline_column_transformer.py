@@ -152,7 +152,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 #
 # ```{caution}
 # Be aware that we use `train_test_split` here for didactic purposes, to show
-# the scikit-learn API.
+# the scikit-learn API. In a real setting one should use cross-validation as
+# previously demonstrated.
 # ```
 #
 # Now, we can train the model on the train set.

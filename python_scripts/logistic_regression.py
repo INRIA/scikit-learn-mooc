@@ -100,16 +100,12 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # ```{note}
 # Here, we will use the class `DecisionBoundaryDisplay`. We provide this class
 # to allow making plots of the decision function boundary in a 2 dimensional
-# space. The implementation can be found [here](
-# https://github.com/INRIA/scikit-learn-mooc/blob/main/python_scripts/helpers/plotting.py).
-# This class is intended to be part of the `scikit-learn` package in the future
-# as it is proposed in the following [Pull-Request](
-# https://github.com/scikit-learn/scikit-learn/pull/16061).
+# space.
 # ```
 
 # %%
 import seaborn as sns
-from helpers.plotting import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 
 DecisionBoundaryDisplay.from_estimator(
     logistic_regression, data_test, response_method="predict", cmap="RdBu_r", alpha=0.5

@@ -146,12 +146,12 @@ _ = plt.title("Weights of the logistic regression")
 # For the mathematically inclined reader, the equation of the decision boundary
 # is:
 #
-#     `coef0 * x0 + coef1 * x1 + intercept = 0`
+#     coef0 * x0 + coef1 * x1 + intercept = 0
 #
 # where `x0` is `"Culmen Length (mm)"` and `x1` is `"Culmen Depth (mm)"`.
 #
 # This equation is equivalent to (assuming that `coef1` is non-zero):
 #
-#     `x1 = coef0 / coef1 * x0 - intercept / coef1`
+#     x1 = coef0 / coef1 * x0 - intercept / coef1
 #
 # which is the equation of a straight line.

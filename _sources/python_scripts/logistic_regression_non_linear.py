@@ -20,7 +20,7 @@
 # find a perfect linear separation.
 #
 # We will generate a first dataset where the data are represented as two
-# interlaced half circle. This dataset is generated using the function
+# interlaced half circles. This dataset is generated using the function
 # [`sklearn.datasets.make_moons`](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html).
 
 # %%
@@ -84,7 +84,7 @@ linear_model.fit(data_moons, target_moons)
 # Let's check the decision boundary of such a linear model on this dataset.
 
 # %%
-from helpers.plotting import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 
 DecisionBoundaryDisplay.from_estimator(
     linear_model, data_moons, response_method="predict", cmap="RdBu", alpha=0.5

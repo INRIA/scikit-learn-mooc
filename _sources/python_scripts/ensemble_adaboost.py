@@ -56,7 +56,7 @@ data_misclassified = data.iloc[misclassified_samples_idx]
 
 # %%
 import matplotlib.pyplot as plt
-from helpers.plotting import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 
 DecisionBoundaryDisplay.from_estimator(
     tree, data, response_method="predict", cmap="RdBu", alpha=0.5

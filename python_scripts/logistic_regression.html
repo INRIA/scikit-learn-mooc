@@ -1458,7 +1458,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
 
@@ -1474,7 +1474,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>We can quickly start by visualizing the feature distribution by class:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="k">for</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">culmen_columns</span><span class="p">:</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -1483,10 +1483,6 @@ Appendix - Datasets description section at the end of this MOOC.</p>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">feature_name</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/logistic_regression_4_0.png" src="../_images/logistic_regression_4_0.png" />
-<img alt="../_images/logistic_regression_4_1.png" src="../_images/logistic_regression_4_1.png" />
 </div>
 </div>
 <p>We can observe that we have quite a simple problem. When the culmen
@@ -1497,7 +1493,7 @@ species.</p>
 we will create a training and a testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">penguins_train</span><span class="p">,</span> <span class="n">penguins_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
@@ -1518,7 +1514,7 @@ regression.</p>
 algorithm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
 <span class="n">sklearn</span><span class="o">.</span><span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1526,7 +1522,7 @@ algorithm.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
@@ -1539,11 +1535,6 @@ algorithm.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy on test set: 1.000
-</pre></div>
-</div>
-</div>
 </div>
 <p>Since we are dealing with a classification problem containing only 2
 features, it is then possible to observe the decision function boundary.
@@ -1551,16 +1542,18 @@ The boundary is the rule used by our predictive model to affect a class label
 given the feature values of the sample.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Here, we will use the class <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code>. We provide this class
-to allow making plots of the decision function boundary in a 2 dimensional
-space. The implementation can be found <a class="reference external" href="https://github.com/INRIA/scikit-learn-mooc/blob/main/python_scripts/helpers/plotting.py">here</a>.
-This class is intended to be part of the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> package in the future
-as it is proposed in the following <a class="reference external" href="https://github.com/scikit-learn/scikit-learn/pull/16061">Pull-Request</a>.</p>
+<p>Here, we will use the class <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code>. This educational tool
+allows us to gain some insights by plotting the decision function boundary
+learned by the classifier in a 2 dimensional feature space.</p>
+<p>Notice however that in more realistic machine learning contexts, one would
+typically fit on more than two features at once and therefore it would not be
+possible to display such a visualization of of the decision boundary in
+general.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">helpers.plotting</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
 <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">logistic_regression</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
@@ -1572,9 +1565,6 @@ as it is proposed in the following <a class="reference external" href="https://g
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/logistic_regression_11_0.png" src="../_images/logistic_regression_11_0.png" />
-</div>
 </div>
 <p>Thus, we see that our decision function is represented by a line separating
 the 2 classes. We should also note that we did not impose any regularization
@@ -1583,7 +1573,7 @@ by setting the parameter <code class="docutils literal notranslate"><span class=
 features:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># the coefficients is a 2d array</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># the coefficients is a 2d array</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1591,16 +1581,27 @@ features:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Weights of the logistic regression&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/logistic_regression_14_0.png" src="../_images/logistic_regression_14_0.png" />
 </div>
+<p>Indeed, both coefficients are non-null. If one of them had been zero, the
+decision boundary would have been either horizontal or vertical.</p>
+<p>Furthermore the intercept is also non-zero, which means that the decision does
+not go through the point with (0, 0) coordinates.</p>
+<p>For the mathematically inclined reader, the equation of the decision boundary
+is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>coef0 * x0 + coef1 * x1 + intercept = 0
+</pre></div>
 </div>
-<p>Indeed, both coefficients are non-null.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">x0</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;Culmen</span> <span class="pre">Length</span> <span class="pre">(mm)&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">x1</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;Culmen</span> <span class="pre">Depth</span> <span class="pre">(mm)&quot;</span></code>.</p>
+<p>This equation is equivalent to (assuming that <code class="docutils literal notranslate"><span class="pre">coef1</span></code> is non-zero):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x1 = coef0 / coef1 * x0 - intercept / coef1
+</pre></div>
+</div>
+<p>which is the equation of a straight line.</p>
 </div>
 
     <script type="text/x-thebe-config">

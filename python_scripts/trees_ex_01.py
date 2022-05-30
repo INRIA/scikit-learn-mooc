@@ -52,7 +52,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # the training data. Once this classifier trained, plot the data and the
 # decision boundary to see the benefit of increasing the depth. To plot the
 # decision boundary, you should import the class `DecisionBoundaryDisplay`
-# from the module `helpers.plotting` as shown in the previous course notebook.
+# from the module `sklearn.inspection` as shown in the previous course notebook.
 
 # %%
 # Write your code here.

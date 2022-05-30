@@ -103,7 +103,7 @@ model
 #
 # ![Randomized vs grid search](../figures/grid_vs_random_search.svg)
 #
-# Indeed, the number of evaluation points need to be divided across the
+# Indeed, the number of evaluation points needs to be divided across the
 # two different hyperparameters. With a grid, the danger is that the
 # region of good hyperparameters fall between the line of the grid: this
 # region is aligned with the grid given that hyperparameter 2 has a weak

@@ -98,18 +98,19 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # given the feature values of the sample.
 #
 # ```{note}
-# Here, we will use the class `DecisionBoundaryDisplay`. We provide this class
-# to allow making plots of the decision function boundary in a 2 dimensional
-# space. The implementation can be found [here](
-# https://github.com/INRIA/scikit-learn-mooc/blob/main/python_scripts/helpers/plotting.py).
-# This class is intended to be part of the `scikit-learn` package in the future
-# as it is proposed in the following [Pull-Request](
-# https://github.com/scikit-learn/scikit-learn/pull/16061).
+# Here, we will use the class `DecisionBoundaryDisplay`. This educational tool
+# allows us to gain some insights by plotting the decision function boundary
+# learned by the classifier in a 2 dimensional feature space.
+#
+# Notice however that in more realistic machine learning contexts, one would
+# typically fit on more than two features at once and therefore it would not be
+# possible to display such a visualization of of the decision boundary in
+# general.
 # ```
 
 # %%
 import seaborn as sns
-from helpers.plotting import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 
 DecisionBoundaryDisplay.from_estimator(
     logistic_regression, data_test, response_method="predict", cmap="RdBu_r", alpha=0.5
@@ -136,4 +137,21 @@ weights.plot.barh()
 _ = plt.title("Weights of the logistic regression")
 
 # %% [markdown]
-# Indeed, both coefficients are non-null.
+# Indeed, both coefficients are non-null. If one of them had been zero, the
+# decision boundary would have been either horizontal or vertical.
+#
+# Furthermore the intercept is also non-zero, which means that the decision does
+# not go through the point with (0, 0) coordinates.
+#
+# For the mathematically inclined reader, the equation of the decision boundary
+# is:
+#
+#     coef0 * x0 + coef1 * x1 + intercept = 0
+#
+# where `x0` is `"Culmen Length (mm)"` and `x1` is `"Culmen Depth (mm)"`.
+#
+# This equation is equivalent to (assuming that `coef1` is non-zero):
+#
+#     x1 = coef0 / coef1 * x0 - intercept / coef1
+#
+# which is the equation of a straight line.

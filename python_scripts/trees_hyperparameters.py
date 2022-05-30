@@ -42,7 +42,7 @@ data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from helpers.plotting import DecisionBoundaryDisplay
+from sklearn.inspection import DecisionBoundaryDisplay
 
 
 def fit_and_plot_classification(model, data, feature_names, target_names):
@@ -160,7 +160,7 @@ _ = plt.title(f"Optimal depth found via CV: "
 # Indeed, optimal generalization performance could be reached by growing some of
 # the branches deeper than some others.
 #
-# We will built a dataset where we will illustrate this asymmetry. We will
+# We will build a dataset where we will illustrate this asymmetry. We will
 # generate a dataset composed of 2 subsets: one subset where a clear separation
 # should be found by the tree and another subset where samples from both
 # classes will be mixed. It implies that a decision tree will need more splits

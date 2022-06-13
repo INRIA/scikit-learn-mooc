@@ -194,7 +194,7 @@ cv_results = cross_validate(
 
 # %%
 score = cv_results["test_score"]
-print(f"R2 score: {score.mean():.3f} +/- {score.std():.3f}")
+print(f"R2 score: {score.mean():.3f} ± {score.std():.3f}")
 
 # %%
 import pandas as pd

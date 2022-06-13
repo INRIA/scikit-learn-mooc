@@ -109,7 +109,7 @@ model = GridSearchCV(
 # Outer cross-validation to compute the testing score
 test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=2)
 print(f"The mean score using nested cross-validation is: "
-      f"{test_score.mean():.3f} +/- {test_score.std():.3f}")
+      f"{test_score.mean():.3f} ± {test_score.std():.3f}")
 
 # %% [markdown]
 # The reported score is more trustworthy and should be close to production's

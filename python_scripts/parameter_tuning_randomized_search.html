@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Hyperparameter tuning by randomized-search &#8212; Scikit-learn course</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,21 +20,17 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -40,22 +38,23 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
-    <script src="../_static/matomo.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
+    <script src="../_static/matomo.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -68,7 +67,21 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -77,9 +90,10 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
@@ -1324,112 +1338,244 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/python_scripts/parameter_tuning_randomized_search.py"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.py</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/INRIA/scikit-learn-mooc"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/parameter_tuning_randomized_search.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/INRIA/scikit-learn-mooc/edit/main/python_scripts/parameter_tuning_randomized_search.py"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?urlpath=tree/python_scripts/parameter_tuning_randomized_search.py"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?urlpath=tree/python_scripts/parameter_tuning_randomized_search.py"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/INRIA/scikit-learn-mooc"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/INRIA/scikit-learn-mooc/issues/new?title=Issue%20on%20page%20%2Fpython_scripts/parameter_tuning_randomized_search.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/INRIA/scikit-learn-mooc/edit/main/python_scripts/parameter_tuning_randomized_search.py"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/python_scripts/parameter_tuning_randomized_search.py"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.py</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#our-predictive-model">
    Our predictive model
@@ -1442,12 +1588,11 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Hyperparameter tuning by randomized-search</h1>
@@ -1476,11 +1621,12 @@ const thebe_selector_output = ".output, .cell_output"
                     </div>
                 </div>
             </div>
-            
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="hyperparameter-tuning-by-randomized-search">
-<h1>Hyperparameter tuning by randomized-search<a class="headerlink" href="#hyperparameter-tuning-by-randomized-search" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="hyperparameter-tuning-by-randomized-search">
+<h1>Hyperparameter tuning by randomized-search<a class="headerlink" href="#hyperparameter-tuning-by-randomized-search" title="Permalink to this headline">#</a></h1>
 <p>In the previous notebook, we showed how to use a grid-search approach to
 search for the best hyperparameters maximizing the generalization performance
 of a predictive model.</p>
@@ -1489,8 +1635,8 @@ the number of parameters to tune is increasing. Also, the grid will impose
 a regularity during the search which might be problematic.</p>
 <p>In this notebook, we will present another method to tune hyperparameters
 called randomized search.</p>
-<div class="section" id="our-predictive-model">
-<h2>Our predictive model<a class="headerlink" href="#our-predictive-model" title="Permalink to this headline">¶</a></h2>
+<section id="our-predictive-model">
+<h2>Our predictive model<a class="headerlink" href="#our-predictive-model" title="Permalink to this headline">#</a></h2>
 <p>Let us reload the dataset as we did previously:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1704,7 +1850,7 @@ section.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 {color: black;background-color: white;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 pre{padding: 0;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-toggleable {background-color: white;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-estimator:hover {background-color: #d4ebff;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-item {z-index: 1;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-parallel-item:only-child::after {width: 0;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9 div.sk-text-repr-fallback {display: none;}</style><div id="sk-5da5a809-dcf3-4b4b-a59e-27effacb52a9" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
                  ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
                                    transformers=[(&#x27;cat_preprocessor&#x27;,
                                                   OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
@@ -1716,7 +1862,7 @@ section.</p>
                                                    &#x27;native-country&#x27;])])),
                 (&#x27;classifier&#x27;,
                  HistGradientBoostingClassifier(max_leaf_nodes=4,
-                                                random_state=42))])</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="e60e2334-0dda-4ad1-907f-d1f44acfd577" type="checkbox" ><label for="e60e2334-0dda-4ad1-907f-d1f44acfd577" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                                                random_state=42))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
                  ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
                                    transformers=[(&#x27;cat_preprocessor&#x27;,
                                                   OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
@@ -1728,17 +1874,17 @@ section.</p>
                                                    &#x27;native-country&#x27;])])),
                 (&#x27;classifier&#x27;,
                  HistGradientBoostingClassifier(max_leaf_nodes=4,
-                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="3d9ef499-6a37-4266-bb8a-5af942985f5a" type="checkbox" ><label for="3d9ef499-6a37-4266-bb8a-5af942985f5a" class="sk-toggleable__label sk-toggleable__label-arrow">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
+                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
                   transformers=[(&#x27;cat_preprocessor&#x27;,
                                  OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                 unknown_value=-1),
                                  [&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;,
                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
-                                  &#x27;native-country&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="a222061b-8248-4df2-825e-e71bc1f28c76" type="checkbox" ><label for="a222061b-8248-4df2-825e-e71bc1f28c76" class="sk-toggleable__label sk-toggleable__label-arrow">cat_preprocessor</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="0102000d-93da-4e60-8a88-60eebbfebfd0" type="checkbox" ><label for="0102000d-93da-4e60-8a88-60eebbfebfd0" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="e3f8c1dd-a8e5-4522-b9d3-9626dbcb8e75" type="checkbox" ><label for="e3f8c1dd-a8e5-4522-b9d3-9626dbcb8e75" class="sk-toggleable__label sk-toggleable__label-arrow">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="084360d4-3cae-4ddd-a5d6-4bb87dacb120" type="checkbox" ><label for="084360d4-3cae-4ddd-a5d6-4bb87dacb120" class="sk-toggleable__label sk-toggleable__label-arrow">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="d9185973-6a3d-4de0-9a1a-bb27e7fd58d4" type="checkbox" ><label for="d9185973-6a3d-4de0-9a1a-bb27e7fd58d4" class="sk-toggleable__label sk-toggleable__label-arrow">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div>
+                                  &#x27;native-country&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">cat_preprocessor</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label sk-toggleable__label-arrow">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div>
 </div>
-</div>
-<div class="section" id="tuning-using-a-randomized-search">
-<h2>Tuning using a randomized-search<a class="headerlink" href="#tuning-using-a-randomized-search" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="tuning-using-a-randomized-search">
+<h2>Tuning using a randomized-search<a class="headerlink" href="#tuning-using-a-randomized-search" title="Permalink to this headline">#</a></h2>
 <p>With the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator, the parameters need to be specified
 explicitly. We already mentioned that exploring a large number of values for
 different parameters will be quickly untractable.</p>
@@ -1835,11 +1981,11 @@ of available processors.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 10 candidates, totalling 50 fits
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 23.7 s, sys: 379 ms, total: 24.1 s
-Wall time: 24.1 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 34.3 s, sys: 603 ms, total: 34.9 s
+Wall time: 34.9 s
 </pre></div>
 </div>
-<div class="output text_html"><style>#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d {color: black;background-color: white;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d pre{padding: 0;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-toggleable {background-color: white;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-estimator:hover {background-color: #d4ebff;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-item {z-index: 1;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-parallel::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 2em;bottom: 0;left: 50%;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-parallel-item {display: flex;flex-direction: column;position: relative;background-color: white;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-parallel-item:only-child::after {width: 0;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;position: relative;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-label label {font-family: monospace;font-weight: bold;background-color: white;display: inline-block;line-height: 1.2em;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-label-container {position: relative;z-index: 2;text-align: center;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d div.sk-text-repr-fallback {display: none;}</style><div id="sk-75bcf8ee-5d3b-4956-a09d-c9fb6572907d" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
+<div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
                    estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
                                               ColumnTransformer(remainder=&#x27;passthrough&#x27;,
                                                                 sparse_threshold=0,
@@ -1856,12 +2002,12 @@ Wall time: 24.1 s
                                                                                 &#x27;native-country&#x27;])])),
                                              (&#x27;classifier&#x27;,
                                               Hi...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7fd8c05ce410&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7fd8c05ce550&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7fd8c05cebd0&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7fd8c05cea90&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7fd8c05ce6d0&gt;},
-                   verbose=1)</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1569b1f9-bf77-43d9-a9f5-b69f124a4995" type="checkbox" ><label for="1569b1f9-bf77-43d9-a9f5-b69f124a4995" class="sk-toggleable__label sk-toggleable__label-arrow">RandomizedSearchCV</label><div class="sk-toggleable__content"><pre>RandomizedSearchCV(cv=5,
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f03ae9295b0&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f03ad380310&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f03ae213fa0&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f03ad5a4c40&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f03ad380580&gt;},
+                   verbose=1)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label sk-toggleable__label-arrow">RandomizedSearchCV</label><div class="sk-toggleable__content"><pre>RandomizedSearchCV(cv=5,
                    estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
                                               ColumnTransformer(remainder=&#x27;passthrough&#x27;,
                                                                 sparse_threshold=0,
@@ -1878,18 +2024,30 @@ Wall time: 24.1 s
                                                                                 &#x27;native-country&#x27;])])),
                                              (&#x27;classifier&#x27;,
                                               Hi...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7fd8c05ce410&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7fd8c05ce550&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7fd8c05cebd0&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7fd8c05cea90&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7fd8c05ce6d0&gt;},
-                   verbose=1)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ffb01ad5-7e3f-4521-9894-9c742a3803e6" type="checkbox" ><label for="ffb01ad5-7e3f-4521-9894-9c742a3803e6" class="sk-toggleable__label sk-toggleable__label-arrow">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f03ae9295b0&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_frozen object at 0x7f03ad380310&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f03ae213fa0&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f03ad5a4c40&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f03ad380580&gt;},
+                   verbose=1)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
+                 ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
+                                   transformers=[(&#x27;cat_preprocessor&#x27;,
+                                                  OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
+                                                                 unknown_value=-1),
+                                                  [&#x27;workclass&#x27;, &#x27;education&#x27;,
+                                                   &#x27;marital-status&#x27;,
+                                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;,
+                                                   &#x27;race&#x27;, &#x27;sex&#x27;,
+                                                   &#x27;native-country&#x27;])])),
+                (&#x27;classifier&#x27;,
+                 HistGradientBoostingClassifier(max_leaf_nodes=4,
+                                                random_state=42))])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label sk-toggleable__label-arrow">preprocessor: ColumnTransformer</label><div class="sk-toggleable__content"><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
                   transformers=[(&#x27;cat_preprocessor&#x27;,
                                  OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                 unknown_value=-1),
                                  [&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;,
                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
-                                  &#x27;native-country&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="f1459444-ffbb-430c-a622-83222d8db4a3" type="checkbox" ><label for="f1459444-ffbb-430c-a622-83222d8db4a3" class="sk-toggleable__label sk-toggleable__label-arrow">cat_preprocessor</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="852f1410-f7bc-4c91-a39a-2bb8681a8f3b" type="checkbox" ><label for="852f1410-f7bc-4c91-a39a-2bb8681a8f3b" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="1331930d-cdd2-49b9-9db2-0e5d93dd16b6" type="checkbox" ><label for="1331930d-cdd2-49b9-9db2-0e5d93dd16b6" class="sk-toggleable__label sk-toggleable__label-arrow">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="ef6c16b6-860c-4c1a-8bee-161d6c3eed99" type="checkbox" ><label for="ef6c16b6-860c-4c1a-8bee-161d6c3eed99" class="sk-toggleable__label sk-toggleable__label-arrow">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="697ba3dc-8664-4afe-a502-ed1ddafb0f74" type="checkbox" ><label for="697ba3dc-8664-4afe-a502-ed1ddafb0f74" class="sk-toggleable__label sk-toggleable__label-arrow">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+                                  &#x27;native-country&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label sk-toggleable__label-arrow">cat_preprocessor</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label sk-toggleable__label-arrow">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label sk-toggleable__label-arrow">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label sk-toggleable__label-arrow">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
 </div>
 <p>Then, we can compute the accuracy score on the test set.</p>
 <div class="cell docutils container">
@@ -1902,7 +2060,7 @@ Wall time: 24.1 s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the best model is 0.84
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the best model is 0.87
 </pre></div>
 </div>
 </div>
@@ -1918,11 +2076,11 @@ Wall time: 24.1 s
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best parameters are:
-{&#39;classifier__l2_regularization&#39;: 0.00013636546044159585,
- &#39;classifier__learning_rate&#39;: 0.018108282173293605,
- &#39;classifier__max_bins&#39;: 12,
- &#39;classifier__max_leaf_nodes&#39;: 57,
- &#39;classifier__min_samples_leaf&#39;: 19}
+{&#39;classifier__l2_regularization&#39;: 3.322775006526706e-05,
+ &#39;classifier__learning_rate&#39;: 0.05572762301434854,
+ &#39;classifier__max_bins&#39;: 49,
+ &#39;classifier__max_leaf_nodes&#39;: 100,
+ &#39;classifier__min_samples_leaf&#39;: 45}
 </pre></div>
 </div>
 </div>
@@ -1982,113 +2140,113 @@ previously.</p>
   </thead>
   <tbody>
     <tr>
-      <th>2</th>
-      <td>0.000136</td>
-      <td>0.018108</td>
-      <td>57</td>
-      <td>19</td>
-      <td>12</td>
-      <td>0.838853</td>
-      <td>0.003601</td>
+      <th>6</th>
+      <td>0.000033</td>
+      <td>0.055728</td>
+      <td>100</td>
+      <td>45</td>
+      <td>49</td>
+      <td>0.855478</td>
+      <td>0.003224</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>0.000824</td>
-      <td>0.081228</td>
-      <td>28</td>
-      <td>17</td>
-      <td>5</td>
-      <td>0.829844</td>
-      <td>0.003464</td>
+      <th>9</th>
+      <td>0.067946</td>
+      <td>0.05648</td>
+      <td>32</td>
+      <td>40</td>
+      <td>16</td>
+      <td>0.850837</td>
+      <td>0.004090</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>0.000056</td>
-      <td>0.026054</td>
-      <td>5</td>
-      <td>13</td>
-      <td>64</td>
-      <td>0.823373</td>
-      <td>0.003861</td>
+      <th>0</th>
+      <td>657.60859</td>
+      <td>0.043959</td>
+      <td>200</td>
+      <td>18</td>
+      <td>12</td>
+      <td>0.831864</td>
+      <td>0.003281</td>
       <td>3</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.000029</td>
-      <td>0.760435</td>
-      <td>57</td>
-      <td>89</td>
-      <td>4</td>
-      <td>0.812017</td>
-      <td>0.002550</td>
+      <td>0.001446</td>
+      <td>0.066444</td>
+      <td>3</td>
+      <td>30</td>
+      <td>7</td>
+      <td>0.822773</td>
+      <td>0.001876</td>
       <td>4</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.001485</td>
-      <td>0.070479</td>
-      <td>2</td>
+      <td>0.000421</td>
+      <td>1.963363</td>
+      <td>34</td>
+      <td>44</td>
+      <td>32</td>
+      <td>0.814337</td>
+      <td>0.008950</td>
       <td>5</td>
-      <td>38</td>
-      <td>0.809642</td>
-      <td>0.002012</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>0.000017</td>
-      <td>0.048044</td>
-      <td>4</td>
-      <td>5</td>
-      <td>2</td>
-      <td>0.799896</td>
-      <td>0.002713</td>
-      <td>6</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>10.169277</td>
-      <td>2.221269</td>
-      <td>24</td>
-      <td>86</td>
-      <td>197</td>
-      <td>0.765936</td>
-      <td>0.017416</td>
+      <td>0.000002</td>
+      <td>0.035839</td>
+      <td>3</td>
+      <td>22</td>
+      <td>11</td>
+      <td>0.804646</td>
+      <td>0.001366</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000004</td>
+      <td>0.026848</td>
+      <td>3</td>
+      <td>1</td>
+      <td>8</td>
+      <td>0.794191</td>
+      <td>0.001920</td>
       <td>7</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>0.000023</td>
-      <td>2.73086</td>
-      <td>64</td>
-      <td>1</td>
-      <td>23</td>
-      <td>0.713959</td>
-      <td>0.060855</td>
+      <th>1</th>
+      <td>0.001137</td>
+      <td>0.002213</td>
+      <td>40</td>
+      <td>2</td>
+      <td>4</td>
+      <td>0.758947</td>
+      <td>0.000013</td>
       <td>8</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>159.141257</td>
-      <td>7.626499</td>
-      <td>29</td>
-      <td>53</td>
+      <th>7</th>
+      <td>0.000002</td>
+      <td>0.00172</td>
+      <td>14</td>
+      <td>65</td>
       <td>3</td>
-      <td>0.656138</td>
-      <td>0.050065</td>
-      <td>9</td>
+      <td>0.758947</td>
+      <td>0.000013</td>
+      <td>8</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>0.099857</td>
-      <td>2.790064</td>
-      <td>36</td>
-      <td>6</td>
+      <th>8</th>
+      <td>23.476008</td>
+      <td>4.973505</td>
       <td>4</td>
-      <td>0.635499</td>
-      <td>0.036837</td>
+      <td>37</td>
+      <td>99</td>
+      <td>0.635532</td>
+      <td>0.102279</td>
       <td>10</td>
     </tr>
   </tbody>
@@ -2292,8 +2450,8 @@ problematic sometimes.</p>
 the results of large hyperparameter search sessions and gain some
 insights on range of parameter values that lead to the highest performing
 models and how different hyperparameter are coupled or not.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2317,9 +2475,11 @@ models and how different hyperparameter are coupled or not.</p>
 
               </div>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="parameter_tuning_grid_search.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -2335,17 +2495,17 @@ models and how different hyperparameter are coupled or not.</p>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-  <p>
-    
-      By scikit-learn developers<br/>
-    
-        &copy; Copyright 2021.<br/>
-      <div class="extra_footer">
-        <div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By scikit-learn developers<br/>
+  
+      &copy; Copyright 2022.<br/>
+    <div class="extra_footer">
+      <div>
   <div class="mooc_add">
    <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">Join the full MOOC for better learning!</a>
   </div>
@@ -2356,16 +2516,20 @@ models and how different hyperparameter are coupled or not.</p>
   with many thanks to the <a href="https://scikit-learn.org">scikit-learn</a> community as a whole!
 </div>
 
-      </div>
-  </p>
-</footer>
-</main>
+    </div>
+</p>
+        </footer>
+    </div>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

@@ -333,7 +333,7 @@ cv_results
 
 # %%
 scores = cv_results["test_score"]
-print(f"The accuracy is: {scores.mean():.3f} +/- {scores.std():.3f}")
+print(f"The accuracy is: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # As you can see, this representation of the categorical variables is

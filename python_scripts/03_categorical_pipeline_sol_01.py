@@ -87,7 +87,7 @@ cv_results = cross_validate(model, data_categorical, target)
 
 scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown] tags=["solution"]
 # Using an arbitrary mapping from string labels to integers as done here causes
@@ -105,7 +105,7 @@ cv_results = cross_validate(DummyClassifier(strategy="most_frequent"),
                             data_categorical, target)
 scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # Now, we would like to compare the generalization performance of our previous
@@ -124,7 +124,7 @@ model = make_pipeline(
 cv_results = cross_validate(model, data_categorical, target)
 scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown] tags=["solution"]
 # With the linear classifier chosen, using an encoding that does not assume

@@ -483,7 +483,7 @@ for n_round in range(n_repeats):
 print(
     f'feature importance of "{curr_feat}" on train set is '
     f'{np.mean(list_feature_importance):.3} '
-    f'+/- {np.std(list_feature_importance):.3}')
+    f'± {np.std(list_feature_importance):.3}')
 
 
 # %% [markdown]

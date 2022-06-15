@@ -41,7 +41,7 @@ cv_results = cross_validate(tree, data, target, n_jobs=2)
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # We obtain fair results. However, as we previously presented in the "tree in
@@ -77,7 +77,7 @@ cv_results = cross_validate(tree, data, target, n_jobs=2,
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # We see that optimizing the hyperparameters will have a positive effect
@@ -110,7 +110,7 @@ cv_results = cross_validate(bagging_regressor, data, target, n_jobs=2)
 scores = cv_results["test_score"]
 
 print(f"R2 score obtained by cross-validation: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # Without searching for optimal hyperparameters, the overall generalization

@@ -78,7 +78,7 @@ results = cross_validate(
 # %%
 # solution
 print(f"R2 score with cross-validation:\n"
-      f"{results['test_score'].mean():.3f} +/- "
+      f"{results['test_score'].mean():.3f} ± "
       f"{results['test_score'].std():.3f}")
 
 # %% [markdown]

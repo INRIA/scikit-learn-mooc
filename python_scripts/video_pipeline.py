@@ -103,7 +103,7 @@ from sklearn.model_selection import cross_validate
 cv_results = cross_validate(model, data, target, cv=5)
 scores = cv_results["test_score"]
 print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # ```{note}

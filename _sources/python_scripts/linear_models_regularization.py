@@ -67,12 +67,12 @@ cv_results = cross_validate(linear_regression, data, target,
 # %%
 train_error = -cv_results["train_score"]
 print(f"Mean squared error of linear regression model on the train set:\n"
-      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
+      f"{train_error.mean():.3f} ± {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
 print(f"Mean squared error of linear regression model on the test set:\n"
-      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
+      f"{test_error.mean():.3f} ± {test_error.std():.3f}")
 
 # %% [markdown]
 # The score on the training set is much better. This generalization performance
@@ -148,12 +148,12 @@ cv_results = cross_validate(ridge, data, target,
 # %%
 train_error = -cv_results["train_score"]
 print(f"Mean squared error of linear regression model on the train set:\n"
-      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
+      f"{train_error.mean():.3f} ± {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
 print(f"Mean squared error of linear regression model on the test set:\n"
-      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
+      f"{test_error.mean():.3f} ± {test_error.std():.3f}")
 
 # %% [markdown]
 # We see that the training and testing scores are much closer, indicating that
@@ -222,12 +222,12 @@ cv_results = cross_validate(ridge, data, target,
 # %%
 train_error = -cv_results["train_score"]
 print(f"Mean squared error of linear regression model on the train set:\n"
-      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
+      f"{train_error.mean():.3f} ± {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
 print(f"Mean squared error of linear regression model on the test set:\n"
-      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
+      f"{test_error.mean():.3f} ± {test_error.std():.3f}")
 
 # %% [markdown]
 # We observe that scaling data has a positive impact on the test score and that
@@ -341,12 +341,12 @@ cv_results = cross_validate(ridge, data, target,
 # %%
 train_error = -cv_results["train_score"]
 print(f"Mean squared error of linear regression model on the train set:\n"
-      f"{train_error.mean():.3f} +/- {train_error.std():.3f}")
+      f"{train_error.mean():.3f} ± {train_error.std():.3f}")
 
 # %%
 test_error = -cv_results["test_score"]
 print(f"Mean squared error of linear regression model on the test set:\n"
-      f"{test_error.mean():.3f} +/- {test_error.std():.3f}")
+      f"{test_error.mean():.3f} ± {test_error.std():.3f}")
 
 # %% [markdown]
 # By optimizing `alpha`, we see that the training and testing scores are close.
@@ -387,7 +387,7 @@ best_alphas
 
 # %%
 print(f"The mean optimal alpha leading to the best generalization performance is:\n"
-      f"{np.mean(best_alphas):.2f} +/- {np.std(best_alphas):.2f}")
+      f"{np.mean(best_alphas):.2f} ± {np.std(best_alphas):.2f}")
 
 # %% [markdown]
 #

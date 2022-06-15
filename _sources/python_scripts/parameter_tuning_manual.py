@@ -76,7 +76,7 @@ from sklearn.model_selection import cross_validate
 cv_results = cross_validate(model, data, target)
 scores = cv_results["test_score"]
 print(f"Accuracy score via cross-validation:\n"
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # We created a model with the default `C` value that is equal to 1. If we
@@ -98,7 +98,7 @@ model.set_params(classifier__C=1e-3)
 cv_results = cross_validate(model, data, target)
 scores = cv_results["test_score"]
 print(f"Accuracy score via cross-validation:\n"
-      f"{scores.mean():.3f} +/- {scores.std():.3f}")
+      f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # When the model of interest is a `Pipeline`, the parameter names are of the
@@ -132,7 +132,7 @@ for C in [1e-3, 1e-2, 1e-1, 1, 10]:
     cv_results = cross_validate(model, data, target)
     scores = cv_results["test_score"]
     print(f"Accuracy score via cross-validation with C={C}:\n"
-          f"{scores.mean():.3f} +/- {scores.std():.3f}")
+          f"{scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
 # We can see that as long as C is high enough, the model seems to perform

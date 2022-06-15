@@ -278,7 +278,7 @@ print(f"The standard deviation of the testing error is: "
 
 # %% [markdown]
 # Note that the standard deviation is much smaller than the mean: we could
-# summarize that our cross-validation estimate of the testing error is 46.36 +/-
+# summarize that our cross-validation estimate of the testing error is 46.36 ±
 # 1.17 k\$.
 #
 # If we were to train a single model on the full dataset (without

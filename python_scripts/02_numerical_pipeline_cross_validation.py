@@ -136,7 +136,7 @@ cv_result
 scores = cv_result["test_score"]
 print(
     "The mean cross-validation accuracy is: "
-    f"{scores.mean():.3f} +/- {scores.std():.3f}"
+    f"{scores.mean():.3f} ± {scores.std():.3f}"
 )
 
 # %% [markdown]

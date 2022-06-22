@@ -91,7 +91,7 @@ from sklearn.model_selection import cross_val_score
 test_score = cross_val_score(regressor, data_train, target_train, cv=cv,
                              n_jobs=2)
 print(f"The mean R2 is: "
-      f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
+      f"{test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # Surprisingly, we get outstanding generalization performance. We will
@@ -187,7 +187,7 @@ cv = LeaveOneGroupOut()
 test_score = cross_val_score(regressor, data, target,
                              cv=cv, groups=groups, n_jobs=2)
 print(f"The mean R2 is: "
-      f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
+      f"{test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # In this case, we see that we cannot make good predictions, which is less
@@ -206,7 +206,7 @@ cv = TimeSeriesSplit(n_splits=groups.nunique())
 test_score = cross_val_score(regressor, data, target,
                              cv=cv, groups=groups, n_jobs=2)
 print(f"The mean R2 is: "
-      f"{test_score.mean():.2f} +/- {test_score.std():.2f}")
+      f"{test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # In conclusion, it is really important to not use an out of the shelves

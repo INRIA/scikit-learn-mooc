@@ -107,7 +107,7 @@ cv_results
 # %%
 print(
     "Generalization score without hyperparameters tuning:\n"
-    f"{cv_results['test_score'].mean():.3f} +/- {cv_results['test_score'].std():.3f}"
+    f"{cv_results['test_score'].mean():.3f} ± {cv_results['test_score'].std():.3f}"
 )
 
 # %% [markdown]
@@ -243,7 +243,7 @@ cv_results = pd.DataFrame(cv_results)
 cv_test_scores = cv_results['test_score']
 print(
     "Generalization score with hyperparameters tuning:\n"
-    f"{cv_test_scores.mean():.3f} +/- {cv_test_scores.std():.3f}"
+    f"{cv_test_scores.mean():.3f} ± {cv_test_scores.std():.3f}"
 )
 
 # %% [markdown]

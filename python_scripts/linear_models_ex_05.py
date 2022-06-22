@@ -67,7 +67,7 @@ logistic_regression = make_pipeline(
 # Given the following candidates for the `C` parameter, find out the impact of
 # `C` on the classifier decision boundary. You can use
 # `sklearn.inspection.DecisionBoundaryDisplay.from_estimator` to plot the
-# decision function boundary
+# decision function boundary.
 
 # %%
 Cs = [0.01, 0.1, 1, 10]

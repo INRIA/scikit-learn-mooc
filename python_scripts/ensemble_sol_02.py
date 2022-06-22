@@ -66,7 +66,7 @@ data_range = pd.DataFrame(np.linspace(170, 235, num=300),
 # the random forest in this dataset.
 
 # %%
-#solution
+# solution
 tree_predictions = []
 
 for tree in forest.estimators_:
@@ -82,7 +82,7 @@ forest_predictions = forest.predict(data_range)
 # - the decision of the random forest.
 
 # %%
-#solution
+# solution
 import matplotlib.pyplot as plt
 import seaborn as sns
 

@@ -22,8 +22,7 @@
 # `penalty="l2"` regularization (which happens to be the default in scikit-learn)
 # to find by yourself the effect of the parameter `C`.
 #
-# We will start by loading the dataset and create the helper function to show
-# the decision separation as in the previous code.
+# We will start by loading the dataset.
 
 # %% [markdown]
 # ```{note}
@@ -66,9 +65,9 @@ logistic_regression = make_pipeline(
 
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of
-# `C` on the classifier decision boundary. You can import the helper class with
-# `from sklearn.inspection import DecisionBoundaryDisplay` to plot the decision
-# function boundary. Use the method `from_estimator` from this class.
+# `C` on the classifier decision boundary. You can use
+# `sklearn.inspection.DecisionBoundaryDisplay.from_estimator` to plot the
+# decision function boundary.
 
 # %%
 Cs = [0.01, 0.1, 1, 10]

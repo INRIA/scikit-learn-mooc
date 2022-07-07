@@ -104,7 +104,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 #
 # Notice however that in more realistic machine learning contexts, one would
 # typically fit on more than two features at once and therefore it would not be
-# possible to display such a visualization of of the decision boundary in
+# possible to display such a visualization of the decision boundary in
 # general.
 # ```
 

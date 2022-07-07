@@ -16,7 +16,7 @@
 #   update in the UI of scikit-learn in a future release.
 
 # %% [markdown]
-# ### First we load the dataset
+# ## First we load the dataset
 
 # %% [markdown]
 # We need to define our data and target. In this case we will build a classification model
@@ -46,7 +46,7 @@ categorical_features = ['Neighborhood', 'HouseStyle']
 data = data[numeric_features + categorical_features]
 
 # %% [markdown]
-# ### Then we create the pipeline
+# ## Then we create the pipeline
 
 # %% [markdown]
 # The first step is to define the preprocessing steps
@@ -95,7 +95,7 @@ set_config(display='diagram')
 model
 
 # %% [markdown]
-# ### Finally we score the model
+# ## Finally we score the model
 
 # %%
 from sklearn.model_selection import cross_validate

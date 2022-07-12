@@ -158,12 +158,13 @@ print(
 # %% [markdown]
 #
 # On average, roughly 63.2% of the original data points of the original dataset
-# will be present in a given bootstrap sample.
+# will be present in a given bootstrap sample. Since the bootstrap sample has
+# the same size as the original dataset, there will be many samples that are in
+# the bootstrap sample multiple times.
 #
-# Using bootstrap we are able to generate many datasets, all slightly different.
-# We can fit a decision tree for each of these datasets and they all shall be
-# slightly different as well.
-
+# Using bootstrap we are able to generate many datasets, all slightly
+# different. We can fit a decision tree for each of these datasets and they all
+# shall be slightly different as well.
 
 # %%
 bag_of_trees = []

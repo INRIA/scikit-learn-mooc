@@ -1733,10 +1733,8 @@ would be meaningless.</p>
 <p>Let’s see how we can use bootstraping to learn several trees.</p>
 <section id="bootstrap-resampling">
 <h2>Bootstrap resampling<a class="headerlink" href="#bootstrap-resampling" title="Permalink to this headline">#</a></h2>
-<p>Bootstrapping is a resampling “with replacement” of the original
-dataset. It corresponds to sampling n out of n data points with
-replacement uniformly at random from the original dataset. n is the
-number of data points in the original dataset.</p>
+<p>Given a dataset with <code class="docutils literal notranslate"><span class="pre">n</span></code> data points, bootstrapping corresponds to resampling
+with replacement  <code class="docutils literal notranslate"><span class="pre">n</span></code> out of such <code class="docutils literal notranslate"><span class="pre">n</span></code> data points uniformly at random.</p>
 <p>As a result, the output of the bootstrap sampling procedure is another
 dataset with also n data points, but likely with duplicates. As a consequence,
 there are also data points from the original dataset that are never selected to
@@ -1817,12 +1815,13 @@ unique samples in the bootstrap samples.</p>
 </div>
 </div>
 </div>
-<p>On average, ~63.2% of the original data points of the original dataset will
-be present in a given bootstrap sample. The other ~36.8% are repeated
-samples.</p>
-<p>We are able to generate many datasets, all slightly different.</p>
-<p>Now, we can fit a decision tree for each of these datasets and they all shall
-be slightly different as well.</p>
+<p>On average, roughly 63.2% of the original data points of the original dataset
+will be present in a given bootstrap sample. Since the bootstrap sample has
+the same size as the original dataset, there will be many samples that are in
+the bootstrap sample multiple times.</p>
+<p>Using bootstrap we are able to generate many datasets, all slightly
+different. We can fit a decision tree for each of these datasets and they all
+shall be slightly different as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bag_of_trees</span> <span class="o">=</span> <span class="p">[]</span>

@@ -157,8 +157,8 @@ print(
 
 # %% [markdown]
 #
-# On average, ~63.2% of the original data points of the original dataset will be
-# present in a given bootstrap sample.
+# On average, roughly 63.2% of the original data points of the original dataset
+# will be present in a given bootstrap sample.
 #
 # Using bootstrap we are able to generate many datasets, all slightly different.
 # We can fit a decision tree for each of these datasets and they all shall be

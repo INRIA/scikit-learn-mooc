@@ -47,23 +47,10 @@ print(f"Mean absolute error: "
       f"{mean_absolute_error(target_test, target_predicted):.3f} grams")
 
 # %% [markdown]
-# The next steps of this exercise are to:
-#
-# - create a new dataset containing the penguins with a flipper length
-#   between 170 mm and 230 mm;
-# - plot the training data using a scatter plot;
-# - plot the decision of each individual tree by predicting on the newly
-#   created dataset;
-# - plot the decision of the random forest using this newly created dataset.
-
-# ```{tip}
-# The trees contained in the forest that you created can be accessed
-# with the attribute `estimators_`.
-# ```
-
-# %% [markdown] tags=["solution"]
-# In a first cell, we will collect all the required predictions from the
-# different trees and forest.
+# We now aim to plot the predictions from the individual trees in the forest.
+# For that purpose you have to create first a new dataset containing evenly
+# spaced values for the flipper length over the interval between 170 mm and 230
+# mm.
 
 # %%
 # solution
@@ -71,17 +58,31 @@ import numpy as np
 
 data_range = pd.DataFrame(np.linspace(170, 235, num=300),
                           columns=data.columns)
+
+# %% [markdown]
+# The trees contained in the forest that you created can be accessed with the
+# attribute `estimators_`. Use them to predict the body mass corresponding to
+# the values in this newly created dataset. Similarly find the predictions of
+# the random forest in this dataset.
+
+# %%
+# solution
 tree_predictions = []
+
 for tree in forest.estimators_:
     # we convert `data_range` into a NumPy array to avoid a warning raised in scikit-learn
     tree_predictions.append(tree.predict(data_range.to_numpy()))
 
 forest_predictions = forest.predict(data_range)
 
-# %% [markdown] tags=["solution"]
-# Now, we can plot the predictions that we collected.
+# %% [markdown]
+# Now make a plot that displays:
+# - the whole `data` using a scatter plot;
+# - the decision of each individual tree;
+# - the decision of the random forest.
 
-# %% tags=["solution"]
+# %%
+# solution
 import matplotlib.pyplot as plt
 import seaborn as sns
 

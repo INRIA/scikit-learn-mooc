@@ -47,7 +47,7 @@ print(f"Mean absolute error: "
       f"{mean_absolute_error(target_test, target_predicted):.3f} grams")
 
 # %% [markdown]
-# We aim now to plot the predictions from the individual trees in the forest.
+# We now aim to plot the predictions from the individual trees in the forest.
 # For that purpose you have to create first a new dataset containing evenly
 # spaced values for the flipper length over the interval between 170 mm and 230
 # mm.

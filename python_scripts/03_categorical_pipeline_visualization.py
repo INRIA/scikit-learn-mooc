@@ -6,7 +6,7 @@
 # ---
 
 # %% [markdown]
-# # How to define a scikit-learn pipeline and visualize it
+# # Visualizing scikit-learn pipelines in Jupyter
 
 # %% [markdown]
 # The goal of keeping this notebook is to:

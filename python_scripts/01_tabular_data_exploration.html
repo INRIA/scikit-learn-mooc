@@ -1601,6 +1601,11 @@ title="Print to PDF"
    Creating decision rules by hand
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notebook-recap">
+   Notebook Recap
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -1640,6 +1645,11 @@ title="Print to PDF"
    Creating decision rules by hand
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#notebook-recap">
+   Notebook Recap
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -1669,7 +1679,7 @@ the dataset.</p></li>
 <p>You can look at the OpenML webpage to learn more about this dataset:
 <a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a></p>
 <p>The dataset is available as a CSV (Comma-Separated Values) file and we will
-use pandas to read it.</p>
+use <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to read it.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference external" href="https://pandas.pydata.org/">Pandas</a> is a Python library used for
@@ -1692,7 +1702,7 @@ information, etc.</p>
 </section>
 <section id="the-variables-columns-in-the-dataset">
 <h2>The variables (columns) in the dataset<a class="headerlink" href="#the-variables-columns-in-the-dataset" title="Permalink to this headline">#</a></h2>
-<p>The data are stored in a pandas dataframe. A dataframe is a type of structured
+<p>The data are stored in a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> dataframe. A dataframe is a type of structured
 data composed of 2 dimensions. This type of data is also referred as tabular
 data.</p>
 <p>Each row represents a “sample”. In the field of machine learning or
@@ -1838,7 +1848,8 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
 <p>The column named <strong>class</strong> is our target variable (i.e., the variable which
 we want to predict). The two possible classes are <code class="docutils literal notranslate"><span class="pre">&lt;=50K</span></code> (low-revenue) and
 <code class="docutils literal notranslate"><span class="pre">&gt;50K</span></code> (high-revenue). The resulting prediction problem is therefore a
-binary classification problem, while we will use the other columns as input
+binary classification problem as <code class="docutils literal notranslate"><span class="pre">class</span></code> has only two possible values.
+We will use the left-over columns (any column other than <code class="docutils literal notranslate"><span class="pre">class</span></code>) as input
 variables for our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1857,8 +1868,9 @@ Name: class, dtype: int64
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Classes are slightly imbalanced, meaning there are more samples of one or
-more classes compared to others. Class imbalance happens often in practice
+<p>Here, classes are slightly imbalanced, meaning there are more samples of one or
+more classes compared to others. In this case, we have many more samples with
+<code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&lt;=50K&quot;</span></code> than with <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&gt;50K&quot;</span></code>. Class imbalance happens often in practice
 and may need special techniques when building a predictive model.</p>
 <p>For example in a medical setting, if we are trying to predict whether
 subjects will develop a rare disease, there will be a lot more healthy
@@ -1870,11 +1882,22 @@ finite number of values, for example <code class="docutils literal notranslate">
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;education-num&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 <span class="n">categorical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;workclass&quot;</span><span class="p">,</span> <span class="s2">&quot;education&quot;</span><span class="p">,</span> <span class="s2">&quot;marital-status&quot;</span><span class="p">,</span> <span class="s2">&quot;occupation&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;relationship&quot;</span><span class="p">,</span> <span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="s2">&quot;native-country&quot;</span><span class="p">]</span>
+    <span class="s2">&quot;workclass&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;education&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;marital-status&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;occupation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;relationship&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;race&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sex&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;native-country&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 <span class="n">all_columns</span> <span class="o">=</span> <span class="n">numerical_columns</span> <span class="o">+</span> <span class="n">categorical_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">all_columns</span><span class="p">]</span>
@@ -1886,8 +1909,10 @@ finite number of values, for example <code class="docutils literal notranslate">
 dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1981,7 +2006,7 @@ problems if used naively when deploying a real life setting.</p>
 <p>We recommend our readers to refer to <a class="reference external" href="https://fairlearn.org">fairlearn.org</a>
 for resources on how to quantify and potentially mitigate fairness
 issues related to the deployment of automated decision making
-systems that relying on machine learning components.</p>
+systems that rely on machine learning components.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -2385,8 +2410,9 @@ years of education.</p>
 </table>
 </div></div></div>
 </div>
-<p>This shows that <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> give you the same
-information. For example, <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;=2</span></code> is equivalent to
+<p>For every entry in <code class="docutils literal notranslate"><span class="pre">\&quot;education\&quot;</span></code>, there is only one single corresponding
+value in <code class="docutils literal notranslate"><span class="pre">\&quot;education-num\&quot;</span></code>. This shows that <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>
+give you the same information. For example, <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;=2</span></code> is equivalent to
 <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;=&quot;1st-4th&quot;</span></code>. In practice that means we can remove
 <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code> without losing information. Note that having redundant (or
 highly correlated) columns can be a problem for machine learning algorithms.</p>
@@ -2498,13 +2524,16 @@ thresholds that we chose (27 years and 40 hours) are somewhat arbitrary, i.e.
 we chose them by only looking at the pairplot. In contrast, a decision tree
 will choose the “best” splits based on data without human intervention or
 inspection. Decision trees will be covered more in detail in a future module.</p>
-<p>Note that machine learning is really interesting when creating rules by hand
-is not straightforward, for example because we are in high dimension (many
-features) or because there are no simple and obvious rules that separate the
-two classes as in the top-right region of the previous plot.</p>
+<p>Note that machine learning is often used when creating rules by hand
+is not straightforward. For example because we are in high dimension (many
+features in a table) or because there are no simple and obvious rules that
+separate the two classes as in the top-right region of the previous plot.</p>
 <p>To sum up, the important thing to remember is that in a machine-learning
-setting, a model automatically creates the “rules” from the data in order to
-make predictions on new unseen data.</p>
+setting, a model automatically creates the “rules” from the existing data in
+order to make predictions on new unseen data.</p>
+</section>
+<section id="notebook-recap">
+<h2>Notebook Recap<a class="headerlink" href="#notebook-recap" title="Permalink to this headline">#</a></h2>
 <p>In this notebook we:</p>
 <ul class="simple">
 <li><p>loaded the data from a CSV file using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>;</p></li>
@@ -2514,7 +2543,7 @@ categorical and numerical variables;</p></li>
 you to decide whether using machine learning is appropriate for your data
 and to highlight potential peculiarities in your data.</p></li>
 </ul>
-<p>Ideas which will be discussed more in detail later:</p>
+<p>We made important observations (which will be discussed later in more detail):</p>
 <ul class="simple">
 <li><p>if your target variable is imbalanced (e.g., you have more samples from one
 target category than another), you may need special techniques for training

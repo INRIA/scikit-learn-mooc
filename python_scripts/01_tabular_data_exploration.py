@@ -28,7 +28,7 @@
 # <http://www.openml.org/d/1590>
 #
 # The dataset is available as a CSV (Comma-Separated Values) file and we will
-# use pandas to read it.
+# use `pandas` to read it.
 #
 # ```{note}
 # [Pandas](https://pandas.pydata.org/) is a Python library used for
@@ -50,7 +50,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 # %% [markdown]
 # ## The variables (columns) in the dataset
 #
-# The data are stored in a pandas dataframe. A dataframe is a type of structured
+# The data are stored in a `pandas` dataframe. A dataframe is a type of structured
 # data composed of 2 dimensions. This type of data is also referred as tabular
 # data.
 #
@@ -74,7 +74,8 @@ adult_census.head()
 # The column named **class** is our target variable (i.e., the variable which
 # we want to predict). The two possible classes are `<=50K` (low-revenue) and
 # `>50K` (high-revenue). The resulting prediction problem is therefore a
-# binary classification problem, while we will use the other columns as input
+# binary classification problem as `class` has only two possible values.
+# We will use the left-over columns (any column other than `class`) as input
 # variables for our model.
 
 # %%
@@ -83,8 +84,9 @@ adult_census[target_column].value_counts()
 
 # %% [markdown]
 # ```{note}
-# Classes are slightly imbalanced, meaning there are more samples of one or
-# more classes compared to others. Class imbalance happens often in practice
+# Here, classes are slightly imbalanced, meaning there are more samples of one or
+# more classes compared to others. In this case, we have many more samples with
+# `" <=50K"` than with `" >50K"`. Class imbalance happens often in practice
 # and may need special techniques when building a predictive model.
 #
 # For example in a medical setting, if we are trying to predict whether
@@ -99,11 +101,22 @@ adult_census[target_column].value_counts()
 
 # %%
 numerical_columns = [
-    "age", "education-num", "capital-gain", "capital-loss",
-    "hours-per-week"]
+    "age",
+    "education-num",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week",
+]
 categorical_columns = [
-    "workclass", "education", "marital-status", "occupation",
-    "relationship", "race", "sex", "native-country"]
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
+]
 all_columns = numerical_columns + categorical_columns + [target_column]
 
 adult_census = adult_census[all_columns]
@@ -113,8 +126,10 @@ adult_census = adult_census[all_columns]
 # dataset:
 
 # %%
-print(f"The dataset contains {adult_census.shape[0]} samples and "
-      f"{adult_census.shape[1]} columns")
+print(
+    f"The dataset contains {adult_census.shape[0]} samples and "
+    f"{adult_census.shape[1]} columns"
+)
 
 # %% [markdown]
 # We can compute the number of features by counting the number of columns and
@@ -181,7 +196,7 @@ adult_census["sex"].value_counts()
 # We recommend our readers to refer to [fairlearn.org](https://fairlearn.org)
 # for resources on how to quantify and potentially mitigate fairness
 # issues related to the deployment of automated decision making
-# systems that relying on machine learning components.
+# systems that rely on machine learning components.
 
 # %%
 adult_census["education"].value_counts()
@@ -196,8 +211,9 @@ adult_census["education"].value_counts()
 pd.crosstab(index=adult_census["education"], columns=adult_census["education-num"])
 
 # %% [markdown]
-# This shows that `"education"` and `"education-num"` give you the same
-# information. For example, `"education-num"=2` is equivalent to
+# For every entry in `\"education\"`, there is only one single corresponding
+# value in `\"education-num\"`. This shows that `"education"` and `"education-num"`
+# give you the same information. For example, `"education-num"=2` is equivalent to
 # `"education"="1st-4th"`. In practice that means we can remove
 # `"education-num"` without losing information. Note that having redundant (or
 # highly correlated) columns can be a problem for machine learning algorithms.
@@ -297,16 +313,17 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 # will choose the "best" splits based on data without human intervention or
 # inspection. Decision trees will be covered more in detail in a future module.
 #
-# Note that machine learning is really interesting when creating rules by hand
-# is not straightforward, for example because we are in high dimension (many
-# features) or because there are no simple and obvious rules that separate the
-# two classes as in the top-right region of the previous plot.
+# Note that machine learning is often used when creating rules by hand
+# is not straightforward. For example because we are in high dimension (many
+# features in a table) or because there are no simple and obvious rules that
+# separate the two classes as in the top-right region of the previous plot.
 #
 # To sum up, the important thing to remember is that in a machine-learning
-# setting, a model automatically creates the "rules" from the data in order to
-# make predictions on new unseen data.
+# setting, a model automatically creates the "rules" from the existing data in
+# order to make predictions on new unseen data.
 
 # %% [markdown]
+# ## Notebook Recap
 #
 # In this notebook we:
 #
@@ -317,7 +334,7 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 #   you to decide whether using machine learning is appropriate for your data
 #   and to highlight potential peculiarities in your data.
 #
-# Ideas which will be discussed more in detail later:
+# We made important observations (which will be discussed later in more detail):
 #
 # * if your target variable is imbalanced (e.g., you have more samples from one
 #   target category than another), you may need special techniques for training

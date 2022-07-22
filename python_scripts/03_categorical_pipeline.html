@@ -2802,15 +2802,21 @@ training and will not be able to encode it.</p>
 <ul class="simple">
 <li><p>list all the possible categories and provide it to the encoder via the
 keyword argument <code class="docutils literal notranslate"><span class="pre">categories</span></code>;</p></li>
-<li><p>use the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>.</p></li>
+<li><p>use the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>, i.e. if an unknown category is encountered
+during transform, the resulting one-hot encoded columns for this feature will
+be all zeros.</p></li>
 </ul>
 <p>Here, we will use the latter solution for simplicity.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Be aware the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> exposes as well a parameter
-<code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>. It can be set to <code class="docutils literal notranslate"><span class="pre">use_encoded_value</span></code> and by setting
-<code class="docutils literal notranslate"><span class="pre">unknown_value</span></code> to handle rare categories. You are going to use these
-parameters in the next exercise.</p>
+<code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>. It can be set to <code class="docutils literal notranslate"><span class="pre">use_encoded_value</span></code>. If that option is chosen,
+you can define a fixed value to which all unknowns will be set to during
+<code class="docutils literal notranslate"><span class="pre">transform</span></code>. For example,
+<code class="docutils literal notranslate"><span class="pre">OrdinalEncoder(handle_unknown='use_encoded_value',</span> <span class="pre">unknown_value=42)</span></code>
+will set all values encountered during <code class="docutils literal notranslate"><span class="pre">transform</span></code> to <code class="docutils literal notranslate"><span class="pre">42</span></code> which are not part of
+the data encountered during the <code class="docutils literal notranslate"><span class="pre">fit</span></code> call.
+You are going to use these parameters in the next exercise.</p>
 </div>
 <p>We can now create our machine learning pipeline.</p>
 <div class="cell docutils container">

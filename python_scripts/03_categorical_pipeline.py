@@ -290,16 +290,22 @@ data["native-country"].value_counts()
 #
 # * list all the possible categories and provide it to the encoder via the
 #   keyword argument `categories`;
-# * use the parameter `handle_unknown`.
+# * use the parameter `handle_unknown`, i.e. if an unknown category is encountered
+#   during transform, the resulting one-hot encoded columns for this feature will
+#   be all zeros. 
 #
 # Here, we will use the latter solution for simplicity.
 
 # %% [markdown]
 # ```{tip}
 # Be aware the `OrdinalEncoder` exposes as well a parameter
-# `handle_unknown`. It can be set to `use_encoded_value` and by setting
-# `unknown_value` to handle rare categories. You are going to use these
-# parameters in the next exercise.
+# `handle_unknown`. It can be set to `use_encoded_value`. If that option is chosen,
+# you can define a fixed value to which all unknowns will be set to during
+# `transform`. For example,
+# `OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=42)`
+# will set all values encountered during `transform` to `42` which are not part of
+# the data encountered during the `fit` call.
+# You are going to use these parameters in the next exercise.
 # ```
 
 # %% [markdown]

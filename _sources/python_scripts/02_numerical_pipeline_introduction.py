@@ -228,7 +228,7 @@ print(f"The test accuracy using a {model_name} is "
 #
 # It shows the importance to always testing the generalization performance of
 # predictive models on a different set than the one used to train these models.
-# We will discuss later in more details how predictive models should be
+# We will discuss later in more detail how predictive models should be
 # evaluated.
 
 # %% [markdown]
@@ -238,11 +238,13 @@ print(f"The test accuracy using a {model_name} is "
 # prediction of a model and the true targets. Equivalent terms for
 # **generalization performance** are predictive performance and statistical
 # performance. We will refer to **computational performance** of a predictive
-# model when accessing the computational costs of training a predictive model
+# model when assessing the computational costs of training a predictive model
 # or using it to make predictions.
 # ```
 
 # %% [markdown]
+# ## Notebook Recap
+#
 # In this notebook we:
 #
 # * fitted a **k-nearest neighbors** model on a training dataset;

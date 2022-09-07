@@ -104,9 +104,9 @@ cv_result
 # %% [markdown]
 # The output of `cross_validate` is a Python dictionary, which by default
 # contains three entries:
-# - (i) the time to train the model on the training data for each fold,
-# - (ii) the time to predict with the model on the testing data for each fold,
-# - (iii) the default score on the testing data for each fold.
+# - (i) the time to train the model on the training data for each fold, `fit_time`
+# - (ii) the time to predict with the model on the testing data for each fold, `score_time`
+# - (iii) the default score on the testing data for each fold, `test_score`.
 #
 # Setting `cv=5` created 5 distinct splits to get 5 variations for the training
 # and testing sets. Each training set is used to fit one model which is then
@@ -152,5 +152,7 @@ print(
 # cross-validation is compatible with the one from a single train-test split.
 
 # %% [markdown]
+# ## Notebook recap
+# 
 # In this notebook we assessed the generalization performance of our model via
 # **cross-validation**.

@@ -148,7 +148,7 @@ As a result the train error will be low, and the test error high.
 
 ---
 
-# Varying varying sample size
+# Varying sample size
 
 .shift-left.pull-left[<img
 src="../figures/polynomial_overfit_ntrain_145.svg"

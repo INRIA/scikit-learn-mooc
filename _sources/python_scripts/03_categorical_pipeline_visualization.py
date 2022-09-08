@@ -89,9 +89,6 @@ model = Pipeline(steps=[
 # Let's visualize it!
 
 # %%
-from sklearn import set_config
-
-set_config(display='diagram')
 model
 
 # %% [markdown]

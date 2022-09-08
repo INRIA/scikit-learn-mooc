@@ -193,10 +193,13 @@ adult_census["sex"].value_counts()
 # [fairness](https://docs.microsoft.com/en-us/azure/machine-learning/concept-fairness-ml#what-is-machine-learning-fairness)
 # problems if used naively when deploying a real life setting.
 #
-# We recommend our readers to refer to [fairlearn.org](https://fairlearn.org)
-# for resources on how to quantify and potentially mitigate fairness
-# issues related to the deployment of automated decision making
-# systems that rely on machine learning components.
+# If you want a deeper overview regarding this subject, you can refer to the
+# Appendix - Datasets description section at the end of this MOOC.
+#
+# We also recommend our readers to refer to
+# [fairlearn.org](https://fairlearn.org) for resources on how to quantify and
+# potentially mitigate fairness issues related to the deployment of automated
+# decision making systems that rely on machine learning components.
 
 # %%
 adult_census["education"].value_counts()

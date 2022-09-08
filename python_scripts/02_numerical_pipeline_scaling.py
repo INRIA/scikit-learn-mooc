@@ -25,11 +25,6 @@ import pandas as pd
 
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
-# %%
-# to display nice model diagram
-from sklearn import set_config
-set_config(display='diagram')
-
 # %% [markdown]
 # We will now drop the target from the data we will use to train our
 # predictive model.

@@ -121,13 +121,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=500))
-
-# %% [markdown]
-# We can display an interactive diagram with the following command:
-
-# %%
-from sklearn import set_config
-set_config(display='diagram')
 model
 
 # %% [markdown]

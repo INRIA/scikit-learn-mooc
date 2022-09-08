@@ -24,11 +24,17 @@
 #
 # ## Random forest
 #
-# The main parameter to tune for random forest is the `n_estimators` parameter.
+# The main parameter to select in random forest is the `n_estimators` parameter.
 # In general, the more trees in the forest, the better the generalization
 # performance will be. However, it will slow down the fitting and prediction
 # time. The goal is to balance computing time and generalization performance when
 # setting the number of estimators when putting such learner in production.
+#
+# ```{caution}
+# Here, we tune the `n_estimators` but doing so is likely to be a loss of
+# resources. Be aware that using early-stopping as in the previous exercise will
+# be better.
+# ```
 #
 # Then, we could also tune a parameter that controls the depth of each tree in
 # the forest. Two parameters are important for this: `max_depth` and
@@ -142,12 +148,6 @@ cv_results["std_test_error"] = cv_results["std_test_score"]
 cv_results[columns].sort_values(by="mean_test_error")
 
 # %% [markdown]
-#
-# ```{caution}
-# Here, we tune the `n_estimators` but be aware that using early-stopping as
-# in the previous exercise will be better.
-# ```
-#
 # In this search, we see that the `learning_rate` is required to be large
 # enough, i.e. > 0.1. We also observe that for the best ranked models, having a
 # smaller `learning_rate`, will require more trees or a larger number of

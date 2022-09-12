@@ -8,20 +8,19 @@
 # %% [markdown]
 # # The Adult census dataset
 #
-# This dataset is a collection of information related to a person. The
-# prediction task is to predict whether a person is earning a salary above or
-# below 50k USD/year.
+# [This dataset](http://www.openml.org/d/1590) is a collection of demographic
+# information for the adult population as of 1994 in the USA. The prediction
+# task is to predict whether a person is earning a salary above or below 50k
+# USD/year.
 #
 # We explore this dataset in the first module's notebook "First look at our
 # dataset". This provides a first intuition on how the data is structured. To
 # avoid repeating the same information, here we explore with some more detail
 # the relation between data imbalance and fairness.
 #
-# Remember that the data we use correspond to the 1994 US census that is
-# available in [OpenML](http://openml.org/). A first thing to notice is that the
-# information one can extract from it is outdated, not to mention that the
-# variable names are somewhat controversial. We start as always by loading the
-# dataset:
+# A first thing to notice is that the information one can extract from this
+# dataset is outdated, not to mention that the variable names are somewhat
+# controversial. We start as always by loading the dataset:
 
 # %%
 import pandas as pd
@@ -59,7 +58,11 @@ print(f"The prevalence of the dataset is: {prevalence:.3f}")
 adult_census["sex"].value_counts()
 
 # %% [markdown]
-# The class imbalance is even higher when the variable `"sex"` is accounted for:
+# This is not the real proportion of the US demography, meaning that the
+# sampling as is, is not representative of the population. Indeed, the original
+# version of the dataset contains a variable named `"fnlwgt"` to account for
+# representativity of a sample. The class imbalance is even higher when the
+# target variable is segmented by `"sex"`:
 
 # %%
 adult_census.groupby("sex")[target_name].value_counts()
@@ -215,7 +218,8 @@ _ = plt.title("Empirical distribution of the target \nsegmented by 'age' and 'se
 # %% [markdown]
 # In the previous plot we see that the `"<=50K"` class is skewed to low ages for
 # the female samples, but once again, the class `">50K"` displays the same
-# distribution regardless of the variable `'sex'`.
+# distribution regardless of the variable `'sex'`. Keep in mind that empirical
+# distributions are only a proxy of the real distribution.
 #
 # ## Conclusions and going further
 #

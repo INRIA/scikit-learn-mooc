@@ -304,6 +304,9 @@ disp = PrecisionRecallDisplay.from_estimator(
     classifier, data_test, target_test, pos_label='donated',
     marker="+"
 )
+disp = PrecisionRecallDisplay.from_estimator(
+    dummy_classifier, data_test, target_test, pos_label='donated',
+    color="tab:orange", linestyle="--", ax=disp.ax_)
 plt.xlabel("Recall                  ")
 plt.text(0.45, -0.2, "=  TPR or sensitivity", size=8)
 plt.ylabel("Precision         ")
@@ -331,6 +334,18 @@ _ = disp.ax_.set_title("Precision-recall curve")
 # and is named average precision (AP). With an ideal classifier, the average
 # precision would be 1.
 #
+# Notice that the AP of a `DummyClassifier`, used as baseline to define the
+# chance level, coincides with the number of samples in the positive class
+# divided by the total number of samples (this number is called the prevalence
+# of the positive class).
+
+# %%
+prevalence = (
+    target_test.value_counts()[1] / target_test.value_counts().sum()
+)
+print(f"Prevalence of the class 'donated': {prevalence:.2f}")
+
+# %% [markdown]
 # The precision and recall metric focuses on the positive class, however, one
 # might be interested in the compromise between accurately discriminating the
 # positive class and accurately discriminating the negative classes. The

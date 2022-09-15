@@ -304,6 +304,12 @@ disp = PrecisionRecallDisplay.from_estimator(
     classifier, data_test, target_test, pos_label='donated',
     marker="+"
 )
+plt.xlabel("Recall                  ")
+plt.text(0.45, -0.2, "=  TPR or sensitivity", size=8)
+plt.ylabel("Precision         ")
+plt.text(-0.16, 0.6, "=  PPV", size=8, rotation="vertical")
+plt.xlim(0, 1)
+plt.ylim(0, 1)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = disp.ax_.set_title("Precision-recall curve")
 
@@ -332,7 +338,7 @@ _ = disp.ax_.set_title("Precision-recall curve")
 # another name for recall. However, specificity measures the proportion of
 # correctly classified samples in the negative class defined as: TN / (TN +
 # FP). Similar to the precision-recall curve, sensitivity and specificity are
-# generally plotted as a curve called the receiver operating characteristic
+# generally plotted as a curve called the Receiver Operating Characteristic
 # (ROC) curve. Below is such a curve:
 
 # %%
@@ -345,7 +351,10 @@ disp = RocCurveDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
-_ = disp.ax_.set_title("ROC AUC curve")
+plt.xlabel("False positive rate")
+plt.ylabel("True positive rate                           ")
+plt.text(-0.23, 0.55, "=  sensitivity or recall", size=8, rotation="vertical")
+_ = disp.ax_.set_title("Receiver Operating Characteristic curve")
 
 # %% [markdown]
 # This curve was built using the same principle as the precision-recall curve:

@@ -325,7 +325,7 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 import numpy as np
 from sklearn.linear_model import RidgeCV
 
-alphas = np.logspace(-2, 0, num=20)
+alphas = np.logspace(-2, 0, num=21)
 ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
                       RidgeCV(alphas=alphas, store_cv_values=True))
 
@@ -353,18 +353,29 @@ print(f"Mean squared error of linear regression model on the test set:\n"
 # It indicates that our model is not overfitting.
 #
 # When fitting the ridge regressor, we also requested to store the error found
-# during cross-validation (by setting the parameter `store_cv_values=True`).
-# We will plot the mean squared error for the different `alphas` regularization
-# strength that we tried.
+# during cross-validation (by setting the parameter `store_cv_values=True`). We
+# will plot the mean squared error for the different `alphas` regularization
+# strength that we tried. The shaded region represent one standard deviation of
+# the average mean square error across folds for a given value of `alpha`.
 
 # %%
 mse_alphas = [est[-1].cv_values_.mean(axis=0)
               for est in cv_results["estimator"]]
 cv_alphas = pd.DataFrame(mse_alphas, columns=alphas)
+cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas
 
 # %%
-cv_alphas.mean(axis=0).plot(marker="+")
+plt.plot(cv_alphas["mean"])
+plt.fill_between(
+    cv_alphas.index,
+    cv_alphas["mean"] - cv_alphas["std"],
+    cv_alphas["mean"] + cv_alphas["std"],
+    color="navy",
+    alpha=0.3,
+)
+plt.xlim((0.0, 1.0))
+plt.ylim((4_500, 11_000))
 plt.ylabel("Mean squared error\n (lower is better)")
 plt.xlabel("alpha")
 _ = plt.title("Error obtained by cross-validation")
@@ -382,14 +393,16 @@ best_alphas
 # The optimal regularization strength is not necessarily the same on all
 # cross-validation iterations. But since we expect each cross-validation
 # resampling to stem from the same data distribution, it is common practice
-# to use the average value of the best `alpha` found on different
-# cross-validation folds as our final estimate for the tuned `alpha`.
+# to choose the best `alpha` to put into production as lying in the range
+# defined by:
 
 # %%
-print(f"The mean optimal alpha leading to the best generalization performance is:\n"
-      f"{np.mean(best_alphas):.2f} ± {np.std(best_alphas):.2f}")
+print(f"Min optimal alpha: {np.min(best_alphas):.2f} and "
+      f"Max optimal alpha: {np.max(best_alphas):.2f}")
 
 # %% [markdown]
+# This range can be reduced by decreasing the spacing between the grid of
+# `alphas`.
 #
 # In this notebook, you learned about the concept of regularization and
 # the importance of preprocessing and parameter tuning.

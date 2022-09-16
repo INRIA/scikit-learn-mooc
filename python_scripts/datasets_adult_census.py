@@ -46,9 +46,9 @@ adult_census[target_name].value_counts()
 # %%
 prevalence = (
     adult_census[target_name].value_counts()[1]
-    / adult_census[target_name].value_counts()[0]
+    / adult_census[target_name].value_counts().sum()
 )
-print(f"The prevalence of the dataset is: {prevalence:.3f}")
+print(f"The prevalence of the '>50K' class is: {prevalence:.3f}")
 
 # %% [markdown]
 # Notice that there is also an important imbalance on the data collection
@@ -76,14 +76,18 @@ _ = sns.catplot(x=target_name, hue="sex", kind="count", data=adult_census)
 # We can define a prevalence by group, or equivalently convert into percentage:
 
 # %%
+adult_census_female = adult_census.loc[adult_census["sex"]==" Female"]
 prevalence_female = (
-    adult_census.groupby("sex")[target_name].value_counts()[1]
-    / adult_census.groupby("sex")[target_name].value_counts()[0]
+    adult_census_female[target_name].value_counts()[1]
+    / adult_census_female[target_name].value_counts().sum()
 )
+
+adult_census_male = adult_census.loc[adult_census["sex"]==" Male"]
 prevalence_male = (
-    adult_census.groupby("sex")[target_name].value_counts()[3]
-    / adult_census.groupby("sex")[target_name].value_counts()[2]
+    adult_census_male[target_name].value_counts()[1]
+    / adult_census_male[target_name].value_counts().sum()
 )
+
 print(
     f"The percentage of 'female' samples earning a high revenue is {100*prevalence_female:.2f}%"
 )

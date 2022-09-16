@@ -29,7 +29,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # * uses a `StandardScaler` to normalize the numerical data;
 # * uses a `sklearn.neighbors.KNeighborsRegressor` as a predictive model.
 
-# %%
+# %% tags=["solution"]
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsRegressor

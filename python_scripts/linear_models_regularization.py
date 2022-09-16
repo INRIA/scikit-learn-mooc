@@ -355,7 +355,7 @@ print(f"Mean squared error of linear regression model on the test set:\n"
 # When fitting the ridge regressor, we also requested to store the error found
 # during cross-validation (by setting the parameter `store_cv_values=True`). We
 # will plot the mean squared error for the different `alphas` regularization
-# strength that we tried. The shaded region represent one standard deviation of
+# strength that we tried. The error bars represent one standard deviation of
 # the average mean square error across folds for a given value of `alpha`.
 
 # %%
@@ -366,19 +366,13 @@ cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas
 
 # %%
-plt.plot(cv_alphas["mean"])
-plt.fill_between(
-    cv_alphas.index,
-    cv_alphas["mean"] - cv_alphas["std"],
-    cv_alphas["mean"] + cv_alphas["std"],
-    color="navy",
-    alpha=0.3,
-)
+plt.errorbar(cv_alphas.index, cv_alphas["mean"],
+             yerr=cv_alphas["std"])
 plt.xlim((0.0, 1.0))
 plt.ylim((4_500, 11_000))
 plt.ylabel("Mean squared error\n (lower is better)")
 plt.xlabel("alpha")
-_ = plt.title("Error obtained by cross-validation")
+_ = plt.title("Testing error obtained by cross-validation")
 
 # %% [markdown]
 # As we can see, regularization is just like salt in cooking: one must balance

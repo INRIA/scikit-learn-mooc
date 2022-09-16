@@ -25,11 +25,12 @@ data_train, data_test, target_train, target_test = train_test_split(
 # In this exercise, we will progressively define the regression pipeline
 # and later tune its hyperparameters.
 #
-# Start by defining pipeline that:
+# Start by defining a pipeline that:
 # * uses a `StandardScaler` to normalize the numerical data;
 # * uses a `sklearn.neighbors.KNeighborsRegressor` as a predictive model.
 
-# %% tags=["solution"]
+# %%
+# solution
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
@@ -42,7 +43,7 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 # hyperparameters by tuning the following parameters of the `model`:
 #
 # - the parameter `n_neighbors` of the `KNeighborsRegressor` with values
-#   `[1, 3, 5, 7, 10, 12, 15]`
+#   `[1, 3, 5, 7, 10, 12, 15]`;
 # - the parameter `with_mean` of the `StandardScaler` with possible values
 #   `True` or `False`;
 # - the parameter `with_std` of the `StandardScaler` with possible values
@@ -61,7 +62,8 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 # Once the computation has completed, print the best combination of parameters
 # stored in the `best_params_` attribute.
 
-# %% tags=["solution"]
+# %%
+# solution
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
@@ -113,16 +115,18 @@ cv_results = cv_results[column_name_mapping.values()].sort_values(
     "mean test score", ascending=False)
 
 # %% [markdown] tags=["solution"]
-# In addition, the parallel coordinate plot from `plotly` expects all data to
-# be numeric. Thus, we convert the boolean indicator informing whether or not
-# the data were centered or scaled into an integer, where True is mapped to 1
-# and False is mapped to 0.
+# In addition, the parallel coordinate plot from `plotly` expects all data to be
+# numeric. Thus, we convert the boolean indicator informing whether or not the
+# data were centered or scaled into an integer, where True is mapped to 1 and
+# False is mapped to 0. As `n_neighbors` has `dtype=object`, we also convert it
+# explicitly to an integer.
 
 # %% tags=["solution"]
 import numpy as np
 
 column_scaler = ["centering", "scaling"]
 cv_results[column_scaler] = cv_results[column_scaler].astype(np.int64)
+cv_results["n_neighbors"] = cv_results["n_neighbors"].astype(np.int64)
 cv_results
 
 # %% tags=["solution"]

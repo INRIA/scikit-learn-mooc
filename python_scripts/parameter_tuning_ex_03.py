@@ -44,7 +44,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # hyperparameters by tuning the following parameters of the `model`:
 #
 # - the parameter `n_neighbors` of the `KNeighborsRegressor` with values
-#   `[1, 3, 5, 7, 10, 12, 15]`;
+#   `np.logspace(0, 3, num=10).astype(np.int32)`;
 # - the parameter `with_mean` of the `StandardScaler` with possible values
 #   `True` or `False`;
 # - the parameter `with_std` of the `StandardScaler` with possible values
@@ -57,7 +57,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # costly to compute for large grids, whereas the parameter `n_iter` of the
 # `RandomizedSearchCV` controls the number of different random combination that
 # are evaluated. Notice that setting `n_iter` larger than the number of possible
-# combinations in a grid (in this case 7 x 2 x 2 = 28) would lead to repeating
+# combinations in a grid (in this case 10 x 2 x 2 = 40) would lead to repeating
 # already-explored combinations.
 #
 # Once the computation has completed, print the best combination of parameters

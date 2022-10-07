@@ -43,7 +43,7 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 # hyperparameters by tuning the following parameters of the `model`:
 #
 # - the parameter `n_neighbors` of the `KNeighborsRegressor` with values
-#   `[1, 3, 5, 7, 10, 12, 15]`;
+#   `np.logspace(0, 3, num=10).astype(np.int32)`;
 # - the parameter `with_mean` of the `StandardScaler` with possible values
 #   `True` or `False`;
 # - the parameter `with_std` of the `StandardScaler` with possible values
@@ -56,7 +56,7 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 # costly to compute for large grids, whereas the parameter `n_iter` of the
 # `RandomizedSearchCV` controls the number of different random combination that
 # are evaluated. Notice that setting `n_iter` larger than the number of possible
-# combinations in a grid (in this case 7 x 2 x 2 = 28) would lead to repeating
+# combinations in a grid (in this case 10 x 2 x 2 = 40) would lead to repeating
 # already-explored combinations.
 #
 # Once the computation has completed, print the best combination of parameters
@@ -64,10 +64,11 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 
 # %%
 # solution
+import numpy as np
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
-    "kneighborsregressor__n_neighbors": [1, 3, 5, 7, 10, 15, 20],
+    "kneighborsregressor__n_neighbors": np.logspace(0, 3, num=10).astype(np.int32),
     "standardscaler__with_mean": [True, False],
     "standardscaler__with_std": [True, False],
 }
@@ -122,8 +123,6 @@ cv_results = cv_results[column_name_mapping.values()].sort_values(
 # explicitly to an integer.
 
 # %% tags=["solution"]
-import numpy as np
-
 column_scaler = ["centering", "scaling"]
 cv_results[column_scaler] = cv_results[column_scaler].astype(np.int64)
 cv_results["n_neighbors"] = cv_results["n_neighbors"].astype(np.int64)

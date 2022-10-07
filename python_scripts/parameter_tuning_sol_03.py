@@ -190,7 +190,6 @@ for i in range(1, n_plot):
     plt.annotate(
         non_scaled_dist[0, i],
         (data_to_plot.iloc[i]["AveRooms"], data_to_plot.iloc[i]["Population"]),
-        fontsize="large",
     )
 _ = plt.title("Distances to sample_of_interest before scaling")
 
@@ -218,7 +217,6 @@ for i in range(1, n_plot):
     plt.annotate(
         scaled_dist[0, i],
         (scaled_data.iloc[i]["AveRooms"], scaled_data.iloc[i]["Population"]),
-        fontsize="large",
     )
 plt.axis("square")
 _ = plt.title("Distances to sample_of_interest after scaling")

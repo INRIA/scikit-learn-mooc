@@ -67,7 +67,7 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
-    "kneighborsregressor__n_neighbors" : [1, 3, 5, 7, 10, 15, 20],
+    "kneighborsregressor__n_neighbors": [1, 3, 5, 7, 10, 15, 20],
     "standardscaler__with_mean": [True, False],
     "standardscaler__with_std": [True, False],
 }
@@ -146,12 +146,33 @@ fig.show()
 # (move) the range selection and cross two selections to see the intersections.
 #
 # Selecting the best performing models (i.e. above an accuracy of ~0.68), we
-# observe the following pattern:
+# observe that **in this case**:
 #
-# - scaling the data is important. All the best performing models are scaling
-#   the data;
+# - scaling the data is important. All the best performing models use scaled
+#   features;
 # - centering the data does not have a strong impact. Both approaches, centering
 #   and not centering, can lead to good models;
 # - using some neighbors is fine but using too many is a problem. In particular
-#   no pipeline with `n_neighbors=1` can be found among the best models. In this
-#   case, scaling has a bigger impact than the hyperparameter itself!
+#   no pipeline with `n_neighbors=1` can be found among the best models.
+#   However, scaling features has an even stronger impact than the choice of
+#   `n_neighbors` in this problem.
+#
+# The reason is that fitting scaled data leads to a completely different
+# KNeighbors model:  if you have two variables A and B where A has values which
+# vary between 0 and 10,000 (e.g. the variable `"Population"`) and B is a
+# variable that varies between 0 and 2 (e.g. the variable `"AveBedrms"`), then
+# distances between samples (rows of the dataframe) are mostly impacted by
+# differences in values of the column A, while values of the column B will be
+# comparatively ignored. If one applies StandardScaler to such a database, both
+# the values of A and B will be approximately between -3 and 3 and the neighbor
+# structure will be impacted more or less equivalently by both variables.
+#
+# Note that **in this case** the models with scaled features perform better
+# than the models with non-scaled features because all the variables are
+# expected to be predictive and we rather avoid some of them being comparatively
+# ignored.
+#
+# If the variables in lower scales were not predictive one may experience a
+# decrease of the performance after scaling the features: noisy features would
+# contribute more to the prediction after scaling and therefore scaling would
+# increase overfitting.

@@ -200,6 +200,12 @@ adult_census["sex"].value_counts()
 # for resources on how to quantify and potentially mitigate fairness
 # issues related to the deployment of automated decision making
 # systems that rely on machine learning components.
+#
+# Studying why the data collection process of this dataset lead to such an
+# unexpected gender imbalance is beyond the scope of this MOOC but we should
+# keep in mind that this dataset is not representative of the US population
+# before drawing any conclusions based on its statistics or the predictions of
+# models trained on it.
 
 # %%
 adult_census["education"].value_counts()

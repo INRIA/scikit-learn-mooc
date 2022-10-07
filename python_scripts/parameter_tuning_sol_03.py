@@ -160,12 +160,73 @@ fig.show()
 # The reason is that fitting scaled data leads to a completely different
 # KNeighbors model:  if you have two variables A and B where A has values which
 # vary between 0 and 10,000 (e.g. the variable `"Population"`) and B is a
-# variable that varies between 0 and 2 (e.g. the variable `"AveBedrms"`), then
+# feature that varies between 1 and 10 (e.g. the variable `"AveRooms"`), then
 # distances between samples (rows of the dataframe) are mostly impacted by
 # differences in values of the column A, while values of the column B will be
 # comparatively ignored. If one applies StandardScaler to such a database, both
 # the values of A and B will be approximately between -3 and 3 and the neighbor
 # structure will be impacted more or less equivalently by both variables.
+#
+# We can make a plot showing the distances of some samples to a central
+# `sample_of_interest` as annotations:
+
+# %% tags=["solution"]
+import matplotlib.pyplot as plt
+from sklearn.metrics.pairwise import euclidean_distances
+
+n_plot = 5
+data_to_plot = data[0:n_plot][["AveRooms", "Population"]]
+sample_of_interest = data_to_plot.iloc[0].to_numpy().reshape(1, -1)
+non_scaled_dist = np.round(euclidean_distances(sample_of_interest, data_to_plot), 0)
+
+data_to_plot.plot.scatter(x="AveRooms", y="Population")
+for i in range(1, n_plot):
+    plt.plot(
+        data_to_plot.iloc[[0, i]]["AveRooms"],
+        data_to_plot.iloc[[0, i]]["Population"],
+        "k--",
+        linewidth=1,
+    )
+    plt.annotate(
+        non_scaled_dist[0, i],
+        (data_to_plot.iloc[i]["AveRooms"], data_to_plot.iloc[i]["Population"]),
+        fontsize="large",
+    )
+_ = plt.title("Distances to sample_of_interest before scaling")
+
+# %% [markdown] tags=["solution"]
+# Pay attention to the two samples in the lower left corner. Their annotations
+# show that their respective distances to the `sample_of_interest` are 236 and
+# 243 even if the latter appears seemingly closer. This is due to the scale of
+# the `"Population"`-axis. Let's scale the features, recompute the distances and
+# force a square axis to better visualize the neighbor structure.
+
+# %% tags=["solution"]
+scaled_data = scaler.fit_transform(data_to_plot)
+scaled_data = pd.DataFrame(scaled_data, columns=data_to_plot.columns)
+scaled_sample_of_interest = scaled_data.iloc[0].to_numpy().reshape(1, -1)
+scaled_dist = np.round(euclidean_distances(scaled_sample_of_interest, scaled_data), 2)
+
+scaled_data.plot.scatter(x="AveRooms", y="Population")
+for i in range(1, n_plot):
+    plt.plot(
+        scaled_data.iloc[[0, i]]["AveRooms"],
+        scaled_data.iloc[[0, i]]["Population"],
+        "k--",
+        linewidth=1,
+    )
+    plt.annotate(
+        scaled_dist[0, i],
+        (scaled_data.iloc[i]["AveRooms"], scaled_data.iloc[i]["Population"]),
+        fontsize="large",
+    )
+plt.axis("square")
+_ = plt.title("Distances to sample_of_interest after scaling")
+
+# %% [markdown] tags=["solution"]
+# Notice that the two samples in the lower left corner changed their relative
+# distance to the `sample_of_interest`: the most distant of those two samples
+# became the closest.
 #
 # Note that **in this case** the models with scaled features perform better
 # than the models with non-scaled features because all the variables are

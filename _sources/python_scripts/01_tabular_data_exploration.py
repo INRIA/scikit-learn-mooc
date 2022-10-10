@@ -186,17 +186,26 @@ _ = adult_census.hist(figsize=(20, 14))
 adult_census["sex"].value_counts()
 
 # %% [markdown]
-# Note that there is an important imbalance on the data collection concerning
-# the number of male/female samples. Be aware that any kind of data imbalance
-# will impact the generalizability of a model trained on it. Moreover, it can
-# lead to
+# Note that the data collection process resulted in an important imbalance
+# between the number of male/female samples.
+#
+# Be aware that training a model with such data imbalance can cause
+# disproportioned prediction errors for the under-represented groups. This is a
+# typical cause of
 # [fairness](https://docs.microsoft.com/en-us/azure/machine-learning/concept-fairness-ml#what-is-machine-learning-fairness)
-# problems if used naively when deploying a real life setting.
+# problems if used naively when deploying a machine learning based system in a
+# real life setting.
 #
 # We recommend our readers to refer to [fairlearn.org](https://fairlearn.org)
 # for resources on how to quantify and potentially mitigate fairness
 # issues related to the deployment of automated decision making
 # systems that rely on machine learning components.
+#
+# Studying why the data collection process of this dataset lead to such an
+# unexpected gender imbalance is beyond the scope of this MOOC but we should
+# keep in mind that this dataset is not representative of the US population
+# before drawing any conclusions based on its statistics or the predictions of
+# models trained on it.
 
 # %%
 adult_census["education"].value_counts()

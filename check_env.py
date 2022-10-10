@@ -57,7 +57,7 @@ print()
 requirements = {'numpy': "1.16", 'scipy': "1.2", 'matplotlib': "3.0",
                 'sklearn': "1.1", 'pandas': "1",
                 'seaborn': "0.11",
-                'notebook': "5.7", 'plotly': "4.3"}
+                'notebook': "5.7", 'plotly': "5.10"}
 
 # now the dependencies
 for lib, required_version in list(requirements.items()):

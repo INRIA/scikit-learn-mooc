@@ -307,10 +307,8 @@ disp = PrecisionRecallDisplay.from_estimator(
 disp = PrecisionRecallDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
-plt.xlabel("Recall                  ")
-plt.text(0.45, -0.2, "=  TPR or sensitivity", size=8)
-plt.ylabel("Precision         ")
-plt.text(-0.16, 0.6, "=  PPV", size=8, rotation="vertical")
+plt.xlabel("Recall (also known as TPR or sensitivity)")
+plt.ylabel("Precision (also known as PPV)")
 plt.xlim(0, 1)
 plt.ylim(0, 1)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
@@ -366,8 +364,7 @@ disp = RocCurveDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
 plt.xlabel("False positive rate")
-plt.ylabel("True positive rate                           ")
-plt.text(-0.17, 0.55, "=  sensitivity or recall", size=8, rotation="vertical")
+plt.ylabel("True positive rate (also known as sensitivity or recall)")
 plt.xlim(0, 1)
 plt.ylim(0, 1)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

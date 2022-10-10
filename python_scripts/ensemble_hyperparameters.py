@@ -149,6 +149,12 @@ cv_results["std_test_error"] = cv_results["std_test_score"]
 cv_results[columns].sort_values(by="mean_test_error")
 
 # %% [markdown]
+#
+# ```{caution}
+# Here, we tune the `n_estimators` but be aware that using early-stopping as
+# in the previous exercise will be better.
+# ```
+#
 # In this search, we see that the `learning_rate` is required to be large
 # enough, i.e. > 0.1. We also observe that for the best ranked models, having a
 # smaller `learning_rate`, will require more trees or a larger number of

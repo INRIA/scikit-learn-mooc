@@ -41,8 +41,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # In general, the more trees in the forest, the better the generalization
 # performance will be. However, it will slow down the fitting and prediction
 # time. The goal is to balance computing time and generalization performance
-# when setting the number of estimators when putting such learner in production.
-# Here, we fix `n_estimators=100`, which is already the default value.
+# when setting the number of estimators. Here, we fix `n_estimators=100`, which
+# is already the default value.
 #
 # ```{caution}
 # Tuning the `n_estimators` for random forests leads to overfitting and can

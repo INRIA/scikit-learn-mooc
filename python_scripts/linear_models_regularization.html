@@ -1924,9 +1924,7 @@ model which enforces such behavior.</p>
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:212: LinAlgWarning: Ill-conditioned matrix (rcond=2.68318e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:212: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.14/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:212: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 </pre></div>
 </div>
@@ -2173,7 +2171,7 @@ testing score.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RidgeCV</span>
 
-<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span>
                       <span class="n">RidgeCV</span><span class="p">(</span><span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">,</span> <span class="n">store_cv_values</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
@@ -2203,7 +2201,7 @@ testing score.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the train set:
-4306.562 ± 25.918
+4301.922 ± 24.826
 </pre></div>
 </div>
 </div>
@@ -2218,7 +2216,7 @@ testing score.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the test set:
-4348.657 ± 252.921
+4458.556 ± 462.192
 </pre></div>
 </div>
 </div>
@@ -2226,14 +2224,16 @@ testing score.</p>
 <p>By optimizing <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, we see that the training and testing scores are close.
 It indicates that our model is not overfitting.</p>
 <p>When fitting the ridge regressor, we also requested to store the error found
-during cross-validation (by setting the parameter <code class="docutils literal notranslate"><span class="pre">store_cv_values=True</span></code>).
-We will plot the mean squared error for the different <code class="docutils literal notranslate"><span class="pre">alphas</span></code> regularization
-strength that we tried.</p>
+during cross-validation (by setting the parameter <code class="docutils literal notranslate"><span class="pre">store_cv_values=True</span></code>). We
+will plot the mean squared error for the different <code class="docutils literal notranslate"><span class="pre">alphas</span></code> regularization
+strength that we tried. The error bars represent one standard deviation of
+the average mean square error across folds for a given value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mse_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cv_values_</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
               <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
 <span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mse_alphas</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">alphas</span><span class="p">)</span>
+<span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">cv_alphas</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 <span class="n">cv_alphas</span>
 </pre></div>
 </div>
@@ -2257,143 +2257,115 @@ strength that we tried.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>0.010000</th>
-      <th>0.012743</th>
-      <th>0.016238</th>
-      <th>0.020691</th>
-      <th>0.026367</th>
-      <th>0.033598</th>
-      <th>0.042813</th>
-      <th>0.054556</th>
-      <th>0.069519</th>
-      <th>0.088587</th>
-      <th>0.112884</th>
-      <th>0.143845</th>
-      <th>0.183298</th>
-      <th>0.233572</th>
-      <th>0.297635</th>
-      <th>0.379269</th>
-      <th>0.483293</th>
-      <th>0.615848</th>
-      <th>0.784760</th>
-      <th>1.000000</th>
+      <th>mean</th>
+      <th>std</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>7587.897141</td>
-      <td>7059.531216</td>
-      <td>6579.796667</td>
-      <td>6161.839629</td>
-      <td>5813.048345</td>
-      <td>5535.350138</td>
-      <td>5326.646369</td>
-      <td>5182.950517</td>
-      <td>5100.749049</td>
-      <td>5079.212663</td>
-      <td>5122.029454</td>
-      <td>5238.704149</td>
-      <td>5445.118890</td>
-      <td>5763.012259</td>
-      <td>6217.925433</td>
-      <td>6835.274126</td>
-      <td>7634.692137</td>
-      <td>8623.620241</td>
-      <td>9791.918443</td>
-      <td>11109.476019</td>
+      <th>0.010000</th>
+      <td>10805.760257</td>
+      <td>7859.294941</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>7079.341771</td>
-      <td>6696.622046</td>
-      <td>6329.022308</td>
-      <td>5987.727181</td>
-      <td>5681.306000</td>
-      <td>5415.171818</td>
-      <td>5191.880969</td>
-      <td>5012.209177</td>
-      <td>4876.780585</td>
-      <td>4787.974274</td>
-      <td>4751.851652</td>
-      <td>4779.853646</td>
-      <td>4889.937328</td>
-      <td>5106.656625</td>
-      <td>5459.549144</td>
-      <td>5979.280717</td>
-      <td>6691.530974</td>
-      <td>7609.581815</td>
-      <td>8727.609953</td>
-      <td>10017.092899</td>
+      <th>0.012589</th>
+      <td>9835.307516</td>
+      <td>6588.155387</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>24857.406605</td>
-      <td>21448.284772</td>
-      <td>18293.478416</td>
-      <td>15481.009011</td>
-      <td>13067.031991</td>
-      <td>11071.457116</td>
-      <td>9480.437579</td>
-      <td>8254.431555</td>
-      <td>7338.963939</td>
-      <td>6675.026438</td>
-      <td>6207.024331</td>
-      <td>5887.541169</td>
-      <td>5679.263698</td>
-      <td>5554.913823</td>
-      <td>5496.051755</td>
-      <td>5491.367683</td>
-      <td>5534.775517</td>
-      <td>5623.398006</td>
-      <td>5755.456140</td>
-      <td>5928.154410</td>
+      <th>0.015849</th>
+      <td>8925.577610</td>
+      <td>5409.395931</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>7504.216958</td>
-      <td>7125.074257</td>
-      <td>6754.172985</td>
-      <td>6400.999897</td>
-      <td>6072.937966</td>
-      <td>5774.941819</td>
-      <td>5509.955509</td>
-      <td>5280.027720</td>
-      <td>5087.960263</td>
-      <td>4939.271829</td>
-      <td>4844.228092</td>
-      <td>4819.618117</td>
-      <td>4889.808854</td>
-      <td>5086.420585</td>
-      <td>5445.877349</td>
-      <td>6004.320850</td>
-      <td>6790.113763</td>
-      <td>7815.311733</td>
-      <td>9068.542918</td>
-      <td>10511.939341</td>
+      <th>0.019953</th>
+      <td>8100.047161</td>
+      <td>4353.016704</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>6999.938808</td>
-      <td>6598.898743</td>
-      <td>6215.363499</td>
-      <td>5861.328579</td>
-      <td>5546.025773</td>
-      <td>5275.377052</td>
-      <td>5052.349007</td>
-      <td>4878.140850</td>
-      <td>4753.964890</td>
-      <td>4683.117084</td>
-      <td>4673.049960</td>
-      <td>4737.162496</td>
-      <td>4895.935124</td>
-      <td>5176.863333</td>
-      <td>5612.500529</td>
-      <td>6236.037942</td>
-      <td>7074.449338</td>
-      <td>8140.303978</td>
-      <td>9424.471281</td>
-      <td>10892.352852</td>
+      <th>0.025119</th>
+      <td>7375.000527</td>
+      <td>3438.794963</td>
+    </tr>
+    <tr>
+      <th>0.031623</th>
+      <td>6758.474506</td>
+      <td>2674.639258</td>
+    </tr>
+    <tr>
+      <th>0.039811</th>
+      <td>6250.760542</td>
+      <td>2056.950531</td>
+    </tr>
+    <tr>
+      <th>0.050119</th>
+      <td>5846.266069</td>
+      <td>1572.763214</td>
+    </tr>
+    <tr>
+      <th>0.063096</th>
+      <td>5536.215174</td>
+      <td>1202.943947</td>
+    </tr>
+    <tr>
+      <th>0.079433</th>
+      <td>5311.576140</td>
+      <td>925.547806</td>
+    </tr>
+    <tr>
+      <th>0.100000</th>
+      <td>5165.715922</td>
+      <td>718.596591</td>
+    </tr>
+    <tr>
+      <th>0.125893</th>
+      <td>5096.474028</td>
+      <td>562.042934</td>
+    </tr>
+    <tr>
+      <th>0.158489</th>
+      <td>5107.489238</td>
+      <td>439.763119</td>
+    </tr>
+    <tr>
+      <th>0.199526</th>
+      <td>5208.638340</td>
+      <td>345.021050</td>
+    </tr>
+    <tr>
+      <th>0.251189</th>
+      <td>5415.385561</td>
+      <td>297.489290</td>
+    </tr>
+    <tr>
+      <th>0.316228</th>
+      <td>5746.801131</td>
+      <td>353.672626</td>
+    </tr>
+    <tr>
+      <th>0.398107</th>
+      <td>6222.125875</td>
+      <td>535.737882</td>
+    </tr>
+    <tr>
+      <th>0.501187</th>
+      <td>6856.124687</td>
+      <td>820.747311</td>
+    </tr>
+    <tr>
+      <th>0.630957</th>
+      <td>7654.025118</td>
+      <td>1192.443073</td>
+    </tr>
+    <tr>
+      <th>0.794328</th>
+      <td>8607.322588</td>
+      <td>1638.892918</td>
+    </tr>
+    <tr>
+      <th>1.000000</th>
+      <td>9691.803104</td>
+      <td>2144.446582</td>
     </tr>
   </tbody>
 </table>
@@ -2401,10 +2373,13 @@ strength that we tried.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">4_500</span><span class="p">,</span> <span class="mi">11_000</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Error obtained by cross-validation&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Testing error obtained by cross-validation&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2423,11 +2398,11 @@ its amount to get the best generalization performance. We can check if the best
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.08858667904100823,
- 0.11288378916846889,
- 0.37926901907322497,
- 0.14384498882876628,
- 0.11288378916846889]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.07943282347242814,
+ 0.12589254117941676,
+ 0.31622776601683794,
+ 0.12589254117941676,
+ 0.1]
 </pre></div>
 </div>
 </div>
@@ -2435,22 +2410,23 @@ its amount to get the best generalization performance. We can check if the best
 <p>The optimal regularization strength is not necessarily the same on all
 cross-validation iterations. But since we expect each cross-validation
 resampling to stem from the same data distribution, it is common practice
-to use the average value of the best <code class="docutils literal notranslate"><span class="pre">alpha</span></code> found on different
-cross-validation folds as our final estimate for the tuned <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p>
+to choose the best <code class="docutils literal notranslate"><span class="pre">alpha</span></code> to put into production as lying in the range
+defined by:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean optimal alpha leading to the best generalization performance is:</span><span class="se">\n</span><span class="s2">&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> and &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;Max optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean optimal alpha leading to the best generalization performance is:
-0.17 ± 0.11
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Min optimal alpha: 0.08 and Max optimal alpha: 0.32
 </pre></div>
 </div>
 </div>
 </div>
+<p>This range can be reduced by decreasing the spacing between the grid of
+<code class="docutils literal notranslate"><span class="pre">alphas</span></code>.</p>
 <p>In this notebook, you learned about the concept of regularization and
 the importance of preprocessing and parameter tuning.</p>
 </section>

@@ -364,7 +364,7 @@ disp = RocCurveDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
 plt.xlabel("False positive rate")
-plt.ylabel("True positive rate (also known as sensitivity or recall)")
+plt.ylabel("True positive rate\n(also known as sensitivity or recall)")
 plt.xlim(0, 1)
 plt.ylim(0, 1)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

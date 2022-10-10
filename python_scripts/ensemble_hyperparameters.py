@@ -18,8 +18,8 @@
 #
 # ```{caution}
 # For the sake of clarity, no cross-validation will be used to estimate the
-# testing error. We are only showing the effect of the parameters
-# on the validation set of what should be the inner loop of a nested
+# variability of the testing error. We are only showing the effect of the
+# parameters on the validation set of what should be the inner loop of a nested
 # cross-validation.
 # ```
 #
@@ -28,13 +28,13 @@
 # The main parameter to select in random forest is the `n_estimators` parameter.
 # In general, the more trees in the forest, the better the generalization
 # performance will be. However, it will slow down the fitting and prediction
-# time. The goal is to balance computing time and generalization performance when
-# setting the number of estimators when putting such learner in production.
+# time. The goal is to balance computing time and generalization performance
+# when setting the number of estimators when putting such learner in production.
+# Here, we fix `n_estimators=100`, which is already the default value.
 #
 # ```{caution}
-# Here, we tune the `n_estimators` but doing so is likely to be a loss of
-# resources. Be aware that using early-stopping as in the previous exercise will
-# be better.
+# Tuning the `n_estimators` for random forests leads to overfitting and can
+# result in a waste of computer power.
 # ```
 #
 # Then, we could also tune a parameter that controls the depth of each tree in
@@ -80,15 +80,14 @@ cv_results["std_test_error"] = cv_results["std_test_score"]
 cv_results[columns].sort_values(by="mean_test_error")
 
 # %% [markdown]
-# We can observe in our search that we are required to have a large
-# number of leaves and thus deep trees. This parameter seems particularly
-# impactful in comparison to the number of trees for this particular dataset:
-# with at least 50 trees, the generalization performance will be driven by the
-# number of leaves.
+# We can observe in our search that we are required to have a large number of
+# leaves and thus deep trees. This parameter seems particularly impactful in
+# comparison to the number of features for this particular dataset.
 #
-# Now we will estimate the generalization performance of the best model by
-# refitting it with the full training set and using the test set for scoring on
-# unseen data. This is done by default when calling the `.fit` method.
+# Once the `RandomizedSearchCV` has found the best set of hyperparameters, it
+# uses them to refit the model using the full training set. To estimate the
+# generalization performance of the best model it suffices to call `.score` on
+# the unseen data.
 
 # %%
 error = -search_cv.score(data_test, target_test)
@@ -151,8 +150,8 @@ cv_results[columns].sort_values(by="mean_test_error")
 # %% [markdown]
 #
 # ```{caution}
-# Here, we tune the `n_estimators` but be aware that using early-stopping as
-# in the previous exercise will be better.
+# Here, we tune the `n_estimators` but be aware that is better to use
+# `early_stopping` as done in the Exercise M6.04.
 # ```
 #
 # In this search, we see that the `learning_rate` is required to be large
@@ -163,8 +162,8 @@ cv_results[columns].sort_values(by="mean_test_error")
 # on the other hyperparameter values.
 
 # %% [markdown]
-# Now we estimate the generalization performance of the best model
-# using the test set.
+# Now we estimate the generalization performance of the best model using the
+# test set.
 
 # %%
 error = -search_cv.score(data_test, target_test)
@@ -173,5 +172,5 @@ print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
 # %% [markdown]
 # The mean test score in the held-out test set is slightly better than the score
 # of the best model. The reason is that the final model is refitted on the whole
-# training set and therefore, on more data than the inner cross-validated models
-# of the grid search procedure.
+# training set and therefore, on more data than the cross-validated models of
+# the grid search procedure.

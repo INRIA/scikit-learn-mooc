@@ -2,7 +2,7 @@
 
 📢 📢 📢 A new session of the [Machine learning in Python with scikit-learn
 MOOC](https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn),
-is available starting on Feb. 15, 2022 and will last for 3 months. Enroll for
+is available starting on October 18, 2022 and will last for 3 months. Enroll for
 the full MOOC experience (quizz solutions, executable notebooks, discussion
 forum, etc ...) !
 

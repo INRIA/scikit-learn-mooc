@@ -23,6 +23,18 @@
 # cross-validation.
 # ```
 #
+# We will start by loading the california housing dataset.
+
+# %%
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0)
+
+# %% [markdown]
 # ## Random forest
 #
 # The main parameter to select in random forest is the `n_estimators` parameter.
@@ -37,25 +49,24 @@
 # result in a waste of computer power.
 # ```
 #
-# Then, we could also tune a parameter that controls the depth of each tree in
-# the forest. Two parameters are important for this: `max_depth` and
+# Instead, we can tune the hyperparameter `max_features`, which controls the
+# number of features to consider when looking for the best split. If set to
+# `None`, then `max_features=n_features`.
+
+# %%
+print(f"In this case, n_features={len(data.columns)}")
+
+# %% [markdown]
+# We can also tune the different parameters that control the depth of each tree
+# in the forest. Two parameters are important for this: `max_depth` and
 # `max_leaf_nodes`. They differ in the way they control the tree structure.
 # Indeed, `max_depth` will enforce to have a more symmetric tree, while
 # `max_leaf_nodes` does not impose such constraint.
 #
-# Be aware that with random forest, trees are generally deep since we are
-# seeking to overfit each tree on each bootstrap sample because this will be
-# mitigated by combining them altogether. Assembling underfitted trees (i.e.
-# shallow trees) might also lead to an underfitted forest.
-
-# %%
-from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
-
-data, target = fetch_california_housing(return_X_y=True, as_frame=True)
-target *= 100  # rescale the target in k$
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
+# Be aware that with random forest, trees are expected to be deep since we are
+# seeking to overfit each tree on each bootstrap sample. Overfitting is
+# mitigated when combining the trees altogether, whereas assembling underfitted
+# trees (i.e. shallow trees) might also lead to an underfitted forest.
 
 # %%
 import pandas as pd

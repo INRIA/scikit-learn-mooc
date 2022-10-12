@@ -163,8 +163,8 @@ Which of the following statements hold:
 
 - a) Looking at the individual cross-validation scores, the best ranked model using a
   `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
-  than using any other processor
-- b) Using any of the preprocessors has always a better ranking than using no processor, irrespective
+  than using any other preprocessor
+- b) Using any of the preprocessors has always a better ranking than using no preprocessor, irrespective
   of the value `of n_neighbors`
 - c) Looking at the individual cross-validation scores, the model with `n_neighbors=5` and
   `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
@@ -202,10 +202,10 @@ Explore the set of best parameters that the different grid search models found
 in each fold of the outer cross-validation. Remember that you can access them
 with the `best_params_` attribute of the estimator. Select all the statements that are true.
 
-- a) The tuned number of nearest neighbors is stable across all folds
-- b) The tuned number of nearest neighbors changes often across all folds
-- c) The optimal scaler is stable across all folds
-- d) The optimal scaler changes often across all folds
+- a) The tuned number of nearest neighbors is stable across folds
+- b) The tuned number of nearest neighbors changes often across folds
+- c) The optimal scaler is stable across folds
+- d) The optimal scaler changes often across folds
 
 _Select all answers that apply_
 

@@ -13,11 +13,11 @@ _Select all answers that apply_
 +++
 
 ```{admonition} Question
-Ordinal variables are:
+An ordinal variable:
 
-- a) categorical variables with a large number of possible categories
-- b) typically represented by integers or string labels
-- c) categorical variables with a meaningful order
+- a) is a categorical variable with a large number of different categories;
+- b) can be represented by integers or string labels;
+- c) is a categorical variable with a meaningful order.
 
 _Select all answers that apply_
 ```
@@ -25,12 +25,12 @@ _Select all answers that apply_
 +++
 
 ```{admonition} Question
-One-hot encoding will:
+One-hot encoding:
 
-- a) encode a single string-encoded column into a single integer coded column
-- b) transform a numerical variable into a categorical variable
-- c) create one additional column for each possible category
-- d) transform string variable onto numerical representation
+- a) encodes each column with string-labeled values into a single integer-coded column
+- b) transforms a numerical variable into a categorical variable
+- c) creates one additional column for each possible category
+- d) transforms string-labeled variables using a numerical representation
 
 _Select all answers that apply_
 ```

@@ -1568,7 +1568,8 @@ regression. For this purpose, we will create two separate predictive models
 and evaluate them by 10-fold cross-validation.</p>
 <p>Thus, use <code class="docutils literal notranslate"><span class="pre">sklearn.linear_model.LinearRegression</span></code> and
 <code class="docutils literal notranslate"><span class="pre">sklearn.tree.DecisionTreeRegressor</span></code> to create the models. Use the default
-parameters for both models.</p>
+parameters for the linear regression and set <code class="docutils literal notranslate"><span class="pre">random_state=0</span></code> for the decision
+tree.</p>
 <p>Be aware that a linear model requires to scale numerical features.
 Please use <code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code> so that your
 linear regression model behaves the same way as the quiz author
@@ -1627,8 +1628,8 @@ columns. For the sake of simplicity, we will assume the following:</p>
 <ul class="simple">
 <li><p>categorical columns can be selected if they have an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type;</p></li>
 <li><p>use an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> to encode the categorical columns;</p></li>
-<li><p>numerical columns can be selected if they do not have an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.
-It will be the complement of the numerical columns.</p></li>
+<li><p>numerical columns should correspond to the <code class="docutils literal notranslate"><span class="pre">numerical_features</span></code> as defined above.
+This is a subset of the features that are not an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p></li>
 </ul>
 <p>In addition, set the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> of the decision tree to <code class="docutils literal notranslate"><span class="pre">7</span></code> (fixed, no need
 to tune it with a grid-search).</p>

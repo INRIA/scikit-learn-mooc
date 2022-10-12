@@ -14,11 +14,10 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Decision trees are capable of:
+Decision tree regressors can predict:
 
-- a) interpolating and extrapolating
-- b) only interpolating
-- c) only extrapolating
+- a) any values, including values larger or smaller than those observed in `y_train`;
+- b) only values in the range from `np.min(y_train)` to `np.max(y_train)`.
 
 _Select a single answer_
 ```

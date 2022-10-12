@@ -37,7 +37,8 @@ and evaluate them by 10-fold cross-validation.
 
 Thus, use `sklearn.linear_model.LinearRegression` and
 `sklearn.tree.DecisionTreeRegressor` to create the models. Use the default
-parameters for both models.
+parameters for the linear regression and set `random_state=0` for the decision
+tree.
 
 Be aware that a linear model requires to scale numerical features.
 Please use `sklearn.preprocessing.StandardScaler` so that your
@@ -108,8 +109,8 @@ columns. For the sake of simplicity, we will assume the following:
 
 - categorical columns can be selected if they have an `object` data type;
 - use an `OrdinalEncoder` to encode the categorical columns;
-- numerical columns can be selected if they do not have an `object` data type.
-  It will be the complement of the numerical columns.
+- numerical columns should correspond to the `numerical_features` as defined above.
+  This is a subset of the features that are not an `object` data type.
 
 In addition, set the `max_depth` of the decision tree to `7` (fixed, no need
 to tune it with a grid-search).

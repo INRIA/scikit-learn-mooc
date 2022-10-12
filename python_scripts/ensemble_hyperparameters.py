@@ -69,7 +69,8 @@ print(f"In this case, n_features={len(data.columns)}")
 # in the forest. Two parameters are important for this: `max_depth` and
 # `max_leaf_nodes`. They differ in the way they control the tree structure.
 # Indeed, `max_depth` will enforce to have a more symmetric tree, while
-# `max_leaf_nodes` does not impose such constraint.
+# `max_leaf_nodes` does not impose such constraint. If `max_leaf_nodes=None`
+# then the number of leaf nodes is unlimited.
 #
 # The hyperparameter `min_samples_leaf` controls the minimum number of samples
 # required to be at a leaf node. This means that a split point (at any depth) is
@@ -108,13 +109,15 @@ cv_results[columns].sort_values(by="mean_test_error")
 
 # %% [markdown]
 # We can observe in our search that we are required to have a large number of
-# leaves and thus deep trees. This parameter seems particularly impactful in
-# the other tuning parameters but more iterations of random search would be
-# necessary to precisely assert the role of each parameters.
+# `max_leaf_nodes` and thus deep trees. This parameter seems particularly
+# impactful with respect to the other tuning parameters, but large values of
+# `min_samples_leaf` seem to reduce the performance of the model.
 #
-# Using `n_iter=10` is good enough to quickly find a hyperparameter combination
-# that yields a model that works well enough without wasting too much
-# computational resources.
+# In practice, more iterations of random search would be necessary to precisely
+# assert the role of each parameters. Using `n_iter=10` is good enough to
+# quickly inspect the hyperparameter combinations that yield models that work
+# well enough without spending too much computational resources. Feel free to
+# try more interations on your own.
 #
 # Once the `RandomizedSearchCV` has found the best set of hyperparameters, it
 # uses them to refit the model using the full training set. To estimate the

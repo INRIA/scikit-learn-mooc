@@ -304,6 +304,13 @@ disp = PrecisionRecallDisplay.from_estimator(
     classifier, data_test, target_test, pos_label='donated',
     marker="+"
 )
+disp = PrecisionRecallDisplay.from_estimator(
+    dummy_classifier, data_test, target_test, pos_label='donated',
+    color="tab:orange", linestyle="--", ax=disp.ax_)
+plt.xlabel("Recall (also known as TPR or sensitivity)")
+plt.ylabel("Precision (also known as PPV)")
+plt.xlim(0, 1)
+plt.ylim(0, 1)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = disp.ax_.set_title("Precision-recall curve")
 
@@ -325,6 +332,18 @@ _ = disp.ax_.set_title("Precision-recall curve")
 # and is named average precision (AP). With an ideal classifier, the average
 # precision would be 1.
 #
+# Notice that the AP of a `DummyClassifier`, used as baseline to define the
+# chance level, coincides with the number of samples in the positive class
+# divided by the total number of samples (this number is called the prevalence
+# of the positive class).
+
+# %%
+prevalence = (
+    target_test.value_counts()[1] / target_test.value_counts().sum()
+)
+print(f"Prevalence of the class 'donated': {prevalence:.2f}")
+
+# %% [markdown]
 # The precision and recall metric focuses on the positive class, however, one
 # might be interested in the compromise between accurately discriminating the
 # positive class and accurately discriminating the negative classes. The
@@ -332,7 +351,7 @@ _ = disp.ax_.set_title("Precision-recall curve")
 # another name for recall. However, specificity measures the proportion of
 # correctly classified samples in the negative class defined as: TN / (TN +
 # FP). Similar to the precision-recall curve, sensitivity and specificity are
-# generally plotted as a curve called the receiver operating characteristic
+# generally plotted as a curve called the Receiver Operating Characteristic
 # (ROC) curve. Below is such a curve:
 
 # %%
@@ -344,8 +363,12 @@ disp = RocCurveDisplay.from_estimator(
 disp = RocCurveDisplay.from_estimator(
     dummy_classifier, data_test, target_test, pos_label='donated',
     color="tab:orange", linestyle="--", ax=disp.ax_)
+plt.xlabel("False positive rate")
+plt.ylabel("True positive rate\n(also known as sensitivity or recall)")
+plt.xlim(0, 1)
+plt.ylim(0, 1)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
-_ = disp.ax_.set_title("ROC AUC curve")
+_ = disp.ax_.set_title("Receiver Operating Characteristic curve")
 
 # %% [markdown]
 # This curve was built using the same principle as the precision-recall curve:

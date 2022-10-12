@@ -2128,6 +2128,13 @@ decision threshold. Let’s start by computing the precision-recall curve.</p>
     <span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
     <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span>
 <span class="p">)</span>
+<span class="n">disp</span> <span class="o">=</span> <span class="n">PrecisionRecallDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">dummy_classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Recall (also known as TPR or sensitivity)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Precision (also known as PPV)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Precision-recall curve&quot;</span><span class="p">)</span>
 </pre></div>
@@ -2152,6 +2159,25 @@ threshold, we get different precision vs. recall values.</p>
 metric characterizing the curve is linked to the area under the curve (AUC)
 and is named average precision (AP). With an ideal classifier, the average
 precision would be 1.</p>
+<p>Notice that the AP of a <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code>, used as baseline to define the
+chance level, coincides with the number of samples in the positive class
+divided by the total number of samples (this number is called the prevalence
+of the positive class).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prevalence</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prevalence of the class &#39;donated&#39;: </span><span class="si">{</span><span class="n">prevalence</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prevalence of the class &#39;donated&#39;: 0.24
+</pre></div>
+</div>
+</div>
+</div>
 <p>The precision and recall metric focuses on the positive class, however, one
 might be interested in the compromise between accurately discriminating the
 positive class and accurately discriminating the negative classes. The
@@ -2159,7 +2185,7 @@ statistics used for this are sensitivity and specificity. Sensitivity is just
 another name for recall. However, specificity measures the proportion of
 correctly classified samples in the negative class defined as: TN / (TN +
 FP). Similar to the precision-recall curve, sensitivity and specificity are
-generally plotted as a curve called the receiver operating characteristic
+generally plotted as a curve called the Receiver Operating Characteristic
 (ROC) curve. Below is such a curve:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2171,13 +2197,17 @@ generally plotted as a curve called the receiver operating characteristic
 <span class="n">disp</span> <span class="o">=</span> <span class="n">RocCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">dummy_classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;False positive rate&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;True positive rate</span><span class="se">\n</span><span class="s2">(also known as sensitivity or recall)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ROC AUC curve&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Receiver Operating Characteristic curve&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/metrics_classification_41_0.png" src="../_images/metrics_classification_41_0.png" />
+<img alt="../_images/metrics_classification_43_0.png" src="../_images/metrics_classification_43_0.png" />
 </div>
 </div>
 <p>This curve was built using the same principle as the precision-recall curve:

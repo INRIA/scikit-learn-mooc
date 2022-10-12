@@ -71,6 +71,13 @@ print(f"In this case, n_features={len(data.columns)}")
 # Indeed, `max_depth` will enforce to have a more symmetric tree, while
 # `max_leaf_nodes` does not impose such constraint.
 #
+# The hyperparameter `min_samples_leaf` controls the minimum number of samples
+# required to be at a leaf node. This means that a split point (at any depth) is
+# only done if it leaves at least `min_samples_leaf` training samples in each of
+# the left and right branches. A small value for `min_samples_leaf` means that
+# some samples can become isolated when a tree is deep, promoting overfitting. A
+# large value would prevent deep trees, which can lead to underfitting.
+#
 # Be aware that with random forest, trees are expected to be deep since we are
 # seeking to overfit each tree on each bootstrap sample. Overfitting is
 # mitigated when combining the trees altogether, whereas assembling underfitted

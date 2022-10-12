@@ -45,13 +45,21 @@ data_train, data_test, target_train, target_test = train_test_split(
 # is already the default value.
 #
 # ```{caution}
-# Tuning the `n_estimators` for random forests leads to overfitting and can
-# result in a waste of computer power.
+# Tuning the `n_estimators` for random forests generally result in a waste of
+# computer power. We just need to ensure that it is large enough so that doubling
+# its value does not lead to a significant improvement of the validation error.
 # ```
 #
 # Instead, we can tune the hyperparameter `max_features`, which controls the
-# number of features to consider when looking for the best split. If set to
-# `None`, then `max_features=n_features`.
+# size of the random subset of features to consider when looking for the best
+# split when growing the trees: smaller values for `max_features` will lead to
+# more random trees with hopefully more uncorrelated prediction errors. However
+# if `max_features` is too small, predictions can be too random, even after
+# averaging with the tree in the ensemble.
+#
+# If `max_features` is set to `None`, then this is equivalent to setting
+# `max_features=n_features` which means that the
+# only source of randomness in the random forest is the bagging procedure.
 
 # %%
 print(f"In this case, n_features={len(data.columns)}")
@@ -75,7 +83,8 @@ from sklearn.ensemble import RandomForestRegressor
 
 param_distributions = {
     "max_features": [1, 2, 3, 5, None],
-    "max_leaf_nodes": [2, 5, 10, 20, 50, 100],
+    "max_leaf_nodes": [10, 100, 1000, None],
+    "min_samples_leaf": [1, 2, 5, 10, 20, 50, 100],
 }
 search_cv = RandomizedSearchCV(
     RandomForestRegressor(n_jobs=2), param_distributions=param_distributions,
@@ -93,7 +102,12 @@ cv_results[columns].sort_values(by="mean_test_error")
 # %% [markdown]
 # We can observe in our search that we are required to have a large number of
 # leaves and thus deep trees. This parameter seems particularly impactful in
-# comparison to the number of features for this particular dataset.
+# the other tuning parameters but more iterations of random search would be
+# necessary to precisely assert the role of each parameters.
+#
+# Using `n_iter=10` is good enough to quickly find a hyper-parameter combination
+# that yields a model that works well enough without wasting too much
+# computational resources.
 #
 # Once the `RandomizedSearchCV` has found the best set of hyperparameters, it
 # uses them to refit the model using the full training set. To estimate the

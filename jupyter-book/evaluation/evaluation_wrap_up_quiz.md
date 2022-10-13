@@ -180,9 +180,8 @@ In the previous cross-validation, we made the choice of using a `ShuffleSplit`
 cross-validation strategy. It means that randomly selected samples were selected
 as testing set ignoring any time dependency between the lines of the dataframe.
 
-We would like to have a cross-validation strategy that evaluates the capacity of
-our model to predict on a completely new bike ride: the samples in the
-validation set should only come from rides not present in the training set.
+We would like to have a cross-validation strategy that takes into account the
+groups defined by each individual date. Each group corresponds to a bike ride.
 
 ```{admonition} Question
 How many bike rides are stored in the dataframe `data`? Do not hesitate to
@@ -204,14 +203,12 @@ Hint: You can access to the date and time of a `DatetimeIndex` using
 
 +++
 
-Instead of using the naive `ShuffleSplit` strategy, we will use a strategy that
-takes into account the group defined by each individual date. It corresponds to
-a bike ride. We would like to have a cross-validation strategy that evaluates
-the capacity of our model to predict on a completely new bike ride: the samples
-in the validation set should only come from rides not present in the training
-set. Therefore, we can use a `LeaveOneGroupOut` strategy: at each iteration of
-the cross-validation, we will keep a bike ride for the evaluation and use all
-other bike rides to train our model.
+We would like to have a cross-validation strategy that evaluates the capacity of
+our model to predict on a completely new bike ride: the samples in the
+validation set should only come from rides not present in the training set.
+Therefore, we can use a `LeaveOneGroupOut` strategy: at each iteration of the
+cross-validation, we will keep a bike ride for the evaluation and use all other
+bike rides to train our model.
 
 Thus, you concretely need to:
 

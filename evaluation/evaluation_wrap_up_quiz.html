@@ -1696,9 +1696,8 @@ in the dictionaries returned by the <code class="docutils literal notranslate"><
 <p>In the previous cross-validation, we made the choice of using a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code>
 cross-validation strategy. It means that randomly selected samples were selected
 as testing set ignoring any time dependency between the lines of the dataframe.</p>
-<p>We would like to have a cross-validation strategy that evaluates the capacity of
-our model to predict on a completely new bike ride: the samples in the
-validation set should only come from rides not present in the training set.</p>
+<p>We would like to have a cross-validation strategy that takes into account the
+groups defined by each individual date. Each group corresponds to a bike ride.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
 <p>How many bike rides are stored in the dataframe <code class="docutils literal notranslate"><span class="pre">data</span></code>? Do not hesitate to
@@ -1716,14 +1715,12 @@ at most once per day.
 Hint: You can access to the date and time of a <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code> using
 <code class="docutils literal notranslate"><span class="pre">df.index.date</span></code> and <code class="docutils literal notranslate"><span class="pre">df.index.time</span></code>, respectively.</p>
 </div>
-<p>Instead of using the naive <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> strategy, we will use a strategy that
-takes into account the group defined by each individual date. It corresponds to
-a bike ride. We would like to have a cross-validation strategy that evaluates
-the capacity of our model to predict on a completely new bike ride: the samples
-in the validation set should only come from rides not present in the training
-set. Therefore, we can use a <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> strategy: at each iteration of
-the cross-validation, we will keep a bike ride for the evaluation and use all
-other bike rides to train our model.</p>
+<p>We would like to have a cross-validation strategy that evaluates the capacity of
+our model to predict on a completely new bike ride: the samples in the
+validation set should only come from rides not present in the training set.
+Therefore, we can use a <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> strategy: at each iteration of the
+cross-validation, we will keep a bike ride for the evaluation and use all other
+bike rides to train our model.</p>
 <p>Thus, you concretely need to:</p>
 <ul class="simple">
 <li><p>create a variable called <code class="docutils literal notranslate"><span class="pre">group</span></code> that is a 1D numpy array containing the

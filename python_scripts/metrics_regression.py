@@ -81,10 +81,12 @@ print(f"Mean squared error on the testing set: "
       f"{mean_squared_error(target_test, target_predicted):.3f}")
 
 # %% [markdown]
-# The raw MSE can be difficult to interpret. One way is to rescale the MSE
-# by the variance of the target. This score is known as the $R^2$ also called
-# the coefficient of determination. Indeed, this is the default score used
-# in scikit-learn by calling the method `score`.
+# The raw MSE can be difficult to interpret. One way is to rescale the MSE by
+# the variance of the target. This score is known as the $R^2$ also called the
+# [coefficient of
+# determination](https://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination).
+# Indeed, this is the default score used in scikit-learn by calling the method
+# `score`.
 
 # %%
 regressor.score(data_test, target_test)

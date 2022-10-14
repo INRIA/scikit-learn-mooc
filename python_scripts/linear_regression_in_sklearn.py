@@ -78,10 +78,14 @@ plt.plot(flipper_length_range, predicted_body_mass)
 _ = plt.title("Model using LinearRegression from scikit-learn")
 
 # %% [markdown]
-# In the solution of the previous exercise, we implemented a function to
-# compute the goodness of fit of a model. Indeed, we mentioned two metrics: (i)
-# the mean squared error and (ii) the mean absolute error. These metrics are
-# implemented in scikit-learn and we do not need to use our own implementation.
+# In the solution of the previous exercise, we implemented a function to compute
+# the goodness of fit of a model. Indeed, we mentioned two metrics: (i) the
+# [mean squared
+# error](https://scikit-learn.org/stable/modules/model_evaluation.html#mean-squared-error)
+# and (ii) the [mean absolute
+# error](https://scikit-learn.org/stable/modules/model_evaluation.html#mean-absolute-error).
+# These metrics are implemented in scikit-learn and we do not need to use our
+# own implementation.
 #
 # We can first compute the mean squared error.
 

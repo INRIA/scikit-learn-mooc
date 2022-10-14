@@ -281,18 +281,23 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 data["native-country"].value_counts()
 
 # %% [markdown]
-# We see that the `Holand-Netherlands` category is occurring rarely. This will
+# We see that the `"Holand-Netherlands"` category is occurring rarely. This will
 # be a problem during cross-validation: if the sample ends up in the test set
 # during splitting then the classifier would not have seen the category during
 # training and will not be able to encode it.
 #
-# In scikit-learn, there are two solutions to bypass this issue:
+# In scikit-learn, there are some possible solutions to bypass this issue:
 #
 # * list all the possible categories and provide it to the encoder via the
 #   keyword argument `categories`;
-# * use the parameter `handle_unknown`, i.e. if an unknown category is encountered
-#   during transform, the resulting one-hot encoded columns for this feature will
-#   be all zeros. 
+# * set the parameter `handle_unknown="infrequent_if_exist"`, i.e. if one or
+#   more unknown categories are encountered during transform, the resulting
+#   one-hot encoded columns will be mapped to the last position in the encoding.
+#   The notion of what is "infrequent" can be controlled with the
+#   hyper-parameter `min_frequency`.
+# * set the parameter `handle_unknown="ignore"`, i.e. if an unknown category is
+#   encountered during transform, the resulting one-hot encoded columns for this
+#   feature will be all zeros.
 #
 # Here, we will use the latter solution for simplicity.
 

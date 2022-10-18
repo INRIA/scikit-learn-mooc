@@ -18,28 +18,12 @@
 #
 # ```{caution}
 # For the sake of clarity, no cross-validation will be used to estimate the
-# testing error. We are only showing the effect of the parameters
-# on the validation set of what should be the inner cross-validation.
+# variability of the testing error. We are only showing the effect of the
+# parameters on the validation set of what should be the inner loop of a nested
+# cross-validation.
 # ```
 #
-# ## Random forest
-#
-# The main parameter to tune for random forest is the `n_estimators` parameter.
-# In general, the more trees in the forest, the better the generalization
-# performance will be. However, it will slow down the fitting and prediction
-# time. The goal is to balance computing time and generalization performance when
-# setting the number of estimators when putting such learner in production.
-#
-# Then, we could also tune a parameter that controls the depth of each tree in
-# the forest. Two parameters are important for this: `max_depth` and
-# `max_leaf_nodes`. They differ in the way they control the tree structure.
-# Indeed, `max_depth` will enforce to have a more symmetric tree, while
-# `max_leaf_nodes` does not impose such constraint.
-#
-# Be aware that with random forest, trees are generally deep since we are
-# seeking to overfit each tree on each bootstrap sample because this will be
-# mitigated by combining them altogether. Assembling underfitted trees (i.e.
-# shallow trees) might also lead to an underfitted forest.
+# We will start by loading the california housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -50,14 +34,65 @@ target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, random_state=0)
 
+# %% [markdown]
+# ## Random forest
+#
+# The main parameter to select in random forest is the `n_estimators` parameter.
+# In general, the more trees in the forest, the better the generalization
+# performance will be. However, it will slow down the fitting and prediction
+# time. The goal is to balance computing time and generalization performance
+# when setting the number of estimators. Here, we fix `n_estimators=100`, which
+# is already the default value.
+#
+# ```{caution}
+# Tuning the `n_estimators` for random forests generally result in a waste of
+# computer power. We just need to ensure that it is large enough so that doubling
+# its value does not lead to a significant improvement of the validation error.
+# ```
+#
+# Instead, we can tune the hyperparameter `max_features`, which controls the
+# size of the random subset of features to consider when looking for the best
+# split when growing the trees: smaller values for `max_features` will lead to
+# more random trees with hopefully more uncorrelated prediction errors. However
+# if `max_features` is too small, predictions can be too random, even after
+# averaging with the trees in the ensemble.
+#
+# If `max_features` is set to `None`, then this is equivalent to setting
+# `max_features=n_features` which means that the only source of randomness in
+# the random forest is the bagging procedure.
+
+# %%
+print(f"In this case, n_features={len(data.columns)}")
+
+# %% [markdown]
+# We can also tune the different parameters that control the depth of each tree
+# in the forest. Two parameters are important for this: `max_depth` and
+# `max_leaf_nodes`. They differ in the way they control the tree structure.
+# Indeed, `max_depth` will enforce to have a more symmetric tree, while
+# `max_leaf_nodes` does not impose such constraint. If `max_leaf_nodes=None`
+# then the number of leaf nodes is unlimited.
+#
+# The hyperparameter `min_samples_leaf` controls the minimum number of samples
+# required to be at a leaf node. This means that a split point (at any depth) is
+# only done if it leaves at least `min_samples_leaf` training samples in each of
+# the left and right branches. A small value for `min_samples_leaf` means that
+# some samples can become isolated when a tree is deep, promoting overfitting. A
+# large value would prevent deep trees, which can lead to underfitting.
+#
+# Be aware that with random forest, trees are expected to be deep since we are
+# seeking to overfit each tree on each bootstrap sample. Overfitting is
+# mitigated when combining the trees altogether, whereas assembling underfitted
+# trees (i.e. shallow trees) might also lead to an underfitted forest.
+
 # %%
 import pandas as pd
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.ensemble import RandomForestRegressor
 
 param_distributions = {
-    "n_estimators": [1, 2, 5, 10, 20, 50, 100, 200, 500],
-    "max_leaf_nodes": [2, 5, 10, 20, 50, 100],
+    "max_features": [1, 2, 3, 5, None],
+    "max_leaf_nodes": [10, 100, 1000, None],
+    "min_samples_leaf": [1, 2, 5, 10, 20, 50, 100],
 }
 search_cv = RandomizedSearchCV(
     RandomForestRegressor(n_jobs=2), param_distributions=param_distributions,
@@ -73,15 +108,21 @@ cv_results["std_test_error"] = cv_results["std_test_score"]
 cv_results[columns].sort_values(by="mean_test_error")
 
 # %% [markdown]
-# We can observe in our search that we are required to have a large
-# number of leaves and thus deep trees. This parameter seems particularly
-# impactful in comparison to the number of trees for this particular dataset:
-# with at least 50 trees, the generalization performance will be driven by the
-# number of leaves.
+# We can observe in our search that we are required to have a large number of
+# `max_leaf_nodes` and thus deep trees. This parameter seems particularly
+# impactful with respect to the other tuning parameters, but large values of
+# `min_samples_leaf` seem to reduce the performance of the model.
 #
-# Now we will estimate the generalization performance of the best model by
-# refitting it with the full training set and using the test set for scoring on
-# unseen data. This is done by default when calling the `.fit` method.
+# In practice, more iterations of random search would be necessary to precisely
+# assert the role of each parameters. Using `n_iter=10` is good enough to
+# quickly inspect the hyperparameter combinations that yield models that work
+# well enough without spending too much computational resources. Feel free to
+# try more interations on your own.
+#
+# Once the `RandomizedSearchCV` has found the best set of hyperparameters, it
+# uses them to refit the model using the full training set. To estimate the
+# generalization performance of the best model it suffices to call `.score` on
+# the unseen data.
 
 # %%
 error = -search_cv.score(data_test, target_test)
@@ -144,8 +185,8 @@ cv_results[columns].sort_values(by="mean_test_error")
 # %% [markdown]
 #
 # ```{caution}
-# Here, we tune the `n_estimators` but be aware that using early-stopping as
-# in the previous exercise will be better.
+# Here, we tune the `n_estimators` but be aware that is better to use
+# `early_stopping` as done in the Exercise M6.04.
 # ```
 #
 # In this search, we see that the `learning_rate` is required to be large
@@ -156,8 +197,8 @@ cv_results[columns].sort_values(by="mean_test_error")
 # on the other hyperparameter values.
 
 # %% [markdown]
-# Now we estimate the generalization performance of the best model
-# using the test set.
+# Now we estimate the generalization performance of the best model using the
+# test set.
 
 # %%
 error = -search_cv.score(data_test, target_test)
@@ -166,5 +207,5 @@ print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
 # %% [markdown]
 # The mean test score in the held-out test set is slightly better than the score
 # of the best model. The reason is that the final model is refitted on the whole
-# training set and therefore, on more data than the inner cross-validated models
-# of the grid search procedure.
+# training set and therefore, on more data than the cross-validated models of
+# the grid search procedure.

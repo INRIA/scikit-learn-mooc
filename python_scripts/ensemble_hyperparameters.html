@@ -1643,25 +1643,11 @@ models.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
 <p>For the sake of clarity, no cross-validation will be used to estimate the
-testing error. We are only showing the effect of the parameters
-on the validation set of what should be the inner cross-validation.</p>
+variability of the testing error. We are only showing the effect of the
+parameters on the validation set of what should be the inner loop of a nested
+cross-validation.</p>
 </div>
-<section id="random-forest">
-<h2>Random forest<a class="headerlink" href="#random-forest" title="Permalink to this headline">#</a></h2>
-<p>The main parameter to tune for random forest is the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> parameter.
-In general, the more trees in the forest, the better the generalization
-performance will be. However, it will slow down the fitting and prediction
-time. The goal is to balance computing time and generalization performance when
-setting the number of estimators when putting such learner in production.</p>
-<p>Then, we could also tune a parameter that controls the depth of each tree in
-the forest. Two parameters are important for this: <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> and
-<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>. They differ in the way they control the tree structure.
-Indeed, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> will enforce to have a more symmetric tree, while
-<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> does not impose such constraint.</p>
-<p>Be aware that with random forest, trees are generally deep since we are
-seeking to overfit each tree on each bootstrap sample because this will be
-mitigated by combining them altogether. Assembling underfitted trees (i.e.
-shallow trees) might also lead to an underfitted forest.</p>
+<p>We will start by loading the california housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -1675,6 +1661,57 @@ shallow trees) might also lead to an underfitted forest.</p>
 </div>
 </div>
 </div>
+<section id="random-forest">
+<h2>Random forest<a class="headerlink" href="#random-forest" title="Permalink to this headline">#</a></h2>
+<p>The main parameter to select in random forest is the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> parameter.
+In general, the more trees in the forest, the better the generalization
+performance will be. However, it will slow down the fitting and prediction
+time. The goal is to balance computing time and generalization performance
+when setting the number of estimators. Here, we fix <code class="docutils literal notranslate"><span class="pre">n_estimators=100</span></code>, which
+is already the default value.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Tuning the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> for random forests generally result in a waste of
+computer power. We just need to ensure that it is large enough so that doubling
+its value does not lead to a significant improvement of the validation error.</p>
+</div>
+<p>Instead, we can tune the hyperparameter <code class="docutils literal notranslate"><span class="pre">max_features</span></code>, which controls the
+size of the random subset of features to consider when looking for the best
+split when growing the trees: smaller values for <code class="docutils literal notranslate"><span class="pre">max_features</span></code> will lead to
+more random trees with hopefully more uncorrelated prediction errors. However
+if <code class="docutils literal notranslate"><span class="pre">max_features</span></code> is too small, predictions can be too random, even after
+averaging with the trees in the ensemble.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">max_features</span></code> is set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, then this is equivalent to setting
+<code class="docutils literal notranslate"><span class="pre">max_features=n_features</span></code> which means that the only source of randomness in
+the random forest is the bagging procedure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;In this case, n_features=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>In this case, n_features=8
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also tune the different parameters that control the depth of each tree
+in the forest. Two parameters are important for this: <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> and
+<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>. They differ in the way they control the tree structure.
+Indeed, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> will enforce to have a more symmetric tree, while
+<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> does not impose such constraint. If <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes=None</span></code>
+then the number of leaf nodes is unlimited.</p>
+<p>The hyperparameter <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code> controls the minimum number of samples
+required to be at a leaf node. This means that a split point (at any depth) is
+only done if it leaves at least <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code> training samples in each of
+the left and right branches. A small value for <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code> means that
+some samples can become isolated when a tree is deep, promoting overfitting. A
+large value would prevent deep trees, which can lead to underfitting.</p>
+<p>Be aware that with random forest, trees are expected to be deep since we are
+seeking to overfit each tree on each bootstrap sample. Overfitting is
+mitigated when combining the trees altogether, whereas assembling underfitted
+trees (i.e. shallow trees) might also lead to an underfitted forest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1682,8 +1719,9 @@ shallow trees) might also lead to an underfitted forest.</p>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
 <span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
-    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+    <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
 <span class="p">}</span>
 <span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
     <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
@@ -1719,95 +1757,111 @@ shallow trees) might also lead to an underfitted forest.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>param_n_estimators</th>
+      <th>param_max_features</th>
       <th>param_max_leaf_nodes</th>
+      <th>param_min_samples_leaf</th>
       <th>mean_test_error</th>
       <th>std_test_error</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>500</td>
-      <td>100</td>
-      <td>40.834506</td>
-      <td>0.725585</td>
+      <th>3</th>
+      <td>2</td>
+      <td>None</td>
+      <td>2</td>
+      <td>33.970544</td>
+      <td>0.506398</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>0</th>
+      <td>2</td>
+      <td>1000</td>
       <td>10</td>
-      <td>100</td>
-      <td>41.294084</td>
-      <td>0.840901</td>
+      <td>36.811360</td>
+      <td>0.688319</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>100</td>
-      <td>50</td>
-      <td>43.886950</td>
-      <td>0.706012</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>1</td>
-      <td>100</td>
-      <td>47.779006</td>
-      <td>0.524775</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>100</td>
+      <td>None</td>
+      <td>None</td>
       <td>20</td>
-      <td>49.420030</td>
-      <td>0.900081</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>50</td>
-      <td>20</td>
-      <td>49.542837</td>
-      <td>0.989105</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>10</td>
-      <td>20</td>
-      <td>50.249406</td>
-      <td>0.945631</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>500</td>
-      <td>10</td>
-      <td>54.613008</td>
-      <td>0.814824</td>
+      <td>37.344804</td>
+      <td>0.443983</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5</td>
-      <td>5</td>
-      <td>61.110770</td>
-      <td>1.060290</td>
+      <td>100</td>
+      <td>2</td>
+      <td>40.160025</td>
+      <td>0.638335</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>None</td>
+      <td>100</td>
+      <td>10</td>
+      <td>40.349297</td>
+      <td>0.627993</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>None</td>
+      <td>1000</td>
+      <td>50</td>
+      <td>40.835735</td>
+      <td>0.384922</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>100</td>
+      <td>1</td>
+      <td>49.644169</td>
+      <td>0.852114</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50.027316</td>
+      <td>0.459241</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>5</td>
-      <td>2</td>
-      <td>73.748223</td>
-      <td>1.356032</td>
+      <td>1</td>
+      <td>None</td>
+      <td>100</td>
+      <td>54.414721</td>
+      <td>0.771128</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>10</td>
+      <td>10</td>
+      <td>54.747062</td>
+      <td>0.802707</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We can observe in our search that we are required to have a large
-number of leaves and thus deep trees. This parameter seems particularly
-impactful in comparison to the number of trees for this particular dataset:
-with at least 50 trees, the generalization performance will be driven by the
-number of leaves.</p>
-<p>Now we will estimate the generalization performance of the best model by
-refitting it with the full training set and using the test set for scoring on
-unseen data. This is done by default when calling the <code class="docutils literal notranslate"><span class="pre">.fit</span></code> method.</p>
+<p>We can observe in our search that we are required to have a large number of
+<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> and thus deep trees. This parameter seems particularly
+impactful with respect to the other tuning parameters, but large values of
+<code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code> seem to reduce the performance of the model.</p>
+<p>In practice, more iterations of random search would be necessary to precisely
+assert the role of each parameters. Using <code class="docutils literal notranslate"><span class="pre">n_iter=10</span></code> is good enough to
+quickly inspect the hyperparameter combinations that yield models that work
+well enough without spending too much computational resources. Feel free to
+try more interations on your own.</p>
+<p>Once the <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> has found the best set of hyperparameters, it
+uses them to refit the model using the full training set. To estimate the
+generalization performance of the best model it suffices to call <code class="docutils literal notranslate"><span class="pre">.score</span></code> on
+the unseen data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
@@ -1816,7 +1870,7 @@ unseen data. This is done by default when calling the <code class="docutils lite
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 42.05 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.80 k$
 </pre></div>
 </div>
 </div>
@@ -1906,40 +1960,40 @@ large tree depth.</p>
       <td>200</td>
       <td>20</td>
       <td>0.160519</td>
-      <td>33.897155</td>
-      <td>0.423603</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>200</td>
-      <td>50</td>
-      <td>0.110585</td>
-      <td>34.789706</td>
-      <td>0.293698</td>
+      <td>33.898486</td>
+      <td>0.434554</td>
     </tr>
     <tr>
       <th>17</th>
       <td>500</td>
       <td>5</td>
       <td>0.771785</td>
-      <td>34.833725</td>
-      <td>0.540786</td>
+      <td>34.782536</td>
+      <td>0.566740</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>200</td>
+      <td>50</td>
+      <td>0.110585</td>
+      <td>34.783938</td>
+      <td>0.290510</td>
     </tr>
     <tr>
       <th>10</th>
       <td>200</td>
       <td>20</td>
       <td>0.109889</td>
-      <td>35.007762</td>
-      <td>0.375850</td>
+      <td>35.021632</td>
+      <td>0.385085</td>
     </tr>
     <tr>
       <th>6</th>
       <td>500</td>
       <td>100</td>
       <td>0.709894</td>
-      <td>35.526354</td>
-      <td>0.348071</td>
+      <td>35.542293</td>
+      <td>0.354234</td>
     </tr>
     <tr>
       <th>18</th>
@@ -2067,8 +2121,8 @@ large tree depth.</p>
 </div>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
-<p>Here, we tune the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> but be aware that using early-stopping as
-in the previous exercise will be better.</p>
+<p>Here, we tune the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> but be aware that is better to use
+<code class="docutils literal notranslate"><span class="pre">early_stopping</span></code> as done in the Exercise M6.04.</p>
 </div>
 <p>In this search, we see that the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> is required to be large
 enough, i.e. &gt; 0.1. We also observe that for the best ranked models, having a
@@ -2076,8 +2130,8 @@ smaller <code class="docutils literal notranslate"><span class="pre">learning_ra
 leaves for each tree. However, it is particularly difficult to draw
 more detailed conclusions since the best value of an hyperparameter depends
 on the other hyperparameter values.</p>
-<p>Now we estimate the generalization performance of the best model
-using the test set.</p>
+<p>Now we estimate the generalization performance of the best model using the
+test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
@@ -2086,15 +2140,15 @@ using the test set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 33.00 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 32.99 k$
 </pre></div>
 </div>
 </div>
 </div>
 <p>The mean test score in the held-out test set is slightly better than the score
 of the best model. The reason is that the final model is refitted on the whole
-training set and therefore, on more data than the inner cross-validated models
-of the grid search procedure.</p>
+training set and therefore, on more data than the cross-validated models of
+the grid search procedure.</p>
 </section>
 </section>
 

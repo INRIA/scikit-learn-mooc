@@ -36,7 +36,8 @@
 * [Using numerical and categorical variables together](notebooks/03_categorical_pipeline_column_transformer.ipynb)
 * [📝 Exercise M1.05](notebooks/03_categorical_pipeline_ex_02.ipynb)
 * [📃 Solution for Exercise M1.05](notebooks/03_categorical_pipeline_sol_02.ipynb)
-* [🎥 Visualizing scikit-learn pipelines in Jupyter](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/03_categorical_pipeline_video.html)
+* [🎥 Visualizing scikit-learn pipelines in Jupyter](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/03_categorical_pipeline_visualization_video.html)
+* [Visualizing scikit-learn pipelines in Jupyter](notebooks/03_categorical_pipeline_visualization.ipynb)
 * [✅ Quiz M1.03](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/03_categorical_pipeline_quiz_m1_03.html)
 
 [🏁 Wrap-up quiz 1](https://inria.github.io/scikit-learn-mooc/predictive_modeling_pipeline/wrap_up_quiz.html)

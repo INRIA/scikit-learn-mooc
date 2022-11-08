@@ -1,5 +1,5 @@
 from __future__ import print_function
-from distutils.version import LooseVersion as Version
+from packaging.version import Version
 import sys
 
 OK = '\x1b[42m[ OK ]\x1b[0m'
@@ -29,7 +29,7 @@ def import_version(pkg, min_ver, fail_msg=""):
                         raise
         else:
             ver = mod.__version__
-        if Version(ver) < min_ver:
+        if Version(ver) < Version(min_ver):
             print(FAIL, "%s version %s or higher required, but %s installed."
                   % (lib, min_ver, ver))
         else:
@@ -42,12 +42,13 @@ def import_version(pkg, min_ver, fail_msg=""):
 # first check the python version
 print('Using python in', sys.prefix)
 print(sys.version)
-pyversion = Version(sys.version)
-if pyversion >= "3":
-    if pyversion < "3.6":
+pyversion_str = "%s.%s" % (sys.version_info.major, sys.version_info.minor)
+pyversion = Version(pyversion_str)
+if pyversion >= Version("3"):
+    if pyversion < Version("3.6"):
         print(FAIL, "Python version 3.6 or above is required,"
                     " but %s is installed." % sys.version)
-elif pyversion >= "2":
+elif pyversion >= Version("2"):
     print(FAIL, "Python version 3.6 or above is required,"
                 " but %s is installed." % sys.version)
 else:

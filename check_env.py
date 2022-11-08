@@ -1,23 +1,28 @@
-from __future__ import print_function
 import sys
+import importlib
 
 OK = "\x1b[42m[ OK ]\x1b[0m"
 FAIL = "\x1b[41m[FAIL]\x1b[0m"
 
 try:
-    import importlib
-except ImportError:
-    print(
-        FAIL,
-        "Python version 3.8 or above is required," f" but {sys.version} is installed.",
-    )
-    sys.exit(1)
-
-try:
     from packaging.version import Version
 except ImportError:
-    print(FAIL, "'packaging' package needs to be installed")
+    print(FAIL, "'packaging' package not installed, install it with conda or pip")
     sys.exit(1)
+
+# first check the python version
+print("Using python in", sys.prefix)
+print(sys.version)
+pyversion_str = f"{sys.version_info.major}.{sys.version_info.minor}"
+pyversion = Version(pyversion_str)
+
+if pyversion < Version("3.8"):
+    print(
+        FAIL,
+        "Python version 3.8 or above is required," f" but {pyversion_str} is installed.",
+    )
+    sys.exit(1)
+print()
 
 
 def import_version(pkg, min_ver, fail_msg=""):
@@ -48,19 +53,6 @@ def import_version(pkg, min_ver, fail_msg=""):
         print(FAIL, f"{pkg} not installed. {fail_msg}")
     return mod
 
-
-# first check the python version
-print("Using python in", sys.prefix)
-print(sys.version)
-pyversion_str = f"{sys.version_info.major}.{sys.version_info.minor}"
-pyversion = Version(pyversion_str)
-
-if pyversion < Version("3.8"):
-    print(
-        FAIL,
-        "Python version 3.8 or above is required," f" but {sys.version} is installed.",
-    )
-print()
 
 requirements = {
     "numpy": "1.16",

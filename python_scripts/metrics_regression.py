@@ -149,19 +149,19 @@ print(f"Mean absolute percentage error: "
 # the predicted values versus the true values.
 
 # %%
-predicted_actual = {
-    "True values (k$)": target_test, "Predicted values (k$)": target_predicted}
-predicted_actual = pd.DataFrame(predicted_actual)
-
-# %%
 import matplotlib.pyplot as plt
-import seaborn as sns
+from sklearn.metrics import PredictionErrorDisplay
 
-sns.scatterplot(data=predicted_actual,
-                x="True values (k$)", y="Predicted values (k$)",
-                color="black", alpha=0.5)
-plt.axline((0, 0), slope=1, label="Perfect fit")
-plt.axis('square')
+PredictionErrorDisplay.from_predictions(
+    y_true=target_test,
+    y_pred=target_predicted,
+    kind="actual_vs_predicted",
+    subsample=100,
+    random_state=0,
+)
+plt.axis("square")
+plt.xlabel("Predicted values (k$)")
+plt.ylabel("True values (k$)")
 _ = plt.title("Regression using a model without \ntarget transformation")
 
 # %% [markdown]
@@ -185,18 +185,16 @@ model_transformed_target = TransformedTargetRegressor(
 model_transformed_target.fit(data_train, target_train)
 target_predicted = model_transformed_target.predict(data_test)
 
-# %%
-predicted_actual = {
-    "True values (k$)": target_test, "Predicted values (k$)": target_predicted}
-predicted_actual = pd.DataFrame(predicted_actual)
-
-# %%
-sns.scatterplot(data=predicted_actual,
-                x="True values (k$)", y="Predicted values (k$)",
-                color="black", alpha=0.5)
-plt.axline((0, 0), slope=1, label="Perfect fit")
-plt.axis('square')
-plt.legend()
+PredictionErrorDisplay.from_predictions(
+    y_true=target_test,
+    y_pred=target_predicted,
+    kind="actual_vs_predicted",
+    subsample=100,
+    random_state=0,
+)
+plt.axis("square")
+plt.xlabel("Predicted values (k$)")
+plt.ylabel("True values (k$)")
 _ = plt.title("Regression using a model that\n transform the target before "
               "fitting")
 

@@ -13,18 +13,18 @@ jobs:
       - checkout
       - run: ./build_tools/circle/checkout_merge_commit.sh
       - run: ./build_tools/circle/checksum_python_files.sh /tmp/checksum.txt
-      - restore_cache:
-          keys:
-            - v3-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
-            - v3-{{ .Branch }}
-            - v3-main
+      # - restore_cache:
+      #     keys:
+      #       - v3-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
+      #       - v3-{{ .Branch }}
+      #       - v3-main
       - run:
           command: ./build_tools/circle/build_jupyter_book.sh
           no_output_timeout: 30m
-      - save_cache:
-          paths:
-            - jupyter-book/_build/.jupyter_cache
-          key: v3-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
+      # - save_cache:
+      #     paths:
+      #       - jupyter-book/_build/.jupyter_cache
+      #     key: v3-{{ .Branch }}-{{ checksum "/tmp/checksum.txt" }}
       - store_artifacts:
           path: jupyter-book/_build/html
           destination: jupyter-book

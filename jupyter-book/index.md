@@ -1,5 +1,7 @@
 # Introduction
 
+Let's add more content
+
 ## Course presentation
 
 ```{admonition} Welcome!

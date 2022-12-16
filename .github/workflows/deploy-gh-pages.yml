@@ -43,14 +43,10 @@ jobs:
       run: |
         make jupyter-book
 
-    - name: Create folder for gh-pages
-      run: |
-        cp -r jupyter-book/_build/html gh-pages
-
     - name: GitHub Pages action
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       uses: peaceiris/actions-gh-pages@v3.6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./gh-pages
+        publish_dir: ./jupyter-book/_build/html
         commit_message: "[ci skip] ${{ github.event.head_commit.message }}"

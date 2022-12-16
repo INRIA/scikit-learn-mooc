@@ -1612,17 +1612,17 @@ when dealing with correlated features.</p>
 samples and 5 features from which only 2 features will be informative.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import make_regression
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">coef</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span>
-    <span class="n">n_samples</span><span class="o">=</span><span class="mi">2_000</span><span class="p">,</span>
-    <span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-    <span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">coef</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">noise</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-<span class="p">)</span>
+data, target, coef = make_regression(
+    n_samples=2_000,
+    n_features=5,
+    n_informative=2,
+    shuffle=False,
+    coef=True,
+    random_state=0,
+    noise=30,
+)
 </pre></div>
 </div>
 </div>
@@ -1631,18 +1631,18 @@ samples and 5 features from which only 2 features will be informative.</p>
 used to generate the dataset. Let’s plot this information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Relevant feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Relevant feature #1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #2&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="n">coef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coef</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
-<span class="n">coef</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
-<span class="n">coef</span>
+feature_names = [
+    &quot;Relevant feature #0&quot;,
+    &quot;Relevant feature #1&quot;,
+    &quot;Noisy feature #0&quot;,
+    &quot;Noisy feature #1&quot;,
+    &quot;Noisy feature #2&quot;,
+]
+coef = pd.Series(coef, index=feature_names)
+coef.plot.barh()
+coef
 </pre></div>
 </div>
 </div>
@@ -1663,12 +1663,12 @@ check the value of the coefficients. Are the coefficients of the linear
 regressor close to the coefficients used to generate the dataset?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.linear_model import LinearRegression
 
-<span class="n">linear_regression</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">linear_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-<span class="n">linear_regression</span><span class="o">.</span><span class="n">coef_</span>
+linear_regression = LinearRegression()
+linear_regression.fit(data, target)
+linear_regression.coef_
 </pre></div>
 </div>
 </div>
@@ -1680,15 +1680,15 @@ regressor close to the coefficients used to generate the dataset?</p>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Relevant feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Relevant feature #1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #2&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="n">coef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">linear_regression</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_names = [
+    &quot;Relevant feature #0&quot;,
+    &quot;Relevant feature #1&quot;,
+    &quot;Noisy feature #0&quot;,
+    &quot;Noisy feature #1&quot;,
+    &quot;Noisy feature #2&quot;,
+]
+coef = pd.Series(linear_regression.coef_, index=feature_names)
+_ = coef.plot.barh()
 </pre></div>
 </div>
 </div>
@@ -1704,10 +1704,10 @@ columns that will repeat twice features 0 and 1. This procedure will create
 perfectly correlated features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+import numpy as np
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">data</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+data = np.concatenate([data, data[:, [0, 1]], data[:, [0, 1]]], axis=1)
 </pre></div>
 </div>
 </div>
@@ -1716,10 +1716,10 @@ perfectly correlated features.</p>
 coefficients. What do you observe?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">linear_regression</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">linear_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-<span class="n">linear_regression</span><span class="o">.</span><span class="n">coef_</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+linear_regression = LinearRegression()
+linear_regression.fit(data, target)
+linear_regression.coef_
 </pre></div>
 </div>
 </div>
@@ -1733,19 +1733,19 @@ coefficients. What do you observe?</p>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Relevant feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Relevant feature #1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Noisy feature #2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;First repetition of feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;First repetition of  feature #1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Second repetition of  feature #0&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Second repetition of  feature #1&quot;</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="n">coef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">linear_regression</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_names = [
+    &quot;Relevant feature #0&quot;,
+    &quot;Relevant feature #1&quot;,
+    &quot;Noisy feature #0&quot;,
+    &quot;Noisy feature #1&quot;,
+    &quot;Noisy feature #2&quot;,
+    &quot;First repetition of feature #0&quot;,
+    &quot;First repetition of  feature #1&quot;,
+    &quot;Second repetition of  feature #0&quot;,
+    &quot;Second repetition of  feature #1&quot;,
+]
+coef = pd.Series(linear_regression.coef_, index=feature_names)
+_ = coef.plot.barh()
 </pre></div>
 </div>
 </div>
@@ -1765,12 +1765,12 @@ errors).</p>
 What do you observe?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.linear_model import Ridge
 
-<span class="n">ridge</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">()</span>
-<span class="n">ridge</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-<span class="n">ridge</span><span class="o">.</span><span class="n">coef_</span>
+ridge = Ridge()
+ridge.fit(data, target)
+ridge.coef_
 </pre></div>
 </div>
 </div>
@@ -1783,8 +1783,8 @@ What do you observe?</p>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ridge</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coef = pd.Series(ridge.coef_, index=feature_names)
+_ = coef.plot.barh()
 </pre></div>
 </div>
 </div>
@@ -1800,8 +1800,8 @@ Adding this penalty <code class="docutils literal notranslate"><span class="pre"
 coefficients?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">ridge</span><span class="o">.</span><span class="n">coef_</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+ridge.coef_[:5] * 3
 </pre></div>
 </div>
 </div>
@@ -1829,19 +1829,19 @@ arise naturally when one-hot encoding categorical features.</p>
 are only categorical features.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from sklearn.model_selection import train_test_split
 
-<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
-<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Id&quot;</span><span class="p">)</span>
+ames_housing = pd.read_csv(&quot;../datasets/house_prices.csv&quot;, na_values=&#39;?&#39;)
+ames_housing = ames_housing.drop(columns=&quot;Id&quot;)
 
-<span class="n">categorical_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Street&quot;</span><span class="p">,</span> <span class="s2">&quot;Foundation&quot;</span><span class="p">,</span> <span class="s2">&quot;CentralAir&quot;</span><span class="p">,</span> <span class="s2">&quot;PavedDrive&quot;</span><span class="p">]</span>
-<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">categorical_columns</span><span class="p">],</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+categorical_columns = [&quot;Street&quot;, &quot;Foundation&quot;, &quot;CentralAir&quot;, &quot;PavedDrive&quot;]
+target_name = &quot;SalePrice&quot;
+X, y = ames_housing[categorical_columns], ames_housing[target_name]
 
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
-<span class="p">)</span>
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=0
+)
 </pre></div>
 </div>
 </div>
@@ -1854,7 +1854,7 @@ collinear features.</p>
 contains only two categories:</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;CentralAir&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X_train[&quot;CentralAir&quot;]
 </pre></div>
 </div>
 </div>
@@ -1877,20 +1877,24 @@ Name: CentralAir, Length: 1168, dtype: object
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import OneHotEncoder
 
-<span class="n">single_feature</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CentralAir&quot;</span><span class="p">]</span>
-<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-<span class="n">X_trans</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">single_feature</span><span class="p">])</span>
-<span class="n">X_trans</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">X_trans</span><span class="p">,</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span><span class="n">input_features</span><span class="o">=</span><span class="n">single_feature</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="n">X_trans</span>
+single_feature = [&quot;CentralAir&quot;]
+encoder = OneHotEncoder(sparse=False, dtype=np.int32)
+X_trans = encoder.fit_transform(X_train[single_feature])
+X_trans = pd.DataFrame(
+    X_trans,
+    columns=encoder.get_feature_names_out(input_features=single_feature),
+)
+X_trans
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_encoders.py:808: FutureWarning: `sparse` was renamed to `sparse_output` in version 1.2 and will be removed in 1.4. `sparse_output` is ignored unless you leave `sparse` to its default value.
+  warnings.warn(
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1991,17 +1995,21 @@ first encoded category or <code class="docutils literal notranslate"><span class
 binary categories.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-<span class="n">X_trans</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">single_feature</span><span class="p">])</span>
-<span class="n">X_trans</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">X_trans</span><span class="p">,</span>
-    <span class="n">columns</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span><span class="n">input_features</span><span class="o">=</span><span class="n">single_feature</span><span class="p">),</span>
-<span class="p">)</span>
-<span class="n">X_trans</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>encoder = OneHotEncoder(drop=&quot;first&quot;, sparse=False, dtype=np.int32)
+X_trans = encoder.fit_transform(X_train[single_feature])
+X_trans = pd.DataFrame(
+    X_trans,
+    columns=encoder.get_feature_names_out(input_features=single_feature),
+)
+X_trans
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_encoders.py:808: FutureWarning: `sparse` was renamed to `sparse_output` in version 1.2 and will be removed in 1.4. `sparse_output` is ignored unless you leave `sparse` to its default value.
+  warnings.warn(
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -2082,18 +2090,18 @@ strong regularization.</p>
 <p>Let’s finally illustrate how to use this option is a machine-learning pipeline:</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="n">Ridge</span><span class="p">())</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">n_categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">X_train</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;R2 score on the testing set: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Our model contains </span><span class="si">{</span><span class="n">model</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> features while &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">n_categories</span><span class="p">)</span><span class="si">}</span><span class="s2"> categories are originally available.&quot;</span>
-<span class="p">)</span>
+model = make_pipeline(OneHotEncoder(drop=&quot;first&quot;, dtype=np.int32), Ridge())
+model.fit(X_train, y_train)
+n_categories = [X_train[col].nunique() for col in X_train.columns]
+print(
+    f&quot;R2 score on the testing set: {model.score(X_test, y_test):.2f}&quot;
+)
+print(
+    f&quot;Our model contains {model[-1].coef_.size} features while &quot;
+    f&quot;{sum(n_categories)} categories are originally available.&quot;
+)
 </pre></div>
 </div>
 </div>

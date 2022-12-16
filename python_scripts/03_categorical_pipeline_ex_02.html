@@ -1636,18 +1636,18 @@ one-hot encoded categories.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;class&quot;
+target = adult_census[target_name]
+data = adult_census.drop(columns=[target_name, &quot;education-num&quot;])
 </pre></div>
 </div>
 </div>
@@ -1657,12 +1657,12 @@ to select only columns with a specific data type. Besides, we list in
 advance all categories for the categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import make_column_selector as selector
 
-<span class="n">numerical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_exclude</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-<span class="n">numerical_columns</span> <span class="o">=</span> <span class="n">numerical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+numerical_columns_selector = selector(dtype_exclude=object)
+categorical_columns_selector = selector(dtype_include=object)
+numerical_columns = numerical_columns_selector(data)
+categorical_columns = categorical_columns_selector(data)
 </pre></div>
 </div>
 </div>
@@ -1673,36 +1673,36 @@ advance all categories for the categorical columns.</p>
 reference:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import time
 
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+from sklearn.model_selection import cross_validate
+from sklearn.pipeline import make_pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.ensemble import HistGradientBoostingClassifier
 
-<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
-                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
+categorical_preprocessor = OrdinalEncoder(handle_unknown=&quot;use_encoded_value&quot;,
+                                          unknown_value=-1)
+preprocessor = ColumnTransformer([
+    (&#39;categorical&#39;, categorical_preprocessor, categorical_columns)],
+    remainder=&quot;passthrough&quot;)
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
+model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
-<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-<span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+start = time.time()
+cv_results = cross_validate(model, data, target)
+elapsed_time = time.time() - start
 
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+scores = cv_results[&quot;test_score&quot;]
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;with a fitting time of </span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(&quot;The mean cross-validation accuracy is: &quot;
+      f&quot;{scores.mean():.3f} ± {scores.std():.3f} &quot;
+      f&quot;with a fitting time of {elapsed_time:.3f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.873 ± 0.004 with a fitting time of 4.988
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.873 ± 0.003 with a fitting time of 5.312
 </pre></div>
 </div>
 </div>
@@ -1714,7 +1714,7 @@ reference:</p>
 <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> (or similar):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
 </pre></div>
 </div>
 </div>
@@ -1733,7 +1733,7 @@ data. You might want to use
 dense representation as a workaround.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
 </pre></div>
 </div>
 </div>

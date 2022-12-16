@@ -1572,10 +1572,10 @@ section, we will give an example to highlight some surprising results. This
 time, we will use the handwritten digits dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import load_digits
 
-<span class="n">digits</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">digits</span><span class="o">.</span><span class="n">target</span>
+digits = load_digits()
+data, target = digits.data, digits.target
 </pre></div>
 </div>
 </div>
@@ -1584,11 +1584,11 @@ time, we will use the handwritten digits dataset.</p>
 a logistic regression classifier with a preprocessor to scale the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import MinMaxScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">MinMaxScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">1_000</span><span class="p">))</span>
+model = make_pipeline(MinMaxScaler(), LogisticRegression(max_iter=1_000))
 </pre></div>
 </div>
 </div>
@@ -1597,14 +1597,14 @@ a logistic regression classifier with a preprocessor to scale the data.</p>
 without shuffling the data at first.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">KFold</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_val_score, KFold
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">test_score_no_shuffling</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-                                          <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score_no_shuffling</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score_no_shuffling</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+cv = KFold(shuffle=False)
+test_score_no_shuffling = cross_val_score(model, data, target, cv=cv,
+                                          n_jobs=2)
+print(f&quot;The average accuracy is &quot;
+      f&quot;{test_score_no_shuffling.mean():.3f} ± &quot;
+      f&quot;{test_score_no_shuffling.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1618,17 +1618,17 @@ without shuffling the data at first.</p>
 cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">test_score_with_shuffling</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-                                            <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score_with_shuffling</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score_with_shuffling</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv = KFold(shuffle=True)
+test_score_with_shuffling = cross_val_score(model, data, target, cv=cv,
+                                            n_jobs=2)
+print(f&quot;The average accuracy is &quot;
+      f&quot;{test_score_with_shuffling.mean():.3f} ± &quot;
+      f&quot;{test_score_with_shuffling.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.966 ± 0.011
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.967 ± 0.007
 </pre></div>
 </div>
 </div>
@@ -1638,12 +1638,12 @@ We could go a little further and plot the distribution of the testing
 score. We can first concatenate the test scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">all_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">test_score_no_shuffling</span><span class="p">,</span> <span class="n">test_score_with_shuffling</span><span class="p">],</span>
-    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;KFold without shuffling&quot;</span><span class="p">,</span> <span class="s2">&quot;KFold with shuffling&quot;</span><span class="p">],</span>
-<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+all_scores = pd.DataFrame(
+    [test_score_no_shuffling, test_score_with_shuffling],
+    index=[&quot;KFold without shuffling&quot;, &quot;KFold with shuffling&quot;],
+).T
 </pre></div>
 </div>
 </div>
@@ -1651,13 +1651,13 @@ score. We can first concatenate the test scores.</p>
 <p>Let’s plot the distribution now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 
-<span class="n">all_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy score&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the test scores&quot;</span><span class="p">)</span>
+all_scores.plot.hist(bins=10, edgecolor=&quot;black&quot;, alpha=0.7)
+plt.xlim([0.8, 1.0])
+plt.xlabel(&quot;Accuracy score&quot;)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Distribution of the test scores&quot;)
 </pre></div>
 </div>
 </div>
@@ -1670,7 +1670,7 @@ than the one that does not impose any shuffling. It means that some specific
 fold leads to a low score in this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">test_score_no_shuffling</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(test_score_no_shuffling)
 </pre></div>
 </div>
 </div>
@@ -1685,7 +1685,7 @@ and get better results. To get a better understanding, we should read the
 documentation shipped with the dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(digits.DESCR)
 </pre></div>
 </div>
 </div>
@@ -1756,7 +1756,7 @@ group samples for each writer.</p>
 <p>Indeed, we can recover the groups by looking at the target variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target[:200]
 </pre></div>
 </div>
 </div>
@@ -1786,19 +1786,19 @@ each of these patterns corresponds to a different writer and thus a different
 group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from itertools import count
+import numpy as np
 
-<span class="c1"># defines the lower and upper bounds of sample indices</span>
-<span class="c1"># for each writer</span>
-<span class="n">writer_boundaries</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">386</span><span class="p">,</span> <span class="mi">516</span><span class="p">,</span> <span class="mi">646</span><span class="p">,</span> <span class="mi">776</span><span class="p">,</span> <span class="mi">915</span><span class="p">,</span> <span class="mi">1029</span><span class="p">,</span>
-                     <span class="mi">1157</span><span class="p">,</span> <span class="mi">1287</span><span class="p">,</span> <span class="mi">1415</span><span class="p">,</span> <span class="mi">1545</span><span class="p">,</span> <span class="mi">1667</span><span class="p">,</span> <span class="mi">1797</span><span class="p">]</span>
-<span class="n">groups</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-<span class="n">lower_bounds</span> <span class="o">=</span> <span class="n">writer_boundaries</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">upper_bounds</span> <span class="o">=</span> <span class="n">writer_boundaries</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+# defines the lower and upper bounds of sample indices
+# for each writer
+writer_boundaries = [0, 130, 256, 386, 516, 646, 776, 915, 1029,
+                     1157, 1287, 1415, 1545, 1667, 1797]
+groups = np.zeros_like(target)
+lower_bounds = writer_boundaries[:-1]
+upper_bounds = writer_boundaries[1:]
 
-<span class="k">for</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">up</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">count</span><span class="p">(),</span> <span class="n">lower_bounds</span><span class="p">,</span> <span class="n">upper_bounds</span><span class="p">):</span>
-    <span class="n">groups</span><span class="p">[</span><span class="n">lb</span><span class="p">:</span><span class="n">up</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_id</span>
+for group_id, lb, up in zip(count(), lower_bounds, upper_bounds):
+    groups[lb:up] = group_id
 </pre></div>
 </div>
 </div>
@@ -1806,12 +1806,12 @@ group.</p>
 <p>We can check the grouping by plotting the indices linked to writer ids.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">groups</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">writer_boundaries</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Target index&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Writer index&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Underlying writer groups existing in the target&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(groups)
+plt.yticks(np.unique(groups))
+plt.xticks(writer_boundaries, rotation=90)
+plt.xlabel(&quot;Target index&quot;)
+plt.ylabel(&quot;Writer index&quot;)
+_ = plt.title(&quot;Underlying writer groups existing in the target&quot;)
 </pre></div>
 </div>
 </div>
@@ -1823,14 +1823,14 @@ group.</p>
 information into account: the class containing <code class="docutils literal notranslate"><span class="pre">Group</span></code> should be used.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GroupKFold</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import GroupKFold
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">GroupKFold</span><span class="p">()</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-                             <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+cv = GroupKFold()
+test_score = cross_val_score(model, data, target, groups=groups, cv=cv,
+                             n_jobs=2)
+print(f&quot;The average accuracy is &quot;
+      f&quot;{test_score.mean():.3f} ± &quot;
+      f&quot;{test_score.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1846,22 +1846,22 @@ handwritten digits recognition writers independent. Besides, we can as well
 see that the standard deviation was reduced.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">test_score_no_shuffling</span><span class="p">,</span> <span class="n">test_score_with_shuffling</span><span class="p">,</span> <span class="n">test_score</span><span class="p">],</span>
-    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;KFold without shuffling&quot;</span><span class="p">,</span> <span class="s2">&quot;KFold with shuffling&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;KFold with groups&quot;</span><span class="p">],</span>
-<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_scores = pd.DataFrame(
+    [test_score_no_shuffling, test_score_with_shuffling, test_score],
+    index=[&quot;KFold without shuffling&quot;, &quot;KFold with shuffling&quot;,
+           &quot;KFold with groups&quot;],
+).T
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy score&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the test scores&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_scores.plot.hist(bins=10, edgecolor=&quot;black&quot;, alpha=0.7)
+plt.xlim([0.8, 1.0])
+plt.xlabel(&quot;Accuracy score&quot;)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Distribution of the test scores&quot;)
 </pre></div>
 </div>
 </div>

@@ -1572,15 +1572,15 @@ scikit-learn’s random forest.</p>
 <p>First, we will fit the penguins regression dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from sklearn.model_selection import train_test_split
 
-<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
-<span class="n">feature_name</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
-<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[[</span><span class="n">feature_name</span><span class="p">]],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+penguins = pd.read_csv(&quot;../datasets/penguins_regression.csv&quot;)
+feature_name = &quot;Flipper Length (mm)&quot;
+target_name = &quot;Body Mass (g)&quot;
+data, target = penguins[[feature_name]], penguins[target_name]
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0)
 </pre></div>
 </div>
 </div>
@@ -1595,20 +1595,20 @@ check the generalization performance on the testing set in terms of mean
 absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.metrics import mean_absolute_error
+from sklearn.ensemble import RandomForestRegressor
 
-<span class="n">forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">forest</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> grams&quot;</span><span class="p">)</span>
+forest = RandomForestRegressor(n_estimators=3)
+forest.fit(data_train, target_train)
+target_predicted = forest.predict(data_test)
+print(f&quot;Mean absolute error: &quot;
+      f&quot;{mean_absolute_error(target_test, target_predicted):.3f} grams&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean absolute error: 358.014 grams
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean absolute error: 354.368 grams
 </pre></div>
 </div>
 </div>
@@ -1619,11 +1619,11 @@ spaced values for the flipper length over the interval between 170 mm and 230
 mm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+import numpy as np
 
-<span class="n">data_range</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">170</span><span class="p">,</span> <span class="mi">235</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">),</span>
-                          <span class="n">columns</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+data_range = pd.DataFrame(np.linspace(170, 235, num=300),
+                          columns=data.columns)
 </pre></div>
 </div>
 </div>
@@ -1634,14 +1634,14 @@ the values in this newly created dataset. Similarly find the predictions of
 the random forest in this dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">tree_predictions</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+tree_predictions = []
 
-<span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">forest</span><span class="o">.</span><span class="n">estimators_</span><span class="p">:</span>
-    <span class="c1"># we convert `data_range` into a NumPy array to avoid a warning raised in scikit-learn</span>
-    <span class="n">tree_predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_range</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()))</span>
+for tree in forest.estimators_:
+    # we convert `data_range` into a NumPy array to avoid a warning raised in scikit-learn
+    tree_predictions.append(tree.predict(data_range.to_numpy()))
 
-<span class="n">forest_predictions</span> <span class="o">=</span> <span class="n">forest</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_range</span><span class="p">)</span>
+forest_predictions = forest.predict(data_range)
 </pre></div>
 </div>
 </div>
@@ -1654,20 +1654,20 @@ the random forest in this dataset.</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+sns.scatterplot(data=penguins, x=feature_name, y=target_name,
+                color=&quot;black&quot;, alpha=0.5)
 
-<span class="c1"># plot tree predictions</span>
-<span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">predictions</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tree_predictions</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_range</span><span class="p">[</span><span class="n">feature_name</span><span class="p">],</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Tree #</span><span class="si">{</span><span class="n">tree_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-             <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+# plot tree predictions
+for tree_idx, predictions in enumerate(tree_predictions):
+    plt.plot(data_range[feature_name], predictions, label=f&quot;Tree #{tree_idx}&quot;,
+             linestyle=&quot;--&quot;, alpha=0.8)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_range</span><span class="p">[</span><span class="n">feature_name</span><span class="p">],</span> <span class="n">forest_predictions</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Random forest&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+plt.plot(data_range[feature_name], forest_predictions, label=f&quot;Random forest&quot;)
+_ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
 </pre></div>
 </div>
 </div>

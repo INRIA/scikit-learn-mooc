@@ -1589,10 +1589,10 @@ gradient-boosting, we can add more estimators to overcome this issue.</p>
 from scikit-learn. First, we will load the California housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 </pre></div>
 </div>
 </div>
@@ -1605,36 +1605,36 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>We will make a quick benchmark of the original gradient boosting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
+from sklearn.ensemble import GradientBoostingRegressor
 
-<span class="n">gradient_boosting</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">cv_results_gbdt</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">gradient_boosting</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
+gradient_boosting = GradientBoostingRegressor(n_estimators=200)
+cv_results_gbdt = cross_validate(
+    gradient_boosting, data, target, scoring=&quot;neg_mean_absolute_error&quot;,
+    n_jobs=2
+)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gradient Boosting Decision Tree&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error via cross-validation: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average fit time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;fit_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average score time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;score_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Gradient Boosting Decision Tree&quot;)
+print(f&quot;Mean absolute error via cross-validation: &quot;
+      f&quot;{-cv_results_gbdt[&#39;test_score&#39;].mean():.3f} ± &quot;
+      f&quot;{cv_results_gbdt[&#39;test_score&#39;].std():.3f} k$&quot;)
+print(f&quot;Average fit time: &quot;
+      f&quot;{cv_results_gbdt[&#39;fit_time&#39;].mean():.3f} seconds&quot;)
+print(f&quot;Average score time: &quot;
+      f&quot;{cv_results_gbdt[&#39;score_time&#39;].mean():.3f} seconds&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree
-Mean absolute error via cross-validation: 46.414 ± 2.912 k$
-Average fit time: 6.823 seconds
-Average score time: 0.009 seconds
+Mean absolute error via cross-validation: 46.394 ± 2.911 k$
+Average fit time: 7.986 seconds
+Average score time: 0.010 seconds
 </pre></div>
 </div>
 </div>
@@ -1647,24 +1647,24 @@ this preprocessing with the gradient boosting.</p>
 <p>We can first demonstrate the transformation done by the <code class="docutils literal notranslate"><span class="pre">KBinsDiscretizer</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">KBinsDiscretizer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+from sklearn.preprocessing import KBinsDiscretizer
 
-<span class="n">discretizer</span> <span class="o">=</span> <span class="n">KBinsDiscretizer</span><span class="p">(</span>
-    <span class="n">n_bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;ordinal&quot;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">)</span>
-<span class="n">data_trans</span> <span class="o">=</span> <span class="n">discretizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">data_trans</span>
+discretizer = KBinsDiscretizer(
+    n_bins=256, encode=&quot;ordinal&quot;, strategy=&quot;quantile&quot;)
+data_trans = discretizer.fit_transform(data)
+data_trans
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
   warnings.warn(
 </pre></div>
 </div>
@@ -1691,7 +1691,7 @@ Each value represents the bin index when the distribution by quantile is
 performed. We can check the number of bins per feature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">col</span><span class="p">))</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">data_trans</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>[len(np.unique(col)) for col in data_trans.T]
 </pre></div>
 </div>
 </div>
@@ -1706,61 +1706,61 @@ features. Now, we will use this transformer to discretize data before
 training the gradient boosting regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
 
-<span class="n">gradient_boosting</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">discretizer</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">))</span>
-<span class="n">cv_results_gbdt</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">gradient_boosting</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="p">)</span>
+gradient_boosting = make_pipeline(
+    discretizer, GradientBoostingRegressor(n_estimators=200))
+cv_results_gbdt = cross_validate(
+    gradient_boosting, data, target, scoring=&quot;neg_mean_absolute_error&quot;,
+    n_jobs=2,
+)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:291: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 1 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 3 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 6 are removed. Consider decreasing the number of bins.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/preprocessing/_discretization.py:279: UserWarning: Bins whose width are too small (i.e., &lt;= 1e-8) in feature 7 are removed. Consider decreasing the number of bins.
   warnings.warn(
 </pre></div>
 </div>
@@ -1768,22 +1768,22 @@ training the gradient boosting regressor.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gradient Boosting Decision Tree with KBinsDiscretizer&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error via cross-validation: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average fit time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;fit_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average score time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;score_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Gradient Boosting Decision Tree with KBinsDiscretizer&quot;)
+print(f&quot;Mean absolute error via cross-validation: &quot;
+      f&quot;{-cv_results_gbdt[&#39;test_score&#39;].mean():.3f} ± &quot;
+      f&quot;{cv_results_gbdt[&#39;test_score&#39;].std():.3f} k$&quot;)
+print(f&quot;Average fit time: &quot;
+      f&quot;{cv_results_gbdt[&#39;fit_time&#39;].mean():.3f} seconds&quot;)
+print(f&quot;Average score time: &quot;
+      f&quot;{cv_results_gbdt[&#39;score_time&#39;].mean():.3f} seconds&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree with KBinsDiscretizer
-Mean absolute error via cross-validation: 45.768 ± 2.021 k$
-Average fit time: 4.265 seconds
-Average score time: 0.011 seconds
+Mean absolute error via cross-validation: 45.768 ± 2.020 k$
+Average fit time: 4.784 seconds
+Average score time: 0.012 seconds
 </pre></div>
 </div>
 </div>
@@ -1800,35 +1800,35 @@ than gradient boosting when the dataset has over 10,000 samples.</p>
 computation times with the experiment of the previous section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import HistGradientBoostingRegressor
 
-<span class="n">histogram_gradient_boosting</span> <span class="o">=</span> <span class="n">HistGradientBoostingRegressor</span><span class="p">(</span>
-    <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">cv_results_hgbdt</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">histogram_gradient_boosting</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="p">)</span>
+histogram_gradient_boosting = HistGradientBoostingRegressor(
+    max_iter=200, random_state=0)
+cv_results_hgbdt = cross_validate(
+    histogram_gradient_boosting, data, target,
+    scoring=&quot;neg_mean_absolute_error&quot;, n_jobs=2,
+)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Histogram Gradient Boosting Decision Tree&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error via cross-validation: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results_hgbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_hgbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average fit time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_hgbdt</span><span class="p">[</span><span class="s1">&#39;fit_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average score time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_hgbdt</span><span class="p">[</span><span class="s1">&#39;score_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Histogram Gradient Boosting Decision Tree&quot;)
+print(f&quot;Mean absolute error via cross-validation: &quot;
+      f&quot;{-cv_results_hgbdt[&#39;test_score&#39;].mean():.3f} ± &quot;
+      f&quot;{cv_results_hgbdt[&#39;test_score&#39;].std():.3f} k$&quot;)
+print(f&quot;Average fit time: &quot;
+      f&quot;{cv_results_hgbdt[&#39;fit_time&#39;].mean():.3f} seconds&quot;)
+print(f&quot;Average score time: &quot;
+      f&quot;{cv_results_hgbdt[&#39;score_time&#39;].mean():.3f} seconds&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Histogram Gradient Boosting Decision Tree
 Mean absolute error via cross-validation: 43.758 ± 2.694 k$
-Average fit time: 0.705 seconds
+Average fit time: 0.738 seconds
 Average score time: 0.064 seconds
 </pre></div>
 </div>

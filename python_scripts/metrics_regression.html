@@ -1580,14 +1580,14 @@ of houses in the city of Ames, Iowa. As with classification, we will only use
 a single train-test split to focus solely on the regression metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import numpy as np
 
-<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">/=</span> <span class="mi">1000</span>
+ames_housing = pd.read_csv(&quot;../datasets/house_prices.csv&quot;)
+data = ames_housing.drop(columns=&quot;SalePrice&quot;)
+target = ames_housing[&quot;SalePrice&quot;]
+data = data.select_dtypes(np.number)
+target /= 1000
 </pre></div>
 </div>
 </div>
@@ -1600,11 +1600,11 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>Let’s start by splitting our dataset intro a train and test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
 
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
-<span class="p">)</span>
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=True, random_state=0
+)
 </pre></div>
 </div>
 </div>
@@ -1618,15 +1618,15 @@ optimized by said model.</p>
 <p>We will give an example using a linear regression model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
-<span class="n">regressor</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+regressor = LinearRegression()
+regressor.fit(data_train, target_train)
+target_predicted = regressor.predict(data_train)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error on the training set: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target_train</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Mean squared error on the training set: &quot;
+      f&quot;{mean_squared_error(target_train, target_predicted):.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1642,10 +1642,10 @@ will decrease the error.</p>
 <p>Then, we can compute the mean squared error on the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted = regressor.predict(data_test)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error on the testing set: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Mean squared error on the testing set: &quot;
+      f&quot;{mean_squared_error(target_test, target_predicted):.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1661,7 +1661,7 @@ the coefficient of determination. Indeed, this is the default score used
 in scikit-learn by calling the method <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>regressor.score(data_test, target_test)
 </pre></div>
 </div>
 </div>
@@ -1677,12 +1677,12 @@ is 1 but there is no lower bound. However, a model that predicts the expected
 value of the target would get a score of 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.dummy import DummyRegressor
 
-<span class="n">dummy_regressor</span> <span class="o">=</span> <span class="n">DummyRegressor</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
-<span class="n">dummy_regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score for a regressor predicting the mean:&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dummy_regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+dummy_regressor = DummyRegressor(strategy=&quot;mean&quot;)
+dummy_regressor.fit(data_train, target_train)
+print(f&quot;R2 score for a regressor predicting the mean:&quot;
+      f&quot;{dummy_regressor.score(data_test, target_test):.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1699,11 +1699,11 @@ of the target. If we wanted to get an interpretable score, we would be
 interested in the median or mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import mean_absolute_error
 
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+target_predicted = regressor.predict(data_test)
+print(f&quot;Mean absolute error: &quot;
+      f&quot;{mean_absolute_error(target_test, target_predicted):.3f} k$&quot;)
 </pre></div>
 </div>
 </div>
@@ -1720,10 +1720,10 @@ applications, we might not want these large errors to have such a big
 influence on our metric. In this case we can use the median absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">median_absolute_error</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import median_absolute_error
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Median absolute error: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">median_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+print(f&quot;Median absolute error: &quot;
+      f&quot;{median_absolute_error(target_test, target_predicted):.3f} k$&quot;)
 </pre></div>
 </div>
 </div>
@@ -1740,10 +1740,10 @@ Indeed, the mean absolute error is not relative.</p>
 <p>The mean absolute percentage error introduce this relative scaling.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_percentage_error</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import mean_absolute_percentage_error
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute percentage error: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+print(f&quot;Mean absolute percentage error: &quot;
+      f&quot;{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %&quot;)
 </pre></div>
 </div>
 </div>
@@ -1757,24 +1757,24 @@ Indeed, the mean absolute error is not relative.</p>
 the predicted values versus the true values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_actual</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;True values (k$)&quot;</span><span class="p">:</span> <span class="n">target_test</span><span class="p">,</span> <span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">:</span> <span class="n">target_predicted</span><span class="p">}</span>
-<span class="n">predicted_actual</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predicted_actual</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>predicted_actual = {
+    &quot;True values (k$)&quot;: target_test, &quot;Predicted values (k$)&quot;: target_predicted}
+predicted_actual = pd.DataFrame(predicted_actual)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+import seaborn as sns
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">predicted_actual</span><span class="p">,</span>
-                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axline</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">slope</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Perfect fit&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;square&#39;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Regression using a model without </span><span class="se">\n</span><span class="s2">target transformation&quot;</span><span class="p">)</span>
+sns.scatterplot(data=predicted_actual,
+                x=&quot;True values (k$)&quot;, y=&quot;Predicted values (k$)&quot;,
+                color=&quot;black&quot;, alpha=0.5)
+plt.axline((0, 0), slope=1, label=&quot;Perfect fit&quot;)
+plt.axis(&#39;square&#39;)
+_ = plt.title(&quot;Regression using a model without \ntarget transformation&quot;)
 </pre></div>
 </div>
 </div>
@@ -1791,38 +1791,38 @@ target to predict does not follow a normal distribution. In this case the
 model would benefit from target transformation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">QuantileTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">TransformedTargetRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import QuantileTransformer
+from sklearn.compose import TransformedTargetRegressor
 
-<span class="n">transformer</span> <span class="o">=</span> <span class="n">QuantileTransformer</span><span class="p">(</span>
-    <span class="n">n_quantiles</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">output_distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
-<span class="n">model_transformed_target</span> <span class="o">=</span> <span class="n">TransformedTargetRegressor</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="o">=</span><span class="n">regressor</span><span class="p">,</span> <span class="n">transformer</span><span class="o">=</span><span class="n">transformer</span><span class="p">)</span>
-<span class="n">model_transformed_target</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model_transformed_target</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+transformer = QuantileTransformer(
+    n_quantiles=900, output_distribution=&quot;normal&quot;)
+model_transformed_target = TransformedTargetRegressor(
+    regressor=regressor, transformer=transformer)
+model_transformed_target.fit(data_train, target_train)
+target_predicted = model_transformed_target.predict(data_test)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_actual</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;True values (k$)&quot;</span><span class="p">:</span> <span class="n">target_test</span><span class="p">,</span> <span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">:</span> <span class="n">target_predicted</span><span class="p">}</span>
-<span class="n">predicted_actual</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predicted_actual</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>predicted_actual = {
+    &quot;True values (k$)&quot;: target_test, &quot;Predicted values (k$)&quot;: target_predicted}
+predicted_actual = pd.DataFrame(predicted_actual)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">predicted_actual</span><span class="p">,</span>
-                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axline</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">slope</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Perfect fit&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;square&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Regression using a model that</span><span class="se">\n</span><span class="s2"> transform the target before &quot;</span>
-              <span class="s2">&quot;fitting&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(data=predicted_actual,
+                x=&quot;True values (k$)&quot;, y=&quot;Predicted values (k$)&quot;,
+                color=&quot;black&quot;, alpha=0.5)
+plt.axline((0, 0), slope=1, label=&quot;Perfect fit&quot;)
+plt.axis(&#39;square&#39;)
+plt.legend()
+_ = plt.title(&quot;Regression using a model that\n transform the target before &quot;
+              &quot;fitting&quot;)
 </pre></div>
 </div>
 </div>

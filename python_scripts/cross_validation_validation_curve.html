@@ -1633,11 +1633,11 @@ they can help us know if our model generalizes, overfits, or underfits.</p>
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
 
-<span class="n">housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">housing</span><span class="o">.</span><span class="n">target</span>
-<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
+housing = fetch_california_housing(as_frame=True)
+data, target = housing.data, housing.target
+target *= 100  # rescale the target in k$
 </pre></div>
 </div>
 </div>
@@ -1649,9 +1649,9 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeRegressor
 
-<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+regressor = DecisionTreeRegressor()
 </pre></div>
 </div>
 </div>
@@ -1664,14 +1664,14 @@ training error. Thus, we need to compute the error on the training set,
 which is possible using the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">ShuffleSplit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from sklearn.model_selection import cross_validate, ShuffleSplit
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
-                            <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+cv = ShuffleSplit(n_splits=30, test_size=0.2)
+cv_results = cross_validate(regressor, data, target,
+                            cv=cv, scoring=&quot;neg_mean_absolute_error&quot;,
+                            return_train_score=True, n_jobs=2)
+cv_results = pd.DataFrame(cv_results)
 </pre></div>
 </div>
 </div>
@@ -1680,20 +1680,20 @@ which is possible using the <code class="docutils literal notranslate"><span cla
 the negative mean absolute error into a positive mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="n">scores</span><span class="p">[[</span><span class="s2">&quot;train error&quot;</span><span class="p">,</span> <span class="s2">&quot;test error&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span>
-    <span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">,</span> <span class="s2">&quot;test_score&quot;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scores = pd.DataFrame()
+scores[[&quot;train error&quot;, &quot;test error&quot;]] = -cv_results[
+    [&quot;train_score&quot;, &quot;test_score&quot;]]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 
-<span class="n">scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Train and test errors distribution via cross-validation&quot;</span><span class="p">)</span>
+scores.plot.hist(bins=50, edgecolor=&quot;black&quot;)
+plt.xlabel(&quot;Mean absolute error (k$)&quot;)
+_ = plt.title(&quot;Train and test errors distribution via cross-validation&quot;)
 </pre></div>
 </div>
 </div>
@@ -1723,20 +1723,20 @@ above experiment and varies the value of a hyperparameter.</p>
 tradeoff between under-fitting and over-fitting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">validation_curve</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
+from sklearn.model_selection import validation_curve
 
-<span class="n">max_depth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
-<span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
+max_depth = [1, 5, 10, 15, 20, 25]
+train_scores, test_scores = validation_curve(
+    regressor, data, target, param_name=&quot;max_depth&quot;, param_range=max_depth,
+    cv=cv, scoring=&quot;neg_mean_absolute_error&quot;, n_jobs=2)
+train_errors, test_errors = -train_scores, -test_scores
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 267 ms, sys: 29.9 ms, total: 297 ms
-Wall time: 10.6 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 169 ms, sys: 32.5 ms, total: 201 ms
+Wall time: 11.2 s
 </pre></div>
 </div>
 </div>
@@ -1745,13 +1745,13 @@ Wall time: 10.6 s
 plotting the training and testing errors (as well as their deviations).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training error&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing error&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.plot(max_depth, train_errors.mean(axis=1), label=&quot;Training error&quot;)
+plt.plot(max_depth, test_errors.mean(axis=1), label=&quot;Testing error&quot;)
+plt.legend()
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Maximum depth of decision tree&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Validation curve for decision tree&quot;</span><span class="p">)</span>
+plt.xlabel(&quot;Maximum depth of decision tree&quot;)
+plt.ylabel(&quot;Mean absolute error (k$)&quot;)
+_ = plt.title(&quot;Validation curve for decision tree&quot;)
 </pre></div>
 </div>
 </div>
@@ -1787,15 +1787,15 @@ can repeat the same plot as before but this time, we will add some
 information to show the standard deviation of the errors as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training error&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">test_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Testing error&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.errorbar(max_depth, train_errors.mean(axis=1),
+             yerr=train_errors.std(axis=1), label=&#39;Training error&#39;)
+plt.errorbar(max_depth, test_errors.mean(axis=1),
+             yerr=test_errors.std(axis=1), label=&#39;Testing error&#39;)
+plt.legend()
 
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Maximum depth of decision tree&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Validation curve for decision tree&quot;</span><span class="p">)</span>
+plt.xlabel(&quot;Maximum depth of decision tree&quot;)
+plt.ylabel(&quot;Mean absolute error (k$)&quot;)
+_ = plt.title(&quot;Validation curve for decision tree&quot;)
 </pre></div>
 </div>
 </div>

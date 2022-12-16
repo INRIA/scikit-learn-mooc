@@ -1633,9 +1633,9 @@ train-test split.</p>
 <p>First, let’s load the full adult census dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
 </pre></div>
 </div>
 </div>
@@ -1644,9 +1644,9 @@ train-test split.</p>
 predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;class&quot;
+target = adult_census[target_name]
+data = adult_census.drop(columns=target_name)
 </pre></div>
 </div>
 </div>
@@ -1655,9 +1655,9 @@ predictive model.</p>
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>numerical_columns = [&quot;age&quot;, &quot;capital-gain&quot;, &quot;capital-loss&quot;, &quot;hours-per-week&quot;]
 
-<span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
+data_numeric = data[numerical_columns]
 </pre></div>
 </div>
 </div>
@@ -1666,11 +1666,11 @@ notebook.</p>
 preprocessing and the estimator in every iteration of the cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+model = make_pipeline(StandardScaler(), LogisticRegression())
 </pre></div>
 </div>
 </div>
@@ -1712,22 +1712,22 @@ exists several cross-validation strategies, <code class="docutils literal notran
 <code class="docutils literal notranslate"><span class="pre">cv</span></code> which defines the splitting strategy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
+from sklearn.model_selection import cross_validate
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
-<span class="n">cv_result</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">cv_result</span>
+model = make_pipeline(StandardScaler(), LogisticRegression())
+cv_result = cross_validate(model, data_numeric, target, cv=5)
+cv_result
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 688 ms, sys: 196 ms, total: 884 ms
-Wall time: 499 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 677 ms, sys: 200 ms, total: 878 ms
+Wall time: 496 ms
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.07488465, 0.07144618, 0.07144213, 0.07114935, 0.0714314 ]),
- &#39;score_time&#39;: array([0.01558423, 0.01561189, 0.01537871, 0.01540375, 0.0153563 ]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.07593918, 0.07106662, 0.07143807, 0.06934071, 0.07034397]),
+ &#39;score_time&#39;: array([0.01626325, 0.01545906, 0.0156765 , 0.01525259, 0.01533628]),
  &#39;test_score&#39;: array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])}
 </pre></div>
 </div>
@@ -1762,11 +1762,11 @@ round from the <code class="docutils literal notranslate"><span class="pre">cv_r
 variation of the accuracy across folds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cv_result</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scores = cv_result[&quot;test_score&quot;]
+print(
+    &quot;The mean cross-validation accuracy is: &quot;
+    f&quot;{scores.mean():.3f} ± {scores.std():.3f}&quot;
+)
 </pre></div>
 </div>
 </div>

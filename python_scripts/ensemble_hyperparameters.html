@@ -1632,13 +1632,13 @@ cross-validation.</p>
 <p>We will start by loading the california housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=0)
 </pre></div>
 </div>
 </div>
@@ -1668,7 +1668,7 @@ averaging with the trees in the ensemble.</p>
 the random forest is the bagging procedure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;In this case, n_features=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;In this case, n_features={len(data.columns)}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1696,27 +1696,27 @@ mitigated when combining the trees altogether, whereas assembling underfitted
 trees (i.e. shallow trees) might also lead to an underfitted forest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.ensemble import RandomForestRegressor
 
-<span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
-    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
-    <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
-<span class="p">}</span>
-<span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">search_cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+param_distributions = {
+    &quot;max_features&quot;: [1, 2, 3, 5, None],
+    &quot;max_leaf_nodes&quot;: [10, 100, 1000, None],
+    &quot;min_samples_leaf&quot;: [1, 2, 5, 10, 20, 50, 100],
+}
+search_cv = RandomizedSearchCV(
+    RandomForestRegressor(n_jobs=2), param_distributions=param_distributions,
+    scoring=&quot;neg_mean_absolute_error&quot;, n_iter=10, random_state=0, n_jobs=2,
+)
+search_cv.fit(data_train, target_train)
 
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_error&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">search_cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;std_test_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;std_test_score&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">)</span>
+columns = [f&quot;param_{name}&quot; for name in param_distributions.keys()]
+columns += [&quot;mean_test_error&quot;, &quot;std_test_error&quot;]
+cv_results = pd.DataFrame(search_cv.cv_results_)
+cv_results[&quot;mean_test_error&quot;] = -cv_results[&quot;mean_test_score&quot;]
+cv_results[&quot;std_test_error&quot;] = cv_results[&quot;std_test_score&quot;]
+cv_results[columns].sort_values(by=&quot;mean_test_error&quot;)
 </pre></div>
 </div>
 </div>
@@ -1752,80 +1752,80 @@ trees (i.e. shallow trees) might also lead to an underfitted forest.</p>
       <td>2</td>
       <td>None</td>
       <td>2</td>
-      <td>34.107656</td>
-      <td>0.509122</td>
+      <td>34.062569</td>
+      <td>0.645839</td>
     </tr>
     <tr>
       <th>0</th>
       <td>2</td>
       <td>1000</td>
       <td>10</td>
-      <td>36.812750</td>
-      <td>0.477431</td>
+      <td>36.754213</td>
+      <td>0.394218</td>
     </tr>
     <tr>
       <th>7</th>
       <td>None</td>
       <td>None</td>
       <td>20</td>
-      <td>37.287290</td>
-      <td>0.417327</td>
+      <td>37.317379</td>
+      <td>0.488693</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5</td>
       <td>100</td>
       <td>2</td>
-      <td>40.128505</td>
-      <td>0.405286</td>
+      <td>40.123781</td>
+      <td>0.449476</td>
     </tr>
     <tr>
       <th>8</th>
       <td>None</td>
       <td>100</td>
       <td>10</td>
-      <td>40.473445</td>
-      <td>0.650043</td>
+      <td>40.496706</td>
+      <td>0.524413</td>
     </tr>
     <tr>
       <th>6</th>
       <td>None</td>
       <td>1000</td>
       <td>50</td>
-      <td>40.756064</td>
-      <td>0.448601</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>1</td>
-      <td>100</td>
-      <td>2</td>
-      <td>50.255509</td>
-      <td>0.640070</td>
+      <td>40.870837</td>
+      <td>0.488856</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
       <td>100</td>
       <td>1</td>
-      <td>50.276655</td>
-      <td>0.900037</td>
+      <td>50.083550</td>
+      <td>0.440748</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50.171327</td>
+      <td>0.967715</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1</td>
       <td>None</td>
       <td>100</td>
-      <td>54.642278</td>
-      <td>0.911470</td>
+      <td>54.767829</td>
+      <td>0.969398</td>
     </tr>
     <tr>
       <th>1</th>
       <td>3</td>
       <td>10</td>
       <td>10</td>
-      <td>54.758959</td>
-      <td>0.856561</td>
+      <td>55.014681</td>
+      <td>1.051015</td>
     </tr>
   </tbody>
 </table>
@@ -1846,13 +1846,13 @@ generalization performance of the best model it suffices to call <code class="do
 the unseen data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our random forest regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>error = -search_cv.score(data_test, target_test)
+print(f&quot;On average, our random forest regressor makes an error of {error:.2f} k$&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.96 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.52 k$
 </pre></div>
 </div>
 </div>
@@ -1887,26 +1887,26 @@ learning-rate tends to obtain an overfitted ensemble, similar to having a too
 large tree depth.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">loguniform</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import loguniform
+from sklearn.ensemble import GradientBoostingRegressor
 
-<span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
-    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
-    <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-<span class="p">}</span>
-<span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">GradientBoostingRegressor</span><span class="p">(),</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
-<span class="n">search_cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+param_distributions = {
+    &quot;n_estimators&quot;: [1, 2, 5, 10, 20, 50, 100, 200, 500],
+    &quot;max_leaf_nodes&quot;: [2, 5, 10, 20, 50, 100],
+    &quot;learning_rate&quot;: loguniform(0.01, 1),
+}
+search_cv = RandomizedSearchCV(
+    GradientBoostingRegressor(), param_distributions=param_distributions,
+    scoring=&quot;neg_mean_absolute_error&quot;, n_iter=20, random_state=0, n_jobs=2
+)
+search_cv.fit(data_train, target_train)
 
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_error&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">search_cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;std_test_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;std_test_score&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">)</span>
+columns = [f&quot;param_{name}&quot; for name in param_distributions.keys()]
+columns += [&quot;mean_test_error&quot;, &quot;std_test_error&quot;]
+cv_results = pd.DataFrame(search_cv.cv_results_)
+cv_results[&quot;mean_test_error&quot;] = -cv_results[&quot;mean_test_score&quot;]
+cv_results[&quot;std_test_error&quot;] = cv_results[&quot;std_test_score&quot;]
+cv_results[columns].sort_values(by=&quot;mean_test_error&quot;)
 </pre></div>
 </div>
 </div>
@@ -1942,40 +1942,40 @@ large tree depth.</p>
       <td>200</td>
       <td>20</td>
       <td>0.160519</td>
-      <td>33.894484</td>
-      <td>0.431750</td>
+      <td>33.890931</td>
+      <td>0.426154</td>
     </tr>
     <tr>
       <th>12</th>
       <td>200</td>
       <td>50</td>
       <td>0.110585</td>
-      <td>34.793749</td>
-      <td>0.295081</td>
+      <td>34.782684</td>
+      <td>0.296359</td>
     </tr>
     <tr>
       <th>17</th>
       <td>500</td>
       <td>5</td>
       <td>0.771785</td>
-      <td>34.798699</td>
-      <td>0.555313</td>
+      <td>34.797686</td>
+      <td>0.509724</td>
     </tr>
     <tr>
       <th>10</th>
       <td>200</td>
       <td>20</td>
       <td>0.109889</td>
-      <td>35.012499</td>
-      <td>0.377358</td>
+      <td>35.006713</td>
+      <td>0.386918</td>
     </tr>
     <tr>
       <th>6</th>
       <td>500</td>
       <td>100</td>
       <td>0.709894</td>
-      <td>35.454199</td>
-      <td>0.338324</td>
+      <td>35.510957</td>
+      <td>0.351380</td>
     </tr>
     <tr>
       <th>18</th>
@@ -2116,13 +2116,13 @@ on the other hyperparameter values.</p>
 test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our GBDT regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>error = -search_cv.score(data_test, target_test)
+print(f&quot;On average, our GBDT regressor makes an error of {error:.2f} k$&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 32.99 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 32.96 k$
 </pre></div>
 </div>
 </div>

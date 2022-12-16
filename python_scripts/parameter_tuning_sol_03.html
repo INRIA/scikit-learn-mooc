@@ -1571,14 +1571,14 @@ title="Print to PDF"
 generalization performance on a training set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=42)
 </pre></div>
 </div>
 </div>
@@ -1592,13 +1592,13 @@ and later tune its hyperparameters.</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsRegressor
 
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">scaler</span><span class="p">,</span> <span class="n">KNeighborsRegressor</span><span class="p">())</span>
+scaler = StandardScaler()
+model = make_pipeline(scaler, KNeighborsRegressor())
 </pre></div>
 </div>
 </div>
@@ -1626,21 +1626,21 @@ already-explored combinations.</p>
 stored in the <code class="docutils literal notranslate"><span class="pre">best_params_</span></code> attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+import numpy as np
+from sklearn.model_selection import RandomizedSearchCV
 
-<span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;kneighborsregressor__n_neighbors&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span>
-    <span class="s2">&quot;standardscaler__with_mean&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-    <span class="s2">&quot;standardscaler__with_std&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
-<span class="p">}</span>
+param_distributions = {
+    &quot;kneighborsregressor__n_neighbors&quot;: np.logspace(0, 3, num=10).astype(np.int32),
+    &quot;standardscaler__with_mean&quot;: [True, False],
+    &quot;standardscaler__with_std&quot;: [True, False],
+}
 
-<span class="n">model_random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
-    <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">model_random_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">model_random_search</span><span class="o">.</span><span class="n">best_params_</span>
+model_random_search = RandomizedSearchCV(
+    model, param_distributions=param_distributions,
+    n_iter=20, n_jobs=2, verbose=1, random_state=1)
+model_random_search.fit(data_train, target_train)
+model_random_search.best_params_
 </pre></div>
 </div>
 </div>
@@ -1668,9 +1668,9 @@ parallel coordinate plot as we did in the previous notebook (you are more
 than welcome to try!).</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+cv_results = pd.DataFrame(model_random_search.cv_results_)
 </pre></div>
 </div>
 </div>
@@ -1679,16 +1679,16 @@ than welcome to try!).</p>
 and only select the mean test score and the value of the hyperparameters.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">column_name_mapping</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;param_kneighborsregressor__n_neighbors&quot;</span><span class="p">:</span> <span class="s2">&quot;n_neighbors&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;param_standardscaler__with_mean&quot;</span><span class="p">:</span> <span class="s2">&quot;centering&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;param_standardscaler__with_std&quot;</span><span class="p">:</span> <span class="s2">&quot;scaling&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">:</span> <span class="s2">&quot;mean test score&quot;</span><span class="p">,</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>column_name_mapping = {
+    &quot;param_kneighborsregressor__n_neighbors&quot;: &quot;n_neighbors&quot;,
+    &quot;param_standardscaler__with_mean&quot;: &quot;centering&quot;,
+    &quot;param_standardscaler__with_std&quot;: &quot;scaling&quot;,
+    &quot;mean_test_score&quot;: &quot;mean test score&quot;,
+}
 
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_name_mapping</span><span class="p">)</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_name_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s2">&quot;mean test score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+cv_results = cv_results.rename(columns=column_name_mapping)
+cv_results = cv_results[column_name_mapping.values()].sort_values(
+    &quot;mean test score&quot;, ascending=False)
 </pre></div>
 </div>
 </div>
@@ -1700,10 +1700,10 @@ False is mapped to 0. As <code class="docutils literal notranslate"><span class=
 explicitly to an integer.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">column_scaler</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;centering&quot;</span><span class="p">,</span> <span class="s2">&quot;scaling&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="n">column_scaler</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_scaler</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-<span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-<span class="n">cv_results</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>column_scaler = [&quot;centering&quot;, &quot;scaling&quot;]
+cv_results[column_scaler] = cv_results[column_scaler].astype(np.int64)
+cv_results[&quot;n_neighbors&quot;] = cv_results[&quot;n_neighbors&quot;].astype(np.int64)
+cv_results
 </pre></div>
 </div>
 </div>
@@ -1879,20 +1879,20 @@ explicitly to an integer.</p>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.express as px
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">parallel_coordinates</span><span class="p">(</span>
-    <span class="n">cv_results</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;mean test score&quot;</span><span class="p">,</span>
-    <span class="n">dimensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;n_neighbors&quot;</span><span class="p">,</span> <span class="s2">&quot;centering&quot;</span><span class="p">,</span> <span class="s2">&quot;scaling&quot;</span><span class="p">,</span> <span class="s2">&quot;mean test score&quot;</span><span class="p">],</span>
-    <span class="n">color_continuous_scale</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">diverging</span><span class="o">.</span><span class="n">Tealrose</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+fig = px.parallel_coordinates(
+    cv_results,
+    color=&quot;mean test score&quot;,
+    dimensions=[&quot;n_neighbors&quot;, &quot;centering&quot;, &quot;scaling&quot;, &quot;mean test score&quot;],
+    color_continuous_scale=px.colors.diverging.Tealrose,
+)
+fig.show()
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/plotly/express/_core.py:279: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/plotly/express/_core.py:279: FutureWarning: iteritems is deprecated and will be removed in a future version. Use .items instead.
   dims = [
 </pre></div>
 </div>
@@ -1973,9 +1973,9 @@ e.exports=function(t){return null!=t&&(n(t)||function(t){return"function"==typeo
         });
         }
         </script>
-</div><div class="output text_html"><div>                            <div id="5031f12a-e958-4adf-ba0e-7308f33ff48a" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5031f12a-e958-4adf-ba0e-7308f33ff48a")) {                    Plotly.newPlot(                        "5031f12a-e958-4adf-ba0e-7308f33ff48a",                        [{"dimensions":[{"label":"n_neighbors","values":[10,4,46,100,2,215,215,464,1,1000,21,21,46,100,215,215,464,464,1000,1]},{"label":"centering","values":[0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,1,1,0,0,0]},{"label":"scaling","values":[1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0]},{"label":"mean test score","values":[0.6879258576373957,0.6748121628043684,0.6687783006375685,0.648317424373003,0.6297721405243253,0.6172948325393758,0.6172948325393758,0.5671642313328841,0.5088093178849779,0.48650344151133107,0.10339012702057422,0.10339012702057422,0.061394046877326504,0.03312213289438766,0.017583410774107078,0.017583410774107078,0.00798736254801664,0.00798736254801664,0.0028997204271957733,-0.23883048498944137]}],"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"line":{"color":[0.6879258576373957,0.6748121628043684,0.6687783006375685,0.648317424373003,0.6297721405243253,0.6172948325393758,0.6172948325393758,0.5671642313328841,0.5088093178849779,0.48650344151133107,0.10339012702057422,0.10339012702057422,0.061394046877326504,0.03312213289438766,0.017583410774107078,0.017583410774107078,0.00798736254801664,0.00798736254801664,0.0028997204271957733,-0.23883048498944137],"coloraxis":"coloraxis"},"name":"","type":"parcoords"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"coloraxis":{"colorbar":{"title":{"text":"mean test score"}},"colorscale":[[0.0,"rgb(0, 147, 146)"],[0.16666666666666666,"rgb(114, 170, 161)"],[0.3333333333333333,"rgb(177, 199, 179)"],[0.5,"rgb(241, 234, 200)"],[0.6666666666666666,"rgb(229, 185, 173)"],[0.8333333333333334,"rgb(217, 137, 148)"],[1.0,"rgb(208, 88, 126)"]]},"legend":{"tracegroupgap":0},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
+</div><div class="output text_html"><div>                            <div id="f22dfa18-3001-4278-b8b3-f182f4bc30c0" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("f22dfa18-3001-4278-b8b3-f182f4bc30c0")) {                    Plotly.newPlot(                        "f22dfa18-3001-4278-b8b3-f182f4bc30c0",                        [{"dimensions":[{"label":"n_neighbors","values":[10,4,46,100,2,215,215,464,1,1000,21,21,46,100,215,215,464,464,1000,1]},{"label":"centering","values":[0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,1,1,0,0,0]},{"label":"scaling","values":[1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0]},{"label":"mean test score","values":[0.6879258576373957,0.6748121628043684,0.6687783006375685,0.648317424373003,0.6297721405243253,0.6172948325393758,0.6172948325393758,0.5671642313328841,0.5088093178849779,0.48650344151133107,0.10339012702057422,0.10339012702057422,0.061394046877326504,0.03312213289438766,0.017583410774107078,0.017583410774107078,0.00798736254801664,0.00798736254801664,0.0028997204271957733,-0.23883048498944137]}],"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"line":{"color":[0.6879258576373957,0.6748121628043684,0.6687783006375685,0.648317424373003,0.6297721405243253,0.6172948325393758,0.6172948325393758,0.5671642313328841,0.5088093178849779,0.48650344151133107,0.10339012702057422,0.10339012702057422,0.061394046877326504,0.03312213289438766,0.017583410774107078,0.017583410774107078,0.00798736254801664,0.00798736254801664,0.0028997204271957733,-0.23883048498944137],"coloraxis":"coloraxis"},"name":"","type":"parcoords"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"coloraxis":{"colorbar":{"title":{"text":"mean test score"}},"colorscale":[[0.0,"rgb(0, 147, 146)"],[0.16666666666666666,"rgb(114, 170, 161)"],[0.3333333333333333,"rgb(177, 199, 179)"],[0.5,"rgb(241, 234, 200)"],[0.6666666666666666,"rgb(229, 185, 173)"],[0.8333333333333334,"rgb(217, 137, 148)"],[1.0,"rgb(208, 88, 126)"]]},"legend":{"tracegroupgap":0},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
 
-var gd = document.getElementById('5031f12a-e958-4adf-ba0e-7308f33ff48a');
+var gd = document.getElementById('f22dfa18-3001-4278-b8b3-f182f4bc30c0');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{

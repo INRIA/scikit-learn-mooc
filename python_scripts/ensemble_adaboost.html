@@ -1574,13 +1574,13 @@ boosting in general.</p>
 culmen length and depth features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
-<span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
-<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+penguins = pd.read_csv(&quot;../datasets/penguins_classification.csv&quot;)
+culmen_columns = [&quot;Culmen Length (mm)&quot;, &quot;Culmen Depth (mm)&quot;]
+target_column = &quot;Species&quot;
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
+data, target = penguins[culmen_columns], penguins[target_column]
 </pre></div>
 </div>
 </div>
@@ -1595,13 +1595,13 @@ it is unlikely to overfit and some of the training examples will even be
 misclassified.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
+from sklearn.tree import DecisionTreeClassifier
 
-<span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
+palette = [&quot;tab:red&quot;, &quot;tab:blue&quot;, &quot;black&quot;]
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+tree = DecisionTreeClassifier(max_depth=2, random_state=0)
+tree.fit(data, target)
 </pre></div>
 </div>
 </div>
@@ -1611,35 +1611,35 @@ misclassified.</p>
 <p>We can predict on the same dataset and check which samples are misclassified.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
 
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">misclassified_samples_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">target</span> <span class="o">!=</span> <span class="n">target_predicted</span><span class="p">)</span>
-<span class="n">data_misclassified</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">]</span>
+target_predicted = tree.predict(data)
+misclassified_samples_idx = np.flatnonzero(target != target_predicted)
+data_misclassified = data.iloc[misclassified_samples_idx]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+from sklearn.inspection import DecisionBoundaryDisplay
 
-<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
-<span class="p">)</span>
+DecisionBoundaryDisplay.from_estimator(
+    tree, data, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
+)
 
-<span class="c1"># plot the original dataset</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
-<span class="c1"># plot the misclassified samples</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_misclassified</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Misclassified samples&quot;</span><span class="p">,</span>
-                <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+# plot the original dataset
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
+# plot the misclassified samples
+sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
+                y=culmen_columns[1], label=&quot;Misclassified samples&quot;,
+                marker=&quot;+&quot;, s=150, color=&quot;k&quot;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.04</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision tree predictions </span><span class="se">\n</span><span class="s2">with misclassified samples &quot;</span>
-              <span class="s2">&quot;highlighted&quot;</span><span class="p">)</span>
+plt.legend(bbox_to_anchor=(1.04, 0.5), loc=&quot;center left&quot;)
+_ = plt.title(&quot;Decision tree predictions \nwith misclassified samples &quot;
+              &quot;highlighted&quot;)
 </pre></div>
 </div>
 </div>
@@ -1660,11 +1660,11 @@ Thus, misclassified samples will be assigned a weight of 1 and well
 classified samples will be assigned a weight of 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">sample_weight</span><span class="p">[</span><span class="n">misclassified_samples_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample_weight = np.zeros_like(target, dtype=int)
+sample_weight[misclassified_samples_idx] = 1
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
+tree = DecisionTreeClassifier(max_depth=2, random_state=0)
+tree.fit(data, target, sample_weight=sample_weight)
 </pre></div>
 </div>
 </div>
@@ -1673,18 +1673,18 @@ classified samples will be assigned a weight of 0.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
-<span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_misclassified</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Previously misclassified samples&quot;</span><span class="p">,</span>
-                <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>DecisionBoundaryDisplay.from_estimator(
+    tree, data, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
+)
+sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
+                hue=target_column, palette=palette)
+sns.scatterplot(data=data_misclassified, x=culmen_columns[0],
+                y=culmen_columns[1],
+                label=&quot;Previously misclassified samples&quot;,
+                marker=&quot;+&quot;, s=150, color=&quot;k&quot;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.04</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision tree by changing sample weights&quot;</span><span class="p">)</span>
+plt.legend(bbox_to_anchor=(1.04, 0.5), loc=&quot;center left&quot;)
+_ = plt.title(&quot;Decision tree by changing sample weights&quot;)
 </pre></div>
 </div>
 </div>
@@ -1696,14 +1696,14 @@ classified samples will be assigned a weight of 0.</p>
 that the previously misclassified samples are now correctly classified.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">newly_misclassified_samples_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">target</span> <span class="o">!=</span> <span class="n">target_predicted</span><span class="p">)</span>
-<span class="n">remaining_misclassified_samples_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span>
-    <span class="n">misclassified_samples_idx</span><span class="p">,</span> <span class="n">newly_misclassified_samples_idx</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted = tree.predict(data)
+newly_misclassified_samples_idx = np.flatnonzero(target != target_predicted)
+remaining_misclassified_samples_idx = np.intersect1d(
+    misclassified_samples_idx, newly_misclassified_samples_idx
+)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of samples previously misclassified and &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;still misclassified: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_misclassified_samples_idx</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Number of samples previously misclassified and &quot;
+      f&quot;still misclassified: {len(remaining_misclassified_samples_idx)}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1720,11 +1720,11 @@ is making.</p>
 <p>So we could use the classification error to combine both trees.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ensemble_weight</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">misclassified_samples_idx</span><span class="p">))</span> <span class="o">/</span> <span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-    <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">newly_misclassified_samples_idx</span><span class="p">))</span> <span class="o">/</span> <span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-<span class="p">]</span>
-<span class="n">ensemble_weight</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ensemble_weight = [
+    (target.shape[0] - len(misclassified_samples_idx)) / target.shape[0],
+    (target.shape[0] - len(newly_misclassified_samples_idx)) / target.shape[0],
+]
+ensemble_weight
 </pre></div>
 </div>
 </div>
@@ -1755,17 +1755,21 @@ for how these sample and learner weights can be optimally calculated.</p>
 look at the underlying decision tree classifiers trained.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import AdaBoostClassifier
 
-<span class="n">base_estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">adaboost</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">base_estimator</span><span class="p">,</span>
-                              <span class="n">n_estimators</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME&quot;</span><span class="p">,</span>
-                              <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">adaboost</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+base_estimator = DecisionTreeClassifier(max_depth=3, random_state=0)
+adaboost = AdaBoostClassifier(base_estimator=base_estimator,
+                              n_estimators=3, algorithm=&quot;SAMME&quot;,
+                              random_state=0)
+adaboost.fit(data, target)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
 <div class="output text_html"><style>#sk-container-id-3 {color: black;background-color: white;}#sk-container-id-3 pre{padding: 0;}#sk-container-id-3 div.sk-toggleable {background-color: white;}#sk-container-id-3 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-3 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-3 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-3 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-3 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-3 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-3 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-3 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-3 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-3 div.sk-item {position: relative;z-index: 1;}#sk-container-id-3 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-3 div.sk-item::before, #sk-container-id-3 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-3 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-3 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-3 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-3 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-3 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-3 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-3 div.sk-label-container {text-align: center;}#sk-container-id-3 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-3 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>AdaBoostClassifier(algorithm=&#x27;SAMME&#x27;,
                    base_estimator=DecisionTreeClassifier(max_depth=3,
                                                          random_state=0),
@@ -1776,17 +1780,17 @@ look at the underlying decision tree classifiers trained.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">boosting_round</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">adaboost</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="c1"># we convert `data` into a NumPy array to avoid a warning raised in scikit-learn</span>
-    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-        <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
-    <span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                    <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span>
-                    <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.04</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center left&quot;</span><span class="p">)</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree trained at round </span><span class="si">{</span><span class="n">boosting_round</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for boosting_round, tree in enumerate(adaboost.estimators_):
+    plt.figure()
+    # we convert `data` into a NumPy array to avoid a warning raised in scikit-learn
+    DecisionBoundaryDisplay.from_estimator(
+        tree, data.to_numpy(), response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
+    )
+    sns.scatterplot(x=culmen_columns[0], y=culmen_columns[1],
+                    hue=target_column, data=penguins,
+                    palette=palette)
+    plt.legend(bbox_to_anchor=(1.04, 0.5), loc=&quot;center left&quot;)
+    _ = plt.title(f&quot;Decision tree trained at round {boosting_round}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1807,7 +1811,7 @@ look at the underlying decision tree classifiers trained.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight of each classifier: </span><span class="si">{</span><span class="n">adaboost</span><span class="o">.</span><span class="n">estimator_weights_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Weight of each classifier: {adaboost.estimator_weights_}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1819,7 +1823,7 @@ look at the underlying decision tree classifiers trained.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of each classifier: </span><span class="si">{</span><span class="n">adaboost</span><span class="o">.</span><span class="n">estimator_errors_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Error of each classifier: {adaboost.estimator_errors_}&quot;)
 </pre></div>
 </div>
 </div>

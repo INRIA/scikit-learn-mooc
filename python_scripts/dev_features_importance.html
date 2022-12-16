@@ -1764,10 +1764,10 @@ neighborhoods, as the average number of rooms, the latitude, the longitude or
 the median income of people in the neighborhoods (block).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+import pandas as pd
 
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+X, y = fetch_california_housing(as_frame=True, return_X_y=True)
 </pre></div>
 </div>
 </div>
@@ -1775,15 +1775,15 @@ the median income of people in the neighborhoods (block).</p>
 <p>To speed up the computation, we take the first 10000 samples</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="mi">10000</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="mi">10000</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X = X[:10000]
+y = y[:10000]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X.head()
 </pre></div>
 </div>
 </div>
@@ -1892,13 +1892,13 @@ the median income of people in the neighborhoods (block).</p>
 feature that won’t help the prediction (un-informative feature)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
 
-<span class="c1"># Adding random features</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">bin_var</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rnd_bin&#39;</span><span class="p">)</span>
-<span class="n">num_var</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;rnd_num&#39;</span><span class="p">)</span>
-<span class="n">X_with_rnd_feat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">bin_var</span><span class="p">,</span> <span class="n">num_var</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+# Adding random features
+rng = np.random.RandomState(0)
+bin_var = pd.Series(rng.randint(0, 1, X.shape[0]), name=&#39;rnd_bin&#39;)
+num_var = pd.Series(np.arange(X.shape[0]), name=&#39;rnd_num&#39;)
+X_with_rnd_feat = pd.concat((X, bin_var, num_var), axis=1)
 </pre></div>
 </div>
 </div>
@@ -1907,9 +1907,9 @@ feature that won’t help the prediction (un-informative feature)</p>
 this notebook</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_with_rnd_feat</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
-                                                    <span class="n">random_state</span><span class="o">=</span><span class="mi">29</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X_with_rnd_feat, y,
+                                                    random_state=29)
 </pre></div>
 </div>
 </div>
@@ -1917,13 +1917,13 @@ this notebook</p>
 <p>Let’s quickly inspect some features and the target</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
 
-<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">train_dataset</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
-    <span class="n">train_dataset</span><span class="p">[[</span><span class="s1">&#39;MedHouseVal&#39;</span><span class="p">,</span> <span class="s1">&#39;Latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;AveRooms&#39;</span><span class="p">,</span> <span class="s1">&#39;AveBedrms&#39;</span><span class="p">,</span> <span class="s1">&#39;MedInc&#39;</span><span class="p">]],</span>
-    <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="n">diag_kind</span><span class="o">=</span><span class="s1">&#39;kde&#39;</span><span class="p">,</span> <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;scatter_kws&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}})</span>
+train_dataset = X_train.copy()
+train_dataset.insert(0, &quot;MedHouseVal&quot;, y_train)
+_ = sns.pairplot(
+    train_dataset[[&#39;MedHouseVal&#39;, &#39;Latitude&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;MedInc&#39;]],
+    kind=&#39;reg&#39;, diag_kind=&#39;kde&#39;, plot_kws={&#39;scatter_kws&#39;: {&#39;alpha&#39;: 0.1}})
 </pre></div>
 </div>
 </div>
@@ -1948,14 +1948,14 @@ other features are taken into account in the estimation (marginal
 dependence).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RidgeCV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import RidgeCV
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">RidgeCV</span><span class="p">()</span>
+model = RidgeCV()
 
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+model.fit(X_train, y_train)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+print(f&#39;model score on training data: {model.score(X_train, y_train)}&#39;)
+print(f&#39;model score on testing data: {model.score(X_test, y_test)}&#39;)
 </pre></div>
 </div>
 </div>
@@ -1971,17 +1971,17 @@ part of the target. Its coefficient should be somehow relevant. Let’s look at
 the coefficient learnt</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 
-<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-   <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span>
-   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Coefficients&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">)</span>
+coefs = pd.DataFrame(
+   model.coef_,
+   columns=[&#39;Coefficients&#39;], index=X_train.columns
+)
 
-<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ridge model&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+coefs.plot(kind=&#39;barh&#39;, figsize=(9, 7))
+plt.title(&#39;Ridge model&#39;)
+plt.axvline(x=0, color=&#39;.5&#39;)
+plt.subplots_adjust(left=.3)
 </pre></div>
 </div>
 </div>
@@ -2027,10 +2027,10 @@ more, several decades.</p>
 features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Features std. dev.&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>X_train.std(axis=0).plot(kind=&#39;barh&#39;, figsize=(9, 7))
+plt.title(&#39;Features std. dev.&#39;)
+plt.subplots_adjust(left=.3)
+plt.xlim((0, 100))
 </pre></div>
 </div>
 </div>
@@ -2045,15 +2045,15 @@ features.</p>
 and scaling the variance to 1).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">RidgeCV</span><span class="p">())</span>
+model = make_pipeline(StandardScaler(), RidgeCV())
 
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+model.fit(X_train, y_train)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+print(f&#39;model score on training data: {model.score(X_train, y_train)}&#39;)
+print(f&#39;model score on testing data: {model.score(X_test, y_test)}&#39;)
 </pre></div>
 </div>
 </div>
@@ -2066,15 +2066,15 @@ model score on testing data: 0.5972410717953726
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-   <span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span>
-   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Coefficients&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coefs = pd.DataFrame(
+   model[1].coef_,
+   columns=[&#39;Coefficients&#39;], index=X_train.columns
+)
 
-<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Ridge model&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+coefs.plot(kind=&#39;barh&#39;, figsize=(9, 7))
+plt.title(&#39;Ridge model&#39;)
+plt.axvline(x=0, color=&#39;.5&#39;)
+plt.subplots_adjust(left=.3)
 </pre></div>
 </div>
 </div>
@@ -2101,24 +2101,24 @@ robustness is not guaranteed, and they should probably be interpreted with
 caution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RepeatedKFold</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
+from sklearn.model_selection import RepeatedKFold
 
-<span class="n">cv_model</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-   <span class="n">model</span><span class="p">,</span> <span class="n">X_with_rnd_feat</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">RepeatedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-   <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
-<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-   <span class="p">[</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span>
-    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">cv_model</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]],</span>
-   <span class="n">columns</span><span class="o">=</span><span class="n">X_with_rnd_feat</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">coefs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Coefficient importance&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Coefficient importance and its variability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+cv_model = cross_validate(
+   model, X_with_rnd_feat, y, cv=RepeatedKFold(n_splits=5, n_repeats=5),
+   return_estimator=True, n_jobs=2
+)
+coefs = pd.DataFrame(
+   [model[1].coef_
+    for model in cv_model[&#39;estimator&#39;]],
+   columns=X_with_rnd_feat.columns
+)
+plt.figure(figsize=(9, 7))
+sns.boxplot(data=coefs, orient=&#39;h&#39;, color=&#39;cyan&#39;, saturation=0.5)
+plt.axvline(x=0, color=&#39;.5&#39;)
+plt.xlabel(&#39;Coefficient importance&#39;)
+plt.title(&#39;Coefficient importance and its variability&#39;)
+plt.subplots_adjust(left=.3)
 </pre></div>
 </div>
 </div>
@@ -2137,14 +2137,14 @@ performs feature selection with a L1 penalty. Let us fit a Lasso model
 with a strong regularization parameters <code class="docutils literal notranslate"><span class="pre">alpha</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import Lasso
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">.015</span><span class="p">))</span>
+model = make_pipeline(StandardScaler(), Lasso(alpha=.015))
 
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+model.fit(X_train, y_train)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+print(f&#39;model score on training data: {model.score(X_train, y_train)}&#39;)
+print(f&#39;model score on testing data: {model.score(X_test, y_test)}&#39;)
 </pre></div>
 </div>
 </div>
@@ -2157,15 +2157,15 @@ model score on testing data: 0.5769786920519312
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-   <span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span>
-   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Coefficients&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coefs = pd.DataFrame(
+   model[1].coef_,
+   columns=[&#39;Coefficients&#39;], index=X_train.columns
+)
 
-<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;barh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Lasso model, strong regularization&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+coefs.plot(kind=&#39;barh&#39;, figsize=(9, 7))
+plt.title(&#39;Lasso model, strong regularization&#39;)
+plt.axvline(x=0, color=&#39;.5&#39;)
+plt.subplots_adjust(left=.3)
 </pre></div>
 </div>
 </div>
@@ -2184,21 +2184,21 @@ imperfect</strong>.</p>
 <p>As above, we can look at the variability of the coefficients:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_model</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-   <span class="n">model</span><span class="p">,</span> <span class="n">X_with_rnd_feat</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">RepeatedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
-   <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
-<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-   <span class="p">[</span><span class="n">model</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span>
-    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">cv_model</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]],</span>
-   <span class="n">columns</span><span class="o">=</span><span class="n">X_with_rnd_feat</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">coefs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cyan&#39;</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;.5&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Coefficient importance&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Coefficient importance and its variability&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv_model = cross_validate(
+   model, X_with_rnd_feat, y, cv=RepeatedKFold(n_splits=5, n_repeats=5),
+   return_estimator=True, n_jobs=2
+)
+coefs = pd.DataFrame(
+   [model[1].coef_
+    for model in cv_model[&#39;estimator&#39;]],
+   columns=X_with_rnd_feat.columns
+)
+plt.figure(figsize=(9, 7))
+sns.boxplot(data=coefs, orient=&#39;h&#39;, color=&#39;cyan&#39;, saturation=0.5)
+plt.axvline(x=0, color=&#39;.5&#39;)
+plt.xlabel(&#39;Coefficient importance&#39;)
+plt.title(&#39;Coefficient importance and its variability&#39;)
+plt.subplots_adjust(left=.3)
 </pre></div>
 </div>
 </div>
@@ -2231,20 +2231,20 @@ inherently built within the model. It is the case in RandomForest models.
 Let’s investigate the built-in <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code> attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import RandomForestRegressor
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
+model = RandomForestRegressor()
 
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+model.fit(X_train, y_train)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+print(f&#39;model score on training data: {model.score(X_train, y_train)}&#39;)
+print(f&#39;model score on testing data: {model.score(X_test, y_test)}&#39;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9799374976036019
-model score on testing data: 0.8475781904094966
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9798287830219016
+model score on testing data: 0.8489399536742851
 </pre></div>
 </div>
 </div>
@@ -2253,7 +2253,7 @@ model score on testing data: 0.8475781904094966
 which means that our model is overfitting here.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">importances</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">feature_importances_</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>importances = model.feature_importances_
 </pre></div>
 </div>
 </div>
@@ -2263,12 +2263,12 @@ each tree of the forest. Formally, it is computed as the (normalized) total
 reduction of the criterion brought by that feature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>indices = np.argsort(importances)
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">importances</span><span class="p">)),</span> <span class="n">importances</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">importances</span><span class="p">)))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)[</span><span class="n">indices</span><span class="p">])</span>
+fig, ax = plt.subplots()
+ax.barh(range(len(importances)), importances[indices])
+ax.set_yticks(range(len(importances)))
+_ = ax.set_yticklabels(np.array(X_train.columns)[indices])
 </pre></div>
 </div>
 </div>
@@ -2289,27 +2289,27 @@ changes its prediction. Thus, the change in prediction will correspond to
 the feature importance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Any model could be used here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Any model could be used here
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">()</span>
-<span class="c1"># model = make_pipeline(StandardScaler(),</span>
-<span class="c1">#                       RidgeCV())</span>
+model = RandomForestRegressor()
+# model = make_pipeline(StandardScaler(),
+#                       RidgeCV())
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model.fit(X_train, y_train)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on training data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;model score on testing data: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+print(f&#39;model score on training data: {model.score(X_train, y_train)}&#39;)
+print(f&#39;model score on testing data: {model.score(X_test, y_test)}&#39;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9799704052552226
-model score on testing data: 0.847580224231708
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>model score on training data: 0.9799826536989742
+model score on testing data: 0.8467339999457526
 </pre></div>
 </div>
 </div>
@@ -2334,40 +2334,40 @@ the feature importance would be close to the score.</p>
 remain the same, thus the feature importance will be close to 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_score_after_permutation</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; return the score of model when curr_feat is permuted &quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def get_score_after_permutation(model, X, y, curr_feat):
+    &quot;&quot;&quot; return the score of model when curr_feat is permuted &quot;&quot;&quot;
 
-    <span class="n">X_permuted</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">col_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">curr_feat</span><span class="p">)</span>
-    <span class="c1"># permute one column</span>
-    <span class="n">X_permuted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">col_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span>
-        <span class="n">X_permuted</span><span class="p">[</span><span class="n">curr_feat</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    X_permuted = X.copy()
+    col_idx = list(X.columns).index(curr_feat)
+    # permute one column
+    X_permuted.iloc[:, col_idx] = np.random.permutation(
+        X_permuted[curr_feat].values)
 
-    <span class="n">permuted_score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_permuted</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">permuted_score</span>
-
-
-<span class="k">def</span> <span class="nf">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; compare the score when curr_feat is permuted &quot;&quot;&quot;</span>
-
-    <span class="n">baseline_score_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="n">permuted_score_train</span> <span class="o">=</span> <span class="n">get_score_after_permutation</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">)</span>
-
-    <span class="c1"># feature importance is the difference between the two scores</span>
-    <span class="n">feature_importance</span> <span class="o">=</span> <span class="n">baseline_score_train</span> <span class="o">-</span> <span class="n">permuted_score_train</span>
-    <span class="k">return</span> <span class="n">feature_importance</span>
+    permuted_score = model.score(X_permuted, y)
+    return permuted_score
 
 
-<span class="n">curr_feat</span> <span class="o">=</span> <span class="s1">&#39;MedInc&#39;</span>
+def get_feature_importance(model, X, y, curr_feat):
+    &quot;&quot;&quot; compare the score when curr_feat is permuted &quot;&quot;&quot;
 
-<span class="n">feature_importance</span> <span class="o">=</span> <span class="n">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;feature importance of &quot;</span><span class="si">{</span><span class="n">curr_feat</span><span class="si">}</span><span class="s1">&quot; on train set is &#39;</span>
-      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">feature_importance</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    baseline_score_train = model.score(X, y)
+    permuted_score_train = get_score_after_permutation(model, X, y, curr_feat)
+
+    # feature importance is the difference between the two scores
+    feature_importance = baseline_score_train - permuted_score_train
+    return feature_importance
+
+
+curr_feat = &#39;MedInc&#39;
+
+feature_importance = get_feature_importance(model, X_train, y_train, curr_feat)
+print(f&#39;feature importance of &quot;{curr_feat}&quot; on train set is &#39;
+      f&#39;{feature_importance:.3}&#39;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.65
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.662
 </pre></div>
 </div>
 </div>
@@ -2376,22 +2376,22 @@ remain the same, thus the feature importance will be close to 0.</p>
 inspect the mean and the standard deviation of the feature importance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_repeats = 10
 
-<span class="n">list_feature_importance</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">n_round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
-    <span class="n">list_feature_importance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-        <span class="n">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">))</span>
+list_feature_importance = []
+for n_round in range(n_repeats):
+    list_feature_importance.append(
+        get_feature_importance(model, X_train, y_train, curr_feat))
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s1">&#39;feature importance of &quot;</span><span class="si">{</span><span class="n">curr_feat</span><span class="si">}</span><span class="s1">&quot; on train set is &#39;</span>
-    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">list_feature_importance</span><span class="p">)</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1"> &#39;</span>
-    <span class="sa">f</span><span class="s1">&#39;± </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">list_feature_importance</span><span class="p">)</span><span class="si">:</span><span class="s1">.3</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+print(
+    f&#39;feature importance of &quot;{curr_feat}&quot; on train set is &#39;
+    f&#39;{np.mean(list_feature_importance):.3} &#39;
+    f&#39;± {np.std(list_feature_importance):.3}&#39;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.679 ± 0.00943
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>feature importance of &quot;MedInc&quot; on train set is 0.672 ± 0.00791
 </pre></div>
 </div>
 </div>
@@ -2401,42 +2401,42 @@ we can imagine our model relies heavily on this feature to predict the class.
 We can now compute the feature permutation importance for all the features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">permutation_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate importance score for each feature.&quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def permutation_importance(model, X, y, n_repeats=10):
+    &quot;&quot;&quot;Calculate importance score for each feature.&quot;&quot;&quot;
 
-    <span class="n">importances</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">curr_feat</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="n">list_feature_importance</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">n_round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
-            <span class="n">list_feature_importance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">get_feature_importance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">curr_feat</span><span class="p">))</span>
+    importances = []
+    for curr_feat in X.columns:
+        list_feature_importance = []
+        for n_round in range(n_repeats):
+            list_feature_importance.append(
+                get_feature_importance(model, X, y, curr_feat))
 
-        <span class="n">importances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">list_feature_importance</span><span class="p">)</span>
+        importances.append(list_feature_importance)
 
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;importances_mean&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-            <span class="s1">&#39;importances_std&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-            <span class="s1">&#39;importances&#39;</span><span class="p">:</span> <span class="n">importances</span><span class="p">}</span>
+    return {&#39;importances_mean&#39;: np.mean(importances, axis=1),
+            &#39;importances_std&#39;: np.std(importances, axis=1),
+            &#39;importances&#39;: importances}
 
-<span class="c1"># This function could directly be access from sklearn</span>
-<span class="c1"># from sklearn.inspection import permutation_importance</span>
+# This function could directly be access from sklearn
+# from sklearn.inspection import permutation_importance
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_feature_importances</span><span class="p">(</span><span class="n">perm_importance_result</span><span class="p">,</span> <span class="n">feat_name</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; bar plot the feature importance &quot;&quot;&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_feature_importances(perm_importance_result, feat_name):
+    &quot;&quot;&quot; bar plot the feature importance &quot;&quot;&quot;
 
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    fig, ax = plt.subplots()
 
-    <span class="n">indices</span> <span class="o">=</span> <span class="n">perm_importance_result</span><span class="p">[</span><span class="s1">&#39;importances_mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)),</span>
-             <span class="n">perm_importance_result</span><span class="p">[</span><span class="s1">&#39;importances_mean&#39;</span><span class="p">][</span><span class="n">indices</span><span class="p">],</span>
-             <span class="n">xerr</span><span class="o">=</span><span class="n">perm_importance_result</span><span class="p">[</span><span class="s1">&#39;importances_std&#39;</span><span class="p">][</span><span class="n">indices</span><span class="p">])</span>
+    indices = perm_importance_result[&#39;importances_mean&#39;].argsort()
+    plt.barh(range(len(indices)),
+             perm_importance_result[&#39;importances_mean&#39;][indices],
+             xerr=perm_importance_result[&#39;importances_std&#39;][indices])
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)))</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">feat_name</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+    ax.set_yticks(range(len(indices)))
+    _ = ax.set_yticklabels(feat_name[indices])
 </pre></div>
 </div>
 </div>
@@ -2444,10 +2444,10 @@ We can now compute the feature permutation importance for all the features.</p>
 <p>Let’s compute the feature importance by permutation on the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perm_importance_result_train</span> <span class="o">=</span> <span class="n">permutation_importance</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">n_repeats</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>perm_importance_result_train = permutation_importance(
+    model, X_train, y_train, n_repeats=10)
 
-<span class="n">plot_feature_importances</span><span class="p">(</span><span class="n">perm_importance_result_train</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+plot_feature_importances(perm_importance_result_train, X_train.columns)
 </pre></div>
 </div>
 </div>

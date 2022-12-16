@@ -1627,18 +1627,18 @@ called randomized search.</p>
 <p>Let us reload the dataset as we did previously:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn import set_config
 
-<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
+set_config(display=&quot;diagram&quot;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
 </pre></div>
 </div>
 </div>
@@ -1646,9 +1646,9 @@ called randomized search.</p>
 <p>We extract the column containing the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">target</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;class&quot;
+target = adult_census[target_name]
+target
 </pre></div>
 </div>
 </div>
@@ -1673,8 +1673,8 @@ Name: class, Length: 48842, dtype: object
 duplicates the information with <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data = adult_census.drop(columns=[target_name, &quot;education-num&quot;])
+data.head()
 </pre></div>
 </div>
 </div>
@@ -1794,10 +1794,10 @@ duplicates the information with <code class="docutils literal notranslate"><span
 <p>Once the dataset is loaded, we split it into a training and testing sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
 
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=42)
 </pre></div>
 </div>
 </div>
@@ -1806,33 +1806,33 @@ duplicates the information with <code class="docutils literal notranslate"><span
 section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.compose import make_column_selector as selector
 
-<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+categorical_columns_selector = selector(dtype_include=object)
+categorical_columns = categorical_columns_selector(data)
 
-<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
-                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span> <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+categorical_preprocessor = OrdinalEncoder(handle_unknown=&quot;use_encoded_value&quot;,
+                                          unknown_value=-1)
+preprocessor = ColumnTransformer([
+    (&#39;cat_preprocessor&#39;, categorical_preprocessor, categorical_columns)],
+    remainder=&#39;passthrough&#39;, sparse_threshold=0)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.pipeline import Pipeline
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">)),</span>
-<span class="p">])</span>
+model = Pipeline([
+    (&quot;preprocessor&quot;, preprocessor),
+    (&quot;classifier&quot;, HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4)),
+])
 
-<span class="n">model</span>
+model
 </pre></div>
 </div>
 </div>
@@ -1923,17 +1923,17 @@ generate random values for integer-valued parameters (e.g.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">loguniform</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import loguniform
 
 
-<span class="k">class</span> <span class="nc">loguniform_int</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Integer valued version of the log-uniform distribution&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_distribution</span> <span class="o">=</span> <span class="n">loguniform</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+class loguniform_int:
+    &quot;&quot;&quot;Integer valued version of the log-uniform distribution&quot;&quot;&quot;
+    def __init__(self, a, b):
+        self._distribution = loguniform(a, b)
 
-    <span class="k">def</span> <span class="nf">rvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Random variable sample&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distribution</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    def rvs(self, *args, **kwargs):
+        &quot;&quot;&quot;Random variable sample&quot;&quot;&quot;
+        return self._distribution.rvs(*args, **kwargs).astype(int)
 </pre></div>
 </div>
 </div>
@@ -1945,22 +1945,22 @@ several minutes, depending on the speed of the host computer and the number
 of available processors.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
+from sklearn.model_selection import RandomizedSearchCV
 
-<span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;classifier__l2_regularization&#39;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__max_bins&#39;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
-<span class="p">}</span>
+param_distributions = {
+    &#39;classifier__l2_regularization&#39;: loguniform(1e-6, 1e3),
+    &#39;classifier__learning_rate&#39;: loguniform(0.001, 10),
+    &#39;classifier__max_leaf_nodes&#39;: loguniform_int(2, 256),
+    &#39;classifier__min_samples_leaf&#39;: loguniform_int(1, 100),
+    &#39;classifier__max_bins&#39;: loguniform_int(2, 255),
+}
 
-<span class="n">model_random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">model_random_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+model_random_search = RandomizedSearchCV(
+    model, param_distributions=param_distributions, n_iter=10,
+    cv=5, verbose=1,
+)
+model_random_search.fit(data_train, target_train)
 </pre></div>
 </div>
 </div>
@@ -1968,8 +1968,8 @@ of available processors.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 10 candidates, totalling 50 fits
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 30.2 s, sys: 470 ms, total: 30.7 s
-Wall time: 30.7 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 29.3 s, sys: 382 ms, total: 29.7 s
+Wall time: 29.7 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
@@ -1989,11 +1989,11 @@ Wall time: 30.7 s
                                                                                 &#x27;native-country&#x27;])])),
                                              (&#x27;classifier&#x27;,
                                               Hi...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f1467c8c610&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f1466fbf6d0&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f1466fbaa30&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f1466fba700&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f1466fbf9a0&gt;},
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f39e66815b0&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f39e50bea00&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f39e50c8190&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f39e50ae760&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f39e50be4c0&gt;},
                    verbose=1)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label sk-toggleable__label-arrow">RandomizedSearchCV</label><div class="sk-toggleable__content"><pre>RandomizedSearchCV(cv=5,
                    estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
                                               ColumnTransformer(remainder=&#x27;passthrough&#x27;,
@@ -2011,11 +2011,11 @@ Wall time: 30.7 s
                                                                                 &#x27;native-country&#x27;])])),
                                              (&#x27;classifier&#x27;,
                                               Hi...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f1467c8c610&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f1466fbf6d0&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f1466fbaa30&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f1466fba700&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f1466fbf9a0&gt;},
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f39e66815b0&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f39e50bea00&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f39e50c8190&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f39e50ae760&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f39e50be4c0&gt;},
                    verbose=1)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
                  ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
                                    transformers=[(&#x27;cat_preprocessor&#x27;,
@@ -2039,10 +2039,10 @@ Wall time: 30.7 s
 <p>Then, we can compute the accuracy score on the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_random_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>accuracy = model_random_search.score(data_test, target_test)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy score of the best model is &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;The test accuracy score of the best model is &quot;
+      f&quot;{accuracy:.2f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -2054,20 +2054,20 @@ Wall time: 30.7 s
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from pprint import pprint
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The best parameters are:&quot;</span><span class="p">)</span>
-<span class="n">pprint</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+print(&quot;The best parameters are:&quot;)
+pprint(model_random_search.best_params_)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best parameters are:
-{&#39;classifier__l2_regularization&#39;: 22.888879400834355,
- &#39;classifier__learning_rate&#39;: 0.30395091508430333,
- &#39;classifier__max_bins&#39;: 31,
- &#39;classifier__max_leaf_nodes&#39;: 12,
- &#39;classifier__min_samples_leaf&#39;: 60}
+{&#39;classifier__l2_regularization&#39;: 799.2193944578148,
+ &#39;classifier__learning_rate&#39;: 0.07397580434424327,
+ &#39;classifier__max_bins&#39;: 224,
+ &#39;classifier__max_leaf_nodes&#39;: 44,
+ &#39;classifier__min_samples_leaf&#39;: 15}
 </pre></div>
 </div>
 </div>
@@ -2076,23 +2076,23 @@ Wall time: 30.7 s
 previously.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
-<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># get the parameter names
+column_results = [
+    f&quot;param_{name}&quot; for name in param_distributions.keys()]
+column_results += [
+    &quot;mean_test_score&quot;, &quot;std_test_score&quot;, &quot;rank_test_score&quot;]
 
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+cv_results = pd.DataFrame(model_random_search.cv_results_)
+cv_results = cv_results[column_results].sort_values(
+    &quot;mean_test_score&quot;, ascending=False)
 
-<span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">param_name</span>
+def shorten_param(param_name):
+    if &quot;__&quot; in param_name:
+        return param_name.rsplit(&quot;__&quot;, 1)[1]
+    return param_name
 
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">cv_results</span>
+cv_results = cv_results.rename(shorten_param, axis=1)
+cv_results
 </pre></div>
 </div>
 </div>
@@ -2127,113 +2127,113 @@ previously.</p>
   </thead>
   <tbody>
     <tr>
-      <th>7</th>
-      <td>22.888879</td>
-      <td>0.303951</td>
-      <td>12</td>
-      <td>60</td>
-      <td>31</td>
-      <td>0.855669</td>
-      <td>0.001736</td>
+      <th>3</th>
+      <td>799.219394</td>
+      <td>0.073976</td>
+      <td>44</td>
+      <td>15</td>
+      <td>224</td>
+      <td>0.858289</td>
+      <td>0.002577</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>0.328904</td>
-      <td>0.091837</td>
-      <td>42</td>
-      <td>5</td>
-      <td>25</td>
-      <td>0.854549</td>
-      <td>0.002014</td>
+      <th>8</th>
+      <td>0.000005</td>
+      <td>0.672911</td>
+      <td>3</td>
+      <td>9</td>
+      <td>17</td>
+      <td>0.849745</td>
+      <td>0.002427</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>0.002562</td>
-      <td>0.022364</td>
-      <td>29</td>
-      <td>61</td>
-      <td>42</td>
-      <td>0.853594</td>
-      <td>0.002885</td>
+      <th>5</th>
+      <td>0.003261</td>
+      <td>0.123579</td>
+      <td>9</td>
+      <td>1</td>
+      <td>16</td>
+      <td>0.849472</td>
+      <td>0.002115</td>
       <td>3</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.000006</td>
-      <td>0.012217</td>
-      <td>69</td>
-      <td>1</td>
-      <td>12</td>
-      <td>0.833010</td>
-      <td>0.001568</td>
+      <td>0.940145</td>
+      <td>0.216436</td>
+      <td>130</td>
+      <td>2</td>
+      <td>11</td>
+      <td>0.840818</td>
+      <td>0.002563</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>1.974331</td>
-      <td>0.400978</td>
-      <td>17</td>
-      <td>64</td>
+      <th>7</th>
+      <td>0.963997</td>
+      <td>0.057413</td>
       <td>3</td>
-      <td>0.806776</td>
-      <td>0.003153</td>
+      <td>23</td>
+      <td>42</td>
+      <td>0.831618</td>
+      <td>0.001684</td>
       <td>5</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>402.12741</td>
-      <td>3.008614</td>
-      <td>10</td>
-      <td>5</td>
-      <td>4</td>
-      <td>0.765935</td>
-      <td>0.041360</td>
+      <td>0.001839</td>
+      <td>0.007956</td>
+      <td>76</td>
+      <td>96</td>
+      <td>27</td>
+      <td>0.826240</td>
+      <td>0.001990</td>
       <td>6</td>
     </tr>
     <tr>
-      <th>0</th>
-      <td>5.503723</td>
-      <td>0.002032</td>
-      <td>53</td>
+      <th>4</th>
+      <td>29.401896</td>
+      <td>0.056587</td>
+      <td>5</td>
+      <td>24</td>
       <td>4</td>
-      <td>70</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
+      <td>0.812645</td>
+      <td>0.001138</td>
       <td>7</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.000013</td>
-      <td>0.003373</td>
-      <td>19</td>
-      <td>88</td>
-      <td>213</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
-      <td>7</td>
+      <td>5.841807</td>
+      <td>0.17524</td>
+      <td>8</td>
+      <td>82</td>
+      <td>3</td>
+      <td>0.807376</td>
+      <td>0.002021</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.000013</td>
-      <td>0.001175</td>
-      <td>3</td>
-      <td>72</td>
-      <td>16</td>
+      <td>3.780081</td>
+      <td>0.001493</td>
+      <td>2</td>
+      <td>4</td>
+      <td>15</td>
       <td>0.758947</td>
       <td>0.000013</td>
-      <td>7</td>
+      <td>9</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>0.008397</td>
-      <td>6.471641</td>
-      <td>46</td>
-      <td>40</td>
-      <td>145</td>
-      <td>0.340338</td>
-      <td>0.062354</td>
+      <th>0</th>
+      <td>0.006725</td>
+      <td>5.378648</td>
+      <td>10</td>
+      <td>10</td>
+      <td>8</td>
+      <td>0.602251</td>
+      <td>0.071217</td>
       <td>10</td>
     </tr>
   </tbody>
@@ -2250,23 +2250,23 @@ decent analysis, we load the results obtained from a similar search with 500
 iterations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># model_random_search = RandomizedSearchCV(</span>
-<span class="c1">#     model, param_distributions=param_distributions, n_iter=500,</span>
-<span class="c1">#     n_jobs=2, cv=5)</span>
-<span class="c1"># model_random_search.fit(data_train, target_train)</span>
-<span class="c1"># cv_results =  pd.DataFrame(model_random_search.cv_results_)</span>
-<span class="c1"># cv_results.to_csv(&quot;../figures/randomized_search_results.csv&quot;)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># model_random_search = RandomizedSearchCV(
+#     model, param_distributions=param_distributions, n_iter=500,
+#     n_jobs=2, cv=5)
+# model_random_search.fit(data_train, target_train)
+# cv_results =  pd.DataFrame(model_random_search.cv_results_)
+# cv_results.to_csv(&quot;../figures/randomized_search_results.csv&quot;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../figures/randomized_search_results.csv&quot;</span><span class="p">,</span>
-                         <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv_results = pd.read_csv(&quot;../figures/randomized_search_results.csv&quot;,
+                         index_col=0)
 
-<span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
-    <span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+(cv_results[column_results].rename(
+    shorten_param, axis=1).sort_values(&quot;mean_test_score&quot;, ascending=False))
 </pre></div>
 </div>
 </div>

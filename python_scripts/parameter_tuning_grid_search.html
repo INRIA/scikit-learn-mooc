@@ -1622,18 +1622,18 @@ optimize hyperparameters using a grid-search approach.</p>
 <p>Let us reload the dataset as we did previously:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn import set_config
 
-<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
+set_config(display=&quot;diagram&quot;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
 </pre></div>
 </div>
 </div>
@@ -1641,9 +1641,9 @@ optimize hyperparameters using a grid-search approach.</p>
 <p>We extract the column containing the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">target</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;class&quot;
+target = adult_census[target_name]
+target
 </pre></div>
 </div>
 </div>
@@ -1668,8 +1668,8 @@ Name: class, Length: 48842, dtype: object
 duplicates the information from the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data = adult_census.drop(columns=[target_name, &quot;education-num&quot;])
+data.head()
 </pre></div>
 </div>
 </div>
@@ -1789,10 +1789,10 @@ duplicates the information from the <code class="docutils literal notranslate"><
 <p>Once the dataset is loaded, we split it into a training and testing sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
 
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, random_state=42)
 </pre></div>
 </div>
 </div>
@@ -1802,10 +1802,10 @@ numerical and categorical features.</p>
 <p>The first step is to select all the categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import make_column_selector as selector
 
-<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
-<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+categorical_columns_selector = selector(dtype_include=object)
+categorical_columns = categorical_columns_selector(data)
 </pre></div>
 </div>
 </div>
@@ -1822,10 +1822,10 @@ representations.</p></li>
 <p>We now build our <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> by passing it the known categories.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import OrdinalEncoder
 
-<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
-                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+categorical_preprocessor = OrdinalEncoder(handle_unknown=&quot;use_encoded_value&quot;,
+                                          unknown_value=-1)
 </pre></div>
 </div>
 </div>
@@ -1834,11 +1834,11 @@ representations.</p></li>
 apply the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> to them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import ColumnTransformer
 
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span> <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+preprocessor = ColumnTransformer([
+    (&#39;cat_preprocessor&#39;, categorical_preprocessor, categorical_columns)],
+    remainder=&#39;passthrough&#39;, sparse_threshold=0)
 </pre></div>
 </div>
 </div>
@@ -1847,14 +1847,14 @@ apply the <code class="docutils literal notranslate"><span class="pre">OrdinalEn
 predict whether or not a person earns more than 50 k$ a year.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.pipeline import Pipeline
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
-     <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">))])</span>
-<span class="n">model</span>
+model = Pipeline([
+    (&quot;preprocessor&quot;, preprocessor),
+    (&quot;classifier&quot;,
+     HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4))])
+model
 </pre></div>
 </div>
 </div>
@@ -1902,21 +1902,21 @@ Since the grid-search will be costly, we will only explore the combination
 learning-rate and the maximum number of nodes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
+from sklearn.model_selection import GridSearchCV
 
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">)}</span>
-<span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
-                                 <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+param_grid = {
+    &#39;classifier__learning_rate&#39;: (0.01, 0.1, 1, 10),
+    &#39;classifier__max_leaf_nodes&#39;: (3, 10, 30)}
+model_grid_search = GridSearchCV(model, param_grid=param_grid,
+                                 n_jobs=2, cv=2)
+model_grid_search.fit(data_train, target_train)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.14 s, sys: 54.3 ms, total: 1.2 s
-Wall time: 6.51 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.21 s, sys: 40.7 ms, total: 1.25 s
+Wall time: 6.77 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=2,
@@ -1982,11 +1982,11 @@ Wall time: 6.51 s
 <p>Finally, we will check the accuracy of our model using the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The test accuracy score of the grid-searched pipeline is: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>accuracy = model_grid_search.score(data_test, target_test)
+print(
+    f&quot;The test accuracy score of the grid-searched pipeline is: &quot;
+    f&quot;{accuracy:.2f}&quot;
+)
 </pre></div>
 </div>
 </div>
@@ -2020,7 +2020,7 @@ the best parameters found during <code class="docutils literal notranslate"><spa
 parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model_grid_search.predict(data_test.iloc[0:5])
 </pre></div>
 </div>
 </div>
@@ -2034,8 +2034,8 @@ parameters.</p>
 attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best set of parameters is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;The best set of parameters is: &quot;
+      f&quot;{model_grid_search.best_params_}&quot;)
 </pre></div>
 </div>
 </div>
@@ -2053,9 +2053,9 @@ best parameters “by hand” through a double for loop.</p>
 from these results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">cv_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
+    &quot;mean_test_score&quot;, ascending=False)
+cv_results.head()
 </pre></div>
 </div>
 </div>
@@ -2095,10 +2095,10 @@ from these results.</p>
   <tbody>
     <tr>
       <th>5</th>
-      <td>0.452689</td>
-      <td>0.039733</td>
-      <td>0.212591</td>
-      <td>0.011886</td>
+      <td>0.479968</td>
+      <td>0.042821</td>
+      <td>0.223968</td>
+      <td>0.016211</td>
       <td>0.1</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2110,10 +2110,10 @@ from these results.</p>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.343815</td>
-      <td>0.003132</td>
-      <td>0.191723</td>
-      <td>0.000464</td>
+      <td>0.371093</td>
+      <td>0.009310</td>
+      <td>0.191408</td>
+      <td>0.000606</td>
       <td>0.1</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2125,10 +2125,10 @@ from these results.</p>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.114513</td>
-      <td>0.002742</td>
-      <td>0.075233</td>
-      <td>0.001342</td>
+      <td>0.118507</td>
+      <td>0.003221</td>
+      <td>0.077628</td>
+      <td>0.002129</td>
       <td>1</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2140,10 +2140,10 @@ from these results.</p>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.123060</td>
-      <td>0.004375</td>
-      <td>0.079165</td>
-      <td>0.002177</td>
+      <td>0.126661</td>
+      <td>0.002413</td>
+      <td>0.078876</td>
+      <td>0.001499</td>
       <td>1</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2155,10 +2155,10 @@ from these results.</p>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.124492</td>
-      <td>0.010820</td>
-      <td>0.074064</td>
-      <td>0.000957</td>
+      <td>0.130070</td>
+      <td>0.000417</td>
+      <td>0.077093</td>
+      <td>0.001778</td>
       <td>1</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2176,25 +2176,25 @@ from these results.</p>
 names to remove the <code class="docutils literal notranslate"><span class="pre">&quot;param_classifier__&quot;</span></code> prefix for readability:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
-<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># get the parameter names
+column_results = [f&quot;param_{name}&quot; for name in param_grid.keys()]
+column_results += [
+    &quot;mean_test_score&quot;, &quot;std_test_score&quot;, &quot;rank_test_score&quot;]
+cv_results = cv_results[column_results]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">param_name</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def shorten_param(param_name):
+    if &quot;__&quot; in param_name:
+        return param_name.rsplit(&quot;__&quot;, 1)[1]
+    return param_name
 
 
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">cv_results</span>
+cv_results = cv_results.rename(shorten_param, axis=1)
+cv_results
 </pre></div>
 </div>
 </div>
@@ -2334,11 +2334,11 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pivoted_cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">values</span><span class="o">=</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pivoted_cv_results = cv_results.pivot_table(
+    values=&quot;mean_test_score&quot;, index=[&quot;learning_rate&quot;],
+    columns=[&quot;max_leaf_nodes&quot;])
 
-<span class="n">pivoted_cv_results</span>
+pivoted_cv_results
 </pre></div>
 </div>
 </div>
@@ -2404,11 +2404,11 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 <p>We can use a heatmap representation to show the above dataframe visually.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pivoted_cv_results</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
-                 <span class="n">vmax</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+ax = sns.heatmap(pivoted_cv_results, annot=True, cmap=&quot;YlGnBu&quot;, vmin=0.7,
+                 vmax=0.9)
+ax.invert_yaxis()
 </pre></div>
 </div>
 </div>

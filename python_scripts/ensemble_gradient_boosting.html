@@ -1580,43 +1580,43 @@ regression problem which is more intuitive for demonstrating the underlying
 machinery.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import numpy as np
 
-<span class="c1"># Create a random number generator that will be used to set the randomness</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">generate_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate synthetic dataset. Returns `data_train`, `data_test`,</span>
-<span class="sd">    `target_train`.&quot;&quot;&quot;</span>
-    <span class="n">x_max</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span>
-    <span class="n">len_x</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="n">len_x</span> <span class="o">-</span> <span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span>
-    <span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">noise</span>
-
-    <span class="n">data_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">])</span>
-    <span class="n">data_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">),</span>
-                             <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">])</span>
-    <span class="n">target_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span>
+# Create a random number generator that will be used to set the randomness
+rng = np.random.RandomState(0)
 
 
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">()</span>
+def generate_data(n_samples=50):
+    &quot;&quot;&quot;Generate synthetic dataset. Returns `data_train`, `data_test`,
+    `target_train`.&quot;&quot;&quot;
+    x_max, x_min = 1.4, -1.4
+    len_x = x_max - x_min
+    x = rng.rand(n_samples) * len_x - len_x / 2
+    noise = rng.randn(n_samples) * 0.3
+    y = x ** 3 - 0.5 * x ** 2 + noise
+
+    data_train = pd.DataFrame(x, columns=[&quot;Feature&quot;])
+    data_test = pd.DataFrame(np.linspace(x_max, x_min, num=300),
+                             columns=[&quot;Feature&quot;])
+    target_train = pd.Series(y, name=&quot;Target&quot;)
+
+    return data_train, data_test, target_train
+
+
+data_train, data_test, target_train = generate_data()
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+import seaborn as sns
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Synthetic regression dataset&quot;</span><span class="p">)</span>
+sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
+_ = plt.title(&quot;Synthetic regression dataset&quot;)
 </pre></div>
 </div>
 </div>
@@ -1629,13 +1629,13 @@ of learners. We will start by creating a decision tree regressor. We will set
 the depth of the tree so that the resulting learner will underfit the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeRegressor
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+tree = DecisionTreeRegressor(max_depth=3, random_state=0)
+tree.fit(data_train, target_train)
 
-<span class="n">target_train_predicted</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
-<span class="n">target_test_predicted</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+target_train_predicted = tree.predict(data_train)
+target_test_predicted = tree.predict(data_test)
 </pre></div>
 </div>
 </div>
@@ -1646,21 +1646,21 @@ was generated in equally-spaced intervals for the visual evaluation of the
 predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the data</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="c1"># plot the predictions</span>
-<span class="n">line_predictions</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># plot the data
+sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
+# plot the predictions
+line_predictions = plt.plot(data_test[&quot;Feature&quot;], target_test_predicted, &quot;--&quot;)
 
-<span class="c1"># plot the residuals</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span>
-                                  <span class="n">target_train</span><span class="p">,</span>
-                                  <span class="n">target_train_predicted</span><span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+# plot the residuals
+for value, true, predicted in zip(data_train[&quot;Feature&quot;],
+                                  target_train,
+                                  target_train_predicted):
+    lines_residuals = plt.plot([value, value], [true, predicted], color=&quot;red&quot;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="n">line_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines_residuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
-           <span class="p">[</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Residuals&quot;</span><span class="p">])</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction function together </span><span class="se">\n</span><span class="s2">with errors on the training set&quot;</span><span class="p">)</span>
+plt.legend([line_predictions[0], lines_residuals[0]],
+           [&quot;Fitted tree&quot;, &quot;Residuals&quot;])
+_ = plt.title(&quot;Prediction function together \nwith errors on the training set&quot;)
 </pre></div>
 </div>
 </div>
@@ -1685,33 +1685,33 @@ have a tree that is able to predict the errors made by the initial tree.</p>
 <p>Let’s train such a tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residuals</span> <span class="o">=</span> <span class="n">target_train</span> <span class="o">-</span> <span class="n">target_train_predicted</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>residuals = target_train - target_train_predicted
 
-<span class="n">tree_residuals</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tree_residuals</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">residuals</span><span class="p">)</span>
+tree_residuals = DecisionTreeRegressor(max_depth=5, random_state=0)
+tree_residuals.fit(data_train, residuals)
 
-<span class="n">target_train_predicted_residuals</span> <span class="o">=</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
-<span class="n">target_test_predicted_residuals</span> <span class="o">=</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+target_train_predicted_residuals = tree_residuals.predict(data_train)
+target_test_predicted_residuals = tree_residuals.predict(data_test)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">line_predictions</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted_residuals</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(x=data_train[&quot;Feature&quot;], y=residuals, color=&quot;black&quot;, alpha=0.5)
+line_predictions = plt.plot(
+    data_test[&quot;Feature&quot;], target_test_predicted_residuals, &quot;--&quot;)
 
-<span class="c1"># plot the residuals of the predicted residuals</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span>
-                                  <span class="n">residuals</span><span class="p">,</span>
-                                  <span class="n">target_train_predicted_residuals</span><span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+# plot the residuals of the predicted residuals
+for value, true, predicted in zip(data_train[&quot;Feature&quot;],
+                                  residuals,
+                                  target_train_predicted_residuals):
+    lines_residuals = plt.plot([value, value], [true, predicted], color=&quot;red&quot;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="n">line_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines_residuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
-           <span class="p">[</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Residuals&quot;</span><span class="p">],</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span>
-           <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction of the previous residuals&quot;</span><span class="p">)</span>
+plt.legend([line_predictions[0], lines_residuals[0]],
+           [&quot;Fitted tree&quot;, &quot;Residuals&quot;], bbox_to_anchor=(1.05, 0.8),
+           loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Prediction of the previous residuals&quot;)
 </pre></div>
 </div>
 </div>
@@ -1726,10 +1726,10 @@ sample to explain how the predictions of both trees are combined. Let’s first
 select this sample in <code class="docutils literal notranslate"><span class="pre">data_train</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
-<span class="n">x_sample</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s1">&#39;Feature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">target_true</span> <span class="o">=</span> <span class="n">target_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">target_true_residual</span> <span class="o">=</span> <span class="n">residuals</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample = data_train.iloc[[-2]]
+x_sample = sample[&#39;Feature&#39;].iloc[0]
+target_true = target_train.iloc[-2]
+target_true_residual = residuals.iloc[-2]
 </pre></div>
 </div>
 </div>
@@ -1739,25 +1739,25 @@ Let’s start by plotting the original data and the prediction of the first
 decision tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the previous information:</span>
-<span class="c1">#   * the dataset</span>
-<span class="c1">#   * the predictions</span>
-<span class="c1">#   * the residuals</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the previous information:
+#   * the dataset
+#   * the predictions
+#   * the residuals
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span>
-                                  <span class="n">target_train</span><span class="p">,</span>
-                                  <span class="n">target_train_predicted</span><span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
+plt.plot(data_test[&quot;Feature&quot;], target_test_predicted, &quot;--&quot;)
+for value, true, predicted in zip(data_train[&quot;Feature&quot;],
+                                  target_train,
+                                  target_train_predicted):
+    lines_residuals = plt.plot([value, value], [true, predicted], color=&quot;red&quot;)
 
-<span class="c1"># Highlight the sample of interest</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">target_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tree predictions&quot;</span><span class="p">)</span>
+# Highlight the sample of interest
+plt.scatter(sample, target_true, label=&quot;Sample of interest&quot;,
+            color=&quot;tab:orange&quot;, s=200)
+plt.xlim([-1, 0])
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Tree predictions&quot;)
 </pre></div>
 </div>
 </div>
@@ -1769,25 +1769,25 @@ decision tree.</p>
 computed from the first decision tree and show the residual predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the previous information:</span>
-<span class="c1">#   * the residuals committed by the first tree</span>
-<span class="c1">#   * the residual predictions</span>
-<span class="c1">#   * the residuals of the residual predictions</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the previous information:
+#   * the residuals committed by the first tree
+#   * the residual predictions
+#   * the residuals of the residual predictions
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted_residuals</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span>
-                                  <span class="n">residuals</span><span class="p">,</span>
-                                  <span class="n">target_train_predicted_residuals</span><span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+sns.scatterplot(x=data_train[&quot;Feature&quot;], y=residuals,
+                color=&quot;black&quot;, alpha=0.5)
+plt.plot(data_test[&quot;Feature&quot;], target_test_predicted_residuals, &quot;--&quot;)
+for value, true, predicted in zip(data_train[&quot;Feature&quot;],
+                                  residuals,
+                                  target_train_predicted_residuals):
+    lines_residuals = plt.plot([value, value], [true, predicted], color=&quot;red&quot;)
 
-<span class="c1"># Highlight the sample of interest</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">target_true_residual</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction of the residuals&quot;</span><span class="p">)</span>
+# Highlight the sample of interest
+plt.scatter(sample, target_true_residual, label=&quot;Sample of interest&quot;,
+            color=&quot;tab:orange&quot;, s=200)
+plt.xlim([-1, 0])
+plt.legend()
+_ = plt.title(&quot;Prediction of the residuals&quot;)
 </pre></div>
 </div>
 </div>
@@ -1802,13 +1802,13 @@ using the fitted tree. First, let’s check the prediction of the initial tree
 and compare it with the true value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True value to predict for &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;f(x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">target_true</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;True value to predict for &quot;
+      f&quot;f(x={x_sample:.3f}) = {target_true:.3f}&quot;)
 
-<span class="n">y_pred_first_tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the first decision tree for x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;y=</span><span class="si">{</span><span class="n">y_pred_first_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of the tree: </span><span class="si">{</span><span class="n">target_true</span> <span class="o">-</span> <span class="n">y_pred_first_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+y_pred_first_tree = tree.predict(sample)[0]
+print(f&quot;Prediction of the first decision tree for x={x_sample:.3f}: &quot;
+      f&quot;y={y_pred_first_tree:.3f}&quot;)
+print(f&quot;Error of the tree: {target_true - y_pred_first_tree:.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1824,8 +1824,8 @@ Error of the tree: -0.248
 tree to try to predict this residual.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the residual for x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Prediction of the residual for x={x_sample:.3f}: &quot;
+      f&quot;{tree_residuals.predict(sample)[0]:.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1840,12 +1840,12 @@ tree to try to predict this residual.</p>
 summing the prediction of all the trees in the ensemble.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_first_and_second_tree</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">y_pred_first_tree</span> <span class="o">+</span> <span class="n">tree_residuals</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction of the first and second decision trees combined for &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;x=</span><span class="si">{</span><span class="n">x_sample</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: y=</span><span class="si">{</span><span class="n">y_pred_first_and_second_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error of the tree: </span><span class="si">{</span><span class="n">target_true</span> <span class="o">-</span> <span class="n">y_pred_first_and_second_tree</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_pred_first_and_second_tree = (
+    y_pred_first_tree + tree_residuals.predict(sample)[0]
+)
+print(f&quot;Prediction of the first and second decision trees combined for &quot;
+      f&quot;x={x_sample:.3f}: y={y_pred_first_and_second_tree:.3f}&quot;)
+print(f&quot;Error of the tree: {target_true - y_pred_first_and_second_tree:.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1866,81 +1866,81 @@ corrects the second tree’s error and so on).</p>
 boosting on the California housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import cross_validate
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
+data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import GradientBoostingRegressor
 
-<span class="n">gradient_boosting</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-<span class="n">cv_results_gbdt</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">gradient_boosting</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="p">)</span>
+gradient_boosting = GradientBoostingRegressor(n_estimators=200)
+cv_results_gbdt = cross_validate(
+    gradient_boosting, data, target, scoring=&quot;neg_mean_absolute_error&quot;,
+    n_jobs=2,
+)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gradient Boosting Decision Tree&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error via cross-validation: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average fit time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;fit_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average score time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_gbdt</span><span class="p">[</span><span class="s1">&#39;score_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Gradient Boosting Decision Tree&quot;)
+print(f&quot;Mean absolute error via cross-validation: &quot;
+      f&quot;{-cv_results_gbdt[&#39;test_score&#39;].mean():.3f} ± &quot;
+      f&quot;{cv_results_gbdt[&#39;test_score&#39;].std():.3f} k$&quot;)
+print(f&quot;Average fit time: &quot;
+      f&quot;{cv_results_gbdt[&#39;fit_time&#39;].mean():.3f} seconds&quot;)
+print(f&quot;Average score time: &quot;
+      f&quot;{cv_results_gbdt[&#39;score_time&#39;].mean():.3f} seconds&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree
-Mean absolute error via cross-validation: 46.409 ± 2.914 k$
-Average fit time: 6.828 seconds
-Average score time: 0.009 seconds
+Mean absolute error via cross-validation: 46.397 ± 2.912 k$
+Average fit time: 7.988 seconds
+Average score time: 0.010 seconds
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import RandomForestRegressor
 
-<span class="n">random_forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">cv_results_rf</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">random_forest</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="p">)</span>
+random_forest = RandomForestRegressor(n_estimators=200, n_jobs=2)
+cv_results_rf = cross_validate(
+    random_forest, data, target, scoring=&quot;neg_mean_absolute_error&quot;,
+    n_jobs=2,
+)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Random Forest&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error via cross-validation: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results_rf</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_rf</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average fit time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_rf</span><span class="p">[</span><span class="s1">&#39;fit_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average score time: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results_rf</span><span class="p">[</span><span class="s1">&#39;score_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Random Forest&quot;)
+print(f&quot;Mean absolute error via cross-validation: &quot;
+      f&quot;{-cv_results_rf[&#39;test_score&#39;].mean():.3f} ± &quot;
+      f&quot;{cv_results_rf[&#39;test_score&#39;].std():.3f} k$&quot;)
+print(f&quot;Average fit time: &quot;
+      f&quot;{cv_results_rf[&#39;fit_time&#39;].mean():.3f} seconds&quot;)
+print(f&quot;Average score time: &quot;
+      f&quot;{cv_results_rf[&#39;score_time&#39;].mean():.3f} seconds&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest
-Mean absolute error via cross-validation: 46.521 ± 4.547 k$
-Average fit time: 18.262 seconds
-Average score time: 0.162 seconds
+Mean absolute error via cross-validation: 46.507 ± 4.444 k$
+Average fit time: 21.461 seconds
+Average score time: 0.179 seconds
 </pre></div>
 </div>
 </div>

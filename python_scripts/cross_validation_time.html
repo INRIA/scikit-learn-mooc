@@ -1584,19 +1584,19 @@ previous cross-validation strategies presented. We are going to load financial
 quotations from some energy companies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;TOT&quot;</span><span class="p">:</span> <span class="s2">&quot;Total&quot;</span><span class="p">,</span> <span class="s2">&quot;XOM&quot;</span><span class="p">:</span> <span class="s2">&quot;Exxon&quot;</span><span class="p">,</span> <span class="s2">&quot;CVX&quot;</span><span class="p">:</span> <span class="s2">&quot;Chevron&quot;</span><span class="p">,</span>
-           <span class="s2">&quot;COP&quot;</span><span class="p">:</span> <span class="s2">&quot;ConocoPhillips&quot;</span><span class="p">,</span> <span class="s2">&quot;VLO&quot;</span><span class="p">:</span> <span class="s2">&quot;Valero Energy&quot;</span><span class="p">}</span>
-<span class="n">template_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;../datasets/financial-data/</span><span class="si">{}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
+symbols = {&quot;TOT&quot;: &quot;Total&quot;, &quot;XOM&quot;: &quot;Exxon&quot;, &quot;CVX&quot;: &quot;Chevron&quot;,
+           &quot;COP&quot;: &quot;ConocoPhillips&quot;, &quot;VLO&quot;: &quot;Valero Energy&quot;}
+template_name = (&quot;../datasets/financial-data/{}.csv&quot;)
 
-<span class="n">quotes</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-        <span class="n">template_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">symbol</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
-    <span class="n">quotes</span><span class="p">[</span><span class="n">symbols</span><span class="p">[</span><span class="n">symbol</span><span class="p">]]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;open&quot;</span><span class="p">]</span>
-<span class="n">quotes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span>
+quotes = {}
+for symbol in symbols:
+    data = pd.read_csv(
+        template_name.format(symbol), index_col=0, parse_dates=True
+    )
+    quotes[symbols[symbol]] = data[&quot;open&quot;]
+quotes = pd.DataFrame(quotes)
 </pre></div>
 </div>
 </div>
@@ -1604,12 +1604,12 @@ quotations from some energy companies.</p>
 <p>We can start by plotting the different financial quotations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 
-<span class="n">quotes</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Quote value&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Stock values over time&quot;</span><span class="p">)</span>
+quotes.plot()
+plt.ylabel(&quot;Quote value&quot;)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Stock values over time&quot;)
 </pre></div>
 </div>
 </div>
@@ -1622,11 +1622,11 @@ companies’ quotes. To make explanatory plots, we first use a train-test split
 and then we evaluate other cross-validation methods.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">quotes</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Chevron&quot;</span><span class="p">]),</span> <span class="n">quotes</span><span class="p">[</span><span class="s2">&quot;Chevron&quot;</span><span class="p">]</span>
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+data, target = quotes.drop(columns=[&quot;Chevron&quot;]), quotes[&quot;Chevron&quot;]
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=True, random_state=0)
 </pre></div>
 </div>
 </div>
@@ -1637,9 +1637,9 @@ check the generalization performance of our model.</p>
 <p>Let’s first define our model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeRegressor
 
-<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+regressor = DecisionTreeRegressor()
 </pre></div>
 </div>
 </div>
@@ -1647,9 +1647,9 @@ check the generalization performance of our model.</p>
 <p>And now the cross-validation strategy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import ShuffleSplit
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+cv = ShuffleSplit(random_state=0)
 </pre></div>
 </div>
 </div>
@@ -1657,12 +1657,12 @@ check the generalization performance of our model.</p>
 <p>Finally, we perform the evaluation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_val_score
 
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-                             <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean R2 is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+test_score = cross_val_score(regressor, data_train, target_train, cv=cv,
+                             n_jobs=2)
+print(f&quot;The mean R2 is: &quot;
+      f&quot;{test_score.mean():.2f} ± {test_score.std():.2f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1680,10 +1680,10 @@ procedure with a single split and plot the prediction. We can use
 <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> for this purpose.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="c1"># Affect the index of `target_predicted` to ease the plotting</span>
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">target_predicted</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">target_test</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>regressor.fit(data_train, target_train)
+target_predicted = regressor.predict(data_test)
+# Affect the index of `target_predicted` to ease the plotting
+target_predicted = pd.Series(target_predicted, index=target_test.index)
 </pre></div>
 </div>
 </div>
@@ -1691,15 +1691,15 @@ procedure with a single split and plot the prediction. We can use
 <p>Let’s check the generalization performance of our model on this split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import r2_score
 
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The R2 on this single split is: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+test_score = r2_score(target_test, target_predicted)
+print(f&quot;The R2 on this single split is: {test_score:.2f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: 0.83
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: 0.82
 </pre></div>
 </div>
 </div>
@@ -1708,13 +1708,13 @@ procedure with a single split and plot the prediction. We can use
 We will plot the training, testing and prediction samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_train</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training&quot;</span><span class="p">)</span>
-<span class="n">target_test</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing&quot;</span><span class="p">)</span>
-<span class="n">target_predicted</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prediction&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_train.plot(label=&quot;Training&quot;)
+target_test.plot(label=&quot;Testing&quot;)
+target_predicted.plot(label=&quot;Prediction&quot;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Quote value&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Model predictions using a ShuffleSplit strategy&quot;</span><span class="p">)</span>
+plt.ylabel(&quot;Quote value&quot;)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Model predictions using a ShuffleSplit strategy&quot;)
 </pre></div>
 </div>
 </div>
@@ -1735,25 +1735,25 @@ the split. In this case, we will use the first 75% of the data to train and
 the remaining data to test.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">target_predicted</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">target_test</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=False, random_state=0,
+)
+regressor.fit(data_train, target_train)
+target_predicted = regressor.predict(data_test)
+target_predicted = pd.Series(target_predicted, index=target_test.index)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The R2 on this single split is: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_score = r2_score(target_test, target_predicted)
+print(f&quot;The R2 on this single split is: {test_score:.2f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.18
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.41
 </pre></div>
 </div>
 </div>
@@ -1763,13 +1763,13 @@ performs worse than just predicting the mean of the target. We can visually
 check what we are predicting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_train</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training&quot;</span><span class="p">)</span>
-<span class="n">target_test</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing&quot;</span><span class="p">)</span>
-<span class="n">target_predicted</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prediction&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_train.plot(label=&quot;Training&quot;)
+target_test.plot(label=&quot;Testing&quot;)
+target_predicted.plot(label=&quot;Prediction&quot;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Quote value&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Model predictions using a split without shuffling&quot;</span><span class="p">)</span>
+plt.ylabel(&quot;Quote value&quot;)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Model predictions using a split without shuffling&quot;)
 </pre></div>
 </div>
 </div>
@@ -1786,19 +1786,19 @@ and predict each group’s information by using information from the other
 groups. We can use the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> cross-validation for this purpose.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">LeaveOneGroupOut</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import LeaveOneGroupOut
 
-<span class="n">groups</span> <span class="o">=</span> <span class="n">quotes</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">)</span>
-<span class="n">cv</span> <span class="o">=</span> <span class="n">LeaveOneGroupOut</span><span class="p">()</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
-                             <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean R2 is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+groups = quotes.index.to_period(&quot;Q&quot;)
+cv = LeaveOneGroupOut()
+test_score = cross_val_score(regressor, data, target,
+                             cv=cv, groups=groups, n_jobs=2)
+print(f&quot;The mean R2 is: &quot;
+      f&quot;{test_score.mean():.2f} ± {test_score.std():.2f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.02 ± 1.65
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -0.83 ± 1.70
 </pre></div>
 </div>
 </div>
@@ -1812,18 +1812,18 @@ case, we can use the <code class="docutils literal notranslate"><span class="pre
 behaviour.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import TimeSeriesSplit
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">TimeSeriesSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">groups</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
-                             <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean R2 is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+cv = TimeSeriesSplit(n_splits=groups.nunique())
+test_score = cross_val_score(regressor, data, target,
+                             cv=cv, groups=groups, n_jobs=2)
+print(f&quot;The mean R2 is: &quot;
+      f&quot;{test_score.mean():.2f} ± {test_score.std():.2f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -5.45 ± 16.67
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.34 ± 1.90
 </pre></div>
 </div>
 </div>

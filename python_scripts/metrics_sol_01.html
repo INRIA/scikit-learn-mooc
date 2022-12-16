@@ -1573,11 +1573,11 @@ practicing and implementing cross-validation.</p>
 <p>We will reuse the blood transfusion dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">blood_transfusion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/blood_transfusion.csv&quot;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">]</span>
+blood_transfusion = pd.read_csv(&quot;../datasets/blood_transfusion.csv&quot;)
+data = blood_transfusion.drop(columns=&quot;Class&quot;)
+target = blood_transfusion[&quot;Class&quot;]
 </pre></div>
 </div>
 </div>
@@ -1590,10 +1590,10 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>First, create a decision tree classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.tree import DecisionTreeClassifier
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+tree = DecisionTreeClassifier()
 </pre></div>
 </div>
 </div>
@@ -1605,17 +1605,17 @@ of <code class="docutils literal notranslate"><span class="pre">cross_val_score<
 score). Check its documentation to learn how to do that.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">StratifiedKFold</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.model_selection import cross_val_score, StratifiedKFold
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;accuracy&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+cv = StratifiedKFold(n_splits=10)
+scores = cross_val_score(tree, data, target, cv=cv, scoring=&quot;accuracy&quot;)
+print(f&quot;Accuracy score: {scores.mean():.3f} ± {scores.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.629 ± 0.147
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.634 ± 0.138
 </pre></div>
 </div>
 </div>
@@ -1623,15 +1623,15 @@ score). Check its documentation to learn how to do that.</p>
 <p>Repeat the experiment by computing the <code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-                         <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balanced accuracy score: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+scores = cross_val_score(tree, data, target, cv=cv,
+                         scoring=&quot;balanced_accuracy&quot;)
+print(f&quot;Balanced accuracy score: {scores.mean():.3f} ± {scores.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.502 ± 0.118
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.502 ± 0.109
 </pre></div>
 </div>
 </div>
@@ -1643,184 +1643,184 @@ positive label which in our case we consider to be the class <code class="docuti
 label will not be supported by scikit-learn because it is indeed ambiguous.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_val_score
+from sklearn.tree import DecisionTreeClassifier
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;precision&quot;</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+tree = DecisionTreeClassifier()
+try:
+    scores = cross_val_score(tree, data, target, cv=10, scoring=&quot;precision&quot;)
+except ValueError as exc:
+    print(exc)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py:776: UserWarning: Scoring failed. The score on this train-test partition for these parameters will be set to nan. Details: 
 Traceback (most recent call last):
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/model_selection/_validation.py&quot;, line 767, in _score
     scores = scorer(estimator, X_test, y_test)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 106, in __call__
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 107, in __call__
     score = scorer._score(cached_call, estimator, *args, **kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 267, in _score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_scorer.py&quot;, line 268, in _score
     return self._sign * self._score_func(y_true, y_pred, **self._kwargs)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1776, in precision_score
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1954, in precision_score
     p, _, _, _ = precision_recall_fscore_support(
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1563, in precision_recall_fscore_support
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1573, in precision_recall_fscore_support
     labels = _check_set_wise_labels(y_true, y_pred, average, labels, pos_label)
-  File &quot;/opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1372, in _check_set_wise_labels
+  File &quot;/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/_classification.py&quot;, line 1382, in _check_set_wise_labels
     raise ValueError(
 ValueError: pos_label=1 is not a valid label. It should be one of [&#39;donated&#39;, &#39;not donated&#39;]
 
@@ -1844,10 +1844,10 @@ Finally, create a scorer by calling <code class="docutils literal notranslate"><
 <code class="docutils literal notranslate"><span class="pre">precision_score</span></code> and pass the extra parameter <code class="docutils literal notranslate"><span class="pre">pos_label=&quot;donated&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">precision_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.metrics import make_scorer, precision_score
 
-<span class="n">precision</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">precision_score</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;donated&quot;</span><span class="p">)</span>
+precision = make_scorer(precision_score, pos_label=&quot;donated&quot;)
 </pre></div>
 </div>
 </div>
@@ -1856,14 +1856,14 @@ Finally, create a scorer by calling <code class="docutils literal notranslate"><
 in the <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> call, pass the scorer that you created above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">precision</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision score: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+scores = cross_val_score(tree, data, target, cv=cv, scoring=precision)
+print(f&quot;Precision score: {scores.mean():.3f} ± {scores.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.246 ± 0.180
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.247 ± 0.172
 </pre></div>
 </div>
 </div>
@@ -1877,48 +1877,48 @@ balanced accuracy through cross-validation. Plot the cross-validation score
 for both metrics using a box plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-<span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.model_selection import cross_validate
+scoring = [&quot;accuracy&quot;, &quot;balanced_accuracy&quot;]
 
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
-<span class="n">scores</span>
+scores = cross_validate(tree, data, target, cv=cv, scoring=scoring)
+scores
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00259137, 0.00271702, 0.00284004, 0.00259352, 0.00271583,
-        0.00258183, 0.00256085, 0.00258708, 0.00257254, 0.00255466]),
- &#39;score_time&#39;: array([0.00204682, 0.00184727, 0.0020113 , 0.00192428, 0.00182462,
-        0.00177503, 0.00175309, 0.00176382, 0.00174522, 0.00178504]),
- &#39;test_accuracy&#39;: array([0.26666667, 0.54666667, 0.77333333, 0.56      , 0.64      ,
-        0.64      , 0.68      , 0.77333333, 0.67567568, 0.75675676]),
- &#39;test_balanced_accuracy&#39;: array([0.38450292, 0.49269006, 0.64181287, 0.3874269 , 0.45906433,
-        0.42105263, 0.54239766, 0.73684211, 0.500516  , 0.51186791])}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00310135, 0.00304866, 0.00302434, 0.00285482, 0.00298047,
+        0.00283408, 0.00277233, 0.00283909, 0.00283122, 0.00282359]),
+ &#39;score_time&#39;: array([0.00209069, 0.00199032, 0.00193143, 0.0019474 , 0.00194883,
+        0.00193238, 0.00189734, 0.0019362 , 0.0019381 , 0.00191092]),
+ &#39;test_accuracy&#39;: array([0.26666667, 0.53333333, 0.77333333, 0.56      , 0.58666667,
+        0.64      , 0.69333333, 0.77333333, 0.64864865, 0.75675676]),
+ &#39;test_balanced_accuracy&#39;: array([0.38450292, 0.48391813, 0.66081871, 0.40643275, 0.40497076,
+        0.42105263, 0.55116959, 0.73684211, 0.48297214, 0.51186791])}
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+color = {&quot;whiskers&quot;: &quot;black&quot;, &quot;medians&quot;: &quot;black&quot;, &quot;caps&quot;: &quot;black&quot;}
 
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">],</span> <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_balanced_accuracy&quot;</span><span class="p">]],</span>
-    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;Balanced accuracy&quot;</span><span class="p">]</span>
-<span class="p">)</span><span class="o">.</span><span class="n">T</span>
+metrics = pd.DataFrame(
+    [scores[&quot;test_accuracy&quot;], scores[&quot;test_balanced_accuracy&quot;]],
+    index=[&quot;Accuracy&quot;, &quot;Balanced accuracy&quot;]
+).T
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
 
-<span class="n">metrics</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Computation of multiple scores using cross_validate&quot;</span><span class="p">)</span>
+metrics.plot.box(vert=False, color=color)
+_ = plt.title(&quot;Computation of multiple scores using cross_validate&quot;)
 </pre></div>
 </div>
 </div>

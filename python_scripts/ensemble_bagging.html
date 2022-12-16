@@ -1644,41 +1644,41 @@ learner are aggregated to give the final predictions.</p>
 bootstraping.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import numpy as np
 
-<span class="c1"># create a random number generator that will be used to set the randomness</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+# create a random number generator that will be used to set the randomness
+rng = np.random.RandomState(1)
 
 
-<span class="k">def</span> <span class="nf">generate_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate synthetic dataset. Returns `data_train`, `data_test`,</span>
-<span class="sd">    `target_train`.&quot;&quot;&quot;</span>
-    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
-    <span class="n">noise</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">noise</span>
-    <span class="n">y</span> <span class="o">/=</span> <span class="n">y</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+def generate_data(n_samples=30):
+    &quot;&quot;&quot;Generate synthetic dataset. Returns `data_train`, `data_test`,
+    `target_train`.&quot;&quot;&quot;
+    x_min, x_max = -3, 3
+    x = rng.uniform(x_min, x_max, size=n_samples)
+    noise = 4.0 * rng.randn(n_samples)
+    y = x ** 3 - 0.5 * (x + 1) ** 2 + noise
+    y /= y.std()
 
-    <span class="n">data_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">])</span>
-    <span class="n">data_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">])</span>
-    <span class="n">target_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+    data_train = pd.DataFrame(x, columns=[&quot;Feature&quot;])
+    data_test = pd.DataFrame(
+        np.linspace(x_max, x_min, num=300), columns=[&quot;Feature&quot;])
+    target_train = pd.Series(y, name=&quot;Target&quot;)
 
-    <span class="k">return</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span>
+    return data_train, data_test, target_train
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+import seaborn as sns
 
-<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Synthetic regression dataset&quot;</span><span class="p">)</span>
+data_train, data_test, target_train = generate_data(n_samples=30)
+sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
+_ = plt.title(&quot;Synthetic regression dataset&quot;)
 </pre></div>
 </div>
 </div>
@@ -1691,11 +1691,11 @@ However, a decision tree is capable of approximating such a non-linear
 dependency:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeRegressor
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+tree = DecisionTreeRegressor(max_depth=3, random_state=0)
+tree.fit(data_train, target_train)
+y_pred = tree.predict(data_test)
 </pre></div>
 </div>
 </div>
@@ -1705,11 +1705,11 @@ training and computing an evaluation metric on such a synthetic test set
 would be meaningless.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Predictions by a single decision tree&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
+plt.plot(data_test[&quot;Feature&quot;], y_pred, label=&quot;Fitted tree&quot;)
+plt.legend()
+_ = plt.title(&quot;Predictions by a single decision tree&quot;)
 </pre></div>
 </div>
 </div>
@@ -1731,17 +1731,17 @@ are often referred to as the out-of-bag sample.</p>
 resampled variation <code class="docutils literal notranslate"><span class="pre">data_bootstrap</span></code> and <code class="docutils literal notranslate"><span class="pre">target_bootstrap</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bootstrap_sample</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="c1"># Indices corresponding to a sampling with replacement of the same sample</span>
-    <span class="c1"># size than the original data</span>
-    <span class="n">bootstrap_indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="c1"># In pandas, we need to use `.iloc` to extract rows using an integer</span>
-    <span class="c1"># position index:</span>
-    <span class="n">data_bootstrap</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">bootstrap_indices</span><span class="p">]</span>
-    <span class="n">target_bootstrap</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">bootstrap_indices</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">data_bootstrap</span><span class="p">,</span> <span class="n">target_bootstrap</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def bootstrap_sample(data, target):
+    # Indices corresponding to a sampling with replacement of the same sample
+    # size than the original data
+    bootstrap_indices = rng.choice(
+        np.arange(target.shape[0]), size=target.shape[0], replace=True,
+    )
+    # In pandas, we need to use `.iloc` to extract rows using an integer
+    # position index:
+    data_bootstrap = data.iloc[bootstrap_indices]
+    target_bootstrap = target.iloc[bootstrap_indices]
+    return data_bootstrap, target_bootstrap
 </pre></div>
 </div>
 </div>
@@ -1750,21 +1750,21 @@ resampled variation <code class="docutils literal notranslate"><span class="pre"
 with the original dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_bootstraps</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="k">for</span> <span class="n">bootstrap_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstraps</span><span class="p">):</span>
-    <span class="c1"># draw a bootstrap from the original data</span>
-    <span class="n">data_bootstrap</span><span class="p">,</span> <span class="n">target_bootstrap</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span>
-        <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_bootstrap</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_bootstrap</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Resampled data&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_train</span><span class="p">,</span>
-                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original data&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resampled data #</span><span class="si">{</span><span class="n">bootstrap_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_bootstraps = 3
+for bootstrap_idx in range(n_bootstraps):
+    # draw a bootstrap from the original data
+    data_bootstrap, target_bootstrap = bootstrap_sample(
+        data_train, target_train,
+    )
+    plt.figure()
+    plt.scatter(data_bootstrap[&quot;Feature&quot;], target_bootstrap,
+                color=&quot;tab:blue&quot;, facecolors=&quot;none&quot;,
+                alpha=0.5, label=&quot;Resampled data&quot;, s=180, linewidth=5)
+    plt.scatter(data_train[&quot;Feature&quot;], target_train,
+                color=&quot;black&quot;, s=60,
+                alpha=1, label=&quot;Original data&quot;)
+    plt.title(f&quot;Resampled data #{bootstrap_idx}&quot;)
+    plt.legend()
 </pre></div>
 </div>
 </div>
@@ -1782,17 +1782,17 @@ and from each other. To confirm this intuition, we can check the number of
 unique samples in the bootstrap samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train_huge</span><span class="p">,</span> <span class="n">data_test_huge</span><span class="p">,</span> <span class="n">target_train_huge</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span>
-    <span class="n">n_samples</span><span class="o">=</span><span class="mi">100_000</span><span class="p">)</span>
-<span class="n">data_bootstrap_sample</span><span class="p">,</span> <span class="n">target_bootstrap_sample</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span>
-    <span class="n">data_train_huge</span><span class="p">,</span> <span class="n">target_train_huge</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_train_huge, data_test_huge, target_train_huge = generate_data(
+    n_samples=100_000)
+data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
+    data_train_huge, target_train_huge)
 
-<span class="n">ratio_unique_sample</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data_bootstrap_sample</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span>
-                       <span class="n">data_bootstrap_sample</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Percentage of samples present in the original dataset: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ratio_unique_sample</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span>
-<span class="p">)</span>
+ratio_unique_sample = (np.unique(data_bootstrap_sample).size /
+                       data_bootstrap_sample.size)
+print(
+    f&quot;Percentage of samples present in the original dataset: &quot;
+    f&quot;{ratio_unique_sample * 100:.1f}%&quot;
+)
 </pre></div>
 </div>
 </div>
@@ -1811,14 +1811,14 @@ different. We can fit a decision tree for each of these datasets and they all
 shall be slightly different as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bag_of_trees</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">bootstrap_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstraps</span><span class="p">):</span>
-    <span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bag_of_trees = []
+for bootstrap_idx in range(n_bootstraps):
+    tree = DecisionTreeRegressor(max_depth=3, random_state=0)
 
-    <span class="n">data_bootstrap_sample</span><span class="p">,</span> <span class="n">target_bootstrap_sample</span> <span class="o">=</span> <span class="n">bootstrap_sample</span><span class="p">(</span>
-        <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-    <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_bootstrap_sample</span><span class="p">,</span> <span class="n">target_bootstrap_sample</span><span class="p">)</span>
-    <span class="n">bag_of_trees</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
+        data_train, target_train)
+    tree.fit(data_bootstrap_sample, target_bootstrap_sample)
+    bag_of_trees.append(tree)
 </pre></div>
 </div>
 </div>
@@ -1828,15 +1828,15 @@ predict the samples within the range of data. They shall give slightly
 different predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bag_of_trees</span><span class="p">):</span>
-    <span class="n">tree_predictions</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">tree_predictions</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Tree #</span><span class="si">{</span><span class="n">tree_idx</span><span class="si">}</span><span class="s2"> predictions&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
+for tree_idx, tree in enumerate(bag_of_trees):
+    tree_predictions = tree.predict(data_test)
+    plt.plot(data_test[&quot;Feature&quot;], tree_predictions, linestyle=&quot;--&quot;, alpha=0.8,
+             label=f&quot;Tree #{tree_idx} predictions&quot;)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Predictions of trees trained on different bootstraps&quot;</span><span class="p">)</span>
+plt.legend()
+_ = plt.title(&quot;Predictions of trees trained on different bootstraps&quot;)
 </pre></div>
 </div>
 </div>
@@ -1857,21 +1857,21 @@ prediction of the ensemble for the test data point is the average of those
 <p>We can plot the averaged predictions from the previous example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
 
-<span class="n">bag_predictions</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bag_of_trees</span><span class="p">):</span>
-    <span class="n">tree_predictions</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">tree_predictions</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
-             <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Tree #</span><span class="si">{</span><span class="n">tree_idx</span><span class="si">}</span><span class="s2"> predictions&quot;</span><span class="p">)</span>
-    <span class="n">bag_predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree_predictions</span><span class="p">)</span>
+bag_predictions = []
+for tree_idx, tree in enumerate(bag_of_trees):
+    tree_predictions = tree.predict(data_test)
+    plt.plot(data_test[&quot;Feature&quot;], tree_predictions, linestyle=&quot;--&quot;, alpha=0.8,
+             label=f&quot;Tree #{tree_idx} predictions&quot;)
+    bag_predictions.append(tree_predictions)
 
-<span class="n">bag_predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">bag_predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">bag_predictions</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Averaged predictions&quot;</span><span class="p">,</span>
-         <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Predictions of bagged trees&quot;</span><span class="p">)</span>
+bag_predictions = np.mean(bag_predictions, axis=0)
+plt.plot(data_test[&quot;Feature&quot;], bag_predictions, label=&quot;Averaged predictions&quot;,
+         linestyle=&quot;-&quot;)
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+_ = plt.title(&quot;Predictions of bagged trees&quot;)
 </pre></div>
 </div>
 </div>
@@ -1895,13 +1895,19 @@ trees. We set <code class="docutils literal notranslate"><span class="pre">n_est
 above to get a stronger smoothing effect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import BaggingRegressor
 
-<span class="n">bagged_trees</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
-    <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">bagged_trees</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+bagged_trees = BaggingRegressor(
+    base_estimator=DecisionTreeRegressor(max_depth=3),
+    n_estimators=100,
+)
+_ = bagged_trees.fit(data_train, target_train)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -1909,13 +1915,13 @@ above to get a stronger smoothing effect.</p>
 <p>Let us visualize the predictions of the ensemble on the same interval of data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
 
-<span class="n">bagged_trees_predictions</span> <span class="o">=</span> <span class="n">bagged_trees</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">bagged_trees_predictions</span><span class="p">)</span>
+bagged_trees_predictions = bagged_trees.predict(data_test)
+plt.plot(data_test[&quot;Feature&quot;], bagged_trees_predictions)
 
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Predictions from a bagging classifier&quot;</span><span class="p">)</span>
+_ = plt.title(&quot;Predictions from a bagging classifier&quot;)
 </pre></div>
 </div>
 </div>
@@ -1930,20 +1936,20 @@ Python list in the <code class="docutils literal notranslate"><span class="pre">
 <p>Let us compare the based model predictions with their average:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">tree_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bagged_trees</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Predictions of individual trees&quot;</span> <span class="k">if</span> <span class="n">tree_idx</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="c1"># we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn</span>
-    <span class="n">tree_predictions</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">tree_predictions</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-             <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for tree_idx, tree in enumerate(bagged_trees.estimators_):
+    label = &quot;Predictions of individual trees&quot; if tree_idx == 0 else None
+    # we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn
+    tree_predictions = tree.predict(data_test.to_numpy())
+    plt.plot(data_test[&quot;Feature&quot;], tree_predictions, linestyle=&quot;--&quot;, alpha=0.1,
+             color=&quot;tab:blue&quot;, label=label)
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
 
-<span class="n">bagged_trees_predictions</span> <span class="o">=</span> <span class="n">bagged_trees</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">bagged_trees_predictions</span><span class="p">,</span>
-         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predictions of ensemble&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+bagged_trees_predictions = bagged_trees.predict(data_test)
+plt.plot(data_test[&quot;Feature&quot;], bagged_trees_predictions,
+         color=&quot;tab:orange&quot;, label=&quot;Predictions of ensemble&quot;)
+_ = plt.legend()
 </pre></div>
 </div>
 </div>
@@ -1965,17 +1971,17 @@ transformation of the input variable, let us try to fit a bagged polynomial
 regression pipeline on this dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import Ridge
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.pipeline import make_pipeline
 
 
-<span class="n">polynomial_regressor</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">MinMaxScaler</span><span class="p">(),</span>
-    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
-    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">),</span>
-<span class="p">)</span>
+polynomial_regressor = make_pipeline(
+    MinMaxScaler(),
+    PolynomialFeatures(degree=4),
+    Ridge(alpha=1e-10),
+)
 </pre></div>
 </div>
 </div>
@@ -1993,35 +1999,41 @@ base models.</p>
 <code class="docutils literal notranslate"><span class="pre">base_estimator</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">BaggingRegressor</span></code> class:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span>
-    <span class="n">base_estimator</span><span class="o">=</span><span class="n">polynomial_regressor</span><span class="p">,</span>
-    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bagging = BaggingRegressor(
+    base_estimator=polynomial_regressor,
+    n_estimators=100,
+    random_state=0,
+)
+_ = bagging.fit(data_train, target_train)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">regressor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bagging</span><span class="o">.</span><span class="n">estimators_</span><span class="p">):</span>
-    <span class="c1"># we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn</span>
-    <span class="n">regressor_predictions</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
-    <span class="n">base_model_line</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">regressor_predictions</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predictions of base models&quot;</span> <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span>
-    <span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for i, regressor in enumerate(bagging.estimators_):
+    # we convert `data_test` into a NumPy array to avoid a warning raised in scikit-learn
+    regressor_predictions = regressor.predict(data_test.to_numpy())
+    base_model_line = plt.plot(
+        data_test[&quot;Feature&quot;], regressor_predictions, linestyle=&quot;--&quot;, alpha=0.2,
+        label=&quot;Predictions of base models&quot; if i == 0 else None,
+        color=&quot;tab:blue&quot;
+    )
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">bagging_predictions</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">bagging_predictions</span><span class="p">,</span>
-         <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predictions of ensemble&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">target_train</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">target_train</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Bagged polynomial regression&quot;</span><span class="p">)</span>
+sns.scatterplot(x=data_train[&quot;Feature&quot;], y=target_train, color=&quot;black&quot;,
+                alpha=0.5)
+bagging_predictions = bagging.predict(data_test)
+plt.plot(data_test[&quot;Feature&quot;], bagging_predictions,
+         color=&quot;tab:orange&quot;, label=&quot;Predictions of ensemble&quot;)
+plt.ylim(target_train.min(), target_train.max())
+plt.legend()
+_ = plt.title(&quot;Bagged polynomial regression&quot;)
 </pre></div>
 </div>
 </div>

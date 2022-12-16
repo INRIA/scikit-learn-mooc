@@ -1578,17 +1578,17 @@ be later used to get deterministic results.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="c1"># Set the seed for reproduction</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+# Set the seed for reproduction
+rng = np.random.RandomState(0)
 
-<span class="c1"># Generate data</span>
-<span class="n">n_sample</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">data_max</span><span class="p">,</span> <span class="n">data_min</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span>
-<span class="n">len_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_max</span> <span class="o">-</span> <span class="n">data_min</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span> <span class="o">*</span> <span class="n">len_data</span> <span class="o">-</span> <span class="n">len_data</span> <span class="o">/</span> <span class="mi">2</span>
-<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span> <span class="o">*</span> <span class="mf">.3</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">noise</span>
+# Generate data
+n_sample = 100
+data_max, data_min = 1.4, -1.4
+len_data = (data_max - data_min)
+data = rng.rand(n_sample) * len_data - len_data / 2
+noise = rng.randn(n_sample) * .3
+target = data ** 3 - 0.5 * data ** 2 + noise
 </pre></div>
 </div>
 </div>
@@ -1600,18 +1600,18 @@ and target</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">full_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">target</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+full_data = pd.DataFrame({&quot;data&quot;: data, &quot;target&quot;: target})
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
 
-<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+_ = sns.scatterplot(data=full_data, x=&quot;data&quot;, y=&quot;target&quot;, color=&quot;black&quot;,
+                    alpha=0.5)
 </pre></div>
 </div>
 </div>
@@ -1628,26 +1628,26 @@ problem here would be to infer the salary given the years of experience.</p>
 data and the predictions of this model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="n">target_predict</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">data</span> <span class="o">+</span> <span class="n">intercept</span>
-    <span class="k">return</span> <span class="n">target_predict</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def f(data, weight=0, intercept=0):
+    target_predict = weight * data + intercept
+    return target_predict
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+predictions = f(data, weight=1.2, intercept=-0.2)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;data&quot;, y=&quot;target&quot;, color=&quot;black&quot;,
+                     alpha=0.5)
+_ = ax.plot(data, predictions)
 </pre></div>
 </div>
 </div>
@@ -1658,11 +1658,11 @@ data and the predictions of this model.</p>
 <p>Compute the mean squared error for this model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+from sklearn.metrics import mean_squared_error
 
-<span class="n">error</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The MSE is </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+error = mean_squared_error(target, f(data, weight=1.2, intercept=-0.2))
+print(f&quot;The MSE is {error}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1683,12 +1683,12 @@ vector represents a sample.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import LinearRegression
 
-<span class="c1"># solution</span>
-<span class="n">linear_regression</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="n">data_2d</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">linear_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_2d</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+# solution
+linear_regression = LinearRegression()
+data_2d = data.reshape(-1, 1)
+linear_regression.fit(data_2d, target)
 </pre></div>
 </div>
 </div>
@@ -1699,17 +1699,17 @@ vector represents a sample.</p>
 and the predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">predictions</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_2d</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+predictions = linear_regression.predict(data_2d)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;data&quot;, y=&quot;target&quot;, color=&quot;black&quot;,
+                     alpha=0.5)
+_ = ax.plot(data, predictions)
 </pre></div>
 </div>
 </div>
@@ -1720,9 +1720,9 @@ and the predictions.</p>
 <p>Compute the mean squared error</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">error</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The MSE is </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
+error = mean_squared_error(target, predictions)
+print(f&quot;The MSE is {error}&quot;)
 </pre></div>
 </div>
 </div>

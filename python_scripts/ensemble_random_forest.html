@@ -1637,12 +1637,12 @@ matrix</strong>:</p>
 census dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
-<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
+target_name = &quot;class&quot;
+data = adult_census.drop(columns=[target_name, &quot;education-num&quot;])
+target = adult_census[target_name]
 </pre></div>
 </div>
 </div>
@@ -1663,16 +1663,16 @@ raise an error when calling its <code class="docutils literal notranslate"><span
 of the validation set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_transformer</span><span class="p">,</span> <span class="n">make_column_selector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import OrdinalEncoder
+from sklearn.compose import make_column_transformer, make_column_selector
 
-<span class="n">categorical_encoder</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
-    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
-<span class="p">)</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
-    <span class="p">(</span><span class="n">categorical_encoder</span><span class="p">,</span> <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)),</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span>
-<span class="p">)</span>
+categorical_encoder = OrdinalEncoder(
+    handle_unknown=&quot;use_encoded_value&quot;, unknown_value=-1
+)
+preprocessor = make_column_transformer(
+    (categorical_encoder, make_column_selector(dtype_include=object)),
+    remainder=&quot;passthrough&quot;
+)
 </pre></div>
 </div>
 </div>
@@ -1681,22 +1681,22 @@ of the validation set.</p>
 tree classifier and check its generalization performance via cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
+from sklearn.tree import DecisionTreeClassifier
 
-<span class="n">tree</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+tree = make_pipeline(preprocessor, DecisionTreeClassifier(random_state=0))
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_val_score
 
-<span class="n">scores_tree</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+scores_tree = cross_val_score(tree, data, target)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree classifier: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_tree</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores_tree</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Decision tree classifier: &quot;
+      f&quot;{scores_tree.mean():.3f} ± {scores_tree.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1712,29 +1712,49 @@ addition, we need to specify how many models do we want to combine. Note that
 we also need to preprocess the data and thus use a scikit-learn pipeline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import BaggingClassifier
 
-<span class="n">bagged_trees</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">preprocessor</span><span class="p">,</span>
-    <span class="n">BaggingClassifier</span><span class="p">(</span>
-        <span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-        <span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+bagged_trees = make_pipeline(
+    preprocessor,
+    BaggingClassifier(
+        base_estimator=DecisionTreeClassifier(random_state=0),
+        n_estimators=50, n_jobs=2, random_state=0,
+    )
+)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores_bagged_trees</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">bagged_trees</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scores_bagged_trees = cross_val_score(bagged_trees, data, target)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bagged decision tree classifier: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_bagged_trees</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores_bagged_trees</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Bagged decision tree classifier: &quot;
+      f&quot;{scores_bagged_trees.mean():.3f} ± {scores_bagged_trees.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bagged decision tree classifier: 0.846 ± 0.005
 </pre></div>
 </div>
@@ -1747,23 +1767,23 @@ specify any <code class="docutils literal notranslate"><span class="pre">base_es
 tree. Thus, we just specify the desired number of trees in the forest.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import RandomForestClassifier
 
-<span class="n">random_forest</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">preprocessor</span><span class="p">,</span>
-    <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="p">)</span>
+random_forest = make_pipeline(
+    preprocessor,
+    RandomForestClassifier(n_estimators=50, n_jobs=2, random_state=0)
+)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores_random_forest</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">random_forest</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scores_random_forest = cross_val_score(random_forest, data, target)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Random forest classifier: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_random_forest</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores_random_forest</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Random forest classifier: &quot;
+      f&quot;{scores_random_forest.mean():.3f} ± &quot;
+      f&quot;{scores_random_forest.std():.3f}&quot;)
 </pre></div>
 </div>
 </div>

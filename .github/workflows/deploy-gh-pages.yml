@@ -5,6 +5,9 @@ on:
     branches:
     - main
     - test-ci*
+  pull_request:
+    branches:
+      - main
 
 jobs:
   deploy-gh-pages:
@@ -42,6 +45,16 @@ jobs:
     - name: Build the JupyterBook
       run: |
         make jupyter-book
+        echo ${{github.event.number}} > pull_request_number
+
+    - name: Upload jupyter-book artifact for PRs
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: jupyter-book
+        path: |
+          jupyter-book/_build/html
+          pull_request_number
 
     - name: GitHub Pages action
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

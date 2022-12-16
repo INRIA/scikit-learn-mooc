@@ -258,8 +258,9 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # - the original categories (before encoding) have an ordering;
 # - the encoded categories follow the same ordering than the original
 #   categories.
-# The **next exercise** highlights the issue of misusing `OrdinalEncoder` with
-# a linear model.
+#
+# The **next exercise** shows what can happen when using an `OrdinalEncoder`
+# with a liner model and the conditions above are not met.
 #
 # One-hot encoding categorical variables with high cardinality can cause 
 # computational inefficiency in tree-based models. Because of this, it is not recommended

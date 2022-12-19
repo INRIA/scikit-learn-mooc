@@ -17,9 +17,6 @@ function show_error_logs {
 }
 
 affected_jupyter_book_paths() {
-    git remote -v
-    git show
-    git log -10
     files=$(git diff --name-only origin/main...)
     # TODO: rather than the grep pattern below we could potentially look at
     # _toc.yml to know whether the file affects the JupyterBook
@@ -45,6 +42,11 @@ write_changed_html() {
         ) > "$jupyter_book_build_dir/_changed.html"
     fi
 }
+
+git remote -v
+git show
+git log -10
+git fetch origin main >&2 # || (echo QUICK BUILD: failed to get changed filenames for $git_range; return)
 
 affected=$(affected_jupyter_book_paths)
 

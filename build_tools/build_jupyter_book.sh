@@ -27,13 +27,15 @@ affected_jupyter_book_paths() {
 
 write_changed_html() {
     affected="$1"
-    if [ -n "$CI_PULL_REQUEST" ]
+    echo GITHUB_PULL_REQUEST_NUMBER: $GITHUB_PULL_REQUEST_NUMBER
+    if [ -n "$GITHUB_PULL_REQUEST_NUMBER" ]
     then
+        GITHUB_PULL_REQUEST_URL="https://github.com/inria/scikit-learn-mooc/pull/$GITHUB_PULL_REQUEST_NUMBER"
         echo "The following files may have been changed by PR $GITHUB_PR_NUMBER:"
         echo "$affected"
         (
             echo '<html><body>'
-            echo 'Files changed by PR <a href="'"$CI_PULL_REQUEST"'">'"$CI_PULL_REQUEST</a>"
+            echo 'Files changed by PR <a href="'"$GITHUB_PR_URL"'">'"$GITHUB_PR_URL</a>"
             echo '<ul>'
             echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">main</a>]|'
             echo '</ul><p>This PR JupyterBook <a href="index.html">index</a>'

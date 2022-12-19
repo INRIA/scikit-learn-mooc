@@ -17,7 +17,10 @@ function show_error_logs {
 }
 
 affected_jupyter_book_paths() {
-    files=$(git diff --name-only origin/main...$GITHUB_SHA)
+    git remote -v
+    git show
+    git log -10
+    files=$(git diff --name-only origin/main...)
     # TODO: rather than the grep pattern below we could potentially look at
     # _toc.yml to know whether the file affects the JupyterBook
     echo "$files" | grep python_scripts | perl -pe 's@\.py$@.html@'
@@ -27,7 +30,6 @@ affected_jupyter_book_paths() {
 
 write_changed_html() {
     affected="$1"
-    echo GITHUB_PULL_REQUEST_NUMBER: $GITHUB_PULL_REQUEST_NUMBER
     if [ -n "$GITHUB_PULL_REQUEST_NUMBER" ]
     then
         GITHUB_PULL_REQUEST_URL="https://github.com/inria/scikit-learn-mooc/pull/$GITHUB_PULL_REQUEST_NUMBER"

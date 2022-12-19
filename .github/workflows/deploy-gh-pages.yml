@@ -44,12 +44,14 @@ jobs:
 
     - name: Build the JupyterBook
       run: |
-        make jupyter-book
+        bash build_tools/build_jupyter_book.sh
         echo ${{github.event.number}} > pull_request_number
 
     - name: Upload jupyter-book artifact for PRs
       if: ${{ github.event_name == 'pull_request' }}
       uses: actions/upload-artifact@v3
+      env:
+        GITHUB_PULL_REQUEST_NUMBER: ${{github.event.number}}
       with:
         name: jupyter-book
         path: |

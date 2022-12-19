@@ -44,15 +44,18 @@ write_changed_html() {
 }
 
 git remote -v
-git show
-git log -10
+git show --stat
+git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -20
 git fetch origin main >&2 # || (echo QUICK BUILD: failed to get changed filenames for $git_range; return)
+git diff origin/main... --stat
+git diff origin/main...
 
 affected=$(affected_jupyter_book_paths)
+mkdir -p $jupyter_book_build_dir
+write_changed_html "$affected"
 
 make $jupyter_book_dir 2>&1 | tee $jupyter_book_dir/build.log
 
-write_changed_html "$affected"
 
 # Grep the log to make sure there has been no errors when running the notebooks
 # since jupyter-book exit code is always 0

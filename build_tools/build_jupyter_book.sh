@@ -16,8 +16,6 @@ function show_error_logs {
     exit 1
 }
 
-apt-get install make
-
 source /opt/conda/etc/profile.d/conda.sh
 conda update --yes conda
 conda create -n scikit-learn-mooc --yes -c conda-forge python=3.9

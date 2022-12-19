@@ -16,12 +16,6 @@ function show_error_logs {
     exit 1
 }
 
-source /opt/conda/etc/profile.d/conda.sh
-conda update --yes conda
-conda create -n scikit-learn-mooc --yes -c conda-forge python=3.9
-conda activate scikit-learn-mooc
-pip install -r requirements-dev.txt
-
 affected_jupyter_book_paths() {
     files=$(git diff --name-only origin/main...$GITHUB_SHA)
     # TODO: rather than the grep pattern below we could potentially look at

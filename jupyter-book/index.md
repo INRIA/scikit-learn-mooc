@@ -2,8 +2,6 @@
 
 ## Course presentation
 
-Let's add more content.
-
 ```{admonition} Welcome!
 :class: remove-from-content-only
 

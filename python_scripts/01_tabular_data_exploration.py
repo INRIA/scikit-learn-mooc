@@ -36,8 +36,6 @@
 # pandas, we recommend you look at this
 # [tutorial](https://pandas.pydata.org/docs/user_guide/10min.html).
 # ```
-#
-# Let's add more content
 
 # %%
 import pandas as pd

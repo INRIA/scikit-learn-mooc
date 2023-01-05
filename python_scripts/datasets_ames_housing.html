@@ -1579,10 +1579,10 @@ value marker.</p>
 will be parsed by pandas when opening the file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-ames_housing = pd.read_csv(&quot;../datasets/house_prices.csv&quot;, na_values=&#39;?&#39;)
-ames_housing = ames_housing.drop(columns=&quot;Id&quot;)
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Id&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1590,7 +1590,7 @@ ames_housing = ames_housing.drop(columns=&quot;Id&quot;)
 <p>We can have a first look at the available columns in this dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ames_housing.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1767,8 +1767,8 @@ would like to predict. So we will split our dataset into two variables
 containing the data and the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;SalePrice&quot;
-data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">),</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1776,7 +1776,7 @@ data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
 <p>Let’s have a quick look at the target before to focus on the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1795,10 +1795,10 @@ Name: SalePrice, dtype: int64
 of a house in $. We can have a look at the target distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
-target.plot.hist(bins=20, edgecolor=&quot;black&quot;)
-plt.xlabel(&quot;House price in $&quot;)
-_ = plt.title(&quot;Distribution of the house price \nin Ames&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">target</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;House price in $&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the house price </span><span class="se">\n</span><span class="s2">in Ames&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1814,7 +1814,7 @@ designing a predictive model.</p>
 house prices.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1916,8 +1916,8 @@ numerical and categorical data are available.</p>
 <p>First, we will have a look at the data represented with numbers.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>numerical_data = data.select_dtypes(&quot;number&quot;)
-numerical_data.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>
+<span class="n">numerical_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1973,9 +1973,9 @@ memory usage: 410.8 KB
 a look at the histogram for all these features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>numerical_data.hist(bins=20, figsize=(12, 22), edgecolor=&quot;black&quot;,
-                    layout=(9, 4))
-plt.subplots_adjust(hspace=0.8, wspace=0.8)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_data</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">22</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                    <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1992,8 +1992,8 @@ predictive model.</p>
 <p>Now, let’s have a look at the data encoded with strings.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>string_data = data.select_dtypes(object)
-string_data.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">string_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+<span class="n">string_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2056,24 +2056,24 @@ memory usage: 490.6+ KB
 count for each feature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from math import ceil
-from itertools import zip_longest
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">zip_longest</span>
 
-n_string_features = string_data.shape[1]
-nrows, ncols = ceil(n_string_features / 4), 4
+<span class="n">n_string_features</span> <span class="o">=</span> <span class="n">string_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">n_string_features</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">4</span>
 
-fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(14, 80))
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="n">ncols</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
 
-for feature_name, ax in zip_longest(string_data, axs.ravel()):
-    if feature_name is None:
-        # do not show the axis
-        ax.axis(&quot;off&quot;)
-        continue
+<span class="k">for</span> <span class="n">feature_name</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">zip_longest</span><span class="p">(</span><span class="n">string_data</span><span class="p">,</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()):</span>
+    <span class="k">if</span> <span class="n">feature_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># do not show the axis</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+        <span class="k">continue</span>
 
-    string_data[feature_name].value_counts().plot.barh(ax=ax)
-    ax.set_title(feature_name)
+    <span class="n">string_data</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">feature_name</span><span class="p">)</span>
 
-plt.subplots_adjust(hspace=0.2, wspace=0.8)
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2095,8 +2095,8 @@ created a version of this database without missing values.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ames_housing_no_missing = pd.read_csv(&quot;../datasets/ames_housing_no_missing.csv&quot;)
-ames_housing_no_missing.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing_no_missing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
+<span class="n">ames_housing_no_missing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2274,54 +2274,54 @@ to replace missing values using the mean along each numerical column
 (including the target), and the most frequent value along each categorical column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import make_column_transformer
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import make_pipeline
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_transformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
 
-numerical_features = [
-    &quot;LotFrontage&quot;,
-    &quot;LotArea&quot;,
-    &quot;MasVnrArea&quot;,
-    &quot;BsmtFinSF1&quot;,
-    &quot;BsmtFinSF2&quot;,
-    &quot;BsmtUnfSF&quot;,
-    &quot;TotalBsmtSF&quot;,
-    &quot;1stFlrSF&quot;,
-    &quot;2ndFlrSF&quot;,
-    &quot;LowQualFinSF&quot;,
-    &quot;GrLivArea&quot;,
-    &quot;BedroomAbvGr&quot;,
-    &quot;KitchenAbvGr&quot;,
-    &quot;TotRmsAbvGrd&quot;,
-    &quot;Fireplaces&quot;,
-    &quot;GarageCars&quot;,
-    &quot;GarageArea&quot;,
-    &quot;WoodDeckSF&quot;,
-    &quot;OpenPorchSF&quot;,
-    &quot;EnclosedPorch&quot;,
-    &quot;3SsnPorch&quot;,
-    &quot;ScreenPorch&quot;,
-    &quot;PoolArea&quot;,
-    &quot;MiscVal&quot;,
-    target_name,
-]
-categorical_features = data.columns.difference(numerical_features)
+<span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;LotFrontage&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LotArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MasVnrArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BsmtFinSF1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BsmtFinSF2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BsmtUnfSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TotalBsmtSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1stFlrSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;2ndFlrSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LowQualFinSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GrLivArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BedroomAbvGr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KitchenAbvGr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TotRmsAbvGrd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Fireplaces&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GarageCars&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GarageArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WoodDeckSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OpenPorchSF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EnclosedPorch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;3SsnPorch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ScreenPorch&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PoolArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MiscVal&quot;</span><span class="p">,</span>
+    <span class="n">target_name</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">categorical_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">numerical_features</span><span class="p">)</span>
 
-most_frequent_imputer = SimpleImputer(strategy=&quot;most_frequent&quot;)
-mean_imputer = SimpleImputer(strategy=&quot;mean&quot;)
+<span class="n">most_frequent_imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<span class="n">mean_imputer</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
 
-preprocessor = make_column_transformer(
-    (most_frequent_imputer, categorical_features),
-    (mean_imputer, numerical_features),
-)
-ames_housing_preprocessed = pd.DataFrame(
-    preprocessor.fit_transform(ames_housing),
-    columns=categorical_features.tolist() + numerical_features,
-)
-ames_housing_preprocessed = ames_housing_preprocessed[ames_housing.columns]
-ames_housing_preprocessed = ames_housing_preprocessed.astype(ames_housing.dtypes)
-(ames_housing_no_missing == ames_housing_preprocessed).all()
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">most_frequent_imputer</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">mean_imputer</span><span class="p">,</span> <span class="n">numerical_features</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">ames_housing</span><span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">categorical_features</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="n">numerical_features</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">ames_housing_preprocessed</span><span class="p">[</span><span class="n">ames_housing</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">ames_housing_preprocessed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">ames_housing</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="p">(</span><span class="n">ames_housing_no_missing</span> <span class="o">==</span> <span class="n">ames_housing_preprocessed</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

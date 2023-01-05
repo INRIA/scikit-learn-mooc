@@ -1576,11 +1576,11 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-penguins = pd.read_csv(&quot;../datasets/penguins_classification.csv&quot;)
-culmen_columns = [&quot;Culmen Length (mm)&quot;, &quot;Culmen Depth (mm)&quot;]
-target_column = &quot;Species&quot;
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
+<span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1589,11 +1589,11 @@ target_column = &quot;Species&quot;
 predict values based on an out-of-samples dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-data, target = penguins[culmen_columns], penguins[target_column]
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1609,10 +1609,10 @@ boundaries. These boundaries lines indicate where the model changes its
 prediction from one class to another.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-linear_model = LogisticRegression()
-linear_model.fit(data_train, target_train)
+<span class="n">linear_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">linear_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1621,22 +1621,22 @@ linear_model.fit(data_train, target_train)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
-import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-from sklearn.inspection import DecisionBoundaryDisplay
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
-# create a palette to be used in the scatterplot
-palette = [&quot;tab:red&quot;, &quot;tab:blue&quot;, &quot;black&quot;]
+<span class="c1"># create a palette to be used in the scatterplot</span>
+<span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
 
-DecisionBoundaryDisplay.from_estimator(
-    linear_model, data_train, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
-)
-sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                hue=target_column, palette=palette)
-# put the legend outside the plot
-plt.legend(bbox_to_anchor=(1.05, 1), loc=&#39;upper left&#39;)
-_ = plt.title(&quot;Decision boundary using a logistic regression&quot;)
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">linear_model</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
+<span class="c1"># put the legend outside the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary using a logistic regression&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1652,9 +1652,9 @@ model’s weights and intercept.</p>
 such problem as it gives good accuracy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>linear_model.fit(data_train, target_train)
-test_score = linear_model.score(data_test, target_test)
-print(f&quot;Accuracy of the LogisticRegression: {test_score:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">linear_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">linear_model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of the LogisticRegression: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1672,10 +1672,10 @@ feature at a time. Let’s illustrate this behaviour by having a decision
 tree make a single split to partition the feature space.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeClassifier
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 
-tree = DecisionTreeClassifier(max_depth=1)
-tree.fit(data_train, target_train)
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1684,13 +1684,13 @@ tree.fit(data_train, target_train)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>DecisionBoundaryDisplay.from_estimator(
-    tree, data_train, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
-)
-sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                hue=target_column, palette=palette)
-plt.legend(bbox_to_anchor=(1.05, 1), loc=&#39;upper left&#39;)
-_ = plt.title(&quot;Decision boundary using a decision tree&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">tree</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary using a decision tree&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1704,11 +1704,11 @@ that a decision tree does not use a combination of feature when making a
 split. We can look more in depth at the tree structure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import plot_tree
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
 
-_, ax = plt.subplots(figsize=(8, 6))
-_ = plot_tree(tree, feature_names=culmen_columns,
-              class_names=tree.classes_, impurity=False, ax=ax)
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">,</span>
+              <span class="n">class_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="n">impurity</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1738,10 +1738,10 @@ represented class is the Gentoo species.</p>
 where the culmen depth is inferior to the threshold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample_1 = pd.DataFrame(
-    {&quot;Culmen Length (mm)&quot;: [0], &quot;Culmen Depth (mm)&quot;: [15]}
-)
-tree.predict(sample_1)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">]}</span>
+<span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1755,10 +1755,10 @@ tree.predict(sample_1)
 a culmen depth superior to the threshold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample_2 = pd.DataFrame(
-    {&quot;Culmen Length (mm)&quot;: [0], &quot;Culmen Depth (mm)&quot;: [17]}
-)
-tree.predict(sample_2)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">]}</span>
+<span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1776,17 +1776,17 @@ also compute the probability of belonging to a specific class within this
 partition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_pred_proba = tree.predict_proba(sample_2)
-y_proba_class_0 = pd.Series(y_pred_proba[0], index=tree.classes_)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">sample_2</span><span class="p">)</span>
+<span class="n">y_proba_class_0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred_proba</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>y_proba_class_0.plot.bar()
-plt.ylabel(&quot;Probability&quot;)
-_ = plt.title(&quot;Probability to belong to a penguin class&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_proba_class_0</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Probability to belong to a penguin class&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1798,15 +1798,15 @@ _ = plt.title(&quot;Probability to belong to a penguin class&quot;)
 structure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adelie_proba = 103 / 161
-chinstrap_proba = 52 / 161
-gentoo_proba = 6 / 161
-print(
-    f&quot;Probabilities for the different classes:\n&quot;
-    f&quot;Adelie: {adelie_proba:.3f}\n&quot;
-    f&quot;Chinstrap: {chinstrap_proba:.3f}\n&quot;
-    f&quot;Gentoo: {gentoo_proba:.3f}\n&quot;
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adelie_proba</span> <span class="o">=</span> <span class="mi">103</span> <span class="o">/</span> <span class="mi">161</span>
+<span class="n">chinstrap_proba</span> <span class="o">=</span> <span class="mi">52</span> <span class="o">/</span> <span class="mi">161</span>
+<span class="n">gentoo_proba</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">/</span> <span class="mi">161</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Probabilities for the different classes:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Adelie: </span><span class="si">{</span><span class="n">adelie_proba</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Chinstrap: </span><span class="si">{</span><span class="n">chinstrap_proba</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Gentoo: </span><span class="si">{</span><span class="n">gentoo_proba</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1824,10 +1824,10 @@ the moment. It means that whatever the value given, it will not be used
 during the prediction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample_3 = pd.DataFrame(
-    {&quot;Culmen Length (mm)&quot;: [10_000], &quot;Culmen Depth (mm)&quot;: [17]}
-)
-tree.predict_proba(sample_3)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10_000</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">]}</span>
+<span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">sample_3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1842,9 +1842,9 @@ depth of 1 is not powerful enough to separate the three species and the model
 accuracy is low when compared to the linear model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tree.fit(data_train, target_train)
-test_score = tree.score(data_test, target_test)
-print(f&quot;Accuracy of the DecisionTreeClassifier: {test_score:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of the DecisionTreeClassifier: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

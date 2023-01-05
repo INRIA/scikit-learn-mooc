@@ -1584,11 +1584,11 @@ performance of any machine-learning model should not perform better than the
 chance-level.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-# solution
-rng = np.random.RandomState(42)
-data, target = rng.randn(100, 100000), rng.randint(0, 2, size=100)
+<span class="c1"># solution</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100000</span><span class="p">),</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1598,14 +1598,14 @@ the score of such a model. It will allow use to confirm that our model cannot
 predict anything meaningful from random data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import cross_val_score
-from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-# solution
-model = LogisticRegression()
-test_score = cross_val_score(model, data, target, n_jobs=2)
-print(f&quot;The mean accuracy is: {test_score.mean():.3f}&quot;)
+<span class="c1"># solution</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean accuracy is: </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1625,14 +1625,14 @@ train and test a logistic regression model.</p>
 <p>You should get some surprising results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.feature_selection import SelectKBest, f_classif
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectKBest</span><span class="p">,</span> <span class="n">f_classif</span>
 
-# solution
-feature_selector = SelectKBest(score_func=f_classif, k=10)
-data_subset = feature_selector.fit_transform(data, target)
-test_score = cross_val_score(model, data_subset, target)
-print(f&quot;The mean accuracy is: {test_score.mean():.3f}&quot;)
+<span class="c1"># solution</span>
+<span class="n">feature_selector</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">score_func</span><span class="o">=</span><span class="n">f_classif</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">data_subset</span> <span class="o">=</span> <span class="n">feature_selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_subset</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean accuracy is: </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1656,18 +1656,18 @@ feature selector on the training set. Then, transform both the training and
 testing sets before you train and test the logistic regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import train_test_split
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-# solution
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
-feature_selector.fit(data_train, target_train)
-data_train_subset = feature_selector.transform(data_train)
-data_test_subset = feature_selector.transform(data_test)
-model.fit(data_train_subset, target_train)
-test_score = model.score(data_test_subset, target_test)
-print(f&quot;The mean accuracy is: {test_score:.3f}&quot;)
+<span class="c1"># solution</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">feature_selector</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">data_train_subset</span> <span class="o">=</span> <span class="n">feature_selector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+<span class="n">data_test_subset</span> <span class="o">=</span> <span class="n">feature_selector</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train_subset</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test_subset</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean accuracy is: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1693,13 +1693,13 @@ regression. Then, use cross-validation to get an estimate of the uncertainty
 of your model generalization performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.pipeline import make_pipeline
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
-# solution
-model = make_pipeline(feature_selector, LogisticRegression())
-test_score = cross_val_score(model, data, target)
-print(f&quot;The mean accuracy is: {test_score.mean():.3f}&quot;)
+<span class="c1"># solution</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">feature_selector</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean accuracy is: </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

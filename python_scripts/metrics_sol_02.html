@@ -1574,14 +1574,14 @@ metrics within a cross-validation framework to get familiar with the syntax.</p>
 <p>We will use the Ames house prices dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-ames_housing = pd.read_csv(&quot;../datasets/house_prices.csv&quot;)
-data = ames_housing.drop(columns=&quot;SalePrice&quot;)
-target = ames_housing[&quot;SalePrice&quot;]
-data = data.select_dtypes(np.number)
-target /= 1000
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">/=</span> <span class="mi">1000</span>
 </pre></div>
 </div>
 </div>
@@ -1594,10 +1594,10 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>The first step will be to create a linear regression model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.linear_model import LinearRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 
-model = LinearRegression()
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1608,11 +1608,11 @@ the model. Use a <code class="docutils literal notranslate"><span class="pre">KF
 the default score).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import cross_val_score
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
 
-scores = cross_val_score(model, data, target, cv=10, scoring=&quot;r2&quot;)
-print(f&quot;R2 score: {scores.mean():.3f} ± {scores.std():.3f}&quot;)
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1626,12 +1626,12 @@ print(f&quot;R2 score: {scores.mean():.3f} ± {scores.std():.3f}&quot;)
 to refer to the documentation for the <code class="docutils literal notranslate"><span class="pre">scoring</span></code> parameter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-scores = cross_val_score(model, data, target, cv=10,
-                         scoring=&quot;neg_mean_absolute_error&quot;)
-errors = -scores
-print(f&quot;Mean absolute error: &quot;
-      f&quot;{errors.mean():.3f} k$ ± {errors.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                         <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">)</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">scores</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$ ± </span><span class="si">{</span><span class="n">errors</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1650,23 +1650,23 @@ at once by passing a list of scorers to the <code class="docutils literal notran
 compute the <span class="math notranslate nohighlight">\(R^2\)</span> score and the mean absolute error for instance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-scoring = [&quot;r2&quot;, &quot;neg_mean_absolute_error&quot;]
-cv_results = cross_validate(model, data, target, scoring=scoring)
+<span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;r2&quot;</span><span class="p">,</span> <span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">]</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-scores = {&quot;R2&quot;: cv_results[&quot;test_r2&quot;],
-          &quot;MAE&quot;: -cv_results[&quot;test_neg_mean_absolute_error&quot;]}
-scores = pd.DataFrame(scores)
-scores
+<span class="n">scores</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;R2&quot;</span><span class="p">:</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_r2&quot;</span><span class="p">],</span>
+          <span class="s2">&quot;MAE&quot;</span><span class="p">:</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_neg_mean_absolute_error&quot;</span><span class="p">]}</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+<span class="n">scores</span>
 </pre></div>
 </div>
 </div>

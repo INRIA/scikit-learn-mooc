@@ -1657,11 +1657,11 @@ rather than continuous.</p>
 <p>We will load the blood transfusion dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-blood_transfusion = pd.read_csv(&quot;../datasets/blood_transfusion.csv&quot;)
-data = blood_transfusion.drop(columns=&quot;Class&quot;)
-target = blood_transfusion[&quot;Class&quot;]
+<span class="n">blood_transfusion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/blood_transfusion.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1674,11 +1674,11 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>Let’s start by checking the classes present in the target vector <code class="docutils literal notranslate"><span class="pre">target</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-target.value_counts().plot.barh()
-plt.xlabel(&quot;Number of samples&quot;)
-_ = plt.title(&quot;Number of samples per classes present\n in the target&quot;)
+<span class="n">target</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Number of samples per classes present</span><span class="se">\n</span><span class="s2"> in the target&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1693,10 +1693,10 @@ predict this outcome.</p>
 of cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, shuffle=True, random_state=0, test_size=0.5)
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1706,10 +1706,10 @@ the model on the train set, and later use the test set to compute the
 different classification metric.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-classifier = LogisticRegression()
-classifier.fit(data_train, target_train)
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1725,14 +1725,14 @@ they donated blood twice in the past (1000 c.c. each time). The last time was
 6 months ago, and the first time goes back to 20 months ago.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>new_donor = pd.DataFrame(
-    {
-        &quot;Recency&quot;: [6],
-        &quot;Frequency&quot;: [2],
-        &quot;Monetary&quot;: [1000],
-        &quot;Time&quot;: [20],
-    }
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_donor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;Recency&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+        <span class="s2">&quot;Frequency&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="s2">&quot;Monetary&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1000</span><span class="p">],</span>
+        <span class="s2">&quot;Time&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">],</span>
+    <span class="p">}</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1741,7 +1741,7 @@ they donated blood twice in the past (1000 c.c. each time). The last time was
 <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>classifier.predict(new_donor)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_donor</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1759,8 +1759,8 @@ predict whether a subject will give blood with the help of the trained
 classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted = classifier.predict(data_test)
-target_predicted[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1778,7 +1778,7 @@ target_predicted[:5]
 predictions (sometimes called ground-truth) which we did not use until now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_test == target_predicted
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span> <span class="o">==</span> <span class="n">target_predicted</span>
 </pre></div>
 </div>
 </div>
@@ -1807,9 +1807,9 @@ times our classifier was right and divide it by the number of samples in our
 set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-np.mean(target_test == target_predicted)
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">target_test</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1824,10 +1824,10 @@ accurate at classifying if a subject will give blood. <code class="docutils lite
 a function that computes this metric in the module <code class="docutils literal notranslate"><span class="pre">sklearn.metrics</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import accuracy_score
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
 
-accuracy = accuracy_score(target_test, target_predicted)
-print(f&quot;Accuracy: {accuracy:.3f}&quot;)
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1841,7 +1841,7 @@ print(f&quot;Accuracy: {accuracy:.3f}&quot;)
 scikit-learn API), which computes the accuracy score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>classifier.score(data_test, target_test)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1865,9 +1865,9 @@ following cases:</p>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import ConfusionMatrixDisplay
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ConfusionMatrixDisplay</span>
 
-_ = ConfusionMatrixDisplay.from_estimator(classifier, data_test, target_test)
+<span class="n">_</span> <span class="o">=</span> <span class="n">ConfusionMatrixDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1905,13 +1905,13 @@ We could, similarly to accuracy, manually compute these values,
 however scikit-learn provides functions to compute these statistics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import precision_score, recall_score
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
 
-precision = precision_score(target_test, target_predicted, pos_label=&quot;donated&quot;)
-recall = recall_score(target_test, target_predicted, pos_label=&quot;donated&quot;)
+<span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;donated&quot;</span><span class="p">)</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;donated&quot;</span><span class="p">)</span>
 
-print(f&quot;Precision score: {precision:.3f}&quot;)
-print(f&quot;Recall score: {recall:.3f}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision score: </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall score: </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1938,9 +1938,9 @@ look at the ratio of classes (labels). We could check this ratio in the
 training set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_train.value_counts(normalize=True).plot.barh()
-plt.xlabel(&quot;Class frequency&quot;)
-_ = plt.title(&quot;Class frequency in the training set&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Class frequency&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Class frequency in the training set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1955,12 +1955,12 @@ relevant, depending on the application. We can illustrate the issue using a
 dummy classifier as a baseline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.dummy import DummyClassifier
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
-dummy_classifier = DummyClassifier(strategy=&quot;most_frequent&quot;)
-dummy_classifier.fit(data_train, target_train)
-print(f&quot;Accuracy of the dummy classifier: &quot;
-      f&quot;{dummy_classifier.score(data_test, target_test):.3f}&quot;)
+<span class="n">dummy_classifier</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<span class="n">dummy_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of the dummy classifier: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dummy_classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1979,10 +1979,10 @@ one should either use the precision and recall as presented above or the
 balanced accuracy score instead of accuracy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import balanced_accuracy_score
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">balanced_accuracy_score</span>
 
-balanced_accuracy = balanced_accuracy_score(target_test, target_predicted)
-print(f&quot;Balanced accuracy: {balanced_accuracy:.3f}&quot;)
+<span class="n">balanced_accuracy</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balanced accuracy: </span><span class="si">{</span><span class="n">balanced_accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2006,9 +2006,9 @@ problem. We can quickly check this relationship with the classifier that
 we trained.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_proba_predicted = pd.DataFrame(classifier.predict_proba(data_test),
-                                      columns=classifier.classes_)
-target_proba_predicted[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_proba_predicted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_test</span><span class="p">),</span>
+                                      <span class="n">columns</span><span class="o">=</span><span class="n">classifier</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+<span class="n">target_proba_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2067,8 +2067,8 @@ target_proba_predicted[:5]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted = classifier.predict(data_test)
-target_predicted[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2083,9 +2083,9 @@ target_predicted[:5]
 probability without using the threshold 0.5.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>equivalence_pred_proba = (
-    target_proba_predicted.idxmax(axis=1).to_numpy() == target_predicted)
-np.all(equivalence_pred_proba)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">equivalence_pred_proba</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">target_proba_predicted</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">equivalence_pred_proba</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2104,21 +2104,21 @@ on a graph axis and each point on the graph corresponds to a specific
 decision threshold. Let’s start by computing the precision-recall curve.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import PrecisionRecallDisplay
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">PrecisionRecallDisplay</span>
 
-disp = PrecisionRecallDisplay.from_estimator(
-    classifier, data_test, target_test, pos_label=&#39;donated&#39;,
-    marker=&quot;+&quot;
-)
-disp = PrecisionRecallDisplay.from_estimator(
-    dummy_classifier, data_test, target_test, pos_label=&#39;donated&#39;,
-    color=&quot;tab:orange&quot;, linestyle=&quot;--&quot;, ax=disp.ax_)
-plt.xlabel(&quot;Recall (also known as TPR or sensitivity)&quot;)
-plt.ylabel(&quot;Precision (also known as PPV)&quot;)
-plt.xlim(0, 1)
-plt.ylim(0, 1)
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-_ = disp.ax_.set_title(&quot;Precision-recall curve&quot;)
+<span class="n">disp</span> <span class="o">=</span> <span class="n">PrecisionRecallDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span>
+<span class="p">)</span>
+<span class="n">disp</span> <span class="o">=</span> <span class="n">PrecisionRecallDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">dummy_classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Recall (also known as TPR or sensitivity)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Precision (also known as PPV)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Precision-recall curve&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2147,10 +2147,10 @@ divided by the total number of samples (this number is called the prevalence
 of the positive class).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>prevalence = (
-    target_test.value_counts()[1] / target_test.value_counts().sum()
-)
-print(f&quot;Prevalence of the class &#39;donated&#39;: {prevalence:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prevalence</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prevalence of the class &#39;donated&#39;: </span><span class="si">{</span><span class="n">prevalence</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2171,20 +2171,20 @@ generally plotted as a curve called the Receiver Operating Characteristic
 (ROC) curve. Below is such a curve:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.metrics import RocCurveDisplay
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">RocCurveDisplay</span>
 
-disp = RocCurveDisplay.from_estimator(
-    classifier, data_test, target_test, pos_label=&#39;donated&#39;,
-    marker=&quot;+&quot;)
-disp = RocCurveDisplay.from_estimator(
-    dummy_classifier, data_test, target_test, pos_label=&#39;donated&#39;,
-    color=&quot;tab:orange&quot;, linestyle=&quot;--&quot;, ax=disp.ax_)
-plt.xlabel(&quot;False positive rate&quot;)
-plt.ylabel(&quot;True positive rate\n(also known as sensitivity or recall)&quot;)
-plt.xlim(0, 1)
-plt.ylim(0, 1)
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-_ = disp.ax_.set_title(&quot;Receiver Operating Characteristic curve&quot;)
+<span class="n">disp</span> <span class="o">=</span> <span class="n">RocCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<span class="n">disp</span> <span class="o">=</span> <span class="n">RocCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">dummy_classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;False positive rate&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;True positive rate</span><span class="se">\n</span><span class="s2">(also known as sensitivity or recall)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Receiver Operating Characteristic curve&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -1580,17 +1580,17 @@ non-linear regression model as a whole.</p>
 previous exercise.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-rng = np.random.RandomState(0)
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-n_sample = 100
-data_max, data_min = 1.4, -1.4
-len_data = (data_max - data_min)
-# sort the data to make plotting easier later
-data = np.sort(rng.rand(n_sample) * len_data - len_data / 2)
-noise = rng.randn(n_sample) * .3
-target = data ** 3 - 0.5 * data ** 2 + noise
+<span class="n">n_sample</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">data_max</span><span class="p">,</span> <span class="n">data_min</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span>
+<span class="n">len_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_max</span> <span class="o">-</span> <span class="n">data_min</span><span class="p">)</span>
+<span class="c1"># sort the data to make plotting easier later</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span> <span class="o">*</span> <span class="n">len_data</span> <span class="o">-</span> <span class="n">len_data</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_sample</span><span class="p">)</span> <span class="o">*</span> <span class="mf">.3</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">noise</span>
 </pre></div>
 </div>
 </div>
@@ -1602,19 +1602,19 @@ and target:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-full_data = pd.DataFrame({&quot;input_feature&quot;: data, &quot;target&quot;: target})
+<span class="n">full_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;input_feature&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="n">target</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-_ = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                    color=&quot;black&quot;, alpha=0.5)
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1634,9 +1634,9 @@ vector represents a sample.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># X should be 2D for sklearn: (n_samples, n_features)
-data = data.reshape((-1, 1))
-data.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># X should be 2D for sklearn: (n_samples, n_features)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -1648,29 +1648,29 @@ data.shape
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
 
-linear_regression = LinearRegression()
-linear_regression.fit(data, target)
-target_predicted = linear_regression.predict(data)
+<span class="n">linear_regression</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">linear_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mse = mean_squared_error(target, target_predicted)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1683,8 +1683,8 @@ best “straight line” that fits the data. We can inspect the coefficients
 using the attributes of the model learnt as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;weight: {linear_regression.coef_[0]:.2f}, &quot;
-      f&quot;intercept: {linear_regression.intercept_:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;weight: </span><span class="si">{</span><span class="n">linear_regression</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;intercept: </span><span class="si">{</span><span class="n">linear_regression</span><span class="o">.</span><span class="n">intercept_</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1709,21 +1709,21 @@ global linear decision function.</p></li>
 which can natively handle non-linearity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeRegressor
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
-tree = DecisionTreeRegressor(max_depth=3).fit(data, target)
-target_predicted = tree.predict(data)
-mse = mean_squared_error(target, target_predicted)
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1741,7 +1741,7 @@ this information as follows. This kind of transformation is called a
 polynomial feature expansion:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -1753,8 +1753,8 @@ polynomial feature expansion:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_expanded = np.concatenate([data, data ** 2, data ** 3], axis=1)
-data_expanded.shape
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_expanded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">data</span> <span class="o">**</span> <span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data_expanded</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -1766,19 +1766,19 @@ data_expanded.shape
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>linear_regression.fit(data_expanded, target)
-target_predicted = linear_regression.predict(data_expanded)
-mse = mean_squared_error(target, target_predicted)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">linear_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_expanded</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_expanded</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1797,16 +1797,16 @@ scikit-learn pipeline which first transforms the features and then fit the
 regression model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import PolynomialFeatures
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
 
-polynomial_regression = make_pipeline(
-    PolynomialFeatures(degree=3, include_bias=False),
-    LinearRegression(),
-)
-polynomial_regression.fit(data, target)
-target_predicted = polynomial_regression.predict(data)
-mse = mean_squared_error(target, target_predicted)
+<span class="n">polynomial_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">LinearRegression</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">polynomial_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">polynomial_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1819,7 +1819,7 @@ of the absolute values of the differences between the features generated by
 both methods and checking that it is close to zero:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>np.abs(polynomial_regression[0].fit_transform(data) - data_expanded).max()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">polynomial_regression</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="n">data_expanded</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1834,10 +1834,10 @@ both methods and checking that it is close to zero:</p>
 manually engineered features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1860,22 +1860,22 @@ kernels by fitting them on the same dataset.</p>
 <p>First, consider a support vector machine with a linear kernel:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.svm import SVR
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
 
-svr = SVR(kernel=&quot;linear&quot;)
-svr.fit(data, target)
-target_predicted = svr.predict(data)
-mse = mean_squared_error(target, target_predicted)
+<span class="n">svr</span> <span class="o">=</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
+<span class="n">svr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">svr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1893,20 +1893,20 @@ training set.</p>
 expressivity as our previous polynomial regression pipeline:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>svr = SVR(kernel=&quot;poly&quot;, degree=3)
-svr.fit(data, target)
-target_predicted = svr.predict(data)
-mse = mean_squared_error(target, target_predicted)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svr</span> <span class="o">=</span> <span class="n">SVR</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">svr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">svr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1927,19 +1927,19 @@ proper definition of those methods. The following just gives an intuitive
 overview of the predictions we would get using those on our toy dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import KBinsDiscretizer
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">KBinsDiscretizer</span>
 
-binned_regression = make_pipeline(
-    KBinsDiscretizer(n_bins=8), LinearRegression(),
-)
-binned_regression.fit(data, target)
-target_predicted = binned_regression.predict(data)
-mse = mean_squared_error(target, target_predicted)
+<span class="n">binned_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">binned_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">binned_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 
-ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1949,19 +1949,19 @@ _ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.kernel_approximation import Nystroem
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.kernel_approximation</span> <span class="kn">import</span> <span class="n">Nystroem</span>
 
-nystroem_regression = make_pipeline(
-    Nystroem(n_components=5), LinearRegression(),
-)
-nystroem_regression.fit(data, target)
-target_predicted = nystroem_regression.predict(data)
-mse = mean_squared_error(target, target_predicted)
+<span class="n">nystroem_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">Nystroem</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">nystroem_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">nystroem_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 
-ax = sns.scatterplot(data=full_data, x=&quot;input_feature&quot;, y=&quot;target&quot;,
-                     color=&quot;black&quot;, alpha=0.5)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f&quot;Mean squared error = {mse:.2f}&quot;)
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">full_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;input_feature&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error = </span><span class="si">{</span><span class="n">mse</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

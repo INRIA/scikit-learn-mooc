@@ -1575,42 +1575,42 @@ change <code class="docutils literal notranslate"><span class="pre">train_size</
 20%).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-from sklearn.model_selection import train_test_split
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 
-target_name = &quot;class&quot;
-target = adult_census[target_name]
-data = adult_census.drop(columns=[target_name, &quot;education-num&quot;])
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, train_size=0.2, random_state=42)
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import ColumnTransformer
-from sklearn.compose import make_column_selector as selector
-from sklearn.preprocessing import OrdinalEncoder
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
-categorical_preprocessor = OrdinalEncoder(handle_unknown=&quot;use_encoded_value&quot;,
-                                          unknown_value=-1)
-preprocessor = ColumnTransformer(
-    [(&#39;cat_preprocessor&#39;, categorical_preprocessor,
-      selector(dtype_include=object))],
-    remainder=&#39;passthrough&#39;, sparse_threshold=0)
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
+                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span>
+      <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">))],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span> <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.pipeline import Pipeline
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 
-model = Pipeline([
-    (&quot;preprocessor&quot;, preprocessor),
-    (&quot;classifier&quot;, HistGradientBoostingClassifier(random_state=42))
-])
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+<span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1630,32 +1630,32 @@ depth of each tree.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import cross_val_score
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
 
-learning_rate = [0.01, 0.1, 1, 10]
-max_leaf_nodes = [3, 10, 30]
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">max_leaf_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
 
-best_score = 0
-best_params = {}
-for lr in learning_rate:
-    for mln in max_leaf_nodes:
-        print(f&quot;Evaluating model with learning rate {lr:.3f}&quot;
-              f&quot; and max leaf nodes {mln}... &quot;, end=&quot;&quot;)
-        model.set_params(
-            classifier__learning_rate=lr,
-            classifier__max_leaf_nodes=mln
-        )
-        scores = cross_val_score(model, data_train, target_train, cv=2)
-        mean_score = scores.mean()
-        print(f&quot;score: {mean_score:.3f}&quot;)
-        if mean_score &gt; best_score:
-            best_score = mean_score
-            best_params = {&#39;learning-rate&#39;: lr, &#39;max leaf nodes&#39;: mln}
-            print(f&quot;Found new best model with score {best_score:.3f}!&quot;)
+<span class="n">best_score</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">best_params</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">lr</span> <span class="ow">in</span> <span class="n">learning_rate</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">mln</span> <span class="ow">in</span> <span class="n">max_leaf_nodes</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Evaluating model with learning rate </span><span class="si">{</span><span class="n">lr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+              <span class="sa">f</span><span class="s2">&quot; and max leaf nodes </span><span class="si">{</span><span class="n">mln</span><span class="si">}</span><span class="s2">... &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span>
+            <span class="n">classifier__learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+            <span class="n">classifier__max_leaf_nodes</span><span class="o">=</span><span class="n">mln</span>
+        <span class="p">)</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">mean_score</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;score: </span><span class="si">{</span><span class="n">mean_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mean_score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
+            <span class="n">best_score</span> <span class="o">=</span> <span class="n">mean_score</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;learning-rate&#39;</span><span class="p">:</span> <span class="n">lr</span><span class="p">,</span> <span class="s1">&#39;max leaf nodes&#39;</span><span class="p">:</span> <span class="n">mln</span><span class="p">}</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found new best model with score </span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
 
-print(f&quot;The best accuracy obtained is {best_score:.3f}&quot;)
-print(f&quot;The best parameters found are:\n {best_params}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best accuracy obtained is </span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best parameters found are:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">best_params</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1689,7 +1689,10 @@ Evaluating model with learning rate 0.100 and max leaf nodes 30...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.857
-Evaluating model with learning rate 1.000 and max leaf nodes 3... score: 0.855
+Evaluating model with learning rate 1.000 and max leaf nodes 3... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.855
 Evaluating model with learning rate 1.000 and max leaf nodes 10... 
 </pre></div>
 </div>
@@ -1698,12 +1701,18 @@ Evaluating model with learning rate 1.000 and max leaf nodes 30...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.828
-Evaluating model with learning rate 10.000 and max leaf nodes 3... score: 0.288
+Evaluating model with learning rate 10.000 and max leaf nodes 3... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.288
 Evaluating model with learning rate 10.000 and max leaf nodes 10... 
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.253
-Evaluating model with learning rate 10.000 and max leaf nodes 30... score: 0.437
+Evaluating model with learning rate 10.000 and max leaf nodes 30... 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.437
 The best accuracy obtained is 0.859
 The best parameters found are:
  {&#39;learning-rate&#39;: 0.1, &#39;max leaf nodes&#39;: 10}
@@ -1715,16 +1724,16 @@ The best parameters found are:
 that we found using cross-validation in the training set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-best_lr = best_params[&#39;learning-rate&#39;]
-best_mln = best_params[&#39;max leaf nodes&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">best_lr</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;learning-rate&#39;</span><span class="p">]</span>
+<span class="n">best_mln</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;max leaf nodes&#39;</span><span class="p">]</span>
 
-model.set_params(classifier__learning_rate=best_lr,
-                 classifier__max_leaf_nodes=best_mln)
-model.fit(data_train, target_train)
-test_score = model.score(data_test, target_test)
+<span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__learning_rate</span><span class="o">=</span><span class="n">best_lr</span><span class="p">,</span>
+                 <span class="n">classifier__max_leaf_nodes</span><span class="o">=</span><span class="n">best_mln</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 
-print(f&quot;Test score after the parameter tuning: {test_score:.3f}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test score after the parameter tuning: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

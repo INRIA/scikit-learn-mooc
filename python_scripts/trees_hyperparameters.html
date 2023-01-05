@@ -1642,20 +1642,20 @@ the classification and regression problems we saw previously.</p>
 <p>First, we will load the classification and regression datasets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-data_clf_columns = [&quot;Culmen Length (mm)&quot;, &quot;Culmen Depth (mm)&quot;]
-target_clf_column = &quot;Species&quot;
-data_clf = pd.read_csv(&quot;../datasets/penguins_classification.csv&quot;)
+<span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+<span class="n">data_clf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_reg_columns = [&quot;Flipper Length (mm)&quot;]
-target_reg_column = &quot;Body Mass (g)&quot;
-data_reg = pd.read_csv(&quot;../datasets/penguins_regression.csv&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_reg_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_reg_column</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">data_reg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1671,38 +1671,38 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 decision boundary for classification and the regression line for regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.inspection import DecisionBoundaryDisplay
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
 
-def fit_and_plot_classification(model, data, feature_names, target_names):
-    model.fit(data[feature_names], data[target_names])
-    if data[target_names].nunique() == 2:
-        palette = [&quot;tab:red&quot;, &quot;tab:blue&quot;]
-    else:
-        palette = [&quot;tab:red&quot;, &quot;tab:blue&quot;, &quot;black&quot;]
-    DecisionBoundaryDisplay.from_estimator(
-        model, data[feature_names], response_method=&quot;predict&quot;,
-        cmap=&quot;RdBu&quot;, alpha=0.5
-    )
-    sns.scatterplot(data=data, x=feature_names[0], y=feature_names[1],
-                    hue=target_names, palette=palette)
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=&#39;upper left&#39;)
+<span class="k">def</span> <span class="nf">fit_and_plot_classification</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
+    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+    <span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="n">hue</span><span class="o">=</span><span class="n">target_names</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
 
 
-def fit_and_plot_regression(model, data, feature_names, target_names):
-    model.fit(data[feature_names], data[target_names])
-    data_test = pd.DataFrame(
-        np.arange(data.iloc[:, 0].min(), data.iloc[:, 0].max()),
-        columns=data[feature_names].columns,
-    )
-    target_predicted = model.predict(data_test)
+<span class="k">def</span> <span class="nf">fit_and_plot_regression</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">])</span>
+    <span class="n">data_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 
-    sns.scatterplot(
-        x=data.iloc[:, 0], y=data[target_names], color=&quot;black&quot;, alpha=0.5)
-    plt.plot(data_test.iloc[:, 0], target_predicted, linewidth=4)
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">target_predicted</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1718,20 +1718,20 @@ parameter.</p>
 <p>We can first set the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter value to a very low value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span>
 
-max_depth = 2
-tree_clf = DecisionTreeClassifier(max_depth=max_depth)
-tree_reg = DecisionTreeRegressor(max_depth=max_depth)
+<span class="n">max_depth</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+<span class="n">tree_reg</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fit_and_plot_classification(
-    tree_clf, data_clf, data_clf_columns, target_clf_column)
-_ = plt.title(f&quot;Shallow classification tree with max-depth of {max_depth}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_classification</span><span class="p">(</span>
+    <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shallow classification tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1741,9 +1741,9 @@ _ = plt.title(f&quot;Shallow classification tree with max-depth of {max_depth}&q
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fit_and_plot_regression(
-    tree_reg, data_reg, data_reg_columns, target_reg_column)
-_ = plt.title(f&quot;Shallow regression tree with max-depth of {max_depth}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_regression</span><span class="p">(</span>
+    <span class="n">tree_reg</span><span class="p">,</span> <span class="n">data_reg</span><span class="p">,</span> <span class="n">data_reg_columns</span><span class="p">,</span> <span class="n">target_reg_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shallow regression tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1755,18 +1755,18 @@ _ = plt.title(f&quot;Shallow regression tree with max-depth of {max_depth}&quot;
 by observing the decision function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_depth = 30
-tree_clf = DecisionTreeClassifier(max_depth=max_depth)
-tree_reg = DecisionTreeRegressor(max_depth=max_depth)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+<span class="n">tree_reg</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fit_and_plot_classification(
-    tree_clf, data_clf, data_clf_columns, target_clf_column)
-_ = plt.title(f&quot;Deep classification tree with max-depth of {max_depth}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_classification</span><span class="p">(</span>
+    <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deep classification tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1776,9 +1776,9 @@ _ = plt.title(f&quot;Deep classification tree with max-depth of {max_depth}&quot
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fit_and_plot_regression(
-    tree_reg, data_reg, data_reg_columns, target_reg_column)
-_ = plt.title(f&quot;Deep regression tree with max-depth of {max_depth}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_regression</span><span class="p">(</span>
+    <span class="n">tree_reg</span><span class="p">,</span> <span class="n">data_reg</span><span class="p">,</span> <span class="n">data_reg_columns</span><span class="p">,</span> <span class="n">target_reg_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deep regression tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1794,21 +1794,21 @@ of the hyperparameters that one should optimize via cross-validation and
 grid-search.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import GridSearchCV
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
-param_grid = {&quot;max_depth&quot;: np.arange(2, 10, 1)}
-tree_clf = GridSearchCV(DecisionTreeClassifier(), param_grid=param_grid)
-tree_reg = GridSearchCV(DecisionTreeRegressor(), param_grid=param_grid)
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">)</span>
+<span class="n">tree_reg</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeRegressor</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fit_and_plot_classification(
-    tree_clf, data_clf, data_clf_columns, target_clf_column)
-_ = plt.title(f&quot;Optimal depth found via CV: &quot;
-              f&quot;{tree_clf.best_params_[&#39;max_depth&#39;]}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_classification</span><span class="p">(</span>
+    <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimal depth found via CV: &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree_clf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1818,10 +1818,10 @@ _ = plt.title(f&quot;Optimal depth found via CV: &quot;
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fit_and_plot_regression(
-    tree_reg, data_reg, data_reg_columns, target_reg_column)
-_ = plt.title(f&quot;Optimal depth found via CV: &quot;
-              f&quot;{tree_reg.best_params_[&#39;max_depth&#39;]}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_regression</span><span class="p">(</span>
+    <span class="n">tree_reg</span><span class="p">,</span> <span class="n">data_reg</span><span class="p">,</span> <span class="n">data_reg_columns</span><span class="p">,</span> <span class="n">target_reg_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimal depth found via CV: &quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tree_reg</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1848,33 +1848,33 @@ to classify properly samples from the second subset than from the first
 subset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import make_blobs
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
 
-data_clf_columns = [&quot;Feature #0&quot;, &quot;Feature #1&quot;]
-target_clf_column = &quot;Class&quot;
+<span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">,</span> <span class="s2">&quot;Feature #1&quot;</span><span class="p">]</span>
+<span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Class&quot;</span>
 
-# Blobs that will be interlaced
-X_1, y_1 = make_blobs(
-    n_samples=300, centers=[[0, 0], [-1, -1]], random_state=0)
-# Blobs that will be easily separated
-X_2, y_2 = make_blobs(
-    n_samples=300, centers=[[3, 6], [7, 0]], random_state=0)
+<span class="c1"># Blobs that will be interlaced</span>
+<span class="n">X_1</span><span class="p">,</span> <span class="n">y_1</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Blobs that will be easily separated</span>
+<span class="n">X_2</span><span class="p">,</span> <span class="n">y_2</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-X = np.concatenate([X_1, X_2], axis=0)
-y = np.concatenate([y_1, y_2])
-data_clf = np.concatenate([X, y[:, np.newaxis]], axis=1)
-data_clf = pd.DataFrame(
-    data_clf, columns=data_clf_columns + [target_clf_column])
-data_clf[target_clf_column] = data_clf[target_clf_column].astype(np.int32)
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X_1</span><span class="p">,</span> <span class="n">X_2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">y_1</span><span class="p">,</span> <span class="n">y_2</span><span class="p">])</span>
+<span class="n">data_clf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data_clf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data_clf</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">data_clf_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_clf_column</span><span class="p">])</span>
+<span class="n">data_clf</span><span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_clf</span><span class="p">[</span><span class="n">target_clf_column</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(data=data_clf, x=data_clf_columns[0], y=data_clf_columns[1],
-                hue=target_clf_column, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-_ = plt.title(&quot;Synthetic dataset&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_clf</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_clf_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Synthetic dataset&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1887,11 +1887,11 @@ expect this depth to be enough to separate the blobs that are easy to
 separate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_depth = 2
-tree_clf = DecisionTreeClassifier(max_depth=max_depth)
-fit_and_plot_classification(
-    tree_clf, data_clf, data_clf_columns, target_clf_column)
-_ = plt.title(f&quot;Decision tree with max-depth of {max_depth}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+<span class="n">fit_and_plot_classification</span><span class="p">(</span>
+    <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1908,10 +1908,10 @@ in the area where the blobs are mixed together. Let’s check the tree
 representation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import plot_tree
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
 
-_, ax = plt.subplots(figsize=(10, 10))
-_ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1923,11 +1923,11 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 increase the depth to check how the tree will grow.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>max_depth = 6
-tree_clf = DecisionTreeClassifier(max_depth=max_depth)
-fit_and_plot_classification(
-    tree_clf, data_clf, data_clf_columns, target_clf_column)
-_ = plt.title(f&quot;Decision tree with max-depth of {max_depth}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_depth</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+<span class="n">fit_and_plot_classification</span><span class="p">(</span>
+    <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1937,8 +1937,8 @@ _ = plt.title(f&quot;Decision tree with max-depth of {max_depth}&quot;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_, ax = plt.subplots(figsize=(11, 7))
-_ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1956,12 +1956,12 @@ and apply a constraint at the leaves or nodes level. We will check the effect
 of <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>min_samples_leaf = 60
-tree_clf = DecisionTreeClassifier(min_samples_leaf=min_samples_leaf)
-fit_and_plot_classification(
-    tree_clf, data_clf, data_clf_columns, target_clf_column)
-_ = plt.title(
-    f&quot;Decision tree with leaf having at least {min_samples_leaf} samples&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_samples_leaf</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">min_samples_leaf</span><span class="o">=</span><span class="n">min_samples_leaf</span><span class="p">)</span>
+<span class="n">fit_and_plot_classification</span><span class="p">(</span>
+    <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Decision tree with leaf having at least </span><span class="si">{</span><span class="n">min_samples_leaf</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1971,8 +1971,8 @@ _ = plt.title(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_, ax = plt.subplots(figsize=(10, 7))
-_ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

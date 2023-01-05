@@ -1574,10 +1574,10 @@ via grid-search.</p>
 <p>We will use the California housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
-data, target = fetch_california_housing(return_X_y=True, as_frame=True)
-target *= 100  # rescale the target in k$
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
 </pre></div>
 </div>
 </div>
@@ -1586,11 +1586,11 @@ target *= 100  # rescale the target in k$
 trees number to be large, and configure the model to use early-stopping.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.ensemble import HistGradientBoostingRegressor
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingRegressor</span>
 
-hist_gbdt = HistGradientBoostingRegressor(
-    max_iter=1000, early_stopping=True, random_state=0)
+<span class="n">hist_gbdt</span> <span class="o">=</span> <span class="n">HistGradientBoostingRegressor</span><span class="p">(</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1606,16 +1606,16 @@ In this grid-search, you should search for the following parameters:</p>
 grid-search providing the previous gradient boosting instance as the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import GridSearchCV
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
-params = {
-    &quot;max_depth&quot;: [3, 8],
-    &quot;max_leaf_nodes&quot;: [15, 31],
-    &quot;learning_rate&quot;: [0.1, 1],
-}
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">31</span><span class="p">],</span>
+    <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="p">}</span>
 
-search = GridSearchCV(hist_gbdt, params)
+<span class="n">search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">hist_gbdt</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1627,13 +1627,13 @@ to run the cross-validation. You should also set <code class="docutils literal n
 so that we can investigate the inner model trained via cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import cross_validate
-from sklearn.model_selection import KFold
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
 
-cv = KFold(n_splits=5, shuffle=True, random_state=0)
-results = cross_validate(
-    search, data, target, cv=cv, return_estimator=True, n_jobs=2)
+<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">search</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1642,10 +1642,10 @@ results = cross_validate(
 standard deviation score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-print(f&quot;R2 score with cross-validation:\n&quot;
-      f&quot;{results[&#39;test_score&#39;].mean():.3f} ± &quot;
-      f&quot;{results[&#39;test_score&#39;].std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score with cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1660,10 +1660,10 @@ print(f&quot;R2 score with cross-validation:\n&quot;
 parameters values. Besides, check the number of trees used by the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-for estimator in results[&quot;estimator&quot;]:
-    print(estimator.best_params_)
-    print(f&quot;# trees: {estimator.best_estimator_.n_iter_}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="k">for</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# trees: </span><span class="si">{</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1689,34 +1689,34 @@ Aggregate the mean test score for each parameter combination and make a box
 plot of these scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-index_columns = [f&quot;param_{name}&quot; for name in params.keys()]
-columns = index_columns + [&quot;mean_test_score&quot;]
+<span class="n">index_columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="n">index_columns</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span>
 
-inner_cv_results = []
-for cv_idx, estimator in enumerate(results[&quot;estimator&quot;]):
-    search_cv_results = pd.DataFrame(estimator.cv_results_)
-    search_cv_results = search_cv_results[columns].set_index(index_columns)
-    search_cv_results = search_cv_results.rename(
-        columns={&quot;mean_test_score&quot;: f&quot;CV {cv_idx}&quot;})
-    inner_cv_results.append(search_cv_results)
-inner_cv_results = pd.concat(inner_cv_results, axis=1).T
+<span class="n">inner_cv_results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">cv_idx</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]):</span>
+    <span class="n">search_cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+    <span class="n">search_cv_results</span> <span class="o">=</span> <span class="n">search_cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_columns</span><span class="p">)</span>
+    <span class="n">search_cv_results</span> <span class="o">=</span> <span class="n">search_cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;CV </span><span class="si">{</span><span class="n">cv_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">})</span>
+    <span class="n">inner_cv_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">search_cv_results</span><span class="p">)</span>
+<span class="n">inner_cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">inner_cv_results</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-color = {&quot;whiskers&quot;: &quot;black&quot;, &quot;medians&quot;: &quot;black&quot;, &quot;caps&quot;: &quot;black&quot;}
-inner_cv_results.plot.box(vert=False, color=color)
-plt.xlabel(&quot;R2 score&quot;)
-plt.ylabel(&quot;Parameters&quot;)
-_ = plt.title(&quot;Inner CV results with parameters\n&quot;
-              &quot;(max_depth, max_leaf_nodes, learning_rate)&quot;)
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">inner_cv_results</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;R2 score&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Parameters&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Inner CV results with parameters</span><span class="se">\n</span><span class="s2">&quot;</span>
+              <span class="s2">&quot;(max_depth, max_leaf_nodes, learning_rate)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

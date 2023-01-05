@@ -1572,9 +1572,9 @@ dataset is locally available in the directory <code class="docutils literal notr
 a comma separated value (CSV) file. We start by loading the entire dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-blood_transfusion = pd.read_csv(&quot;../datasets/blood_transfusion.csv&quot;)
+<span class="n">blood_transfusion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/blood_transfusion.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1582,7 +1582,7 @@ blood_transfusion = pd.read_csv(&quot;../datasets/blood_transfusion.csv&quot;)
 <p>We can have a first look at the at the dataset loaded.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>blood_transfusion.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blood_transfusion</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1663,8 +1663,8 @@ to be predicted called <code class="docutils literal notranslate"><span class="p
 and the <code class="docutils literal notranslate"><span class="pre">target</span></code> that should be predicted.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data = blood_transfusion.drop(columns=&quot;Class&quot;)
-target = blood_transfusion[&quot;Class&quot;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1672,7 +1672,7 @@ target = blood_transfusion[&quot;Class&quot;]
 <p>Let’s have a first look at the <code class="docutils literal notranslate"><span class="pre">data</span></code> variable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1756,7 +1756,7 @@ blood.</p></li>
 these columns and if any missing values are present in our dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1781,7 +1781,7 @@ numbers and there is no missing values. We can have a look at each feature
 distributions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = data.hist(figsize=(12, 10), bins=30, edgecolor=&quot;black&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1796,7 +1796,7 @@ means that we have a few extreme high values for these features.</p>
 task.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1813,11 +1813,11 @@ Name: Class, dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-target.value_counts(normalize=True).plot.barh()
-plt.xlabel(&quot;Number of samples&quot;)
-_ = plt.title(&quot;Class distribution&quot;)
+<span class="n">target</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Class distribution&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1831,7 +1831,7 @@ solved is a classification problem. We should note that the class counts of
 these two classes is different.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target.value_counts(normalize=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1853,9 +1853,9 @@ model as well as the predictive model chosen itself.</p>
 and the target using a pair plot representation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-_ = sns.pairplot(blood_transfusion, hue=&quot;Class&quot;)
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">blood_transfusion</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

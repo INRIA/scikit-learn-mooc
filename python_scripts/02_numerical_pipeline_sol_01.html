@@ -1583,9 +1583,9 @@ shows a few examples of how to evaluate the generalization performance of these
 baseline models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1594,9 +1594,9 @@ adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
 used to train our predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;class&quot;
-target = adult_census[target_name]
-data = adult_census.drop(columns=target_name)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1605,10 +1605,10 @@ data = adult_census.drop(columns=target_name)
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>numerical_columns = [
-    &quot;age&quot;, &quot;capital-gain&quot;, &quot;capital-loss&quot;, &quot;hours-per-week&quot;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
 
-data_numeric = data[numerical_columns]
+<span class="n">data_numeric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1616,11 +1616,11 @@ data_numeric = data[numerical_columns]
 <p>Split the data and target into a train and test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-# solution
-data_numeric_train, data_numeric_test, target_train, target_test = \
-    train_test_split(data_numeric, target, random_state=42)
+<span class="c1"># solution</span>
+<span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> \
+    <span class="n">train_test_split</span><span class="p">(</span><span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1632,15 +1632,15 @@ Repeat the experiment by always predicting the class <code class="docutils liter
 achieve the desired behavior.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.dummy import DummyClassifier
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
-# solution
-class_to_predict = &quot; &gt;50K&quot;
-high_revenue_clf = DummyClassifier(strategy=&quot;constant&quot;,
-                                   constant=class_to_predict)
-high_revenue_clf.fit(data_numeric_train, target_train)
-score = high_revenue_clf.score(data_numeric_test, target_test)
-print(f&quot;Accuracy of a model predicting only high revenue: {score:.3f}&quot;)
+<span class="c1"># solution</span>
+<span class="n">class_to_predict</span> <span class="o">=</span> <span class="s2">&quot; &gt;50K&quot;</span>
+<span class="n">high_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+                                   <span class="n">constant</span><span class="o">=</span><span class="n">class_to_predict</span><span class="p">)</span>
+<span class="n">high_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">high_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting only high revenue: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1655,12 +1655,12 @@ first. We will now check the generalization performance of a model which always
 predict the low revenue class, i.e. <code class="docutils literal notranslate"><span class="pre">&quot;</span> <span class="pre">&lt;=50K&quot;</span></code>.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>class_to_predict = &quot; &lt;=50K&quot;
-low_revenue_clf = DummyClassifier(strategy=&quot;constant&quot;,
-                                  constant=class_to_predict)
-low_revenue_clf.fit(data_numeric_train, target_train)
-score = low_revenue_clf.score(data_numeric_test, target_test)
-print(f&quot;Accuracy of a model predicting only low revenue: {score:.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">class_to_predict</span> <span class="o">=</span> <span class="s2">&quot; &lt;=50K&quot;</span>
+<span class="n">low_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+                                  <span class="n">constant</span><span class="o">=</span><span class="n">class_to_predict</span><span class="p">)</span>
+<span class="n">low_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">low_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting only low revenue: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1676,7 +1676,7 @@ the fact that we have 3/4 of the target belonging to low-revenue class.</p>
 will not be helpful.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adult_census[&quot;class&quot;].value_counts()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1690,7 +1690,7 @@ Name: class, dtype: int64
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(target == &quot; &lt;=50K&quot;).mean()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target</span> <span class="o">==</span> <span class="s2">&quot; &lt;=50K&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1704,10 +1704,10 @@ Name: class, dtype: int64
 class that appears the most in the training target.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>most_freq_revenue_clf = DummyClassifier(strategy=&quot;most_frequent&quot;)
-most_freq_revenue_clf.fit(data_numeric_train, target_train)
-score = most_freq_revenue_clf.score(data_numeric_test, target_test)
-print(f&quot;Accuracy of a model predicting the most frequent class: {score:.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">most_freq_revenue_clf</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_numeric_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">most_freq_revenue_clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_numeric_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of a model predicting the most frequent class: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

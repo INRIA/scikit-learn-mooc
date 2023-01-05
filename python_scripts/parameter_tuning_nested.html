@@ -1664,12 +1664,12 @@ two separated variables. In addition, we drop the column <code class="docutils l
 previously done.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-target_name = &quot;class&quot;
-adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
-target = adult_census[target_name]
-data = adult_census.drop(columns=[target_name, &quot;education-num&quot;])
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1681,52 +1681,52 @@ data = adult_census.drop(columns=[target_name, &quot;education-num&quot;])
 this pipeline is identical to the one we used in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn import set_config
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
 
-# To get a diagram visualization of the pipeline
-set_config(display=&quot;diagram&quot;)
+<span class="c1"># To get a diagram visualization of the pipeline</span>
+<span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.compose import make_column_selector as selector
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
 
-categorical_columns_selector = selector(dtype_include=object)
-categorical_columns = categorical_columns_selector(data)
+<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-categorical_preprocessor = OrdinalEncoder(
-    handle_unknown=&quot;use_encoded_value&quot;, unknown_value=-1
-)
-preprocessor = ColumnTransformer(
-    [
-        (&#39;cat_preprocessor&#39;, categorical_preprocessor, categorical_columns),
-    ],
-    remainder=&#39;passthrough&#39;,
-    sparse_threshold=0,
-)
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
+    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span>
+    <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.pipeline import Pipeline
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 
-model = Pipeline([
-    (&quot;preprocessor&quot;, preprocessor),
-    (
-        &quot;classifier&quot;,
-        HistGradientBoostingClassifier(
-            random_state=42, max_leaf_nodes=4
-        )
-    ),
-])
-model
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+    <span class="p">(</span>
+        <span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
+        <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span>
+        <span class="p">)</span>
+    <span class="p">),</span>
+<span class="p">])</span>
+<span class="n">model</span>
 </pre></div>
 </div>
 </div>
@@ -1777,11 +1777,11 @@ generalization performance of the model. Here, we recall the necessary
 scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-cv_results = cross_validate(model, data, target, cv=5)
-cv_results = pd.DataFrame(cv_results)
-cv_results
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="n">cv_results</span>
 </pre></div>
 </div>
 </div>
@@ -1812,32 +1812,32 @@ cv_results
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.539868</td>
-      <td>0.077210</td>
+      <td>0.645775</td>
+      <td>0.098473</td>
       <td>0.863241</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.553298</td>
-      <td>0.078185</td>
+      <td>0.640754</td>
+      <td>0.099787</td>
       <td>0.860784</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.537125</td>
-      <td>0.078152</td>
+      <td>0.646602</td>
+      <td>0.102818</td>
       <td>0.860360</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.536091</td>
-      <td>0.079662</td>
+      <td>0.648234</td>
+      <td>0.102987</td>
       <td>0.862408</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.536575</td>
-      <td>0.077924</td>
+      <td>0.646071</td>
+      <td>0.097974</td>
       <td>0.866912</td>
     </tr>
   </tbody>
@@ -1848,10 +1848,10 @@ cv_results
 we can compute the mean and standard deviation of the generalization score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(
-    &quot;Generalization score without hyperparameters tuning:\n&quot;
-    f&quot;{cv_results[&#39;test_score&#39;].mean():.3f} ± {cv_results[&#39;test_score&#39;].std():.3f}&quot;
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Generalization score without hyperparameters tuning:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1874,16 +1874,16 @@ grid-search strategy and reproduce the steps done in the previous notebook.</p>
 parameters and the parameter values that we want to explore.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import GridSearchCV
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
-param_grid = {
-    &#39;classifier__learning_rate&#39;: (0.05, 0.5),
-    &#39;classifier__max_leaf_nodes&#39;: (10, 30),
-}
-model_grid_search = GridSearchCV(
-    model, param_grid=param_grid, n_jobs=2, cv=2
-)
-model_grid_search.fit(data, target)
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1954,14 +1954,14 @@ resulting from the parameter grid. The best combination is selected by
 keeping the combination leading to the best mean cross-validated score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv_results = pd.DataFrame(model_grid_search.cv_results_)
-cv_results[[
-    &quot;param_classifier__learning_rate&quot;,
-    &quot;param_classifier__max_leaf_nodes&quot;,
-    &quot;mean_test_score&quot;,
-    &quot;std_test_score&quot;,
-    &quot;rank_test_score&quot;
-]]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span><span class="p">[[</span>
+    <span class="s2">&quot;param_classifier__learning_rate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;param_classifier__max_leaf_nodes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rank_test_score&quot;</span>
+<span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -2030,7 +2030,7 @@ cv_results[[
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model_grid_search.best_params_
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">best_params_</span>
 </pre></div>
 </div>
 </div>
@@ -2056,15 +2056,15 @@ final evaluation of the refitted model. We highlight here the process using a
 single train-test split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, test_size=0.2, random_state=42
-)
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
 
-model_grid_search.fit(data_train, target_train)
-accuracy = model_grid_search.score(data_test, target_test)
-print(f&quot;Accuracy on test set: {accuracy:.3f}&quot;)
+<span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on test set: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2117,21 +2117,21 @@ refitted tuned model.</p>
 <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> to perform such evaluation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv_results = cross_validate(
-    model_grid_search, data, target, cv=5, n_jobs=2, return_estimator=True
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">model_grid_search</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv_results = pd.DataFrame(cv_results)
-cv_test_scores = cv_results[&#39;test_score&#39;]
-print(
-    &quot;Generalization score with hyperparameters tuning:\n&quot;
-    f&quot;{cv_test_scores.mean():.3f} ± {cv_test_scores.std():.3f}&quot;
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="n">cv_test_scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Generalization score with hyperparameters tuning:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">cv_test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2169,11 +2169,11 @@ value of the best hyperparameters obtained for each fold of the outer
 cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for cv_fold, estimator_in_fold in enumerate(cv_results[&quot;estimator&quot;]):
-    print(
-        f&quot;Best hyperparameters for fold #{cv_fold + 1}:\n&quot;
-        f&quot;{estimator_in_fold.best_params_}&quot;
-    )
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">cv_fold</span><span class="p">,</span> <span class="n">estimator_in_fold</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Best hyperparameters for fold #</span><span class="si">{</span><span class="n">cv_fold</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">estimator_in_fold</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>

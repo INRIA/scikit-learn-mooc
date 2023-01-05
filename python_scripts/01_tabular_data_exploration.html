@@ -1671,9 +1671,9 @@ pandas, we recommend you look at this
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1698,7 +1698,7 @@ statistics, commonly used equivalent terms are “variable”, “attribute”, 
 <code class="docutils literal notranslate"><span class="pre">head</span></code> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adult_census.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1835,8 +1835,8 @@ We will use the left-over columns (any column other than <code class="docutils l
 variables for our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_column = &quot;class&quot;
-adult_census[target_column].value_counts()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">adult_census</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1863,26 +1863,26 @@ take continuous values, for example <code class="docutils literal notranslate"><
 finite number of values, for example <code class="docutils literal notranslate"><span class="pre">&quot;native-country&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>numerical_columns = [
-    &quot;age&quot;,
-    &quot;education-num&quot;,
-    &quot;capital-gain&quot;,
-    &quot;capital-loss&quot;,
-    &quot;hours-per-week&quot;,
-]
-categorical_columns = [
-    &quot;workclass&quot;,
-    &quot;education&quot;,
-    &quot;marital-status&quot;,
-    &quot;occupation&quot;,
-    &quot;relationship&quot;,
-    &quot;race&quot;,
-    &quot;sex&quot;,
-    &quot;native-country&quot;,
-]
-all_columns = numerical_columns + categorical_columns + [target_column]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;education-num&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">categorical_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;workclass&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;education&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;marital-status&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;occupation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;relationship&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;race&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sex&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;native-country&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">all_columns</span> <span class="o">=</span> <span class="n">numerical_columns</span> <span class="o">+</span> <span class="n">categorical_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 
-adult_census = adult_census[all_columns]
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">all_columns</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1891,10 +1891,10 @@ adult_census = adult_census[all_columns]
 dataset:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(
-    f&quot;The dataset contains {adult_census.shape[0]} samples and &quot;
-    f&quot;{adult_census.shape[1]} columns&quot;
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1908,7 +1908,7 @@ dataset:</p>
 subtract 1, since one of the columns is the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;The dataset contains {adult_census.shape[1] - 1} features.&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">adult_census</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> features.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1937,7 +1937,7 @@ about the data. We can start by plotting histograms, note that this only works
 for features containing numerical values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = adult_census.hist(figsize=(20, 14))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1967,7 +1967,7 @@ working hours at the time of the data collection;</p></li>
 <p>For categorical variables, we can look at the distribution of values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adult_census[&quot;sex&quot;].value_counts()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1998,7 +1998,7 @@ before drawing any conclusions based on its statistics or the predictions of
 models trained on it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adult_census[&quot;education&quot;].value_counts()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2030,7 +2030,7 @@ years of education.</p>
 <p>Let’s look at the relationship between <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education-num&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pd.crosstab(index=adult_census[&quot;education&quot;], columns=adult_census[&quot;education-num&quot;])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2418,21 +2418,21 @@ plots on the off-diagonal can reveal interesting interactions between
 variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-# We will plot a subset of the data to keep the plot readable and make the
-# plotting faster
-n_samples_to_plot = 5000
-columns = [&quot;age&quot;, &quot;education-num&quot;, &quot;hours-per-week&quot;]
-_ = sns.pairplot(
-    data=adult_census[:n_samples_to_plot],
-    vars=columns,
-    hue=target_column,
-    plot_kws={&quot;alpha&quot;: 0.2},
-    height=3,
-    diag_kind=&quot;hist&quot;,
-    diag_kws={&quot;bins&quot;: 30},
-)
+<span class="c1"># We will plot a subset of the data to keep the plot readable and make the</span>
+<span class="c1"># plotting faster</span>
+<span class="n">n_samples_to_plot</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="nb">vars</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+    <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">diag_kind</span><span class="o">=</span><span class="s2">&quot;hist&quot;</span><span class="p">,</span>
+    <span class="n">diag_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">},</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2448,13 +2448,13 @@ predict whether someone has a high- or low-income. For instance, we could
 focus on the combination of the <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code> features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = sns.scatterplot(
-    x=&quot;age&quot;,
-    y=&quot;hours-per-week&quot;,
-    data=adult_census[:n_samples_to_plot],
-    hue=target_column,
-    alpha=0.5,
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2471,25 +2471,25 @@ such that we can easily decide what class one should predict. We could come up
 with hand-written rules as shown in this plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-ax = sns.scatterplot(
-    x=&quot;age&quot;,
-    y=&quot;hours-per-week&quot;,
-    data=adult_census[:n_samples_to_plot],
-    hue=target_column,
-    alpha=0.5,
-)
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;hours-per-week&quot;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">adult_census</span><span class="p">[:</span><span class="n">n_samples_to_plot</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
 
-age_limit = 27
-plt.axvline(x=age_limit, ymin=0, ymax=1, color=&quot;black&quot;, linestyle=&quot;--&quot;)
+<span class="n">age_limit</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">age_limit</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
-hours_per_week_limit = 40
-plt.axhline(y=hours_per_week_limit, xmin=0.18, xmax=1, color=&quot;black&quot;, linestyle=&quot;--&quot;)
+<span class="n">hours_per_week_limit</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">hours_per_week_limit</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
-plt.annotate(&quot;&lt;=50K&quot;, (17, 25), rotation=90, fontsize=35)
-plt.annotate(&quot;&lt;=50K&quot;, (35, 20), fontsize=35)
-_ = plt.annotate(&quot;???&quot;, (45, 60), fontsize=35)
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&lt;=50K&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&lt;=50K&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;???&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -1624,11 +1624,11 @@ the different errors.</p>
 notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
-housing = fetch_california_housing(as_frame=True)
-data, target = housing.data, housing.target
-target *= 100  # rescale the target in k$
+<span class="n">housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">housing</span><span class="o">.</span><span class="n">target</span>
+<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
 </pre></div>
 </div>
 </div>
@@ -1640,9 +1640,9 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.tree import DecisionTreeRegressor
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
-regressor = DecisionTreeRegressor()
+<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1663,9 +1663,9 @@ to improve a model’s generalization performance.</p>
 proportion of the training set from 10% to 100%.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-train_sizes = np.linspace(0.1, 1.0, num=5, endpoint=True)
-train_sizes
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">train_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_sizes</span>
 </pre></div>
 </div>
 </div>
@@ -1678,9 +1678,9 @@ train_sizes
 <p>We will use a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation to assess our predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import ShuffleSplit
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
-cv = ShuffleSplit(n_splits=30, test_size=0.2)
+<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1688,14 +1688,14 @@ cv = ShuffleSplit(n_splits=30, test_size=0.2)
 <p>Now, we are all set to carry out the experiment.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import learning_curve
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">learning_curve</span>
 
-results = learning_curve(
-    regressor, data, target, train_sizes=train_sizes, cv=cv,
-    scoring=&quot;neg_mean_absolute_error&quot;, n_jobs=2)
-train_size, train_scores, test_scores = results[:3]
-# Convert the scores into errors
-train_errors, test_errors = -train_scores, -test_scores
+<span class="n">results</span> <span class="o">=</span> <span class="n">learning_curve</span><span class="p">(</span>
+    <span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">train_sizes</span><span class="o">=</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">train_size</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="c1"># Convert the scores into errors</span>
+<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
 </pre></div>
 </div>
 </div>
@@ -1703,18 +1703,18 @@ train_errors, test_errors = -train_scores, -test_scores
 <p>Now, we can plot the curve.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-plt.errorbar(train_size, train_errors.mean(axis=1),
-             yerr=train_errors.std(axis=1), label=&quot;Training error&quot;)
-plt.errorbar(train_size, test_errors.mean(axis=1),
-             yerr=test_errors.std(axis=1), label=&quot;Testing error&quot;)
-plt.legend()
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">train_size</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training error&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">train_size</span><span class="p">,</span> <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">test_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing error&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-plt.xscale(&quot;log&quot;)
-plt.xlabel(&quot;Number of samples in the training set&quot;)
-plt.ylabel(&quot;Mean absolute error (k$)&quot;)
-_ = plt.title(&quot;Learning curve for decision tree&quot;)
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples in the training set&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Learning curve for decision tree&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

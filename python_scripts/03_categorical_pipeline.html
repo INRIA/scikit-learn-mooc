@@ -1675,16 +1675,16 @@ title="Print to PDF"
 categorical data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
-# drop the duplicated column `&quot;education-num&quot;` as stated in the first notebook
-adult_census = adult_census.drop(columns=&quot;education-num&quot;)
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="c1"># drop the duplicated column `&quot;education-num&quot;` as stated in the first notebook</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;education-num&quot;</span><span class="p">)</span>
 
-target_name = &quot;class&quot;
-target = adult_census[target_name]
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 
-data = adult_census.drop(columns=[target_name])
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1704,7 +1704,7 @@ possible countries (along with the <code class="docutils literal notranslate"><s
 missing):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data[&quot;native-country&quot;].value_counts().sort_index()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;native-country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1760,7 +1760,7 @@ Name: native-country, dtype: int64
 the answer lies in the columns’ data type:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.dtypes
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
 </pre></div>
 </div>
 </div>
@@ -1793,11 +1793,11 @@ do a similar approach. Instead, we will use the scikit-learn helper function
 their data type. We will illustrate how to use this helper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import make_column_selector as selector
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
 
-categorical_columns_selector = selector(dtype_include=object)
-categorical_columns = categorical_columns_selector(data)
-categorical_columns
+<span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+<span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">categorical_columns</span>
 </pre></div>
 </div>
 </div>
@@ -1820,8 +1820,8 @@ column names that have the requested data type. We can now filter out the
 unwanted columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_categorical = data[categorical_columns]
-data_categorical.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_categorical</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">categorical_columns</span><span class="p">]</span>
+<span class="n">data_categorical</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1916,7 +1916,7 @@ data_categorical.head()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;The dataset is composed of {data_categorical.shape[1]} features&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset is composed of </span><span class="si">{</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1940,13 +1940,13 @@ We will start by encoding a single column to understand how the encoding
 works.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import OrdinalEncoder
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
-education_column = data_categorical[[&quot;education&quot;]]
+<span class="n">education_column</span> <span class="o">=</span> <span class="n">data_categorical</span><span class="p">[[</span><span class="s2">&quot;education&quot;</span><span class="p">]]</span>
 
-encoder = OrdinalEncoder()
-education_encoded = encoder.fit_transform(education_column)
-education_encoded
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">()</span>
+<span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
+<span class="n">education_encoded</span>
 </pre></div>
 </div>
 </div>
@@ -1967,7 +1967,7 @@ value. We could check the mapping between the categories and the numerical
 values by checking the fitted attribute <code class="docutils literal notranslate"><span class="pre">categories_</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>encoder.categories_
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">encoder</span><span class="o">.</span><span class="n">categories_</span>
 </pre></div>
 </div>
 </div>
@@ -1983,8 +1983,8 @@ values by checking the fitted attribute <code class="docutils literal notranslat
 <p>Now, we can check the encoding applied on all categorical features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_encoded = encoder.fit_transform(data_categorical)
-data_encoded[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_categorical</span><span class="p">)</span>
+<span class="n">data_encoded</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2000,8 +2000,8 @@ data_encoded[:5]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(
-    f&quot;The dataset encoded contains {data_encoded.shape[1]} features&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The dataset encoded contains </span><span class="si">{</span><span class="n">data_encoded</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2046,11 +2046,11 @@ will be set to <code class="docutils literal notranslate"><span class="pre">0</s
 how the encoding works.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import OneHotEncoder
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
 
-encoder = OneHotEncoder(sparse=False)
-education_encoded = encoder.fit_transform(education_column)
-education_encoded
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">education_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">education_column</span><span class="p">)</span>
+<span class="n">education_encoded</span>
 </pre></div>
 </div>
 </div>
@@ -2084,9 +2084,9 @@ and ones. We can get a better understanding using the associated feature
 names resulting from the transformation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_names = encoder.get_feature_names_out(input_features=[&quot;education&quot;])
-education_encoded = pd.DataFrame(education_encoded, columns=feature_names)
-education_encoded
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span><span class="n">input_features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;education&quot;</span><span class="p">])</span>
+<span class="n">education_encoded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">education_encoded</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">education_encoded</span>
 </pre></div>
 </div>
 </div>
@@ -2347,9 +2347,9 @@ returned, for each sample, a 1 to specify which category it belongs to.</p>
 <p>Let’s apply this encoding on the full dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(
-    f&quot;The dataset is composed of {data_categorical.shape[1]} features&quot;)
-data_categorical.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The dataset is composed of </span><span class="si">{</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<span class="n">data_categorical</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2447,8 +2447,8 @@ data_categorical.head()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_encoded = encoder.fit_transform(data_categorical)
-data_encoded[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data_categorical</span><span class="p">)</span>
+<span class="n">data_encoded</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -2498,8 +2498,8 @@ data_encoded[:5]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(
-    f&quot;The encoded dataset contains {data_encoded.shape[1]} features&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The encoded dataset contains </span><span class="si">{</span><span class="n">data_encoded</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2513,8 +2513,8 @@ data_encoded[:5]
 provided by the encoder object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>columns_encoded = encoder.get_feature_names_out(data_categorical.columns)
-pd.DataFrame(data_encoded, columns=columns_encoded).head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">columns_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span><span class="n">data_categorical</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_encoded</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns_encoded</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2732,7 +2732,7 @@ cross-validation.</p>
 Let’s recall some statistics regarding this column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data[&quot;native-country&quot;].value_counts()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;native-country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2811,12 +2811,12 @@ You are going to use these parameters in the next exercise.</p>
 <p>We can now create our machine learning pipeline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
-from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-model = make_pipeline(
-    OneHotEncoder(handle_unknown=&quot;ignore&quot;), LogisticRegression(max_iter=500)
-)
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2833,15 +2833,15 @@ scaling. In this case, increasing <code class="docutils literal notranslate"><sp
 categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
-cv_results = cross_validate(model, data_categorical, target)
-cv_results
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">cv_results</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.7065227 , 0.63834381, 0.65207958, 0.64714241, 0.64239192]),
- &#39;score_time&#39;: array([0.02951956, 0.02837181, 0.0285759 , 0.03006887, 0.02829599]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.84990811, 0.79812551, 0.88143182, 0.78920507, 0.7831552 ]),
+ &#39;score_time&#39;: array([0.03406978, 0.03360724, 0.03421521, 0.03650665, 0.03367352]),
  &#39;test_score&#39;: array([0.83222438, 0.83560242, 0.82872645, 0.83312858, 0.83466421])}
 </pre></div>
 </div>
@@ -2849,8 +2849,8 @@ cv_results
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>scores = cv_results[&quot;test_score&quot;]
-print(f&quot;The accuracy is: {scores.mean():.3f} ± {scores.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The accuracy is: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

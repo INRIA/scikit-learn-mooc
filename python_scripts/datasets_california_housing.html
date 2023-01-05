@@ -1572,9 +1572,9 @@ title="Print to PDF"
 scikit-learn.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
-california_housing = fetch_california_housing(as_frame=True)
+<span class="n">california_housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1582,7 +1582,7 @@ california_housing = fetch_california_housing(as_frame=True)
 <p>We can have a first look at the available description</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(california_housing.DESCR)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">california_housing</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1640,7 +1640,7 @@ It can be downloaded/loaded using the
 <p>Let’s have an overview of the entire dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>california_housing.frame.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1744,7 +1744,7 @@ each district in California. Let’s have a close look at the features that can
 be used by a predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>california_housing.data.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1846,7 +1846,7 @@ averages or medians.</p>
 <p>Now, let’s have a look to the target to be predicted.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>california_housing.target.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1867,7 +1867,7 @@ Therefore, this problem is a regression problem.</p>
 any missing value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>california_housing.frame.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1902,10 +1902,10 @@ memory usage: 1.4 MB
 their histograms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-california_housing.frame.hist(figsize=(12, 10), bins=30, edgecolor=&quot;black&quot;)
-plt.subplots_adjust(hspace=0.7, wspace=0.4)
+<span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1929,8 +1929,8 @@ could be considered as outliers?). We can see this specificity looking at the
 statistics for these features:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>features_of_interest = [&quot;AveRooms&quot;, &quot;AveBedrms&quot;, &quot;AveOccup&quot;, &quot;Population&quot;]
-california_housing.frame[features_of_interest].describe()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_of_interest</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AveRooms&quot;</span><span class="p">,</span> <span class="s2">&quot;AveBedrms&quot;</span><span class="p">,</span> <span class="s2">&quot;AveOccup&quot;</span><span class="p">,</span> <span class="s2">&quot;Population&quot;</span><span class="p">]</span>
+<span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="p">[</span><span class="n">features_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2031,14 +2031,14 @@ and longitude and the circle size and color would be linked with the house
 value in the district.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-sns.scatterplot(data=california_housing.frame, x=&quot;Longitude&quot;, y=&quot;Latitude&quot;,
-                size=&quot;MedHouseVal&quot;, hue=&quot;MedHouseVal&quot;,
-                palette=&quot;viridis&quot;, alpha=0.5)
-plt.legend(title=&quot;MedHouseVal&quot;, bbox_to_anchor=(1.05, 0.95),
-           loc=&quot;upper left&quot;)
-_ = plt.title(&quot;Median house value depending of\n their spatial location&quot;)
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span>
+                <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">),</span>
+           <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Median house value depending of</span><span class="se">\n</span><span class="s2"> their spatial location&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2055,24 +2055,24 @@ San Francisco.</p>
 could still allow us to see these specificities.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-rng = np.random.RandomState(0)
-indices = rng.choice(np.arange(california_housing.frame.shape[0]), size=500,
-                     replace=False)
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                     <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(data=california_housing.frame.iloc[indices],
-                x=&quot;Longitude&quot;, y=&quot;Latitude&quot;,
-                size=&quot;MedHouseVal&quot;, hue=&quot;MedHouseVal&quot;,
-                palette=&quot;viridis&quot;, alpha=0.5)
-plt.legend(title=&quot;MedHouseVal&quot;, bbox_to_anchor=(1.05, 1),
-           loc=&quot;upper left&quot;)
-_ = plt.title(&quot;Median house value depending of\n their spatial location&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span>
+                <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+                <span class="n">size</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span>
+                <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+           <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Median house value depending of</span><span class="se">\n</span><span class="s2"> their spatial location&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2085,21 +2085,21 @@ target but dropping the longitude and latitude. We will quantize the target
 such that we can create proper histogram.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-# Drop the unwanted columns
-columns_drop = [&quot;Longitude&quot;, &quot;Latitude&quot;]
-subset = california_housing.frame.iloc[indices].drop(columns=columns_drop)
-# Quantize the target and keep the midpoint for each interval
-subset[&quot;MedHouseVal&quot;] = pd.qcut(subset[&quot;MedHouseVal&quot;], 6, retbins=False)
-subset[&quot;MedHouseVal&quot;] = subset[&quot;MedHouseVal&quot;].apply(lambda x: x.mid)
+<span class="c1"># Drop the unwanted columns</span>
+<span class="n">columns_drop</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">]</span>
+<span class="n">subset</span> <span class="o">=</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">columns_drop</span><span class="p">)</span>
+<span class="c1"># Quantize the target and keep the midpoint for each interval</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">,</span> <span class="n">retbins</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>_ = sns.pairplot(data=subset, hue=&quot;MedHouseVal&quot;, palette=&quot;viridis&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">subset</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2118,24 +2118,24 @@ house values.</p>
 values of the coefficients obtained via cross-validation</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import RidgeCV
-from sklearn.pipeline import make_pipeline
-from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RidgeCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-alphas = np.logspace(-3, 1, num=30)
-model = make_pipeline(StandardScaler(), RidgeCV(alphas=alphas))
-cv_results = cross_validate(
-    model, california_housing.data, california_housing.target,
-    return_estimator=True, n_jobs=2)
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">RidgeCV</span><span class="p">(</span><span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">))</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">california_housing</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+    <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>score = cv_results[&quot;test_score&quot;]
-print(f&quot;R2 score: {score.mean():.3f} ± {score.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">score</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 score: </span><span class="si">{</span><span class="n">score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2147,22 +2147,22 @@ print(f&quot;R2 score: {score.mean():.3f} ± {score.std():.3f}&quot;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-coefs = pd.DataFrame(
-    [est[-1].coef_ for est in cv_results[&quot;estimator&quot;]],
-    columns=california_housing.feature_names
-)
+<span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">california_housing</span><span class="o">.</span><span class="n">feature_names</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>color = {&quot;whiskers&quot;: &quot;black&quot;, &quot;medians&quot;: &quot;black&quot;, &quot;caps&quot;: &quot;black&quot;}
-coefs.plot.box(vert=False, color=color)
-plt.axvline(x=0, ymin=-1, ymax=1, color=&quot;black&quot;, linestyle=&quot;--&quot;)
-_ = plt.title(&quot;Coefficients of Ridge models\n via cross-validation&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">coefs</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coefficients of Ridge models</span><span class="se">\n</span><span class="s2"> via cross-validation&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

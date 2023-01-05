@@ -1662,9 +1662,9 @@ can (almost) directly be fed into predictive models. We will load a
 subset of the original data with only the numerical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-adult_census = pd.read_csv(&quot;../datasets/adult-census-numeric.csv&quot;)
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1672,7 +1672,7 @@ adult_census = pd.read_csv(&quot;../datasets/adult-census-numeric.csv&quot;)
 <p>Let’s have a look at the first records of this dataframe:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adult_census.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1757,9 +1757,9 @@ data.</p>
 <h2>Separate the data and the target<a class="headerlink" href="#separate-the-data-and-the-target" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;class&quot;
-target = adult_census[target_name]
-target
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">target</span>
 </pre></div>
 </div>
 </div>
@@ -1782,8 +1782,8 @@ Name: class, Length: 39073, dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data = adult_census.drop(columns=[target_name, ])
-data.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1857,7 +1857,7 @@ use to build our predictive model. In addition, we can also check how many
 samples are available in our dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.columns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 </div>
 </div>
@@ -1869,8 +1869,8 @@ samples are available in our dataset.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;The dataset contains {data.shape[0]} samples and &quot;
-      f&quot;{data.shape[1]} features&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1897,10 +1897,10 @@ notebook, we will introduce better models.</p>
 target data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.neighbors import KNeighborsClassifier
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
 
-model = KNeighborsClassifier()
-_ = model.fit(data, target)
+<span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1923,7 +1923,7 @@ commonly called <code class="docutils literal notranslate"><span class="pre">y</
 <p>Let’s use our model to make some predictions using the same dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted = model.predict(data)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1937,7 +1937,7 @@ model states, the prediction function is specific for each type of model.</p>
 simplicity, we will look at the five first predicted targets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1950,7 +1950,7 @@ simplicity, we will look at the five first predicted targets.</p>
 <p>Indeed, we can compare these predictions to the actual data…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1968,7 +1968,7 @@ Name: class, dtype: object
 <p>…and we could even check if the predictions agree with the real targets:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target[:5] == target_predicted[:5]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1985,8 +1985,8 @@ Name: class, dtype: bool
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Number of correct prediction: &quot;
-      f&quot;{(target[:5] == target_predicted[:5]).sum()} / 5&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of correct prediction: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> / 5&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2001,7 +2001,7 @@ sample.</p>
 <p>To get a better assessment, we can compute the average success rate.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(target == target_predicted).mean()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">target</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2031,7 +2031,7 @@ assess a model is called testing data.</p>
 set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adult_census_test = pd.read_csv(&#39;../datasets/adult-census-numeric-test.csv&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../datasets/adult-census-numeric-test.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2040,8 +2040,8 @@ set.</p>
 as in the beginning of this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_test = adult_census_test[target_name]
-data_test = adult_census_test.drop(columns=[target_name, ])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2049,8 +2049,8 @@ data_test = adult_census_test.drop(columns=[target_name, ])
 <p>We can check the number of features and samples available in this new set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;The testing dataset contains {data_test.shape[0]} samples and &quot;
-      f&quot;{data_test.shape[1]} features&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The testing dataset contains </span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2065,11 +2065,11 @@ success rate, we can use the method <code class="docutils literal notranslate"><
 this method returns their performance metric.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>accuracy = model.score(data_test, target_test)
-model_name = model.__class__.__name__
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
-print(f&quot;The test accuracy using a {model_name} is &quot;
-      f&quot;{accuracy:.3f}&quot;)
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy using a </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

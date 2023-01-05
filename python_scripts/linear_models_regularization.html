@@ -1641,11 +1641,11 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
-data, target = fetch_california_housing(as_frame=True, return_X_y=True)
-target *= 100  # rescale the target in k$
-data.head()
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1748,17 +1748,17 @@ out-of-sample test set to evaluate the generalization capabilities of our
 model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import LinearRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 
-linear_regression = make_pipeline(PolynomialFeatures(degree=2),
-                                  LinearRegression())
-cv_results = cross_validate(linear_regression, data, target,
-                            cv=10, scoring=&quot;neg_mean_squared_error&quot;,
-                            return_train_score=True,
-                            return_estimator=True)
+<span class="n">linear_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                                  <span class="n">LinearRegression</span><span class="p">())</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">linear_regression</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
+                            <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1767,9 +1767,9 @@ cv_results = cross_validate(linear_regression, data, target,
 assess the generalization performance of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_error = -cv_results[&quot;train_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the train set:\n&quot;
-      f&quot;{train_error.mean():.3f} ± {train_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1782,9 +1782,9 @@ print(f&quot;Mean squared error of linear regression model on the train set:\n&q
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_error = -cv_results[&quot;test_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the test set:\n&quot;
-      f&quot;{test_error.mean():.3f} ± {test_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1810,7 +1810,7 @@ provides a <code class="docutils literal notranslate"><span class="pre">get_feat
 the first fitted model from the cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model_first_fold = cv_results[&quot;estimator&quot;][0]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_first_fold</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1819,9 +1819,9 @@ the first fitted model from the cross-validation.</p>
 names</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>feature_names = model_first_fold[0].get_feature_names_out(
-    input_features=data.columns)
-feature_names
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">model_first_fold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
+    <span class="n">input_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">feature_names</span>
 </pre></div>
 </div>
 </div>
@@ -1847,10 +1847,10 @@ feature_names
 <p>Finally, we can create the dataframe containing all the information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-coefs = [est[-1].coef_ for est in cv_results[&quot;estimator&quot;]]
-weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
+<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_linear_regression</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1858,11 +1858,11 @@ weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
 <p>Now, let’s use a box plot to see the coefficients variations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-color = {&quot;whiskers&quot;: &quot;black&quot;, &quot;medians&quot;: &quot;black&quot;, &quot;caps&quot;: &quot;black&quot;}
-weights_linear_regression.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title(&quot;Linear regression coefficients&quot;)
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear regression coefficients&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1876,14 +1876,14 @@ to shrink toward zero. This is known as regularization. We will use a ridge
 model which enforces such behavior.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import Ridge
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
 
-ridge = make_pipeline(PolynomialFeatures(degree=2),
-                      Ridge(alpha=100))
-cv_results = cross_validate(ridge, data, target,
-                            cv=10, scoring=&quot;neg_mean_squared_error&quot;,
-                            return_train_score=True,
-                            return_estimator=True)
+<span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                      <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
+                            <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1900,15 +1900,15 @@ cv_results = cross_validate(ridge, data, target,
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.75974e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.82401e-17): result may not be accurate.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.82401e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=4.96672e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68318e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 </pre></div>
 </div>
@@ -1920,9 +1920,9 @@ numerical problems when training the predictive model.</p>
 <p>We can explore the train and test scores of this model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_error = -cv_results[&quot;train_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the train set:\n&quot;
-      f&quot;{train_error.mean():.3f} ± {train_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1935,9 +1935,9 @@ print(f&quot;Mean squared error of linear regression model on the train set:\n&q
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_error = -cv_results[&quot;test_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the test set:\n&quot;
-      f&quot;{test_error.mean():.3f} ± {test_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1953,16 +1953,16 @@ our model is less overfitting. We can compare the values of the weights of
 ridge with the un-regularized linear regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coefs = [est[-1].coef_ for est in cv_results[&quot;estimator&quot;]]
-weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title(&quot;Ridge weights&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2005,23 +2005,23 @@ is generally good practice to scale the data.</p>
 scaler will be placed just before the regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import StandardScaler
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 
-ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
-                      Ridge(alpha=0.5))
-cv_results = cross_validate(ridge, data, target,
-                            cv=10, scoring=&quot;neg_mean_squared_error&quot;,
-                            return_train_score=True,
-                            return_estimator=True)
+<span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span>
+                      <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
+                            <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_error = -cv_results[&quot;train_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the train set:\n&quot;
-      f&quot;{train_error.mean():.3f} ± {train_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2034,9 +2034,9 @@ print(f&quot;Mean squared error of linear regression model on the train set:\n&q
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_error = -cv_results[&quot;test_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the test set:\n&quot;
-      f&quot;{test_error.mean():.3f} ± {test_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2054,16 +2054,16 @@ spot.</p>
 <p>Let’s have an additional look to the different weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coefs = [est[-1].coef_ for est in cv_results[&quot;estimator&quot;]]
-weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title(&quot;Ridge weights with data scaling&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights with data scaling&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2077,28 +2077,28 @@ closer and that all features are more equally contributing.</p>
 of the value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> by increasing its value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
-                      Ridge(alpha=1_000_000))
-cv_results = cross_validate(ridge, data, target,
-                            cv=10, scoring=&quot;neg_mean_squared_error&quot;,
-                            return_train_score=True,
-                            return_estimator=True)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span>
+                      <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">))</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
+                            <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>coefs = [est[-1].coef_ for est in cv_results[&quot;estimator&quot;]]
-weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title(&quot;Ridge weights with data scaling and large alpha&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights with data scaling and large alpha&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2152,34 +2152,34 @@ alpha, while the outer cross-validation will give an estimate of the
 testing score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-from sklearn.linear_model import RidgeCV
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RidgeCV</span>
 
-alphas = np.logspace(-2, 0, num=21)
-ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(),
-                      RidgeCV(alphas=alphas, store_cv_values=True))
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
+<span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span>
+                      <span class="n">RidgeCV</span><span class="p">(</span><span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">,</span> <span class="n">store_cv_values</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import ShuffleSplit
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
-cv = ShuffleSplit(n_splits=5, random_state=1)
-cv_results = cross_validate(ridge, data, target,
-                            cv=cv, scoring=&quot;neg_mean_squared_error&quot;,
-                            return_train_score=True,
-                            return_estimator=True, n_jobs=2)
+<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
+                            <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_error = -cv_results[&quot;train_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the train set:\n&quot;
-      f&quot;{train_error.mean():.3f} ± {train_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2192,9 +2192,9 @@ print(f&quot;Mean squared error of linear regression model on the train set:\n&q
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_error = -cv_results[&quot;test_score&quot;]
-print(f&quot;Mean squared error of linear regression model on the test set:\n&quot;
-      f&quot;{test_error.mean():.3f} ± {test_error.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2214,11 +2214,11 @@ strength that we tried. The error bars represent one standard deviation of
 the average mean square error across folds for a given value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mse_alphas = [est[-1].cv_values_.mean(axis=0)
-              for est in cv_results[&quot;estimator&quot;]]
-cv_alphas = pd.DataFrame(mse_alphas, columns=alphas)
-cv_alphas = cv_alphas.aggregate([&quot;mean&quot;, &quot;std&quot;]).T
-cv_alphas
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mse_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cv_values_</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mse_alphas</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">alphas</span><span class="p">)</span>
+<span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">cv_alphas</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">cv_alphas</span>
 </pre></div>
 </div>
 </div>
@@ -2357,13 +2357,13 @@ cv_alphas
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.errorbar(cv_alphas.index, cv_alphas[&quot;mean&quot;],
-             yerr=cv_alphas[&quot;std&quot;])
-plt.xlim((0.0, 1.0))
-plt.ylim((4_500, 11_000))
-plt.ylabel(&quot;Mean squared error\n (lower is better)&quot;)
-plt.xlabel(&quot;alpha&quot;)
-_ = plt.title(&quot;Testing error obtained by cross-validation&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span>
+             <span class="n">yerr</span><span class="o">=</span><span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">4_500</span><span class="p">,</span> <span class="mi">11_000</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Testing error obtained by cross-validation&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2376,8 +2376,8 @@ its amount to get the best generalization performance. We can check if the best
 <code class="docutils literal notranslate"><span class="pre">alpha</span></code> found is stable across the cross-validation fold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>best_alphas = [est[-1].alpha_ for est in cv_results[&quot;estimator&quot;]]
-best_alphas
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">alpha_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">best_alphas</span>
 </pre></div>
 </div>
 </div>
@@ -2398,8 +2398,8 @@ to choose the best <code class="docutils literal notranslate"><span class="pre">
 defined by:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;Min optimal alpha: {np.min(best_alphas):.2f} and &quot;
-      f&quot;Max optimal alpha: {np.max(best_alphas):.2f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Min optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> and &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;Max optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

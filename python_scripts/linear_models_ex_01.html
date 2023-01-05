@@ -1659,12 +1659,12 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-penguins = pd.read_csv(&quot;../datasets/penguins_regression.csv&quot;)
-feature_name = &quot;Flipper Length (mm)&quot;
-target_name = &quot;Body Mass (g)&quot;
-data, target = penguins[[feature_name]], penguins[target_name]
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
+<span class="n">feature_name</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[[</span><span class="n">feature_name</span><span class="p">]],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1674,12 +1674,12 @@ data, target = penguins[[feature_name]], penguins[target_name]
 <h3>Model definition<a class="headerlink" href="#model-definition" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def linear_model_flipper_mass(
-    flipper_length, weight_flipper_length, intercept_body_mass
-):
-    &quot;&quot;&quot;Linear model of the form y = a * x + b&quot;&quot;&quot;
-    body_mass = weight_flipper_length * flipper_length + intercept_body_mass
-    return body_mass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">linear_model_flipper_mass</span><span class="p">(</span>
+    <span class="n">flipper_length</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear model of the form y = a * x + b&quot;&quot;&quot;</span>
+    <span class="n">body_mass</span> <span class="o">=</span> <span class="n">weight_flipper_length</span> <span class="o">*</span> <span class="n">flipper_length</span> <span class="o">+</span> <span class="n">intercept_body_mass</span>
+    <span class="k">return</span> <span class="n">body_mass</span>
 </pre></div>
 </div>
 </div>
@@ -1696,16 +1696,16 @@ fit our data. Use the above helper function to visualize both the models and
 the real samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-flipper_length_range = np.linspace(data.min(), data.max(), num=300)
+<span class="n">flipper_length_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1720,7 +1720,7 @@ as inputs the true target values and the predictions and returns a single
 scalar as output.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1731,12 +1731,12 @@ each model.</p>
     <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model #</span><span class="si">{</span><span class="n">model_idx</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">weight</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g / mm) * flipper length + </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">goodness_fit_measure</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">goodness_fit_measure</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>

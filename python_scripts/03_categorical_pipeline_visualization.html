@@ -1635,13 +1635,13 @@ update in the UI of scikit-learn in a future release.</p></li>
 <p>We need to define our data and target. In this case we will build a classification model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-ames_housing = pd.read_csv(&quot;../datasets/house_prices.csv&quot;, na_values=&#39;?&#39;)
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
 
-target_name = &quot;SalePrice&quot;
-data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
-target = (target &gt; 200_000).astype(int)
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">),</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">target</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span> <span class="o">&gt;</span> <span class="mi">200_000</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1649,7 +1649,7 @@ target = (target &gt; 200_000).astype(int)
 <p>We inspect the first rows of the dataframe</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span>
 </pre></div>
 </div>
 </div>
@@ -1969,9 +1969,9 @@ target = (target &gt; 200_000).astype(int)
 this arbitrary subset of data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>numeric_features = [&#39;LotArea&#39;, &#39;FullBath&#39;, &#39;HalfBath&#39;]
-categorical_features = [&#39;Neighborhood&#39;, &#39;HouseStyle&#39;]
-data = data[numeric_features + categorical_features]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numeric_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LotArea&#39;</span><span class="p">,</span> <span class="s1">&#39;FullBath&#39;</span><span class="p">,</span> <span class="s1">&#39;HalfBath&#39;</span><span class="p">]</span>
+<span class="n">categorical_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Neighborhood&#39;</span><span class="p">,</span> <span class="s1">&#39;HouseStyle&#39;</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">numeric_features</span> <span class="o">+</span> <span class="n">categorical_features</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1982,16 +1982,16 @@ data = data[numeric_features + categorical_features]
 <p>The first step is to define the preprocessing steps</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import Pipeline
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">SimpleImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
 
-numeric_transformer = Pipeline(steps=[
-    (&#39;imputer&#39;, SimpleImputer(strategy=&#39;median&#39;)),
-    (&#39;scaler&#39;, StandardScaler(),
-)])
+<span class="n">numeric_transformer</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;imputer&#39;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span>
+<span class="p">)])</span>
 
-categorical_transformer = OneHotEncoder(handle_unknown=&#39;ignore&#39;)
+<span class="n">categorical_transformer</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1999,12 +1999,12 @@ categorical_transformer = OneHotEncoder(handle_unknown=&#39;ignore&#39;)
 <p>The next step is to apply the transformations using <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.compose import ColumnTransformer
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
 
-preprocessor = ColumnTransformer(transformers=[
-    (&#39;num&#39;, numeric_transformer, numeric_features),
-    (&#39;cat&#39;, categorical_transformer, categorical_features),
-])
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;num&#39;</span><span class="p">,</span> <span class="n">numeric_transformer</span><span class="p">,</span> <span class="n">numeric_features</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="n">categorical_transformer</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
+<span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2012,12 +2012,12 @@ preprocessor = ColumnTransformer(transformers=[
 <p>Then we define the model and join the steps in order</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-model = Pipeline(steps=[
-    (&#39;preprocessor&#39;, preprocessor),
-    (&#39;classifier&#39;, LogisticRegression()),
-])
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;preprocessor&#39;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">()),</span>
+<span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2025,7 +2025,7 @@ model = Pipeline(steps=[
 <p>Let’s visualize it!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span>
 </pre></div>
 </div>
 </div>
@@ -2067,12 +2067,12 @@ model = Pipeline(steps=[
 <h2>Finally we score the model<a class="headerlink" href="#finally-we-score-the-model" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-cv_results = cross_validate(model, data, target, cv=5)
-scores = cv_results[&quot;test_score&quot;]
-print(&quot;The mean cross-validation accuracy is: &quot;
-      f&quot;{scores.mean():.3f} ± {scores.std():.3f}&quot;)
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

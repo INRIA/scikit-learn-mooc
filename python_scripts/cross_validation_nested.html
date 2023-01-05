@@ -1583,9 +1583,9 @@ generalization performance.</p>
 <p>We will illustrate this difference using the breast cancer dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import load_breast_cancer
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_breast_cancer</span>
 
-data, target = load_breast_cancer(return_X_y=True)
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">load_breast_cancer</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1594,16 +1594,16 @@ data, target = load_breast_cancer(return_X_y=True)
 on a minimal parameter grid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import GridSearchCV
-from sklearn.svm import SVC
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 
-param_grid = {&quot;C&quot;: [0.1, 1, 10], &quot;gamma&quot;: [.01, .1]}
-model_to_tune = SVC()
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s2">&quot;gamma&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">.01</span><span class="p">,</span> <span class="mf">.1</span><span class="p">]}</span>
+<span class="n">model_to_tune</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">()</span>
 
-search = GridSearchCV(
-    estimator=model_to_tune, param_grid=param_grid, n_jobs=2
-)
-search.fit(data, target)
+<span class="n">search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">model_to_tune</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1621,7 +1621,7 @@ combinations of parameters given in <code class="docutils literal notranslate"><
 maximize the mean score on the internal test sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;The best parameters found are: {search.best_params_}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best parameters found are: </span><span class="si">{</span><span class="n">search</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1634,7 +1634,7 @@ maximize the mean score on the internal test sets.</p>
 <p>We can also show the mean score obtained by using the parameters <code class="docutils literal notranslate"><span class="pre">best_params_</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;The mean CV score of the best model is: {search.best_score_:.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean CV score of the best model is: </span><span class="si">{</span><span class="n">search</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1667,21 +1667,21 @@ testing scores on completely independent sets of samples.</p>
 <p>Let us do this in one go as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_val_score, KFold
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">KFold</span>
 
-# Declare the inner and outer cross-validation strategies
-inner_cv = KFold(n_splits=5, shuffle=True, random_state=0)
-outer_cv = KFold(n_splits=3, shuffle=True, random_state=0)
+<span class="c1"># Declare the inner and outer cross-validation strategies</span>
+<span class="n">inner_cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">outer_cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-# Inner cross-validation for parameter search
-model = GridSearchCV(
-    estimator=model_to_tune, param_grid=param_grid, cv=inner_cv, n_jobs=2
-)
+<span class="c1"># Inner cross-validation for parameter search</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">model_to_tune</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">inner_cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
 
-# Outer cross-validation to compute the testing score
-test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=2)
-print(f&quot;The mean score using nested cross-validation is: &quot;
-      f&quot;{test_score.mean():.3f} ± {test_score.std():.3f}&quot;)
+<span class="c1"># Outer cross-validation to compute the testing score</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">outer_cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean score using nested cross-validation is: &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1701,26 +1701,26 @@ and shuffle the data differently to ensure that our conclusion does not
 depend on a particular resampling of the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_score_not_nested = []
-test_score_nested = []
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_score_not_nested</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_score_nested</span> <span class="o">=</span> <span class="p">[]</span>
 
-N_TRIALS = 20
-for i in range(N_TRIALS):
-    # For each trial, we use cross-validation splits on independently
-    # randomly shuffled data by passing distinct values to the random_state
-    # parameter.
-    inner_cv = KFold(n_splits=5, shuffle=True, random_state=i)
-    outer_cv = KFold(n_splits=3, shuffle=True, random_state=i)
+<span class="n">N_TRIALS</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_TRIALS</span><span class="p">):</span>
+    <span class="c1"># For each trial, we use cross-validation splits on independently</span>
+    <span class="c1"># randomly shuffled data by passing distinct values to the random_state</span>
+    <span class="c1"># parameter.</span>
+    <span class="n">inner_cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">outer_cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
 
-    # Non_nested parameter search and scoring
-    model = GridSearchCV(estimator=model_to_tune, param_grid=param_grid,
-                         cv=inner_cv, n_jobs=2)
-    model.fit(data, target)
-    test_score_not_nested.append(model.best_score_)
+    <span class="c1"># Non_nested parameter search and scoring</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model_to_tune</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
+                         <span class="n">cv</span><span class="o">=</span><span class="n">inner_cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">test_score_not_nested</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
 
-    # Nested CV with parameter optimization
-    test_score = cross_val_score(model, data, target, cv=outer_cv, n_jobs=2)
-    test_score_nested.append(test_score.mean())
+    <span class="c1"># Nested CV with parameter optimization</span>
+    <span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">outer_cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">test_score_nested</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1728,26 +1728,26 @@ for i in range(N_TRIALS):
 <p>We can merge the data together and make a box plot of the two strategies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-all_scores = {
-    &quot;Not nested CV&quot;: test_score_not_nested,
-    &quot;Nested CV&quot;: test_score_nested,
-}
-all_scores = pd.DataFrame(all_scores)
+<span class="n">all_scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Not nested CV&quot;</span><span class="p">:</span> <span class="n">test_score_not_nested</span><span class="p">,</span>
+    <span class="s2">&quot;Nested CV&quot;</span><span class="p">:</span> <span class="n">test_score_nested</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">all_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_scores</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-color = {&quot;whiskers&quot;: &quot;black&quot;, &quot;medians&quot;: &quot;black&quot;, &quot;caps&quot;: &quot;black&quot;}
-all_scores.plot.box(color=color, vert=False)
-plt.xlabel(&quot;Accuracy&quot;)
-_ = plt.title(&quot;Comparison of mean accuracy obtained on the test sets with\n&quot;
-              &quot;and without nested cross-validation&quot;)
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">all_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparison of mean accuracy obtained on the test sets with</span><span class="se">\n</span><span class="s2">&quot;</span>
+              <span class="s2">&quot;and without nested cross-validation&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

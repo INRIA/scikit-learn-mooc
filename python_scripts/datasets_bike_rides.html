@@ -1574,10 +1574,10 @@ located in the directory <code class="docutils literal notranslate"><span class=
 <p>We open this dataset using pandas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-cycling = pd.read_csv(&quot;../datasets/bike_rides.csv&quot;)
-cycling.head()
+<span class="n">cycling</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/bike_rides.csv&quot;</span><span class="p">)</span>
+<span class="n">cycling</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1670,7 +1670,7 @@ of some specific measurements. Let’s check the data type of the columns more
 in details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cycling.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cycling</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1704,10 +1704,10 @@ such data type when opening the file. In addition, we will want to use
 arguments to help pandas at reading properly our CSV file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cycling = pd.read_csv(&quot;../datasets/bike_rides.csv&quot;, index_col=0,
-                      parse_dates=True)
-cycling.index.name = &quot;&quot;
-cycling.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cycling</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/bike_rides.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                      <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cycling</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">cycling</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1799,7 +1799,7 @@ cycling.head()
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cycling.info()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cycling</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1851,8 +1851,8 @@ data science problem is quite easy: can we predict instantaneous cyclist
 power from other (cheaper) sensors.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_name = &quot;power&quot;
-data, target = cycling.drop(columns=target_name), cycling[target_name]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;power&quot;</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">cycling</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">),</span> <span class="n">cycling</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1860,10 +1860,10 @@ data, target = cycling.drop(columns=target_name), cycling[target_name]
 <p>We can have a first look at the target distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-target.plot.hist(bins=50, edgecolor=&quot;black&quot;)
-plt.xlabel(&quot;Power (W)&quot;)
+<span class="n">target</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Power (W)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1884,7 +1884,7 @@ power output.</p>
 <p>Now, let’s have a look at the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1970,7 +1970,7 @@ power output.</p>
 <p>We can first have a closer look to the index of the dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.index
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">index</span>
 </pre></div>
 </div>
 </div>
@@ -1994,7 +1994,7 @@ power output.</p>
 <p>We see that records are acquired every seconds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.index.min(), data.index.max()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2010,7 +2010,7 @@ every seconds between these dates. Indeed, only a couple of date should be
 present in the dataframe, corresponding to the number of cycling rides.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.index.normalize().nunique()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -2024,18 +2024,18 @@ present in the dataframe, corresponding to the number of cycling rides.</p>
 extract only the first ride of August 18, 2020.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>date_first_ride = &quot;2020-08-18&quot;
-cycling_ride = cycling.loc[date_first_ride]
-data_ride, target_ride = data.loc[date_first_ride], target.loc[date_first_ride]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">date_first_ride</span> <span class="o">=</span> <span class="s2">&quot;2020-08-18&quot;</span>
+<span class="n">cycling_ride</span> <span class="o">=</span> <span class="n">cycling</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">date_first_ride</span><span class="p">]</span>
+<span class="n">data_ride</span><span class="p">,</span> <span class="n">target_ride</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">date_first_ride</span><span class="p">],</span> <span class="n">target</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">date_first_ride</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_ride.plot()
-plt.legend(bbox_to_anchor=(1.05, 1), loc=&#39;upper left&#39;)
-_ = plt.title(&quot;Sensor values for different cyclist measurements&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ride</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Sensor values for different cyclist measurements&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2049,9 +2049,9 @@ make it difficult to make any observation. We could resample the data to get
 a smoother visualization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_ride.resample(&quot;60S&quot;).mean().plot()
-plt.legend(bbox_to_anchor=(1.05, 1), loc=&#39;upper left&#39;)
-_ = plt.title(&quot;Sensor values for different cyclist measurements&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ride</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;60S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Sensor values for different cyclist measurements&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2062,13 +2062,13 @@ _ = plt.title(&quot;Sensor values for different cyclist measurements&quot;)
 <p>We can check the range of the different features:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>axs = data_ride.hist(figsize=(10, 12), bins=50, edgecolor=&quot;black&quot;, grid=False)
-# add the units to the plots
-units = [&quot;beats per minute&quot;, &quot;rotations per minute&quot;, &quot;meters per second&quot;,
-         &quot;meters per second squared&quot;, &quot;%&quot;]
-for unit, ax in zip(units, axs.ravel()):
-    ax.set_xlabel(unit)
-plt.subplots_adjust(hspace=0.6)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">axs</span> <span class="o">=</span> <span class="n">data_ride</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># add the units to the plots</span>
+<span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;beats per minute&quot;</span><span class="p">,</span> <span class="s2">&quot;rotations per minute&quot;</span><span class="p">,</span> <span class="s2">&quot;meters per second&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;meters per second squared&quot;</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">unit</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2083,29 +2083,29 @@ a null power. We also see that the slope have large extremum.</p>
 some of these intuitions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-rng = np.random.RandomState(0)
-indices = rng.choice(np.arange(cycling_ride.shape[0]), size=500, replace=False)
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cycling_ride</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>subset = cycling_ride.iloc[indices].copy()
-# Quantize the target and keep the midpoint for each interval
-subset[&quot;power&quot;] = pd.qcut(subset[&quot;power&quot;], 6, retbins=False)
-subset[&quot;power&quot;] = subset[&quot;power&quot;].apply(lambda x: x.mid)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subset</span> <span class="o">=</span> <span class="n">cycling_ride</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># Quantize the target and keep the midpoint for each interval</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;power&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">qcut</span><span class="p">(</span><span class="n">subset</span><span class="p">[</span><span class="s2">&quot;power&quot;</span><span class="p">],</span> <span class="mi">6</span><span class="p">,</span> <span class="n">retbins</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">subset</span><span class="p">[</span><span class="s2">&quot;power&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="s2">&quot;power&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mid</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-_ = sns.pairplot(data=subset, hue=&quot;power&quot;, palette=&quot;viridis&quot;)
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">subset</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;power&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

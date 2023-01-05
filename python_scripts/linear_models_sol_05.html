@@ -1582,30 +1582,30 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-penguins = pd.read_csv(&quot;../datasets/penguins_classification.csv&quot;)
-# only keep the Adelie and Chinstrap classes
-penguins = penguins.set_index(&quot;Species&quot;).loc[
-    [&quot;Adelie&quot;, &quot;Chinstrap&quot;]].reset_index()
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
+<span class="c1"># only keep the Adelie and Chinstrap classes</span>
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+    <span class="p">[</span><span class="s2">&quot;Adelie&quot;</span><span class="p">,</span> <span class="s2">&quot;Chinstrap&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 
-culmen_columns = [&quot;Culmen Length (mm)&quot;, &quot;Culmen Depth (mm)&quot;]
-target_column = &quot;Species&quot;
+<span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import train_test_split
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-penguins_train, penguins_test = train_test_split(penguins, random_state=0)
+<span class="n">penguins_train</span><span class="p">,</span> <span class="n">penguins_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-data_train = penguins_train[culmen_columns]
-data_test = penguins_test[culmen_columns]
+<span class="n">data_train</span> <span class="o">=</span> <span class="n">penguins_train</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">penguins_test</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">]</span>
 
-target_train = penguins_train[target_column]
-target_test = penguins_test[target_column]
+<span class="n">target_train</span> <span class="o">=</span> <span class="n">penguins_train</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
+<span class="n">target_test</span> <span class="o">=</span> <span class="n">penguins_test</span><span class="p">[</span><span class="n">target_column</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1613,12 +1613,12 @@ target_test = penguins_test[target_column]
 <p>First, let’s create our predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty=&quot;l2&quot;))
+<span class="n">logistic_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1629,30 +1629,30 @@ logistic_regression = make_pipeline(
 decision function boundary.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>Cs = [0.01, 0.1, 1, 10]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
 
-# solution
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.inspection import DecisionBoundaryDisplay
+<span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
-for C in Cs:
-    logistic_regression.set_params(logisticregression__C=C)
-    logistic_regression.fit(data_train, target_train)
-    accuracy = logistic_regression.score(data_test, target_test)
+<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
+    <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">logistic_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 
-    DecisionBoundaryDisplay.from_estimator(
-        logistic_regression,
-        data_test,
-        response_method=&quot;predict&quot;,
-        cmap=&quot;RdBu_r&quot;,
-        alpha=0.5,
-    )
-    sns.scatterplot(
-        data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
-        hue=target_column, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-    plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-    plt.title(f&quot;C: {C} \n Accuracy on the test set: {accuracy:.2f}&quot;)
+    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">logistic_regression</span><span class="p">,</span>
+        <span class="n">data_test</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">penguins_test</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;C: </span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> Accuracy on the test set: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1666,23 +1666,23 @@ for C in Cs:
 <p>Look at the impact of the <code class="docutils literal notranslate"><span class="pre">C</span></code> hyperparameter on the magnitude of the weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-weights_ridge = []
-for C in Cs:
-    logistic_regression.set_params(logisticregression__C=C)
-    logistic_regression.fit(data_train, target_train)
-    coefs = logistic_regression[-1].coef_[0]
-    weights_ridge.append(pd.Series(coefs, index=culmen_columns))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">weights_ridge</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
+    <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">logistic_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+    <span class="n">coefs</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">weights_ridge</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>weights_ridge = pd.concat(
-    weights_ridge, axis=1, keys=[f&quot;C: {C}&quot; for C in Cs])
-weights_ridge.plot.barh()
-_ = plt.title(&quot;LogisticRegression weights depending of C&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="n">weights_ridge</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C: </span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">])</span>
+<span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;LogisticRegression weights depending of C&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

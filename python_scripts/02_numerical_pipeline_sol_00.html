@@ -1573,10 +1573,10 @@ particular the <code class="docutils literal notranslate"><span class="pre">.fit
 <p>Let’s load the adult census dataset with only numerical variables</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-adult_census = pd.read_csv(&quot;../datasets/adult-census-numeric.csv&quot;)
-data = adult_census.drop(columns=&quot;class&quot;)
-target = adult_census[&quot;class&quot;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1595,9 +1595,9 @@ or directly access the description inside your notebook by running the
 following cell. This will open a pager pointing to the documentation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.neighbors import KNeighborsClassifier
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
 
-KNeighborsClassifier?
+KNeighborsClassifier<span class="o">?</span>
 </pre></div>
 </div>
 </div>
@@ -1606,8 +1606,8 @@ KNeighborsClassifier?
 <p>Create a <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> model with <code class="docutils literal notranslate"><span class="pre">n_neighbors=50</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-model = KNeighborsClassifier(n_neighbors=50)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1615,8 +1615,8 @@ model = KNeighborsClassifier(n_neighbors=50)
 <p>Fit this model on the data and target loaded above</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-model.fit(data, target)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1627,10 +1627,10 @@ model.fit(data, target)
 data. Do they match the actual target values?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-first_data_values = data.iloc[:10]
-first_predictions = model.predict(first_data_values)
-first_predictions
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">first_data_values</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">first_predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">first_data_values</span><span class="p">)</span>
+<span class="n">first_predictions</span>
 </pre></div>
 </div>
 </div>
@@ -1643,8 +1643,8 @@ first_predictions
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>first_target_values = target.iloc[:10]
-first_target_values
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_target_values</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">first_target_values</span>
 </pre></div>
 </div>
 </div>
@@ -1666,12 +1666,12 @@ Name: class, dtype: object
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>number_of_correct_predictions = (
-    first_predictions == first_target_values).sum()
-number_of_predictions = len(first_predictions)
-print(
-    f&quot;{number_of_correct_predictions}/{number_of_predictions} &quot;
-    &quot;of predictions are correct&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">number_of_correct_predictions</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">first_predictions</span> <span class="o">==</span> <span class="n">first_target_values</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">number_of_predictions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">first_predictions</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">number_of_correct_predictions</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">number_of_predictions</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="s2">&quot;of predictions are correct&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1684,8 +1684,8 @@ print(
 <p>Compute the accuracy on the training data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-model.score(data, target)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1699,13 +1699,13 @@ model.score(data, target)
 compute the accuracy on the test data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-adult_census_test = pd.read_csv(&quot;../datasets/adult-census-numeric-test.csv&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">adult_census_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric-test.csv&quot;</span><span class="p">)</span>
 
-data_test = adult_census_test.drop(columns=&quot;class&quot;)
-target_test = adult_census_test[&quot;class&quot;]
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">)</span>
+<span class="n">target_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
 
-model.score(data_test, target_test)
+<span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

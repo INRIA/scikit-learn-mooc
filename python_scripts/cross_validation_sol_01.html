@@ -1583,11 +1583,11 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-blood_transfusion = pd.read_csv(&quot;../datasets/blood_transfusion.csv&quot;)
-data = blood_transfusion.drop(columns=&quot;Class&quot;)
-target = blood_transfusion[&quot;Class&quot;]
+<span class="n">blood_transfusion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/blood_transfusion.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1612,12 +1612,12 @@ default.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 
-model = make_pipeline(StandardScaler(), SVC())
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">SVC</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1631,13 +1631,13 @@ to the <code class="docutils literal notranslate"><span class="pre">cv</span></c
 let the other parameters to the default.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import cross_validate, ShuffleSplit
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">ShuffleSplit</span>
 
-cv = ShuffleSplit(random_state=0)
-cv_results = cross_validate(model, data, target, cv=cv, n_jobs=2)
-cv_results = pd.DataFrame(cv_results)
-cv_results
+<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="n">cv_results</span>
 </pre></div>
 </div>
 </div>
@@ -1668,62 +1668,62 @@ cv_results
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.017570</td>
-      <td>0.003332</td>
+      <td>0.024834</td>
+      <td>0.003611</td>
       <td>0.680000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.017020</td>
-      <td>0.003000</td>
+      <td>0.020903</td>
+      <td>0.003958</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.016409</td>
-      <td>0.002954</td>
+      <td>0.020488</td>
+      <td>0.003615</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.014674</td>
-      <td>0.002735</td>
+      <td>0.020455</td>
+      <td>0.003592</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.014564</td>
-      <td>0.002638</td>
+      <td>0.019958</td>
+      <td>0.003464</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.014718</td>
-      <td>0.002596</td>
+      <td>0.021428</td>
+      <td>0.003600</td>
       <td>0.786667</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.013986</td>
-      <td>0.002471</td>
+      <td>0.020227</td>
+      <td>0.003385</td>
       <td>0.800000</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.013191</td>
-      <td>0.002513</td>
+      <td>0.018730</td>
+      <td>0.003412</td>
       <td>0.826667</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.013913</td>
-      <td>0.002495</td>
+      <td>0.018595</td>
+      <td>0.003433</td>
       <td>0.746667</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.013617</td>
-      <td>0.002474</td>
+      <td>0.018459</td>
+      <td>0.003273</td>
       <td>0.733333</td>
     </tr>
   </tbody>
@@ -1732,11 +1732,11 @@ cv_results
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(
-    f&quot;Accuracy score of our model:\n&quot;
-    f&quot;{cv_results[&#39;test_score&#39;].mean():.3f} ± &quot;
-    f&quot;{cv_results[&#39;test_score&#39;].std():.3f}&quot;
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Accuracy score of our model:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1761,15 +1761,15 @@ using <code class="docutils literal notranslate"><span class="pre">model.get_par
 accessing and setting hyperparameter in the next section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-import numpy as np
-from sklearn.model_selection import validation_curve
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">validation_curve</span>
 
-gammas = np.logspace(-3, 2, num=30)
-param_name = &quot;svc__gamma&quot;
-train_scores, test_scores = validation_curve(
-    model, data, target, param_name=param_name, param_range=gammas, cv=cv,
-    n_jobs=2)
+<span class="n">gammas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">param_name</span> <span class="o">=</span> <span class="s2">&quot;svc__gamma&quot;</span>
+<span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">gammas</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1777,29 +1777,29 @@ train_scores, test_scores = validation_curve(
 <p>Plot the validation curve for the train and test scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-plt.errorbar(
-    gammas,
-    train_scores.mean(axis=1),
-    yerr=train_scores.std(axis=1),
-    alpha=0.95,
-    label=&quot;Training score&quot;,
-)
-plt.errorbar(
-    gammas,
-    test_scores.mean(axis=1),
-    yerr=test_scores.std(axis=1),
-    alpha=0.5,
-    label=&quot;Testing score&quot;,
-)
-plt.legend()
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">gammas</span><span class="p">,</span>
+    <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">gammas</span><span class="p">,</span>
+    <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-plt.xscale(&quot;log&quot;)
-plt.xlabel(r&quot;Value of hyperparameter $\gamma$&quot;)
-plt.ylabel(&quot;Accuracy score&quot;)
-_ = plt.title(&quot;Validation score of support vector machine&quot;)
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Value of hyperparameter $\gamma$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy score&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Validation score of support vector machine&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1818,38 +1818,38 @@ by computing the train and test scores for different training dataset size.
 Plot the train and test scores with respect to the number of samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import learning_curve
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">learning_curve</span>
 
-train_sizes = np.linspace(0.1, 1, num=10)
-results = learning_curve(
-    model, data, target, train_sizes=train_sizes, cv=cv, n_jobs=2)
-train_size, train_scores, test_scores = results[:3]
+<span class="n">train_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">learning_curve</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">train_sizes</span><span class="o">=</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">train_size</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.errorbar(
-    train_size,
-    train_scores.mean(axis=1),
-    yerr=train_scores.std(axis=1),
-    alpha=0.95,
-    label=&quot;Training score&quot;,
-)
-plt.errorbar(
-    train_size,
-    test_scores.mean(axis=1),
-    yerr=test_scores.std(axis=1),
-    alpha=0.5,
-    label=&quot;Testing score&quot;,
-)
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">train_size</span><span class="p">,</span>
+    <span class="n">train_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">train_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">train_size</span><span class="p">,</span>
+    <span class="n">test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing score&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 
-plt.xlabel(&quot;Number of samples in the training set&quot;)
-plt.ylabel(&quot;Accuracy&quot;)
-_ = plt.title(&quot;Learning curve for support vector machine&quot;)
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples in the training set&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Learning curve for support vector machine&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

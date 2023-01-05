@@ -1581,19 +1581,19 @@ interlaced half circles. This dataset is generated using the function
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html"><code class="docutils literal notranslate"><span class="pre">sklearn.datasets.make_moons</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-import pandas as pd
-from sklearn.datasets import make_moons
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
 
-feature_names = [&quot;Feature #0&quot;, &quot;Features #1&quot;]
-target_name = &quot;class&quot;
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">,</span> <span class="s2">&quot;Features #1&quot;</span><span class="p">]</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 
-X, y = make_moons(n_samples=100, noise=0.13, random_state=42)
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.13</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# We store both the data and target in a dataframe to ease plotting
-moons = pd.DataFrame(np.concatenate([X, y[:, np.newaxis]], axis=1),
-                     columns=feature_names + [target_name])
-data_moons, target_moons = moons[feature_names], moons[target_name]
+<span class="c1"># We store both the data and target in a dataframe to ease plotting</span>
+<span class="n">moons</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
+<span class="n">data_moons</span><span class="p">,</span> <span class="n">target_moons</span> <span class="o">=</span> <span class="n">moons</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">moons</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1602,12 +1602,12 @@ data_moons, target_moons = moons[feature_names], moons[target_name]
 have a look at it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
-import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
-                hue=target_moons, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-_ = plt.title(&quot;Illustration of the moons dataset&quot;)
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Illustration of the moons dataset&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1623,20 +1623,20 @@ We will create a predictive model by standardizing the dataset followed by
 a linear support vector machine classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sklearn
-sklearn.set_config(display=&quot;diagram&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="n">sklearn</span><span class="o">.</span><span class="n">set_config</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;diagram&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
 
-linear_model = make_pipeline(StandardScaler(), SVC(kernel=&quot;linear&quot;))
-linear_model.fit(data_moons, target_moons)
+<span class="n">linear_model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">))</span>
+<span class="n">linear_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_moons</span><span class="p">,</span> <span class="n">target_moons</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1656,14 +1656,14 @@ you want to assess the generalization performance of a machine-learning model.</
 <p>Let’s check the decision boundary of such a linear model on this dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.inspection import DecisionBoundaryDisplay
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
-DecisionBoundaryDisplay.from_estimator(
-    linear_model, data_moons, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
-)
-sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
-                hue=target_moons, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-_ = plt.title(&quot;Decision boundary of a linear model&quot;)
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">linear_model</span><span class="p">,</span> <span class="n">data_moons</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary of a linear model&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1677,25 +1677,25 @@ two classes.</p>
 samples of a class will be surrounded by samples from the other class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import make_gaussian_quantiles
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_gaussian_quantiles</span>
 
-feature_names = [&quot;Feature #0&quot;, &quot;Features #1&quot;]
-target_name = &quot;class&quot;
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">,</span> <span class="s2">&quot;Features #1&quot;</span><span class="p">]</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 
-X, y = make_gaussian_quantiles(
-    n_samples=100, n_features=2, n_classes=2, random_state=42)
-gauss = pd.DataFrame(np.concatenate([X, y[:, np.newaxis]], axis=1),
-                     columns=feature_names + [target_name])
-data_gauss, target_gauss = gauss[feature_names], gauss[target_name]
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_gaussian_quantiles</span><span class="p">(</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">gauss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
+<span class="n">data_gauss</span><span class="p">,</span> <span class="n">target_gauss</span> <span class="o">=</span> <span class="n">gauss</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">gauss</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
-                     hue=target_gauss, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-_ = plt.title(&quot;Illustration of the Gaussian quantiles dataset&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gauss</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                     <span class="n">hue</span><span class="o">=</span><span class="n">target_gauss</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Illustration of the Gaussian quantiles dataset&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1708,13 +1708,13 @@ adapted. We can check what decision function, a linear support vector machine
 will find.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>linear_model.fit(data_gauss, target_gauss)
-DecisionBoundaryDisplay.from_estimator(
-    linear_model, data_gauss, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
-)
-sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
-                hue=target_gauss, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-_ = plt.title(&quot;Decision boundary of a linear model&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">linear_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_gauss</span><span class="p">,</span> <span class="n">target_gauss</span><span class="p">)</span>
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">linear_model</span><span class="p">,</span> <span class="n">data_gauss</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gauss</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_gauss</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary of a linear model&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1733,20 +1733,20 @@ function (RBF) kernel together with a support vector machine classifier.</p>
 function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kernel_model = make_pipeline(StandardScaler(), SVC(kernel=&quot;rbf&quot;, gamma=5))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel_model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kernel_model.fit(data_moons, target_moons)
-DecisionBoundaryDisplay.from_estimator(
-    kernel_model, data_moons, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
-)
-sns.scatterplot(data=moons, x=feature_names[0], y=feature_names[1],
-                hue=target_moons, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-_ = plt.title(&quot;Decision boundary with a model using an RBF kernel&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_moons</span><span class="p">,</span> <span class="n">target_moons</span><span class="p">)</span>
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">kernel_model</span><span class="p">,</span> <span class="n">data_moons</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">hue</span><span class="o">=</span><span class="n">target_moons</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary with a model using an RBF kernel&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1760,13 +1760,13 @@ classifier should be able to generalize on unseen data.</p>
 <p>Let’s check the decision function on the second dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>kernel_model.fit(data_gauss, target_gauss)
-DecisionBoundaryDisplay.from_estimator(
-    kernel_model, data_gauss, response_method=&quot;predict&quot;, cmap=&quot;RdBu&quot;, alpha=0.5
-)
-ax = sns.scatterplot(data=gauss, x=feature_names[0], y=feature_names[1],
-                     hue=target_gauss, palette=[&quot;tab:red&quot;, &quot;tab:blue&quot;])
-_ = plt.title(&quot;Decision boundary with a model using an RBF kernel&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_gauss</span><span class="p">,</span> <span class="n">target_gauss</span><span class="p">)</span>
+<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">kernel_model</span><span class="p">,</span> <span class="n">data_gauss</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gauss</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">feature_names</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                     <span class="n">hue</span><span class="o">=</span><span class="n">target_gauss</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary with a model using an RBF kernel&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -1576,9 +1576,9 @@ your problem.</p>
 we can get into trouble if we are not careful. Let’s load the iris dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import load_iris
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
 
-data, target = load_iris(as_frame=True, return_X_y=True)
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1588,11 +1588,11 @@ regression. We expect this model to work quite well on the iris dataset since
 this is a toy dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import make_pipeline
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
 
-model = make_pipeline(StandardScaler(), LogisticRegression())
+<span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1603,13 +1603,13 @@ We will define a dataset with nine samples and repeat the cross-validation
 three times (i.e. <code class="docutils literal notranslate"><span class="pre">n_splits</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
-from sklearn.model_selection import KFold
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
 
-data_random = np.random.randn(9, 1)
-cv = KFold(n_splits=3)
-for train_index, test_index in cv.split(data_random):
-    print(&quot;TRAIN:&quot;, train_index, &quot;TEST:&quot;, test_index)
+<span class="n">data_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data_random</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TRAIN:&quot;</span><span class="p">,</span> <span class="n">train_index</span><span class="p">,</span> <span class="s2">&quot;TEST:&quot;</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1631,13 +1631,13 @@ least once among the different splits.</p>
 model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-cv = KFold(n_splits=3)
-results = cross_validate(model, data, target, cv=cv)
-test_score = results[&quot;test_score&quot;]
-print(f&quot;The average accuracy is &quot;
-      f&quot;{test_score.mean():.3f} ± {test_score.std():.3f}&quot;)
+<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1652,13 +1652,13 @@ any cross-validation split. We will now check our target’s value to
 understand the issue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-target.plot()
-plt.xlabel(&quot;Sample index&quot;)
-plt.ylabel(&quot;Class&quot;)
-plt.yticks(target.unique())
-_ = plt.title(&quot;Class value in target y&quot;)
+<span class="n">target</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Sample index&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Class value in target y&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1678,18 +1678,18 @@ into two distincts lists; one for the training set and one for the testing
 set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-n_splits = 3
-cv = KFold(n_splits=n_splits)
+<span class="n">n_splits</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_splits</span><span class="p">)</span>
 
-train_cv_counts = []
-test_cv_counts = []
-for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
-    target_train, target_test = target.iloc[train_idx], target.iloc[test_idx]
+<span class="n">train_cv_counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_cv_counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">fold_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)):</span>
+    <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
 
-    train_cv_counts.append(target_train.value_counts())
-    test_cv_counts.append(target_test.value_counts())
+    <span class="n">train_cv_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+    <span class="n">test_cv_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1698,10 +1698,10 @@ for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
 information regarding the fold within the same dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_cv_counts = pd.concat(train_cv_counts, axis=1,
-                            keys=[f&quot;Fold #{idx}&quot; for idx in range(n_splits)])
-train_cv_counts.index.name = &quot;Class label&quot;
-train_cv_counts
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_cv_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">train_cv_counts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Fold #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_splits</span><span class="p">)])</span>
+<span class="n">train_cv_counts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Class label&quot;</span>
+<span class="n">train_cv_counts</span>
 </pre></div>
 </div>
 </div>
@@ -1760,10 +1760,10 @@ train_cv_counts
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_cv_counts = pd.concat(test_cv_counts, axis=1,
-                           keys=[f&quot;Fold #{idx}&quot; for idx in range(n_splits)])
-test_cv_counts.index.name = &quot;Class label&quot;
-test_cv_counts
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_cv_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">test_cv_counts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Fold #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_splits</span><span class="p">)])</span>
+<span class="n">test_cv_counts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Class label&quot;</span>
+<span class="n">test_cv_counts</span>
 </pre></div>
 </div>
 </div>
@@ -1823,10 +1823,10 @@ test_cv_counts
 <p>Now we can represent graphically this information with bar plots.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_cv_counts.plot.bar()
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.ylabel(&quot;Count&quot;)
-_ = plt.title(&quot;Training set&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_cv_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Training set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1836,10 +1836,10 @@ _ = plt.title(&quot;Training set&quot;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_cv_counts.plot.bar()
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.ylabel(&quot;Count&quot;)
-_ = plt.title(&quot;Test set&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_cv_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1855,11 +1855,11 @@ training stage.</p>
 the data into three groups.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cv = KFold(n_splits=3, shuffle=True, random_state=0)
-results = cross_validate(model, data, target, cv=cv)
-test_score = results[&quot;test_score&quot;]
-print(f&quot;The average accuracy is &quot;
-      f&quot;{test_score.mean():.3f} ± {test_score.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1876,29 +1876,29 @@ set’s class frequency. It would ensure that we are training and testing our
 model with a class distribution that we will encounter in production.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_cv_counts = []
-test_cv_counts = []
-for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
-    target_train, target_test = target.iloc[train_idx], target.iloc[test_idx]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_cv_counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_cv_counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">fold_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)):</span>
+    <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
 
-    train_cv_counts.append(target_train.value_counts())
-    test_cv_counts.append(target_test.value_counts())
-train_cv_counts = pd.concat(train_cv_counts, axis=1,
-                            keys=[f&quot;Fold #{idx}&quot; for idx in range(n_splits)])
-test_cv_counts = pd.concat(test_cv_counts, axis=1,
-                           keys=[f&quot;Fold #{idx}&quot; for idx in range(n_splits)])
-train_cv_counts.index.name = &quot;Class label&quot;
-test_cv_counts.index.name = &quot;Class label&quot;
+    <span class="n">train_cv_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+    <span class="n">test_cv_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="n">train_cv_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">train_cv_counts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Fold #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_splits</span><span class="p">)])</span>
+<span class="n">test_cv_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">test_cv_counts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Fold #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_splits</span><span class="p">)])</span>
+<span class="n">train_cv_counts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Class label&quot;</span>
+<span class="n">test_cv_counts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Class label&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_cv_counts.plot.bar()
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.ylabel(&quot;Count&quot;)
-_ = plt.title(&quot;Training set&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_cv_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Training set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1908,10 +1908,10 @@ _ = plt.title(&quot;Training set&quot;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_cv_counts.plot.bar()
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.ylabel(&quot;Count&quot;)
-_ = plt.title(&quot;Test set&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_cv_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1928,19 +1928,19 @@ cross-validation strategies implement the stratification; they contain
 <code class="docutils literal notranslate"><span class="pre">Stratified</span></code> in their names.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import StratifiedKFold
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
 
-cv = StratifiedKFold(n_splits=3)
+<span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>results = cross_validate(model, data, target, cv=cv)
-test_score = results[&quot;test_score&quot;]
-print(f&quot;The average accuracy is &quot;
-      f&quot;{test_score.mean():.3f} ± {test_score.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average accuracy is &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1952,29 +1952,29 @@ print(f&quot;The average accuracy is &quot;
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_cv_counts = []
-test_cv_counts = []
-for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
-    target_train, target_test = target.iloc[train_idx], target.iloc[test_idx]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_cv_counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_cv_counts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">fold_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train_idx</span><span class="p">,</span> <span class="n">test_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)):</span>
+    <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">target</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
 
-    train_cv_counts.append(target_train.value_counts())
-    test_cv_counts.append(target_test.value_counts())
-train_cv_counts = pd.concat(train_cv_counts, axis=1,
-                            keys=[f&quot;Fold #{idx}&quot; for idx in range(n_splits)])
-test_cv_counts = pd.concat(test_cv_counts, axis=1,
-                           keys=[f&quot;Fold #{idx}&quot; for idx in range(n_splits)])
-train_cv_counts.index.name = &quot;Class label&quot;
-test_cv_counts.index.name = &quot;Class label&quot;
+    <span class="n">train_cv_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+    <span class="n">test_cv_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+<span class="n">train_cv_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">train_cv_counts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Fold #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_splits</span><span class="p">)])</span>
+<span class="n">test_cv_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">test_cv_counts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                           <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Fold #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_splits</span><span class="p">)])</span>
+<span class="n">train_cv_counts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Class label&quot;</span>
+<span class="n">test_cv_counts</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Class label&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train_cv_counts.plot.bar()
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.ylabel(&quot;Count&quot;)
-_ = plt.title(&quot;Training set&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_cv_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Training set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1984,10 +1984,10 @@ _ = plt.title(&quot;Training set&quot;)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test_cv_counts.plot.bar()
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.ylabel(&quot;Count&quot;)
-_ = plt.title(&quot;Test set&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_cv_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -1587,16 +1587,16 @@ they are spelled with a final underscore <code class="docutils literal notransla
 features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-adult_census = pd.read_csv(&quot;../datasets/adult-census.csv&quot;)
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 
-target_name = &quot;class&quot;
-numerical_columns = [
-    &quot;age&quot;, &quot;capital-gain&quot;, &quot;capital-loss&quot;, &quot;hours-per-week&quot;]
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
 
-target = adult_census[target_name]
-data = adult_census[numerical_columns]
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1604,7 +1604,7 @@ data = adult_census[numerical_columns]
 <p>Our data is only numerical.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data.head()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1680,14 +1680,14 @@ work better if all features have a similar scaling. For this purpose,
 we use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which transforms the data by rescaling features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-model = Pipeline(steps=[
-    (&quot;preprocessor&quot;, StandardScaler()),
-    (&quot;classifier&quot;, LogisticRegression())
-])
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1696,12 +1696,12 @@ model = Pipeline(steps=[
 cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-cv_results = cross_validate(model, data, target)
-scores = cv_results[&quot;test_score&quot;]
-print(f&quot;Accuracy score via cross-validation:\n&quot;
-      f&quot;{scores.mean():.3f} ± {scores.std():.3f}&quot;)
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score via cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1726,11 +1726,11 @@ the <code class="docutils literal notranslate"><span class="pre">set_params</spa
 For example, we can set <code class="docutils literal notranslate"><span class="pre">C=1e-3</span></code>, fit and evaluate the model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model.set_params(classifier__C=1e-3)
-cv_results = cross_validate(model, data, target)
-scores = cv_results[&quot;test_score&quot;]
-print(f&quot;Accuracy score via cross-validation:\n&quot;
-      f&quot;{scores.mean():.3f} ± {scores.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__C</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score via cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1750,8 +1750,8 @@ list all the parameters with their values. For example, if you want to
 get all the parameter names, you can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for parameter in model.get_params():
-    print(parameter)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_params</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1788,7 +1788,7 @@ values are the parameter values. If you want to get the value of a single
 parameter, for example <code class="docutils literal notranslate"><span class="pre">classifier__C</span></code>, you can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>model.get_params()[&#39;classifier__C&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">get_params</span><span class="p">()[</span><span class="s1">&#39;classifier__C&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1802,12 +1802,12 @@ parameter, for example <code class="docutils literal notranslate"><span class="p
 value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for C in [1e-3, 1e-2, 1e-1, 1, 10]:
-    model.set_params(classifier__C=C)
-    cv_results = cross_validate(model, data, target)
-    scores = cv_results[&quot;test_score&quot;]
-    print(f&quot;Accuracy score via cross-validation with C={C}:\n&quot;
-          f&quot;{scores.mean():.3f} ± {scores.std():.3f}&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score via cross-validation with C=</span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -1573,11 +1573,11 @@ practicing and implementing cross-validation.</p>
 <p>We will reuse the blood transfusion dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-blood_transfusion = pd.read_csv(&quot;../datasets/blood_transfusion.csv&quot;)
-data = blood_transfusion.drop(columns=&quot;Class&quot;)
-target = blood_transfusion[&quot;Class&quot;]
+<span class="n">blood_transfusion</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/blood_transfusion.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">blood_transfusion</span><span class="p">[</span><span class="s2">&quot;Class&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1590,7 +1590,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>First, create a decision tree classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1602,7 +1602,7 @@ of <code class="docutils literal notranslate"><span class="pre">cross_val_score<
 score). Check its documentation to learn how to do that.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1610,7 +1610,7 @@ score). Check its documentation to learn how to do that.</p>
 <p>Repeat the experiment by computing the <code class="docutils literal notranslate"><span class="pre">balanced_accuracy</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1622,14 +1622,14 @@ positive label which in our case we consider to be the class <code class="docuti
 label will not be supported by scikit-learn because it is indeed ambiguous.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import cross_val_score
-from sklearn.tree import DecisionTreeClassifier
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 
-tree = DecisionTreeClassifier()
-try:
-    scores = cross_val_score(tree, data, target, cv=10, scoring=&quot;precision&quot;)
-except ValueError as exc:
-    print(exc)
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;precision&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1823,7 +1823,7 @@ Finally, create a scorer by calling <code class="docutils literal notranslate"><
 <code class="docutils literal notranslate"><span class="pre">precision_score</span></code> and pass the extra parameter <code class="docutils literal notranslate"><span class="pre">pos_label=&quot;donated&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1832,7 +1832,7 @@ Finally, create a scorer by calling <code class="docutils literal notranslate"><
 in the <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> call, pass the scorer that you created above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>
@@ -1846,7 +1846,7 @@ balanced accuracy through cross-validation. Plot the cross-validation score
 for both metrics using a box plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Write your code here.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
 </pre></div>
 </div>
 </div>

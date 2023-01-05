@@ -1574,13 +1574,13 @@ range of feature values seen during the training.</p>
 <p>We will first load the regression data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-penguins = pd.read_csv(&quot;../datasets/penguins_regression.csv&quot;)
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
 
-feature_name = &quot;Flipper Length (mm)&quot;
-target_name = &quot;Body Mass (g)&quot;
-data_train, target_train = penguins[[feature_name]], penguins[target_name]
+<span class="n">feature_name</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[[</span><span class="n">feature_name</span><span class="p">]],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1595,15 +1595,15 @@ regression model, and fit them on the training data. Limit the depth at
 3 levels for the decision tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeRegressor
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
-linear_regression = LinearRegression()
-tree = DecisionTreeRegressor(max_depth=3)
+<span class="n">linear_regression</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
-linear_regression.fit(data_train, target_train)
-tree.fit(data_train, target_train)
+<span class="n">linear_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1615,20 +1615,20 @@ the minimum to the maximum of the training dataset. Get the predictions of
 each model using this dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-data_test = pd.DataFrame(np.arange(data_train[feature_name].min(),
-                                   data_train[feature_name].max()),
-                         columns=[feature_name])
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
+                                   <span class="n">data_train</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
+                         <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">feature_name</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted_linear_regression = linear_regression.predict(data_test)
-target_predicted_tree = tree.predict(data_test)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted_linear_regression</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">target_predicted_tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1637,17 +1637,17 @@ target_predicted_tree = tree.predict(data_test)
 predictions of both models on the top.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-import matplotlib.pyplot as plt
-import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                color=&quot;black&quot;, alpha=0.5)
-plt.plot(data_test[feature_name], target_predicted_linear_regression,
-         label=&quot;Linear regression&quot;)
-plt.plot(data_test[feature_name], target_predicted_tree, label=&quot;Decision tree&quot;)
-plt.legend()
-_ = plt.title(&quot;Prediction of linear model and a decision tree&quot;)
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="n">feature_name</span><span class="p">],</span> <span class="n">target_predicted_linear_regression</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Linear regression&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="n">feature_name</span><span class="p">],</span> <span class="n">target_predicted_tree</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Decision tree&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction of linear model and a decision tree&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1664,11 +1664,11 @@ in other words, add values below and above the minimum and the maximum of
 the flipper length seen during training.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-offset = 30
-data_test = pd.DataFrame(np.arange(data_train[feature_name].min() - offset,
-                                   data_train[feature_name].max() + offset),
-                         columns=[feature_name])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span><span class="p">,</span>
+                                   <span class="n">data_train</span><span class="p">[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="n">offset</span><span class="p">),</span>
+                         <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">feature_name</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1677,22 +1677,22 @@ data_test = pd.DataFrame(np.arange(data_train[feature_name].min() - offset,
 Repeat the plotting of the previous exercise.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-target_predicted_linear_regression = linear_regression.predict(data_test)
-target_predicted_tree = tree.predict(data_test)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">target_predicted_linear_regression</span> <span class="o">=</span> <span class="n">linear_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="n">target_predicted_tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                color=&quot;black&quot;, alpha=0.5)
-plt.plot(data_test[feature_name], target_predicted_linear_regression,
-         label=&quot;Linear regression&quot;)
-plt.plot(data_test[feature_name], target_predicted_tree, label=&quot;Decision tree&quot;)
-plt.legend()
-_ = plt.title(&quot;Prediction of linear model and a decision tree&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="n">feature_name</span><span class="p">],</span> <span class="n">target_predicted_linear_regression</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Linear regression&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="n">feature_name</span><span class="p">],</span> <span class="n">target_predicted_tree</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Decision tree&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction of linear model and a decision tree&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

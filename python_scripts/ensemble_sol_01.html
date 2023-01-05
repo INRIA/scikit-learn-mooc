@@ -1573,13 +1573,13 @@ of a bagging regressor and evaluate the gain obtained.</p>
 a testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-data, target = fetch_california_housing(as_frame=True, return_X_y=True)
-target *= 100  # rescale the target in k$
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5)
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
+<span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1594,17 +1594,17 @@ to its parameter <code class="docutils literal notranslate"><span class="pre">ba
 generalization performance on the testing set using the mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.metrics import mean_absolute_error
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import BaggingRegressor
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
 
-tree = DecisionTreeRegressor()
-bagging = BaggingRegressor(base_estimator=tree, n_jobs=2)
-bagging.fit(data_train, target_train)
-target_predicted = bagging.predict(data_test)
-print(f&quot;Basic mean absolute error of the bagging regressor:\n&quot;
-      f&quot;{mean_absolute_error(target_test, target_predicted):.2f} k$&quot;)
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingRegressor</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">tree</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+<span class="n">target_predicted</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basic mean absolute error of the bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1614,7 +1614,7 @@ print(f&quot;Basic mean absolute error of the bagging regressor:\n&quot;
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basic mean absolute error of the bagging regressor:
-37.17 k$
+36.83 k$
 </pre></div>
 </div>
 </div>
@@ -1631,9 +1631,9 @@ method.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-for param in bagging.get_params().keys():
-    print(param)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">bagging</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1667,50 +1667,44 @@ warm_start
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from scipy.stats import randint
-from sklearn.model_selection import RandomizedSearchCV
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">randint</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 
-param_grid = {
-    &quot;n_estimators&quot;: randint(10, 30),
-    &quot;max_samples&quot;: [0.5, 0.8, 1.0],
-    &quot;max_features&quot;: [0.5, 0.8, 1.0],
-    &quot;base_estimator__max_depth&quot;: randint(3, 10),
-}
-search = RandomizedSearchCV(
-    bagging, param_grid, n_iter=20, scoring=&quot;neg_mean_absolute_error&quot;
-)
-_ = search.fit(data_train, target_train)
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="s2">&quot;max_samples&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+    <span class="s2">&quot;max_features&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+    <span class="s2">&quot;base_estimator__max_depth&quot;</span><span class="p">:</span> <span class="n">randint</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+<span class="p">}</span>
+<span class="n">search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
+    <span class="n">bagging</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span>
+<span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
@@ -1736,19 +1730,21 @@ _ = search.fit(data_train, target_train)
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
@@ -1777,60 +1773,6 @@ _ = search.fit(data_train, target_train)
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
@@ -1880,17 +1822,7 @@ _ = search.fit(data_train, target_train)
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
@@ -1902,17 +1834,7 @@ _ = search.fit(data_train, target_train)
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
@@ -1972,11 +1894,85 @@ _ = search.fit(data_train, target_train)
   warnings.warn(
 /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/ensemble/_base.py:166: FutureWarning: `base_estimator` was renamed to `estimator` in version 1.2 and will be removed in 1.4.
   warnings.warn(
 </pre></div>
 </div>
@@ -2022,14 +2018,14 @@ _ = search.fit(data_train, target_train)
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-columns = [f&quot;param_{name}&quot; for name in param_grid.keys()]
-columns += [&quot;mean_test_error&quot;, &quot;std_test_error&quot;]
-cv_results = pd.DataFrame(search.cv_results_)
-cv_results[&quot;mean_test_error&quot;] = -cv_results[&quot;mean_test_score&quot;]
-cv_results[&quot;std_test_error&quot;] = cv_results[&quot;std_test_score&quot;]
-cv_results[columns].sort_values(by=&quot;mean_test_error&quot;)
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">columns</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_error&quot;</span><span class="p">]</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+<span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span>
+<span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;std_test_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;std_test_score&quot;</span><span class="p">]</span>
+<span class="n">cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;mean_test_error&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2062,184 +2058,184 @@ cv_results[columns].sort_values(by=&quot;mean_test_error&quot;)
   </thead>
   <tbody>
     <tr>
-      <th>4</th>
-      <td>25</td>
-      <td>0.8</td>
-      <td>1.0</td>
-      <td>9</td>
-      <td>39.285488</td>
-      <td>1.065437</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>15</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>9</td>
-      <td>39.584374</td>
-      <td>1.536785</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>24</td>
-      <td>0.5</td>
-      <td>1.0</td>
-      <td>9</td>
-      <td>39.662715</td>
-      <td>1.043622</td>
-    </tr>
-    <tr>
       <th>3</th>
-      <td>12</td>
-      <td>0.5</td>
-      <td>0.8</td>
+      <td>20</td>
+      <td>1.0</td>
+      <td>1.0</td>
       <td>9</td>
-      <td>40.688281</td>
-      <td>1.287795</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>17</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>8</td>
-      <td>40.713554</td>
-      <td>1.016348</td>
+      <td>39.287032</td>
+      <td>1.176986</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>29</td>
-      <td>0.5</td>
+      <td>13</td>
+      <td>0.8</td>
       <td>1.0</td>
+      <td>9</td>
+      <td>39.763999</td>
+      <td>0.995976</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>10</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>9</td>
+      <td>39.979491</td>
+      <td>1.132505</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>26</td>
+      <td>1.0</td>
+      <td>0.8</td>
       <td>8</td>
-      <td>40.899959</td>
-      <td>1.092325</td>
+      <td>40.380609</td>
+      <td>0.983110</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>21</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>8</td>
+      <td>41.371202</td>
+      <td>1.299754</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>10</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>9</td>
+      <td>41.818500</td>
+      <td>1.849915</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>7</td>
+      <td>43.135688</td>
+      <td>1.238979</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>21</td>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>8</td>
+      <td>45.203602</td>
+      <td>1.493870</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>6</td>
+      <td>45.409762</td>
+      <td>1.041063</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>22</td>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>8</td>
+      <td>46.999697</td>
+      <td>0.953817</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>19</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>7</td>
+      <td>47.094651</td>
+      <td>1.667611</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>0.5</td>
+      <td>0.5</td>
+      <td>6</td>
+      <td>48.472914</td>
+      <td>1.547955</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>11</td>
+      <td>0.5</td>
+      <td>0.8</td>
+      <td>5</td>
+      <td>48.483726</td>
+      <td>1.151304</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>25</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <td>6</td>
+      <td>49.792786</td>
+      <td>2.291302</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>19</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>4</td>
+      <td>51.731389</td>
+      <td>1.184337</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>16</td>
+      <td>0.8</td>
+      <td>1.0</td>
+      <td>4</td>
+      <td>51.790025</td>
+      <td>1.408888</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>10</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>4</td>
+      <td>52.280050</td>
+      <td>1.318771</td>
     </tr>
     <tr>
       <th>12</th>
       <td>11</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>8</td>
-      <td>41.098362</td>
-      <td>1.031177</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>16</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>8</td>
-      <td>41.232852</td>
-      <td>1.336169</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>22</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>44.938325</td>
-      <td>0.891937</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>11</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>45.470913</td>
-      <td>0.884804</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>17</td>
-      <td>0.5</td>
-      <td>0.8</td>
-      <td>6</td>
-      <td>45.717196</td>
-      <td>1.661482</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>29</td>
       <td>0.5</td>
       <td>0.5</td>
-      <td>8</td>
-      <td>46.493467</td>
-      <td>1.107450</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>14</td>
-      <td>1.0</td>
-      <td>0.5</td>
-      <td>7</td>
-      <td>47.938944</td>
-      <td>4.332733</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>18</td>
-      <td>0.8</td>
-      <td>1.0</td>
-      <td>5</td>
-      <td>48.061696</td>
-      <td>1.297683</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>13</td>
-      <td>0.8</td>
-      <td>0.8</td>
-      <td>5</td>
-      <td>49.057206</td>
-      <td>1.043600</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>12</td>
-      <td>0.8</td>
-      <td>0.8</td>
       <td>4</td>
-      <td>52.830220</td>
-      <td>1.324504</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>13</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>4</td>
-      <td>53.151594</td>
-      <td>1.156809</td>
+      <td>54.856320</td>
+      <td>2.403840</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>15</td>
+      <td>14</td>
       <td>1.0</td>
-      <td>0.8</td>
-      <td>4</td>
-      <td>53.454543</td>
-      <td>1.354720</td>
+      <td>1.0</td>
+      <td>3</td>
+      <td>56.910818</td>
+      <td>1.100283</td>
     </tr>
     <tr>
-      <th>10</th>
-      <td>22</td>
-      <td>0.5</td>
+      <th>6</th>
+      <td>14</td>
+      <td>0.8</td>
       <td>0.8</td>
       <td>3</td>
-      <td>57.261043</td>
-      <td>0.541868</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>24</td>
-      <td>1.0</td>
-      <td>0.8</td>
-      <td>3</td>
-      <td>57.490290</td>
-      <td>0.746990</td>
+      <td>57.674482</td>
+      <td>1.469571</td>
     </tr>
   </tbody>
 </table>
@@ -2247,15 +2243,15 @@ cv_results[columns].sort_values(by=&quot;mean_test_error&quot;)
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>target_predicted = search.predict(data_test)
-print(f&quot;Mean absolute error after tuning of the bagging regressor:\n&quot;
-      f&quot;{mean_absolute_error(target_test, target_predicted):.2f} k$&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error after tuning of the bagging regressor:</span><span class="se">\n</span><span class="s2">&quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean absolute error after tuning of the bagging regressor:
-39.09 k$
+39.26 k$
 </pre></div>
 </div>
 </div>

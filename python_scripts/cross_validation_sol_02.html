@@ -1574,10 +1574,10 @@ of interest.</p>
 using only the numerical features for the sake of simplicity.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-adult_census = pd.read_csv(&quot;../datasets/adult-census-numeric-all.csv&quot;)
-data, target = adult_census.drop(columns=&quot;class&quot;), adult_census[&quot;class&quot;]
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric-all.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">),</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1586,10 +1586,10 @@ data, target = adult_census.drop(columns=&quot;class&quot;), adult_census[&quot;
 samples as a testing at each round. Let us use 10 cross-validation rounds.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import ShuffleSplit
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
-cv = ShuffleSplit(n_splits=10, test_size=0.5, random_state=0)
+<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1598,12 +1598,12 @@ cv = ShuffleSplit(n_splits=10, test_size=0.5, random_state=0)
 standardize the data followed by a logistic regression classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-classifier = make_pipeline(StandardScaler(), LogisticRegression())
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -1612,17 +1612,17 @@ classifier = make_pipeline(StandardScaler(), LogisticRegression())
 dataset. Store the results pandas Series as we did in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-cv_results_logistic_regression = cross_validate(
-    classifier, data, target, cv=cv, n_jobs=2
-)
+<span class="n">cv_results_logistic_regression</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
 
-test_score_logistic_regression = pd.Series(
-    cv_results_logistic_regression[&quot;test_score&quot;], name=&quot;Logistic Regression&quot;
-)
-test_score_logistic_regression
+<span class="n">test_score_logistic_regression</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_logistic_regression</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Logistic Regression&quot;</span>
+<span class="p">)</span>
+<span class="n">test_score_logistic_regression</span>
 </pre></div>
 </div>
 </div>
@@ -1650,17 +1650,17 @@ class.</p>
 <p>Store the results in a second pandas Series.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-from sklearn.dummy import DummyClassifier
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
-most_frequent_classifier = DummyClassifier(strategy=&quot;most_frequent&quot;)
-cv_results_most_frequent = cross_validate(
-    most_frequent_classifier, data, target, cv=cv, n_jobs=2
-)
-test_score_most_frequent = pd.Series(
-    cv_results_most_frequent[&quot;test_score&quot;], name=&quot;Most frequent class predictor&quot;
-)
-test_score_most_frequent
+<span class="n">most_frequent_classifier</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
+<span class="n">cv_results_most_frequent</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">most_frequent_classifier</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">test_score_most_frequent</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_most_frequent</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Most frequent class predictor&quot;</span>
+<span class="p">)</span>
+<span class="n">test_score_most_frequent</span>
 </pre></div>
 </div>
 </div>
@@ -1684,12 +1684,12 @@ Name: Most frequent class predictor, dtype: float64
 concatenate the test scores as columns a single pandas dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-all_test_scores = pd.concat(
-    [test_score_logistic_regression, test_score_most_frequent],
-    axis=&#39;columns&#39;,
-)
-all_test_scores
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">all_test_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">test_score_logistic_regression</span><span class="p">,</span> <span class="n">test_score_most_frequent</span><span class="p">],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">all_test_scores</span>
 </pre></div>
 </div>
 </div>
@@ -1777,15 +1777,15 @@ function</a>.</p>
 <p>What conclusions do you draw from the results?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-import numpy as np
-import matplotlib.pyplot as plt
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-bins = np.linspace(start=0.5, stop=1.0, num=100)
-all_test_scores.plot.hist(bins=bins, edgecolor=&quot;black&quot;)
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.xlabel(&quot;Accuracy (%)&quot;)
-_ = plt.title(&quot;Distribution of the CV scores&quot;)
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">all_test_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy (%)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the CV scores&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1808,52 +1808,52 @@ to find out about the meaning of the <code class="docutils literal notranslate">
 strategies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-stratified_dummy = DummyClassifier(strategy=&quot;stratified&quot;)
-cv_results_stratified = cross_validate(
-    stratified_dummy, data, target, cv=cv, n_jobs=2
-)
-test_score_dummy_stratified = pd.Series(
-    cv_results_stratified[&quot;test_score&quot;], name=&quot;Stratified class predictor&quot;
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">stratified_dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;stratified&quot;</span><span class="p">)</span>
+<span class="n">cv_results_stratified</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">stratified_dummy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">test_score_dummy_stratified</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_stratified</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Stratified class predictor&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>uniform_dummy = DummyClassifier(strategy=&quot;uniform&quot;)
-cv_results_uniform = cross_validate(
-    uniform_dummy, data, target, cv=cv, n_jobs=2
-)
-test_score_dummy_uniform = pd.Series(
-    cv_results_uniform[&quot;test_score&quot;], name=&quot;Uniform class predictor&quot;
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uniform_dummy</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<span class="n">cv_results_uniform</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">uniform_dummy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">test_score_dummy_uniform</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">cv_results_uniform</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Uniform class predictor&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_test_scores = pd.concat(
-    [
-        test_score_logistic_regression,
-        test_score_most_frequent,
-        test_score_dummy_stratified,
-        test_score_dummy_uniform,
-    ],
-    axis=&#39;columns&#39;,
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_test_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">test_score_logistic_regression</span><span class="p">,</span>
+        <span class="n">test_score_most_frequent</span><span class="p">,</span>
+        <span class="n">test_score_dummy_stratified</span><span class="p">,</span>
+        <span class="n">test_score_dummy_uniform</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_test_scores.plot.hist(bins=bins, edgecolor=&quot;black&quot;)
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.xlabel(&quot;Accuracy (%)&quot;)
-_ = plt.title(&quot;Distribution of the test scores&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_test_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy (%)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the test scores&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

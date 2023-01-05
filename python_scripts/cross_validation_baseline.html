@@ -1580,10 +1580,10 @@ section named “Appendix - Datasets description” at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.datasets import fetch_california_housing
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
-data, target = fetch_california_housing(return_X_y=True, as_frame=True)
-target *= 100  # rescale the target in k$
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
 </pre></div>
 </div>
 </div>
@@ -1592,9 +1592,9 @@ target *= 100  # rescale the target in k$
 splitter with 20% of the data held on the validation side of the split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.model_selection import ShuffleSplit
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
-cv = ShuffleSplit(n_splits=30, test_size=0.2, random_state=0)
+<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1604,31 +1604,31 @@ which is our model of interest. Besides, we will store the testing error in a
 pandas series to make it easier to plot the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.model_selection import cross_validate
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-regressor = DecisionTreeRegressor()
-cv_results_tree_regressor = cross_validate(
-    regressor, data, target, cv=cv, scoring=&quot;neg_mean_absolute_error&quot;, n_jobs=2
-)
+<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+<span class="n">cv_results_tree_regressor</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
 
-errors_tree_regressor = pd.Series(
-    -cv_results_tree_regressor[&quot;test_score&quot;], name=&quot;Decision tree regressor&quot;
-)
-errors_tree_regressor.describe()
+<span class="n">errors_tree_regressor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="o">-</span><span class="n">cv_results_tree_regressor</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Decision tree regressor&quot;</span>
+<span class="p">)</span>
+<span class="n">errors_tree_regressor</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    30.000000
-mean     45.641154
-std       1.306470
-min      43.150379
-25%      44.851423
-50%      45.539248
-75%      46.640461
-max      48.418576
+mean     45.672637
+std       1.230809
+min      43.492336
+25%      44.974296
+50%      45.548041
+75%      46.668752
+max      47.835316
 Name: Decision tree regressor, dtype: float64
 </pre></div>
 </div>
@@ -1640,16 +1640,16 @@ training target variable. Therefore, the dummy regressor does not use any
 information from the input features stored in the dataframe named <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from sklearn.dummy import DummyRegressor
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyRegressor</span>
 
-dummy = DummyRegressor(strategy=&quot;mean&quot;)
-result_dummy = cross_validate(
-    dummy, data, target, cv=cv, scoring=&quot;neg_mean_absolute_error&quot;, n_jobs=2
-)
-errors_dummy_regressor = pd.Series(
-    -result_dummy[&quot;test_score&quot;], name=&quot;Dummy regressor&quot;
-)
-errors_dummy_regressor.describe()
+<span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyRegressor</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+<span class="n">result_dummy</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">dummy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">errors_dummy_regressor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="o">-</span><span class="n">result_dummy</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Dummy regressor&quot;</span>
+<span class="p">)</span>
+<span class="n">errors_dummy_regressor</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1671,11 +1671,11 @@ Name: Dummy regressor, dtype: float64
 and the actual decision tree regressor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_errors = pd.concat(
-    [errors_tree_regressor, errors_dummy_regressor],
-    axis=1,
-)
-all_errors
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_errors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">errors_tree_regressor</span><span class="p">,</span> <span class="n">errors_dummy_regressor</span><span class="p">],</span>
+    <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">all_errors</span>
 </pre></div>
 </div>
 </div>
@@ -1705,152 +1705,152 @@ all_errors
   <tbody>
     <tr>
       <th>0</th>
-      <td>46.623052</td>
+      <td>47.141854</td>
       <td>90.713153</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>46.988588</td>
+      <td>46.501064</td>
       <td>90.539353</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>44.753917</td>
+      <td>43.897935</td>
       <td>91.941912</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>43.321817</td>
+      <td>43.894518</td>
       <td>90.213912</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>48.054940</td>
+      <td>47.835316</td>
       <td>92.015862</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>45.186862</td>
+      <td>45.088751</td>
       <td>90.542490</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>43.813969</td>
+      <td>43.934947</td>
       <td>89.757566</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>44.445197</td>
+      <td>44.725526</td>
       <td>92.477244</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>45.305441</td>
+      <td>45.082449</td>
       <td>90.947952</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>45.146382</td>
+      <td>45.013702</td>
       <td>91.991373</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>46.984613</td>
+      <td>47.056199</td>
       <td>92.023571</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>45.902802</td>
+      <td>46.426325</td>
       <td>90.556965</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>45.905974</td>
+      <td>45.479013</td>
       <td>91.539567</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>45.143939</td>
+      <td>45.181049</td>
       <td>91.185225</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>47.182576</td>
+      <td>47.413171</td>
       <td>92.298971</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>44.303843</td>
+      <td>44.150017</td>
       <td>91.084639</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>45.667197</td>
+      <td>45.955255</td>
       <td>90.984471</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>46.976662</td>
+      <td>46.761593</td>
       <td>89.981744</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>44.625742</td>
+      <td>45.369589</td>
       <td>90.547140</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>46.978215</td>
+      <td>46.932721</td>
       <td>89.820219</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>43.150379</td>
+      <td>43.492336</td>
       <td>91.768721</td>
     </tr>
     <tr>
       <th>21</th>
-      <td>45.603431</td>
+      <td>45.617069</td>
       <td>92.305556</td>
     </tr>
     <tr>
       <th>22</th>
-      <td>45.147375</td>
+      <td>44.961160</td>
       <td>90.503017</td>
     </tr>
     <tr>
       <th>23</th>
-      <td>46.646263</td>
+      <td>46.546168</td>
       <td>92.147974</td>
     </tr>
     <tr>
       <th>24</th>
-      <td>45.969520</td>
+      <td>46.709613</td>
       <td>91.386320</td>
     </tr>
     <tr>
       <th>25</th>
-      <td>45.475066</td>
+      <td>45.897017</td>
       <td>90.815660</td>
     </tr>
     <tr>
       <th>26</th>
-      <td>43.953000</td>
+      <td>43.991859</td>
       <td>92.216574</td>
     </tr>
     <tr>
       <th>27</th>
-      <td>46.124918</td>
+      <td>46.286037</td>
       <td>90.107460</td>
     </tr>
     <tr>
       <th>28</th>
-      <td>45.434364</td>
+      <td>45.291824</td>
       <td>90.620318</td>
     </tr>
     <tr>
       <th>29</th>
-      <td>48.418576</td>
+      <td>47.545029</td>
       <td>91.165331</td>
     </tr>
   </tbody>
@@ -1859,14 +1859,14 @@ all_errors
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
-import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-bins = np.linspace(start=0, stop=100, num=80)
-all_errors.plot.hist(bins=bins, edgecolor=&quot;black&quot;)
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc=&quot;upper left&quot;)
-plt.xlabel(&quot;Mean absolute error (k$)&quot;)
-_ = plt.title(&quot;Cross-validation testing errors&quot;)
+<span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">all_errors</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cross-validation testing errors&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

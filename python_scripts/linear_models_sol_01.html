@@ -1659,12 +1659,12 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-penguins = pd.read_csv(&quot;../datasets/penguins_regression.csv&quot;)
-feature_name = &quot;Flipper Length (mm)&quot;
-target_name = &quot;Body Mass (g)&quot;
-data, target = penguins[[feature_name]], penguins[target_name]
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
+<span class="n">feature_name</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[[</span><span class="n">feature_name</span><span class="p">]],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1674,12 +1674,12 @@ data, target = penguins[[feature_name]], penguins[target_name]
 <h3>Model definition<a class="headerlink" href="#model-definition" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def linear_model_flipper_mass(
-    flipper_length, weight_flipper_length, intercept_body_mass
-):
-    &quot;&quot;&quot;Linear model of the form y = a * x + b&quot;&quot;&quot;
-    body_mass = weight_flipper_length * flipper_length + intercept_body_mass
-    return body_mass
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">linear_model_flipper_mass</span><span class="p">(</span>
+    <span class="n">flipper_length</span><span class="p">,</span> <span class="n">weight_flipper_length</span><span class="p">,</span> <span class="n">intercept_body_mass</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Linear model of the form y = a * x + b&quot;&quot;&quot;</span>
+    <span class="n">body_mass</span> <span class="o">=</span> <span class="n">weight_flipper_length</span> <span class="o">*</span> <span class="n">flipper_length</span> <span class="o">+</span> <span class="n">intercept_body_mass</span>
+    <span class="k">return</span> <span class="n">body_mass</span>
 </pre></div>
 </div>
 </div>
@@ -1696,33 +1696,33 @@ fit our data. Use the above helper function to visualize both the models and
 the real samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-flipper_length_range = np.linspace(data.min(), data.max(), num=300)
+<span class="n">flipper_length_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-import matplotlib.pyplot as plt
-import seaborn as sns
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-weights = [-40, 45, 90]
-intercepts = [15000, -5000, -14000]
+<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<span class="n">intercepts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15000</span><span class="p">,</span> <span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="o">-</span><span class="mi">14000</span><span class="p">]</span>
 
-ax = sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                     color=&quot;black&quot;, alpha=0.5)
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">feature_name</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
-label = &quot;{0:.2f} (g / mm) * flipper length + {1:.2f} (g)&quot;
-for weight, intercept in zip(weights, intercepts):
-    predicted_body_mass = linear_model_flipper_mass(
-        flipper_length_range, weight, intercept)
+<span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2"> (g / mm) * flipper length + </span><span class="si">{1:.2f}</span><span class="s2"> (g)&quot;</span>
+<span class="k">for</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">intercepts</span><span class="p">):</span>
+    <span class="n">predicted_body_mass</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span>
+        <span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
 
-    ax.plot(flipper_length_range, predicted_body_mass,
-            label=label.format(weight, intercept))
-_ = ax.legend(loc=&#39;center left&#39;, bbox_to_anchor=(-0.25, 1.25), ncol=1)
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">flipper_length_range</span><span class="p">,</span> <span class="n">predicted_body_mass</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">),</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1740,19 +1740,19 @@ as inputs the true target values and the predictions and returns a single
 scalar as output.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-def goodness_fit_measure(true_values, predictions):
-    # we compute the error between the true values and the predictions of our
-    # model
-    errors = np.ravel(true_values) - np.ravel(predictions)
-    # We have several possible strategies to reduce all errors to a single value.
-    # Computing the mean error (sum divided by the number of element) might seem
-    # like a good solution. However, we have negative errors that will misleadingly
-    # reduce the mean error. Therefore, we can either square each
-    # error or take the absolute value: these metrics are known as mean
-    # squared error (MSE) and mean absolute error (MAE). Let&#39;s use the MAE here
-    # as an example.
-    return np.mean(np.abs(errors))
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="k">def</span> <span class="nf">goodness_fit_measure</span><span class="p">(</span><span class="n">true_values</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+    <span class="c1"># we compute the error between the true values and the predictions of our</span>
+    <span class="c1"># model</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">true_values</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+    <span class="c1"># We have several possible strategies to reduce all errors to a single value.</span>
+    <span class="c1"># Computing the mean error (sum divided by the number of element) might seem</span>
+    <span class="c1"># like a good solution. However, we have negative errors that will misleadingly</span>
+    <span class="c1"># reduce the mean error. Therefore, we can either square each</span>
+    <span class="c1"># error or take the absolute value: these metrics are known as mean</span>
+    <span class="c1"># squared error (MSE) and mean absolute error (MAE). Let&#39;s use the MAE here</span>
+    <span class="c1"># as an example.</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">errors</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1763,17 +1763,17 @@ each model.</p>
     <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model #</span><span class="si">{</span><span class="n">model_idx</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">weight</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g / mm) * flipper length + </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">goodness_fit_measure</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">goodness_fit_measure</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># solution
-for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):
-    target_predicted = linear_model_flipper_mass(data, weight, intercept)
-    print(f&quot;Model #{model_idx}:&quot;)
-    print(f&quot;{weight:.2f} (g / mm) * flipper length + {intercept:.2f} (g)&quot;)
-    print(f&quot;Error: {goodness_fit_measure(target, target_predicted):.3f}\n&quot;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="k">for</span> <span class="n">model_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">intercepts</span><span class="p">)):</span>
+    <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">linear_model_flipper_mass</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model #</span><span class="si">{</span><span class="n">model_idx</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">weight</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g / mm) * flipper length + </span><span class="si">{</span><span class="n">intercept</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (g)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">goodness_fit_measure</span><span class="p">(</span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

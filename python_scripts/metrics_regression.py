@@ -156,8 +156,7 @@ PredictionErrorDisplay.from_predictions(
     y_true=target_test,
     y_pred=target_predicted,
     kind="actual_vs_predicted",
-    subsample=100,
-    random_state=0,
+    scatter_kwargs={"alpha": 0.5},
 )
 plt.axis("square")
 plt.xlabel("Predicted values (k$)")

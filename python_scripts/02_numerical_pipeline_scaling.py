@@ -172,9 +172,14 @@ data_train_scaled
 data_train_scaled = scaler.fit_transform(data_train)
 data_train_scaled
 
+# %% [markdown]
+# By default `StandardScaler` outputs a numpy array, but it is also possible to
+# set the output to be a pandas dataframe. This makes some data exploration
+# tasks easier, as it preserves the column names.
+
 # %%
-data_train_scaled = pd.DataFrame(data_train_scaled,
-                                 columns=data_train.columns)
+scaler = StandardScaler().set_output(transform="pandas")
+data_train_scaled = scaler.fit_transform(data_train)
 data_train_scaled.describe()
 
 # %% [markdown]

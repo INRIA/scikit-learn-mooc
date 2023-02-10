@@ -46,7 +46,7 @@ Using python in /home/lesteve/miniconda3/envs/scikit-learn-course
 [ OK ] numpy version 1.19.5
 [ OK ] scipy version 1.6.0
 [ OK ] matplotlib version 3.3.3
-[ OK ] sklearn version 1.1.1
+[ OK ] sklearn version 1.2.1
 [ OK ] pandas version 1.2.0
 [ OK ] seaborn version 0.11.1
 [ OK ] notebook version 6.2.0

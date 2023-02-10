@@ -18,11 +18,6 @@
 # Let us reload the dataset as we did previously:
 
 # %%
-from sklearn import set_config
-
-set_config(display="diagram")
-
-# %%
 import pandas as pd
 
 adult_census = pd.read_csv("../datasets/adult-census.csv")

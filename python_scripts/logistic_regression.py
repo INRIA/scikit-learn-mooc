@@ -75,10 +75,6 @@ target_test = penguins_test[target_column]
 # algorithm.
 
 # %%
-import sklearn
-sklearn.set_config(display="diagram")
-
-# %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression

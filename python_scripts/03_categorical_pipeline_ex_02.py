@@ -102,7 +102,7 @@ print("The mean cross-validation accuracy is: "
 #
 # Hint: `HistGradientBoostingClassifier` does not yet support sparse input
 # data. You might want to use
-# `OneHotEncoder(handle_unknown="ignore", sparse=False)` to force the use of a
+# `OneHotEncoder(handle_unknown="ignore", sparse_output=output=False)` to force the use of a
 # dense representation as a workaround.
 
 # %%

@@ -60,10 +60,6 @@ _ = plt.title("Illustration of the moons dataset")
 # a linear support vector machine classifier.
 
 # %%
-import sklearn
-sklearn.set_config(display="diagram")
-
-# %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC

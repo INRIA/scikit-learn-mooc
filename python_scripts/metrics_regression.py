@@ -145,8 +145,15 @@ print(f"Mean absolute percentage error: "
       f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %")
 
 # %% [markdown]
-# In addition of metrics, we can visually represent the results by plotting
-# the predicted values versus the true values.
+# In addition of metrics, we can visually represent the results by plotting the
+# predicted values versus the true values. On such a plot, correct predictions
+# lie on the diagonal line. This allows us to detect if the model makes errors
+# in a consistent way, i.e. has some bias.
+#
+# A similar option is to plot  the residuals (i.e. the difference between the
+# actual and the predicted values) vs. the predicted values. This plot makes it
+# easier to visualize whether the residuals have a variance that is independent
+# of the house values.
 
 # %%
 import matplotlib.pyplot as plt
@@ -179,14 +186,10 @@ axs[1].set_ylabel("Residual values (k$)")
 _ = fig.suptitle("Regression using a model\nwithout target transformation", y=1.1)
 
 # %% [markdown]
-# On this plot, correct predictions would lie on the diagonal line. This plot
-# allows us to detect if the model makes errors in a consistent way, i.e.
-# has some bias.
-#
-# On this plot, we see that for the large True price values, our model tends to
-# under-estimate the price of the house. Typically, this issue arises when the
-# target to predict does not follow a normal distribution. In this case the
-# model would benefit from target transformation.
+# On these plots, we see that for the large True price values, our model tends
+# to under-estimate the price of the house. Typically, this issue arises when
+# the target to predict does not follow a normal distribution. In this case the
+# model would benefit from a target transformation.
 
 # %%
 from sklearn.preprocessing import QuantileTransformer
@@ -228,4 +231,4 @@ _ = fig.suptitle("Regression using a model that\ntransforms the target "
 
 # %% [markdown]
 # Thus, once we transformed the target, we see that we corrected some of the
-# high values.
+# predictions of the high values.

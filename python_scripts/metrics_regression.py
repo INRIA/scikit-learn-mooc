@@ -152,16 +152,31 @@ print(f"Mean absolute percentage error: "
 import matplotlib.pyplot as plt
 from sklearn.metrics import PredictionErrorDisplay
 
+fig, axs = plt.subplots(ncols=2, figsize=(13, 5))
+
 PredictionErrorDisplay.from_predictions(
     y_true=target_test,
     y_pred=target_predicted,
     kind="actual_vs_predicted",
     scatter_kwargs={"alpha": 0.5},
+    ax=axs[0]
 )
-plt.axis("square")
-plt.xlabel("Predicted values (k$)")
-plt.ylabel("True values (k$)")
-_ = plt.title("Regression using a model without \ntarget transformation")
+axs[0].axis("square")
+axs[0].set_xlabel("Predicted values (k$)")
+axs[0].set_ylabel("True values (k$)")
+
+PredictionErrorDisplay.from_predictions(
+    y_true=target_test,
+    y_pred=target_predicted,
+    kind="residual_vs_predicted",
+    scatter_kwargs={"alpha": 0.5},
+    ax=axs[1]
+)
+axs[1].axis("square")
+axs[1].set_xlabel("Predicted values (k$)")
+axs[1].set_ylabel("Residual values (k$)")
+
+_ = fig.suptitle("Regression using a model\nwithout target transformation", y=1.1)
 
 # %% [markdown]
 # On this plot, correct predictions would lie on the diagonal line. This plot

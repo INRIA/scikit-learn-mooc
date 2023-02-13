@@ -245,7 +245,7 @@ _ = plt.title("Predictions of bagged trees")
 from sklearn.ensemble import BaggingRegressor
 
 bagged_trees = BaggingRegressor(
-    base_estimator=DecisionTreeRegressor(max_depth=3),
+    estimator=DecisionTreeRegressor(max_depth=3),
     n_estimators=100,
 )
 _ = bagged_trees.fit(data_train, target_train)
@@ -333,11 +333,11 @@ polynomial_regressor = make_pipeline(
 # base models.
 #
 # The ensemble itself is simply built by passing the resulting pipeline as the
-# `base_estimator` parameter of the `BaggingRegressor` class:
+# `estimator` parameter of the `BaggingRegressor` class:
 
 # %%
 bagging = BaggingRegressor(
-    base_estimator=polynomial_regressor,
+    estimator=polynomial_regressor,
     n_estimators=100,
     random_state=0,
 )

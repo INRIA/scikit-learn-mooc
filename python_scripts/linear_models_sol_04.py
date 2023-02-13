@@ -208,7 +208,7 @@ X_train["CentralAir"]
 from sklearn.preprocessing import OneHotEncoder
 
 single_feature = ["CentralAir"]
-encoder = OneHotEncoder(sparse_output=output=False, dtype=np.int32)
+encoder = OneHotEncoder(sparse_output=False, dtype=np.int32)
 X_trans = encoder.fit_transform(X_train[single_feature])
 X_trans = pd.DataFrame(
     X_trans,

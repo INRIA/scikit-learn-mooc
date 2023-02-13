@@ -172,7 +172,7 @@ print(
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
-encoder = OneHotEncoder(sparse_output=output=False)
+encoder = OneHotEncoder(sparse_output=False)
 education_encoded = encoder.fit_transform(education_column)
 education_encoded
 

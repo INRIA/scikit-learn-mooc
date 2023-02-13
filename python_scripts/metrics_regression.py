@@ -199,18 +199,32 @@ model_transformed_target = TransformedTargetRegressor(
 model_transformed_target.fit(data_train, target_train)
 target_predicted = model_transformed_target.predict(data_test)
 
+fig, axs = plt.subplots(ncols=2, figsize=(13, 5))
+
 PredictionErrorDisplay.from_predictions(
     y_true=target_test,
     y_pred=target_predicted,
     kind="actual_vs_predicted",
-    subsample=100,
-    random_state=0,
+    scatter_kwargs={"alpha": 0.5},
+    ax=axs[0]
 )
-plt.axis("square")
-plt.xlabel("Predicted values (k$)")
-plt.ylabel("True values (k$)")
-_ = plt.title("Regression using a model that\n transform the target before "
-              "fitting")
+axs[0].axis("square")
+axs[0].set_xlabel("Predicted values (k$)")
+axs[0].set_ylabel("True values (k$)")
+
+PredictionErrorDisplay.from_predictions(
+    y_true=target_test,
+    y_pred=target_predicted,
+    kind="residual_vs_predicted",
+    scatter_kwargs={"alpha": 0.5},
+    ax=axs[1]
+)
+axs[1].axis("square")
+axs[1].set_xlabel("Predicted values (k$)")
+axs[1].set_ylabel("Residual values (k$)")
+
+_ = fig.suptitle("Regression using a model that\ntransforms the target "
+                 "before fitting", y=1.1)
 
 # %% [markdown]
 # Thus, once we transformed the target, we see that we corrected some of the

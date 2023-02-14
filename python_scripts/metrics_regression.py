@@ -186,14 +186,14 @@ axs[1].set_ylabel("Residual values (k$)")
 _ = fig.suptitle("Regression using a model\nwithout target transformation", y=1.1)
 
 # %% [markdown]
-# On these plots, we see that our model tends to under-estimate the price of the house
-# both for the lowest and large True price values. This means that the residuals (
-# difference between true and predicted values) still hold some structure
-# typically visible as the "banana" or "smile" shape of the residual plot.
-# This is often a clue that our model could be improved, either by transforming
-# the features, the target or sometimes changing the model type or its parameters.
-# In this case let's try to see if the model would benefit from a target transformation
-# that monotonically reshape the target variable to follow a normal distribution.
+# On these plots, we see that our model tends to under-estimate the price of the
+# house both for the lowest and large True price values. This means that the
+# residuals still hold some structure typically visible as the "banana" or
+# "smile" shape of the residual plot. This is often a clue that our model could
+# be improved, either by transforming the features, the target or sometimes
+# changing the model type or its parameters. In this case let's try to see if
+# the model would benefit from a target transformation that monotonically
+# reshapes the target variable to follow a normal distribution.
 
 # %%
 from sklearn.preprocessing import QuantileTransformer
@@ -234,5 +234,34 @@ _ = fig.suptitle("Regression using a model that\ntransforms the target "
                  "before fitting", y=1.1)
 
 # %% [markdown]
-# Thus, once we transformed the target, we see that we corrected some of the
-# predictions of the high values.
+# The model with the transformed target seems to exhibit fewer structure in its
+# residuals: over-estimation and under-estimation errors seems to be more
+# balanced.
+#
+# We can confirm this by computing the previously mentioned metrics and observe
+# that they all improved w.r.t. the linear regression model without the target
+# transformation.
+
+# %%
+print(f"Mean absolute error: "
+      f"{mean_absolute_error(target_test, target_predicted):.3f} k$")
+
+print(f"Median absolute error: "
+      f"{median_absolute_error(target_test, target_predicted):.3f} k$")
+
+print(f"Mean absolute percentage error: "
+      f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %")
+
+# %% [markdown]
+# While a common practice, performing such a target transformation for linear
+# regression is often disapproved by statisticians. It is mathematically more
+# justified to instead adapt the loss function of the regression model itself,
+# for instance by fitting a `PoissonRegressor` or a `TweedieRegressor` model
+# instead of `LinearRegression`. In particular those models indeed use an
+# internal "log link" function that makes them more suited for this kind of
+# positive-only target data distributions, but this analysis is beyond the scope
+# of this MOOC.
+#
+# The interested readers are encouraged to learn more about those models, in
+# particular by reading the user guide and the examples linked for their API
+# documentation pages above.

@@ -186,10 +186,14 @@ axs[1].set_ylabel("Residual values (k$)")
 _ = fig.suptitle("Regression using a model\nwithout target transformation", y=1.1)
 
 # %% [markdown]
-# On these plots, we see that for the large True price values, our model tends
-# to under-estimate the price of the house. Typically, this issue arises when
-# the target to predict does not follow a normal distribution. In this case the
-# model would benefit from a target transformation.
+# On these plots, we see that our model tends to under-estimate the price of the house
+# both for the lowest and large True price values. This means that the residuals (
+# difference between true and predicted values) still hold some structure
+# typically visible as the "banana" or "smile" shape of the residual plot.
+# This is often a clue that our model could be improved, either by transforming
+# the features, the target or sometimes changing the model type or its parameters.
+# In this case let's try to see if the model would benefit from a target transformation
+# that monotonically reshape the target variable to follow a normal distribution.
 
 # %%
 from sklearn.preprocessing import QuantileTransformer

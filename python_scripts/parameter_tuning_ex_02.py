@@ -75,9 +75,9 @@ model = Pipeline([
 # Write your code here.
 
 # %% [markdown]
-#
-# Now use the test set to score the model using the best parameters
-# that we found using cross-validation in the training set.
+# Now use the test set to score the model using the best parameters that we
+# found using cross-validation. You will have to refit the model over the full
+# training set.
 
 # %%
 # Write your code here.

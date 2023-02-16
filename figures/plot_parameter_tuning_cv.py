@@ -103,25 +103,24 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, ax, lw=50):
             )
 
     # Formatting
+    ax.set_title("{} nested cross-validation".format(type(cv_outer).__name__))
+    ax1 = ax.twinx()
     yticklabels = n_splits_outer * list(range(n_splits_inner))
-    ax.set(
-        yticks=np.arange(n_splits_outer * n_splits_inner) + 0.5,
+    ax1.set(
+        yticks=np.arange(n_splits_outer * n_splits_inner) + 0.3,
         yticklabels=yticklabels,
         xlabel="Sample index",
         ylabel="CV inner iteration",
         ylim=[n_splits_outer * n_splits_inner + 0.2, -0.2],
         xlim=[0, 50],
     )
-
-    ax.set_title("{} nested cross-validation".format(type(cv_outer).__name__))
-    ax1 = ax.twinx()
     yticklabels = list(range(n_splits_outer))
-    ax1.set(
-        yticks=np.arange(n_splits_outer) + 0.25,
+    ax.set(
+        yticks=n_splits_inner*np.arange(n_splits_outer) + 0.5,
         yticklabels=yticklabels,
         xlabel="Sample index",
         ylabel="CV outer iteration",
-        ylim=[n_splits_outer + 0.2, 0.08],
+        ylim=[n_splits_outer * n_splits_inner + 0.2, 0.08],
         xlim=[0, 50],
     )
     ax.legend(

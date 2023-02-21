@@ -1651,7 +1651,7 @@ depth of each tree.</p></li>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;score: </span><span class="si">{</span><span class="n">mean_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">mean_score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
             <span class="n">best_score</span> <span class="o">=</span> <span class="n">mean_score</span>
-            <span class="n">best_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;learning-rate&#39;</span><span class="p">:</span> <span class="n">lr</span><span class="p">,</span> <span class="s1">&#39;max leaf nodes&#39;</span><span class="p">:</span> <span class="n">mln</span><span class="p">}</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">lr</span><span class="p">,</span> <span class="s1">&#39;max_leaf_nodes&#39;</span><span class="p">:</span> <span class="n">mln</span><span class="p">}</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found new best model with score </span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best accuracy obtained is </span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1701,10 +1701,7 @@ Evaluating model with learning rate 1.000 and max leaf nodes 30...
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.828
-Evaluating model with learning rate 10.000 and max leaf nodes 3... 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.288
+Evaluating model with learning rate 10.000 and max leaf nodes 3... score: 0.288
 Evaluating model with learning rate 10.000 and max leaf nodes 10... 
 </pre></div>
 </div>
@@ -1715,18 +1712,19 @@ Evaluating model with learning rate 10.000 and max leaf nodes 30...
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score: 0.437
 The best accuracy obtained is 0.859
 The best parameters found are:
- {&#39;learning-rate&#39;: 0.1, &#39;max leaf nodes&#39;: 10}
+ {&#39;learning_rate&#39;: 0.1, &#39;max_leaf_nodes&#39;: 10}
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now use the test set to score the model using the best parameters
-that we found using cross-validation in the training set.</p>
+<p>Now use the test set to score the model using the best parameters that we
+found using cross-validation. You will have to refit the model over the full
+training set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">best_lr</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;learning-rate&#39;</span><span class="p">]</span>
-<span class="n">best_mln</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;max leaf nodes&#39;</span><span class="p">]</span>
+<span class="n">best_lr</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">]</span>
+<span class="n">best_mln</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="s1">&#39;max_leaf_nodes&#39;</span><span class="p">]</span>
 
 <span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__learning_rate</span><span class="o">=</span><span class="n">best_lr</span><span class="p">,</span>
                  <span class="n">classifier__max_leaf_nodes</span><span class="o">=</span><span class="n">best_mln</span><span class="p">)</span>

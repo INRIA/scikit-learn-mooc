@@ -86,21 +86,21 @@ for lr in learning_rate:
         print(f"score: {mean_score:.3f}")
         if mean_score > best_score:
             best_score = mean_score
-            best_params = {'learning-rate': lr, 'max leaf nodes': mln}
+            best_params = {'learning_rate': lr, 'max_leaf_nodes': mln}
             print(f"Found new best model with score {best_score:.3f}!")
 
 print(f"The best accuracy obtained is {best_score:.3f}")
 print(f"The best parameters found are:\n {best_params}")
 
 # %% [markdown]
-#
-# Now use the test set to score the model using the best parameters
-# that we found using cross-validation in the training set.
+# Now use the test set to score the model using the best parameters that we
+# found using cross-validation. You will have to refit the model over the full
+# training set.
 
 # %%
 # solution
-best_lr = best_params['learning-rate']
-best_mln = best_params['max leaf nodes']
+best_lr = best_params['learning_rate']
+best_mln = best_params['max_leaf_nodes']
 
 model.set_params(classifier__learning_rate=best_lr,
                  classifier__max_leaf_nodes=best_mln)

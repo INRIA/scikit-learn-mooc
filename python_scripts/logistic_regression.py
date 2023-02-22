@@ -80,7 +80,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty="none")
+    StandardScaler(), LogisticRegression(penalty=None)
 )
 logistic_regression.fit(data_train, target_train)
 accuracy = logistic_regression.score(data_test, target_test)

@@ -38,7 +38,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
-# to its parameter `base_estimator`. Train the regressor and evaluate its
+# to its parameter `estimator`. Train the regressor and evaluate its
 # generalization performance on the testing set using the mean absolute error.
 
 # %%

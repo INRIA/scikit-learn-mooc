@@ -256,12 +256,14 @@ print(f"Mean absolute percentage error: "
 # While a common practice, performing such a target transformation for linear
 # regression is often disapproved by statisticians. It is mathematically more
 # justified to instead adapt the loss function of the regression model itself,
-# for instance by fitting a `PoissonRegressor` or a `TweedieRegressor` model
-# instead of `LinearRegression`. In particular those models indeed use an
+# for instance by fitting a
+# [`PoissonRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.PoissonRegressor.html)
+# or a
+# [`TweedieRegressor`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.TweedieRegressor.html)
+# model instead of `LinearRegression`. In particular those models indeed use an
 # internal "log link" function that makes them more suited for this kind of
 # positive-only target data distributions, but this analysis is beyond the scope
 # of this MOOC.
 #
 # The interested readers are encouraged to learn more about those models, in
-# particular by reading the user guide and the examples linked for their API
-# documentation pages above.
+# particular by reading the respective user guide linked above.

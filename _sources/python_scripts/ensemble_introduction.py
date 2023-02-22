@@ -102,9 +102,9 @@ print(f"R2 score obtained by cross-validation: "
 # %%time
 from sklearn.ensemble import BaggingRegressor
 
-base_estimator = DecisionTreeRegressor(random_state=0)
+estimator = DecisionTreeRegressor(random_state=0)
 bagging_regressor = BaggingRegressor(
-    base_estimator=base_estimator, n_estimators=20, random_state=0)
+    estimator=estimator, n_estimators=20, random_state=0)
 
 cv_results = cross_validate(bagging_regressor, data, target, n_jobs=2)
 scores = cv_results["test_score"]

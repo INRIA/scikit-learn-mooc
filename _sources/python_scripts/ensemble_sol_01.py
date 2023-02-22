@@ -31,7 +31,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 
 # %% [markdown]
 # Create a `BaggingRegressor` and provide a `DecisionTreeRegressor`
-# to its parameter `base_estimator`. Train the regressor and evaluate its
+# to its parameter `estimator`. Train the regressor and evaluate its
 # generalization performance on the testing set using the mean absolute error.
 
 # %%
@@ -41,7 +41,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import BaggingRegressor
 
 tree = DecisionTreeRegressor()
-bagging = BaggingRegressor(base_estimator=tree, n_jobs=2)
+bagging = BaggingRegressor(estimator=tree, n_jobs=2)
 bagging.fit(data_train, target_train)
 target_predicted = bagging.predict(data_test)
 print(f"Basic mean absolute error of the bagging regressor:\n"
@@ -72,7 +72,7 @@ param_grid = {
     "n_estimators": randint(10, 30),
     "max_samples": [0.5, 0.8, 1.0],
     "max_features": [0.5, 0.8, 1.0],
-    "base_estimator__max_depth": randint(3, 10),
+    "estimator__max_depth": randint(3, 10),
 }
 search = RandomizedSearchCV(
     bagging, param_grid, n_iter=20, scoring="neg_mean_absolute_error"

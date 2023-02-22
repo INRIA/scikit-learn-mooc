@@ -208,7 +208,7 @@ X_train["CentralAir"]
 from sklearn.preprocessing import OneHotEncoder
 
 single_feature = ["CentralAir"]
-encoder = OneHotEncoder(sparse=False, dtype=np.int32)
+encoder = OneHotEncoder(sparse_output=False, dtype=np.int32)
 X_trans = encoder.fit_transform(X_train[single_feature])
 X_trans = pd.DataFrame(
     X_trans,
@@ -237,7 +237,7 @@ X_trans
 # binary categories.
 
 # %% tags=["solution"]
-encoder = OneHotEncoder(drop="first", sparse=False, dtype=np.int32)
+encoder = OneHotEncoder(drop="first", sparse_output=False, dtype=np.int32)
 X_trans = encoder.fit_transform(X_train[single_feature])
 X_trans = pd.DataFrame(
     X_trans,

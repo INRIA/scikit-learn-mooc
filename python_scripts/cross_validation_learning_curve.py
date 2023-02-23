@@ -58,6 +58,7 @@ regressor = DecisionTreeRegressor()
 
 # %%
 import numpy as np
+
 train_sizes = np.linspace(0.1, 1.0, num=5, endpoint=True)
 train_sizes
 
@@ -73,30 +74,23 @@ cv = ShuffleSplit(n_splits=30, test_size=0.2)
 # Now, we are all set to carry out the experiment.
 
 # %%
-from sklearn.model_selection import learning_curve
-
-results = learning_curve(
-    regressor, data, target, train_sizes=train_sizes, cv=cv,
-    scoring="neg_mean_absolute_error", n_jobs=2)
-train_size, train_scores, test_scores = results[:3]
-# Convert the scores into errors
-train_errors, test_errors = -train_scores, -test_scores
-
-# %% [markdown]
-# Now, we can plot the curve.
-
-# %%
+from sklearn.model_selection import LearningCurveDisplay
 import matplotlib.pyplot as plt
 
-plt.errorbar(train_size, train_errors.mean(axis=1),
-             yerr=train_errors.std(axis=1), label="Training error")
-plt.errorbar(train_size, test_errors.mean(axis=1),
-             yerr=test_errors.std(axis=1), label="Testing error")
-plt.legend()
-
-plt.xscale("log")
-plt.xlabel("Number of samples in the training set")
-plt.ylabel("Mean absolute error (k$)")
+LearningCurveDisplay.from_estimator(
+    regressor,
+    data,
+    target,
+    train_sizes=train_sizes,
+    cv=cv,
+    score_type="both", # both train and test errors
+    scoring="neg_mean_absolute_error",
+    negate_score=True, # to use when metric starts with "neg_"
+    log_scale=True, # sets log scale for the x-axis
+    score_name="Mean absolute error (k$)",
+    std_display_style="errorbar",
+    n_jobs=2,
+)
 _ = plt.title("Learning curve for decision tree")
 
 # %% [markdown]

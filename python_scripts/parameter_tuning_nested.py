@@ -41,12 +41,6 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 # this pipeline is identical to the one we used in the previous notebook.
 
 # %%
-from sklearn import set_config
-
-# To get a diagram visualization of the pipeline
-set_config(display="diagram")
-
-# %%
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.compose import make_column_selector as selector

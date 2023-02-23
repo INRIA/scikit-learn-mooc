@@ -104,7 +104,7 @@ from sklearn.ensemble import BaggingClassifier
 bagged_trees = make_pipeline(
     preprocessor,
     BaggingClassifier(
-        base_estimator=DecisionTreeClassifier(random_state=0),
+        estimator=DecisionTreeClassifier(random_state=0),
         n_estimators=50, n_jobs=2, random_state=0,
     )
 )
@@ -121,7 +121,7 @@ print(f"Bagged decision tree classifier: "
 # better than the performance of a single tree.
 #
 # Now, we will use a random forest. You will observe that we do not need to
-# specify any `base_estimator` because the estimator is forced to be a decision
+# specify any `estimator` because the estimator is forced to be a decision
 # tree. Thus, we just specify the desired number of trees in the forest.
 
 # %%

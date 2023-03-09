@@ -89,9 +89,9 @@ quizzes (quizzes with solutions).
 make quizzes
 ```
 
-### Generating full-index.md
+### Generating full-index.ipynb
 
-full-index.md is useful when giving the course live. It makes it easier to guide people
+full-index.ipynb is useful when giving the course live. It makes it easier to guide people
 through the notebooks.
 
 ```

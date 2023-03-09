@@ -1,8 +1,9 @@
 # %%
 from pathlib import Path
-import yaml
 
 import click
+
+import nbformat
 
 import jupytext
 
@@ -73,7 +74,7 @@ def get_single_file_markdown(docname):
     title = get_first_title(path)
     target = path
     # For now the target is relative to the repo root directory since that is
-    # where full-index.md lives. Maybe one day this can be another argument of
+    # where full-index.ipynb lives. Maybe one day this can be another argument of
     # the script ?
     target = target.relative_to(root_dir)
 
@@ -208,6 +209,24 @@ def test_get_full_index_markdown():
     print(get_full_index_markdown(toc_path))
 
 
+def get_full_index_ipynb(toc_path):
+    md_str = get_full_index_markdown(toc_path)
+    nb = jupytext.reads(md_str, format=".md")
+
+    nb = nbformat.v4.new_notebook(cells=[nbformat.v4.new_markdown_cell(md_str)])
+
+    # nb_content = jupytext.writes(nb, fmt=".ipynb")
+    # nb = json.loads(nb_content)
+
+    # In nbformat 5, markdown cells have ids, nbformat.write and consequently
+    # jupytext writes random cell ids when generating .ipynb from .py, creating
+    # unnecessary changes.
+    for c in nb.cells:
+        del c["id"]
+
+    return nbformat.v4.writes(nb)
+
+
 def test_json_manipulation():
     """Gives a few hints about the json format"""
     # %%
@@ -288,15 +307,15 @@ def test_json_manipulation():
 )
 @click.option(
     "--output",
-    default="full-index.md",
-    help="Path where the markdown index will be written",
+    default="full-index.ipynb",
+    help="Path where the index notebook will be written",
 )
 def main(toc, output):
     toc_path = Path(toc)
     output_path = Path(output)
 
-    md_str = get_full_index_markdown(toc_path)
-    output_path.write_text(md_str)
+    ipynb_str = get_full_index_ipynb(toc_path)
+    output_path.write_text(ipynb_str)
 
 
 if __name__ == "__main__":

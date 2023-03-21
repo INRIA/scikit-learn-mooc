@@ -196,8 +196,8 @@ See [this](./workflow-notes.md).
 ## Direct binder links to OVH, GESIS and GKE to trigger and cache builds
 
 
-- [OVH Binder](https://ovh.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
+- [OVH Binder](https://ovh.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?filepath=full-index.ipynb)
 
-- [GESIS Binder](https://gesis.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
+- [GESIS Binder](https://gesis.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?filepath=full-index.ipynb)
 
-- [GKE Binder](https://gke.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
+- [GKE Binder](https://gke.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?filepath=full-index.ipynb)

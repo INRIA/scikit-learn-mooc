@@ -16,9 +16,9 @@
 # # 📝 Exercise M5.01
 #
 # In the previous notebook, we showed how a tree with a depth of 1 level was
-# working. The aim of this exercise is to repeat part of the previous
-# experiment for a depth with 2 levels to show how the process of partitioning
-# is repeated over time.
+# working. The aim of this exercise is to repeat part of the previous experiment
+# for a depth with 2 levels to show how the process of partitioning is repeated
+# over time.
 #
 # Before to start, we will:
 #
@@ -48,18 +48,18 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# Create a decision tree classifier with a maximum depth of 2 levels and fit
-# the training data. Once this classifier trained, plot the data and the
-# decision boundary to see the benefit of increasing the depth. To plot the
-# decision boundary, you should import the class `DecisionBoundaryDisplay`
-# from the module `sklearn.inspection` as shown in the previous course notebook.
+# Create a decision tree classifier with a maximum depth of 2 levels and fit the
+# training data. Once this classifier trained, plot the data and the decision
+# boundary to see the benefit of increasing the depth. To plot the decision
+# boundary, you should import the class `DecisionBoundaryDisplay` from the
+# module `sklearn.inspection` as shown in the previous course notebook.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Did we make use of the feature "Culmen Length"?
-# Plot the tree using the function `sklearn.tree.plot_tree` to find out!
+# Did we make use of the feature "Culmen Length"? Plot the tree using the
+# function `sklearn.tree.plot_tree` to find out!
 
 # %%
 # Write your code here.

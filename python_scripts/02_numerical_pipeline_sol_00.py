@@ -24,12 +24,12 @@ target = adult_census["class"]
 # %% [markdown]
 # In the previous notebook we used `model = KNeighborsClassifier()`. All
 # scikit-learn models can be created without arguments. This is convenient
-# because it means that you don't need to understand the full details of a
-# model before starting to use it.
+# because it means that you don't need to understand the full details of a model
+# before starting to use it.
 #
-# One of the `KNeighborsClassifier` parameters is `n_neighbors`. It controls
-# the number of neighbors we are going to use to make a prediction for a new
-# data point.
+# One of the `KNeighborsClassifier` parameters is `n_neighbors`. It controls the
+# number of neighbors we are going to use to make a prediction for a new data
+# point.
 #
 # What is the default value of the `n_neighbors` parameter? Hint: Look at the
 # documentation on the [scikit-learn

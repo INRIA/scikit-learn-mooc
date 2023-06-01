@@ -9,14 +9,14 @@
 # # Linear regression using scikit-learn
 #
 # In the previous notebook, we presented the parametrization of a linear model.
-# During the exercise, you saw that varying parameters will give different models
-# that will fit better or worse the data. To evaluate quantitatively this
+# During the exercise, you saw that varying parameters will give different
+# models that will fit better or worse the data. To evaluate quantitatively this
 # goodness of fit, you implemented a so-called metric.
 #
 # When doing machine learning, you are interested in selecting the model which
-# will minimize the error on the data available the most.
-# From the previous exercise, we could implement a brute-force approach,
-# varying the weights and intercept and select the model with the lowest error.
+# will minimize the error on the data available the most. From the previous
+# exercise, we could implement a brute-force approach, varying the weights and
+# intercept and select the model with the lowest error.
 #
 # Hopefully, this problem of finding the best parameters values (i.e. that
 # result in the lowest error) can be solved without the need to check every
@@ -47,8 +47,8 @@ linear_regression.fit(data, target)
 
 # %% [markdown]
 # The instance `linear_regression` will store the parameter values in the
-# attributes `coef_` and `intercept_`. We can check what the optimal model
-# found is:
+# attributes `coef_` and `intercept_`. We can check what the optimal model found
+# is:
 
 # %%
 weight_flipper_length = linear_regression.coef_[0]
@@ -66,8 +66,7 @@ intercept_body_mass
 import numpy as np
 
 flipper_length_range = np.linspace(data.min(), data.max(), num=300)
-predicted_body_mass = (
-    weight_flipper_length * flipper_length_range + intercept_body_mass)
+predicted_body_mass = weight_flipper_length * flipper_length_range + intercept_body_mass
 
 # %%
 import matplotlib.pyplot as plt
@@ -78,10 +77,10 @@ plt.plot(flipper_length_range, predicted_body_mass)
 _ = plt.title("Model using LinearRegression from scikit-learn")
 
 # %% [markdown]
-# In the solution of the previous exercise, we implemented a function to
-# compute the goodness of fit of a model. Indeed, we mentioned two metrics: (i)
-# the mean squared error and (ii) the mean absolute error. These metrics are
-# implemented in scikit-learn and we do not need to use our own implementation.
+# In the solution of the previous exercise, we implemented a function to compute
+# the goodness of fit of a model. Indeed, we mentioned two metrics: (i) the mean
+# squared error and (ii) the mean absolute error. These metrics are implemented
+# in scikit-learn and we do not need to use our own implementation.
 #
 # We can first compute the mean squared error.
 
@@ -100,8 +99,8 @@ print(f"The mean squared error of the optimal model is {model_error:.2f}")
 # a higher mean squared error on the training set.
 #
 # However, the mean squared error is difficult to interpret. The mean absolute
-# error is more intuitive since it provides an error in the same unit as the
-# one of the target.
+# error is more intuitive since it provides an error in the same unit as the one
+# of the target.
 
 # %%
 from sklearn.metrics import mean_absolute_error
@@ -110,8 +109,8 @@ model_error = mean_absolute_error(target, inferred_body_mass)
 print(f"The mean absolute error of the optimal model is {model_error:.2f} g")
 
 # %% [markdown]
-# A mean absolute error of 313 means that in average, our model make an error
-# of ± 313 grams when predicting the body mass of a penguin given its flipper
+# A mean absolute error of 313 means that in average, our model make an error of
+# ± 313 grams when predicting the body mass of a penguin given its flipper
 # length.
 
 

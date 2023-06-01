@@ -27,15 +27,18 @@
 # %%
 import pandas as pd
 
-symbols = {"TOT": "Total", "XOM": "Exxon", "CVX": "Chevron",
-           "COP": "ConocoPhillips", "VLO": "Valero Energy"}
-template_name = ("../datasets/financial-data/{}.csv")
+symbols = {
+    "TOT": "Total",
+    "XOM": "Exxon",
+    "CVX": "Chevron",
+    "COP": "ConocoPhillips",
+    "VLO": "Valero Energy",
+}
+template_name = "../datasets/financial-data/{}.csv"
 
 quotes = {}
 for symbol in symbols:
-    data = pd.read_csv(
-        template_name.format(symbol), index_col=0, parse_dates=True
-    )
+    data = pd.read_csv(template_name.format(symbol), index_col=0, parse_dates=True)
     quotes[symbols[symbol]] = data["open"]
 quotes = pd.DataFrame(quotes)
 
@@ -60,7 +63,8 @@ from sklearn.model_selection import train_test_split
 
 data, target = quotes.drop(columns=["Chevron"]), quotes["Chevron"]
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, shuffle=True, random_state=0)
+    data, target, shuffle=True, random_state=0
+)
 
 # %% [markdown]
 # We will use a decision tree regressor that we expect to overfit and thus not
@@ -88,10 +92,8 @@ cv = ShuffleSplit(random_state=0)
 # %%
 from sklearn.model_selection import cross_val_score
 
-test_score = cross_val_score(regressor, data_train, target_train, cv=cv,
-                             n_jobs=2)
-print(f"The mean R2 is: "
-      f"{test_score.mean():.2f} ± {test_score.std():.2f}")
+test_score = cross_val_score(regressor, data_train, target_train, cv=cv, n_jobs=2)
+print(f"The mean R2 is: " f"{test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # Surprisingly, we get outstanding generalization performance. We will
@@ -117,8 +119,8 @@ test_score = r2_score(target_test, target_predicted)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
-# Similarly, we obtain good results in terms of $R^2$.
-# We will plot the training, testing and prediction samples.
+# Similarly, we obtain good results in terms of $R^2$. We will plot the
+# training, testing and prediction samples.
 
 # %%
 target_train.plot(label="Training")
@@ -145,7 +147,10 @@ _ = plt.title("Model predictions using a ShuffleSplit strategy")
 
 # %%
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, shuffle=False, random_state=0,
+    data,
+    target,
+    shuffle=False,
+    random_state=0,
 )
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_test)
@@ -184,10 +189,8 @@ from sklearn.model_selection import LeaveOneGroupOut
 
 groups = quotes.index.to_period("Q")
 cv = LeaveOneGroupOut()
-test_score = cross_val_score(regressor, data, target,
-                             cv=cv, groups=groups, n_jobs=2)
-print(f"The mean R2 is: "
-      f"{test_score.mean():.2f} ± {test_score.std():.2f}")
+test_score = cross_val_score(regressor, data, target, cv=cv, groups=groups, n_jobs=2)
+print(f"The mean R2 is: " f"{test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # In this case, we see that we cannot make good predictions, which is less
@@ -203,10 +206,8 @@ print(f"The mean R2 is: "
 from sklearn.model_selection import TimeSeriesSplit
 
 cv = TimeSeriesSplit(n_splits=groups.nunique())
-test_score = cross_val_score(regressor, data, target,
-                             cv=cv, groups=groups, n_jobs=2)
-print(f"The mean R2 is: "
-      f"{test_score.mean():.2f} ± {test_score.std():.2f}")
+test_score = cross_val_score(regressor, data, target, cv=cv, groups=groups, n_jobs=2)
+print(f"The mean R2 is: " f"{test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # In conclusion, it is really important to not use an out of the shelves

@@ -29,8 +29,8 @@ data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 
 # %% [markdown]
-# Across all evaluations, we will use a `ShuffleSplit` cross-validation
-# splitter with 20% of the data held on the validation side of the split.
+# Across all evaluations, we will use a `ShuffleSplit` cross-validation splitter
+# with 20% of the data held on the validation side of the split.
 
 # %%
 from sklearn.model_selection import ShuffleSplit
@@ -75,7 +75,6 @@ errors_dummy_regressor = pd.Series(
 )
 errors_dummy_regressor.describe()
 
-
 # %% [markdown]
 # We now plot the cross-validation testing errors for the mean target baseline
 # and the actual decision tree regressor.
@@ -99,13 +98,13 @@ _ = plt.title("Cross-validation testing errors")
 
 # %% [markdown]
 # We see that the generalization performance of our decision tree is far from
-# being perfect: the price predictions are off by more than 45,000 US dollars
-# on average. However it is much better than the mean price baseline. So this
-# confirms that it is possible to predict the housing price much better by
-# using a model that takes into account the values of the input features
-# (housing location, size, neighborhood income...). Such a model makes more
-# informed predictions and approximately divides the error rate by a factor of 2
-# compared to the baseline that ignores the input features.
+# being perfect: the price predictions are off by more than 45,000 US dollars on
+# average. However it is much better than the mean price baseline. So this
+# confirms that it is possible to predict the housing price much better by using
+# a model that takes into account the values of the input features (housing
+# location, size, neighborhood income...). Such a model makes more informed
+# predictions and approximately divides the error rate by a factor of 2 compared
+# to the baseline that ignores the input features.
 #
 # Note that here we used the mean price as the baseline prediction. We could
 # have used the median instead. See the online documentation of the

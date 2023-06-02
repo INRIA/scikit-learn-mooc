@@ -190,10 +190,10 @@ print(
 # ```{important}
 # Which encoder should I use?
 #
-# | # |                  | Meaningful order              | Non-meaningful order |
-# | - | ---------------- | ----------------------------- | -------------------- |
-# |   | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder`     |
-# |   | Linear model     | `OrdinalEncoder` with caution | `OneHotEncoder`      |
+# |                  | Meaningful order              | Non-meaningful order |
+# | ---------------- | ----------------------------- | -------------------- |
+# | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder`     |
+# | Linear model     | `OrdinalEncoder` with caution | `OneHotEncoder`      |
 #
 # - `OneHotEncoder`: will always do something meaningful, but can be unnecessary
 #   slow with trees.

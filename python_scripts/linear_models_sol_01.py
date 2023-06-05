@@ -52,12 +52,12 @@ def linear_model_flipper_mass(
 # %% [markdown]
 # ## Main exercise
 #
-# Define a vector `weights = [...]` and a vector `intercepts = [...]` of
-# the same length. Each pair of entries `(weights[i], intercepts[i])` tags a
+# Define a vector `weights = [...]` and a vector `intercepts = [...]` of the
+# same length. Each pair of entries `(weights[i], intercepts[i])` tags a
 # different model. Use these vectors along with the vector
-# `flipper_length_range` to plot several linear models that could possibly
-# fit our data. Use the above helper function to visualize both the models and
-# the real samples.
+# `flipper_length_range` to plot several linear models that could possibly fit
+# our data. Use the above helper function to visualize both the models and the
+# real samples.
 
 # %%
 import numpy as np
@@ -72,22 +72,27 @@ import seaborn as sns
 weights = [-40, 45, 90]
 intercepts = [15000, -5000, -14000]
 
-ax = sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                     color="black", alpha=0.5)
+ax = sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 
 label = "{0:.2f} (g / mm) * flipper length + {1:.2f} (g)"
 for weight, intercept in zip(weights, intercepts):
     predicted_body_mass = linear_model_flipper_mass(
-        flipper_length_range, weight, intercept)
+        flipper_length_range, weight, intercept
+    )
 
-    ax.plot(flipper_length_range, predicted_body_mass,
-            label=label.format(weight, intercept))
-_ = ax.legend(loc='center left', bbox_to_anchor=(-0.25, 1.25), ncol=1)
+    ax.plot(
+        flipper_length_range,
+        predicted_body_mass,
+        label=label.format(weight, intercept),
+    )
+_ = ax.legend(loc="center left", bbox_to_anchor=(-0.25, 1.25), ncol=1)
 
 # %% [markdown]
-# In the previous question, you were asked to create several linear models.
-# The visualization allowed you to qualitatively assess if a model was better
-# than another.
+# In the previous question, you were asked to create several linear models. The
+# visualization allowed you to qualitatively assess if a model was better than
+# another.
 #
 # Now, you should come up with a quantitative measure which indicates the
 # goodness of fit of each linear model and allows you to select the best model.
@@ -111,9 +116,10 @@ def goodness_fit_measure(true_values, predictions):
     # as an example.
     return np.mean(np.abs(errors))
 
+
 # %% [markdown]
-# You can now copy and paste the code below to show the goodness of fit for
-# each model.
+# You can now copy and paste the code below to show the goodness of fit for each
+# model.
 #
 # ```python
 # for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):

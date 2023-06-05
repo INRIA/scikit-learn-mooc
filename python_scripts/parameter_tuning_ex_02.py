@@ -35,27 +35,38 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=[target_name, "education-num"])
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, train_size=0.2, random_state=42)
+    data, target, train_size=0.2, random_state=42
+)
 
 # %%
 from sklearn.compose import ColumnTransformer
 from sklearn.compose import make_column_selector as selector
 from sklearn.preprocessing import OrdinalEncoder
 
-categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
-                                          unknown_value=-1)
+categorical_preprocessor = OrdinalEncoder(
+    handle_unknown="use_encoded_value", unknown_value=-1
+)
 preprocessor = ColumnTransformer(
-    [('cat_preprocessor', categorical_preprocessor,
-      selector(dtype_include=object))],
-    remainder='passthrough', sparse_threshold=0)
+    [
+        (
+            "cat_preprocessor",
+            categorical_preprocessor,
+            selector(dtype_include=object),
+        )
+    ],
+    remainder="passthrough",
+    sparse_threshold=0,
+)
 
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 
-model = Pipeline([
-    ("preprocessor", preprocessor),
-    ("classifier", HistGradientBoostingClassifier(random_state=42))
-])
+model = Pipeline(
+    [
+        ("preprocessor", preprocessor),
+        ("classifier", HistGradientBoostingClassifier(random_state=42)),
+    ]
+)
 
 # %% [markdown]
 #

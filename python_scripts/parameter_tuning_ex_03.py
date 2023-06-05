@@ -26,7 +26,8 @@ data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
+    data, target, random_state=42
+)
 
 # %% [markdown]
 # In this exercise, we will progressively define the regression pipeline

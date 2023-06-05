@@ -41,10 +41,7 @@ target = adult_census["class"]
 # %%
 from sklearn.neighbors import KNeighborsClassifier
 
-# In a Jupyter notebook, you can use `model?` to display the online help and
-# `model??` to display the source code if it's available. It will be equivalent
-# to using `help(model)` and `??` will work for any Python object.
-help(KNeighborsClassifier)
+# KNeighborsClassifier?
 
 # %% [markdown] tags=["solution"]
 # We can see that the default value for `n_neighbors` is 5.

@@ -8,8 +8,8 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.04
 #
-# In the previous notebook, we saw the effect of applying some regularization
-# on the coefficient of a linear model.
+# In the previous notebook, we saw the effect of applying some regularization on
+# the coefficient of a linear model.
 #
 # In this exercise, we will study the advantage of using some regularization
 # when dealing with correlated features.
@@ -31,8 +31,8 @@ data, target, coef = make_regression(
 )
 
 # %% [markdown]
-# When creating the dataset, `make_regression` returns the true coefficient
-# used to generate the dataset. Let's plot this information.
+# When creating the dataset, `make_regression` returns the true coefficient used
+# to generate the dataset. Let's plot this information.
 
 # %%
 import pandas as pd
@@ -49,9 +49,9 @@ coef.plot.barh()
 coef
 
 # %% [markdown]
-# Create a `LinearRegression` regressor and fit on the entire dataset and
-# check the value of the coefficients. Are the coefficients of the linear
-# regressor close to the coefficients used to generate the dataset?
+# Create a `LinearRegression` regressor and fit on the entire dataset and check
+# the value of the coefficients. Are the coefficients of the linear regressor
+# close to the coefficients used to generate the dataset?
 
 # %%
 # solution
@@ -89,8 +89,8 @@ import numpy as np
 data = np.concatenate([data, data[:, [0, 1]], data[:, [0, 1]]], axis=1)
 
 # %% [markdown]
-# Fit again the linear regressor on this new dataset and check the
-# coefficients. What do you observe?
+# Fit again the linear regressor on this new dataset and check the coefficients.
+# What do you observe?
 
 # %%
 # solution
@@ -114,12 +114,12 @@ coef = pd.Series(linear_regression.coef_, index=feature_names)
 _ = coef.plot.barh()
 
 # %% [markdown] tags=["solution"]
-# We see that the coefficient values are far from what one could expect.
-# By repeating the informative features, one would have expected these
-# coefficients to be similarly informative.
+# We see that the coefficient values are far from what one could expect. By
+# repeating the informative features, one would have expected these coefficients
+# to be similarly informative.
 #
-# Instead, we see that some coefficients have a huge norm ~1e14. It indeed
-# means that we try to solve an mathematical ill-posed problem. Indeed, finding
+# Instead, we see that some coefficients have a huge norm ~1e14. It indeed means
+# that we try to solve an mathematical ill-posed problem. Indeed, finding
 # coefficients in a linear regression involves inverting the matrix
 # `np.dot(data.T, data)` which is not possible (or lead to high numerical
 # errors).
@@ -143,8 +143,8 @@ _ = coef.plot.barh()
 # %% [markdown] tags=["solution"]
 # We see that the penalty applied on the weights give a better results: the
 # values of the coefficients do not suffer from numerical issues. Indeed, the
-# matrix to be inverted internally is `np.dot(data.T, data) + alpha * I`.
-# Adding this penalty `alpha` allow the inversion without numerical issue.
+# matrix to be inverted internally is `np.dot(data.T, data) + alpha * I`. Adding
+# this penalty `alpha` allow the inversion without numerical issue.
 
 # %% [markdown]
 # Can you find the relationship between the ridge coefficients and the original
@@ -155,8 +155,8 @@ _ = coef.plot.barh()
 ridge.coef_[:5] * 3
 
 # %% [markdown] tags=["solution"]
-# Repeating three times each informative features induced to divide the
-# ridge coefficients by three.
+# Repeating three times each informative features induced to divide the ridge
+# coefficients by three.
 
 # %% [markdown] tags=["solution"]
 # ```{tip}
@@ -180,7 +180,7 @@ ridge.coef_[:5] * 3
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values='?')
+ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
 ames_housing = ames_housing.drop(columns="Id")
 
 categorical_columns = ["Street", "Foundation", "CentralAir", "PavedDrive"]
@@ -195,8 +195,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 #
 # We previously presented that a `OneHotEncoder` creates as many columns as
 # categories. Therefore, there is always one column (i.e. one encoded category)
-# that can be inferred from the others. Thus, `OneHotEncoder` creates
-# collinear features.
+# that can be inferred from the others. Thus, `OneHotEncoder` creates collinear
+# features.
 #
 # We illustrate this behaviour by considering the "CentralAir" feature that
 # contains only two categories:
@@ -221,20 +221,19 @@ X_trans
 # Here, we see that the encoded category "CentralAir_N" is the opposite of the
 # encoded category "CentralAir_Y". Therefore, we observe that using a
 # `OneHotEncoder` creates two features having the problematic pattern observed
-# earlier in this exercise. Training a linear regression model on such a
-# of one-hot encoded binary feature can therefore lead to numerical
-# problems, especially without regularization. Furthermore, the two one-hot
-# features are redundant as they encode exactly the same information in
-# opposite ways.
+# earlier in this exercise. Training a linear regression model on such a of
+# one-hot encoded binary feature can therefore lead to numerical problems,
+# especially without regularization. Furthermore, the two one-hot features are
+# redundant as they encode exactly the same information in opposite ways.
 #
-# Using regularization helps to overcome the numerical issues that we highlighted
-# earlier in this exercise.
+# Using regularization helps to overcome the numerical issues that we
+# highlighted earlier in this exercise.
 #
 # Another strategy is to arbitrarily drop one of the encoded categories.
 # Scikit-learn provides such an option by setting the parameter `drop` in the
-# `OneHotEncoder`. This parameter can be set to `first` to always drop the
-# first encoded category or `binary_only` to only drop a column in the case of
-# binary categories.
+# `OneHotEncoder`. This parameter can be set to `first` to always drop the first
+# encoded category or `binary_only` to only drop a column in the case of binary
+# categories.
 
 # %% tags=["solution"]
 encoder = OneHotEncoder(drop="first", sparse_output=False, dtype=np.int32)
@@ -248,13 +247,14 @@ X_trans
 # %% [markdown] tags=["solution"]
 #
 # We see that only the second column of the previous encoded data is kept.
-# Dropping one of the one-hot encoded column is a common practice,
-# especially for binary categorical features. Note however that this breaks
-# symmetry between categories and impacts the number of coefficients of the
-# model, their values, and thus their meaning, especially when applying
-# strong regularization.
+# Dropping one of the one-hot encoded column is a common practice, especially
+# for binary categorical features. Note however that this breaks symmetry
+# between categories and impacts the number of coefficients of the model, their
+# values, and thus their meaning, especially when applying strong
+# regularization.
 #
-# Let's finally illustrate how to use this option is a machine-learning pipeline:
+# Let's finally illustrate how to use this option is a machine-learning
+# pipeline:
 
 # %% tags=["solution"]
 from sklearn.pipeline import make_pipeline
@@ -262,9 +262,7 @@ from sklearn.pipeline import make_pipeline
 model = make_pipeline(OneHotEncoder(drop="first", dtype=np.int32), Ridge())
 model.fit(X_train, y_train)
 n_categories = [X_train[col].nunique() for col in X_train.columns]
-print(
-    f"R2 score on the testing set: {model.score(X_test, y_test):.2f}"
-)
+print(f"R2 score on the testing set: {model.score(X_test, y_test):.2f}")
 print(
     f"Our model contains {model[-1].coef_.size} features while "
     f"{sum(n_categories)} categories are originally available."

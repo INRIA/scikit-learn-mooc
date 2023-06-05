@@ -81,7 +81,7 @@ cv_results
 
 # %% tags=["solution"]
 print(
-    f"Accuracy score of our model:\n"
+    "Accuracy score of our model:\n"
     f"{cv_results['test_score'].mean():.3f} ± "
     f"{cv_results['test_score'].std():.3f}"
 )
@@ -110,8 +110,14 @@ from sklearn.model_selection import validation_curve
 gammas = np.logspace(-3, 2, num=30)
 param_name = "svc__gamma"
 train_scores, test_scores = validation_curve(
-    model, data, target, param_name=param_name, param_range=gammas, cv=cv,
-    n_jobs=2)
+    model,
+    data,
+    target,
+    param_name=param_name,
+    param_range=gammas,
+    cv=cv,
+    n_jobs=2,
+)
 
 # %% [markdown]
 # Plot the validation curve for the train and test scores.
@@ -160,7 +166,8 @@ from sklearn.model_selection import learning_curve
 
 train_sizes = np.linspace(0.1, 1, num=10)
 results = learning_curve(
-    model, data, target, train_sizes=train_sizes, cv=cv, n_jobs=2)
+    model, data, target, train_sizes=train_sizes, cv=cv, n_jobs=2
+)
 train_size, train_scores, test_scores = results[:3]
 
 # %% tags=["solution"]

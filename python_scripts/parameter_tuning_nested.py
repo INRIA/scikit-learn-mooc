@@ -16,8 +16,8 @@
 # "Selecting the best model" to show how to evaluate models where
 # hyperparameters need to be tuned.
 #
-# Thus, we will first load the dataset and create the predictive model that
-# we want to optimize and later on, evaluate.
+# Thus, we will first load the dataset and create the predictive model that we
+# want to optimize and later on, evaluate.
 #
 # ## Loading the dataset
 #
@@ -37,8 +37,8 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 # %% [markdown]
 # ## Our predictive model
 #
-# We now create the predictive model that we want to optimize. Note that
-# this pipeline is identical to the one we used in the previous notebook.
+# We now create the predictive model that we want to optimize. Note that this
+# pipeline is identical to the one we used in the previous notebook.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -53,9 +53,9 @@ categorical_preprocessor = OrdinalEncoder(
 )
 preprocessor = ColumnTransformer(
     [
-        ('cat_preprocessor', categorical_preprocessor, categorical_columns),
+        ("cat_preprocessor", categorical_preprocessor, categorical_columns),
     ],
-    remainder='passthrough',
+    remainder="passthrough",
     sparse_threshold=0,
 )
 
@@ -63,15 +63,15 @@ preprocessor = ColumnTransformer(
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 
-model = Pipeline([
-    ("preprocessor", preprocessor),
-    (
-        "classifier",
-        HistGradientBoostingClassifier(
-            random_state=42, max_leaf_nodes=4
-        )
-    ),
-])
+model = Pipeline(
+    [
+        ("preprocessor", preprocessor),
+        (
+            "classifier",
+            HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4),
+        ),
+    ]
+)
 model
 
 # %% [markdown]
@@ -95,18 +95,19 @@ cv_results = pd.DataFrame(cv_results)
 cv_results
 
 # %% [markdown]
-# The cross-validation scores are coming from a 5-fold cross-validation. So
-# we can compute the mean and standard deviation of the generalization score.
+# The cross-validation scores are coming from a 5-fold cross-validation. So we
+# can compute the mean and standard deviation of the generalization score.
 
 # %%
 print(
-    "Generalization score without hyperparameters tuning:\n"
-    f"{cv_results['test_score'].mean():.3f} ± {cv_results['test_score'].std():.3f}"
+    "Generalization score without hyperparameters"
+    f" tuning:\n{cv_results['test_score'].mean():.3f} ±"
+    f" {cv_results['test_score'].std():.3f}"
 )
 
 # %% [markdown]
-# We now present how to evaluate the model with hyperparameter tuning,
-# where an extra step is required to select the best set of parameters.
+# We now present how to evaluate the model with hyperparameter tuning, where an
+# extra step is required to select the best set of parameters.
 #
 # ### With hyperparameter tuning
 #
@@ -121,39 +122,39 @@ print(
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {
-    'classifier__learning_rate': (0.05, 0.5),
-    'classifier__max_leaf_nodes': (10, 30),
+    "classifier__learning_rate": (0.05, 0.5),
+    "classifier__max_leaf_nodes": (10, 30),
 }
-model_grid_search = GridSearchCV(
-    model, param_grid=param_grid, n_jobs=2, cv=2
-)
+model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=2, cv=2)
 model_grid_search.fit(data, target)
 
 # %% [markdown]
 # As previously seen, when calling the `fit` method, the model embedded in the
-# grid-search is trained with every possible combination of parameters
-# resulting from the parameter grid. The best combination is selected by
-# keeping the combination leading to the best mean cross-validated score.
+# grid-search is trained with every possible combination of parameters resulting
+# from the parameter grid. The best combination is selected by keeping the
+# combination leading to the best mean cross-validated score.
 
 # %%
 cv_results = pd.DataFrame(model_grid_search.cv_results_)
-cv_results[[
-    "param_classifier__learning_rate",
-    "param_classifier__max_leaf_nodes",
-    "mean_test_score",
-    "std_test_score",
-    "rank_test_score"
-]]
+cv_results[
+    [
+        "param_classifier__learning_rate",
+        "param_classifier__max_leaf_nodes",
+        "mean_test_score",
+        "std_test_score",
+        "rank_test_score",
+    ]
+]
 
 # %%
 model_grid_search.best_params_
 
 # %% [markdown]
 # One important caveat here concerns the evaluation of the generalization
-# performance. Indeed, the mean and standard deviation of the scores computed
-# by the cross-validation in the grid-search are potentially not good estimates
-# of the generalization performance we would obtain by refitting a model with
-# the best combination of hyper-parameter values on the full dataset. Note that
+# performance. Indeed, the mean and standard deviation of the scores computed by
+# the cross-validation in the grid-search are potentially not good estimates of
+# the generalization performance we would obtain by refitting a model with the
+# best combination of hyper-parameter values on the full dataset. Note that
 # scikit-learn automatically performs this refit by default when calling
 # `model_grid_search.fit`. This refitted model is trained with more data than
 # the different models trained internally during the cross-validation of the
@@ -180,22 +181,23 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # %% [markdown]
 # The score measure on the final test set is almost within the range of the
 # internal CV score for the best hyper-parameter combination. This is reassuring
-# as it means that the tuning procedure did not cause significant overfitting
-# in itself (other-wise the final test score would have been lower than the
+# as it means that the tuning procedure did not cause significant overfitting in
+# itself (other-wise the final test score would have been lower than the
 # internal CV scores). That is expected because our grid search explored very
 # few hyper-parameter combinations for the sake of speed. The test score of the
-# final model is actually a bit higher than what we could have expected from
-# the internal cross-validation. This is also expected because the refitted
-# model is trained on a larger dataset than the models evaluated in the
-# internal CV loop of the grid-search procedure. This is often the case that
-# models trained on a larger number of samples tend to generalize better.
+# final model is actually a bit higher than what we could have expected from the
+# internal cross-validation. This is also expected because the refitted model is
+# trained on a larger dataset than the models evaluated in the internal CV loop
+# of the grid-search procedure. This is often the case that models trained on a
+# larger number of samples tend to generalize better.
 #
 # In the code above, the selection of the best hyperparameters was done only on
 # the train set from the initial train-test split. Then, we evaluated the
 # generalization performance of our tuned model on the left out test set. This
 # can be shown schematically as follows
 #
-# ![Cross-validation tuning diagram](../figures/cross_validation_train_test_diagram.png)
+# ![Cross-validation tuning
+# diagram](../figures/cross_validation_train_test_diagram.png)
 #
 # ```{note}
 # This figure shows the particular case of **K-fold** cross-validation
@@ -214,8 +216,8 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # ```
 #
 # However, this evaluation only provides us a single point estimate of the
-# generalization performance. As recall at the beginning of this notebook, it
-# is beneficial to have a rough idea of the uncertainty of our estimated
+# generalization performance. As recall at the beginning of this notebook, it is
+# beneficial to have a rough idea of the uncertainty of our estimated
 # generalization performance. Therefore, we should instead use an additional
 # cross-validation for this evaluation.
 #
@@ -234,7 +236,7 @@ cv_results = cross_validate(
 
 # %%
 cv_results = pd.DataFrame(cv_results)
-cv_test_scores = cv_results['test_score']
+cv_test_scores = cv_results["test_score"]
 print(
     "Generalization score with hyperparameters tuning:\n"
     f"{cv_test_scores.mean():.3f} ± {cv_test_scores.std():.3f}"
@@ -244,9 +246,9 @@ print(
 # This result is compatible with the test score measured with the string outer
 # train-test split.
 #
-# However, in this case, we can apprehend the variability of our estimate of
-# the generalization performance thanks to the measure of the
-# standard-deviation of the scores measured in the outer cross-validation.
+# However, in this case, we can apprehend the variability of our estimate of the
+# generalization performance thanks to the measure of the standard-deviation of
+# the scores measured in the outer cross-validation.
 #
 # Here is a schematic representation of the complete nested cross-validation
 # procedure:
@@ -289,18 +291,17 @@ for cv_fold, estimator_in_fold in enumerate(cv_results["estimator"]):
 # expect that it will have an actual predictive performance close to what we
 # measured in the outer cross-validation.
 #
-# But it is also possible that some hyperparameters do not matter at all, and
-# as a result in different tuning sessions give different results. In this
-# case, any value will do. This can typically be confirmed by doing a parallel
-# coordinate plot of the results of a large hyperparameter search as seen in
-# the exercises.
+# But it is also possible that some hyperparameters do not matter at all, and as
+# a result in different tuning sessions give different results. In this case,
+# any value will do. This can typically be confirmed by doing a parallel
+# coordinate plot of the results of a large hyperparameter search as seen in the
+# exercises.
 #
 # From a deployment point of view, one could also choose to deploy all the
 # models found by the outer cross-validation loop and make them vote to get the
-# final predictions. However this can cause operational problems because it
-# uses more memory and makes computing prediction slower, resulting in a higher
+# final predictions. However this can cause operational problems because it uses
+# more memory and makes computing prediction slower, resulting in a higher
 # computational resource usage per prediction.
 #
-# In this notebook, we have seen how to evaluate the predictive performance of
-# a model with tuned hyper-parameters using the nested cross-validation
-# procedure.
+# In this notebook, we have seen how to evaluate the predictive performance of a
+# model with tuned hyper-parameters using the nested cross-validation procedure.

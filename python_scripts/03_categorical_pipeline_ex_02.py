@@ -63,11 +63,13 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.ensemble import HistGradientBoostingClassifier
 
-categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
-                                          unknown_value=-1)
-preprocessor = ColumnTransformer([
-    ('categorical', categorical_preprocessor, categorical_columns)],
-    remainder="passthrough")
+categorical_preprocessor = OrdinalEncoder(
+    handle_unknown="use_encoded_value", unknown_value=-1
+)
+preprocessor = ColumnTransformer(
+    [("categorical", categorical_preprocessor, categorical_columns)],
+    remainder="passthrough",
+)
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
@@ -77,9 +79,11 @@ elapsed_time = time.time() - start
 
 scores = cv_results["test_score"]
 
-print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} ± {scores.std():.3f} "
-      f"with a fitting time of {elapsed_time:.3f}")
+print(
+    "The mean cross-validation accuracy is: "
+    f"{scores.mean():.3f} ± {scores.std():.3f} "
+    f"with a fitting time of {elapsed_time:.3f}"
+)
 
 # %% [markdown]
 # ## Scaling numerical features

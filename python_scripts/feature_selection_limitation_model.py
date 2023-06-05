@@ -42,20 +42,21 @@ from sklearn.ensemble import RandomForestClassifier
 model_without_selection = RandomForestClassifier()
 
 # %% [markdown]
-# We will evaluate this model by a k-fold cross validation and store the
-# results in a pandas dataframe.
+# We will evaluate this model by a k-fold cross validation and store the results
+# in a pandas dataframe.
 
 # %%
 import pandas as pd
 from sklearn.model_selection import cross_validate
 
 cv_results_without_selection = cross_validate(
-    model_without_selection, data, target, cv=5)
+    model_without_selection, data, target, cv=5
+)
 cv_results_without_selection = pd.DataFrame(cv_results_without_selection)
 
 # %% [markdown]
-# Then, we will build another model which will include a feature selection
-# step based on a random forest and evaluate it as well with cross-validation.
+# Then, we will build another model which will include a feature selection step
+# based on a random forest and evaluate it as well with cross-validation.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -63,16 +64,18 @@ from sklearn.feature_selection import SelectFromModel
 
 feature_selector = SelectFromModel(RandomForestClassifier())
 model_with_selection = make_pipeline(
-    feature_selector, RandomForestClassifier())
+    feature_selector, RandomForestClassifier()
+)
 
 # %%
-cv_results_with_selection = cross_validate(model_with_selection, data, target,
-                                           cv=5)
+cv_results_with_selection = cross_validate(
+    model_with_selection, data, target, cv=5
+)
 cv_results_with_selection = pd.DataFrame(cv_results_with_selection)
 
 # %% [markdown]
-# We can compare the testing score of the two models. For this matter,
-# we are combining results in a single dataframe.
+# We can compare the testing score of the two models. For this matter, we are
+# combining results in a single dataframe.
 
 # %%
 cv_results = pd.concat(
@@ -93,8 +96,8 @@ plt.xlabel("Accuracy")
 _ = plt.title("Limitation of using a random forest for feature selection")
 
 # %% [markdown]
-# The model that selected a subset of feature is less performant than a
-# random forest fitted on the full dataset.
+# The model that selected a subset of feature is less performant than a random
+# forest fitted on the full dataset.
 #
 # We can rely on some aspects tackled in the notebook presenting the model
 # inspection to explain this behaviour. The decision tree's relative feature

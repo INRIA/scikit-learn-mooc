@@ -8,12 +8,12 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M7.01
 #
-# In this exercise we will define dummy classification baselines and use them
-# as reference to assess the relative predictive performance of a given model
-# of interest.
+# In this exercise we will define dummy classification baselines and use them as
+# reference to assess the relative predictive performance of a given model of
+# interest.
 #
-# We illustrate those baselines with the help of the Adult Census dataset,
-# using only the numerical features for the sake of simplicity.
+# We illustrate those baselines with the help of the Adult Census dataset, using
+# only the numerical features for the sake of simplicity.
 
 # %%
 import pandas as pd
@@ -44,8 +44,8 @@ from sklearn.linear_model import LogisticRegression
 classifier = make_pipeline(StandardScaler(), LogisticRegression())
 
 # %% [markdown]
-# Compute the cross-validation (test) scores for the classifier on this
-# dataset. Store the results pandas Series as we did in the previous notebook.
+# Compute the cross-validation (test) scores for the classifier on this dataset.
+# Store the results pandas Series as we did in the previous notebook.
 
 # %%
 # solution
@@ -61,9 +61,9 @@ test_score_logistic_regression = pd.Series(
 test_score_logistic_regression
 
 # %% [markdown]
-# Now, compute the cross-validation scores of a dummy classifier that
-# constantly predicts the most frequent class observed the training set. Please
-# refer to the online documentation for the [sklearn.dummy.DummyClassifier
+# Now, compute the cross-validation scores of a dummy classifier that constantly
+# predicts the most frequent class observed the training set. Please refer to
+# the online documentation for the [sklearn.dummy.DummyClassifier
 # ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
 # class.
 #
@@ -78,26 +78,27 @@ cv_results_most_frequent = cross_validate(
     most_frequent_classifier, data, target, cv=cv, n_jobs=2
 )
 test_score_most_frequent = pd.Series(
-    cv_results_most_frequent["test_score"], name="Most frequent class predictor"
+    cv_results_most_frequent["test_score"],
+    name="Most frequent class predictor",
 )
 test_score_most_frequent
 
 # %% [markdown]
-# Now that we collected the results from the baseline and the model,
-# concatenate the test scores as columns a single pandas dataframe.
+# Now that we collected the results from the baseline and the model, concatenate
+# the test scores as columns a single pandas dataframe.
 
 # %%
 # solution
 all_test_scores = pd.concat(
     [test_score_logistic_regression, test_score_most_frequent],
-    axis='columns',
+    axis="columns",
 )
 all_test_scores
 
 # %% [markdown]
 #
-# Next, plot the histogram of the cross-validation test scores for both
-# models with the help of [pandas built-in plotting
+# Next, plot the histogram of the cross-validation test scores for both models
+# with the help of [pandas built-in plotting
 # function](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#histograms).
 #
 # What conclusions do you draw from the results?
@@ -115,10 +116,10 @@ _ = plt.title("Distribution of the CV scores")
 
 # %% [markdown] tags=["solution"]
 # We observe that the two histograms are well separated. Therefore the dummy
-# classifier with the strategy `most_frequent` has a much lower accuracy
-# than the logistic regression classifier. We conclude that the logistic
-# regression model can successfully find predictive information in the input
-# features to improve upon the baseline.
+# classifier with the strategy `most_frequent` has a much lower accuracy than
+# the logistic regression classifier. We conclude that the logistic regression
+# model can successfully find predictive information in the input features to
+# improve upon the baseline.
 
 # %% [markdown]
 # Change the `strategy` of the dummy classifier to `"stratified"`, compute the
@@ -160,7 +161,7 @@ all_test_scores = pd.concat(
         test_score_dummy_stratified,
         test_score_dummy_uniform,
     ],
-    axis='columns',
+    axis="columns",
 )
 
 # %% tags=["solution"]
@@ -172,16 +173,16 @@ _ = plt.title("Distribution of the test scores")
 # %% [markdown] tags=["solution"]
 # We see that using `strategy="stratified"`, the results are much worse than
 # with the `most_frequent` strategy. Since the classes are imbalanced,
-# predicting the most frequent involves that we will be right for the
-# proportion of this class (~75% of the samples). However, the `"stratified"`
-# strategy will randomly generate predictions by respecting the training
-# set's class distribution, resulting in some wrong predictions even for
-# the most frequent class, hence we obtain a lower accuracy.
+# predicting the most frequent involves that we will be right for the proportion
+# of this class (~75% of the samples). However, the `"stratified"` strategy will
+# randomly generate predictions by respecting the training set's class
+# distribution, resulting in some wrong predictions even for the most frequent
+# class, hence we obtain a lower accuracy.
 #
-# This is even more so for the `strategy="uniform"`: this strategy assigns
-# class labels uniformly at random. Therefore, on a binary classification
-# problem, the cross-validation accuracy is 50% on average, which is the
-# weakest of the three dummy baselines.
+# This is even more so for the `strategy="uniform"`: this strategy assigns class
+# labels uniformly at random. Therefore, on a binary classification problem, the
+# cross-validation accuracy is 50% on average, which is the weakest of the three
+# dummy baselines.
 
 # %% [markdown] tags=["solution"]
 # Note: one could argue that the `"uniform"` or `strategy="stratified"`
@@ -198,14 +199,14 @@ _ = plt.title("Distribution of the test scores")
 # of interest. When training on such randomly permuted labels, many machine
 # learning estimators would end up approximately behaving much like the
 # `DummyClassifier(strategy="most_frequent")` by always predicting the majority
-# class, irrespective of the input features. As a result, this
-# `"most_frequent"` baseline is sometimes called the "chance level" for
-# imbalanced classification problems, even though its predictions are
-# completely deterministic and do not involve much "chance" anymore.
+# class, irrespective of the input features. As a result, this `"most_frequent"`
+# baseline is sometimes called the "chance level" for imbalanced classification
+# problems, even though its predictions are completely deterministic and do not
+# involve much "chance" anymore.
 #
 # Defining the chance level using `permutation_test_score` is quite
 # computation-intensive because it requires fitting many non-dummy models on
-# random permutations of the data. Using dummy classifiers as baselines is
-# often enough for practical purposes. For imbalanced classification problems,
-# the `"most_frequent"` strategy is the strongest of the three baselines and
+# random permutations of the data. Using dummy classifiers as baselines is often
+# enough for practical purposes. For imbalanced classification problems, the
+# `"most_frequent"` strategy is the strongest of the three baselines and
 # therefore the one we should use.

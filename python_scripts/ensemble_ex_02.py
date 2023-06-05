@@ -29,7 +29,8 @@ feature_name = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 data, target = penguins[[feature_name]], penguins[target_name]
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
+    data, target, random_state=0
+)
 
 # %% [markdown]
 # ```{note}

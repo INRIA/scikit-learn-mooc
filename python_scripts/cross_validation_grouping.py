@@ -18,8 +18,8 @@ digits = load_digits()
 data, target = digits.data, digits.target
 
 # %% [markdown]
-# We will recreate the same model used in the previous notebook:
-# a logistic regression classifier with a preprocessor to scale the data.
+# We will recreate the same model used in the previous notebook: a logistic
+# regression classifier with a preprocessor to scale the data.
 
 # %%
 from sklearn.preprocessing import MinMaxScaler
@@ -36,11 +36,12 @@ model = make_pipeline(MinMaxScaler(), LogisticRegression(max_iter=1_000))
 from sklearn.model_selection import cross_val_score, KFold
 
 cv = KFold(shuffle=False)
-test_score_no_shuffling = cross_val_score(model, data, target, cv=cv,
-                                          n_jobs=2)
-print(f"The average accuracy is "
-      f"{test_score_no_shuffling.mean():.3f} ± "
-      f"{test_score_no_shuffling.std():.3f}")
+test_score_no_shuffling = cross_val_score(model, data, target, cv=cv, n_jobs=2)
+print(
+    "The average accuracy is "
+    f"{test_score_no_shuffling.mean():.3f} ± "
+    f"{test_score_no_shuffling.std():.3f}"
+)
 
 # %% [markdown]
 # Now, let's repeat the experiment by shuffling the data within the
@@ -48,16 +49,19 @@ print(f"The average accuracy is "
 
 # %%
 cv = KFold(shuffle=True)
-test_score_with_shuffling = cross_val_score(model, data, target, cv=cv,
-                                            n_jobs=2)
-print(f"The average accuracy is "
-      f"{test_score_with_shuffling.mean():.3f} ± "
-      f"{test_score_with_shuffling.std():.3f}")
+test_score_with_shuffling = cross_val_score(
+    model, data, target, cv=cv, n_jobs=2
+)
+print(
+    "The average accuracy is "
+    f"{test_score_with_shuffling.mean():.3f} ± "
+    f"{test_score_with_shuffling.std():.3f}"
+)
 
 # %% [markdown]
-# We observe that shuffling the data improves the mean accuracy.
-# We could go a little further and plot the distribution of the testing
-# score. We can first concatenate the test scores.
+# We observe that shuffling the data improves the mean accuracy. We could go a
+# little further and plot the distribution of the testing score. We can first
+# concatenate the test scores.
 
 # %%
 import pandas as pd
@@ -136,8 +140,23 @@ import numpy as np
 
 # defines the lower and upper bounds of sample indices
 # for each writer
-writer_boundaries = [0, 130, 256, 386, 516, 646, 776, 915, 1029,
-                     1157, 1287, 1415, 1545, 1667, 1797]
+writer_boundaries = [
+    0,
+    130,
+    256,
+    386,
+    516,
+    646,
+    776,
+    915,
+    1029,
+    1157,
+    1287,
+    1415,
+    1545,
+    1667,
+    1797,
+]
 groups = np.zeros_like(target)
 lower_bounds = writer_boundaries[:-1]
 upper_bounds = writer_boundaries[1:]
@@ -164,23 +183,27 @@ _ = plt.title("Underlying writer groups existing in the target")
 from sklearn.model_selection import GroupKFold
 
 cv = GroupKFold()
-test_score = cross_val_score(model, data, target, groups=groups, cv=cv,
-                             n_jobs=2)
-print(f"The average accuracy is "
-      f"{test_score.mean():.3f} ± "
-      f"{test_score.std():.3f}")
+test_score = cross_val_score(
+    model, data, target, groups=groups, cv=cv, n_jobs=2
+)
+print(
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
+)
 
 # %% [markdown]
-# We see that this strategy is less optimistic regarding the model generalization
-# performance. However, this is the most reliable if our goal is to make
-# handwritten digits recognition writers independent. Besides, we can as well
-# see that the standard deviation was reduced.
+# We see that this strategy is less optimistic regarding the model
+# generalization performance. However, this is the most reliable if our goal is
+# to make handwritten digits recognition writers independent. Besides, we can as
+# well see that the standard deviation was reduced.
 
 # %%
 all_scores = pd.DataFrame(
     [test_score_no_shuffling, test_score_with_shuffling, test_score],
-    index=["KFold without shuffling", "KFold with shuffling",
-           "KFold with groups"],
+    index=[
+        "KFold without shuffling",
+        "KFold with shuffling",
+        "KFold with groups",
+    ],
 ).T
 
 # %%

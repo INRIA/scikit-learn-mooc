@@ -12,11 +12,11 @@
 # In the previous notebooks, we always used either a default `KFold` or a
 # `ShuffleSplit` cross-validation strategies to iteratively split our dataset.
 # However, you should not assume that these approaches are always the best
-# option: some other cross-validation strategies might be better adapted to
-# your problem.
+# option: some other cross-validation strategies might be better adapted to your
+# problem.
 #
-# Let's start with the concept of stratification by giving an example where
-# we can get into trouble if we are not careful. Let's load the iris dataset.
+# Let's start with the concept of stratification by giving an example where we
+# can get into trouble if we are not careful. Let's load the iris dataset.
 
 # %%
 from sklearn.datasets import load_iris
@@ -37,9 +37,9 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 
 # %% [markdown]
 # Once we created our model, we will use the cross-validation framework to
-# evaluate it. We will use the `KFold` cross-validation strategy.
-# We will define a dataset with nine samples and repeat the cross-validation
-# three times (i.e. `n_splits`).
+# evaluate it. We will use the `KFold` cross-validation strategy. We will define
+# a dataset with nine samples and repeat the cross-validation three times (i.e.
+# `n_splits`).
 
 # %%
 import numpy as np
@@ -52,11 +52,11 @@ for train_index, test_index in cv.split(data_random):
 
 # %% [markdown]
 # By defining three splits, we will use three samples for testing and six for
-# training each time. `KFold` does not shuffle by default. It means that it
-# will select the three first samples for the testing set at the first split,
-# then the three next three samples for the second split, and the three next
-# for the last split. In the end, all samples have been used in testing at
-# least once among the different splits.
+# training each time. `KFold` does not shuffle by default. It means that it will
+# select the three first samples for the testing set at the first split, then
+# the three next three samples for the second split, and the three next for the
+# last split. In the end, all samples have been used in testing at least once
+# among the different splits.
 #
 # Now, let's apply this strategy to check the generalization performance of our
 # model.
@@ -67,13 +67,14 @@ from sklearn.model_selection import cross_validate
 cv = KFold(n_splits=3)
 results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is "
-      f"{test_score.mean():.3f} ± {test_score.std():.3f}")
+print(
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
+)
 
 # %% [markdown]
 # It is a real surprise that our model cannot correctly classify any sample in
-# any cross-validation split. We will now check our target's value to
-# understand the issue.
+# any cross-validation split. We will now check our target's value to understand
+# the issue.
 
 # %%
 import matplotlib.pyplot as plt
@@ -86,8 +87,8 @@ _ = plt.title("Class value in target y")
 
 # %% [markdown]
 # We see that the target vector `target` is ordered. It will have some
-# unexpected consequences when using the `KFold` cross-validation. To
-# illustrate the consequences, we will show the class count in each fold of the
+# unexpected consequences when using the `KFold` cross-validation. To illustrate
+# the consequences, we will show the class count in each fold of the
 # cross-validation in the train and test set.
 #
 # Let's compute the class counts for both the training and testing sets using
@@ -117,14 +118,16 @@ for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
 # information regarding the fold within the same dataset.
 
 # %%
-train_cv_counts = pd.concat(train_cv_counts, axis=1,
-                            keys=[f"Fold #{idx}" for idx in range(n_splits)])
+train_cv_counts = pd.concat(
+    train_cv_counts, axis=1, keys=[f"Fold #{idx}" for idx in range(n_splits)]
+)
 train_cv_counts.index.name = "Class label"
 train_cv_counts
 
 # %%
-test_cv_counts = pd.concat(test_cv_counts, axis=1,
-                           keys=[f"Fold #{idx}" for idx in range(n_splits)])
+test_cv_counts = pd.concat(
+    test_cv_counts, axis=1, keys=[f"Fold #{idx}" for idx in range(n_splits)]
+)
 test_cv_counts.index.name = "Class label"
 test_cv_counts
 
@@ -144,20 +147,21 @@ plt.ylabel("Count")
 _ = plt.title("Test set")
 
 # %% [markdown]
-# We can confirm that in each fold, only two of the three classes are present
-# in the training set and all samples of the remaining class is used as a test
-# set. So our model is unable to predict this class that was unseen during the
+# We can confirm that in each fold, only two of the three classes are present in
+# the training set and all samples of the remaining class is used as a test set.
+# So our model is unable to predict this class that was unseen during the
 # training stage.
 #
-# One possibility to solve the issue is to shuffle the data before splitting
-# the data into three groups.
+# One possibility to solve the issue is to shuffle the data before splitting the
+# data into three groups.
 
 # %%
 cv = KFold(n_splits=3, shuffle=True, random_state=0)
 results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is "
-      f"{test_score.mean():.3f} ± {test_score.std():.3f}")
+print(
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
+)
 
 # %% [markdown]
 # We get results that are closer to what we would expect with an accuracy above
@@ -174,10 +178,12 @@ for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
 
     train_cv_counts.append(target_train.value_counts())
     test_cv_counts.append(target_test.value_counts())
-train_cv_counts = pd.concat(train_cv_counts, axis=1,
-                            keys=[f"Fold #{idx}" for idx in range(n_splits)])
-test_cv_counts = pd.concat(test_cv_counts, axis=1,
-                           keys=[f"Fold #{idx}" for idx in range(n_splits)])
+train_cv_counts = pd.concat(
+    train_cv_counts, axis=1, keys=[f"Fold #{idx}" for idx in range(n_splits)]
+)
+test_cv_counts = pd.concat(
+    test_cv_counts, axis=1, keys=[f"Fold #{idx}" for idx in range(n_splits)]
+)
 train_cv_counts.index.name = "Class label"
 test_cv_counts.index.name = "Class label"
 
@@ -211,8 +217,9 @@ cv = StratifiedKFold(n_splits=3)
 # %%
 results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is "
-      f"{test_score.mean():.3f} ± {test_score.std():.3f}")
+print(
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
+)
 
 # %%
 train_cv_counts = []
@@ -222,10 +229,12 @@ for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
 
     train_cv_counts.append(target_train.value_counts())
     test_cv_counts.append(target_test.value_counts())
-train_cv_counts = pd.concat(train_cv_counts, axis=1,
-                            keys=[f"Fold #{idx}" for idx in range(n_splits)])
-test_cv_counts = pd.concat(test_cv_counts, axis=1,
-                           keys=[f"Fold #{idx}" for idx in range(n_splits)])
+train_cv_counts = pd.concat(
+    train_cv_counts, axis=1, keys=[f"Fold #{idx}" for idx in range(n_splits)]
+)
+test_cv_counts = pd.concat(
+    test_cv_counts, axis=1, keys=[f"Fold #{idx}" for idx in range(n_splits)]
+)
 train_cv_counts.index.name = "Class label"
 test_cv_counts.index.name = "Class label"
 

@@ -9,9 +9,9 @@
 # # The Ames housing dataset
 #
 # In this notebook, we will quickly present the "Ames housing" dataset. We will
-# see that this dataset is similar to the "California housing" dataset.
-# However, it is more complex to handle: it contains missing data and both
-# numerical and categorical features.
+# see that this dataset is similar to the "California housing" dataset. However,
+# it is more complex to handle: it contains missing data and both numerical and
+# categorical features.
 #
 # This dataset is located in the `datasets` directory. It is stored in a comma
 # separated value (CSV) file. As previously mentioned, we are aware that the
@@ -24,7 +24,7 @@
 # %%
 import pandas as pd
 
-ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values='?')
+ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
 ames_housing = ames_housing.drop(columns="Id")
 
 # %% [markdown]
@@ -40,7 +40,10 @@ ames_housing.head()
 
 # %%
 target_name = "SalePrice"
-data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
+data, target = (
+    ames_housing.drop(columns=target_name),
+    ames_housing[target_name],
+)
 
 # %% [markdown]
 # Let's have a quick look at the target before to focus on the data.
@@ -54,6 +57,7 @@ target.head()
 
 # %%
 import matplotlib.pyplot as plt
+
 target.plot.hist(bins=20, edgecolor="black")
 plt.xlabel("House price in $")
 _ = plt.title("Distribution of the house price \nin Ames")
@@ -83,18 +87,19 @@ numerical_data = data.select_dtypes("number")
 numerical_data.info()
 
 # %% [markdown]
-# We see that the data are mainly represented with integer number. Let's have
-# a look at the histogram for all these features.
+# We see that the data are mainly represented with integer number. Let's have a
+# look at the histogram for all these features.
 
 # %%
-numerical_data.hist(bins=20, figsize=(12, 22), edgecolor="black",
-                    layout=(9, 4))
+numerical_data.hist(
+    bins=20, figsize=(12, 22), edgecolor="black", layout=(9, 4)
+)
 plt.subplots_adjust(hspace=0.8, wspace=0.8)
 
 # %% [markdown]
 # We see that some features have high picks for 0. It could be linked that this
-# value was assigned when the criterion did not apply, for instance the
-# area of the swimming pool when no swimming pools are available.
+# value was assigned when the criterion did not apply, for instance the area of
+# the swimming pool when no swimming pools are available.
 #
 # We also have some feature encoding some date (for instance year).
 #
@@ -147,14 +152,17 @@ plt.subplots_adjust(hspace=0.2, wspace=0.8)
 # ```
 
 # %%
-ames_housing_no_missing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
+ames_housing_no_missing = pd.read_csv(
+    "../datasets/ames_housing_no_missing.csv"
+)
 ames_housing_no_missing.head()
 
 # %% [markdown]
 # It contains the same information as the original dataset after using a
 # [`sklearn.impute.SimpleImputer`](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html)
 # to replace missing values using the mean along each numerical column
-# (including the target), and the most frequent value along each categorical column.
+# (including the target), and the most frequent value along each categorical
+# column.
 
 # %%
 from sklearn.compose import make_column_transformer
@@ -203,5 +211,7 @@ ames_housing_preprocessed = pd.DataFrame(
     columns=categorical_features.tolist() + numerical_features,
 )
 ames_housing_preprocessed = ames_housing_preprocessed[ames_housing.columns]
-ames_housing_preprocessed = ames_housing_preprocessed.astype(ames_housing.dtypes)
+ames_housing_preprocessed = ames_housing_preprocessed.astype(
+    ames_housing.dtypes
+)
 (ames_housing_no_missing == ames_housing_preprocessed).all()

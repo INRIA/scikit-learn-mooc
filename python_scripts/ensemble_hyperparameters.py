@@ -32,7 +32,8 @@ from sklearn.model_selection import train_test_split
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
+    data, target, random_state=0
+)
 
 # %% [markdown]
 # ## Random forest
@@ -95,8 +96,12 @@ param_distributions = {
     "min_samples_leaf": [1, 2, 5, 10, 20, 50, 100],
 }
 search_cv = RandomizedSearchCV(
-    RandomForestRegressor(n_jobs=2), param_distributions=param_distributions,
-    scoring="neg_mean_absolute_error", n_iter=10, random_state=0, n_jobs=2,
+    RandomForestRegressor(n_jobs=2),
+    param_distributions=param_distributions,
+    scoring="neg_mean_absolute_error",
+    n_iter=10,
+    random_state=0,
+    n_jobs=2,
 )
 search_cv.fit(data_train, target_train)
 
@@ -126,7 +131,9 @@ cv_results[columns].sort_values(by="mean_test_error")
 
 # %%
 error = -search_cv.score(data_test, target_test)
-print(f"On average, our random forest regressor makes an error of {error:.2f} k$")
+print(
+    f"On average, our random forest regressor makes an error of {error:.2f} k$"
+)
 
 # %% [markdown]
 # ## Gradient-boosting decision trees
@@ -136,8 +143,8 @@ print(f"On average, our random forest regressor makes an error of {error:.2f} k$
 # `learning_rate`, and `max_depth` or `max_leaf_nodes` (as previously discussed
 # random forest).
 #
-# Let's first discuss the `max_depth` (or `max_leaf_nodes`) parameter. We saw
-# in the section on gradient-boosting that the algorithm fits the error of the
+# Let's first discuss the `max_depth` (or `max_leaf_nodes`) parameter. We saw in
+# the section on gradient-boosting that the algorithm fits the error of the
 # previous tree in the ensemble. Thus, fitting fully grown trees would be
 # detrimental. Indeed, the first tree of the ensemble would perfectly fit
 # (overfit) the data and thus no subsequent tree would be required, since there
@@ -170,8 +177,12 @@ param_distributions = {
     "learning_rate": loguniform(0.01, 1),
 }
 search_cv = RandomizedSearchCV(
-    GradientBoostingRegressor(), param_distributions=param_distributions,
-    scoring="neg_mean_absolute_error", n_iter=20, random_state=0, n_jobs=2
+    GradientBoostingRegressor(),
+    param_distributions=param_distributions,
+    scoring="neg_mean_absolute_error",
+    n_iter=20,
+    random_state=0,
+    n_jobs=2,
 )
 search_cv.fit(data_train, target_train)
 
@@ -191,10 +202,10 @@ cv_results[columns].sort_values(by="mean_test_error")
 #
 # In this search, we see that the `learning_rate` is required to be large
 # enough, i.e. > 0.1. We also observe that for the best ranked models, having a
-# smaller `learning_rate`, will require more trees or a larger number of
-# leaves for each tree. However, it is particularly difficult to draw
-# more detailed conclusions since the best value of an hyperparameter depends
-# on the other hyperparameter values.
+# smaller `learning_rate`, will require more trees or a larger number of leaves
+# for each tree. However, it is particularly difficult to draw more detailed
+# conclusions since the best value of an hyperparameter depends on the other
+# hyperparameter values.
 
 # %% [markdown]
 # Now we estimate the generalization performance of the best model using the

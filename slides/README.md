@@ -18,16 +18,3 @@ python -m http.server
 # open your browser with the right port (from previous command) using the right md file
 firefox 'http://localhost:8000/slides/index.html?file=../slides/ml_concepts.md'
 ```
-
-# Export
-
-To install packages needed to generate the slides:
-
-```
-pip install -r requirements.txt
-```
-
-Note: for some reason if you `pip install` `htmlark` and not
-`htmlark[parsers]`, you'll get a blank HTML page.
-
-Then use `make` to export html files.

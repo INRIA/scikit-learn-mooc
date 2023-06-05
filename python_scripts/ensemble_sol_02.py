@@ -22,7 +22,8 @@ feature_name = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
 data, target = penguins[[feature_name]], penguins[target_name]
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
+    data, target, random_state=0
+)
 
 # %% [markdown]
 # ```{note}
@@ -31,9 +32,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Create a random forest containing three trees. Train the forest and
-# check the generalization performance on the testing set in terms of mean
-# absolute error.
+# Create a random forest containing three trees. Train the forest and check the
+# generalization performance on the testing set in terms of mean absolute error.
 
 # %%
 # solution
@@ -43,8 +43,10 @@ from sklearn.ensemble import RandomForestRegressor
 forest = RandomForestRegressor(n_estimators=3)
 forest.fit(data_train, target_train)
 target_predicted = forest.predict(data_test)
-print(f"Mean absolute error: "
-      f"{mean_absolute_error(target_test, target_predicted):.3f} grams")
+print(
+    "Mean absolute error: "
+    f"{mean_absolute_error(target_test, target_predicted):.3f} grams"
+)
 
 # %% [markdown]
 # We now aim to plot the predictions from the individual trees in the forest.
@@ -56,8 +58,7 @@ print(f"Mean absolute error: "
 # solution
 import numpy as np
 
-data_range = pd.DataFrame(np.linspace(170, 235, num=300),
-                          columns=data.columns)
+data_range = pd.DataFrame(np.linspace(170, 235, num=300), columns=data.columns)
 
 # %% [markdown]
 # The trees contained in the forest that you created can be accessed with the
@@ -86,13 +87,19 @@ forest_predictions = forest.predict(data_range)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 
 # plot tree predictions
 for tree_idx, predictions in enumerate(tree_predictions):
-    plt.plot(data_range[feature_name], predictions, label=f"Tree #{tree_idx}",
-             linestyle="--", alpha=0.8)
+    plt.plot(
+        data_range[feature_name],
+        predictions,
+        label=f"Tree #{tree_idx}",
+        linestyle="--",
+        alpha=0.8,
+    )
 
-plt.plot(data_range[feature_name], forest_predictions, label=f"Random forest")
+plt.plot(data_range[feature_name], forest_predictions, label="Random forest")
 _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

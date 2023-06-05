@@ -39,9 +39,9 @@ tree = DecisionTreeClassifier()
 # %% [markdown]
 # Create a `StratifiedKFold` cross-validation object. Then use it inside the
 # `cross_val_score` function to evaluate the decision tree. We will first use
-# the accuracy as a score function. Explicitly use the `scoring` parameter
-# of `cross_val_score` to compute the accuracy (even if this is the default
-# score). Check its documentation to learn how to do that.
+# the accuracy as a score function. Explicitly use the `scoring` parameter of
+# `cross_val_score` to compute the accuracy (even if this is the default score).
+# Check its documentation to learn how to do that.
 
 # %%
 # solution
@@ -56,17 +56,18 @@ print(f"Accuracy score: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %%
 # solution
-scores = cross_val_score(tree, data, target, cv=cv,
-                         scoring="balanced_accuracy")
+scores = cross_val_score(
+    tree, data, target, cv=cv, scoring="balanced_accuracy"
+)
 print(f"Balanced accuracy score: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
-# We will now add a bit of complexity. We would like to compute the precision
-# of our model. However, during the course we saw that we need to mention the
+# We will now add a bit of complexity. We would like to compute the precision of
+# our model. However, during the course we saw that we need to mention the
 # positive label which in our case we consider to be the class `donated`.
 #
-# We will show that computing the precision without providing the positive
-# label will not be supported by scikit-learn because it is indeed ambiguous.
+# We will show that computing the precision without providing the positive label
+# will not be supported by scikit-learn because it is indeed ambiguous.
 
 # %%
 from sklearn.model_selection import cross_val_score
@@ -89,9 +90,8 @@ except ValueError as exc:
 #
 # So, import `sklearn.metrics.make_scorer` and
 # `sklearn.metrics.precision_score`. Check their documentations for more
-# information.
-# Finally, create a scorer by calling `make_scorer` using the score function
-# `precision_score` and pass the extra parameter `pos_label="donated"`.
+# information. Finally, create a scorer by calling `make_scorer` using the score
+# function `precision_score` and pass the extra parameter `pos_label="donated"`.
 
 # %%
 # solution
@@ -111,8 +111,8 @@ print(f"Precision score: {scores.mean():.3f} ± {scores.std():.3f}")
 # %% [markdown]
 # `cross_val_score` will only compute a single score provided to the `scoring`
 # parameter. The function `cross_validate` allows the computation of multiple
-# scores by passing a list of string or scorer to the parameter `scoring`,
-# which could be handy.
+# scores by passing a list of string or scorer to the parameter `scoring`, which
+# could be handy.
 #
 # Import `sklearn.model_selection.cross_validate` and compute the accuracy and
 # balanced accuracy through cross-validation. Plot the cross-validation score
@@ -121,8 +121,8 @@ print(f"Precision score: {scores.mean():.3f} ± {scores.std():.3f}")
 # %%
 # solution
 from sklearn.model_selection import cross_validate
-scoring = ["accuracy", "balanced_accuracy"]
 
+scoring = ["accuracy", "balanced_accuracy"]
 scores = cross_validate(tree, data, target, cv=cv, scoring=scoring)
 scores
 
@@ -133,7 +133,7 @@ color = {"whiskers": "black", "medians": "black", "caps": "black"}
 
 metrics = pd.DataFrame(
     [scores["test_accuracy"], scores["test_balanced_accuracy"]],
-    index=["Accuracy", "Balanced accuracy"]
+    index=["Accuracy", "Balanced accuracy"],
 ).T
 
 # %% tags=["solution"]

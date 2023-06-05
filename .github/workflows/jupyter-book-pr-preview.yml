@@ -1,0 +1,60 @@
+name: jupyter-book-pr-preview
+
+on:
+  workflow_run:
+    workflows: ["deploy-gh-pages"]
+    types:
+      - completed
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    if: ${{github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success'}}
+    steps:
+      - name: 'Commit Status: Set Workflow Status as Pending'
+        uses: myrotvorets/set-commit-status-action@1.1.6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: pending
+          sha: ${{ github.event.workflow_run.head_sha }}
+          context: 'JupyterBook preview'
+
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: deploy-gh-pages.yml
+          pr: ${{steps.pull-request-number.outputs.result}}
+          name: jupyter-book
+
+      - name: Get pull request number
+        id: pull-request-number
+        run: |
+          export PULL_REQUEST_NUMBER=$(cat pull_request_number)
+          echo "result=${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install --global netlify-cli@6
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{secrets.NETLIFY_AUTH_TOKEN}}
+          NETLIFY_SITE_ID: ${{secrets.NETLIFY_SITE_ID}}
+        run: netlify deploy --dir=jupyter-book/_build/html --alias=pull-request-${{steps.pull-request-number.outputs.result}}
+
+      - name: 'Commit Status: Update deployment status'
+        uses: myrotvorets/set-commit-status-action@1.1.6
+        # Always run this step regardless of job failing early
+        if: always()
+        env:
+          DEPLOY_SUCCESS: Successfully deployed preview.
+          DEPLOY_FAILURE: Failed to deploy preview.
+          TARGET_URL_SUCCESS: https://pull-request-${{steps.pull-request-number.outputs.result}}--scikit-learn-mooc.netlify.app/_changed.html
+          TARGET_URL_FAILURE: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status == 'success' && 'success' || 'failure' }}
+          sha: ${{ github.event.workflow_run.head_sha }}
+          context: 'JupyterBook preview'
+          description: ${{ job.status == 'success' && env.DEPLOY_SUCCESS || env.DEPLOY_FAILURE }}
+          targetUrl:  ${{ job.status == 'success' && env.TARGET_URL_SUCCESS || env.TARGET_URL_FAILURE }}

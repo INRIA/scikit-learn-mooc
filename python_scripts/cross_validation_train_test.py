@@ -8,9 +8,9 @@
 # %% [markdown]
 # # Cross-validation framework
 #
-# In the previous notebooks, we introduce some concepts regarding the
-# evaluation of predictive models. While this section could be slightly
-# redundant, we intend to go into details into the cross-validation framework.
+# In the previous notebooks, we introduce some concepts regarding the evaluation
+# of predictive models. While this section could be slightly redundant, we
+# intend to go into details into the cross-validation framework.
 #
 # Before we dive in, let's linger on the reasons for always having training and
 # testing sets. Let's first look at the limitation of using a dataset without
@@ -44,8 +44,8 @@ print(housing.DESCR)
 data.head()
 
 # %% [markdown]
-# To simplify future visualization, let's transform the prices from the
-# 100 (k\$) range to the thousand dollars (k\$) range.
+# To simplify future visualization, let's transform the prices from the 100
+# (k\$) range to the thousand dollars (k\$) range.
 
 # %%
 target *= 100
@@ -69,9 +69,10 @@ regressor = DecisionTreeRegressor(random_state=0)
 regressor.fit(data, target)
 
 # %% [markdown]
-# After training the regressor, we would like to know its potential generalization
-# performance once deployed in production. For this purpose, we use the mean
-# absolute error, which gives us an error in the native unit, i.e. k\$.
+# After training the regressor, we would like to know its potential
+# generalization performance once deployed in production. For this purpose, we
+# use the mean absolute error, which gives us an error in the native unit, i.e.
+# k\$.
 
 # %%
 from sklearn.metrics import mean_absolute_error
@@ -96,11 +97,11 @@ print(f"On average, our regressor makes an error of {score:.2f} k$")
 # In this MOOC, we will consistently use the term "training error".
 # ```
 #
-# We trained a predictive model to minimize the training error but our aim is
-# to minimize the error on data that has not been seen during training.
+# We trained a predictive model to minimize the training error but our aim is to
+# minimize the error on data that has not been seen during training.
 #
-# This error is also called the **generalization error** or the "true"
-# **testing error**.
+# This error is also called the **generalization error** or the "true" **testing
+# error**.
 #
 # ```{note}
 # In this MOOC, we will consistently use the term "testing error".
@@ -118,7 +119,8 @@ print(f"On average, our regressor makes an error of {score:.2f} k$")
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
+    data, target, random_state=0
+)
 
 # %% [markdown]
 # Then, let's train our model.
@@ -145,8 +147,8 @@ score = mean_absolute_error(target_test, target_predicted)
 print(f"The testing error of our model is {score:.2f} k$")
 
 # %% [markdown]
-# This testing error is actually about what we would expect from our model if
-# it was used in a production environment.
+# This testing error is actually about what we would expect from our model if it
+# was used in a production environment.
 
 # %% [markdown]
 # ## Stability of the cross-validation estimates
@@ -205,7 +207,8 @@ from sklearn.model_selection import ShuffleSplit
 
 cv = ShuffleSplit(n_splits=40, test_size=0.3, random_state=0)
 cv_results = cross_validate(
-    regressor, data, target, cv=cv, scoring="neg_mean_absolute_error")
+    regressor, data, target, cv=cv, scoring="neg_mean_absolute_error"
+)
 
 # %% [markdown]
 # The results `cv_results` are stored into a Python dictionary. We will convert
@@ -269,12 +272,16 @@ _ = plt.title("Test error distribution")
 # 43 k\$ to 50 k\$.
 
 # %%
-print(f"The mean cross-validated testing error is: "
-      f"{cv_results['test_error'].mean():.2f} k$")
+print(
+    "The mean cross-validated testing error is: "
+    f"{cv_results['test_error'].mean():.2f} k$"
+)
 
 # %%
-print(f"The standard deviation of the testing error is: "
-      f"{cv_results['test_error'].std():.2f} k$")
+print(
+    "The standard deviation of the testing error is: "
+    f"{cv_results['test_error'].std():.2f} k$"
+)
 
 # %% [markdown]
 # Note that the standard deviation is much smaller than the mean: we could
@@ -326,8 +333,8 @@ print(f"The standard deviation of the target is: {target.std():.2f} k$")
 # ## More detail regarding `cross_validate`
 #
 # During cross-validation, many models are trained and evaluated. Indeed, the
-# number of elements in each array of the output of `cross_validate` is a
-# result from one of these `fit`/`score` procedures. To make it explicit, it is
+# number of elements in each array of the output of `cross_validate` is a result
+# from one of these `fit`/`score` procedures. To make it explicit, it is
 # possible to retrieve these fitted models for each of the splits/folds by
 # passing the option `return_estimator=True` in `cross_validate`.
 

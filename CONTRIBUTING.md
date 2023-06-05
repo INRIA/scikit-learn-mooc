@@ -89,9 +89,9 @@ quizzes (quizzes with solutions).
 make quizzes
 ```
 
-### Generating full-index.md
+### Generating full-index.ipynb
 
-full-index.md is useful when giving the course live. It makes it easier to guide people
+full-index.ipynb is useful when giving the course live. It makes it easier to guide people
 through the notebooks.
 
 ```
@@ -195,9 +195,11 @@ See [this](./workflow-notes.md).
 
 ## Direct binder links to OVH, GESIS and GKE to trigger and cache builds
 
+- [OVH Binder](https://ovh.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?filepath=full-index.ipynb)
 
-- [OVH Binder](https://ovh.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
+- [GESIS Binder](https://gesis.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?filepath=full-index.ipynb)
 
-- [GESIS Binder](https://gesis.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
+- [GKE Binder](https://gke.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?filepath=full-index.ipynb)
 
-- [GKE Binder](https://gke.mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main)
+The [Binder Grafana dashboard](https://grafana.mybinder.org/d/3SpLQinmk/1-overview?orgId=1)
+can be handy to have an idea whether there are currently some Binder issues.

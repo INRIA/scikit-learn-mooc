@@ -126,8 +126,7 @@ data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
 
 # %%
-print(
-    f"The dataset encoded contains {data_encoded.shape[1]} features")
+print(f"The dataset encoded contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
 # We see that the categories have been encoded for each feature (column)
@@ -204,8 +203,7 @@ education_encoded
 # Let's apply this encoding on the full dataset.
 
 # %%
-print(
-    f"The dataset is composed of {data_categorical.shape[1]} features")
+print(f"The dataset is composed of {data_categorical.shape[1]} features")
 data_categorical.head()
 
 # %%
@@ -213,8 +211,7 @@ data_encoded = encoder.fit_transform(data_categorical)
 data_encoded[:5]
 
 # %%
-print(
-    f"The encoded dataset contains {data_encoded.shape[1]} features")
+print(f"The encoded dataset contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
 # Let's wrap this NumPy array in a dataframe with informative column names as
@@ -261,9 +258,9 @@ pd.DataFrame(data_encoded, columns=columns_encoded).head()
 # The **next exercise** highlights the issue of misusing `OrdinalEncoder` with
 # a linear model.
 #
-# One-hot encoding categorical variables with high cardinality can cause 
+# One-hot encoding categorical variables with high cardinality can cause
 # computational inefficiency in tree-based models. Because of this, it is not recommended
-# to use `OneHotEncoder` in such cases even if the original categories do not 
+# to use `OneHotEncoder` in such cases even if the original categories do not
 # have a given order. We will show this in the **final exercise** of this sequence.
 
 # %% [markdown]
@@ -339,6 +336,7 @@ model = make_pipeline(
 
 # %%
 from sklearn.model_selection import cross_validate
+
 cv_results = cross_validate(model, data_categorical, target)
 cv_results
 

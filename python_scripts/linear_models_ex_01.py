@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -59,12 +58,12 @@ def linear_model_flipper_mass(
 # %% [markdown]
 # ## Main exercise
 #
-# Define a vector `weights = [...]` and a vector `intercepts = [...]` of
-# the same length. Each pair of entries `(weights[i], intercepts[i])` tags a
+# Define a vector `weights = [...]` and a vector `intercepts = [...]` of the
+# same length. Each pair of entries `(weights[i], intercepts[i])` tags a
 # different model. Use these vectors along with the vector
-# `flipper_length_range` to plot several linear models that could possibly
-# fit our data. Use the above helper function to visualize both the models and
-# the real samples.
+# `flipper_length_range` to plot several linear models that could possibly fit
+# our data. Use the above helper function to visualize both the models and the
+# real samples.
 
 # %%
 import numpy as np
@@ -75,9 +74,9 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 # Write your code here.
 
 # %% [markdown]
-# In the previous question, you were asked to create several linear models.
-# The visualization allowed you to qualitatively assess if a model was better
-# than another.
+# In the previous question, you were asked to create several linear models. The
+# visualization allowed you to qualitatively assess if a model was better than
+# another.
 #
 # Now, you should come up with a quantitative measure which indicates the
 # goodness of fit of each linear model and allows you to select the best model.
@@ -90,8 +89,8 @@ flipper_length_range = np.linspace(data.min(), data.max(), num=300)
 # Write your code here.
 
 # %% [markdown]
-# You can now copy and paste the code below to show the goodness of fit for
-# each model.
+# You can now copy and paste the code below to show the goodness of fit for each
+# model.
 #
 # ```python
 # for model_idx, (weight, intercept) in enumerate(zip(weights, intercepts)):

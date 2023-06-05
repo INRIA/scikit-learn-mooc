@@ -13,8 +13,8 @@
 # generalizing. Besides these aspects, it is also important to understand how
 # the different errors are influenced by the number of samples available.
 #
-# In this notebook, we will show this aspect by looking a the variability of
-# the different errors.
+# In this notebook, we will show this aspect by looking a the variability of the
+# different errors.
 #
 # Let's first load the data and create the same model as in the previous
 # notebook.
@@ -50,14 +50,15 @@ regressor = DecisionTreeRegressor()
 # the validation curve, but instead of varying a hyperparameter, we vary the
 # number of training samples. This curve is called the **learning curve**.
 #
-# It gives information regarding the benefit of adding new training samples
-# to improve a model's generalization performance.
+# It gives information regarding the benefit of adding new training samples to
+# improve a model's generalization performance.
 #
-# Let's compute the learning curve for a decision tree and vary the
-# proportion of the training set from 10% to 100%.
+# Let's compute the learning curve for a decision tree and vary the proportion
+# of the training set from 10% to 100%.
 
 # %%
 import numpy as np
+
 train_sizes = np.linspace(0.1, 1.0, num=5, endpoint=True)
 train_sizes
 
@@ -76,8 +77,14 @@ cv = ShuffleSplit(n_splits=30, test_size=0.2)
 from sklearn.model_selection import learning_curve
 
 results = learning_curve(
-    regressor, data, target, train_sizes=train_sizes, cv=cv,
-    scoring="neg_mean_absolute_error", n_jobs=2)
+    regressor,
+    data,
+    target,
+    train_sizes=train_sizes,
+    cv=cv,
+    scoring="neg_mean_absolute_error",
+    n_jobs=2,
+)
 train_size, train_scores, test_scores = results[:3]
 # Convert the scores into errors
 train_errors, test_errors = -train_scores, -test_scores
@@ -88,10 +95,18 @@ train_errors, test_errors = -train_scores, -test_scores
 # %%
 import matplotlib.pyplot as plt
 
-plt.errorbar(train_size, train_errors.mean(axis=1),
-             yerr=train_errors.std(axis=1), label="Training error")
-plt.errorbar(train_size, test_errors.mean(axis=1),
-             yerr=test_errors.std(axis=1), label="Testing error")
+plt.errorbar(
+    train_size,
+    train_errors.mean(axis=1),
+    yerr=train_errors.std(axis=1),
+    label="Training error",
+)
+plt.errorbar(
+    train_size,
+    test_errors.mean(axis=1),
+    yerr=test_errors.std(axis=1),
+    label="Testing error",
+)
 plt.legend()
 
 plt.xscale("log")
@@ -104,11 +119,11 @@ _ = plt.title("Learning curve for decision tree")
 # means that the trained model (i.e. decision tree) is clearly overfitting the
 # training data.
 #
-# Looking at the testing error alone, we observe that the more samples are
-# added into the training set, the lower the testing error becomes. Also, we
-# are searching for the plateau of the testing error for which there is no
-# benefit to adding samples anymore or assessing the potential gain of adding
-# more samples into the training set.
+# Looking at the testing error alone, we observe that the more samples are added
+# into the training set, the lower the testing error becomes. Also, we are
+# searching for the plateau of the testing error for which there is no benefit
+# to adding samples anymore or assessing the potential gain of adding more
+# samples into the training set.
 #
 # If we achieve a plateau and adding new samples in the training set does not
 # reduce the testing error, we might have reached the Bayes error rate using the

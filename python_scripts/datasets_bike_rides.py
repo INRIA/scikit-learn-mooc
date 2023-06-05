@@ -20,29 +20,30 @@ cycling = pd.read_csv("../datasets/bike_rides.csv")
 cycling.head()
 
 # %% [markdown]
-# The first column `timestamp` contains a specific information regarding the
-# the time and date of a record while other columns contain numerical value
-# of some specific measurements. Let's check the data type of the columns more
-# in details.
+# The first column `timestamp` contains a specific information regarding the the
+# time and date of a record while other columns contain numerical value of some
+# specific measurements. Let's check the data type of the columns more in
+# details.
 
 # %%
 cycling.info()
 
 # %% [markdown]
-# Indeed, CSV format store data as text. Pandas tries to infer numerical type
-# by default. It is the reason why all features but `timestamp` are encoded as
+# Indeed, CSV format store data as text. Pandas tries to infer numerical type by
+# default. It is the reason why all features but `timestamp` are encoded as
 # floating point values. However, we see that the `timestamp` is stored as an
 # `object` column. It means that the data in this column are stored as `str`
 # rather than a specialized `datetime` data type.
 #
-# In fact, one needs to set an option such that pandas is directed to infer
-# such data type when opening the file. In addition, we will want to use
-# `timestamp` as an index. Thus, we can reopen the file with some extra
-# arguments to help pandas at reading properly our CSV file.
+# In fact, one needs to set an option such that pandas is directed to infer such
+# data type when opening the file. In addition, we will want to use `timestamp`
+# as an index. Thus, we can reopen the file with some extra arguments to help
+# pandas at reading properly our CSV file.
 
 # %%
-cycling = pd.read_csv("../datasets/bike_rides.csv", index_col=0,
-                      parse_dates=True)
+cycling = pd.read_csv(
+    "../datasets/bike_rides.csv", index_col=0, parse_dates=True
+)
 cycling.index.name = ""
 cycling.head()
 
@@ -50,40 +51,40 @@ cycling.head()
 cycling.info()
 
 # %% [markdown]
-# By specifying to pandas to parse the date, we obtain a `DatetimeIndex` that
-# is really handy when filtering data based on date.
+# By specifying to pandas to parse the date, we obtain a `DatetimeIndex` that is
+# really handy when filtering data based on date.
 #
-# We can now have a look at the data stored in our dataframe. It will help us
-# to frame the data science problem that we try to solve.
+# We can now have a look at the data stored in our dataframe. It will help us to
+# frame the data science problem that we try to solve.
 #
-# The records correspond at information derived from GPS recordings of a
-# cyclist (`speed`, `acceleration`, `slope`) and some extra information
-# acquired from other sensors: `heart-rate` that corresponds to the number of
-# beats per minute of the cyclist heart, `cadence` that is the rate at which a
-# cyclist is turning the pedals, and `power` that corresponds to the work
-# required by the cyclist to go forward.
+# The records correspond at information derived from GPS recordings of a cyclist
+# (`speed`, `acceleration`, `slope`) and some extra information acquired from
+# other sensors: `heart-rate` that corresponds to the number of beats per minute
+# of the cyclist heart, `cadence` that is the rate at which a cyclist is turning
+# the pedals, and `power` that corresponds to the work required by the cyclist
+# to go forward.
 #
 # The power might be slightly an abstract quantity so let's give a more
 # intuitive explanation.
 #
-# Let's take the example of a soup blender that one uses to blend vegetable.
-# The engine of this blender develop an instantaneous power of ~300 Watts to
-# blend the vegetable. Here, our cyclist is just the engine of the blender (at
-# the difference that an average cyclist will develop an instantaneous power
-# around ~150 Watts) and blending the vegetable corresponds to move the
-# cyclist's bike forward.
+# Let's take the example of a soup blender that one uses to blend vegetable. The
+# engine of this blender develop an instantaneous power of ~300 Watts to blend
+# the vegetable. Here, our cyclist is just the engine of the blender (at the
+# difference that an average cyclist will develop an instantaneous power around
+# ~150 Watts) and blending the vegetable corresponds to move the cyclist's bike
+# forward.
 #
 # Professional cyclists are using power to calibrate their training and track
 # the energy spent during a ride. For instance, riding at a higher power
 # requires more energy and thus, you need to provide resources to create this
-# energy. With human, this resource is food. For our soup blender, this
-# resource can be uranium, petrol, natural gas, coal, etc. Our body serves as a
-# power plant to transform the resources into energy.
+# energy. With human, this resource is food. For our soup blender, this resource
+# can be uranium, petrol, natural gas, coal, etc. Our body serves as a power
+# plant to transform the resources into energy.
 #
 # The issue with measuring power is linked to the cost of the sensor: a cycling
-# power meter. The cost of such sensor vary from $400 to $1000. Thus, our
-# data science problem is quite easy: can we predict instantaneous cyclist
-# power from other (cheaper) sensors.
+# power meter. The cost of such sensor vary from $400 to $1000. Thus, our data
+# science problem is quite easy: can we predict instantaneous cyclist power from
+# other (cheaper) sensors.
 
 # %%
 target_name = "power"
@@ -125,10 +126,10 @@ data.index
 data.index.min(), data.index.max()
 
 # %% [markdown]
-# The starting date is the August 18, 2020 and the ending date is
-# September 13, 2020. However, it is obvious that our cyclist did not ride
-# every seconds between these dates. Indeed, only a couple of date should be
-# present in the dataframe, corresponding to the number of cycling rides.
+# The starting date is the August 18, 2020 and the ending date is September 13,
+# 2020. However, it is obvious that our cyclist did not ride every seconds
+# between these dates. Indeed, only a couple of date should be present in the
+# dataframe, corresponding to the number of cycling rides.
 
 # %%
 data.index.normalize().nunique()
@@ -144,18 +145,18 @@ data_ride, target_ride = data.loc[date_first_ride], target.loc[date_first_ride]
 
 # %%
 data_ride.plot()
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 _ = plt.title("Sensor values for different cyclist measurements")
 
 # %% [markdown]
 # Since the unit and range of each measurement (feature) is different, it is
 # rather difficult to interpret the plot. Also, the high temporal resolution
-# make it difficult to make any observation. We could resample the data to get
-# a smoother visualization.
+# make it difficult to make any observation. We could resample the data to get a
+# smoother visualization.
 
 # %%
 data_ride.resample("60S").mean().plot()
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 _ = plt.title("Sensor values for different cyclist measurements")
 
 # %% [markdown]
@@ -164,16 +165,21 @@ _ = plt.title("Sensor values for different cyclist measurements")
 # %%
 axs = data_ride.hist(figsize=(10, 12), bins=50, edgecolor="black", grid=False)
 # add the units to the plots
-units = ["beats per minute", "rotations per minute", "meters per second",
-         "meters per second squared", "%"]
+units = [
+    "beats per minute",
+    "rotations per minute",
+    "meters per second",
+    "meters per second squared",
+    "%",
+]
 for unit, ax in zip(units, axs.ravel()):
     ax.set_xlabel(unit)
 plt.subplots_adjust(hspace=0.6)
 
 # %% [markdown]
 # From these plots, we can see some interesting information: a cyclist is
-# spending some time without pedaling. This samples should be associated with
-# a null power. We also see that the slope have large extremum.
+# spending some time without pedaling. This samples should be associated with a
+# null power. We also see that the slope have large extremum.
 #
 # Let's make a pair plot on a subset of data samples to see if we can confirm
 # some of these intuitions.
@@ -196,9 +202,9 @@ import seaborn as sns
 _ = sns.pairplot(data=subset, hue="power", palette="viridis")
 
 # %% [markdown]
-# Indeed, we see that low cadence is associated with low power. We can also
-# the a link between higher slope / high heart-rate and higher power: a cyclist
-# need to develop more energy to go uphill enforcing a stronger physiological
-# stimuli on the body. We can confirm this intuition by looking at the
-# interaction between the slope and the speed: a lower speed with a higher
-# slope is usually associated with higher power.
+# Indeed, we see that low cadence is associated with low power. We can also the
+# a link between higher slope / high heart-rate and higher power: a cyclist need
+# to develop more energy to go uphill enforcing a stronger physiological stimuli
+# on the body. We can confirm this intuition by looking at the interaction
+# between the slope and the speed: a lower speed with a higher slope is usually
+# associated with higher power.

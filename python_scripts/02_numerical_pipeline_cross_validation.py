@@ -13,7 +13,7 @@
 # We will discuss the practical aspects of assessing the generalization
 # performance of our model via **cross-validation** instead of a single
 # train-test split.
-# 
+#
 # ## Data preparation
 #
 # First, let's load the full adult census dataset.
@@ -79,10 +79,11 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 #
 # ```{note}
 # This figure shows the particular case of **K-fold** cross-validation strategy.
-# For each cross-validation split, the procedure trains a clone of model on all the red
-# samples and evaluate the score of the model on the blue samples.
-# As mentioned earlier, there is a variety of different cross-validation
-# strategies. Some of these aspects will be covered in more detail in future notebooks.
+# For each cross-validation split, the procedure trains a clone of model on all
+# the red samples and evaluate the score of the model on the blue samples. As
+# mentioned earlier, there is a variety of different cross-validation
+# strategies. Some of these aspects will be covered in more detail in future
+# notebooks.
 # ```
 #
 # Cross-validation is therefore computationally intensive because it requires
@@ -104,8 +105,10 @@ cv_result
 # %% [markdown]
 # The output of `cross_validate` is a Python dictionary, which by default
 # contains three entries:
-# - (i) the time to train the model on the training data for each fold, `fit_time`
-# - (ii) the time to predict with the model on the testing data for each fold, `score_time`
+# - (i) the time to train the model on the training data for each fold,
+#   `fit_time`
+# - (ii) the time to predict with the model on the testing data for each fold,
+#   `score_time`
 # - (iii) the default score on the testing data for each fold, `test_score`.
 #
 # Setting `cv=5` created 5 distinct splits to get 5 variations for the training
@@ -144,8 +147,8 @@ print(
 # we can estimate the uncertainty of our model generalization performance. This
 # is the main advantage of cross-validation and can be crucial in practice, for
 # example when comparing different models to figure out whether one is better
-# than the other or whether our measures of the generalization performance of each
-# model are within the error bars of one-another.
+# than the other or whether our measures of the generalization performance of
+# each model are within the error bars of one-another.
 #
 # In this particular case, only the first 2 decimals seem to be trustworthy. If
 # you go up in this notebook, you can check that the performance we get with
@@ -153,6 +156,6 @@ print(
 
 # %% [markdown]
 # ## Notebook recap
-# 
+#
 # In this notebook we assessed the generalization performance of our model via
 # **cross-validation**.

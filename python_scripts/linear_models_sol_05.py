@@ -7,13 +7,14 @@
 
 # %% [markdown]
 # # 📃 Solution for Exercise M4.05
+#
 # In the previous notebook we set `penalty="none"` to disable regularization
-# entirely. This parameter can also control the **type** of regularization to use,
-# whereas the regularization **strength** is set using the parameter `C`.
-# Setting`penalty="none"` is equivalent to an infinitely large value of `C`.
-# In this exercise, we ask you to train a logistic regression classifier using the
-# `penalty="l2"` regularization (which happens to be the default in scikit-learn)
-# to find by yourself the effect of the parameter `C`.
+# entirely. This parameter can also control the **type** of regularization to
+# use, whereas the regularization **strength** is set using the parameter `C`.
+# Setting`penalty="none"` is equivalent to an infinitely large value of `C`. In
+# this exercise, we ask you to train a logistic regression classifier using the
+# `penalty="l2"` regularization (which happens to be the default in
+# scikit-learn) to find by yourself the effect of the parameter `C`.
 #
 # We will start by loading the dataset.
 
@@ -28,8 +29,9 @@ import pandas as pd
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes
-penguins = penguins.set_index("Species").loc[
-    ["Adelie", "Chinstrap"]].reset_index()
+penguins = (
+    penguins.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
+)
 
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
@@ -54,7 +56,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty="l2"))
+    StandardScaler(), LogisticRegression(penalty="l2")
+)
 
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of
@@ -83,8 +86,12 @@ for C in Cs:
         alpha=0.5,
     )
     sns.scatterplot(
-        data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
-        hue=target_column, palette=["tab:red", "tab:blue"])
+        data=penguins_test,
+        x=culmen_columns[0],
+        y=culmen_columns[1],
+        hue=target_column,
+        palette=["tab:red", "tab:blue"],
+    )
     plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
     plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
@@ -101,8 +108,7 @@ for C in Cs:
     weights_ridge.append(pd.Series(coefs, index=culmen_columns))
 
 # %% tags=["solution"]
-weights_ridge = pd.concat(
-    weights_ridge, axis=1, keys=[f"C: {C}" for C in Cs])
+weights_ridge = pd.concat(weights_ridge, axis=1, keys=[f"C: {C}" for C in Cs])
 weights_ridge.plot.barh()
 _ = plt.title("LogisticRegression weights depending of C")
 

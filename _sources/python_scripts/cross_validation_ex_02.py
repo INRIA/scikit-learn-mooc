@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -15,12 +14,12 @@
 # %% [markdown]
 # # 📝 Exercise M7.01
 #
-# In this exercise we will define dummy classification baselines and use them
-# as reference to assess the relative predictive performance of a given model
-# of interest.
+# In this exercise we will define dummy classification baselines and use them as
+# reference to assess the relative predictive performance of a given model of
+# interest.
 #
-# We illustrate those baselines with the help of the Adult Census dataset,
-# using only the numerical features for the sake of simplicity.
+# We illustrate those baselines with the help of the Adult Census dataset, using
+# only the numerical features for the sake of simplicity.
 
 # %%
 import pandas as pd
@@ -43,16 +42,16 @@ data, target = adult_census.drop(columns="class"), adult_census["class"]
 # Write your code here.
 
 # %% [markdown]
-# Compute the cross-validation (test) scores for the classifier on this
-# dataset. Store the results pandas Series as we did in the previous notebook.
+# Compute the cross-validation (test) scores for the classifier on this dataset.
+# Store the results pandas Series as we did in the previous notebook.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Now, compute the cross-validation scores of a dummy classifier that
-# constantly predicts the most frequent class observed the training set. Please
-# refer to the online documentation for the [sklearn.dummy.DummyClassifier
+# Now, compute the cross-validation scores of a dummy classifier that constantly
+# predicts the most frequent class observed the training set. Please refer to
+# the online documentation for the [sklearn.dummy.DummyClassifier
 # ](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html)
 # class.
 #
@@ -62,16 +61,16 @@ data, target = adult_census.drop(columns="class"), adult_census["class"]
 # Write your code here.
 
 # %% [markdown]
-# Now that we collected the results from the baseline and the model,
-# concatenate the test scores as columns a single pandas dataframe.
+# Now that we collected the results from the baseline and the model, concatenate
+# the test scores as columns a single pandas dataframe.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
 #
-# Next, plot the histogram of the cross-validation test scores for both
-# models with the help of [pandas built-in plotting
+# Next, plot the histogram of the cross-validation test scores for both models
+# with the help of [pandas built-in plotting
 # function](https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html#histograms).
 #
 # What conclusions do you draw from the results?

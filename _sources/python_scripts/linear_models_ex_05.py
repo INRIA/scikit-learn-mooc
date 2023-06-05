@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -14,13 +13,14 @@
 
 # %% [markdown]
 # # 📝 Exercise M4.05
+#
 # In the previous notebook we set `penalty="none"` to disable regularization
-# entirely. This parameter can also control the **type** of regularization to use,
-# whereas the regularization **strength** is set using the parameter `C`.
-# Setting`penalty="none"` is equivalent to an infinitely large value of `C`.
-# In this exercise, we ask you to train a logistic regression classifier using the
-# `penalty="l2"` regularization (which happens to be the default in scikit-learn)
-# to find by yourself the effect of the parameter `C`.
+# entirely. This parameter can also control the **type** of regularization to
+# use, whereas the regularization **strength** is set using the parameter `C`.
+# Setting`penalty="none"` is equivalent to an infinitely large value of `C`. In
+# this exercise, we ask you to train a logistic regression classifier using the
+# `penalty="l2"` regularization (which happens to be the default in
+# scikit-learn) to find by yourself the effect of the parameter `C`.
 #
 # We will start by loading the dataset.
 

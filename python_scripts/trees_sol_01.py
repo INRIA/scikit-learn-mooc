@@ -84,7 +84,11 @@ from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(16, 12))
 _ = plot_tree(
-    tree, feature_names=culmen_columns, class_names=tree.classes_, impurity=False, ax=ax
+    tree,
+    feature_names=culmen_columns,
+    class_names=tree.classes_,
+    impurity=False,
+    ax=ax,
 )
 
 # %% [markdown] tags=["solution"]

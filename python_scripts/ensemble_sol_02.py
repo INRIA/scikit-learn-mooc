@@ -44,7 +44,7 @@ forest = RandomForestRegressor(n_estimators=3)
 forest.fit(data_train, target_train)
 target_predicted = forest.predict(data_test)
 print(
-    f"Mean absolute error: "
+    "Mean absolute error: "
     f"{mean_absolute_error(target_test, target_predicted):.3f} grams"
 )
 
@@ -87,7 +87,9 @@ forest_predictions = forest.predict(data_range)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 
 # plot tree predictions
 for tree_idx, predictions in enumerate(tree_predictions):
@@ -99,5 +101,5 @@ for tree_idx, predictions in enumerate(tree_predictions):
         alpha=0.8,
     )
 
-plt.plot(data_range[feature_name], forest_predictions, label=f"Random forest")
+plt.plot(data_range[feature_name], forest_predictions, label="Random forest")
 _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")

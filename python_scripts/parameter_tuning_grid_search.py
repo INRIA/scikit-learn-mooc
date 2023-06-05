@@ -139,7 +139,9 @@ model_grid_search.fit(data_train, target_train)
 
 # %%
 accuracy = model_grid_search.score(data_test, target_test)
-print(f"The test accuracy score of the grid-searched pipeline is: " f"{accuracy:.2f}")
+print(
+    f"The test accuracy score of the grid-searched pipeline is: {accuracy:.2f}"
+)
 
 # %% [markdown]
 # ```{warning}
@@ -177,7 +179,7 @@ model_grid_search.predict(data_test.iloc[0:5])
 # attribute.
 
 # %%
-print(f"The best set of parameters is: " f"{model_grid_search.best_params_}")
+print(f"The best set of parameters is: {model_grid_search.best_params_}")
 
 # %% [markdown]
 # The accuracy and the best parameters of the grid-searched pipeline are similar
@@ -225,7 +227,9 @@ cv_results
 
 # %%
 pivoted_cv_results = cv_results.pivot_table(
-    values="mean_test_score", index=["learning_rate"], columns=["max_leaf_nodes"]
+    values="mean_test_score",
+    index=["learning_rate"],
+    columns=["max_leaf_nodes"],
 )
 
 pivoted_cv_results
@@ -236,7 +240,9 @@ pivoted_cv_results
 # %%
 import seaborn as sns
 
-ax = sns.heatmap(pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7, vmax=0.9)
+ax = sns.heatmap(
+    pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7, vmax=0.9
+)
 ax.invert_yaxis()
 
 # %% [markdown]

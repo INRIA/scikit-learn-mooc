@@ -89,7 +89,8 @@ from sklearn.model_selection import cross_val_score
 scores_tree = cross_val_score(tree, data, target)
 
 print(
-    f"Decision tree classifier: " f"{scores_tree.mean():.3f} ± {scores_tree.std():.3f}"
+    "Decision tree classifier: "
+    f"{scores_tree.mean():.3f} ± {scores_tree.std():.3f}"
 )
 
 # %% [markdown]
@@ -116,7 +117,7 @@ bagged_trees = make_pipeline(
 scores_bagged_trees = cross_val_score(bagged_trees, data, target)
 
 print(
-    f"Bagged decision tree classifier: "
+    "Bagged decision tree classifier: "
     f"{scores_bagged_trees.mean():.3f} ± {scores_bagged_trees.std():.3f}"
 )
 
@@ -132,14 +133,15 @@ print(
 from sklearn.ensemble import RandomForestClassifier
 
 random_forest = make_pipeline(
-    preprocessor, RandomForestClassifier(n_estimators=50, n_jobs=2, random_state=0)
+    preprocessor,
+    RandomForestClassifier(n_estimators=50, n_jobs=2, random_state=0),
 )
 
 # %%
 scores_random_forest = cross_val_score(random_forest, data, target)
 
 print(
-    f"Random forest classifier: "
+    "Random forest classifier: "
     f"{scores_random_forest.mean():.3f} ± "
     f"{scores_random_forest.std():.3f}"
 )

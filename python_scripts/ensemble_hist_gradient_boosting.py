@@ -54,18 +54,24 @@ from sklearn.ensemble import GradientBoostingRegressor
 
 gradient_boosting = GradientBoostingRegressor(n_estimators=200)
 cv_results_gbdt = cross_validate(
-    gradient_boosting, data, target, scoring="neg_mean_absolute_error", n_jobs=2
+    gradient_boosting,
+    data,
+    target,
+    scoring="neg_mean_absolute_error",
+    n_jobs=2,
 )
 
 # %%
 print("Gradient Boosting Decision Tree")
 print(
-    f"Mean absolute error via cross-validation: "
+    "Mean absolute error via cross-validation: "
     f"{-cv_results_gbdt['test_score'].mean():.3f} ± "
     f"{cv_results_gbdt['test_score'].std():.3f} k$"
 )
-print(f"Average fit time: " f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
-print(f"Average score time: " f"{cv_results_gbdt['score_time'].mean():.3f} seconds")
+print(f"Average fit time: {cv_results_gbdt['fit_time'].mean():.3f} seconds")
+print(
+    f"Average score time: {cv_results_gbdt['score_time'].mean():.3f} seconds"
+)
 
 # %% [markdown]
 # We recall that a way of accelerating the gradient boosting is to reduce the
@@ -80,7 +86,9 @@ print(f"Average score time: " f"{cv_results_gbdt['score_time'].mean():.3f} secon
 import numpy as np
 from sklearn.preprocessing import KBinsDiscretizer
 
-discretizer = KBinsDiscretizer(n_bins=256, encode="ordinal", strategy="quantile")
+discretizer = KBinsDiscretizer(
+    n_bins=256, encode="ordinal", strategy="quantile"
+)
 data_trans = discretizer.fit_transform(data)
 data_trans
 
@@ -120,12 +128,14 @@ cv_results_gbdt = cross_validate(
 # %%
 print("Gradient Boosting Decision Tree with KBinsDiscretizer")
 print(
-    f"Mean absolute error via cross-validation: "
+    "Mean absolute error via cross-validation: "
     f"{-cv_results_gbdt['test_score'].mean():.3f} ± "
     f"{cv_results_gbdt['test_score'].std():.3f} k$"
 )
-print(f"Average fit time: " f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
-print(f"Average score time: " f"{cv_results_gbdt['score_time'].mean():.3f} seconds")
+print(f"Average fit time: {cv_results_gbdt['fit_time'].mean():.3f} seconds")
+print(
+    f"Average score time: {cv_results_gbdt['score_time'].mean():.3f} seconds"
+)
 
 # %% [markdown]
 # Here, we see that the fit time has been reduced but that the generalization
@@ -157,12 +167,14 @@ cv_results_hgbdt = cross_validate(
 # %%
 print("Histogram Gradient Boosting Decision Tree")
 print(
-    f"Mean absolute error via cross-validation: "
+    "Mean absolute error via cross-validation: "
     f"{-cv_results_hgbdt['test_score'].mean():.3f} ± "
     f"{cv_results_hgbdt['test_score'].std():.3f} k$"
 )
-print(f"Average fit time: " f"{cv_results_hgbdt['fit_time'].mean():.3f} seconds")
-print(f"Average score time: " f"{cv_results_hgbdt['score_time'].mean():.3f} seconds")
+print(f"Average fit time: {cv_results_hgbdt['fit_time'].mean():.3f} seconds")
+print(
+    f"Average score time: {cv_results_hgbdt['score_time'].mean():.3f} seconds"
+)
 
 # %% [markdown]
 # The histogram gradient-boosting is the best algorithm in terms of score. It

@@ -49,8 +49,7 @@ data = adult_census.drop(columns=target_name)
 # notebook.
 
 # %%
-numerical_columns = [
-    "age", "capital-gain", "capital-loss", "hours-per-week"]
+numerical_columns = ["age", "capital-gain", "capital-loss", "hours-per-week"]
 
 data_numeric = data[numerical_columns]
 

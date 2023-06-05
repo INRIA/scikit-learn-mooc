@@ -66,7 +66,9 @@ intercept_body_mass
 import numpy as np
 
 flipper_length_range = np.linspace(data.min(), data.max(), num=300)
-predicted_body_mass = weight_flipper_length * flipper_length_range + intercept_body_mass
+predicted_body_mass = (
+    weight_flipper_length * flipper_length_range + intercept_body_mass
+)
 
 # %%
 import matplotlib.pyplot as plt

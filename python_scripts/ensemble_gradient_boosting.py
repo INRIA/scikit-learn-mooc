@@ -37,10 +37,12 @@ def generate_data(n_samples=50):
     len_x = x_max - x_min
     x = rng.rand(n_samples) * len_x - len_x / 2
     noise = rng.randn(n_samples) * 0.3
-    y = x ** 3 - 0.5 * x ** 2 + noise
+    y = x**3 - 0.5 * x**2 + noise
 
     data_train = pd.DataFrame(x, columns=["Feature"])
-    data_test = pd.DataFrame(np.linspace(x_max, x_min, num=300), columns=["Feature"])
+    data_test = pd.DataFrame(
+        np.linspace(x_max, x_min, num=300), columns=["Feature"]
+    )
     target_train = pd.Series(y, name="Target")
 
     return data_train, data_test, target_train
@@ -52,7 +54,9 @@ data_train, data_test, target_train = generate_data()
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(x=data_train["Feature"], y=target_train, color="black", alpha=0.5)
+sns.scatterplot(
+    x=data_train["Feature"], y=target_train, color="black", alpha=0.5
+)
 _ = plt.title("Synthetic regression dataset")
 
 # %% [markdown]
@@ -77,7 +81,9 @@ target_test_predicted = tree.predict(data_test)
 
 # %%
 # plot the data
-sns.scatterplot(x=data_train["Feature"], y=target_train, color="black", alpha=0.5)
+sns.scatterplot(
+    x=data_train["Feature"], y=target_train, color="black", alpha=0.5
+)
 # plot the predictions
 line_predictions = plt.plot(data_test["Feature"], target_test_predicted, "--")
 
@@ -87,7 +93,9 @@ for value, true, predicted in zip(
 ):
     lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
-plt.legend([line_predictions[0], lines_residuals[0]], ["Fitted tree", "Residuals"])
+plt.legend(
+    [line_predictions[0], lines_residuals[0]], ["Fitted tree", "Residuals"]
+)
 _ = plt.title("Prediction function together \nwith errors on the training set")
 
 # %% [markdown]
@@ -119,7 +127,9 @@ target_test_predicted_residuals = tree_residuals.predict(data_test)
 
 # %%
 sns.scatterplot(x=data_train["Feature"], y=residuals, color="black", alpha=0.5)
-line_predictions = plt.plot(data_test["Feature"], target_test_predicted_residuals, "--")
+line_predictions = plt.plot(
+    data_test["Feature"], target_test_predicted_residuals, "--"
+)
 
 # plot the residuals of the predicted residuals
 for value, true, predicted in zip(
@@ -159,7 +169,9 @@ target_true_residual = residuals.iloc[-2]
 #   * the predictions
 #   * the residuals
 
-sns.scatterplot(x=data_train["Feature"], y=target_train, color="black", alpha=0.5)
+sns.scatterplot(
+    x=data_train["Feature"], y=target_train, color="black", alpha=0.5
+)
 plt.plot(data_test["Feature"], target_test_predicted, "--")
 for value, true, predicted in zip(
     data_train["Feature"], target_train, target_train_predicted
@@ -167,7 +179,9 @@ for value, true, predicted in zip(
     lines_residuals = plt.plot([value, value], [true, predicted], color="red")
 
 # Highlight the sample of interest
-plt.scatter(sample, target_true, label="Sample of interest", color="tab:orange", s=200)
+plt.scatter(
+    sample, target_true, label="Sample of interest", color="tab:orange", s=200
+)
 plt.xlim([-1, 0])
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Tree predictions")
@@ -191,7 +205,11 @@ for value, true, predicted in zip(
 
 # Highlight the sample of interest
 plt.scatter(
-    sample, target_true_residual, label="Sample of interest", color="tab:orange", s=200
+    sample,
+    target_true_residual,
+    label="Sample of interest",
+    color="tab:orange",
+    s=200,
 )
 plt.xlim([-1, 0])
 plt.legend()
@@ -205,7 +223,7 @@ _ = plt.title("Prediction of the residuals")
 # and compare it with the true value.
 
 # %%
-print(f"True value to predict for " f"f(x={x_sample:.3f}) = {target_true:.3f}")
+print(f"True value to predict for f(x={x_sample:.3f}) = {target_true:.3f}")
 
 y_pred_first_tree = tree.predict(sample)[0]
 print(
@@ -230,9 +248,11 @@ print(
 # summing the prediction of all the trees in the ensemble.
 
 # %%
-y_pred_first_and_second_tree = y_pred_first_tree + tree_residuals.predict(sample)[0]
+y_pred_first_and_second_tree = (
+    y_pred_first_tree + tree_residuals.predict(sample)[0]
+)
 print(
-    f"Prediction of the first and second decision trees combined for "
+    "Prediction of the first and second decision trees combined for "
     f"x={x_sample:.3f}: y={y_pred_first_and_second_tree:.3f}"
 )
 print(f"Error of the tree: {target_true - y_pred_first_and_second_tree:.3f}")
@@ -270,12 +290,14 @@ cv_results_gbdt = cross_validate(
 # %%
 print("Gradient Boosting Decision Tree")
 print(
-    f"Mean absolute error via cross-validation: "
+    "Mean absolute error via cross-validation: "
     f"{-cv_results_gbdt['test_score'].mean():.3f} ± "
     f"{cv_results_gbdt['test_score'].std():.3f} k$"
 )
-print(f"Average fit time: " f"{cv_results_gbdt['fit_time'].mean():.3f} seconds")
-print(f"Average score time: " f"{cv_results_gbdt['score_time'].mean():.3f} seconds")
+print(f"Average fit time: {cv_results_gbdt['fit_time'].mean():.3f} seconds")
+print(
+    f"Average score time: {cv_results_gbdt['score_time'].mean():.3f} seconds"
+)
 
 # %%
 from sklearn.ensemble import RandomForestRegressor
@@ -292,12 +314,12 @@ cv_results_rf = cross_validate(
 # %%
 print("Random Forest")
 print(
-    f"Mean absolute error via cross-validation: "
+    "Mean absolute error via cross-validation: "
     f"{-cv_results_rf['test_score'].mean():.3f} ± "
     f"{cv_results_rf['test_score'].std():.3f} k$"
 )
-print(f"Average fit time: " f"{cv_results_rf['fit_time'].mean():.3f} seconds")
-print(f"Average score time: " f"{cv_results_rf['score_time'].mean():.3f} seconds")
+print(f"Average fit time: {cv_results_rf['fit_time'].mean():.3f} seconds")
+print(f"Average score time: {cv_results_rf['score_time'].mean():.3f} seconds")
 
 # %% [markdown]
 # In term of computation performance, the forest can be parallelized and will

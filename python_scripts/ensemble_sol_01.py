@@ -46,7 +46,7 @@ bagging = BaggingRegressor(estimator=tree, n_jobs=2)
 bagging.fit(data_train, target_train)
 target_predicted = bagging.predict(data_test)
 print(
-    f"Basic mean absolute error of the bagging regressor:\n"
+    "Basic mean absolute error of the bagging regressor:\n"
     f"{mean_absolute_error(target_test, target_predicted):.2f} k$"
 )
 
@@ -93,7 +93,7 @@ cv_results[columns].sort_values(by="mean_test_error")
 # %% tags=["solution"]
 target_predicted = search.predict(data_test)
 print(
-    f"Mean absolute error after tuning of the bagging regressor:\n"
+    "Mean absolute error after tuning of the bagging regressor:\n"
     f"{mean_absolute_error(target_test, target_predicted):.2f} k$"
 )
 

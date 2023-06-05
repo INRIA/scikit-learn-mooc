@@ -39,7 +39,13 @@ categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
 preprocessor = ColumnTransformer(
-    [("cat_preprocessor", categorical_preprocessor, selector(dtype_include=object))],
+    [
+        (
+            "cat_preprocessor",
+            categorical_preprocessor,
+            selector(dtype_include=object),
+        )
+    ],
     remainder="passthrough",
     sparse_threshold=0,
 )
@@ -79,11 +85,15 @@ best_params = {}
 for lr in learning_rate:
     for mln in max_leaf_nodes:
         print(
-            f"Evaluating model with learning rate {lr:.3f}"
-            f" and max leaf nodes {mln}... ",
+            (
+                f"Evaluating model with learning rate {lr:.3f}"
+                f" and max leaf nodes {mln}... "
+            ),
             end="",
         )
-        model.set_params(classifier__learning_rate=lr, classifier__max_leaf_nodes=mln)
+        model.set_params(
+            classifier__learning_rate=lr, classifier__max_leaf_nodes=mln
+        )
         scores = cross_val_score(model, data_train, target_train, cv=2)
         mean_score = scores.mean()
         print(f"score: {mean_score:.3f}")
@@ -105,7 +115,9 @@ print(f"The best parameters found are:\n {best_params}")
 best_lr = best_params["learning_rate"]
 best_mln = best_params["max_leaf_nodes"]
 
-model.set_params(classifier__learning_rate=best_lr, classifier__max_leaf_nodes=best_mln)
+model.set_params(
+    classifier__learning_rate=best_lr, classifier__max_leaf_nodes=best_mln
+)
 model.fit(data_train, target_train)
 test_score = model.score(data_test, target_test)
 

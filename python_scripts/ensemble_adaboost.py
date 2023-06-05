@@ -82,7 +82,9 @@ sns.scatterplot(
 )
 
 plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
-_ = plt.title("Decision tree predictions \nwith misclassified samples " "highlighted")
+_ = plt.title(
+    "Decision tree predictions \nwith misclassified samples highlighted"
+)
 
 # %% [markdown]
 # We observe that several samples have been misclassified by the classifier.
@@ -141,7 +143,7 @@ remaining_misclassified_samples_idx = np.intersect1d(
 )
 
 print(
-    f"Number of samples previously misclassified and "
+    "Number of samples previously misclassified and "
     f"still misclassified: {len(remaining_misclassified_samples_idx)}"
 )
 
@@ -197,7 +199,11 @@ for boosting_round, tree in enumerate(adaboost.estimators_):
     plt.figure()
     # we convert `data` into a NumPy array to avoid a warning raised in scikit-learn
     DecisionBoundaryDisplay.from_estimator(
-        tree, data.to_numpy(), response_method="predict", cmap="RdBu", alpha=0.5
+        tree,
+        data.to_numpy(),
+        response_method="predict",
+        cmap="RdBu",
+        alpha=0.5,
     )
     sns.scatterplot(
         x=culmen_columns[0],

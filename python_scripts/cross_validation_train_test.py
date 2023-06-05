@@ -273,13 +273,13 @@ _ = plt.title("Test error distribution")
 
 # %%
 print(
-    f"The mean cross-validated testing error is: "
+    "The mean cross-validated testing error is: "
     f"{cv_results['test_error'].mean():.2f} k$"
 )
 
 # %%
 print(
-    f"The standard deviation of the testing error is: "
+    "The standard deviation of the testing error is: "
     f"{cv_results['test_error'].std():.2f} k$"
 )
 

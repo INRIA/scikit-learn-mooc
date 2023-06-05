@@ -58,9 +58,11 @@ print(f"R2 score: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %%
 # solution
-scores = cross_val_score(model, data, target, cv=10, scoring="neg_mean_absolute_error")
+scores = cross_val_score(
+    model, data, target, cv=10, scoring="neg_mean_absolute_error"
+)
 errors = -scores
-print(f"Mean absolute error: " f"{errors.mean():.3f} k$ ± {errors.std():.3f}")
+print(f"Mean absolute error: {errors.mean():.3f} k$ ± {errors.std():.3f}")
 
 # %% [markdown] tags=["solution"]
 # The `scoring` parameter in scikit-learn expects score. It means that the

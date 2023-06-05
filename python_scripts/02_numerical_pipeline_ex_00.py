@@ -24,6 +24,7 @@
 
 # %%
 import pandas as pd
+
 adult_census = pd.read_csv("../datasets/adult-census-numeric.csv")
 data = adult_census.drop(columns="class")
 target = adult_census["class"]

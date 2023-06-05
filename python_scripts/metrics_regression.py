@@ -64,7 +64,7 @@ regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_train)
 
 print(
-    f"Mean squared error on the training set: "
+    "Mean squared error on the training set: "
     f"{mean_squared_error(target_train, target_predicted):.3f}"
 )
 
@@ -79,7 +79,7 @@ print(
 target_predicted = regressor.predict(data_test)
 
 print(
-    f"Mean squared error on the testing set: "
+    "Mean squared error on the testing set: "
     f"{mean_squared_error(target_test, target_predicted):.3f}"
 )
 
@@ -104,7 +104,7 @@ from sklearn.dummy import DummyRegressor
 dummy_regressor = DummyRegressor(strategy="mean")
 dummy_regressor.fit(data_train, target_train)
 print(
-    f"R2 score for a regressor predicting the mean:"
+    "R2 score for a regressor predicting the mean:"
     f"{dummy_regressor.score(data_test, target_test):.3f}"
 )
 
@@ -120,7 +120,7 @@ from sklearn.metrics import mean_absolute_error
 
 target_predicted = regressor.predict(data_test)
 print(
-    f"Mean absolute error: "
+    "Mean absolute error: "
     f"{mean_absolute_error(target_test, target_predicted):.3f} k$"
 )
 
@@ -135,7 +135,7 @@ print(
 from sklearn.metrics import median_absolute_error
 
 print(
-    f"Median absolute error: "
+    "Median absolute error: "
     f"{median_absolute_error(target_test, target_predicted):.3f} k$"
 )
 
@@ -151,7 +151,7 @@ print(
 from sklearn.metrics import mean_absolute_percentage_error
 
 print(
-    f"Mean absolute percentage error: "
+    "Mean absolute percentage error: "
     f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %"
 )
 
@@ -195,7 +195,9 @@ _ = plt.title("Regression using a model without \ntarget transformation")
 from sklearn.preprocessing import QuantileTransformer
 from sklearn.compose import TransformedTargetRegressor
 
-transformer = QuantileTransformer(n_quantiles=900, output_distribution="normal")
+transformer = QuantileTransformer(
+    n_quantiles=900, output_distribution="normal"
+)
 model_transformed_target = TransformedTargetRegressor(
     regressor=regressor, transformer=transformer
 )
@@ -220,7 +222,9 @@ sns.scatterplot(
 plt.axline((0, 0), slope=1, label="Perfect fit")
 plt.axis("square")
 plt.legend()
-_ = plt.title("Regression using a model that\ntransform the target before fitting")
+_ = plt.title(
+    "Regression using a model that\ntransform the target before fitting"
+)
 
 # %% [markdown]
 # Thus, once we transformed the target, we see that we corrected some of the

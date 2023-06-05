@@ -74,7 +74,9 @@ target_predicted_tree = tree.predict(data_test)
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(
     data_test[feature_name],
     target_predicted_linear_regression,
@@ -100,7 +102,8 @@ _ = plt.title("Prediction of linear model and a decision tree")
 offset = 30
 data_test = pd.DataFrame(
     np.arange(
-        data_train[feature_name].min() - offset, data_train[feature_name].max() + offset
+        data_train[feature_name].min() - offset,
+        data_train[feature_name].max() + offset,
     ),
     columns=[feature_name],
 )
@@ -115,7 +118,9 @@ target_predicted_linear_regression = linear_regression.predict(data_test)
 target_predicted_tree = tree.predict(data_test)
 
 # %% tags=["solution"]
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(
     data_test[feature_name],
     target_predicted_linear_regression,

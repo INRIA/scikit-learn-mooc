@@ -64,7 +64,10 @@ data.head()
 data.columns
 
 # %%
-print(f"The dataset contains {data.shape[0]} samples and " f"{data.shape[1]} features")
+print(
+    f"The dataset contains {data.shape[0]} samples and "
+    f"{data.shape[1]} features"
+)
 
 # %% [markdown]
 # ## Fit a model and make predictions
@@ -146,7 +149,7 @@ target[:5] == target_predicted[:5]
 
 # %%
 print(
-    f"Number of correct prediction: "
+    "Number of correct prediction: "
     f"{(target[:5] == target_predicted[:5]).sum()} / 5"
 )
 
@@ -208,7 +211,7 @@ print(
 accuracy = model.score(data_test, target_test)
 model_name = model.__class__.__name__
 
-print(f"The test accuracy using a {model_name} is " f"{accuracy:.3f}")
+print(f"The test accuracy using a {model_name} is {accuracy:.3f}")
 
 # %% [markdown]
 # Let's check the underlying mechanism when the `score` method is called:

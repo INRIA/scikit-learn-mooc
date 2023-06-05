@@ -53,8 +53,8 @@ data_numeric = data[numerical_columns]
 from sklearn.model_selection import train_test_split
 
 # solution
-data_numeric_train, data_numeric_test, target_train, target_test = train_test_split(
-    data_numeric, target, random_state=42
+data_numeric_train, data_numeric_test, target_train, target_test = (
+    train_test_split(data_numeric, target, random_state=42)
 )
 
 # %% [markdown]
@@ -70,7 +70,9 @@ from sklearn.dummy import DummyClassifier
 
 # solution
 class_to_predict = " >50K"
-high_revenue_clf = DummyClassifier(strategy="constant", constant=class_to_predict)
+high_revenue_clf = DummyClassifier(
+    strategy="constant", constant=class_to_predict
+)
 high_revenue_clf.fit(data_numeric_train, target_train)
 score = high_revenue_clf.score(data_numeric_test, target_test)
 print(f"Accuracy of a model predicting only high revenue: {score:.3f}")
@@ -82,7 +84,9 @@ print(f"Accuracy of a model predicting only high revenue: {score:.3f}")
 
 # %% tags=["solution"]
 class_to_predict = " <=50K"
-low_revenue_clf = DummyClassifier(strategy="constant", constant=class_to_predict)
+low_revenue_clf = DummyClassifier(
+    strategy="constant", constant=class_to_predict
+)
 low_revenue_clf.fit(data_numeric_train, target_train)
 score = low_revenue_clf.score(data_numeric_test, target_test)
 print(f"Accuracy of a model predicting only low revenue: {score:.3f}")

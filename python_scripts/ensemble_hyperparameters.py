@@ -131,7 +131,9 @@ cv_results[columns].sort_values(by="mean_test_error")
 
 # %%
 error = -search_cv.score(data_test, target_test)
-print(f"On average, our random forest regressor makes an error of {error:.2f} k$")
+print(
+    f"On average, our random forest regressor makes an error of {error:.2f} k$"
+)
 
 # %% [markdown]
 # ## Gradient-boosting decision trees

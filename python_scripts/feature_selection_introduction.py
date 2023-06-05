@@ -75,7 +75,9 @@ model_with_selection = make_pipeline(
 import pandas as pd
 from sklearn.model_selection import cross_validate
 
-cv_results_without_selection = cross_validate(model_without_selection, data, target)
+cv_results_without_selection = cross_validate(
+    model_without_selection, data, target
+)
 cv_results_without_selection = pd.DataFrame(cv_results_without_selection)
 
 # %% [markdown]

@@ -41,7 +41,7 @@ cv_results = cross_validate(tree, data, target, n_jobs=2)
 scores = cv_results["test_score"]
 
 print(
-    f"R2 score obtained by cross-validation: "
+    "R2 score obtained by cross-validation: "
     f"{scores.mean():.3f} ± {scores.std():.3f}"
 )
 
@@ -74,13 +74,18 @@ param_grid = {
 cv = 3
 
 tree = GridSearchCV(
-    DecisionTreeRegressor(random_state=0), param_grid=param_grid, cv=cv, n_jobs=2
+    DecisionTreeRegressor(random_state=0),
+    param_grid=param_grid,
+    cv=cv,
+    n_jobs=2,
 )
-cv_results = cross_validate(tree, data, target, n_jobs=2, return_estimator=True)
+cv_results = cross_validate(
+    tree, data, target, n_jobs=2, return_estimator=True
+)
 scores = cv_results["test_score"]
 
 print(
-    f"R2 score obtained by cross-validation: "
+    "R2 score obtained by cross-validation: "
     f"{scores.mean():.3f} ± {scores.std():.3f}"
 )
 
@@ -116,7 +121,7 @@ cv_results = cross_validate(bagging_regressor, data, target, n_jobs=2)
 scores = cv_results["test_score"]
 
 print(
-    f"R2 score obtained by cross-validation: "
+    "R2 score obtained by cross-validation: "
     f"{scores.mean():.3f} ± {scores.std():.3f}"
 )
 

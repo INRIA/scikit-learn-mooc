@@ -66,7 +66,9 @@ cv_results = pd.DataFrame(cv_results)
 
 # %%
 scores = pd.DataFrame()
-scores[["train error", "test error"]] = -cv_results[["train_score", "test_score"]]
+scores[["train error", "test error"]] = -cv_results[
+    ["train_score", "test_score"]
+]
 
 # %%
 import matplotlib.pyplot as plt

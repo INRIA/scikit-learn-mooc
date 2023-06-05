@@ -61,7 +61,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
 model = Pipeline(
-    steps=[("preprocessor", StandardScaler()), ("classifier", LogisticRegression())]
+    steps=[
+        ("preprocessor", StandardScaler()),
+        ("classifier", LogisticRegression()),
+    ]
 )
 
 # %% [markdown]
@@ -74,7 +77,7 @@ from sklearn.model_selection import cross_validate
 cv_results = cross_validate(model, data, target)
 scores = cv_results["test_score"]
 print(
-    f"Accuracy score via cross-validation:\n"
+    "Accuracy score via cross-validation:\n"
     f"{scores.mean():.3f} ± {scores.std():.3f}"
 )
 
@@ -98,7 +101,7 @@ model.set_params(classifier__C=1e-3)
 cv_results = cross_validate(model, data, target)
 scores = cv_results["test_score"]
 print(
-    f"Accuracy score via cross-validation:\n"
+    "Accuracy score via cross-validation:\n"
     f"{scores.mean():.3f} ± {scores.std():.3f}"
 )
 

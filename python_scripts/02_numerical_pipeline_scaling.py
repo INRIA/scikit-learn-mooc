@@ -196,7 +196,9 @@ sns.jointplot(
     y="hours-per-week",
     marginal_kws=dict(bins=15),
 )
-plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nbefore StandardScaler", y=1.1)
+plt.suptitle(
+    "Jointplot of 'age' vs 'hours-per-week' \nbefore StandardScaler", y=1.1
+)
 
 sns.jointplot(
     data=data_train_scaled[:num_points_to_plot],
@@ -204,7 +206,9 @@ sns.jointplot(
     y="hours-per-week",
     marginal_kws=dict(bins=15),
 )
-_ = plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nafter StandardScaler", y=1.1)
+_ = plt.suptitle(
+    "Jointplot of 'age' vs 'hours-per-week' \nafter StandardScaler", y=1.1
+)
 
 # %% [markdown]
 # We can easily combine sequential operations with a scikit-learn `Pipeline`,

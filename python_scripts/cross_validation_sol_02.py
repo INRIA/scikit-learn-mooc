@@ -78,7 +78,8 @@ cv_results_most_frequent = cross_validate(
     most_frequent_classifier, data, target, cv=cv, n_jobs=2
 )
 test_score_most_frequent = pd.Series(
-    cv_results_most_frequent["test_score"], name="Most frequent class predictor"
+    cv_results_most_frequent["test_score"],
+    name="Most frequent class predictor",
 )
 test_score_most_frequent
 
@@ -136,14 +137,18 @@ _ = plt.title("Distribution of the CV scores")
 # %%
 # solution
 stratified_dummy = DummyClassifier(strategy="stratified")
-cv_results_stratified = cross_validate(stratified_dummy, data, target, cv=cv, n_jobs=2)
+cv_results_stratified = cross_validate(
+    stratified_dummy, data, target, cv=cv, n_jobs=2
+)
 test_score_dummy_stratified = pd.Series(
     cv_results_stratified["test_score"], name="Stratified class predictor"
 )
 
 # %% tags=["solution"]
 uniform_dummy = DummyClassifier(strategy="uniform")
-cv_results_uniform = cross_validate(uniform_dummy, data, target, cv=cv, n_jobs=2)
+cv_results_uniform = cross_validate(
+    uniform_dummy, data, target, cv=cv, n_jobs=2
+)
 test_score_dummy_uniform = pd.Series(
     cv_results_uniform["test_score"], name="Uniform class predictor"
 )

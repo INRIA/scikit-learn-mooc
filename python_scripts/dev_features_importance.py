@@ -74,7 +74,9 @@ X_with_rnd_feat = pd.concat((X, bin_var, num_var), axis=1)
 # %%
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X_with_rnd_feat, y, random_state=29)
+X_train, X_test, y_train, y_test = train_test_split(
+    X_with_rnd_feat, y, random_state=29
+)
 
 # %% [markdown]
 # Let's quickly inspect some features and the target:
@@ -85,7 +87,9 @@ import seaborn as sns
 train_dataset = X_train.copy()
 train_dataset.insert(0, "MedHouseVal", y_train)
 _ = sns.pairplot(
-    train_dataset[["MedHouseVal", "Latitude", "AveRooms", "AveBedrms", "MedInc"]],
+    train_dataset[
+        ["MedHouseVal", "Latitude", "AveRooms", "AveBedrms", "MedInc"]
+    ],
     kind="reg",
     diag_kind="kde",
     plot_kws={"scatter_kws": {"alpha": 0.1}},
@@ -129,7 +133,9 @@ print(f"model score on testing data: {model.score(X_test, y_test)}")
 # %%
 import matplotlib.pyplot as plt
 
-coefs = pd.DataFrame(model.coef_, columns=["Coefficients"], index=X_train.columns)
+coefs = pd.DataFrame(
+    model.coef_, columns=["Coefficients"], index=X_train.columns
+)
 
 coefs.plot(kind="barh", figsize=(9, 7))
 plt.title("Ridge model")
@@ -204,7 +210,9 @@ print(f"model score on training data: {model.score(X_train, y_train)}")
 print(f"model score on testing data: {model.score(X_test, y_test)}")
 
 # %%
-coefs = pd.DataFrame(model[1].coef_, columns=["Coefficients"], index=X_train.columns)
+coefs = pd.DataFrame(
+    model[1].coef_, columns=["Coefficients"], index=X_train.columns
+)
 
 coefs.plot(kind="barh", figsize=(9, 7))
 plt.title("Ridge model")
@@ -248,7 +256,8 @@ cv_model = cross_validate(
     n_jobs=2,
 )
 coefs = pd.DataFrame(
-    [model[1].coef_ for model in cv_model["estimator"]], columns=X_with_rnd_feat.columns
+    [model[1].coef_ for model in cv_model["estimator"]],
+    columns=X_with_rnd_feat.columns,
 )
 plt.figure(figsize=(9, 7))
 sns.boxplot(data=coefs, orient="h", color="cyan", saturation=0.5)
@@ -281,7 +290,9 @@ print(f"model score on training data: {model.score(X_train, y_train)}")
 print(f"model score on testing data: {model.score(X_test, y_test)}")
 
 # %%
-coefs = pd.DataFrame(model[1].coef_, columns=["Coefficients"], index=X_train.columns)
+coefs = pd.DataFrame(
+    model[1].coef_, columns=["Coefficients"], index=X_train.columns
+)
 
 coefs.plot(kind="barh", figsize=(9, 7))
 plt.title("Lasso model, strong regularization")
@@ -310,7 +321,8 @@ cv_model = cross_validate(
     n_jobs=2,
 )
 coefs = pd.DataFrame(
-    [model[1].coef_ for model in cv_model["estimator"]], columns=X_with_rnd_feat.columns
+    [model[1].coef_ for model in cv_model["estimator"]],
+    columns=X_with_rnd_feat.columns,
 )
 plt.figure(figsize=(9, 7))
 sns.boxplot(data=coefs, orient="h", color="cyan", saturation=0.5)
@@ -432,6 +444,7 @@ print(f"model score on testing data: {model.score(X_test, y_test)}")
 # On the contrary, if the feature is not used by the model, the score shall
 # remain the same, thus the feature importance will be close to 0.
 
+
 # %%
 def get_score_after_permutation(model, X, y, curr_feat):
     """return the score of model when curr_feat is permuted"""
@@ -439,7 +452,9 @@ def get_score_after_permutation(model, X, y, curr_feat):
     X_permuted = X.copy()
     col_idx = list(X.columns).index(curr_feat)
     # permute one column
-    X_permuted.iloc[:, col_idx] = np.random.permutation(X_permuted[curr_feat].values)
+    X_permuted.iloc[:, col_idx] = np.random.permutation(
+        X_permuted[curr_feat].values
+    )
 
     permuted_score = model.score(X_permuted, y)
     return permuted_score
@@ -460,7 +475,8 @@ curr_feat = "MedInc"
 
 feature_importance = get_feature_importance(model, X_train, y_train, curr_feat)
 print(
-    f'feature importance of "{curr_feat}" on train set is ' f"{feature_importance:.3}"
+    f'feature importance of "{curr_feat}" on train set is '
+    f"{feature_importance:.3}"
 )
 
 # %% [markdown]
@@ -487,6 +503,7 @@ print(
 # 0.67 over 0.98 is very relevant (note the $R^2$ score could go below 0). So we
 # can imagine our model relies heavily on this feature to predict the class. We
 # can now compute the feature permutation importance for all the features.
+
 
 # %%
 def permutation_importance(model, X, y, n_repeats=10):

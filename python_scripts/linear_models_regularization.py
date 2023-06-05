@@ -52,7 +52,9 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 
-linear_regression = make_pipeline(PolynomialFeatures(degree=2), LinearRegression())
+linear_regression = make_pipeline(
+    PolynomialFeatures(degree=2), LinearRegression()
+)
 cv_results = cross_validate(
     linear_regression,
     data,
@@ -70,14 +72,14 @@ cv_results = cross_validate(
 # %%
 train_error = -cv_results["train_score"]
 print(
-    f"Mean squared error of linear regression model on the train set:\n"
+    "Mean squared error of linear regression model on the train set:\n"
     f"{train_error.mean():.3f} ± {train_error.std():.3f}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
-    f"Mean squared error of linear regression model on the test set:\n"
+    "Mean squared error of linear regression model on the test set:\n"
     f"{test_error.mean():.3f} ± {test_error.std():.3f}"
 )
 
@@ -105,7 +107,9 @@ model_first_fold = cv_results["estimator"][0]
 # names:
 
 # %%
-feature_names = model_first_fold[0].get_feature_names_out(input_features=data.columns)
+feature_names = model_first_fold[0].get_feature_names_out(
+    input_features=data.columns
+)
 feature_names
 
 # %% [markdown]
@@ -157,14 +161,14 @@ cv_results = cross_validate(
 # %%
 train_error = -cv_results["train_score"]
 print(
-    f"Mean squared error of linear regression model on the train set:\n"
+    "Mean squared error of linear regression model on the train set:\n"
     f"{train_error.mean():.3f} ± {train_error.std():.3f}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
-    f"Mean squared error of linear regression model on the test set:\n"
+    "Mean squared error of linear regression model on the test set:\n"
     f"{test_error.mean():.3f} ± {test_error.std():.3f}"
 )
 
@@ -223,7 +227,9 @@ _ = plt.title("Ridge weights")
 # %%
 from sklearn.preprocessing import StandardScaler
 
-ridge = make_pipeline(PolynomialFeatures(degree=2), StandardScaler(), Ridge(alpha=0.5))
+ridge = make_pipeline(
+    PolynomialFeatures(degree=2), StandardScaler(), Ridge(alpha=0.5)
+)
 cv_results = cross_validate(
     ridge,
     data,
@@ -237,14 +243,14 @@ cv_results = cross_validate(
 # %%
 train_error = -cv_results["train_score"]
 print(
-    f"Mean squared error of linear regression model on the train set:\n"
+    "Mean squared error of linear regression model on the train set:\n"
     f"{train_error.mean():.3f} ± {train_error.std():.3f}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
-    f"Mean squared error of linear regression model on the test set:\n"
+    "Mean squared error of linear regression model on the test set:\n"
     f"{test_error.mean():.3f} ± {test_error.std():.3f}"
 )
 
@@ -374,14 +380,14 @@ cv_results = cross_validate(
 # %%
 train_error = -cv_results["train_score"]
 print(
-    f"Mean squared error of linear regression model on the train set:\n"
+    "Mean squared error of linear regression model on the train set:\n"
     f"{train_error.mean():.3f} ± {train_error.std():.3f}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
-    f"Mean squared error of linear regression model on the test set:\n"
+    "Mean squared error of linear regression model on the test set:\n"
     f"{test_error.mean():.3f} ± {test_error.std():.3f}"
 )
 
@@ -396,7 +402,9 @@ print(
 # average mean square error across folds for a given value of `alpha`.
 
 # %%
-mse_alphas = [est[-1].cv_values_.mean(axis=0) for est in cv_results["estimator"]]
+mse_alphas = [
+    est[-1].cv_values_.mean(axis=0) for est in cv_results["estimator"]
+]
 cv_alphas = pd.DataFrame(mse_alphas, columns=alphas)
 cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas

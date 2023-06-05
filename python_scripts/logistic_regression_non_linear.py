@@ -34,7 +34,8 @@ X, y = make_moons(n_samples=100, noise=0.13, random_state=42)
 
 # We store both the data and target in a dataframe to ease plotting
 moons = pd.DataFrame(
-    np.concatenate([X, y[:, np.newaxis]], axis=1), columns=feature_names + [target_name]
+    np.concatenate([X, y[:, np.newaxis]], axis=1),
+    columns=feature_names + [target_name],
 )
 data_moons, target_moons = moons[feature_names], moons[target_name]
 
@@ -116,7 +117,8 @@ X, y = make_gaussian_quantiles(
     n_samples=100, n_features=2, n_classes=2, random_state=42
 )
 gauss = pd.DataFrame(
-    np.concatenate([X, y[:, np.newaxis]], axis=1), columns=feature_names + [target_name]
+    np.concatenate([X, y[:, np.newaxis]], axis=1),
+    columns=feature_names + [target_name],
 )
 data_gauss, target_gauss = gauss[feature_names], gauss[target_name]
 

@@ -56,7 +56,9 @@ print(f"Accuracy score: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %%
 # solution
-scores = cross_val_score(tree, data, target, cv=cv, scoring="balanced_accuracy")
+scores = cross_val_score(
+    tree, data, target, cv=cv, scoring="balanced_accuracy"
+)
 print(f"Balanced accuracy score: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]

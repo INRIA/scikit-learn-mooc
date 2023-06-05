@@ -61,7 +61,9 @@ data_test = pd.DataFrame(
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 _ = plt.title("Illustration of the regression dataset used")
 
 # %% [markdown]
@@ -76,7 +78,9 @@ linear_model.fit(data_train, target_train)
 target_predicted = linear_model.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(data_test[feature_name], target_predicted, label="Linear regression")
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")
@@ -92,10 +96,16 @@ ax = sns.scatterplot(
     data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
 )
 plt.plot(
-    data_test[feature_name], target_predicted, label="Linear regression", linestyle="--"
+    data_test[feature_name],
+    target_predicted,
+    label="Linear regression",
+    linestyle="--",
 )
 plt.scatter(
-    data_test[::3], target_predicted[::3], label="Predictions", color="tab:orange"
+    data_test[::3],
+    target_predicted[::3],
+    label="Predictions",
+    color="tab:orange",
 )
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")
@@ -114,7 +124,9 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(data_test[feature_name], target_predicted, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")
@@ -150,7 +162,9 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(data_test[feature_name], target_predicted, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")

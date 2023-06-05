@@ -69,7 +69,9 @@ from sklearn.model_selection import cross_validate
 from sklearn.model_selection import KFold
 
 cv = KFold(n_splits=5, shuffle=True, random_state=0)
-results = cross_validate(search, data, target, cv=cv, return_estimator=True, n_jobs=2)
+results = cross_validate(
+    search, data, target, cv=cv, return_estimator=True, n_jobs=2
+)
 
 # %% [markdown]
 # Now that we got the cross-validation results, print out the mean and standard
@@ -78,7 +80,7 @@ results = cross_validate(search, data, target, cv=cv, return_estimator=True, n_j
 # %%
 # solution
 print(
-    f"R2 score with cross-validation:\n"
+    "R2 score with cross-validation:\n"
     f"{results['test_score'].mean():.3f} ± "
     f"{results['test_score'].std():.3f}"
 )
@@ -127,7 +129,8 @@ inner_cv_results.plot.box(vert=False, color=color)
 plt.xlabel("R2 score")
 plt.ylabel("Parameters")
 _ = plt.title(
-    "Inner CV results with parameters\n" "(max_depth, max_leaf_nodes, learning_rate)"
+    "Inner CV results with parameters\n"
+    "(max_depth, max_leaf_nodes, learning_rate)"
 )
 
 # %% [markdown] tags=["solution"]

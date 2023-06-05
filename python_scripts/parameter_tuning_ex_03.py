@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -30,8 +29,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# In this exercise, we will progressively define the regression pipeline
-# and later tune its hyperparameters.
+# In this exercise, we will progressively define the regression pipeline and
+# later tune its hyperparameters.
 #
 # Start by defining a pipeline that:
 # * uses a `StandardScaler` to normalize the numerical data;
@@ -48,8 +47,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 #   `np.logspace(0, 3, num=10).astype(np.int32)`;
 # - the parameter `with_mean` of the `StandardScaler` with possible values
 #   `True` or `False`;
-# - the parameter `with_std` of the `StandardScaler` with possible values
-#   `True` or `False`.
+# - the parameter `with_std` of the `StandardScaler` with possible values `True`
+#   or `False`.
 #
 # Notice that in the notebook "Hyperparameter tuning by randomized-search" we
 # pass distributions to be sampled by the `RandomizedSearchCV`. In this case we

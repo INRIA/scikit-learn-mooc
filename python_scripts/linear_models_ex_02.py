@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -60,9 +59,9 @@ _ = sns.scatterplot(
 
 # %% [markdown]
 # We observe that the link between the data `data` and vector `target` is
-# non-linear. For instance, `data` could represent the years of
-# experience (normalized) and `target` the salary (normalized). Therefore, the
-# problem here would be to infer the salary given the years of experience.
+# non-linear. For instance, `data` could represent the years of experience
+# (normalized) and `target` the salary (normalized). Therefore, the problem here
+# would be to infer the salary given the years of experience.
 #
 # Using the function `f` defined below, find both the `weight` and the
 # `intercept` that you think will lead to a good linear model. Plot both the

@@ -13,8 +13,7 @@
 # We will introduce these new aspects:
 #
 # * an example of preprocessing, namely **scaling numerical variables**;
-# * using a scikit-learn **pipeline** to chain preprocessing and model
-#   training.
+# * using a scikit-learn **pipeline** to chain preprocessing and model training.
 #
 # ## Data preparation
 #
@@ -26,8 +25,8 @@ import pandas as pd
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We will now drop the target from the data we will use to train our
-# predictive model.
+# We will now drop the target from the data we will use to train our predictive
+# model.
 
 # %%
 target_name = "class"
@@ -35,12 +34,10 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=target_name)
 
 # %% [markdown]
-# Then, we select only the numerical columns, as seen in the previous
-# notebook.
+# Then, we select only the numerical columns, as seen in the previous notebook.
 
 # %%
-numerical_columns = [
-    "age", "capital-gain", "capital-loss", "hours-per-week"]
+numerical_columns = ["age", "capital-gain", "capital-loss", "hours-per-week"]
 
 data_numeric = data[numerical_columns]
 
@@ -51,15 +48,16 @@ data_numeric = data[numerical_columns]
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data_numeric, target, random_state=42)
+    data_numeric, target, random_state=42
+)
 
 # %% [markdown]
 # ## Model fitting with preprocessing
 #
-# A range of preprocessing algorithms in scikit-learn allow us to transform
-# the input data before training a model. In our case, we will standardize the
-# data and then train a new logistic regression model on that new version of
-# the dataset.
+# A range of preprocessing algorithms in scikit-learn allow us to transform the
+# input data before training a model. In our case, we will standardize the data
+# and then train a new logistic regression model on that new version of the
+# dataset.
 #
 # Let's start by printing some statistics about the training data.
 
@@ -85,8 +83,8 @@ data_train.describe()
 #
 # Whether or not a machine learning model requires scaling the features depends
 # on the model family. Linear models such as logistic regression generally
-# benefit from scaling the features while other models such as decision trees
-# do not need such preprocessing (but will not suffer from it).
+# benefit from scaling the features while other models such as decision trees do
+# not need such preprocessing (but will not suffer from it).
 #
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer shifts and scales each feature
@@ -113,8 +111,8 @@ scaler.fit(data_train)
 # ![Transformer fit diagram](../figures/api_diagram-transformer.fit.svg)
 #
 # In this case, the algorithm needs to compute the mean and standard deviation
-# for each feature and store them into some NumPy arrays. Here, these
-# statistics are the model states.
+# for each feature and store them into some NumPy arrays. Here, these statistics
+# are the model states.
 #
 # ```{note}
 # The fact that the model states of this scaler are arrays of means and
@@ -154,17 +152,18 @@ data_train_scaled
 # Let's illustrate the internal mechanism of the `transform` method and put it
 # to perspective with what we already saw with predictors.
 #
-# ![Transformer transform diagram](../figures/api_diagram-transformer.transform.svg)
+# ![Transformer transform
+# diagram](../figures/api_diagram-transformer.transform.svg)
 #
-# The `transform` method for transformers is similar to the `predict` method
-# for predictors. It uses a predefined function, called a **transformation
+# The `transform` method for transformers is similar to the `predict` method for
+# predictors. It uses a predefined function, called a **transformation
 # function**, and uses the model states and the input data. However, instead of
 # outputting predictions, the job of the `transform` method is to output a
 # transformed version of the input data.
 
 # %% [markdown]
-# Finally, the method `fit_transform` is a shorthand method to call
-# successively `fit` and then `transform`.
+# Finally, the method `fit_transform` is a shorthand method to call successively
+# `fit` and then `transform`.
 #
 # ![Transformer fit_transform diagram](../figures/api_diagram-transformer.fit_transform.svg)
 
@@ -173,39 +172,50 @@ data_train_scaled = scaler.fit_transform(data_train)
 data_train_scaled
 
 # %%
-data_train_scaled = pd.DataFrame(data_train_scaled,
-                                 columns=data_train.columns)
+data_train_scaled = pd.DataFrame(data_train_scaled, columns=data_train.columns)
 data_train_scaled.describe()
 
 # %% [markdown]
-# Notice that the mean of all the columns is close to 0 and the standard deviation
-# in all cases is close to 1.
-# We can also visualize the effect of `StandardScaler` using a jointplot to show
-# both the histograms of the distributions and a scatterplot of any pair of numerical
-# features at the same time. We can observe that `StandardScaler` does not change
-# the structure of the data itself but the axes get shifted and scaled.
+# Notice that the mean of all the columns is close to 0 and the standard
+# deviation in all cases is close to 1. We can also visualize the effect of
+# `StandardScaler` using a jointplot to show both the histograms of the
+# distributions and a scatterplot of any pair of numerical features at the same
+# time. We can observe that `StandardScaler` does not change the structure of
+# the data itself but the axes get shifted and scaled.
 
 # %%
-import matplotlib.pyplot  as plt
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 # number of points to visualize to have a clearer plot
 num_points_to_plot = 300
 
-sns.jointplot(data=data_train[:num_points_to_plot], x="age",
-              y="hours-per-week", marginal_kws=dict(bins=15))
-plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nbefore StandardScaler", y=1.1)
+sns.jointplot(
+    data=data_train[:num_points_to_plot],
+    x="age",
+    y="hours-per-week",
+    marginal_kws=dict(bins=15),
+)
+plt.suptitle(
+    "Jointplot of 'age' vs 'hours-per-week' \nbefore StandardScaler", y=1.1
+)
 
-sns.jointplot(data=data_train_scaled[:num_points_to_plot], x="age",
-              y="hours-per-week", marginal_kws=dict(bins=15))
-_ = plt.suptitle("Jointplot of 'age' vs 'hours-per-week' \nafter StandardScaler", y=1.1)
+sns.jointplot(
+    data=data_train_scaled[:num_points_to_plot],
+    x="age",
+    y="hours-per-week",
+    marginal_kws=dict(bins=15),
+)
+_ = plt.suptitle(
+    "Jointplot of 'age' vs 'hours-per-week' \nafter StandardScaler", y=1.1
+)
 
 # %% [markdown]
-# We can easily combine sequential operations with a scikit-learn
-# `Pipeline`, which chains together operations and is used as any other
-# classifier or regressor. The helper function `make_pipeline` will create a
-# `Pipeline`: it takes as arguments the successive transformations to perform,
-# followed by the classifier or regressor model.
+# We can easily combine sequential operations with a scikit-learn `Pipeline`,
+# which chains together operations and is used as any other classifier or
+# regressor. The helper function `make_pipeline` will create a `Pipeline`: it
+# takes as arguments the successive transformations to perform, followed by the
+# classifier or regressor model.
 
 # %%
 import time
@@ -226,8 +236,8 @@ model.named_steps
 
 # %% [markdown]
 # This predictive pipeline exposes the same methods as the final predictor:
-# `fit` and `predict` (and additionally `predict_proba`, `decision_function`,
-# or `score`).
+# `fit` and `predict` (and additionally `predict_proba`, `decision_function`, or
+# `score`).
 
 # %%
 start = time.time()
@@ -235,8 +245,8 @@ model.fit(data_train, target_train)
 elapsed_time = time.time() - start
 
 # %% [markdown]
-# We can represent the internal mechanism of a pipeline when calling `fit`
-# by the following diagram:
+# We can represent the internal mechanism of a pipeline when calling `fit` by
+# the following diagram:
 #
 # ![pipeline fit diagram](../figures/api_diagram-pipeline.fit.svg)
 #
@@ -265,20 +275,22 @@ predicted_target[:5]
 # the predictor that will output the predicted target by calling its method
 # `predict`.
 #
-# As a shorthand, we can check the score of the full predictive pipeline
-# calling the method `model.score`. Thus, let's check the computational and
+# As a shorthand, we can check the score of the full predictive pipeline calling
+# the method `model.score`. Thus, let's check the computational and
 # generalization performance of such a predictive pipeline.
 
 # %%
 model_name = model.__class__.__name__
 score = model.score(data_test, target_test)
-print(f"The accuracy using a {model_name} is {score:.3f} "
-      f"with a fitting time of {elapsed_time:.3f} seconds "
-      f"in {model[-1].n_iter_[0]} iterations")
+print(
+    f"The accuracy using a {model_name} is {score:.3f} "
+    f"with a fitting time of {elapsed_time:.3f} seconds "
+    f"in {model[-1].n_iter_[0]} iterations"
+)
 
 # %% [markdown]
-# We could compare this predictive model with the predictive model used in
-# the previous notebook which did not scale features.
+# We could compare this predictive model with the predictive model used in the
+# previous notebook which did not scale features.
 
 # %%
 model = LogisticRegression()
@@ -289,9 +301,11 @@ elapsed_time = time.time() - start
 # %%
 model_name = model.__class__.__name__
 score = model.score(data_test, target_test)
-print(f"The accuracy using a {model_name} is {score:.3f} "
-      f"with a fitting time of {elapsed_time:.3f} seconds "
-      f"in {model.n_iter_[0]} iterations")
+print(
+    f"The accuracy using a {model_name} is {score:.3f} "
+    f"with a fitting time of {elapsed_time:.3f} seconds "
+    f"in {model.n_iter_[0]} iterations"
+)
 
 # %% [markdown]
 # We see that scaling the data before training the logistic regression was

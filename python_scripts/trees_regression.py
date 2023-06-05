@@ -38,14 +38,15 @@ data_train, target_train = penguins[[feature_name]], penguins[target_name]
 # %%
 import numpy as np
 
-data_test = pd.DataFrame(np.arange(data_train[feature_name].min(),
-                                   data_train[feature_name].max()),
-                                   columns=[feature_name])
+data_test = pd.DataFrame(
+    np.arange(data_train[feature_name].min(), data_train[feature_name].max()),
+    columns=[feature_name],
+)
 
 # %% [markdown]
-# Using the term "test" here refers to data that was not used for training.
-# It should not be confused with data coming from a train-test split, as it
-# was generated in equally-spaced intervals for the visual evaluation of the
+# Using the term "test" here refers to data that was not used for training. It
+# should not be confused with data coming from a train-test split, as it was
+# generated in equally-spaced intervals for the visual evaluation of the
 # predictions.
 #
 # Note that this is methodologically valid here because our objective is to get
@@ -60,8 +61,9 @@ data_test = pd.DataFrame(np.arange(data_train[feature_name].min(),
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 _ = plt.title("Illustration of the regression dataset used")
 
 # %% [markdown]
@@ -76,8 +78,9 @@ linear_model.fit(data_train, target_train)
 target_predicted = linear_model.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(data_test[feature_name], target_predicted, label="Linear regression")
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")
@@ -89,12 +92,21 @@ _ = plt.title("Prediction function using a LinearRegression")
 # the line.
 
 # %%
-ax = sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                     color="black", alpha=0.5)
-plt.plot(data_test[feature_name], target_predicted, label="Linear regression",
-         linestyle="--")
-plt.scatter(data_test[::3], target_predicted[::3], label="Predictions",
-            color="tab:orange")
+ax = sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
+plt.plot(
+    data_test[feature_name],
+    target_predicted,
+    label="Linear regression",
+    linestyle="--",
+)
+plt.scatter(
+    data_test[::3],
+    target_predicted[::3],
+    label="Predictions",
+    color="tab:orange",
+)
 plt.legend()
 _ = plt.title("Prediction function using a LinearRegression")
 
@@ -112,8 +124,9 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(data_test[feature_name], target_predicted, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")
@@ -140,8 +153,8 @@ _ = plot_tree(tree, feature_names=feature_name, ax=ax)
 # partition.
 #
 # In classification, we saw that increasing the depth of the tree allowed us to
-# get more complex decision boundaries.
-# Let's check the effect of increasing the depth in a regression setting:
+# get more complex decision boundaries. Let's check the effect of increasing the
+# depth in a regression setting:
 
 # %%
 tree = DecisionTreeRegressor(max_depth=3)
@@ -149,8 +162,9 @@ tree.fit(data_train, target_train)
 target_predicted = tree.predict(data_test)
 
 # %%
-sns.scatterplot(data=penguins, x=feature_name, y=target_name,
-                color="black", alpha=0.5)
+sns.scatterplot(
+    data=penguins, x=feature_name, y=target_name, color="black", alpha=0.5
+)
 plt.plot(data_test[feature_name], target_predicted, label="Decision tree")
 plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")

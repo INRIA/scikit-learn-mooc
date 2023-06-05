@@ -9,24 +9,27 @@
 # # Analysis of hyperparameter search results
 
 # %% [markdown]
-# In the previous notebook we showed how to implement a randomized
-# search for tuning the hyperparameters of a `HistGradientBoostingClassifier`
-# to fit the `adult_census` dataset. In practice, a randomized hyperparameter
-# search is usually run with a large number of iterations.
+# In the previous notebook we showed how to implement a randomized search for
+# tuning the hyperparameters of a `HistGradientBoostingClassifier` to fit the
+# `adult_census` dataset. In practice, a randomized hyperparameter search is
+# usually run with a large number of iterations.
 
 # %% [markdown]
-# In order to avoid the computational cost and still make a decent analysis,
-# we load the results obtained from a similar search with 500 iterations.
+# In order to avoid the computational cost and still make a decent analysis, we
+# load the results obtained from a similar search with 500 iterations.
 
 # %%
 import pandas as pd
 
-cv_results = pd.read_csv("../figures/randomized_search_results.csv", index_col=0)
+cv_results = pd.read_csv(
+    "../figures/randomized_search_results.csv", index_col=0
+)
 cv_results
 
 # %% [markdown]
-# We define a function to remove the prefixes in the hyperparameters
-# column names.
+# We define a function to remove the prefixes in the hyperparameters column
+# names.
+
 
 # %%
 def shorten_param(param_name):
@@ -34,15 +37,15 @@ def shorten_param(param_name):
         return param_name.rsplit("__", 1)[1]
     return param_name
 
+
 cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
 # %% [markdown]
-# As we have more than 2 parameters in our randomized-search, we
-# cannot visualize the results using a heatmap. We could still do
-# it pair-wise, but having a two-dimensional projection of a
-# multi-dimensional problem can lead to a wrong interpretation of
-# the scores.
+# As we have more than 2 parameters in our randomized-search, we cannot
+# visualize the results using a heatmap. We could still do it pair-wise, but
+# having a two-dimensional projection of a multi-dimensional problem can lead to
+# a wrong interpretation of the scores.
 
 # %%
 import seaborn as sns
@@ -70,7 +73,9 @@ ax = sns.scatterplot(
 ax.set_xscale("log")
 ax.set_yscale("log")
 
-_ = ax.legend(title="mean_test_score", loc="center left", bbox_to_anchor=(1, 0.5))
+_ = ax.legend(
+    title="mean_test_score", loc="center left", bbox_to_anchor=(1, 0.5)
+)
 
 # %% [markdown]
 # In the previous plot we see that the top performing values are located in a
@@ -131,9 +136,8 @@ fig.show()
 # models, whatever the values of the other hyperparameters.
 
 # %% [markdown]
-#
-# In this notebook, we saw how to interactively explore the results of a
-# large randomized search with multiple interacting hyperparameters.
-# In particular we observed that some hyperparameters have very little
-# impact on the cross-validation score, while others have to be adjusted
-# within a specific range to get models with good predictive accuracy.
+# In this notebook, we saw how to interactively explore the results of a large
+# randomized search with multiple interacting hyperparameters. In particular we
+# observed that some hyperparameters have very little impact on the
+# cross-validation score, while others have to be adjusted within a specific
+# range to get models with good predictive accuracy.

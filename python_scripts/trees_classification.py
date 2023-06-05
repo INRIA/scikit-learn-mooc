@@ -33,16 +33,16 @@ from sklearn.model_selection import train_test_split
 
 data, target = penguins[culmen_columns], penguins[target_column]
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0)
+    data, target, random_state=0
+)
 
 # %% [markdown]
-#
 # In a previous notebook, we learnt that a linear classifier will define a
 # linear separation to split classes using a linear combination of the input
 # features. In our 2-dimensional space, it means that a linear classifier will
-# define some oblique lines that best separate our classes. We define a
-# function below that, given a set of data points and a classifier, will plot
-# the decision boundaries learnt by the classifier.
+# define some oblique lines that best separate our classes. We define a function
+# below that, given a set of data points and a classifier, will plot the
+# decision boundaries learnt by the classifier.
 #
 # Thus, for a linear classifier, we will obtain the following decision
 # boundaries. These boundaries lines indicate where the model changes its
@@ -66,10 +66,15 @@ palette = ["tab:red", "tab:blue", "black"]
 DecisionBoundaryDisplay.from_estimator(
     linear_model, data_train, response_method="predict", cmap="RdBu", alpha=0.5
 )
-sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                hue=target_column, palette=palette)
+sns.scatterplot(
+    data=penguins,
+    x=culmen_columns[0],
+    y=culmen_columns[1],
+    hue=target_column,
+    palette=palette,
+)
 # put the legend outside the plot
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 _ = plt.title("Decision boundary using a logistic regression")
 
 # %% [markdown]
@@ -78,8 +83,8 @@ _ = plt.title("Decision boundary using a logistic regression")
 # parametrization that we saw in the previous notebook, controlled by the
 # model's weights and intercept.
 #
-# Besides, it seems that the linear model would be a good candidate for
-# such problem as it gives good accuracy.
+# Besides, it seems that the linear model would be a good candidate for such
+# problem as it gives good accuracy.
 
 # %%
 linear_model.fit(data_train, target_train)
@@ -92,8 +97,8 @@ print(f"Accuracy of the LogisticRegression: {test_score:.2f}")
 # intercept to be optimized.
 #
 # Indeed, decision trees will partition the space by considering a single
-# feature at a time. Let's illustrate this behaviour by having a decision
-# tree make a single split to partition the feature space.
+# feature at a time. Let's illustrate this behaviour by having a decision tree
+# make a single split to partition the feature space.
 
 # %%
 from sklearn.tree import DecisionTreeClassifier
@@ -105,9 +110,14 @@ tree.fit(data_train, target_train)
 DecisionBoundaryDisplay.from_estimator(
     tree, data_train, response_method="predict", cmap="RdBu", alpha=0.5
 )
-sns.scatterplot(data=penguins, x=culmen_columns[0], y=culmen_columns[1],
-                hue=target_column, palette=palette)
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+sns.scatterplot(
+    data=penguins,
+    x=culmen_columns[0],
+    y=culmen_columns[1],
+    hue=target_column,
+    palette=palette,
+)
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 _ = plt.title("Decision boundary using a decision tree")
 
 # %% [markdown]
@@ -120,8 +130,13 @@ _ = plt.title("Decision boundary using a decision tree")
 from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(8, 6))
-_ = plot_tree(tree, feature_names=culmen_columns,
-              class_names=tree.classes_, impurity=False, ax=ax)
+_ = plot_tree(
+    tree,
+    feature_names=culmen_columns,
+    class_names=tree.classes_,
+    impurity=False,
+    ax=ax,
+)
 
 # %% [markdown]
 # ```{tip}
@@ -132,12 +147,12 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 
 # %% [markdown]
 # We see that the split was done on the culmen depth feature. The original
-# dataset was subdivided into 2 sets based on the culmen depth
-# (inferior or superior to 16.45 mm).
+# dataset was subdivided into 2 sets based on the culmen depth (inferior or
+# superior to 16.45 mm).
 #
 # This partition of the dataset minimizes the class diversities in each
-# sub-partitions. This measure is also known as a **criterion**,
-# and is a settable parameter.
+# sub-partitions. This measure is also known as a **criterion**, and is a
+# settable parameter.
 #
 # If we look more closely at the partition, we see that the sample superior to
 # 16.45 belongs mainly to the Adelie class. Looking at the values, we indeed
@@ -150,19 +165,15 @@ _ = plot_tree(tree, feature_names=culmen_columns,
 # where the culmen depth is inferior to the threshold.
 
 # %%
-sample_1 = pd.DataFrame(
-    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [15]}
-)
+sample_1 = pd.DataFrame({"Culmen Length (mm)": [0], "Culmen Depth (mm)": [15]})
 tree.predict(sample_1)
 
 # %% [markdown]
-# The class predicted is the Gentoo. We can now check what happens if we pass
-# a culmen depth superior to the threshold.
+# The class predicted is the Gentoo. We can now check what happens if we pass a
+# culmen depth superior to the threshold.
 
 # %%
-sample_2 = pd.DataFrame(
-    {"Culmen Length (mm)": [0], "Culmen Depth (mm)": [17]}
-)
+sample_2 = pd.DataFrame({"Culmen Length (mm)": [0], "Culmen Depth (mm)": [17]})
 tree.predict(sample_2)
 
 # %% [markdown]
@@ -171,8 +182,8 @@ tree.predict(sample_2)
 # Thus, we can conclude that a decision tree classifier will predict the most
 # represented class within a partition.
 #
-# During the training, we have a count of samples in each partition, we can
-# also compute the probability of belonging to a specific class within this
+# During the training, we have a count of samples in each partition, we can also
+# compute the probability of belonging to a specific class within this
 # partition.
 
 # %%
@@ -185,15 +196,15 @@ plt.ylabel("Probability")
 _ = plt.title("Probability to belong to a penguin class")
 
 # %% [markdown]
-# We can also compute the different probabilities manually directly from the tree
-# structure.
+# We can also compute the different probabilities manually directly from the
+# tree structure.
 
 # %%
 adelie_proba = 103 / 161
 chinstrap_proba = 52 / 161
 gentoo_proba = 6 / 161
 print(
-    f"Probabilities for the different classes:\n"
+    "Probabilities for the different classes:\n"
     f"Adelie: {adelie_proba:.3f}\n"
     f"Chinstrap: {chinstrap_proba:.3f}\n"
     f"Gentoo: {gentoo_proba:.3f}\n"
@@ -201,8 +212,8 @@ print(
 
 # %% [markdown]
 # It is also important to note that the culmen length has been disregarded for
-# the moment. It means that whatever the value given, it will not be used
-# during the prediction.
+# the moment. It means that whatever the value given, it will not be used during
+# the prediction.
 
 # %%
 sample_3 = pd.DataFrame(
@@ -211,8 +222,8 @@ sample_3 = pd.DataFrame(
 tree.predict_proba(sample_3)
 
 # %% [markdown]
-# Going back to our classification problem, the split found with a maximum
-# depth of 1 is not powerful enough to separate the three species and the model
+# Going back to our classification problem, the split found with a maximum depth
+# of 1 is not powerful enough to separate the three species and the model
 # accuracy is low when compared to the linear model.
 
 # %%
@@ -221,9 +232,9 @@ test_score = tree.score(data_test, target_test)
 print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 
 # %% [markdown]
-# Indeed, it is not a surprise. We saw earlier that a single feature will not
-# be able to separate all three species. However, from the previous analysis we
-# saw that by using both features we should be able to get fairly good results.
+# Indeed, it is not a surprise. We saw earlier that a single feature will not be
+# able to separate all three species. However, from the previous analysis we saw
+# that by using both features we should be able to get fairly good results.
 #
 # In the next exercise, you will increase the size of the tree depth. You will
 # get intuitions on how the space partitioning is repeated over time.

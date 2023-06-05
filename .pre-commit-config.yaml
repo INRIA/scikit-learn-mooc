@@ -1,0 +1,22 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+  -   id: check-yaml
+      exclude: doc/
+  -   id: end-of-file-fixer
+      exclude: doc/
+  -   id: trailing-whitespace
+      exclude: doc/
+- repo: https://github.com/psf/black
+  rev: 23.1.0
+  hooks:
+  -   id: black
+      exclude: doc/
+- repo: https://github.com/pycqa/flake8
+  rev: 4.0.1
+  hooks:
+    - id: flake8
+      entry: pflake8
+      additional_dependencies: [pyproject-flake8]
+      types: [file, python]

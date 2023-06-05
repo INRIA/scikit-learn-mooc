@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -15,8 +14,8 @@
 # %% [markdown]
 # # 📝 Exercise M4.04
 #
-# In the previous notebook, we saw the effect of applying some regularization
-# on the coefficient of a linear model.
+# In the previous notebook, we saw the effect of applying some regularization on
+# the coefficient of a linear model.
 #
 # In this exercise, we will study the advantage of using some regularization
 # when dealing with correlated features.
@@ -38,8 +37,8 @@ data, target, coef = make_regression(
 )
 
 # %% [markdown]
-# When creating the dataset, `make_regression` returns the true coefficient
-# used to generate the dataset. Let's plot this information.
+# When creating the dataset, `make_regression` returns the true coefficient used
+# to generate the dataset. Let's plot this information.
 
 # %%
 import pandas as pd
@@ -56,9 +55,9 @@ coef.plot.barh()
 coef
 
 # %% [markdown]
-# Create a `LinearRegression` regressor and fit on the entire dataset and
-# check the value of the coefficients. Are the coefficients of the linear
-# regressor close to the coefficients used to generate the dataset?
+# Create a `LinearRegression` regressor and fit on the entire dataset and check
+# the value of the coefficients. Are the coefficients of the linear regressor
+# close to the coefficients used to generate the dataset?
 
 # %%
 # Write your code here.
@@ -72,8 +71,8 @@ coef
 # Write your code here.
 
 # %% [markdown]
-# Fit again the linear regressor on this new dataset and check the
-# coefficients. What do you observe?
+# Fit again the linear regressor on this new dataset and check the coefficients.
+# What do you observe?
 
 # %%
 # Write your code here.

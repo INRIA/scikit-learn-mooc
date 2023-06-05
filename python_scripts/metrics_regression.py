@@ -226,7 +226,7 @@ plt.axline((0, 0), slope=1, label="Perfect fit")
 plt.axis("square")
 plt.legend()
 _ = plt.title(
-    "Regression using a model that\n transform the target before fitting"
+    "Regression using a model that\n transforms the target before fitting"
 )
 
 # %% [markdown]

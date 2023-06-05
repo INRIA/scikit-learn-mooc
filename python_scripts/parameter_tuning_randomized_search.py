@@ -52,7 +52,8 @@ data.head()
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
+    data, target, random_state=42
+)
 
 # %% [markdown]
 # We will create the same predictive pipeline as seen in the grid-search
@@ -66,20 +67,28 @@ from sklearn.compose import make_column_selector as selector
 categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
-categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
-                                          unknown_value=-1)
-preprocessor = ColumnTransformer([
-    ('cat_preprocessor', categorical_preprocessor, categorical_columns)],
-    remainder='passthrough', sparse_threshold=0)
+categorical_preprocessor = OrdinalEncoder(
+    handle_unknown="use_encoded_value", unknown_value=-1
+)
+preprocessor = ColumnTransformer(
+    [("cat_preprocessor", categorical_preprocessor, categorical_columns)],
+    remainder="passthrough",
+    sparse_threshold=0,
+)
 
 # %%
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.pipeline import Pipeline
 
-model = Pipeline([
-    ("preprocessor", preprocessor),
-    ("classifier", HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4)),
-])
+model = Pipeline(
+    [
+        ("preprocessor", preprocessor),
+        (
+            "classifier",
+            HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4),
+        ),
+    ]
+)
 
 model
 
@@ -145,6 +154,7 @@ from scipy.stats import loguniform
 
 class loguniform_int:
     """Integer valued version of the log-uniform distribution"""
+
     def __init__(self, a, b):
         self._distribution = loguniform(a, b)
 
@@ -161,20 +171,23 @@ class loguniform_int:
 # processors.
 
 # %%
-%%time
+# %%time
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
-    'classifier__l2_regularization': loguniform(1e-6, 1e3),
-    'classifier__learning_rate': loguniform(0.001, 10),
-    'classifier__max_leaf_nodes': loguniform_int(2, 256),
-    'classifier__min_samples_leaf': loguniform_int(1, 100),
-    'classifier__max_bins': loguniform_int(2, 255),
+    "classifier__l2_regularization": loguniform(1e-6, 1e3),
+    "classifier__learning_rate": loguniform(0.001, 10),
+    "classifier__max_leaf_nodes": loguniform_int(2, 256),
+    "classifier__min_samples_leaf": loguniform_int(1, 100),
+    "classifier__max_bins": loguniform_int(2, 255),
 }
 
 model_random_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions, n_iter=10,
-    cv=5, verbose=1,
+    model,
+    param_distributions=param_distributions,
+    n_iter=10,
+    cv=5,
+    verbose=1,
 )
 model_random_search.fit(data_train, target_train)
 
@@ -184,8 +197,7 @@ model_random_search.fit(data_train, target_train)
 # %%
 accuracy = model_random_search.score(data_test, target_test)
 
-print(f"The test accuracy score of the best model is "
-      f"{accuracy:.2f}")
+print(f"The test accuracy score of the best model is {accuracy:.2f}")
 
 # %%
 from pprint import pprint
@@ -200,19 +212,20 @@ pprint(model_random_search.best_params_)
 
 # %%
 # get the parameter names
-column_results = [
-    f"param_{name}" for name in param_distributions.keys()]
-column_results += [
-    "mean_test_score", "std_test_score", "rank_test_score"]
+column_results = [f"param_{name}" for name in param_distributions.keys()]
+column_results += ["mean_test_score", "std_test_score", "rank_test_score"]
 
 cv_results = pd.DataFrame(model_random_search.cv_results_)
 cv_results = cv_results[column_results].sort_values(
-    "mean_test_score", ascending=False)
+    "mean_test_score", ascending=False
+)
+
 
 def shorten_param(param_name):
     if "__" in param_name:
         return param_name.rsplit("__", 1)[1]
     return param_name
+
 
 cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
@@ -235,11 +248,15 @@ cv_results
 # cv_results.to_csv("../figures/randomized_search_results.csv")
 
 # %%
-cv_results = pd.read_csv("../figures/randomized_search_results.csv",
-                         index_col=0)
+cv_results = pd.read_csv(
+    "../figures/randomized_search_results.csv", index_col=0
+)
 
-(cv_results[column_results].rename(
-    shorten_param, axis=1).sort_values("mean_test_score", ascending=False))
+(
+    cv_results[column_results]
+    .rename(shorten_param, axis=1)
+    .sort_values("mean_test_score", ascending=False)
+)
 
 # %% [markdown]
 # In this case the top performing models have test scores with a high overlap

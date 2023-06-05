@@ -17,6 +17,7 @@
 
 # %%
 import pandas as pd
+
 adult_census = pd.read_csv("../datasets/adult-census-numeric.csv")
 data = adult_census.drop(columns="class")
 target = adult_census["class"]
@@ -40,7 +41,10 @@ target = adult_census["class"]
 # %%
 from sklearn.neighbors import KNeighborsClassifier
 
-KNeighborsClassifier?
+# In a Jupyter notebook, you can use `model?` to display the online help and
+# `model??` to display the source code if it's available. It will be equivalent
+# to using `help(model)` and `??` will work for any Python object.
+help(KNeighborsClassifier)
 
 # %% [markdown] tags=["solution"]
 # We can see that the default value for `n_neighbors` is 5.
@@ -75,11 +79,13 @@ first_target_values
 
 # %% tags=["solution"]
 number_of_correct_predictions = (
-    first_predictions == first_target_values).sum()
+    first_predictions == first_target_values
+).sum()
 number_of_predictions = len(first_predictions)
 print(
     f"{number_of_correct_predictions}/{number_of_predictions} "
-    "of predictions are correct")
+    "of predictions are correct"
+)
 
 # %% [markdown]
 # Compute the accuracy on the training data.

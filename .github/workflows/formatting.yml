@@ -1,0 +1,28 @@
+name: Formatting
+
+on:
+  push:
+    branches:
+      - "main"
+
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  run-linters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          allow-prereleases: true
+
+      - name: Run the linters via pre-commit
+        run: |
+          python -m pip install pre-commit
+          # only run pre-commit on the folder `python_scripts`
+          pre-commit run --files python_scripts/*

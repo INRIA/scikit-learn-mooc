@@ -5,6 +5,9 @@ on:
     branches:
     - main
     - test-ci*
+  pull_request:
+    branches:
+      - main
 
 jobs:
   deploy-gh-pages:
@@ -16,8 +19,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
-    # Install dependencies
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -40,17 +44,25 @@ jobs:
           v2-refs/heads/main
 
     - name: Build the JupyterBook
+      env:
+        GITHUB_PULL_REQUEST_NUMBER: ${{github.event.number}}
       run: |
-        make jupyter-book
+        bash build_tools/build_jupyter_book.sh
+        echo ${{github.event.number}} > pull_request_number
 
-    - name: Create folder for gh-pages
-      run: |
-        cp -r jupyter-book/_build/html gh-pages
+    - name: Upload jupyter-book artifact for PRs
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: jupyter-book
+        path: |
+          jupyter-book/_build/html
+          pull_request_number
 
     - name: GitHub Pages action
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       uses: peaceiris/actions-gh-pages@v3.6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./gh-pages
+        publish_dir: ./jupyter-book/_build/html
         commit_message: "[ci skip] ${{ github.event.head_commit.message }}"

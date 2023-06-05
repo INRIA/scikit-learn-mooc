@@ -12,9 +12,9 @@
 # differences with the bagging ensembles.
 #
 # Random forests are a popular model in machine learning. They are a
-# modification of the bagging algorithm. In bagging, any classifier or
-# regressor can be used. In random forests, the base classifier or regressor
-# is always a decision tree.
+# modification of the bagging algorithm. In bagging, any classifier or regressor
+# can be used. In random forests, the base classifier or regressor is always a
+# decision tree.
 #
 # Random forests have another particularity: when training a tree, the search
 # for the best split is done only on a subset of the original features taken at
@@ -30,8 +30,8 @@
 #
 # ## A look at random forests
 #
-# We will illustrate the usage of a random forest classifier on the adult
-# census dataset.
+# We will illustrate the usage of a random forest classifier on the adult census
+# dataset.
 
 # %%
 import pandas as pd
@@ -53,12 +53,12 @@ target = adult_census[target_name]
 # features using an `OrdinalEncoder` since tree-based models can work very
 # efficiently with such a naive representation of categorical variables.
 #
-# Since there are rare categories in this dataset we need to specifically
-# encode unknown categories at prediction time in order to be able to use
+# Since there are rare categories in this dataset we need to specifically encode
+# unknown categories at prediction time in order to be able to use
 # cross-validation. Otherwise some rare categories could only be present on the
 # validation side of the cross-validation split and the `OrdinalEncoder` would
-# raise an error when calling its `transform` method with the data points
-# of the validation set.
+# raise an error when calling its `transform` method with the data points of the
+# validation set.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
@@ -69,13 +69,13 @@ categorical_encoder = OrdinalEncoder(
 )
 preprocessor = make_column_transformer(
     (categorical_encoder, make_column_selector(dtype_include=object)),
-    remainder="passthrough"
+    remainder="passthrough",
 )
 
 # %% [markdown]
 #
-# We will first give a simple example where we will train a single decision
-# tree classifier and check its generalization performance via cross-validation.
+# We will first give a simple example where we will train a single decision tree
+# classifier and check its generalization performance via cross-validation.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -88,8 +88,10 @@ from sklearn.model_selection import cross_val_score
 
 scores_tree = cross_val_score(tree, data, target)
 
-print(f"Decision tree classifier: "
-      f"{scores_tree.mean():.3f} ± {scores_tree.std():.3f}")
+print(
+    "Decision tree classifier: "
+    f"{scores_tree.mean():.3f} ± {scores_tree.std():.3f}"
+)
 
 # %% [markdown]
 #
@@ -104,43 +106,47 @@ from sklearn.ensemble import BaggingClassifier
 bagged_trees = make_pipeline(
     preprocessor,
     BaggingClassifier(
-        base_estimator=DecisionTreeClassifier(random_state=0),
-        n_estimators=50, n_jobs=2, random_state=0,
-    )
+        estimator=DecisionTreeClassifier(random_state=0),
+        n_estimators=50,
+        n_jobs=2,
+        random_state=0,
+    ),
 )
 
 # %%
 scores_bagged_trees = cross_val_score(bagged_trees, data, target)
 
-print(f"Bagged decision tree classifier: "
-      f"{scores_bagged_trees.mean():.3f} ± {scores_bagged_trees.std():.3f}")
+print(
+    "Bagged decision tree classifier: "
+    f"{scores_bagged_trees.mean():.3f} ± {scores_bagged_trees.std():.3f}"
+)
 
 # %% [markdown]
-#
 # Note that the generalization performance of the bagged trees is already much
 # better than the performance of a single tree.
 #
 # Now, we will use a random forest. You will observe that we do not need to
-# specify any `base_estimator` because the estimator is forced to be a decision
-# tree. Thus, we just specify the desired number of trees in the forest.
+# specify any `estimator` because the estimator is forced to be a decision tree.
+# Thus, we just specify the desired number of trees in the forest.
 
 # %%
 from sklearn.ensemble import RandomForestClassifier
 
 random_forest = make_pipeline(
     preprocessor,
-    RandomForestClassifier(n_estimators=50, n_jobs=2, random_state=0)
+    RandomForestClassifier(n_estimators=50, n_jobs=2, random_state=0),
 )
 
 # %%
 scores_random_forest = cross_val_score(random_forest, data, target)
 
-print(f"Random forest classifier: "
-      f"{scores_random_forest.mean():.3f} ± "
-      f"{scores_random_forest.std():.3f}")
+print(
+    "Random forest classifier: "
+    f"{scores_random_forest.mean():.3f} ± "
+    f"{scores_random_forest.std():.3f}"
+)
 
 # %% [markdown]
-#
 # It seems that the random forest is performing slightly better than the bagged
 # trees possibly due to the randomized selection of the features which
 # decorrelates the prediction errors of individual trees and as a consequence
@@ -162,17 +168,17 @@ print(f"Random forest classifier: "
 #
 # However, `max_features` is one of the hyperparameters to consider when tuning
 # a random forest:
-# - too much randomness in the trees can lead to underfitted base models and
-#   can be detrimental for the ensemble as a whole,
+# - too much randomness in the trees can lead to underfitted base models and can
+#   be detrimental for the ensemble as a whole,
 # - too few randomness in the trees leads to more correlation of the prediction
-#   errors and as a result reduce the benefits of the averaging step in terms
-#   of overfitting control.
+#   errors and as a result reduce the benefits of the averaging step in terms of
+#   overfitting control.
 #
 # In scikit-learn, the bagging classes also expose a `max_features` parameter.
 # However, `BaggingClassifier` and `BaggingRegressor` are agnostic with respect
 # to their base model and therefore random feature subsampling can only happen
-# once before fitting each base model instead of several times per base model
-# as is the case when adding splits to a given tree.
+# once before fitting each base model instead of several times per base model as
+# is the case when adding splits to a given tree.
 #
 # We summarize these details in the following table:
 #

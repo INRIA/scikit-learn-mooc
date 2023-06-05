@@ -64,8 +64,10 @@ regressor = LinearRegression()
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_train)
 
-print(f"Mean squared error on the training set: "
-      f"{mean_squared_error(target_train, target_predicted):.3f}")
+print(
+    "Mean squared error on the training set: "
+    f"{mean_squared_error(target_train, target_predicted):.3f}"
+)
 
 # %% [markdown]
 # Our linear regression model is minimizing the mean squared error on the
@@ -77,8 +79,10 @@ print(f"Mean squared error on the training set: "
 # %%
 target_predicted = regressor.predict(data_test)
 
-print(f"Mean squared error on the testing set: "
-      f"{mean_squared_error(target_test, target_predicted):.3f}")
+print(
+    "Mean squared error on the testing set: "
+    f"{mean_squared_error(target_test, target_predicted):.3f}"
+)
 
 # %% [markdown]
 # The raw MSE can be difficult to interpret. One way is to rescale the MSE
@@ -100,8 +104,10 @@ from sklearn.dummy import DummyRegressor
 
 dummy_regressor = DummyRegressor(strategy="mean")
 dummy_regressor.fit(data_train, target_train)
-print(f"R2 score for a regressor predicting the mean:"
-      f"{dummy_regressor.score(data_test, target_test):.3f}")
+print(
+    "R2 score for a regressor predicting the mean:"
+    f"{dummy_regressor.score(data_test, target_test):.3f}"
+)
 
 # %% [markdown]
 # The $R^2$ score gives insight into the quality of the model's fit. However,
@@ -114,8 +120,10 @@ print(f"R2 score for a regressor predicting the mean:"
 from sklearn.metrics import mean_absolute_error
 
 target_predicted = regressor.predict(data_test)
-print(f"Mean absolute error: "
-      f"{mean_absolute_error(target_test, target_predicted):.3f} k$")
+print(
+    "Mean absolute error: "
+    f"{mean_absolute_error(target_test, target_predicted):.3f} k$"
+)
 
 # %% [markdown]
 # By computing the mean absolute error, we can interpret that our model is
@@ -127,8 +135,10 @@ print(f"Mean absolute error: "
 # %%
 from sklearn.metrics import median_absolute_error
 
-print(f"Median absolute error: "
-      f"{median_absolute_error(target_test, target_predicted):.3f} k$")
+print(
+    "Median absolute error: "
+    f"{median_absolute_error(target_test, target_predicted):.3f} k$"
+)
 
 # %% [markdown]
 # The mean absolute error (or median absolute error) still have a known
@@ -141,8 +151,10 @@ print(f"Median absolute error: "
 # %%
 from sklearn.metrics import mean_absolute_percentage_error
 
-print(f"Mean absolute percentage error: "
-      f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %")
+print(
+    "Mean absolute percentage error: "
+    f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %"
+)
 
 # %% [markdown]
 # In addition of metrics, we can visually represent the results by plotting the
@@ -166,7 +178,7 @@ PredictionErrorDisplay.from_predictions(
     y_pred=target_predicted,
     kind="actual_vs_predicted",
     scatter_kwargs={"alpha": 0.5},
-    ax=axs[0]
+    ax=axs[0],
 )
 axs[0].axis("square")
 axs[0].set_xlabel("Predicted values (k$)")
@@ -177,13 +189,15 @@ PredictionErrorDisplay.from_predictions(
     y_pred=target_predicted,
     kind="residual_vs_predicted",
     scatter_kwargs={"alpha": 0.5},
-    ax=axs[1]
+    ax=axs[1],
 )
 axs[1].axis("square")
 axs[1].set_xlabel("Predicted values (k$)")
 axs[1].set_ylabel("Residual values (k$)")
 
-_ = fig.suptitle("Regression using a model\nwithout target transformation", y=1.1)
+_ = fig.suptitle(
+    "Regression using a model\nwithout target transformation", y=1.1
+)
 
 # %% [markdown]
 # On these plots, we see that our model tends to under-estimate the price of the
@@ -200,9 +214,11 @@ from sklearn.preprocessing import QuantileTransformer
 from sklearn.compose import TransformedTargetRegressor
 
 transformer = QuantileTransformer(
-    n_quantiles=900, output_distribution="normal")
+    n_quantiles=900, output_distribution="normal"
+)
 model_transformed_target = TransformedTargetRegressor(
-    regressor=regressor, transformer=transformer)
+    regressor=regressor, transformer=transformer
+)
 model_transformed_target.fit(data_train, target_train)
 target_predicted = model_transformed_target.predict(data_test)
 
@@ -213,7 +229,7 @@ PredictionErrorDisplay.from_predictions(
     y_pred=target_predicted,
     kind="actual_vs_predicted",
     scatter_kwargs={"alpha": 0.5},
-    ax=axs[0]
+    ax=axs[0],
 )
 axs[0].axis("square")
 axs[0].set_xlabel("Predicted values (k$)")
@@ -224,14 +240,16 @@ PredictionErrorDisplay.from_predictions(
     y_pred=target_predicted,
     kind="residual_vs_predicted",
     scatter_kwargs={"alpha": 0.5},
-    ax=axs[1]
+    ax=axs[1],
 )
 axs[1].axis("square")
 axs[1].set_xlabel("Predicted values (k$)")
 axs[1].set_ylabel("Residual values (k$)")
 
-_ = fig.suptitle("Regression using a model that\ntransforms the target "
-                 "before fitting", y=1.1)
+_ = fig.suptitle(
+    "Regression using a model that\ntransforms the target before fitting",
+    y=1.1,
+)
 
 # %% [markdown]
 # The model with the transformed target seems to exhibit fewer structure in its
@@ -243,14 +261,20 @@ _ = fig.suptitle("Regression using a model that\ntransforms the target "
 # transformation.
 
 # %%
-print(f"Mean absolute error: "
-      f"{mean_absolute_error(target_test, target_predicted):.3f} k$")
+print(
+    "Mean absolute error: "
+    f"{mean_absolute_error(target_test, target_predicted):.3f} k$"
+)
 
-print(f"Median absolute error: "
-      f"{median_absolute_error(target_test, target_predicted):.3f} k$")
+print(
+    "Median absolute error: "
+    f"{median_absolute_error(target_test, target_predicted):.3f} k$"
+)
 
-print(f"Mean absolute percentage error: "
-      f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %")
+print(
+    "Mean absolute percentage error: "
+    f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %"
+)
 
 # %% [markdown]
 # While a common practice, performing such a target transformation for linear

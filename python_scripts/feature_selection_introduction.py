@@ -8,12 +8,12 @@
 # %% [markdown]
 # # Benefits of using feature selection
 #
-# In this notebook, we aim at introducing the main benefits that can be
-# gained when using feature selection.
+# In this notebook, we aim at introducing the main benefits that can be gained
+# when using feature selection.
 #
 # Indeed, the principal advantage of selecting features within a machine
-# learning pipeline is to reduce the time to train this pipeline and its time
-# to predict. We will give an example to highlights these advantages. First, we
+# learning pipeline is to reduce the time to train this pipeline and its time to
+# predict. We will give an example to highlights these advantages. First, we
 # generate a synthetic dataset to control the number of features that will be
 # informative, redundant, repeated, and random.
 
@@ -36,12 +36,12 @@ data, target = make_classification(
 #
 # We will create two machine learning pipelines. The former will be a random
 # forest that will use all available features. The latter will also be a random
-# forest, but we will add a feature selection step to train this classifier.
-# The feature selection is based on a univariate test (ANOVA F-value) between
-# each feature and the target that we want to predict. The features with the
-# two most significant scores are selected.
+# forest, but we will add a feature selection step to train this classifier. The
+# feature selection is based on a univariate test (ANOVA F-value) between each
+# feature and the target that we want to predict. The features with the two most
+# significant scores are selected.
 #
-# Let's create the model without any feature selection
+# Let's create the model without any feature selection:
 
 # %%
 from sklearn.ensemble import RandomForestClassifier
@@ -65,8 +65,8 @@ model_with_selection = make_pipeline(
 
 # %% [markdown]
 # We will measure the average time spent to train each pipeline and make it
-# predict. Besides, we will compute the testing score of the model. We
-# will collect these results via cross-validation.
+# predict. Besides, we will compute the testing score of the model. We will
+# collect these results via cross-validation.
 #
 # Let's start with the random forest without feature selection. We will store
 # the results into a dataframe.
@@ -75,8 +75,9 @@ model_with_selection = make_pipeline(
 import pandas as pd
 from sklearn.model_selection import cross_validate
 
-cv_results_without_selection = cross_validate(model_without_selection, data,
-                                              target)
+cv_results_without_selection = cross_validate(
+    model_without_selection, data, target
+)
 cv_results_without_selection = pd.DataFrame(cv_results_without_selection)
 
 # %% [markdown]
@@ -85,12 +86,13 @@ cv_results_without_selection = pd.DataFrame(cv_results_without_selection)
 
 # %%
 cv_results_with_selection = cross_validate(
-    model_with_selection, data, target, return_estimator=True)
+    model_with_selection, data, target, return_estimator=True
+)
 cv_results_with_selection = pd.DataFrame(cv_results_with_selection)
 
 # %% [markdown]
-# To analyze the results, we will merge the results from the two pipeline in
-# a single pandas dataframe.
+# To analyze the results, we will merge the results from the two pipeline in a
+# single pandas dataframe.
 
 # %%
 cv_results = pd.concat(
@@ -121,8 +123,8 @@ _ = plt.title("Time to make prediction")
 # We can draw the same conclusions for both training and scoring elapsed time:
 # selecting the most informative features speed-up our pipeline.
 #
-# Of course, such speed-up is beneficial only if the generalization performance in
-# terms of metrics remain the same. Let's check the testing score.
+# Of course, such speed-up is beneficial only if the generalization performance
+# in terms of metrics remain the same. Let's check the testing score.
 
 # %%
 cv_results["test_score"].plot.box(color=color, vert=False)
@@ -130,8 +132,8 @@ plt.xlabel("Accuracy score")
 _ = plt.title("Test score via cross-validation")
 
 # %% [markdown]
-# We can observe that the model's generalization performance selecting a subset of
-# features decreases compared with the model using all available features.
+# We can observe that the model's generalization performance selecting a subset
+# of features decreases compared with the model using all available features.
 # Since we generated the dataset, we can infer that the decrease is because of
 # the selection. The feature selection algorithm did not choose the two
 # informative features.
@@ -149,8 +151,8 @@ for idx, pipeline in enumerate(cv_results_with_selection["estimator"]):
     )
 
 # %% [markdown]
-# We see that the feature `53` is always selected while the other feature
-# varies depending on the cross-validation fold.
+# We see that the feature `53` is always selected while the other feature varies
+# depending on the cross-validation fold.
 #
 # If we would like to keep our score with similar generalization performance, we
 # could choose another metric to perform the test or select more features. For
@@ -161,9 +163,9 @@ for idx, pipeline in enumerate(cv_results_with_selection["estimator"]):
 # harder.
 #
 # Therefore, we could come with a much more complicated procedure that could
-# tune (via cross-validation) the number of selected features and change
-# the way feature is selected (e.g. using a machine-learning model). However,
-# going towards these solutions alienates the feature selection's primary
-# purpose to get a significant train/test speed-up. Also, if the primary goal
-# was to get a more performant model, performant models exclude non-informative
-# features natively.
+# tune (via cross-validation) the number of selected features and change the way
+# feature is selected (e.g. using a machine-learning model). However, going
+# towards these solutions alienates the feature selection's primary purpose to
+# get a significant train/test speed-up. Also, if the primary goal was to get a
+# more performant model, performant models exclude non-informative features
+# natively.

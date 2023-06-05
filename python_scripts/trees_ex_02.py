@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -15,11 +14,11 @@
 # %% [markdown]
 # # 📝 Exercise M5.02
 #
-# The aim of this exercise is to find out whether a decision tree
-# model is able to extrapolate.
+# The aim of this exercise is to find out whether a decision tree model is able
+# to extrapolate.
 #
-# By extrapolation, we refer to values predicted by a model outside of the
-# range of feature values seen during the training.
+# By extrapolation, we refer to values predicted by a model outside of the range
+# of feature values seen during the training.
 #
 # We will first load the regression data.
 
@@ -40,16 +39,16 @@ data_train, target_train = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
 # First, create two models, a linear regression model and a decision tree
-# regression model, and fit them on the training data. Limit the depth at
-# 3 levels for the decision tree.
+# regression model, and fit them on the training data. Limit the depth at 3
+# levels for the decision tree.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Create a synthetic dataset containing all possible flipper length from
-# the minimum to the maximum of the training dataset. Get the predictions of
-# each model using this dataset.
+# Create a synthetic dataset containing all possible flipper length from the
+# minimum to the maximum of the training dataset. Get the predictions of each
+# model using this dataset.
 
 # %%
 # Write your code here.
@@ -63,9 +62,9 @@ data_train, target_train = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
 # Now, we will check the extrapolation capabilities of each model. Create a
-# dataset containing a broader range of values than your previous dataset,
-# in other words, add values below and above the minimum and the maximum of
-# the flipper length seen during training.
+# dataset containing a broader range of values than your previous dataset, in
+# other words, add values below and above the minimum and the maximum of the
+# flipper length seen during training.
 
 # %%
 # Write your code here.

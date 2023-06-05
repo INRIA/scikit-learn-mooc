@@ -10,7 +10,7 @@
 
 # %% [markdown]
 # The goal of keeping this notebook is to:
-
+#
 # - make it available for users that want to reproduce it locally
 # - archive the script in the event we want to rerecord this video with an
 #   update in the UI of scikit-learn in a future release.
@@ -19,15 +19,19 @@
 # ## First we load the dataset
 
 # %% [markdown]
-# We need to define our data and target. In this case we will build a classification model
+# We need to define our data and target. In this case we will build a
+# classification model
 
 # %%
 import pandas as pd
 
-ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values='?')
+ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
 
 target_name = "SalePrice"
-data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
+data, target = (
+    ames_housing.drop(columns=target_name),
+    ames_housing[target_name],
+)
 target = (target > 200_000).astype(int)
 
 # %% [markdown]
@@ -41,8 +45,8 @@ data
 # this arbitrary subset of data:
 
 # %%
-numeric_features = ['LotArea', 'FullBath', 'HalfBath']
-categorical_features = ['Neighborhood', 'HouseStyle']
+numeric_features = ["LotArea", "FullBath", "HalfBath"]
+categorical_features = ["Neighborhood", "HouseStyle"]
 data = data[numeric_features + categorical_features]
 
 # %% [markdown]
@@ -56,12 +60,17 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
-numeric_transformer = Pipeline(steps=[
-    ('imputer', SimpleImputer(strategy='median')),
-    ('scaler', StandardScaler(),
-)])
+numeric_transformer = Pipeline(
+    steps=[
+        ("imputer", SimpleImputer(strategy="median")),
+        (
+            "scaler",
+            StandardScaler(),
+        ),
+    ]
+)
 
-categorical_transformer = OneHotEncoder(handle_unknown='ignore')
+categorical_transformer = OneHotEncoder(handle_unknown="ignore")
 
 # %% [markdown]
 # The next step is to apply the transformations using `ColumnTransformer`
@@ -69,10 +78,12 @@ categorical_transformer = OneHotEncoder(handle_unknown='ignore')
 # %%
 from sklearn.compose import ColumnTransformer
 
-preprocessor = ColumnTransformer(transformers=[
-    ('num', numeric_transformer, numeric_features),
-    ('cat', categorical_transformer, categorical_features),
-])
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", numeric_transformer, numeric_features),
+        ("cat", categorical_transformer, categorical_features),
+    ]
+)
 
 # %% [markdown]
 # Then we define the model and join the steps in order
@@ -80,10 +91,12 @@ preprocessor = ColumnTransformer(transformers=[
 # %%
 from sklearn.linear_model import LogisticRegression
 
-model = Pipeline(steps=[
-    ('preprocessor', preprocessor),
-    ('classifier', LogisticRegression()),
-])
+model = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("classifier", LogisticRegression()),
+    ]
+)
 
 # %% [markdown]
 # Let's visualize it!
@@ -99,21 +112,23 @@ from sklearn.model_selection import cross_validate
 
 cv_results = cross_validate(model, data, target, cv=5)
 scores = cv_results["test_score"]
-print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} ± {scores.std():.3f}")
+print(
+    "The mean cross-validation accuracy is: "
+    f"{scores.mean():.3f} ± {scores.std():.3f}"
+)
 
 # %% [markdown]
 # ```{note}
 # In this case, around 86% of the times the pipeline correctly predicts whether
-# the price of a house is above or below the 200_000 dollars threshold. But
-# be aware that this score was obtained by picking some features by hand, which
-# is not necessarily the best thing we can do for this classification task. In this
+# the price of a house is above or below the 200_000 dollars threshold. But be
+# aware that this score was obtained by picking some features by hand, which is
+# not necessarily the best thing we can do for this classification task. In this
 # example we can hope that fitting a complex machine learning pipelines on a
 # richer set of features can improve upon this performance level.
 #
 # Reducing a price estimation problem to a binary classification problem with a
-# single threshold at 200_000 dollars is probably too coarse to be useful in
-# in practice. Treating this problem as a regression problem is probably a better
+# single threshold at 200_000 dollars is probably too coarse to be useful in in
+# practice. Treating this problem as a regression problem is probably a better
 # idea. We will see later in this MOOC how to train and evaluate the performance
 # of various regression models.
 # ```

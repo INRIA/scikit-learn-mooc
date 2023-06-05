@@ -67,8 +67,8 @@ model = Pipeline(
     [
         ("preprocessor", preprocessor),
         (
-        "classifier",
-        HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4),
+            "classifier",
+            HistGradientBoostingClassifier(random_state=42, max_leaf_nodes=4),
         ),
     ]
 )

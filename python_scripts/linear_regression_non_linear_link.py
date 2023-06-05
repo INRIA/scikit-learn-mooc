@@ -34,7 +34,7 @@ len_data = data_max - data_min
 # sort the data to make plotting easier later
 data = np.sort(rng.rand(n_sample) * len_data - len_data / 2)
 noise = rng.randn(n_sample) * 0.3
-target = data ** 3 - 0.5 * data ** 2 + noise
+target = data**3 - 0.5 * data**2 + noise
 
 # %% [markdown]
 # ```{note}

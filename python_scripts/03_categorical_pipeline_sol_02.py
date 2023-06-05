@@ -92,12 +92,14 @@ from sklearn.preprocessing import StandardScaler
 
 preprocessor = ColumnTransformer(
     [
-      ("numerical", StandardScaler(), numerical_columns),
-      (
-      "categorical",
-      OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
-      categorical_columns,
-      ),
+        ("numerical", StandardScaler(), numerical_columns),
+        (
+            "categorical",
+            OrdinalEncoder(
+                handle_unknown="use_encoded_value", unknown_value=-1
+            ),
+            categorical_columns,
+        ),
     ]
 )
 
@@ -146,7 +148,9 @@ import time
 
 from sklearn.preprocessing import OneHotEncoder
 
-categorical_preprocessor = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+categorical_preprocessor = OneHotEncoder(
+    handle_unknown="ignore", sparse_output=False
+)
 preprocessor = ColumnTransformer(
     [("one-hot-encoder", categorical_preprocessor, categorical_columns)],
     remainder="passthrough",

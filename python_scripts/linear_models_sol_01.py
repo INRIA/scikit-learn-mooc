@@ -83,7 +83,9 @@ for weight, intercept in zip(weights, intercepts):
     )
 
     ax.plot(
-        flipper_length_range, predicted_body_mass, label=label.format(weight, intercept)
+        flipper_length_range,
+        predicted_body_mass,
+        label=label.format(weight, intercept),
     )
 _ = ax.legend(loc="center left", bbox_to_anchor=(-0.25, 1.25), ncol=1)
 

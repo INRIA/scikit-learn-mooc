@@ -239,7 +239,7 @@ from sklearn.dummy import DummyClassifier
 dummy_classifier = DummyClassifier(strategy="most_frequent")
 dummy_classifier.fit(data_train, target_train)
 print(
-    f"Accuracy of the dummy classifier: "
+    "Accuracy of the dummy classifier: "
     f"{dummy_classifier.score(data_test, target_test):.3f}"
 )
 

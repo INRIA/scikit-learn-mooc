@@ -187,7 +187,9 @@ categorical_columns = ["Street", "Foundation", "CentralAir", "PavedDrive"]
 target_name = "SalePrice"
 X, y = ames_housing[categorical_columns], ames_housing[target_name]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=0
+)
 
 # %% [markdown] tags=["solution"]
 #

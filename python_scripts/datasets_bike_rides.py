@@ -41,7 +41,9 @@ cycling.info()
 # pandas at reading properly our CSV file.
 
 # %%
-cycling = pd.read_csv("../datasets/bike_rides.csv", index_col=0, parse_dates=True)
+cycling = pd.read_csv(
+    "../datasets/bike_rides.csv", index_col=0, parse_dates=True
+)
 cycling.index.name = ""
 cycling.head()
 

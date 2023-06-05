@@ -82,7 +82,9 @@ sns.scatterplot(
 )
 
 plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
-_ = plt.title("Decision tree predictions \nwith misclassified samples " "highlighted")
+_ = plt.title(
+    "Decision tree predictions \nwith misclassified samples highlighted"
+)
 
 # %% [markdown]
 # We observe that several samples have been misclassified by the classifier.
@@ -141,7 +143,7 @@ remaining_misclassified_samples_idx = np.intersect1d(
 )
 
 print(
-    f"Number of samples previously misclassified and "
+    "Number of samples previously misclassified and "
     f"still misclassified: {len(remaining_misclassified_samples_idx)}"
 )
 

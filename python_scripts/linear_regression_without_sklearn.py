@@ -140,9 +140,9 @@ body_mass_181 = linear_model_flipper_mass(
 )
 
 print(
-    f"The body mass for a flipper length of 180 mm "
+    "The body mass for a flipper length of 180 mm "
     f"is {body_mass_180} g and {body_mass_181} g "
-    f"for a flipper length of 181 mm"
+    "for a flipper length of 181 mm"
 )
 
 # %% [markdown]

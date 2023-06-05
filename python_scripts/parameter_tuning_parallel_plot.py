@@ -30,6 +30,7 @@ cv_results
 # We define a function to remove the prefixes in the hyperparameters column
 # names.
 
+
 # %%
 def shorten_param(param_name):
     if "__" in param_name:

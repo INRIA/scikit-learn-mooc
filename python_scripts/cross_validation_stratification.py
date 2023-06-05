@@ -67,7 +67,9 @@ from sklearn.model_selection import cross_validate
 cv = KFold(n_splits=3)
 results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is " f"{test_score.mean():.3f} ± {test_score.std():.3f}")
+print(
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
+)
 
 # %% [markdown]
 # It is a real surprise that our model cannot correctly classify any sample in
@@ -157,7 +159,9 @@ _ = plt.title("Test set")
 cv = KFold(n_splits=3, shuffle=True, random_state=0)
 results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is " f"{test_score.mean():.3f} ± {test_score.std():.3f}")
+print(
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
+)
 
 # %% [markdown]
 # We get results that are closer to what we would expect with an accuracy above
@@ -213,7 +217,9 @@ cv = StratifiedKFold(n_splits=3)
 # %%
 results = cross_validate(model, data, target, cv=cv)
 test_score = results["test_score"]
-print(f"The average accuracy is " f"{test_score.mean():.3f} ± {test_score.std():.3f}")
+print(
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
+)
 
 # %%
 train_cv_counts = []

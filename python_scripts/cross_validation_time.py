@@ -38,7 +38,9 @@ template_name = "../datasets/financial-data/{}.csv"
 
 quotes = {}
 for symbol in symbols:
-    data = pd.read_csv(template_name.format(symbol), index_col=0, parse_dates=True)
+    data = pd.read_csv(
+        template_name.format(symbol), index_col=0, parse_dates=True
+    )
     quotes[symbols[symbol]] = data["open"]
 quotes = pd.DataFrame(quotes)
 
@@ -92,8 +94,10 @@ cv = ShuffleSplit(random_state=0)
 # %%
 from sklearn.model_selection import cross_val_score
 
-test_score = cross_val_score(regressor, data_train, target_train, cv=cv, n_jobs=2)
-print(f"The mean R2 is: " f"{test_score.mean():.2f} ± {test_score.std():.2f}")
+test_score = cross_val_score(
+    regressor, data_train, target_train, cv=cv, n_jobs=2
+)
+print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # Surprisingly, we get outstanding generalization performance. We will
@@ -189,8 +193,10 @@ from sklearn.model_selection import LeaveOneGroupOut
 
 groups = quotes.index.to_period("Q")
 cv = LeaveOneGroupOut()
-test_score = cross_val_score(regressor, data, target, cv=cv, groups=groups, n_jobs=2)
-print(f"The mean R2 is: " f"{test_score.mean():.2f} ± {test_score.std():.2f}")
+test_score = cross_val_score(
+    regressor, data, target, cv=cv, groups=groups, n_jobs=2
+)
+print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # In this case, we see that we cannot make good predictions, which is less
@@ -206,8 +212,10 @@ print(f"The mean R2 is: " f"{test_score.mean():.2f} ± {test_score.std():.2f}")
 from sklearn.model_selection import TimeSeriesSplit
 
 cv = TimeSeriesSplit(n_splits=groups.nunique())
-test_score = cross_val_score(regressor, data, target, cv=cv, groups=groups, n_jobs=2)
-print(f"The mean R2 is: " f"{test_score.mean():.2f} ± {test_score.std():.2f}")
+test_score = cross_val_score(
+    regressor, data, target, cv=cv, groups=groups, n_jobs=2
+)
+print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # In conclusion, it is really important to not use an out of the shelves

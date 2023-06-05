@@ -131,7 +131,11 @@ from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(8, 6))
 _ = plot_tree(
-    tree, feature_names=culmen_columns, class_names=tree.classes_, impurity=False, ax=ax
+    tree,
+    feature_names=culmen_columns,
+    class_names=tree.classes_,
+    impurity=False,
+    ax=ax,
 )
 
 # %% [markdown]
@@ -212,7 +216,9 @@ print(
 # the prediction.
 
 # %%
-sample_3 = pd.DataFrame({"Culmen Length (mm)": [10_000], "Culmen Depth (mm)": [17]})
+sample_3 = pd.DataFrame(
+    {"Culmen Length (mm)": [10_000], "Culmen Depth (mm)": [17]}
+)
 tree.predict_proba(sample_3)
 
 # %% [markdown]

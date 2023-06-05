@@ -38,7 +38,7 @@ from sklearn.model_selection import cross_val_score, KFold
 cv = KFold(shuffle=False)
 test_score_no_shuffling = cross_val_score(model, data, target, cv=cv, n_jobs=2)
 print(
-    f"The average accuracy is "
+    "The average accuracy is "
     f"{test_score_no_shuffling.mean():.3f} ± "
     f"{test_score_no_shuffling.std():.3f}"
 )
@@ -49,9 +49,11 @@ print(
 
 # %%
 cv = KFold(shuffle=True)
-test_score_with_shuffling = cross_val_score(model, data, target, cv=cv, n_jobs=2)
+test_score_with_shuffling = cross_val_score(
+    model, data, target, cv=cv, n_jobs=2
+)
 print(
-    f"The average accuracy is "
+    "The average accuracy is "
     f"{test_score_with_shuffling.mean():.3f} ± "
     f"{test_score_with_shuffling.std():.3f}"
 )
@@ -181,9 +183,11 @@ _ = plt.title("Underlying writer groups existing in the target")
 from sklearn.model_selection import GroupKFold
 
 cv = GroupKFold()
-test_score = cross_val_score(model, data, target, groups=groups, cv=cv, n_jobs=2)
+test_score = cross_val_score(
+    model, data, target, groups=groups, cv=cv, n_jobs=2
+)
 print(
-    f"The average accuracy is " f"{test_score.mean():.3f} ± " f"{test_score.std():.3f}"
+    f"The average accuracy is {test_score.mean():.3f} ± {test_score.std():.3f}"
 )
 
 # %% [markdown]
@@ -195,7 +199,11 @@ print(
 # %%
 all_scores = pd.DataFrame(
     [test_score_no_shuffling, test_score_with_shuffling, test_score],
-    index=["KFold without shuffling", "KFold with shuffling", "KFold with groups"],
+    index=[
+        "KFold without shuffling",
+        "KFold with shuffling",
+        "KFold with groups",
+    ],
 ).T
 
 # %%

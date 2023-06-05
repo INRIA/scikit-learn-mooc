@@ -169,14 +169,14 @@ data_train, data_test, target_train, target_test = train_test_split(
 print(
     f"Number of samples in testing: {data_test.shape[0]} => "
     f"{data_test.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
-    f" original set"
+    " original set"
 )
 
 # %%
 print(
     f"Number of samples in training: {data_train.shape[0]} => "
     f"{data_train.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
-    f" original set"
+    " original set"
 )
 
 # %% [markdown]

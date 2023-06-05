@@ -91,7 +91,9 @@ numerical_data.info()
 # look at the histogram for all these features.
 
 # %%
-numerical_data.hist(bins=20, figsize=(12, 22), edgecolor="black", layout=(9, 4))
+numerical_data.hist(
+    bins=20, figsize=(12, 22), edgecolor="black", layout=(9, 4)
+)
 plt.subplots_adjust(hspace=0.8, wspace=0.8)
 
 # %% [markdown]

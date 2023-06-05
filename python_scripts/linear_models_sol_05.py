@@ -29,7 +29,9 @@ import pandas as pd
 
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 # only keep the Adelie and Chinstrap classes
-penguins = penguins.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
+penguins = (
+    penguins.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
+)
 
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
@@ -53,7 +55,9 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
-logistic_regression = make_pipeline(StandardScaler(), LogisticRegression(penalty="l2"))
+logistic_regression = make_pipeline(
+    StandardScaler(), LogisticRegression(penalty="l2")
+)
 
 # %% [markdown]
 # Given the following candidates for the `C` parameter, find out the impact of

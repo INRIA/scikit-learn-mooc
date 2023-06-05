@@ -63,10 +63,14 @@ from sklearn.pipeline import make_pipeline
 from sklearn.feature_selection import SelectFromModel
 
 feature_selector = SelectFromModel(RandomForestClassifier())
-model_with_selection = make_pipeline(feature_selector, RandomForestClassifier())
+model_with_selection = make_pipeline(
+    feature_selector, RandomForestClassifier()
+)
 
 # %%
-cv_results_with_selection = cross_validate(model_with_selection, data, target, cv=5)
+cv_results_with_selection = cross_validate(
+    model_with_selection, data, target, cv=5
+)
 cv_results_with_selection = pd.DataFrame(cv_results_with_selection)
 
 # %% [markdown]

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -39,9 +38,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 # ```
 
 # %% [markdown]
-# Create a random forest containing three trees. Train the forest and
-# check the generalization performance on the testing set in terms of mean
-# absolute error.
+# Create a random forest containing three trees. Train the forest and check the
+# generalization performance on the testing set in terms of mean absolute error.
 
 # %%
 # Write your code here.

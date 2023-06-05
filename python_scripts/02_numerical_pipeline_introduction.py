@@ -191,11 +191,7 @@ adult_census_test = pd.read_csv("../datasets/adult-census-numeric-test.csv")
 
 # %%
 target_test = adult_census_test[target_name]
-data_test = adult_census_test.drop(
-    columns=[
-        target_name,
-    ]
-)
+data_test = adult_census_test.drop(columns=[target_name])
 
 # %% [markdown]
 # We can check the number of features and samples available in this new set.

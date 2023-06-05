@@ -28,7 +28,10 @@ import pandas as pd
 ames_housing = pd.read_csv("../datasets/house_prices.csv", na_values="?")
 
 target_name = "SalePrice"
-data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
+data, target = (
+    ames_housing.drop(columns=target_name),
+    ames_housing[target_name],
+)
 target = (target > 200_000).astype(int)
 
 # %% [markdown]

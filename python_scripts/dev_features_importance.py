@@ -432,6 +432,7 @@ print(f"model score on testing data: {model.score(X_test, y_test)}")
 # On the contrary, if the feature is not used by the model, the score shall
 # remain the same, thus the feature importance will be close to 0.
 
+
 # %%
 def get_score_after_permutation(model, X, y, curr_feat):
     """return the score of model when curr_feat is permuted"""

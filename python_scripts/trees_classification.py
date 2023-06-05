@@ -200,7 +200,7 @@ adelie_proba = 103 / 161
 chinstrap_proba = 52 / 161
 gentoo_proba = 6 / 161
 print(
-    f"Probabilities for the different classes:\n"
+    "Probabilities for the different classes:\n"
     f"Adelie: {adelie_proba:.3f}\n"
     f"Chinstrap: {chinstrap_proba:.3f}\n"
     f"Gentoo: {gentoo_proba:.3f}\n"

@@ -40,7 +40,10 @@ ames_housing.head()
 
 # %%
 target_name = "SalePrice"
-data, target = ames_housing.drop(columns=target_name), ames_housing[target_name]
+data, target = (
+    ames_housing.drop(columns=target_name),
+    ames_housing[target_name],
+)
 
 # %% [markdown]
 # Let's have a quick look at the target before to focus on the data.
@@ -147,7 +150,9 @@ plt.subplots_adjust(hspace=0.2, wspace=0.8)
 # ```
 
 # %%
-ames_housing_no_missing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
+ames_housing_no_missing = pd.read_csv(
+    "../datasets/ames_housing_no_missing.csv"
+)
 ames_housing_no_missing.head()
 
 # %% [markdown]
@@ -204,5 +209,7 @@ ames_housing_preprocessed = pd.DataFrame(
     columns=categorical_features.tolist() + numerical_features,
 )
 ames_housing_preprocessed = ames_housing_preprocessed[ames_housing.columns]
-ames_housing_preprocessed = ames_housing_preprocessed.astype(ames_housing.dtypes)
+ames_housing_preprocessed = ames_housing_preprocessed.astype(
+    ames_housing.dtypes
+)
 (ames_housing_no_missing == ames_housing_preprocessed).all()

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -57,6 +56,8 @@ import numpy as np
 # You should get some surprising results.
 
 # %%
+from sklearn.feature_selection import SelectKBest, f_classif
+
 # Write your code here.
 
 # %% [markdown]
@@ -66,6 +67,8 @@ import numpy as np
 # testing sets before you train and test the logistic regression.
 
 # %%
+from sklearn.model_selection import train_test_split
+
 # Write your code here.
 
 # %% [markdown]
@@ -80,4 +83,6 @@ import numpy as np
 # of your model generalization performance.
 
 # %%
+from sklearn.pipeline import make_pipeline
+
 # Write your code here.

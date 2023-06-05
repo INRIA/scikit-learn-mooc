@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -36,9 +35,9 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=[target_name, "education-num"])
 
 # %% [markdown]
-# As in the previous notebooks, we use the utility `make_column_selector`
-# to select only columns with a specific data type. Besides, we list in
-# advance all categories for the categorical columns.
+# As in the previous notebooks, we use the utility `make_column_selector` to
+# select only columns with a specific data type. Besides, we list in advance all
+# categories for the categorical columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -63,11 +62,13 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.ensemble import HistGradientBoostingClassifier
 
-categorical_preprocessor = OrdinalEncoder(handle_unknown="use_encoded_value",
-                                          unknown_value=-1)
-preprocessor = ColumnTransformer([
-    ('categorical', categorical_preprocessor, categorical_columns)],
-    remainder="passthrough")
+categorical_preprocessor = OrdinalEncoder(
+    handle_unknown="use_encoded_value", unknown_value=-1
+)
+preprocessor = ColumnTransformer(
+    [("categorical", categorical_preprocessor, categorical_columns)],
+    remainder="passthrough",
+)
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
@@ -77,9 +78,11 @@ elapsed_time = time.time() - start
 
 scores = cv_results["test_score"]
 
-print("The mean cross-validation accuracy is: "
-      f"{scores.mean():.3f} ± {scores.std():.3f} "
-      f"with a fitting time of {elapsed_time:.3f}")
+print(
+    "The mean cross-validation accuracy is: "
+    f"{scores.mean():.3f} ± {scores.std():.3f} "
+    f"with a fitting time of {elapsed_time:.3f}"
+)
 
 # %% [markdown]
 # ## Scaling numerical features
@@ -95,15 +98,15 @@ print("The mean cross-validation accuracy is: "
 #
 # We observed that integer coding of categorical variables can be very
 # detrimental for linear models. However, it does not seem to be the case for
-# `HistGradientBoostingClassifier` models, as the cross-validation score
-# of the reference pipeline with `OrdinalEncoder` is reasonably good.
+# `HistGradientBoostingClassifier` models, as the cross-validation score of the
+# reference pipeline with `OrdinalEncoder` is reasonably good.
 #
 # Let's see if we can get an even better accuracy with `OneHotEncoder`.
 #
-# Hint: `HistGradientBoostingClassifier` does not yet support sparse input
-# data. You might want to use
-# `OneHotEncoder(handle_unknown="ignore", sparse_output=False)` to force the use of a
-# dense representation as a workaround.
+# Hint: `HistGradientBoostingClassifier` does not yet support sparse input data.
+# You might want to use `OneHotEncoder(handle_unknown="ignore",
+# sparse_output=False)` to force the use of a dense representation as a
+# workaround.
 
 # %%
 # Write your code here.

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -24,6 +23,7 @@
 
 # %%
 import pandas as pd
+
 adult_census = pd.read_csv("../datasets/adult-census-numeric.csv")
 data = adult_census.drop(columns="class")
 target = adult_census["class"]
@@ -31,12 +31,12 @@ target = adult_census["class"]
 # %% [markdown]
 # In the previous notebook we used `model = KNeighborsClassifier()`. All
 # scikit-learn models can be created without arguments. This is convenient
-# because it means that you don't need to understand the full details of a
-# model before starting to use it.
+# because it means that you don't need to understand the full details of a model
+# before starting to use it.
 #
-# One of the `KNeighborsClassifier` parameters is `n_neighbors`. It controls
-# the number of neighbors we are going to use to make a prediction for a new
-# data point.
+# One of the `KNeighborsClassifier` parameters is `n_neighbors`. It controls the
+# number of neighbors we are going to use to make a prediction for a new data
+# point.
 #
 # What is the default value of the `n_neighbors` parameter? Hint: Look at the
 # documentation on the [scikit-learn

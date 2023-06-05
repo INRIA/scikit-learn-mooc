@@ -33,7 +33,7 @@ def generate_data(n_samples=30):
     x_min, x_max = -3, 3
     x = rng.uniform(x_min, x_max, size=n_samples)
     noise = 4.0 * rng.randn(n_samples)
-    y = x ** 3 - 0.5 * (x + 1) ** 2 + noise
+    y = x**3 - 0.5 * (x + 1) ** 2 + noise
     y /= y.std()
 
     data_train = pd.DataFrame(x, columns=["Feature"])
@@ -162,7 +162,7 @@ data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
 
 ratio_unique_sample = np.unique(data_bootstrap_sample).size / data_bootstrap_sample.size
 print(
-    f"Percentage of samples present in the original dataset: "
+    "Percentage of samples present in the original dataset: "
     f"{ratio_unique_sample * 100:.1f}%"
 )
 

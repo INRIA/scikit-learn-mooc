@@ -146,7 +146,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 data.shape
 
 # %%
-data_expanded = np.concatenate([data, data ** 2, data ** 3], axis=1)
+data_expanded = np.concatenate([data, data**2, data**3], axis=1)
 data_expanded.shape
 
 

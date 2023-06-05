@@ -37,7 +37,7 @@ def generate_data(n_samples=50):
     len_x = x_max - x_min
     x = rng.rand(n_samples) * len_x - len_x / 2
     noise = rng.randn(n_samples) * 0.3
-    y = x ** 3 - 0.5 * x ** 2 + noise
+    y = x**3 - 0.5 * x**2 + noise
 
     data_train = pd.DataFrame(x, columns=["Feature"])
     data_test = pd.DataFrame(np.linspace(x_max, x_min, num=300), columns=["Feature"])

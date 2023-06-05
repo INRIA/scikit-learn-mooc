@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   jupytext:
@@ -6,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.11.5
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -28,16 +27,17 @@
 
 # %%
 import numpy as np
+
 # Set the seed for reproduction
 rng = np.random.RandomState(0)
 
 # Generate data
 n_sample = 100
 data_max, data_min = 1.4, -1.4
-len_data = (data_max - data_min)
+len_data = data_max - data_min
 data = rng.rand(n_sample) * len_data - len_data / 2
-noise = rng.randn(n_sample) * .3
-target = data ** 3 - 0.5 * data ** 2 + noise
+noise = rng.randn(n_sample) * 0.3
+target = data**3 - 0.5 * data**2 + noise
 
 # %% [markdown]
 # ```{note}
@@ -47,28 +47,32 @@ target = data ** 3 - 0.5 * data ** 2 + noise
 
 # %%
 import pandas as pd
+
 full_data = pd.DataFrame({"data": data, "target": target})
 
 # %%
 import seaborn as sns
 
-_ = sns.scatterplot(data=full_data, x="data", y="target", color="black",
-                    alpha=0.5)
+_ = sns.scatterplot(
+    data=full_data, x="data", y="target", color="black", alpha=0.5
+)
 
 # %% [markdown]
 # We observe that the link between the data `data` and vector `target` is
-# non-linear. For instance, `data` could represent the years of
-# experience (normalized) and `target` the salary (normalized). Therefore, the
-# problem here would be to infer the salary given the years of experience.
+# non-linear. For instance, `data` could represent the years of experience
+# (normalized) and `target` the salary (normalized). Therefore, the problem here
+# would be to infer the salary given the years of experience.
 #
 # Using the function `f` defined below, find both the `weight` and the
 # `intercept` that you think will lead to a good linear model. Plot both the
 # data and the predictions of this model.
 
+
 # %%
 def f(data, weight=0, intercept=0):
     target_predict = weight * data + intercept
     return target_predict
+
 
 # %%
 # Write your code here.

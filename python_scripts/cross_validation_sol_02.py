@@ -78,7 +78,8 @@ cv_results_most_frequent = cross_validate(
     most_frequent_classifier, data, target, cv=cv, n_jobs=2
 )
 test_score_most_frequent = pd.Series(
-    cv_results_most_frequent["test_score"], name="Most frequent class predictor"
+    cv_results_most_frequent["test_score"],
+    name="Most frequent class predictor",
 )
 test_score_most_frequent
 

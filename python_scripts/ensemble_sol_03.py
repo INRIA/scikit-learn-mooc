@@ -74,7 +74,10 @@ gbdt_train_scores, gbdt_validation_scores = validation_curve(
     scoring="neg_mean_absolute_error",
     n_jobs=2,
 )
-gbdt_train_errors, gbdt_validation_errors = -gbdt_train_scores, -gbdt_validation_scores
+gbdt_train_errors, gbdt_validation_errors = (
+    -gbdt_train_scores,
+    -gbdt_validation_scores,
+)
 
 forest_train_scores, forest_validation_scores = validation_curve(
     forest,

@@ -217,7 +217,9 @@ adult_census["education"].value_counts()
 #
 # Let's look at the relationship between `"education"` and `"education-num"`.
 # %%
-pd.crosstab(index=adult_census["education"], columns=adult_census["education-num"])
+pd.crosstab(
+    index=adult_census["education"], columns=adult_census["education-num"]
+)
 
 # %% [markdown]
 # For every entry in `\"education\"`, there is only one single corresponding
@@ -300,7 +302,9 @@ age_limit = 27
 plt.axvline(x=age_limit, ymin=0, ymax=1, color="black", linestyle="--")
 
 hours_per_week_limit = 40
-plt.axhline(y=hours_per_week_limit, xmin=0.18, xmax=1, color="black", linestyle="--")
+plt.axhline(
+    y=hours_per_week_limit, xmin=0.18, xmax=1, color="black", linestyle="--"
+)
 
 plt.annotate("<=50K", (17, 25), rotation=90, fontsize=35)
 plt.annotate("<=50K", (35, 20), fontsize=35)

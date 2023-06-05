@@ -138,8 +138,23 @@ import numpy as np
 
 # defines the lower and upper bounds of sample indices
 # for each writer
-writer_boundaries = [0, 130, 256, 386, 516, 646, 776, 915, 1029,
-                     1157, 1287, 1415, 1545, 1667, 1797]
+writer_boundaries = [
+    0,
+    130,
+    256,
+    386,
+    516,
+    646,
+    776,
+    915,
+    1029,
+    1157,
+    1287,
+    1415,
+    1545,
+    1667,
+    1797,
+]
 groups = np.zeros_like(target)
 lower_bounds = writer_boundaries[:-1]
 upper_bounds = writer_boundaries[1:]

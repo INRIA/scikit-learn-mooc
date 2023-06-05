@@ -202,8 +202,8 @@ data_encoded[:5]
 print(f"The encoded dataset contains {data_encoded.shape[1]} features")
 
 # %% [markdown]
-# Look at how the `"workclass"` variable of the 3 first records has been
-# encoded and compare this to the original string representation.
+# Look at how the `"workclass"` variable of the 3 first records has been encoded
+# and compare this to the original string representation.
 #
 # The number of features after the encoding is more than 10 times larger than in
 # the original data because some variables such as `occupation` and

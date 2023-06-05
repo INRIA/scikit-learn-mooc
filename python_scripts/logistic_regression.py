@@ -103,7 +103,11 @@ import seaborn as sns
 from sklearn.inspection import DecisionBoundaryDisplay
 
 DecisionBoundaryDisplay.from_estimator(
-    logistic_regression, data_test, response_method="predict", cmap="RdBu_r", alpha=0.5
+    logistic_regression,
+    data_test,
+    response_method="predict",
+    cmap="RdBu_r",
+    alpha=0.5,
 )
 sns.scatterplot(
     data=penguins_test,

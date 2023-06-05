@@ -21,7 +21,9 @@
 # %%
 import pandas as pd
 
-cv_results = pd.read_csv("../figures/randomized_search_results.csv", index_col=0)
+cv_results = pd.read_csv(
+    "../figures/randomized_search_results.csv", index_col=0
+)
 cv_results
 
 # %% [markdown]
@@ -70,7 +72,9 @@ ax = sns.scatterplot(
 ax.set_xscale("log")
 ax.set_yscale("log")
 
-_ = ax.legend(title="mean_test_score", loc="center left", bbox_to_anchor=(1, 0.5))
+_ = ax.legend(
+    title="mean_test_score", loc="center left", bbox_to_anchor=(1, 0.5)
+)
 
 # %% [markdown]
 # In the previous plot we see that the top performing values are located in a

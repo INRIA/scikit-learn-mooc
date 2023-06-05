@@ -81,7 +81,7 @@ cv_results
 
 # %% tags=["solution"]
 print(
-    f"Accuracy score of our model:\n"
+    "Accuracy score of our model:\n"
     f"{cv_results['test_score'].mean():.3f} ± "
     f"{cv_results['test_score'].std():.3f}"
 )

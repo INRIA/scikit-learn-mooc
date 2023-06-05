@@ -59,6 +59,7 @@ _ = sns.scatterplot(data=full_data, x="data", y="target", color="black", alpha=0
 # `intercept` that you think will lead to a good linear model. Plot both the
 # data and the predictions of this model.
 
+
 # %%
 def f(data, weight=0, intercept=0):
     target_predict = weight * data + intercept

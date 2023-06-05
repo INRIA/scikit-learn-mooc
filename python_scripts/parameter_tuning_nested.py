@@ -100,8 +100,9 @@ cv_results
 
 # %%
 print(
-    "Generalization score without hyperparameters tuning:\n"
-    f"{cv_results['test_score'].mean():.3f} ± {cv_results['test_score'].std():.3f}"
+    "Generalization score without hyperparameters"
+    f" tuning:\n{cv_results['test_score'].mean():.3f} ±"
+    f" {cv_results['test_score'].std():.3f}"
 )
 
 # %% [markdown]

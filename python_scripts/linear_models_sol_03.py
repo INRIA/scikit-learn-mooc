@@ -115,8 +115,8 @@ cv_results = cross_validate(
 )
 
 # %% [markdown]
-# Compute the mean and std of the MAE in grams (g) and compare with the results without
-# feature engineering.
+# Compute the mean and std of the MAE in grams (g) and compare with the results
+# without feature engineering.
 
 # %%
 # solution

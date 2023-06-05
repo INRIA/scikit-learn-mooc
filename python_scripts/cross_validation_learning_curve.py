@@ -75,9 +75,8 @@ cv = ShuffleSplit(n_splits=30, test_size=0.2)
 
 # %%
 from sklearn.model_selection import LearningCurveDisplay
-import matplotlib.pyplot as plt
 
-LearningCurveDisplay.from_estimator(
+display = LearningCurveDisplay.from_estimator(
     regressor,
     data,
     target,
@@ -91,7 +90,7 @@ LearningCurveDisplay.from_estimator(
     std_display_style="errorbar",
     n_jobs=2,
 )
-_ = plt.title("Learning curve for decision tree")
+_ = display.ax_.set_title("Learning curve for decision tree")
 
 # %% [markdown]
 # Looking at the training error alone, we see that we get an error of 0 k$. It

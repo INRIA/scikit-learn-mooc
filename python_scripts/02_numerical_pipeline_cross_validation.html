@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -769,10 +769,11 @@ figure below illustrates this K-fold strategy.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This figure shows the particular case of <strong>K-fold</strong> cross-validation strategy.
-For each cross-validation split, the procedure trains a clone of model on all the red
-samples and evaluate the score of the model on the blue samples.
-As mentioned earlier, there is a variety of different cross-validation
-strategies. Some of these aspects will be covered in more detail in future notebooks.</p>
+For each cross-validation split, the procedure trains a clone of model on all
+the red samples and evaluate the score of the model on the blue samples. As
+mentioned earlier, there is a variety of different cross-validation
+strategies. Some of these aspects will be covered in more detail in future
+notebooks.</p>
 </div>
 <p>Cross-validation is therefore computationally intensive because it requires
 training several models instead of one.</p>
@@ -792,12 +793,12 @@ exists several cross-validation strategies, <code class="docutils literal notran
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 728 ms, sys: 190 ms, total: 919 ms
-Wall time: 527 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 712 ms, sys: 172 ms, total: 884 ms
+Wall time: 499 ms
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.07595611, 0.07287741, 0.07314062, 0.08205748, 0.07207608]),
- &#39;score_time&#39;: array([0.01664567, 0.0163188 , 0.01622462, 0.01592469, 0.02267885]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.07404351, 0.0713284 , 0.07076836, 0.07071662, 0.07281446]),
+ &#39;score_time&#39;: array([0.01593471, 0.01595831, 0.01625395, 0.01545548, 0.01548839]),
  &#39;test_score&#39;: array([0.79557785, 0.80049135, 0.79965192, 0.79873055, 0.80436118])}
 </pre></div>
 </div>
@@ -806,8 +807,10 @@ Wall time: 527 ms
 <p>The output of <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> is a Python dictionary, which by default
 contains three entries:</p>
 <ul class="simple">
-<li><p>(i) the time to train the model on the training data for each fold, <code class="docutils literal notranslate"><span class="pre">fit_time</span></code></p></li>
-<li><p>(ii) the time to predict with the model on the testing data for each fold, <code class="docutils literal notranslate"><span class="pre">score_time</span></code></p></li>
+<li><p>(i) the time to train the model on the training data for each fold,
+<code class="docutils literal notranslate"><span class="pre">fit_time</span></code></p></li>
+<li><p>(ii) the time to predict with the model on the testing data for each fold,
+<code class="docutils literal notranslate"><span class="pre">score_time</span></code></p></li>
 <li><p>(iii) the default score on the testing data for each fold, <code class="docutils literal notranslate"><span class="pre">test_score</span></code>.</p></li>
 </ul>
 <p>Setting <code class="docutils literal notranslate"><span class="pre">cv=5</span></code> created 5 distinct splits to get 5 variations for the training
@@ -850,8 +853,8 @@ variation of the accuracy across folds.</p>
 we can estimate the uncertainty of our model generalization performance. This
 is the main advantage of cross-validation and can be crucial in practice, for
 example when comparing different models to figure out whether one is better
-than the other or whether our measures of the generalization performance of each
-model are within the error bars of one-another.</p>
+than the other or whether our measures of the generalization performance of
+each model are within the error bars of one-another.</p>
 <p>In this particular case, only the first 2 decimals seem to be trustworthy. If
 you go up in this notebook, you can check that the performance we get with
 cross-validation is compatible with the one from a single train-test split.</p>
@@ -889,7 +892,10 @@ cross-validation is compatible with the one from a single train-test split.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../predictive_modeling_pipeline/02_numerical_pipeline_video_cross_validation.html"
@@ -909,7 +915,10 @@ cross-validation is compatible with the one from a single train-test split.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -935,7 +944,7 @@ cross-validation is compatible with the one from a single train-test split.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -978,7 +987,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -987,8 +996,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

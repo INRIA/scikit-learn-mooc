@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -704,8 +704,8 @@ Instead, we focused on the mechanism used to find the best set of parameters.</p
 <p>In this notebook, we will reuse some knowledge presented in the module
 “Selecting the best model” to show how to evaluate models where
 hyperparameters need to be tuned.</p>
-<p>Thus, we will first load the dataset and create the predictive model that
-we want to optimize and later on, evaluate.</p>
+<p>Thus, we will first load the dataset and create the predictive model that we
+want to optimize and later on, evaluate.</p>
 <section id="loading-the-dataset">
 <h2>Loading the dataset<a class="headerlink" href="#loading-the-dataset" title="Permalink to this heading">#</a></h2>
 <p>As in the previous notebook, we load the Adult census dataset. The loaded
@@ -727,8 +727,8 @@ previously done.</p>
 </section>
 <section id="our-predictive-model">
 <h2>Our predictive model<a class="headerlink" href="#our-predictive-model" title="Permalink to this heading">#</a></h2>
-<p>We now create the predictive model that we want to optimize. Note that
-this pipeline is identical to the one we used in the previous notebook.</p>
+<p>We now create the predictive model that we want to optimize. Note that this
+pipeline is identical to the one we used in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -743,9 +743,9 @@ this pipeline is identical to the one we used in the previous notebook.</p>
 <span class="p">)</span>
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;cat_preprocessor&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
     <span class="p">],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
     <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -757,15 +757,15 @@ this pipeline is identical to the one we used in the previous notebook.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
-    <span class="p">(</span>
-        <span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
-        <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span>
-            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span>
-        <span class="p">)</span>
-    <span class="p">),</span>
-<span class="p">])</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
+            <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 <span class="n">model</span>
 </pre></div>
 </div>
@@ -852,45 +852,46 @@ scores.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.524100</td>
-      <td>0.080474</td>
+      <td>0.541056</td>
+      <td>0.076983</td>
       <td>0.863241</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.515906</td>
-      <td>0.081173</td>
+      <td>0.535356</td>
+      <td>0.078759</td>
       <td>0.860784</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.517862</td>
-      <td>0.080362</td>
+      <td>0.537423</td>
+      <td>0.078432</td>
       <td>0.860360</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.512381</td>
-      <td>0.082335</td>
+      <td>0.541405</td>
+      <td>0.080456</td>
       <td>0.862408</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.517173</td>
-      <td>0.080641</td>
+      <td>0.539939</td>
+      <td>0.078335</td>
       <td>0.866912</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>The cross-validation scores are coming from a 5-fold cross-validation. So
-we can compute the mean and standard deviation of the generalization score.</p>
+<p>The cross-validation scores are coming from a 5-fold cross-validation. So we
+can compute the mean and standard deviation of the generalization score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Generalization score without hyperparameters tuning:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Generalization score without hyperparameters&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot; tuning:</span><span class="se">\n</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ±&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -902,8 +903,8 @@ we can compute the mean and standard deviation of the generalization score.</p>
 </div>
 </div>
 </div>
-<p>We now present how to evaluate the model with hyperparameter tuning,
-where an extra step is required to select the best set of parameters.</p>
+<p>We now present how to evaluate the model with hyperparameter tuning, where an
+extra step is required to select the best set of parameters.</p>
 </section>
 <section id="with-hyperparameter-tuning">
 <h3>With hyperparameter tuning<a class="headerlink" href="#with-hyperparameter-tuning" title="Permalink to this heading">#</a></h3>
@@ -917,12 +918,10 @@ parameters and the parameter values that we want to explore.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+    <span class="s2">&quot;classifier__max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
 <span class="p">}</span>
-<span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
+<span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -989,19 +988,21 @@ parameters and the parameter values that we want to explore.</p>
                                   &#x27;native-country&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label sk-toggleable__label-arrow">cat_preprocessor</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label sk-toggleable__label-arrow">OrdinalEncoder</label><div class="sk-toggleable__content"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label sk-toggleable__label-arrow">remainder</label><div class="sk-toggleable__content"><pre></pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label sk-toggleable__label-arrow">passthrough</label><div class="sk-toggleable__content"><pre>passthrough</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label sk-toggleable__label-arrow">HistGradientBoostingClassifier</label><div class="sk-toggleable__content"><pre>HistGradientBoostingClassifier(max_leaf_nodes=4, random_state=42)</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
 </div>
 <p>As previously seen, when calling the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method, the model embedded in the
-grid-search is trained with every possible combination of parameters
-resulting from the parameter grid. The best combination is selected by
-keeping the combination leading to the best mean cross-validated score.</p>
+grid-search is trained with every possible combination of parameters resulting
+from the parameter grid. The best combination is selected by keeping the
+combination leading to the best mean cross-validated score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
-<span class="n">cv_results</span><span class="p">[[</span>
-    <span class="s2">&quot;param_classifier__learning_rate&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;param_classifier__max_leaf_nodes&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;rank_test_score&quot;</span>
-<span class="p">]]</span>
+<span class="n">cv_results</span><span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;param_classifier__learning_rate&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;param_classifier__max_leaf_nodes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rank_test_score&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1081,10 +1082,10 @@ keeping the combination leading to the best mean cross-validated score.</p>
 </div>
 </div>
 <p>One important caveat here concerns the evaluation of the generalization
-performance. Indeed, the mean and standard deviation of the scores computed
-by the cross-validation in the grid-search are potentially not good estimates
-of the generalization performance we would obtain by refitting a model with
-the best combination of hyper-parameter values on the full dataset. Note that
+performance. Indeed, the mean and standard deviation of the scores computed by
+the cross-validation in the grid-search are potentially not good estimates of
+the generalization performance we would obtain by refitting a model with the
+best combination of hyper-parameter values on the full dataset. Note that
 scikit-learn automatically performs this refit by default when calling
 <code class="docutils literal notranslate"><span class="pre">model_grid_search.fit</span></code>. This refitted model is trained with more data than
 the different models trained internally during the cross-validation of the
@@ -1116,20 +1117,20 @@ single train-test split.</p>
 </div>
 <p>The score measure on the final test set is almost within the range of the
 internal CV score for the best hyper-parameter combination. This is reassuring
-as it means that the tuning procedure did not cause significant overfitting
-in itself (other-wise the final test score would have been lower than the
+as it means that the tuning procedure did not cause significant overfitting in
+itself (other-wise the final test score would have been lower than the
 internal CV scores). That is expected because our grid search explored very
 few hyper-parameter combinations for the sake of speed. The test score of the
-final model is actually a bit higher than what we could have expected from
-the internal cross-validation. This is also expected because the refitted
-model is trained on a larger dataset than the models evaluated in the
-internal CV loop of the grid-search procedure. This is often the case that
-models trained on a larger number of samples tend to generalize better.</p>
+final model is actually a bit higher than what we could have expected from the
+internal cross-validation. This is also expected because the refitted model is
+trained on a larger dataset than the models evaluated in the internal CV loop
+of the grid-search procedure. This is often the case that models trained on a
+larger number of samples tend to generalize better.</p>
 <p>In the code above, the selection of the best hyperparameters was done only on
 the train set from the initial train-test split. Then, we evaluated the
 generalization performance of our tuned model on the left out test set. This
 can be shown schematically as follows</p>
-<p><img alt="Cross-validation tuning diagram" src="../_images/cross_validation_train_test_diagram.png" /></p>
+<p><img alt="Cross-validation tuningdiagram" src="../_images/cross_validation_train_test_diagram.png" /></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This figure shows the particular case of <strong>K-fold</strong> cross-validation
@@ -1145,8 +1146,8 @@ concatenation of the red and green samples and evaluated on the blue samples.</p
 them from the final test set in blue.</p>
 </div>
 <p>However, this evaluation only provides us a single point estimate of the
-generalization performance. As recall at the beginning of this notebook, it
-is beneficial to have a rough idea of the uncertainty of our estimated
+generalization performance. As recall at the beginning of this notebook, it is
+beneficial to have a rough idea of the uncertainty of our estimated
 generalization performance. Therefore, we should instead use an additional
 cross-validation for this evaluation.</p>
 <p>This pattern is called <strong>nested cross-validation</strong>. We use an inner
@@ -1167,7 +1168,7 @@ refitted tuned model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
-<span class="n">cv_test_scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span>
+<span class="n">cv_test_scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Generalization score with hyperparameters tuning:</span><span class="se">\n</span><span class="s2">&quot;</span>
     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_test_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">cv_test_scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -1184,9 +1185,9 @@ refitted tuned model.</p>
 </div>
 <p>This result is compatible with the test score measured with the string outer
 train-test split.</p>
-<p>However, in this case, we can apprehend the variability of our estimate of
-the generalization performance thanks to the measure of the
-standard-deviation of the scores measured in the outer cross-validation.</p>
+<p>However, in this case, we can apprehend the variability of our estimate of the
+generalization performance thanks to the measure of the standard-deviation of
+the scores measured in the outer cross-validation.</p>
 <p>Here is a schematic representation of the complete nested cross-validation
 procedure:</p>
 <p><img alt="Nested cross-validationdiagram" src="../_images/nested_cross_validation_diagram.png" /></p>
@@ -1237,19 +1238,18 @@ select similar values for the hyperparameters. If it is the case, then all is
 fine. It means that we can deploy a model fit with those hyperparameters and
 expect that it will have an actual predictive performance close to what we
 measured in the outer cross-validation.</p>
-<p>But it is also possible that some hyperparameters do not matter at all, and
-as a result in different tuning sessions give different results. In this
-case, any value will do. This can typically be confirmed by doing a parallel
-coordinate plot of the results of a large hyperparameter search as seen in
-the exercises.</p>
+<p>But it is also possible that some hyperparameters do not matter at all, and as
+a result in different tuning sessions give different results. In this case,
+any value will do. This can typically be confirmed by doing a parallel
+coordinate plot of the results of a large hyperparameter search as seen in the
+exercises.</p>
 <p>From a deployment point of view, one could also choose to deploy all the
 models found by the outer cross-validation loop and make them vote to get the
-final predictions. However this can cause operational problems because it
-uses more memory and makes computing prediction slower, resulting in a higher
+final predictions. However this can cause operational problems because it uses
+more memory and makes computing prediction slower, resulting in a higher
 computational resource usage per prediction.</p>
-<p>In this notebook, we have seen how to evaluate the predictive performance of
-a model with tuned hyper-parameters using the nested cross-validation
-procedure.</p>
+<p>In this notebook, we have seen how to evaluate the predictive performance of a
+model with tuned hyper-parameters using the nested cross-validation procedure.</p>
 </section>
 </section>
 </section>
@@ -1280,7 +1280,10 @@ procedure.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="parameter_tuning_parallel_plot.html"
@@ -1300,7 +1303,10 @@ procedure.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1330,7 +1336,7 @@ procedure.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1373,7 +1379,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1382,8 +1388,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

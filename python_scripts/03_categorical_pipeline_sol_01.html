@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -683,8 +683,8 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="solution-for-exercise-m1-04">
 <h1>📃 Solution for Exercise M1.04<a class="headerlink" href="#solution-for-exercise-m1-04" title="Permalink to this heading">#</a></h1>
 <p>The goal of this exercise is to evaluate the impact of using an arbitrary
-integer encoding for categorical variables along with a linear
-classification model such as Logistic Regression.</p>
+integer encoding for categorical variables along with a linear classification
+model such as Logistic Regression.</p>
 <p>To do so, let’s try to use <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> to preprocess the categorical
 variables. This preprocessor is assembled in a pipeline with
 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>. The generalization performance of the pipeline can be
@@ -729,8 +729,8 @@ dataset.</p>
 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> classifier.</p>
 <p>Because <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> can raise errors if it sees an unknown category at
 prediction time, you can set the <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;use_encoded_value&quot;</span></code> and
-<code class="docutils literal notranslate"><span class="pre">unknown_value</span></code> parameters. You can refer to the
-<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html">scikit-learn documentation</a>
+<code class="docutils literal notranslate"><span class="pre">unknown_value</span></code> parameters. You can refer to the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OrdinalEncoder.html">scikit-learn
+documentation</a>
 for more details regarding these parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -741,7 +741,8 @@ for more details regarding these parameters.</p>
 <span class="c1"># solution</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
+    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">),</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -751,13 +752,12 @@ for more details regarding these parameters.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Be aware that if an error happened during the cross-validation,
-<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> will raise a warning and return NaN (Not a Number)
-as scores.  To make it raise a standard Python exception with a traceback,
-you can pass the <code class="docutils literal notranslate"><span class="pre">error_score=&quot;raise&quot;</span></code> argument in the call to
-<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>. An exception will be raised instead of a warning at the first
-encountered problem  and <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> will stop right away instead of
-returning NaN values. This is particularly handy when developing
-complex machine learning pipelines.</p>
+<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> will raise a warning and return NaN (Not a Number) as scores.
+To make it raise a standard Python exception with a traceback, you can pass
+the <code class="docutils literal notranslate"><span class="pre">error_score=&quot;raise&quot;</span></code> argument in the call to <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code>. An
+exception will be raised instead of a warning at the first encountered problem
+and <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> will stop right away instead of returning NaN values.
+This is particularly handy when developing complex machine learning pipelines.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -767,8 +767,10 @@ complex machine learning pipelines.</p>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -788,11 +790,14 @@ the input data and just constantly predicting the most frequent class:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
 
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">),</span>
-                            <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">),</span> <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span>
+<span class="p">)</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -803,22 +808,24 @@ the input data and just constantly predicting the most frequent class:</p>
 </div>
 </div>
 <p>Now, we would like to compare the generalization performance of our previous
-model with a new model where instead of using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code>, we will
-use a <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>. Repeat the model evaluation using cross-validation.
-Compare the score of both models and conclude on the impact of choosing a
-specific encoding strategy when using a linear model.</p>
+model with a new model where instead of using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code>, we will use
+a <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>. Repeat the model evaluation using cross-validation. Compare
+the score of both models and conclude on the impact of choosing a specific
+encoding strategy when using a linear model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
 
 <span class="c1"># solution</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">),</span>
-    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
+    <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data_categorical</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -828,8 +835,8 @@ specific encoding strategy when using a linear model.</p>
 </div>
 </div>
 </div>
-<p>With the linear classifier chosen, using an encoding that does not assume
-any ordering lead to much better result.</p>
+<p>With the linear classifier chosen, using an encoding that does not assume any
+ordering lead to much better result.</p>
 <p>The important message here is: linear model and <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> are used
 together only for ordinal categorical features, i.e. features that have a
 specific ordering. Otherwise, your model will perform poorly.</p>
@@ -861,7 +868,10 @@ specific ordering. Otherwise, your model will perform poorly.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="03_categorical_pipeline_ex_01.html"
@@ -881,7 +891,10 @@ specific ordering. Otherwise, your model will perform poorly.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -891,7 +904,7 @@ specific ordering. Otherwise, your model will perform poorly.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -934,7 +947,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -943,8 +956,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

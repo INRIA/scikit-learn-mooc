@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -692,9 +692,9 @@ they need to be optimized.</p>
 <p>In this notebook we will use the words “hyperparameters” and “parameters”
 interchangeably.</p>
 </div>
-<p>This notebook shows how one can get and set the value of a hyperparameter in
-a scikit-learn estimator. We recall that hyperparameters refer to the
-parameter that will control the learning process.</p>
+<p>This notebook shows how one can get and set the value of a hyperparameter in a
+scikit-learn estimator. We recall that hyperparameters refer to the parameter
+that will control the learning process.</p>
 <p>They should not be confused with the fitted parameters, resulting from the
 training. These fitted parameters are recognizable in scikit-learn because
 they are spelled with a final underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>, for instance <code class="docutils literal notranslate"><span class="pre">model.coef_</span></code>.</p>
@@ -707,8 +707,7 @@ features.</p>
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
-<span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
+<span class="n">numerical_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-gain&quot;</span><span class="p">,</span> <span class="s2">&quot;capital-loss&quot;</span><span class="p">,</span> <span class="s2">&quot;hours-per-week&quot;</span><span class="p">]</span>
 
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">numerical_columns</span><span class="p">]</span>
@@ -788,21 +787,23 @@ features.</p>
 </table>
 </div></div></div>
 </div>
-<p>Let’s create a simple predictive model made of a scaler followed by a
-logistic regression classifier.</p>
-<p>As mentioned in previous notebooks, many models, including linear ones,
-work better if all features have a similar scaling. For this purpose,
-we use a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which transforms the data by rescaling features.</p>
+<p>Let’s create a simple predictive model made of a scaler followed by a logistic
+regression classifier.</p>
+<p>As mentioned in previous notebooks, many models, including linear ones, work
+better if all features have a similar scaling. For this purpose, we use a
+<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, which transforms the data by rescaling features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
-    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
-    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
-<span class="p">])</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+    <span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">()),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -815,8 +816,10 @@ cross-validation.</p>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score via cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Accuracy score via cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -827,25 +830,27 @@ cross-validation.</p>
 </div>
 </div>
 </div>
-<p>We created a model with the default <code class="docutils literal notranslate"><span class="pre">C</span></code> value that is equal to 1. If we
-wanted to use a different <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter we could have done so when we created
-the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> object with something like <code class="docutils literal notranslate"><span class="pre">LogisticRegression(C=1e-3)</span></code>.</p>
+<p>We created a model with the default <code class="docutils literal notranslate"><span class="pre">C</span></code> value that is equal to 1. If we wanted
+to use a different <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter we could have done so when we created the
+<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> object with something like <code class="docutils literal notranslate"><span class="pre">LogisticRegression(C=1e-3)</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For more information on the model hyperparameter <code class="docutils literal notranslate"><span class="pre">C</span></code>, refer to the
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">documentation</a>.
 Be aware that we will focus on linear models in an upcoming module.</p>
 </div>
-<p>We can also change the parameter of a model after it has been created with
-the <code class="docutils literal notranslate"><span class="pre">set_params</span></code> method, which is available for all scikit-learn estimators.
-For example, we can set <code class="docutils literal notranslate"><span class="pre">C=1e-3</span></code>, fit and evaluate the model:</p>
+<p>We can also change the parameter of a model after it has been created with the
+<code class="docutils literal notranslate"><span class="pre">set_params</span></code> method, which is available for all scikit-learn estimators. For
+example, we can set <code class="docutils literal notranslate"><span class="pre">C=1e-3</span></code>, fit and evaluate the model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__C</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score via cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Accuracy score via cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -860,9 +865,9 @@ For example, we can set <code class="docutils literal notranslate"><span class="
 form <code class="docutils literal notranslate"><span class="pre">&lt;model_name&gt;__&lt;parameter_name&gt;</span></code> (note the double underscore in the
 middle). In our case, <code class="docutils literal notranslate"><span class="pre">classifier</span></code> comes from the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> definition and
 <code class="docutils literal notranslate"><span class="pre">C</span></code> is the parameter name of <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>.</p>
-<p>In general, you can use the <code class="docutils literal notranslate"><span class="pre">get_params</span></code> method on scikit-learn models to
-list all the parameters with their values. For example, if you want to
-get all the parameter names, you can use:</p>
+<p>In general, you can use the <code class="docutils literal notranslate"><span class="pre">get_params</span></code> method on scikit-learn models to list
+all the parameters with their values. For example, if you want to get all the
+parameter names, you can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_params</span><span class="p">():</span>
@@ -903,7 +908,7 @@ values are the parameter values. If you want to get the value of a single
 parameter, for example <code class="docutils literal notranslate"><span class="pre">classifier__C</span></code>, you can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">get_params</span><span class="p">()[</span><span class="s1">&#39;classifier__C&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">get_params</span><span class="p">()[</span><span class="s2">&quot;classifier__C&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -921,8 +926,10 @@ value.</p>
     <span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
     <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
     <span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy score via cross-validation with C=</span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span>
-          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Accuracy score via cross-validation with C=</span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -949,18 +956,16 @@ value.</p>
 </div>
 </div>
 </div>
-<p>We can see that as long as C is high enough, the model seems to perform
-well.</p>
-<p>What we did here is very manual: it involves scanning the values for C
-and picking the best one manually. In the next lesson, we will see how
-to do this automatically.</p>
+<p>We can see that as long as C is high enough, the model seems to perform well.</p>
+<p>What we did here is very manual: it involves scanning the values for C and
+picking the best one manually. In the next lesson, we will see how to do this
+automatically.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>When we evaluate a family of models on test data and pick the best
-performer, we can not trust the corresponding prediction accuracy, and
-we need to apply the selected model to new data. Indeed, the test data
-has been used to select the model, and it is thus no longer independent
-from this model.</p>
+<p>When we evaluate a family of models on test data and pick the best performer,
+we can not trust the corresponding prediction accuracy, and we need to apply
+the selected model to new data. Indeed, the test data has been used to select
+the model, and it is thus no longer independent from this model.</p>
 </div>
 <p>In this notebook we have seen:</p>
 <ul class="simple">
@@ -995,7 +1000,10 @@ and set them.</p></li>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../tuning/parameter_tuning_manual_index.html"
@@ -1015,7 +1023,10 @@ and set them.</p></li>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1025,7 +1036,7 @@ and set them.</p></li>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1068,7 +1079,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1077,8 +1088,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

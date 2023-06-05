@@ -8,8 +8,8 @@
 # %% [markdown]
 # # The California housing dataset
 #
-# In this notebook, we will quickly present the dataset known as the
-# "California housing dataset". This dataset can be fetched from internet using
+# In this notebook, we will quickly present the dataset known as the "California
+# housing dataset". This dataset can be fetched from internet using
 # scikit-learn.
 
 # %%
@@ -41,8 +41,8 @@ california_housing.data.head()
 # In this dataset, we have information regarding the demography (income,
 # population, house occupancy) in the districts, the location of the districts
 # (latitude, longitude), and general information regarding the house in the
-# districts (number of rooms, number of bedrooms, age of the house). Since
-# these statistics are at the granularity of the district, they corresponds to
+# districts (number of rooms, number of bedrooms, age of the house). Since these
+# statistics are at the granularity of the district, they corresponds to
 # averages or medians.
 #
 # Now, let's have a look to the target to be predicted.
@@ -81,9 +81,9 @@ plt.subplots_adjust(hspace=0.7, wspace=0.4)
 # We can first focus on features for which their distributions would be more or
 # less expected.
 #
-# The median income is a distribution with a long tail. It means that the
-# salary of people is more or less normally distributed but there is some
-# people getting a high salary.
+# The median income is a distribution with a long tail. It means that the salary
+# of people is more or less normally distributed but there is some people
+# getting a high salary.
 #
 # Regarding the average house age, the distribution is more or less uniform.
 #
@@ -102,51 +102,61 @@ features_of_interest = ["AveRooms", "AveBedrms", "AveOccup", "Population"]
 california_housing.frame[features_of_interest].describe()
 
 # %% [markdown]
-# For each of these features, comparing the `max` and `75%` values, we can see
-# a huge difference. It confirms the intuitions that there are a couple of
-# extreme values.
+# For each of these features, comparing the `max` and `75%` values, we can see a
+# huge difference. It confirms the intuitions that there are a couple of extreme
+# values.
 #
 # Up to know, we discarded the longitude and latitude that carry geographical
-# information. In short, the combination of this feature could help us to
-# decide if there are locations associated with high-valued houses. Indeed,
-# we could make a scatter plot where the x- and y-axis would be the latitude
-# and longitude and the circle size and color would be linked with the house
-# value in the district.
+# information. In short, the combination of this feature could help us to decide
+# if there are locations associated with high-valued houses. Indeed, we could
+# make a scatter plot where the x- and y-axis would be the latitude and
+# longitude and the circle size and color would be linked with the house value
+# in the district.
 
 # %%
 import seaborn as sns
 
-sns.scatterplot(data=california_housing.frame, x="Longitude", y="Latitude",
-                size="MedHouseVal", hue="MedHouseVal",
-                palette="viridis", alpha=0.5)
-plt.legend(title="MedHouseVal", bbox_to_anchor=(1.05, 0.95),
-           loc="upper left")
+sns.scatterplot(
+    data=california_housing.frame,
+    x="Longitude",
+    y="Latitude",
+    size="MedHouseVal",
+    hue="MedHouseVal",
+    palette="viridis",
+    alpha=0.5,
+)
+plt.legend(title="MedHouseVal", bbox_to_anchor=(1.05, 0.95), loc="upper left")
 _ = plt.title("Median house value depending of\n their spatial location")
 
 # %% [markdown]
 # If you are not familiar with the state of California, it is interesting to
-# notice that all datapoints show a graphical representation of this state.
-# We note that the high-valued houses will be located on the coast, where the
-# big cities from California are located: San Diego, Los Angeles, San Jose, or
-# San Francisco.
+# notice that all datapoints show a graphical representation of this state. We
+# note that the high-valued houses will be located on the coast, where the big
+# cities from California are located: San Diego, Los Angeles, San Jose, or San
+# Francisco.
 #
-# We can do a random subsampling to have less data points to plot but that
-# could still allow us to see these specificities.
+# We can do a random subsampling to have less data points to plot but that could
+# still allow us to see these specificities.
 
 # %%
 import numpy as np
 
 rng = np.random.RandomState(0)
-indices = rng.choice(np.arange(california_housing.frame.shape[0]), size=500,
-                     replace=False)
+indices = rng.choice(
+    np.arange(california_housing.frame.shape[0]), size=500, replace=False
+)
 
 # %%
-sns.scatterplot(data=california_housing.frame.iloc[indices],
-                x="Longitude", y="Latitude",
-                size="MedHouseVal", hue="MedHouseVal",
-                palette="viridis", alpha=0.5)
-plt.legend(title="MedHouseVal", bbox_to_anchor=(1.05, 1),
-           loc="upper left")
+sns.scatterplot(
+    data=california_housing.frame.iloc[indices],
+    x="Longitude",
+    y="Latitude",
+    size="MedHouseVal",
+    hue="MedHouseVal",
+    palette="viridis",
+    alpha=0.5,
+)
+plt.legend(title="MedHouseVal", bbox_to_anchor=(1.05, 1), loc="upper left")
 _ = plt.title("Median house value depending of\n their spatial location")
 
 # %% [markdown]
@@ -168,8 +178,8 @@ subset["MedHouseVal"] = subset["MedHouseVal"].apply(lambda x: x.mid)
 _ = sns.pairplot(data=subset, hue="MedHouseVal", palette="viridis")
 
 # %% [markdown]
-# While it is always complicated to interpret a pairplot since there is a lot
-# of data, here we can get a couple of intuitions. We can confirm that some
+# While it is always complicated to interpret a pairplot since there is a lot of
+# data, here we can get a couple of intuitions. We can confirm that some
 # features have extreme values (outliers?). We can as well see that the median
 # income is helpful to distinguish high-valued from low-valued houses.
 #
@@ -178,7 +188,7 @@ _ = sns.pairplot(data=subset, hue="MedHouseVal", palette="viridis")
 # house values.
 #
 # If you are curious, we created a linear predictive model below and show the
-# values of the coefficients obtained via cross-validation
+# values of the coefficients obtained via cross-validation.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -189,8 +199,12 @@ from sklearn.model_selection import cross_validate
 alphas = np.logspace(-3, 1, num=30)
 model = make_pipeline(StandardScaler(), RidgeCV(alphas=alphas))
 cv_results = cross_validate(
-    model, california_housing.data, california_housing.target,
-    return_estimator=True, n_jobs=2)
+    model,
+    california_housing.data,
+    california_housing.target,
+    return_estimator=True,
+    n_jobs=2,
+)
 
 # %%
 score = cv_results["test_score"]
@@ -201,7 +215,7 @@ import pandas as pd
 
 coefs = pd.DataFrame(
     [est[-1].coef_ for est in cv_results["estimator"]],
-    columns=california_housing.feature_names
+    columns=california_housing.feature_names,
 )
 
 # %%
@@ -212,6 +226,6 @@ _ = plt.title("Coefficients of Ridge models\n via cross-validation")
 
 # %% [markdown]
 # It seems that the three features that we earlier spotted are found important
-# by this model. But be careful regarding interpreting these coefficients.
-# We let you go into the module "Interpretation" to go in depth regarding such
+# by this model. But be careful regarding interpreting these coefficients. We
+# let you go into the module "Interpretation" to go in depth regarding such
 # experiment.

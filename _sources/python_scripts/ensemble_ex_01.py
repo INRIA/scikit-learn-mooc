@@ -28,7 +28,8 @@ from sklearn.model_selection import train_test_split
 data, target = fetch_california_housing(as_frame=True, return_X_y=True)
 target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5)
+    data, target, random_state=0, test_size=0.5
+)
 
 # %% [markdown]
 # ```{note}

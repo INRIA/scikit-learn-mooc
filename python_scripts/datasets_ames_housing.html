@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -683,9 +683,9 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="the-ames-housing-dataset">
 <h1>The Ames housing dataset<a class="headerlink" href="#the-ames-housing-dataset" title="Permalink to this heading">#</a></h1>
 <p>In this notebook, we will quickly present the “Ames housing” dataset. We will
-see that this dataset is similar to the “California housing” dataset.
-However, it is more complex to handle: it contains missing data and both
-numerical and categorical features.</p>
+see that this dataset is similar to the “California housing” dataset. However,
+it is more complex to handle: it contains missing data and both numerical and
+categorical features.</p>
 <p>This dataset is located in the <code class="docutils literal notranslate"><span class="pre">datasets</span></code> directory. It is stored in a comma
 separated value (CSV) file. As previously mentioned, we are aware that the
 dataset contains missing values. The character <code class="docutils literal notranslate"><span class="pre">&quot;?&quot;</span></code> is used as a missing
@@ -696,7 +696,7 @@ will be parsed by pandas when opening the file.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">)</span>
 <span class="n">ames_housing</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;Id&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -883,7 +883,10 @@ containing the data and the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">),</span> <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">target_name</span><span class="p">),</span>
+    <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -911,6 +914,7 @@ of a house in $. We can have a look at the target distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
 <span class="n">target</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;House price in $&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of the house price </span><span class="se">\n</span><span class="s2">in Ames&quot;</span><span class="p">)</span>
@@ -963,7 +967,7 @@ Data columns (total 79 columns):
  21  RoofMatl       1460 non-null   object 
  22  Exterior1st    1460 non-null   object 
  23  Exterior2nd    1460 non-null   object 
- 24  MasVnrType     1452 non-null   object 
+ 24  MasVnrType     588 non-null    object 
  25  MasVnrArea     1452 non-null   float64
  26  ExterQual      1460 non-null   object 
  27  ExterCond      1460 non-null   object 
@@ -1084,12 +1088,13 @@ memory usage: 410.8 KB
 </div>
 </div>
 </div>
-<p>We see that the data are mainly represented with integer number. Let’s have
-a look at the histogram for all these features.</p>
+<p>We see that the data are mainly represented with integer number. Let’s have a
+look at the histogram for all these features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_data</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">22</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                    <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numerical_data</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">22</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1099,8 +1104,8 @@ a look at the histogram for all these features.</p>
 </div>
 </div>
 <p>We see that some features have high picks for 0. It could be linked that this
-value was assigned when the criterion did not apply, for instance the
-area of the swimming pool when no swimming pools are available.</p>
+value was assigned when the criterion did not apply, for instance the area of
+the swimming pool when no swimming pools are available.</p>
 <p>We also have some feature encoding some date (for instance year).</p>
 <p>These information are useful and should also be considered when designing a
 predictive model.</p>
@@ -1135,7 +1140,7 @@ Data columns (total 43 columns):
  14  RoofMatl       1460 non-null   object
  15  Exterior1st    1460 non-null   object
  16  Exterior2nd    1460 non-null   object
- 17  MasVnrType     1452 non-null   object
+ 17  MasVnrType     588 non-null    object
  18  ExterQual      1460 non-null   object
  19  ExterCond      1460 non-null   object
  20  Foundation     1460 non-null   object
@@ -1193,7 +1198,7 @@ count for each feature.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2063501624511447de9ea49a8ef34450fcf9e44e1aafd5c5fbd39d4c8bd6318f.png" src="../_images/2063501624511447de9ea49a8ef34450fcf9e44e1aafd5c5fbd39d4c8bd6318f.png" />
+<img alt="../_images/2bb90679f5516d0ec1e7e8e4de424d82297fb8045aaef5a2cef59ac1d6ebe4e1.png" src="../_images/2bb90679f5516d0ec1e7e8e4de424d82297fb8045aaef5a2cef59ac1d6ebe4e1.png" />
 </div>
 </div>
 <p>Plotting this information allows us to answer to two questions:</p>
@@ -1210,7 +1215,9 @@ created a version of this database without missing values.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing_no_missing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ames_housing_no_missing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span>
+<span class="p">)</span>
 <span class="n">ames_housing_no_missing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1386,7 +1393,8 @@ created a version of this database without missing values.</p>
 <p>It contains the same information as the original dataset after using a
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html"><code class="docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code></a>
 to replace missing values using the mean along each numerical column
-(including the target), and the most frequent value along each categorical column.</p>
+(including the target), and the most frequent value along each categorical
+column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_transformer</span>
@@ -1435,7 +1443,9 @@ to replace missing values using the mean along each numerical column
     <span class="n">columns</span><span class="o">=</span><span class="n">categorical_features</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="n">numerical_features</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">ames_housing_preprocessed</span><span class="p">[</span><span class="n">ames_housing</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">ames_housing_preprocessed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">ames_housing</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+<span class="n">ames_housing_preprocessed</span> <span class="o">=</span> <span class="n">ames_housing_preprocessed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+    <span class="n">ames_housing</span><span class="o">.</span><span class="n">dtypes</span>
+<span class="p">)</span>
 <span class="p">(</span><span class="n">ames_housing_no_missing</span> <span class="o">==</span> <span class="n">ames_housing_preprocessed</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1485,7 +1495,10 @@ Length: 80, dtype: bool
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="datasets_california_housing.html"
@@ -1505,7 +1518,10 @@ Length: 80, dtype: bool
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1515,7 +1531,7 @@ Length: 80, dtype: bool
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1558,7 +1574,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1567,8 +1583,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

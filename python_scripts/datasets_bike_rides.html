@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -779,10 +779,10 @@ located in the directory <code class="docutils literal notranslate"><span class=
 </table>
 </div></div></div>
 </div>
-<p>The first column <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> contains a specific information regarding the
-the time and date of a record while other columns contain numerical value
-of some specific measurements. Let’s check the data type of the columns more
-in details.</p>
+<p>The first column <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> contains a specific information regarding the the
+time and date of a record while other columns contain numerical value of some
+specific measurements. Let’s check the data type of the columns more in
+details.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cycling</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -808,19 +808,20 @@ memory usage: 2.0+ MB
 </div>
 </div>
 </div>
-<p>Indeed, CSV format store data as text. Pandas tries to infer numerical type
-by default. It is the reason why all features but <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> are encoded as
+<p>Indeed, CSV format store data as text. Pandas tries to infer numerical type by
+default. It is the reason why all features but <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> are encoded as
 floating point values. However, we see that the <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> is stored as an
 <code class="docutils literal notranslate"><span class="pre">object</span></code> column. It means that the data in this column are stored as <code class="docutils literal notranslate"><span class="pre">str</span></code>
 rather than a specialized <code class="docutils literal notranslate"><span class="pre">datetime</span></code> data type.</p>
-<p>In fact, one needs to set an option such that pandas is directed to infer
-such data type when opening the file. In addition, we will want to use
-<code class="docutils literal notranslate"><span class="pre">timestamp</span></code> as an index. Thus, we can reopen the file with some extra
-arguments to help pandas at reading properly our CSV file.</p>
+<p>In fact, one needs to set an option such that pandas is directed to infer such
+data type when opening the file. In addition, we will want to use <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>
+as an index. Thus, we can reopen the file with some extra arguments to help
+pandas at reading properly our CSV file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cycling</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/bike_rides.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                      <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cycling</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;../datasets/bike_rides.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">cycling</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="n">cycling</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -936,34 +937,34 @@ memory usage: 2.0 MB
 </div>
 </div>
 </div>
-<p>By specifying to pandas to parse the date, we obtain a <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code> that
-is really handy when filtering data based on date.</p>
-<p>We can now have a look at the data stored in our dataframe. It will help us
-to frame the data science problem that we try to solve.</p>
-<p>The records correspond at information derived from GPS recordings of a
-cyclist (<code class="docutils literal notranslate"><span class="pre">speed</span></code>, <code class="docutils literal notranslate"><span class="pre">acceleration</span></code>, <code class="docutils literal notranslate"><span class="pre">slope</span></code>) and some extra information
-acquired from other sensors: <code class="docutils literal notranslate"><span class="pre">heart-rate</span></code> that corresponds to the number of
-beats per minute of the cyclist heart, <code class="docutils literal notranslate"><span class="pre">cadence</span></code> that is the rate at which a
-cyclist is turning the pedals, and <code class="docutils literal notranslate"><span class="pre">power</span></code> that corresponds to the work
-required by the cyclist to go forward.</p>
+<p>By specifying to pandas to parse the date, we obtain a <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code> that is
+really handy when filtering data based on date.</p>
+<p>We can now have a look at the data stored in our dataframe. It will help us to
+frame the data science problem that we try to solve.</p>
+<p>The records correspond at information derived from GPS recordings of a cyclist
+(<code class="docutils literal notranslate"><span class="pre">speed</span></code>, <code class="docutils literal notranslate"><span class="pre">acceleration</span></code>, <code class="docutils literal notranslate"><span class="pre">slope</span></code>) and some extra information acquired from
+other sensors: <code class="docutils literal notranslate"><span class="pre">heart-rate</span></code> that corresponds to the number of beats per minute
+of the cyclist heart, <code class="docutils literal notranslate"><span class="pre">cadence</span></code> that is the rate at which a cyclist is turning
+the pedals, and <code class="docutils literal notranslate"><span class="pre">power</span></code> that corresponds to the work required by the cyclist
+to go forward.</p>
 <p>The power might be slightly an abstract quantity so let’s give a more
 intuitive explanation.</p>
-<p>Let’s take the example of a soup blender that one uses to blend vegetable.
-The engine of this blender develop an instantaneous power of ~300 Watts to
-blend the vegetable. Here, our cyclist is just the engine of the blender (at
-the difference that an average cyclist will develop an instantaneous power
-around ~150 Watts) and blending the vegetable corresponds to move the
-cyclist’s bike forward.</p>
+<p>Let’s take the example of a soup blender that one uses to blend vegetable. The
+engine of this blender develop an instantaneous power of ~300 Watts to blend
+the vegetable. Here, our cyclist is just the engine of the blender (at the
+difference that an average cyclist will develop an instantaneous power around
+~150 Watts) and blending the vegetable corresponds to move the cyclist’s bike
+forward.</p>
 <p>Professional cyclists are using power to calibrate their training and track
 the energy spent during a ride. For instance, riding at a higher power
 requires more energy and thus, you need to provide resources to create this
-energy. With human, this resource is food. For our soup blender, this
-resource can be uranium, petrol, natural gas, coal, etc. Our body serves as a
-power plant to transform the resources into energy.</p>
+energy. With human, this resource is food. For our soup blender, this resource
+can be uranium, petrol, natural gas, coal, etc. Our body serves as a power
+plant to transform the resources into energy.</p>
 <p>The issue with measuring power is linked to the cost of the sensor: a cycling
-power meter. The cost of such sensor vary from <span class="math notranslate nohighlight">\(400 to \)</span>1000. Thus, our
-data science problem is quite easy: can we predict instantaneous cyclist
-power from other (cheaper) sensors.</p>
+power meter. The cost of such sensor vary from <span class="math notranslate nohighlight">\(400 to \)</span>1000. Thus, our data
+science problem is quite easy: can we predict instantaneous cyclist power from
+other (cheaper) sensors.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;power&quot;</span>
@@ -1119,10 +1120,10 @@ power output.</p>
 </div>
 </div>
 </div>
-<p>The starting date is the August 18, 2020 and the ending date is
-September 13, 2020. However, it is obvious that our cyclist did not ride
-every seconds between these dates. Indeed, only a couple of date should be
-present in the dataframe, corresponding to the number of cycling rides.</p>
+<p>The starting date is the August 18, 2020 and the ending date is September 13,
+2020. However, it is obvious that our cyclist did not ride every seconds
+between these dates. Indeed, only a couple of date should be present in the
+dataframe, corresponding to the number of cycling rides.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
@@ -1149,7 +1150,7 @@ extract only the first ride of August 18, 2020.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ride</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Sensor values for different cyclist measurements&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1160,12 +1161,12 @@ extract only the first ride of August 18, 2020.</p>
 </div>
 <p>Since the unit and range of each measurement (feature) is different, it is
 rather difficult to interpret the plot. Also, the high temporal resolution
-make it difficult to make any observation. We could resample the data to get
-a smoother visualization.</p>
+make it difficult to make any observation. We could resample the data to get a
+smoother visualization.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ride</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s2">&quot;60S&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Sensor values for different cyclist measurements&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1179,8 +1180,13 @@ a smoother visualization.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">axs</span> <span class="o">=</span> <span class="n">data_ride</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="c1"># add the units to the plots</span>
-<span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;beats per minute&quot;</span><span class="p">,</span> <span class="s2">&quot;rotations per minute&quot;</span><span class="p">,</span> <span class="s2">&quot;meters per second&quot;</span><span class="p">,</span>
-         <span class="s2">&quot;meters per second squared&quot;</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">]</span>
+<span class="n">units</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;beats per minute&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rotations per minute&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;meters per second&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;meters per second squared&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;%&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 <span class="k">for</span> <span class="n">unit</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">units</span><span class="p">,</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
@@ -1192,8 +1198,8 @@ a smoother visualization.</p>
 </div>
 </div>
 <p>From these plots, we can see some interesting information: a cyclist is
-spending some time without pedaling. This samples should be associated with
-a null power. We also see that the slope have large extremum.</p>
+spending some time without pedaling. This samples should be associated with a
+null power. We also see that the slope have large extremum.</p>
 <p>Let’s make a pair plot on a subset of data samples to see if we can confirm
 some of these intuitions.</p>
 <div class="cell docutils container">
@@ -1228,12 +1234,12 @@ some of these intuitions.</p>
 <img alt="../_images/502514a2d6412ace69165e78c5b4bd65a582212604267e7b89b6210bcc4f7ecf.png" src="../_images/502514a2d6412ace69165e78c5b4bd65a582212604267e7b89b6210bcc4f7ecf.png" />
 </div>
 </div>
-<p>Indeed, we see that low cadence is associated with low power. We can also
-the a link between higher slope / high heart-rate and higher power: a cyclist
-need to develop more energy to go uphill enforcing a stronger physiological
-stimuli on the body. We can confirm this intuition by looking at the
-interaction between the slope and the speed: a lower speed with a higher
-slope is usually associated with higher power.</p>
+<p>Indeed, we see that low cadence is associated with low power. We can also the
+a link between higher slope / high heart-rate and higher power: a cyclist need
+to develop more energy to go uphill enforcing a stronger physiological stimuli
+on the body. We can confirm this intuition by looking at the interaction
+between the slope and the speed: a lower speed with a higher slope is usually
+associated with higher power.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1262,7 +1268,10 @@ slope is usually associated with higher power.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="datasets_blood_transfusion.html"
@@ -1282,7 +1291,10 @@ slope is usually associated with higher power.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1292,7 +1304,7 @@ slope is usually associated with higher power.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1335,7 +1347,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1344,8 +1356,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

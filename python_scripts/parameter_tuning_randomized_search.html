@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -696,9 +696,9 @@ document.write(`
 <p>In the previous notebook, we showed how to use a grid-search approach to
 search for the best hyperparameters maximizing the generalization performance
 of a predictive model.</p>
-<p>However, a grid-search approach has limitations. It does not scale when
-the number of parameters to tune is increasing. Also, the grid will impose
-a regularity during the search which might be problematic.</p>
+<p>However, a grid-search approach has limitations. It does not scale when the
+number of parameters to tune is increasing. Also, the grid will impose a
+regularity during the search which might be problematic.</p>
 <p>In this notebook, we will present another method to tune hyperparameters
 called randomized search.</p>
 <section id="our-predictive-model">
@@ -867,7 +867,8 @@ duplicates the information with <code class="docutils literal notranslate"><span
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -883,11 +884,14 @@ section.</p>
 <span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
 <span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
-                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;cat_preprocessor&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s1">&#39;passthrough&#39;</span><span class="p">,</span> <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
+    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[(</span><span class="s2">&quot;cat_preprocessor&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
+    <span class="n">sparse_threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -897,10 +901,15 @@ section.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
-    <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;classifier&quot;</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">)),</span>
-<span class="p">])</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+        <span class="p">(</span>
+            <span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
+            <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 
 <span class="n">model</span>
 </pre></div>
@@ -945,36 +954,35 @@ section.</p>
 <p>With the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator, the parameters need to be specified
 explicitly. We already mentioned that exploring a large number of values for
 different parameters will be quickly untractable.</p>
-<p>Instead, we can randomly generate the parameter candidates. Indeed,
-such approach avoids the regularity of the grid. Hence, adding more
-evaluations can increase the resolution in each direction. This is the
-case in the frequent situation where the choice of some hyperparameters
-is not very important, as for hyperparameter 2 in the figure below.</p>
+<p>Instead, we can randomly generate the parameter candidates. Indeed, such
+approach avoids the regularity of the grid. Hence, adding more evaluations can
+increase the resolution in each direction. This is the case in the frequent
+situation where the choice of some hyperparameters is not very important, as
+for hyperparameter 2 in the figure below.</p>
 <p><img alt="Randomized vs grid search" src="../_images/grid_vs_random_search.svg" /></p>
-<p>Indeed, the number of evaluation points needs to be divided across the
-two different hyperparameters. With a grid, the danger is that the
-region of good hyperparameters fall between the line of the grid: this
-region is aligned with the grid given that hyperparameter 2 has a weak
-influence. Rather, stochastic search will sample hyperparameter 1
-independently from hyperparameter 2 and find the optimal region.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> class allows for such stochastic search. It is
-used similarly to the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> but the sampling distributions
-need to be specified instead of the parameter values. For instance, we
-will draw candidates using a log-uniform distribution because the parameters
-we are interested in take positive values with a natural log scaling (.1 is
-as close to 1 as 10 is).</p>
+<p>Indeed, the number of evaluation points needs to be divided across the two
+different hyperparameters. With a grid, the danger is that the region of good
+hyperparameters fall between the line of the grid: this region is aligned with
+the grid given that hyperparameter 2 has a weak influence. Rather, stochastic
+search will sample hyperparameter 1 independently from hyperparameter 2 and
+find the optimal region.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> class allows for such stochastic search. It is used
+similarly to the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> but the sampling distributions need to be
+specified instead of the parameter values. For instance, we will draw
+candidates using a log-uniform distribution because the parameters we are
+interested in take positive values with a natural log scaling (.1 is as close
+to 1 as 10 is).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Random search (with <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code>) is typically beneficial compared
-to grid search (with <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>) to optimize 3 or more
-hyperparameters.</p>
+<p>Random search (with <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code>) is typically beneficial compared to
+grid search (with <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>) to optimize 3 or more hyperparameters.</p>
 </div>
-<p>We will optimize 3 other parameters in addition to the ones we
-optimized in the notebook presenting the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>:</p>
+<p>We will optimize 3 other parameters in addition to the ones we optimized in
+the notebook presenting the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code>: it corresponds to the strength of the regularization;</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>: it corresponds to the minimum number of samples
-required in a leaf;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>: it corresponds to the minimum number of samples required
+in a leaf;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_bins</span></code>: it corresponds to the maximum number of bins to construct the
 histograms.</p></li>
 </ul>
@@ -987,9 +995,9 @@ tree in the ensemble.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="docutils literal notranslate"><span class="pre">scipy.stats.loguniform</span></code> can be used to generate floating numbers. To
-generate random values for integer-valued parameters (e.g.
-<code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>) we can adapt is as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">scipy.stats.loguniform</span></code> can be used to generate floating numbers. To generate
+random values for integer-valued parameters (e.g. <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>) we can
+adapt is as follows:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -998,6 +1006,7 @@ generate random values for integer-valued parameters (e.g.
 
 <span class="k">class</span> <span class="nc">loguniform_int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Integer valued version of the log-uniform distribution&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_distribution</span> <span class="o">=</span> <span class="n">loguniform</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
@@ -1009,26 +1018,29 @@ generate random values for integer-valued parameters (e.g.
 </div>
 </div>
 <p>Now, we can define the randomized search using the different distributions.
-Executing 10 iterations of 5-fold cross-validation for random
-parametrizations of this model on this dataset can take from 10 seconds to
-several minutes, depending on the speed of the host computer and the number
-of available processors.</p>
+Executing 10 iterations of 5-fold cross-validation for random parametrizations
+of this model on this dataset can take from 10 seconds to several minutes,
+depending on the speed of the host computer and the number of available
+processors.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 
 <span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;classifier__l2_regularization&#39;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__learning_rate&#39;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__max_leaf_nodes&#39;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__min_samples_leaf&#39;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-    <span class="s1">&#39;classifier__max_bins&#39;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+    <span class="s2">&quot;classifier__l2_regularization&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">),</span>
+    <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;classifier__max_leaf_nodes&quot;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+    <span class="s2">&quot;classifier__min_samples_leaf&quot;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s2">&quot;classifier__max_bins&quot;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
 <span class="p">}</span>
 
 <span class="n">model_random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
+    <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">model_random_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
@@ -1038,8 +1050,8 @@ of available processors.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 10 candidates, totalling 50 fits
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 27.7 s, sys: 492 ms, total: 28.2 s
-Wall time: 28.2 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 35 s, sys: 847 ms, total: 35.9 s
+Wall time: 35.9 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
@@ -1059,11 +1071,11 @@ Wall time: 28.2 s
                                                                                 &#x27;native-country&#x27;])])),
                                              (&#x27;classifier&#x27;,
                                               Hi...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f53336b2640&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f533369b670&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f53336b2400&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f53336b24c0&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f53336b61c0&gt;},
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f5301f891f0&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f530153e4f0&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f530154a220&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f530152fa00&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f530153e970&gt;},
                    verbose=1)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label sk-toggleable__label-arrow">RandomizedSearchCV</label><div class="sk-toggleable__content"><pre>RandomizedSearchCV(cv=5,
                    estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
                                               ColumnTransformer(remainder=&#x27;passthrough&#x27;,
@@ -1081,11 +1093,11 @@ Wall time: 28.2 s
                                                                                 &#x27;native-country&#x27;])])),
                                              (&#x27;classifier&#x27;,
                                               Hi...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f53336b2640&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f533369b670&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f53336b2400&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f53336b24c0&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f53336b61c0&gt;},
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f5301f891f0&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f530153e4f0&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f530154a220&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f530152fa00&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f530153e970&gt;},
                    verbose=1)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
                  ColumnTransformer(remainder=&#x27;passthrough&#x27;, sparse_threshold=0,
                                    transformers=[(&#x27;cat_preprocessor&#x27;,
@@ -1111,8 +1123,7 @@ Wall time: 28.2 s
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_random_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy score of the best model is &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy score of the best model is </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1133,11 +1144,11 @@ Wall time: 28.2 s
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best parameters are:
-{&#39;classifier__l2_regularization&#39;: 0.2611090905336683,
- &#39;classifier__learning_rate&#39;: 0.8055205628720549,
- &#39;classifier__max_bins&#39;: 147,
- &#39;classifier__max_leaf_nodes&#39;: 12,
- &#39;classifier__min_samples_leaf&#39;: 5}
+{&#39;classifier__l2_regularization&#39;: 3.202120374256516e-06,
+ &#39;classifier__learning_rate&#39;: 0.1863260159192394,
+ &#39;classifier__max_bins&#39;: 158,
+ &#39;classifier__max_leaf_nodes&#39;: 22,
+ &#39;classifier__min_samples_leaf&#39;: 86}
 </pre></div>
 </div>
 </div>
@@ -1147,19 +1158,20 @@ previously.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
-<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
+<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
     <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">param_name</span>
+
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">cv_results</span>
@@ -1197,127 +1209,126 @@ previously.</p>
   </thead>
   <tbody>
     <tr>
-      <th>8</th>
-      <td>0.261109</td>
-      <td>0.805521</td>
-      <td>12</td>
-      <td>5</td>
-      <td>147</td>
-      <td>0.866234</td>
-      <td>0.003376</td>
+      <th>6</th>
+      <td>0.000003</td>
+      <td>0.186326</td>
+      <td>22</td>
+      <td>86</td>
+      <td>158</td>
+      <td>0.869237</td>
+      <td>0.002448</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>8.84401</td>
-      <td>0.13734</td>
-      <td>4</td>
-      <td>5</td>
-      <td>22</td>
-      <td>0.852857</td>
-      <td>0.002192</td>
+      <th>2</th>
+      <td>940.419605</td>
+      <td>0.605372</td>
+      <td>159</td>
+      <td>3</td>
+      <td>129</td>
+      <td>0.865715</td>
+      <td>0.001567</td>
       <td>2</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.000001</td>
-      <td>0.995888</td>
-      <td>33</td>
-      <td>4</td>
-      <td>26</td>
-      <td>0.845213</td>
-      <td>0.003240</td>
+      <td>0.000071</td>
+      <td>0.074575</td>
+      <td>20</td>
+      <td>3</td>
+      <td>77</td>
+      <td>0.858290</td>
+      <td>0.002832</td>
       <td>3</td>
     </tr>
     <tr>
       <th>0</th>
-      <td>0.004097</td>
-      <td>0.056634</td>
-      <td>3</td>
-      <td>13</td>
+      <td>0.000002</td>
+      <td>0.059819</td>
+      <td>27</td>
       <td>19</td>
-      <td>0.831018</td>
-      <td>0.002052</td>
+      <td>14</td>
+      <td>0.847506</td>
+      <td>0.003577</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>0.009573</td>
-      <td>0.008575</td>
-      <td>53</td>
-      <td>6</td>
-      <td>27</td>
-      <td>0.830581</td>
-      <td>0.002271</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.000006</td>
-      <td>1.023535</td>
-      <td>71</td>
-      <td>65</td>
-      <td>2</td>
-      <td>0.801015</td>
-      <td>0.002774</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.088903</td>
-      <td>0.779025</td>
-      <td>219</td>
-      <td>2</td>
-      <td>3</td>
-      <td>0.800142</td>
-      <td>0.001880</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>568.538199</td>
-      <td>0.013853</td>
-      <td>5</td>
-      <td>59</td>
-      <td>133</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
-      <td>8</td>
-    </tr>
-    <tr>
       <th>5</th>
-      <td>0.000139</td>
-      <td>0.003044</td>
-      <td>113</td>
-      <td>29</td>
-      <td>60</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
-      <td>8</td>
+      <td>0.000284</td>
+      <td>0.034979</td>
+      <td>73</td>
+      <td>2</td>
+      <td>4</td>
+      <td>0.813519</td>
+      <td>0.000696</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>9.975093</td>
-      <td>0.00209</td>
-      <td>5</td>
-      <td>5</td>
-      <td>130</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
+      <td>0.00389</td>
+      <td>1.918407</td>
+      <td>46</td>
+      <td>1</td>
+      <td>10</td>
+      <td>0.812372</td>
+      <td>0.011983</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>434.827552</td>
+      <td>0.611735</td>
+      <td>192</td>
+      <td>20</td>
+      <td>3</td>
+      <td>0.805847</td>
+      <td>0.002121</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.027345</td>
+      <td>1.386671</td>
+      <td>4</td>
+      <td>18</td>
+      <td>3</td>
+      <td>0.804619</td>
+      <td>0.005742</td>
       <td>8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.332481</td>
+      <td>1.467681</td>
+      <td>2</td>
+      <td>35</td>
+      <td>235</td>
+      <td>0.664434</td>
+      <td>0.110697</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.000031</td>
+      <td>5.522626</td>
+      <td>27</td>
+      <td>31</td>
+      <td>75</td>
+      <td>0.252765</td>
+      <td>0.022342</td>
+      <td>10</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Keep in mind that tuning is limited by the number of different combinations
-of parameters that are scored by the randomized search. In fact, there might
-be other sets of parameters leading to similar or better generalization
-performances but that were not tested in the search.
-In practice, a randomized hyperparameter search is usually run with a large
-number of iterations. In order to avoid the computation cost and still make a
-decent analysis, we load the results obtained from a similar search with 500
-iterations.</p>
+<p>Keep in mind that tuning is limited by the number of different combinations of
+parameters that are scored by the randomized search. In fact, there might be
+other sets of parameters leading to similar or better generalization
+performances but that were not tested in the search. In practice, a randomized
+hyperparameter search is usually run with a large number of iterations. In
+order to avoid the computation cost and still make a decent analysis, we load
+the results obtained from a similar search with 500 iterations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># model_random_search = RandomizedSearchCV(</span>
@@ -1332,11 +1343,15 @@ iterations.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../figures/randomized_search_results.csv&quot;</span><span class="p">,</span>
-                         <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;../figures/randomized_search_results.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
 
-<span class="p">(</span><span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
-    <span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="p">(</span>
+    <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1496,17 +1511,17 @@ iterations.</p>
 <p>500 rows × 8 columns</p>
 </div></div></div>
 </div>
-<p>In this case the top performing models have test scores with a high
-overlap between each other, meaning that indeed, the set of parameters
-leading to the best generalization performance is not unique.</p>
-<p>In this notebook, we saw how a randomized search offers a valuable
-alternative to grid-search when the number of hyperparameters to tune is more
-than two. It also alleviates the regularity imposed by the grid that might be
-problematic sometimes.</p>
+<p>In this case the top performing models have test scores with a high overlap
+between each other, meaning that indeed, the set of parameters leading to the
+best generalization performance is not unique.</p>
+<p>In this notebook, we saw how a randomized search offers a valuable alternative
+to grid-search when the number of hyperparameters to tune is more than two. It
+also alleviates the regularity imposed by the grid that might be problematic
+sometimes.</p>
 <p>In the following, we will see how to use interactive plotting tools to explore
-the results of large hyperparameter search sessions and gain some
-insights on range of parameter values that lead to the highest performing
-models and how different hyperparameter are coupled or not.</p>
+the results of large hyperparameter search sessions and gain some insights on
+range of parameter values that lead to the highest performing models and how
+different hyperparameter are coupled or not.</p>
 </section>
 </section>
 
@@ -1536,7 +1551,10 @@ models and how different hyperparameter are coupled or not.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="parameter_tuning_grid_search.html"
@@ -1556,7 +1574,10 @@ models and how different hyperparameter are coupled or not.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1581,7 +1602,7 @@ models and how different hyperparameter are coupled or not.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1624,7 +1645,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1633,8 +1654,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

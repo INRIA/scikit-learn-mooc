@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -683,9 +683,9 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="solution-for-exercise-m5-01">
 <h1>📃 Solution for Exercise M5.01<a class="headerlink" href="#solution-for-exercise-m5-01" title="Permalink to this heading">#</a></h1>
 <p>In the previous notebook, we showed how a tree with a depth of 1 level was
-working. The aim of this exercise is to repeat part of the previous
-experiment for a depth with 2 levels to show how the process of partitioning
-is repeated over time.</p>
+working. The aim of this exercise is to repeat part of the previous experiment
+for a depth with 2 levels to show how the process of partitioning is repeated
+over time.</p>
 <p>Before to start, we will:</p>
 <ul class="simple">
 <li><p>load the dataset;</p></li>
@@ -720,11 +720,11 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 </div>
-<p>Create a decision tree classifier with a maximum depth of 2 levels and fit
-the training data. Once this classifier trained, plot the data and the
-decision boundary to see the benefit of increasing the depth. To plot the
-decision boundary, you should import the class <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code>
-from the module <code class="docutils literal notranslate"><span class="pre">sklearn.inspection</span></code> as shown in the previous course notebook.</p>
+<p>Create a decision tree classifier with a maximum depth of 2 levels and fit the
+training data. Once this classifier trained, plot the data and the decision
+boundary to see the benefit of increasing the depth. To plot the decision
+boundary, you should import the class <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code> from the
+module <code class="docutils literal notranslate"><span class="pre">sklearn.inspection</span></code> as shown in the previous course notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -749,9 +749,14 @@ from the module <code class="docutils literal notranslate"><span class="pre">skl
 <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">tree</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
 <span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                     <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary using a decision tree&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -760,16 +765,21 @@ from the module <code class="docutils literal notranslate"><span class="pre">skl
 <img alt="../_images/aae320418bf2e6747f1282157fbf9123c964072dec4bea897ae614302a7e4ec4.png" src="../_images/aae320418bf2e6747f1282157fbf9123c964072dec4bea897ae614302a7e4ec4.png" />
 </div>
 </div>
-<p>Did we make use of the feature “Culmen Length”?
-Plot the tree using the function <code class="docutils literal notranslate"><span class="pre">sklearn.tree.plot_tree</span></code> to find out!</p>
+<p>Did we make use of the feature “Culmen Length”? Plot the tree using the
+function <code class="docutils literal notranslate"><span class="pre">sklearn.tree.plot_tree</span></code> to find out!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">,</span>
-              <span class="n">class_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="n">impurity</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span>
+    <span class="n">tree</span><span class="p">,</span>
+    <span class="n">feature_names</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">,</span>
+    <span class="n">class_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+    <span class="n">impurity</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -777,11 +787,10 @@ Plot the tree using the function <code class="docutils literal notranslate"><spa
 <img alt="../_images/ecb966e9ac17500127909e12bd42320b310ed55506aa94a359afb7cb80bd9541.png" src="../_images/ecb966e9ac17500127909e12bd42320b310ed55506aa94a359afb7cb80bd9541.png" />
 </div>
 </div>
-<p>The resulting tree has 7 nodes: 3 of them are “split nodes” and 4
-are “leaf nodes” (or simply “leaves”), organized in 2 levels.
-We see that the second tree level used the “Culmen Length” to make
-two new decisions. Qualitatively, we saw that such a simple tree was enough
-to classify the penguins’ species.</p>
+<p>The resulting tree has 7 nodes: 3 of them are “split nodes” and 4 are “leaf
+nodes” (or simply “leaves”), organized in 2 levels. We see that the second
+tree level used the “Culmen Length” to make two new decisions. Qualitatively,
+we saw that such a simple tree was enough to classify the penguins’ species.</p>
 <p>Compute the accuracy of the decision tree on the testing data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -802,8 +811,8 @@ successively partitioning the feature space, considering one feature at a
 time.</p>
 <p>We predict an Adelie penguin if the feature value is below the threshold,
 which is not surprising since this partition was almost pure. If the feature
-value is above the threshold, we predict the Gentoo penguin, the class that
-is most probable.</p>
+value is above the threshold, we predict the Gentoo penguin, the class that is
+most probable.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -832,7 +841,10 @@ is most probable.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="trees_ex_01.html"
@@ -852,7 +864,10 @@ is most probable.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -862,7 +877,7 @@ is most probable.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -905,7 +920,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -914,8 +929,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

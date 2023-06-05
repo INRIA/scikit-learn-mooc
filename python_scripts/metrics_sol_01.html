@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -715,9 +715,9 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <p>Create a <code class="docutils literal notranslate"><span class="pre">StratifiedKFold</span></code> cross-validation object. Then use it inside the
 <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> function to evaluate the decision tree. We will first use
-the accuracy as a score function. Explicitly use the <code class="docutils literal notranslate"><span class="pre">scoring</span></code> parameter
-of <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> to compute the accuracy (even if this is the default
-score). Check its documentation to learn how to do that.</p>
+the accuracy as a score function. Explicitly use the <code class="docutils literal notranslate"><span class="pre">scoring</span></code> parameter of
+<code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> to compute the accuracy (even if this is the default score).
+Check its documentation to learn how to do that.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -730,7 +730,7 @@ score). Check its documentation to learn how to do that.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.630 ± 0.140
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy score: 0.631 ± 0.140
 </pre></div>
 </div>
 </div>
@@ -739,23 +739,24 @@ score). Check its documentation to learn how to do that.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-                         <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
+    <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;balanced_accuracy&quot;</span>
+<span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Balanced accuracy score: </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.515 ± 0.104
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Balanced accuracy score: 0.519 ± 0.108
 </pre></div>
 </div>
 </div>
 </div>
-<p>We will now add a bit of complexity. We would like to compute the precision
-of our model. However, during the course we saw that we need to mention the
+<p>We will now add a bit of complexity. We would like to compute the precision of
+our model. However, during the course we saw that we need to mention the
 positive label which in our case we consider to be the class <code class="docutils literal notranslate"><span class="pre">donated</span></code>.</p>
-<p>We will show that computing the precision without providing the positive
-label will not be supported by scikit-learn because it is indeed ambiguous.</p>
+<p>We will show that computing the precision without providing the positive label
+will not be supported by scikit-learn because it is indeed ambiguous.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
@@ -934,9 +935,8 @@ In this case, we need to create a scorer using the scoring function and the
 helper function <code class="docutils literal notranslate"><span class="pre">make_scorer</span></code>.</p>
 <p>So, import <code class="docutils literal notranslate"><span class="pre">sklearn.metrics.make_scorer</span></code> and
 <code class="docutils literal notranslate"><span class="pre">sklearn.metrics.precision_score</span></code>. Check their documentations for more
-information.
-Finally, create a scorer by calling <code class="docutils literal notranslate"><span class="pre">make_scorer</span></code> using the score function
-<code class="docutils literal notranslate"><span class="pre">precision_score</span></code> and pass the extra parameter <code class="docutils literal notranslate"><span class="pre">pos_label=&quot;donated&quot;</span></code>.</p>
+information. Finally, create a scorer by calling <code class="docutils literal notranslate"><span class="pre">make_scorer</span></code> using the score
+function <code class="docutils literal notranslate"><span class="pre">precision_score</span></code> and pass the extra parameter <code class="docutils literal notranslate"><span class="pre">pos_label=&quot;donated&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -958,15 +958,15 @@ in the <code class="docutils literal notranslate"><span class="pre">cross_val_sc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.265 ± 0.162
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision score: 0.254 ± 0.163
 </pre></div>
 </div>
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> will only compute a single score provided to the <code class="docutils literal notranslate"><span class="pre">scoring</span></code>
 parameter. The function <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> allows the computation of multiple
-scores by passing a list of string or scorer to the parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code>,
-which could be handy.</p>
+scores by passing a list of string or scorer to the parameter <code class="docutils literal notranslate"><span class="pre">scoring</span></code>, which
+could be handy.</p>
 <p>Import <code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.cross_validate</span></code> and compute the accuracy and
 balanced accuracy through cross-validation. Plot the cross-validation score
 for both metrics using a box plot.</p>
@@ -974,22 +974,22 @@ for both metrics using a box plot.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
-<span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">]</span>
 
+<span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;balanced_accuracy&quot;</span><span class="p">]</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
 <span class="n">scores</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00322056, 0.00291085, 0.00289297, 0.00279713, 0.00281215,
-        0.00278544, 0.00275612, 0.00289655, 0.00277734, 0.00279474]),
- &#39;score_time&#39;: array([0.0025897 , 0.00237536, 0.00234008, 0.00228453, 0.00233269,
-        0.00234056, 0.00226378, 0.00244522, 0.00228095, 0.00261259]),
- &#39;test_accuracy&#39;: array([0.29333333, 0.50666667, 0.76      , 0.54666667, 0.58666667,
-        0.64      , 0.70666667, 0.76      , 0.63513514, 0.75675676]),
- &#39;test_balanced_accuracy&#39;: array([0.42105263, 0.46637427, 0.65204678, 0.37865497, 0.42397661,
-        0.42105263, 0.57894737, 0.72807018, 0.45356037, 0.51186791])}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.00323033, 0.00291562, 0.00310779, 0.00285864, 0.00284123,
+        0.00282383, 0.00278544, 0.00285625, 0.00280285, 0.00284958]),
+ &#39;score_time&#39;: array([0.00253987, 0.00240946, 0.00233603, 0.00231218, 0.00230885,
+        0.00231719, 0.00231314, 0.00232959, 0.00228548, 0.00224757]),
+ &#39;test_accuracy&#39;: array([0.28      , 0.50666667, 0.78666667, 0.54666667, 0.56      ,
+        0.64      , 0.70666667, 0.77333333, 0.64864865, 0.75675676]),
+ &#39;test_balanced_accuracy&#39;: array([0.39327485, 0.46637427, 0.68859649, 0.37865497, 0.3874269 ,
+        0.42105263, 0.55994152, 0.73684211, 0.4623323 , 0.51186791])}
 </pre></div>
 </div>
 </div>
@@ -1002,7 +1002,7 @@ for both metrics using a box plot.</p>
 
 <span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">[</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_accuracy&quot;</span><span class="p">],</span> <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_balanced_accuracy&quot;</span><span class="p">]],</span>
-    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;Balanced accuracy&quot;</span><span class="p">]</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;Balanced accuracy&quot;</span><span class="p">],</span>
 <span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
@@ -1018,7 +1018,7 @@ for both metrics using a box plot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0d20e502e281c44fad02740126f321f6da4c879f210fd31522c3bb7b1ef27646.png" src="../_images/0d20e502e281c44fad02740126f321f6da4c879f210fd31522c3bb7b1ef27646.png" />
+<img alt="../_images/40d24d84a2f546c936db3ba13f875fcb1f52323ee02356c995f1909ec6ac25b6.png" src="../_images/40d24d84a2f546c936db3ba13f875fcb1f52323ee02356c995f1909ec6ac25b6.png" />
 </div>
 </div>
 </section>
@@ -1049,7 +1049,10 @@ for both metrics using a box plot.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="metrics_ex_01.html"
@@ -1069,7 +1072,10 @@ for both metrics using a box plot.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1079,7 +1085,7 @@ for both metrics using a box plot.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1122,7 +1128,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1131,8 +1137,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

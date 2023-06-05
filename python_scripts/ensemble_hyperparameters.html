@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -717,7 +717,8 @@ cross-validation.</p>
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -785,8 +786,12 @@ trees (i.e. shallow trees) might also lead to an underfitted forest.</p>
     <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
 <span class="p">}</span>
 <span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">search_cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
@@ -831,80 +836,80 @@ trees (i.e. shallow trees) might also lead to an underfitted forest.</p>
       <td>2</td>
       <td>None</td>
       <td>2</td>
-      <td>33.985070</td>
-      <td>0.282118</td>
+      <td>33.994711</td>
+      <td>0.538897</td>
     </tr>
     <tr>
       <th>0</th>
       <td>2</td>
       <td>1000</td>
       <td>10</td>
-      <td>36.934176</td>
-      <td>0.517912</td>
+      <td>36.828591</td>
+      <td>0.432680</td>
     </tr>
     <tr>
       <th>7</th>
       <td>None</td>
       <td>None</td>
       <td>20</td>
-      <td>37.293104</td>
-      <td>0.412969</td>
+      <td>37.321178</td>
+      <td>0.441737</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5</td>
       <td>100</td>
       <td>2</td>
-      <td>39.974674</td>
-      <td>0.621358</td>
+      <td>40.041925</td>
+      <td>0.647538</td>
     </tr>
     <tr>
       <th>8</th>
       <td>None</td>
       <td>100</td>
       <td>10</td>
-      <td>40.402835</td>
-      <td>0.604095</td>
+      <td>40.364790</td>
+      <td>0.743403</td>
     </tr>
     <tr>
       <th>6</th>
       <td>None</td>
       <td>1000</td>
       <td>50</td>
-      <td>40.801830</td>
-      <td>0.474767</td>
+      <td>40.744152</td>
+      <td>0.443388</td>
     </tr>
     <tr>
       <th>9</th>
       <td>1</td>
       <td>100</td>
       <td>2</td>
-      <td>49.919996</td>
-      <td>0.736816</td>
+      <td>49.719213</td>
+      <td>0.670644</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
       <td>100</td>
       <td>1</td>
-      <td>50.113684</td>
-      <td>0.683662</td>
+      <td>50.106131</td>
+      <td>0.638342</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1</td>
       <td>None</td>
       <td>100</td>
-      <td>54.526879</td>
-      <td>1.028525</td>
+      <td>54.807478</td>
+      <td>0.910029</td>
     </tr>
     <tr>
       <th>1</th>
       <td>3</td>
       <td>10</td>
       <td>10</td>
-      <td>55.132732</td>
-      <td>0.835047</td>
+      <td>54.932381</td>
+      <td>0.846035</td>
     </tr>
   </tbody>
 </table>
@@ -926,12 +931,14 @@ the unseen data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our random forest regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;On average, our random forest regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 34.13 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.97 k$
 </pre></div>
 </div>
 </div>
@@ -943,8 +950,8 @@ the unseen data.</p>
 one after the other anymore. The important parameters are <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>,
 <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> (as previously discussed
 random forest).</p>
-<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> (or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>) parameter. We saw
-in the section on gradient-boosting that the algorithm fits the error of the
+<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> (or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>) parameter. We saw in
+the section on gradient-boosting that the algorithm fits the error of the
 previous tree in the ensemble. Thus, fitting fully grown trees would be
 detrimental. Indeed, the first tree of the ensemble would perfectly fit
 (overfit) the data and thus no subsequent tree would be required, since there
@@ -975,8 +982,12 @@ large tree depth.</p>
     <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
 <span class="p">}</span>
 <span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">GradientBoostingRegressor</span><span class="p">(),</span> <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
+    <span class="n">GradientBoostingRegressor</span><span class="p">(),</span>
+    <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">search_cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 
@@ -1021,40 +1032,40 @@ large tree depth.</p>
       <td>200</td>
       <td>20</td>
       <td>0.160519</td>
-      <td>33.895296</td>
-      <td>0.440704</td>
+      <td>33.905197</td>
+      <td>0.433738</td>
     </tr>
     <tr>
       <th>12</th>
       <td>200</td>
       <td>50</td>
       <td>0.110585</td>
-      <td>34.794434</td>
-      <td>0.285466</td>
+      <td>34.793012</td>
+      <td>0.292925</td>
     </tr>
     <tr>
       <th>17</th>
       <td>500</td>
       <td>5</td>
       <td>0.771785</td>
-      <td>34.845404</td>
-      <td>0.582993</td>
+      <td>34.822201</td>
+      <td>0.517495</td>
     </tr>
     <tr>
       <th>10</th>
       <td>200</td>
       <td>20</td>
       <td>0.109889</td>
-      <td>35.011598</td>
-      <td>0.387172</td>
+      <td>35.004927</td>
+      <td>0.376778</td>
     </tr>
     <tr>
       <th>6</th>
       <td>500</td>
       <td>100</td>
       <td>0.709894</td>
-      <td>35.412646</td>
-      <td>0.429859</td>
+      <td>35.465560</td>
+      <td>0.306254</td>
     </tr>
     <tr>
       <th>18</th>
@@ -1187,10 +1198,10 @@ large tree depth.</p>
 </div>
 <p>In this search, we see that the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> is required to be large
 enough, i.e. &gt; 0.1. We also observe that for the best ranked models, having a
-smaller <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, will require more trees or a larger number of
-leaves for each tree. However, it is particularly difficult to draw
-more detailed conclusions since the best value of an hyperparameter depends
-on the other hyperparameter values.</p>
+smaller <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, will require more trees or a larger number of leaves
+for each tree. However, it is particularly difficult to draw more detailed
+conclusions since the best value of an hyperparameter depends on the other
+hyperparameter values.</p>
 <p>Now we estimate the generalization performance of the best model using the
 test set.</p>
 <div class="cell docutils container">
@@ -1239,7 +1250,10 @@ the grid search procedure.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../ensemble/ensemble_hyperparameters_index.html"
@@ -1259,7 +1273,10 @@ the grid search procedure.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1284,7 +1301,7 @@ the grid search procedure.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1327,7 +1344,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1336,8 +1353,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -700,12 +700,12 @@ document.write(`
 its minimum or maximum. It is important to understand that this objective
 function is usually decoupled from the evaluation metric that we want to
 optimize in practice. The objective function serves as a proxy for the
-evaluation metric. Therefore, in the upcoming notebooks, we will present
-the different evaluation metrics used in machine learning.</p>
+evaluation metric. Therefore, in the upcoming notebooks, we will present the
+different evaluation metrics used in machine learning.</p>
 <p>This notebook aims at giving an overview of the classification metrics that
-can be used to evaluate the predictive model generalization performance. We can
-recall that in a classification setting, the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> is categorical
-rather than continuous.</p>
+can be used to evaluate the predictive model generalization performance. We
+can recall that in a classification setting, the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> is
+categorical rather than continuous.</p>
 <p>We will load the blood transfusion dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -735,7 +735,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a71ba7e2852af4dc847c52b0e26d3cf1704ac6369d50946dcd23b1bbc0043915.png" src="../_images/a71ba7e2852af4dc847c52b0e26d3cf1704ac6369d50946dcd23b1bbc0043915.png" />
+<img alt="../_images/128aaabf7b0e3153c570d2e13f9f18f31892f629d316a34947e05476c5cd7e57.png" src="../_images/128aaabf7b0e3153c570d2e13f9f18f31892f629d316a34947e05476c5cd7e57.png" />
 </div>
 </div>
 <p>We can see that the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> contains two classes corresponding to
@@ -748,7 +748,8 @@ of cross-validation.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -803,12 +804,11 @@ they donated blood twice in the past (1000 c.c. each time). The last time was
 </div>
 </div>
 </div>
-<p>With this information, our classifier predicts that this synthetic subject
-is more likely to not donate blood again.</p>
-<p>However, we cannot check whether the prediction is correct (we do not know
-the true target value). That’s the purpose of the testing set. First, we
-predict whether a subject will give blood with the help of the trained
-classifier.</p>
+<p>With this information, our classifier predicts that this synthetic subject is
+more likely to not donate blood again.</p>
+<p>However, we cannot check whether the prediction is correct (we do not know the
+true target value). That’s the purpose of the testing set. First, we predict
+whether a subject will give blood with the help of the trained classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
@@ -853,8 +853,8 @@ Name: Class, Length: 374, dtype: bool
 </div>
 <p>In the comparison above, a <code class="docutils literal notranslate"><span class="pre">True</span></code> value means that the value predicted by our
 classifier is identical to the real value, while a <code class="docutils literal notranslate"><span class="pre">False</span></code> means that our
-classifier made a mistake. One way of getting an overall rate representing
-the generalization performance of our classifier would be to compute how many
+classifier made a mistake. One way of getting an overall rate representing the
+generalization performance of our classifier would be to compute how many
 times our classifier was right and divide it by the number of samples in our
 set.</p>
 <div class="cell docutils container">
@@ -871,9 +871,9 @@ set.</p>
 </div>
 </div>
 </div>
-<p>This measure is called the accuracy. Here, our classifier is 78%
-accurate at classifying if a subject will give blood. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides
-a function that computes this metric in the module <code class="docutils literal notranslate"><span class="pre">sklearn.metrics</span></code>.</p>
+<p>This measure is called the accuracy. Here, our classifier is 78% accurate at
+classifying if a subject will give blood. <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides a function
+that computes this metric in the module <code class="docutils literal notranslate"><span class="pre">sklearn.metrics</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
@@ -927,34 +927,34 @@ following cases:</p>
 <img alt="../_images/19ab11034d0d55392e9065cc1c10009e9ab2b11cd1762b4a6b6811b0bb384451.png" src="../_images/19ab11034d0d55392e9065cc1c10009e9ab2b11cd1762b4a6b6811b0bb384451.png" />
 </div>
 </div>
-<p>The in-diagonal numbers are related to predictions that were correct
-while off-diagonal numbers are related to incorrect predictions
+<p>The in-diagonal numbers are related to predictions that were correct while
+off-diagonal numbers are related to incorrect predictions
 (misclassifications). We now know the four types of correct and erroneous
 predictions:</p>
 <ul class="simple">
-<li><p>the top left corner are true positives (TP) and corresponds to people
-who gave blood and were predicted as such by the classifier;</p></li>
-<li><p>the bottom right corner are true negatives (TN) and correspond to
-people who did not give blood and were predicted as such by the
-classifier;</p></li>
-<li><p>the top right corner are false negatives (FN) and correspond to
-people who gave blood but were predicted to not have given blood;</p></li>
-<li><p>the bottom left corner are false positives (FP) and correspond to
-people who did not give blood but were predicted to have given blood.</p></li>
+<li><p>the top left corner are true positives (TP) and corresponds to people who
+gave blood and were predicted as such by the classifier;</p></li>
+<li><p>the bottom right corner are true negatives (TN) and correspond to people who
+did not give blood and were predicted as such by the classifier;</p></li>
+<li><p>the top right corner are false negatives (FN) and correspond to people who
+gave blood but were predicted to not have given blood;</p></li>
+<li><p>the bottom left corner are false positives (FP) and correspond to people who
+did not give blood but were predicted to have given blood.</p></li>
 </ul>
 <p>Once we have split this information, we can compute metrics to highlight the
 generalization performance of our classifier in a particular setting. For
 instance, we could be interested in the fraction of people who really gave
 blood when the classifier predicted so or the fraction of people predicted to
 have given blood out of the total population that actually did so.</p>
-<p>The former metric, known as the precision, is defined as TP / (TP + FP)
-and represents how likely the person actually gave blood when the classifier
-predicted that they did.
-The latter, known as the recall, defined as TP / (TP + FN) and
-assesses how well the classifier is able to correctly identify people who
-did give blood.
-We could, similarly to accuracy, manually compute these values,
-however scikit-learn provides functions to compute these statistics.</p>
+<p>The former metric, known as the precision, is defined as TP / (TP + FP) and
+represents how likely the person actually gave blood when the classifier
+predicted that they did. The latter, known as the recall, defined as TP / (TP</p>
+<ul class="simple">
+<li><p>FN) and assesses how well the classifier is able to correctly identify
+people who did give blood. We could, similarly to accuracy, manually compute
+these values, however scikit-learn provides functions to compute these
+statistics.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
@@ -977,17 +977,17 @@ Recall score: 0.124
 <p>These results are in line with what was seen in the confusion matrix. Looking
 at the left column, more than half of the “donated” predictions were correct,
 leading to a precision above 0.5. However, our classifier mislabeled a lot of
-people who gave blood as “not donated”, leading to a very low recall of
-around 0.1.</p>
+people who gave blood as “not donated”, leading to a very low recall of around
+0.1.</p>
 </section>
 <section id="the-issue-of-class-imbalance">
 <h2>The issue of class imbalance<a class="headerlink" href="#the-issue-of-class-imbalance" title="Permalink to this heading">#</a></h2>
 <p>At this stage, we could ask ourself a reasonable question. While the accuracy
 did not look bad (i.e. 77%), the recall score is relatively low (i.e. 12%).</p>
 <p>As we mentioned, precision and recall only focuses on samples predicted to be
-positive, while accuracy takes both into account. In addition, we did not
-look at the ratio of classes (labels). We could check this ratio in the
-training set.</p>
+positive, while accuracy takes both into account. In addition, we did not look
+at the ratio of classes (labels). We could check this ratio in the training
+set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
@@ -997,7 +997,7 @@ training set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1dece2a407a3f6b98fc7b603e8288292238fd6f0c62724bade17518f9f242c7f.png" src="../_images/1dece2a407a3f6b98fc7b603e8288292238fd6f0c62724bade17518f9f242c7f.png" />
+<img alt="../_images/43e6ae242e6ae8e4cdabe066130799396e9f00834bc18191a4842da5d812cdb9.png" src="../_images/43e6ae242e6ae8e4cdabe066130799396e9f00834bc18191a4842da5d812cdb9.png" />
 </div>
 </div>
 <p>We observe that the positive class, <code class="docutils literal notranslate"><span class="pre">'donated'</span></code>, comprises only 24% of the
@@ -1011,8 +1011,10 @@ dummy classifier as a baseline.</p>
 
 <span class="n">dummy_classifier</span> <span class="o">=</span> <span class="n">DummyClassifier</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;most_frequent&quot;</span><span class="p">)</span>
 <span class="n">dummy_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of the dummy classifier: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dummy_classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Accuracy of the dummy classifier: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dummy_classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1051,15 +1053,15 @@ classes. It is defined as the average recall obtained on each class.</p>
 <h2>Evaluation and different probability thresholds<a class="headerlink" href="#evaluation-and-different-probability-thresholds" title="Permalink to this heading">#</a></h2>
 <p>All statistics that we presented up to now rely on <code class="docutils literal notranslate"><span class="pre">classifier.predict</span></code> which
 outputs the most likely label. We haven’t made use of the probability
-associated with this prediction, which gives the confidence of the
-classifier in this prediction. By default, the prediction of a classifier
-corresponds to a threshold of 0.5 probability in a binary classification
-problem. We can quickly check this relationship with the classifier that
-we trained.</p>
+associated with this prediction, which gives the confidence of the classifier
+in this prediction. By default, the prediction of a classifier corresponds to
+a threshold of 0.5 probability in a binary classification problem. We can
+quickly check this relationship with the classifier that we trained.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_proba_predicted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_test</span><span class="p">),</span>
-                                      <span class="n">columns</span><span class="o">=</span><span class="n">classifier</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_proba_predicted</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data_test</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">classifier</span><span class="o">.</span><span class="n">classes_</span>
+<span class="p">)</span>
 <span class="n">target_proba_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1131,12 +1133,13 @@ we trained.</p>
 </div>
 </div>
 </div>
-<p>Since probabilities sum to 1 we can get the class with the highest
-probability without using the threshold 0.5.</p>
+<p>Since probabilities sum to 1 we can get the class with the highest probability
+without using the threshold 0.5.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">equivalence_pred_proba</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">target_proba_predicted</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">==</span> <span class="n">target_predicted</span><span class="p">)</span>
+    <span class="n">target_proba_predicted</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">==</span> <span class="n">target_predicted</span>
+<span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">equivalence_pred_proba</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1148,23 +1151,28 @@ probability without using the threshold 0.5.</p>
 </div>
 </div>
 <p>The default decision threshold (0.5) might not be the best threshold that
-leads to optimal generalization performance of our classifier. In this case, one
-can vary the decision threshold, and therefore the underlying prediction, and
-compute the same statistics presented earlier. Usually, the two metrics
+leads to optimal generalization performance of our classifier. In this case,
+one can vary the decision threshold, and therefore the underlying prediction,
+and compute the same statistics presented earlier. Usually, the two metrics
 recall and precision are computed and plotted on a graph. Each metric plotted
-on a graph axis and each point on the graph corresponds to a specific
-decision threshold. Let’s start by computing the precision-recall curve.</p>
+on a graph axis and each point on the graph corresponds to a specific decision
+threshold. Let’s start by computing the precision-recall curve.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">PrecisionRecallDisplay</span>
 
 <span class="n">disp</span> <span class="o">=</span> <span class="n">PrecisionRecallDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
-    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span>
+    <span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;donated&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span>
 <span class="p">)</span>
 <span class="n">disp</span> <span class="o">=</span> <span class="n">PrecisionRecallDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">dummy_classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">)</span>
+    <span class="n">dummy_classifier</span><span class="p">,</span>
+    <span class="n">data_test</span><span class="p">,</span>
+    <span class="n">target_test</span><span class="p">,</span>
+    <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;donated&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Recall (also known as TPR or sensitivity)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Precision (also known as PPV)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -1199,9 +1207,7 @@ divided by the total number of samples (this number is called the prevalence
 of the positive class).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prevalence</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prevalence</span> <span class="o">=</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prevalence of the class &#39;donated&#39;: </span><span class="si">{</span><span class="n">prevalence</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1217,8 +1223,8 @@ might be interested in the compromise between accurately discriminating the
 positive class and accurately discriminating the negative classes. The
 statistics used for this are sensitivity and specificity. Sensitivity is just
 another name for recall. However, specificity measures the proportion of
-correctly classified samples in the negative class defined as: TN / (TN +
-FP). Similar to the precision-recall curve, sensitivity and specificity are
+correctly classified samples in the negative class defined as: TN / (TN + FP).
+Similar to the precision-recall curve, sensitivity and specificity are
 generally plotted as a curve called the Receiver Operating Characteristic
 (ROC) curve. Below is such a curve:</p>
 <div class="cell docutils container">
@@ -1226,11 +1232,17 @@ generally plotted as a curve called the Receiver Operating Characteristic
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">RocCurveDisplay</span>
 
 <span class="n">disp</span> <span class="o">=</span> <span class="n">RocCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
-    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+    <span class="n">classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;donated&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span>
+<span class="p">)</span>
 <span class="n">disp</span> <span class="o">=</span> <span class="n">RocCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">dummy_classifier</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;donated&#39;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">)</span>
+    <span class="n">dummy_classifier</span><span class="p">,</span>
+    <span class="n">data_test</span><span class="p">,</span>
+    <span class="n">target_test</span><span class="p">,</span>
+    <span class="n">pos_label</span><span class="o">=</span><span class="s2">&quot;donated&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;False positive rate&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;True positive rate</span><span class="se">\n</span><span class="s2">(also known as sensitivity or recall)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -1281,7 +1293,10 @@ performance obtained will be above this line.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../evaluation/metrics_classification_index.html"
@@ -1301,7 +1316,10 @@ performance obtained will be above this line.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1329,7 +1347,7 @@ performance obtained will be above this line.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1372,7 +1390,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1381,8 +1399,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

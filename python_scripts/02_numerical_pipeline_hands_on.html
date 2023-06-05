@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -695,11 +695,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="working-with-numerical-data">
 <h1>Working with numerical data<a class="headerlink" href="#working-with-numerical-data" title="Permalink to this heading">#</a></h1>
-<p>In the previous notebook, we trained a k-nearest neighbors model on
-some data.</p>
+<p>In the previous notebook, we trained a k-nearest neighbors model on some data.</p>
 <p>However, we oversimplified the procedure by loading a dataset that contained
-exclusively numerical data. Besides, we used datasets which were already
-split into train-test sets.</p>
+exclusively numerical data. Besides, we used datasets which were already split
+into train-test sets.</p>
 <p>In this notebook, we aim at:</p>
 <ul class="simple">
 <li><p>identifying numerical data in a heterogeneous dataset;</p></li>
@@ -711,8 +710,8 @@ split into train-test sets.</p>
 exploration.</p>
 <section id="loading-the-entire-dataset">
 <h2>Loading the entire dataset<a class="headerlink" href="#loading-the-entire-dataset" title="Permalink to this heading">#</a></h2>
-<p>As in the previous notebook, we rely on pandas to open the CSV file into
-a pandas dataframe.</p>
+<p>As in the previous notebook, we rely on pandas to open the CSV file into a
+pandas dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -1000,17 +999,16 @@ Name: class, Length: 48842, dtype: object
 scikit-learn documentation, <code class="docutils literal notranslate"><span class="pre">data</span></code> is commonly named <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> is
 commonly called <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 </div>
-<p>At this point, we can focus on the data we want to use to train our
-predictive model.</p>
+<p>At this point, we can focus on the data we want to use to train our predictive
+model.</p>
 </section>
 <section id="identify-numerical-data">
 <h2>Identify numerical data<a class="headerlink" href="#identify-numerical-data" title="Permalink to this heading">#</a></h2>
 <p>Numerical data are represented with numbers. They are linked to measurable
-(quantitative) data, such as age or the number of hours a person works a
-week.</p>
-<p>Predictive models are natively designed to work with numerical data.
-Moreover, numerical data usually requires very little work before getting
-started with training.</p>
+(quantitative) data, such as age or the number of hours a person works a week.</p>
+<p>Predictive models are natively designed to work with numerical data. Moreover,
+numerical data usually requires very little work before getting started with
+training.</p>
 <p>The first task here will be to identify numerical data in our dataset.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
@@ -1043,8 +1041,8 @@ dtype: object
 </div>
 </div>
 </div>
-<p>We seem to have only two data types: <code class="docutils literal notranslate"><span class="pre">int64</span></code> and <code class="docutils literal notranslate"><span class="pre">object</span></code>. We can make
-sure by checking for unique data types.</p>
+<p>We seem to have only two data types: <code class="docutils literal notranslate"><span class="pre">int64</span></code> and <code class="docutils literal notranslate"><span class="pre">object</span></code>. We can make sure by
+checking for unique data types.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
@@ -1057,9 +1055,9 @@ sure by checking for unique data types.</p>
 </div>
 </div>
 </div>
-<p>Indeed, the only two types in the dataset are integer <code class="docutils literal notranslate"><span class="pre">int64</span></code> and <code class="docutils literal notranslate"><span class="pre">object</span></code>.
-We can look at the first few lines of the dataframe to understand the
-meaning of the <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p>
+<p>Indeed, the only two types in the dataset are integer <code class="docutils literal notranslate"><span class="pre">int64</span></code> and <code class="docutils literal notranslate"><span class="pre">object</span></code>. We
+can look at the first few lines of the dataframe to understand the meaning of
+the <code class="docutils literal notranslate"><span class="pre">object</span></code> data type.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1255,9 +1253,9 @@ integers and check their content.</p>
 </table>
 </div></div></div>
 </div>
-<p>Now that we limited the dataset to numerical columns only,
-we can analyse these numbers to figure out what they represent. We can
-identify two types of usage.</p>
+<p>Now that we limited the dataset to numerical columns only, we can analyse
+these numbers to figure out what they represent. We can identify two types of
+usage.</p>
 <p>The first column, <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code>, is self-explanatory. We can note that the values
 are continuous, meaning they can take up any number in a given range. Let’s
 find out what this range is:</p>
@@ -1308,7 +1306,8 @@ split the dataset into two subsets.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">data_numeric</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1322,13 +1321,15 @@ decides how the dataset is split into a train and a test set).</p>
 </div>
 <p>When calling the function <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code>, we specified that we would like
 to have 25% of samples in the testing set while the remaining samples (75%)
-will be available in the training set. We can check quickly if we got
-what we expected.</p>
+will be available in the training set. We can check quickly if we got what we
+expected.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of samples in testing: </span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> =&gt; &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">data_numeric</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of the&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot; original set&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number of samples in testing: </span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> =&gt; &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">data_numeric</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of the&quot;</span>
+    <span class="s2">&quot; original set&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1340,9 +1341,11 @@ what we expected.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of samples in training: </span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> =&gt; &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">data_numeric</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of the&quot;</span>
-      <span class="sa">f</span><span class="s2">&quot; original set&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number of samples in training: </span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> =&gt; &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">data_numeric</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% of the&quot;</span>
+    <span class="s2">&quot; original set&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1380,10 +1383,10 @@ understand how it works in details.</p>
 </div>
 </div>
 </div>
-<p>Now that the model has been created, you can use it exactly the same way as
-we used the k-nearest neighbors model in the previous notebook. In
-particular, we can use the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method to train the model using the training
-data and labels:</p>
+<p>Now that the model has been created, you can use it exactly the same way as we
+used the k-nearest neighbors model in the previous notebook. In particular, we
+can use the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method to train the model using the training data and
+labels:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
@@ -1393,8 +1396,8 @@ data and labels:</p>
 <div class="cell_output docutils container">
 <div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LogisticRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression()</pre></div></div></div></div></div></div></div>
 </div>
-<p>We can also use the <code class="docutils literal notranslate"><span class="pre">score</span></code> method to check the model generalization performance
-on the test set.</p>
+<p>We can also use the <code class="docutils literal notranslate"><span class="pre">score</span></code> method to check the model generalization
+performance on the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
@@ -1411,17 +1414,17 @@ on the test set.</p>
 </section>
 <section id="notebook-recap">
 <h2>Notebook recap<a class="headerlink" href="#notebook-recap" title="Permalink to this heading">#</a></h2>
-<p>In scikit-learn, the <code class="docutils literal notranslate"><span class="pre">score</span></code> method of a classification model returns the accuracy,
-i.e. the fraction of correctly classified samples. In this case, around
-8 / 10 of the times the logistic regression predicts the right income of a
-person. Now the real question is: is this generalization performance relevant
-of a good predictive model? Find out by solving the next exercise!</p>
+<p>In scikit-learn, the <code class="docutils literal notranslate"><span class="pre">score</span></code> method of a classification model returns the
+accuracy, i.e. the fraction of correctly classified samples. In this case,
+around 8 / 10 of the times the logistic regression predicts the right income
+of a person. Now the real question is: is this generalization performance
+relevant of a good predictive model? Find out by solving the next exercise!</p>
 <p>In this notebook, we learned to:</p>
 <ul class="simple">
 <li><p>identify numerical data in a heterogeneous dataset;</p></li>
 <li><p>select the subset of columns corresponding to numerical data;</p></li>
-<li><p>use the scikit-learn <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> function to separate data into
-a train and a test set;</p></li>
+<li><p>use the scikit-learn <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> function to separate data into a
+train and a test set;</p></li>
 <li><p>train and evaluate a logistic regression model.</p></li>
 </ul>
 </section>
@@ -1453,7 +1456,10 @@ a train and a test set;</p></li>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="02_numerical_pipeline_sol_00.html"
@@ -1473,7 +1479,10 @@ a train and a test set;</p></li>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1500,7 +1509,7 @@ a train and a test set;</p></li>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1543,7 +1552,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1552,8 +1561,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

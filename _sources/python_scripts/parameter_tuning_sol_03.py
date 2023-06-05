@@ -19,11 +19,12 @@ data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=42)
+    data, target, random_state=42
+)
 
 # %% [markdown]
-# In this exercise, we will progressively define the regression pipeline
-# and later tune its hyperparameters.
+# In this exercise, we will progressively define the regression pipeline and
+# later tune its hyperparameters.
 #
 # Start by defining a pipeline that:
 # * uses a `StandardScaler` to normalize the numerical data;
@@ -46,8 +47,8 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 #   `np.logspace(0, 3, num=10).astype(np.int32)`;
 # - the parameter `with_mean` of the `StandardScaler` with possible values
 #   `True` or `False`;
-# - the parameter `with_std` of the `StandardScaler` with possible values
-#   `True` or `False`.
+# - the parameter `with_std` of the `StandardScaler` with possible values `True`
+#   or `False`.
 #
 # Notice that in the notebook "Hyperparameter tuning by randomized-search" we
 # pass distributions to be sampled by the `RandomizedSearchCV`. In this case we
@@ -68,14 +69,21 @@ import numpy as np
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
-    "kneighborsregressor__n_neighbors": np.logspace(0, 3, num=10).astype(np.int32),
+    "kneighborsregressor__n_neighbors": np.logspace(0, 3, num=10).astype(
+        np.int32
+    ),
     "standardscaler__with_mean": [True, False],
     "standardscaler__with_std": [True, False],
 }
 
 model_random_search = RandomizedSearchCV(
-    model, param_distributions=param_distributions,
-    n_iter=20, n_jobs=2, verbose=1, random_state=1)
+    model,
+    param_distributions=param_distributions,
+    n_iter=20,
+    n_jobs=2,
+    verbose=1,
+    random_state=1,
+)
 model_random_search.fit(data_train, target_train)
 model_random_search.best_params_
 
@@ -90,9 +98,9 @@ model_random_search.best_params_
 # conduct such an interactive analysis for this this pipeline using a parallel
 # coordinate plot using the `plotly` library.
 #
-# We could use `cv_results = model_random_search.cv_results_` to make a
-# parallel coordinate plot as we did in the previous notebook (you are more
-# than welcome to try!).
+# We could use `cv_results = model_random_search.cv_results_` to make a parallel
+# coordinate plot as we did in the previous notebook (you are more than welcome
+# to try!).
 
 # %% tags=["solution"]
 import pandas as pd
@@ -113,7 +121,8 @@ column_name_mapping = {
 
 cv_results = cv_results.rename(columns=column_name_mapping)
 cv_results = cv_results[column_name_mapping.values()].sort_values(
-    "mean test score", ascending=False)
+    "mean test score", ascending=False
+)
 
 # %% [markdown] tags=["solution"]
 # In addition, the parallel coordinate plot from `plotly` expects all data to be
@@ -141,8 +150,8 @@ fig.show()
 
 # %% [markdown] tags=["solution"]
 # We recall that it is possible to select a range of results by clicking and
-# holding on any axis of the parallel coordinate plot. You can then slide
-# (move) the range selection and cross two selections to see the intersections.
+# holding on any axis of the parallel coordinate plot. You can then slide (move)
+# the range selection and cross two selections to see the intersections.
 #
 # Selecting the best performing models (i.e. above an accuracy of ~0.68), we
 # observe that **in this case**:
@@ -166,10 +175,9 @@ fig.show()
 # the values of A and B will be approximately between -3 and 3 and the neighbor
 # structure will be impacted more or less equivalently by both variables.
 #
-# Note that **in this case** the models with scaled features perform better
-# than the models with non-scaled features because all the variables are
-# expected to be predictive and we rather avoid some of them being comparatively
-# ignored.
+# Note that **in this case** the models with scaled features perform better than
+# the models with non-scaled features because all the variables are expected to
+# be predictive and we rather avoid some of them being comparatively ignored.
 #
 # If the variables in lower scales were not predictive one may experience a
 # decrease of the performance after scaling the features: noisy features would

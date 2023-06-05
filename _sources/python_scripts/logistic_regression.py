@@ -7,13 +7,14 @@
 
 # %% [markdown]
 # # Linear model for classification
+#
 # In regression, we saw that the target to be predicted was a continuous
 # variable. In classification, this target will be discrete (e.g. categorical).
 #
 # We will go back to our penguin dataset. However, this time we will try to
 # predict the penguin species using the culmen information. We will also
-# simplify our classification problem by selecting only 2 of the penguin
-# species to solve a binary classification problem.
+# simplify our classification problem by selecting only 2 of the penguin species
+# to solve a binary classification problem.
 
 # %% [markdown]
 # ```{note}
@@ -27,8 +28,9 @@ import pandas as pd
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 
 # only keep the Adelie and Chinstrap classes
-penguins = penguins.set_index("Species").loc[
-    ["Adelie", "Chinstrap"]].reset_index()
+penguins = (
+    penguins.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
+)
 culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
 target_column = "Species"
 
@@ -45,13 +47,12 @@ for feature_name in culmen_columns:
     plt.xlabel(feature_name)
 
 # %% [markdown]
-# We can observe that we have quite a simple problem. When the culmen
-# length increases, the probability that the penguin is a Chinstrap is closer
-# to 1. However, the culmen depth is not helpful for predicting the penguin
-# species.
+# We can observe that we have quite a simple problem. When the culmen length
+# increases, the probability that the penguin is a Chinstrap is closer to 1.
+# However, the culmen depth is not helpful for predicting the penguin species.
 #
-# For model fitting, we will separate the target from the data and
-# we will create a training and a testing set.
+# For model fitting, we will separate the target from the data and we will
+# create a training and a testing set.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -65,11 +66,9 @@ target_train = penguins_train[target_column]
 target_test = penguins_test[target_column]
 
 # %% [markdown]
-#
-# The linear regression that we previously saw will predict a continuous
-# output. When the target is a binary outcome, one can use the logistic
-# function to model the probability. This model is known as logistic
-# regression.
+# The linear regression that we previously saw will predict a continuous output.
+# When the target is a binary outcome, one can use the logistic function to
+# model the probability. This model is known as logistic regression.
 #
 # Scikit-learn provides the class `LogisticRegression` which implements this
 # algorithm.
@@ -87,11 +86,10 @@ accuracy = logistic_regression.score(data_test, target_test)
 print(f"Accuracy on test set: {accuracy:.3f}")
 
 # %% [markdown]
-#
-# Since we are dealing with a classification problem containing only 2
-# features, it is then possible to observe the decision function boundary.
-# The boundary is the rule used by our predictive model to affect a class label
-# given the feature values of the sample.
+# Since we are dealing with a classification problem containing only 2 features,
+# it is then possible to observe the decision function boundary. The boundary is
+# the rule used by our predictive model to affect a class label given the
+# feature values of the sample.
 #
 # ```{note}
 # Here, we will use the class `DecisionBoundaryDisplay`. This educational tool
@@ -109,11 +107,19 @@ import seaborn as sns
 from sklearn.inspection import DecisionBoundaryDisplay
 
 DecisionBoundaryDisplay.from_estimator(
-    logistic_regression, data_test, response_method="predict", cmap="RdBu_r", alpha=0.5
+    logistic_regression,
+    data_test,
+    response_method="predict",
+    cmap="RdBu_r",
+    alpha=0.5,
 )
 sns.scatterplot(
-    data=penguins_test, x=culmen_columns[0], y=culmen_columns[1],
-    hue=target_column, palette=["tab:red", "tab:blue"])
+    data=penguins_test,
+    x=culmen_columns[0],
+    y=culmen_columns[1],
+    hue=target_column,
+    palette=["tab:red", "tab:blue"],
+)
 _ = plt.title("Decision boundary of the trained\n LogisticRegression")
 
 # %% [markdown]

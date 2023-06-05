@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -684,10 +684,10 @@ document.write(`
 <h1>📃 Solution for Exercise M6.03<a class="headerlink" href="#solution-for-exercise-m6-03" title="Permalink to this heading">#</a></h1>
 <p>The aim of this exercise is to:</p>
 <ul class="simple">
-<li><p>verifying if a random forest or a gradient-boosting decision tree overfit
-if the number of estimators is not properly chosen;</p></li>
-<li><p>use the early-stopping strategy to avoid adding unnecessary trees, to
-get the best generalization performances.</p></li>
+<li><p>verifying if a random forest or a gradient-boosting decision tree overfit if
+the number of estimators is not properly chosen;</p></li>
+<li><p>use the early-stopping strategy to avoid adding unnecessary trees, to get
+the best generalization performances.</p></li>
 </ul>
 <p>We will use the California housing dataset to conduct our experiments.</p>
 <div class="cell docutils container">
@@ -698,7 +698,8 @@ get the best generalization performances.</p></li>
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -749,7 +750,10 @@ the performance of each model. Evaluate the list of parameters <code class="docu
     <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">gbdt_train_errors</span><span class="p">,</span> <span class="n">gbdt_validation_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">gbdt_train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">gbdt_validation_scores</span>
+<span class="n">gbdt_train_errors</span><span class="p">,</span> <span class="n">gbdt_validation_errors</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="o">-</span><span class="n">gbdt_train_scores</span><span class="p">,</span>
+    <span class="o">-</span><span class="n">gbdt_validation_scores</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">forest_train_scores</span><span class="p">,</span> <span class="n">forest_validation_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
     <span class="n">forest</span><span class="p">,</span>
@@ -809,7 +813,7 @@ the performance of each model. Evaluate the list of parameters <code class="docu
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/724b808918ab992d3b4fbe6f1a88bc412d69e114f15f2a845c3506a2a2372a84.png" src="../_images/724b808918ab992d3b4fbe6f1a88bc412d69e114f15f2a845c3506a2a2372a84.png" />
+<img alt="../_images/0d79619c062d078e1a3ca9265d2c2887c1b375c1b16dde3fdeb73cdec4144c42.png" src="../_images/0d79619c062d078e1a3ca9265d2c2887c1b375c1b16dde3fdeb73cdec4144c42.png" />
 </div>
 </div>
 <p>Both gradient boosting and random forest models will always improve when
@@ -821,8 +825,8 @@ out-of-sample set to compute the generalization performance of the model at
 each addition of a tree. Thus, if the generalization performance is not
 improving for several iterations, it will stop adding trees.</p>
 <p>Now, create a gradient-boosting model with <code class="docutils literal notranslate"><span class="pre">n_estimators=1_000</span></code>. This number
-of trees will be too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such
-that the gradient boosting fitting will stop after adding 5 trees that do not
+of trees will be too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such that
+the gradient boosting fitting will stop after adding 5 trees that do not
 improve the overall generalization performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -834,30 +838,30 @@ improve the overall generalization performance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>266
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>80
 </pre></div>
 </div>
 </div>
 </div>
 <p>We see that the number of trees used is far below 1000 with the current
-dataset. Training the gradient boosting model with the entire 1000 trees
-would have been useless.</p>
-<p>Estimate the generalization performance of this model again using
-the <code class="docutils literal notranslate"><span class="pre">sklearn.metrics.mean_absolute_error</span></code> metric but this time using
-the test set that we held out at the beginning of the notebook.
-Compare the resulting value with the values observed in the validation
-curve.</p>
+dataset. Training the gradient boosting model with the entire 1000 trees would
+have been useless.</p>
+<p>Estimate the generalization performance of this model again using the
+<code class="docutils literal notranslate"><span class="pre">sklearn.metrics.mean_absolute_error</span></code> metric but this time using the test set
+that we held out at the beginning of the notebook. Compare the resulting value
+with the values observed in the validation curve.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+
 <span class="n">error</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">gbdt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our GBDT regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 34.65 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 38.29 k$
 </pre></div>
 </div>
 </div>
@@ -900,7 +904,10 @@ points, the lower the test error.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="ensemble_ex_03.html"
@@ -920,7 +927,10 @@ points, the lower the test error.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -930,7 +940,7 @@ points, the lower the test error.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -973,7 +983,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -982,8 +992,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

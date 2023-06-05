@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -682,11 +682,11 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="benefits-of-using-feature-selection">
 <h1>Benefits of using feature selection<a class="headerlink" href="#benefits-of-using-feature-selection" title="Permalink to this heading">#</a></h1>
-<p>In this notebook, we aim at introducing the main benefits that can be
-gained when using feature selection.</p>
+<p>In this notebook, we aim at introducing the main benefits that can be gained
+when using feature selection.</p>
 <p>Indeed, the principal advantage of selecting features within a machine
-learning pipeline is to reduce the time to train this pipeline and its time
-to predict. We will give an example to highlights these advantages. First, we
+learning pipeline is to reduce the time to train this pipeline and its time to
+predict. We will give an example to highlights these advantages. First, we
 generate a synthetic dataset to control the number of features that will be
 informative, redundant, repeated, and random.</p>
 <div class="cell docutils container">
@@ -710,11 +710,11 @@ To simplify our example, we do not include either redundant or repeated
 features.</p>
 <p>We will create two machine learning pipelines. The former will be a random
 forest that will use all available features. The latter will also be a random
-forest, but we will add a feature selection step to train this classifier.
-The feature selection is based on a univariate test (ANOVA F-value) between
-each feature and the target that we want to predict. The features with the
-two most significant scores are selected.</p>
-<p>Let’s create the model without any feature selection</p>
+forest, but we will add a feature selection step to train this classifier. The
+feature selection is based on a univariate test (ANOVA F-value) between each
+feature and the target that we want to predict. The features with the two most
+significant scores are selected.</p>
+<p>Let’s create the model without any feature selection:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
@@ -742,8 +742,8 @@ selection processing.</p>
 </div>
 </div>
 <p>We will measure the average time spent to train each pipeline and make it
-predict. Besides, we will compute the testing score of the model. We
-will collect these results via cross-validation.</p>
+predict. Besides, we will compute the testing score of the model. We will
+collect these results via cross-validation.</p>
 <p>Let’s start with the random forest without feature selection. We will store
 the results into a dataframe.</p>
 <div class="cell docutils container">
@@ -751,8 +751,9 @@ the results into a dataframe.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
 
-<span class="n">cv_results_without_selection</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model_without_selection</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
-                                              <span class="n">target</span><span class="p">)</span>
+<span class="n">cv_results_without_selection</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">model_without_selection</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span>
+<span class="p">)</span>
 <span class="n">cv_results_without_selection</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results_without_selection</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -763,14 +764,15 @@ selection.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results_with_selection</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">model_with_selection</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">model_with_selection</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">cv_results_with_selection</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results_with_selection</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>To analyze the results, we will merge the results from the two pipeline in
-a single pandas dataframe.</p>
+<p>To analyze the results, we will merge the results from the two pipeline in a
+single pandas dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
@@ -797,7 +799,7 @@ a single pandas dataframe.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7cb594473e0f410cdcddab60b2cf5147d81bc48b9ebf4fb49f34594b14a7ac2f.png" src="../_images/7cb594473e0f410cdcddab60b2cf5147d81bc48b9ebf4fb49f34594b14a7ac2f.png" />
+<img alt="../_images/9585888067db94661b84cbc3aab5a5c38c0068f99addfcbc868251dcbae12fd1.png" src="../_images/9585888067db94661b84cbc3aab5a5c38c0068f99addfcbc868251dcbae12fd1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -809,13 +811,13 @@ a single pandas dataframe.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e93d1c3c8ed141287b296203e5ab77595aa18472a88c885f9761486545ee71c6.png" src="../_images/e93d1c3c8ed141287b296203e5ab77595aa18472a88c885f9761486545ee71c6.png" />
+<img alt="../_images/55ae5a29ae5582a3a447c07e907644e74d0ef3293dc8cf605482b5b7c255ada9.png" src="../_images/55ae5a29ae5582a3a447c07e907644e74d0ef3293dc8cf605482b5b7c255ada9.png" />
 </div>
 </div>
 <p>We can draw the same conclusions for both training and scoring elapsed time:
 selecting the most informative features speed-up our pipeline.</p>
-<p>Of course, such speed-up is beneficial only if the generalization performance in
-terms of metrics remain the same. Let’s check the testing score.</p>
+<p>Of course, such speed-up is beneficial only if the generalization performance
+in terms of metrics remain the same. Let’s check the testing score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -825,11 +827,11 @@ terms of metrics remain the same. Let’s check the testing score.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/397029882332fc0e9c3012eb4cd377aaf652db6aaf1d3c8170793f3cf9828ed3.png" src="../_images/397029882332fc0e9c3012eb4cd377aaf652db6aaf1d3c8170793f3cf9828ed3.png" />
+<img alt="../_images/46679ae8101d3adf2ff18e31598cb375915deed969beaf3a6be230e1808009a3.png" src="../_images/46679ae8101d3adf2ff18e31598cb375915deed969beaf3a6be230e1808009a3.png" />
 </div>
 </div>
-<p>We can observe that the model’s generalization performance selecting a subset of
-features decreases compared with the model using all available features.
+<p>We can observe that the model’s generalization performance selecting a subset
+of features decreases compared with the model using all available features.
 Since we generated the dataset, we can infer that the decrease is because of
 the selection. The feature selection algorithm did not choose the two
 informative features.</p>
@@ -857,8 +859,8 @@ Fold #4 - features selected are: [49 53]
 </div>
 </div>
 </div>
-<p>We see that the feature <code class="docutils literal notranslate"><span class="pre">53</span></code> is always selected while the other feature
-varies depending on the cross-validation fold.</p>
+<p>We see that the feature <code class="docutils literal notranslate"><span class="pre">53</span></code> is always selected while the other feature varies
+depending on the cross-validation fold.</p>
 <p>If we would like to keep our score with similar generalization performance, we
 could choose another metric to perform the test or select more features. For
 instance, we could select the number of features based on a specific
@@ -867,12 +869,12 @@ simplify our problem by having informative and not informative features.
 Correlation between features makes the problem of feature selection even
 harder.</p>
 <p>Therefore, we could come with a much more complicated procedure that could
-tune (via cross-validation) the number of selected features and change
-the way feature is selected (e.g. using a machine-learning model). However,
-going towards these solutions alienates the feature selection’s primary
-purpose to get a significant train/test speed-up. Also, if the primary goal
-was to get a more performant model, performant models exclude non-informative
-features natively.</p>
+tune (via cross-validation) the number of selected features and change the way
+feature is selected (e.g. using a machine-learning model). However, going
+towards these solutions alienates the feature selection’s primary purpose to
+get a significant train/test speed-up. Also, if the primary goal was to get a
+more performant model, performant models exclude non-informative features
+natively.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -901,7 +903,10 @@ features natively.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../feature_selection/feature_selection_module_intro.html"
@@ -921,7 +926,10 @@ features natively.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -931,7 +939,7 @@ features natively.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -974,7 +982,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -983,8 +991,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

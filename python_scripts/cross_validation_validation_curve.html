@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -695,8 +695,8 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="overfit-generalization-underfit">
 <h1>Overfit-generalization-underfit<a class="headerlink" href="#overfit-generalization-underfit" title="Permalink to this heading">#</a></h1>
 <p>In the previous notebook, we presented the general cross-validation framework
-and how it helps us quantify the training and testing errors as well
-as their fluctuations.</p>
+and how it helps us quantify the training and testing errors as well as their
+fluctuations.</p>
 <p>In this notebook, we will put these two errors into perspective and show how
 they can help us know if our model generalizes, overfits, or underfits.</p>
 <p>Let’s first load the data and create the same model as in the previous
@@ -728,31 +728,38 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <section id="overfitting-vs-underfitting">
 <h2>Overfitting vs. underfitting<a class="headerlink" href="#overfitting-vs-underfitting" title="Permalink to this heading">#</a></h2>
-<p>To better understand the generalization performance of our model and maybe find
-insights on how to improve it, we will compare the testing error with the
-training error. Thus, we need to compute the error on the training set,
-which is possible using the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
+<p>To better understand the generalization performance of our model and maybe
+find insights on how to improve it, we will compare the testing error with the
+training error. Thus, we need to compute the error on the training set, which
+is possible using the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">ShuffleSplit</span>
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span>
-                            <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-                            <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">regressor</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>The cross-validation used the negative mean absolute error. We transform
-the negative mean absolute error into a positive mean absolute error.</p>
+<p>The cross-validation used the negative mean absolute error. We transform the
+negative mean absolute error into a positive mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 <span class="n">scores</span><span class="p">[[</span><span class="s2">&quot;train error&quot;</span><span class="p">,</span> <span class="s2">&quot;test error&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span>
-    <span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">,</span> <span class="s2">&quot;test_score&quot;</span><span class="p">]]</span>
+    <span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">,</span> <span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -768,27 +775,27 @@ the negative mean absolute error into a positive mean absolute error.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ebfe6fb69659cf4ae513409a1859dcfdbe8759f53e5de83efac05ea61e622f58.png" src="../_images/ebfe6fb69659cf4ae513409a1859dcfdbe8759f53e5de83efac05ea61e622f58.png" />
+<img alt="../_images/a5eedb9b7654f3799fe489989f2cf82fd5d1b2032704bad6984f0896a1f7643f.png" src="../_images/a5eedb9b7654f3799fe489989f2cf82fd5d1b2032704bad6984f0896a1f7643f.png" />
 </div>
 </div>
-<p>By plotting the distribution of the training and testing errors, we
-get information about whether our model is over-fitting, under-fitting (or
-both at the same time).</p>
-<p>Here, we observe a <strong>small training error</strong> (actually zero), meaning that
-the model is <strong>not under-fitting</strong>: it is flexible enough to capture any
+<p>By plotting the distribution of the training and testing errors, we get
+information about whether our model is over-fitting, under-fitting (or both at
+the same time).</p>
+<p>Here, we observe a <strong>small training error</strong> (actually zero), meaning that the
+model is <strong>not under-fitting</strong>: it is flexible enough to capture any
 variations present in the training set.</p>
-<p>However the <strong>significantly larger testing error</strong> tells us that the
-model is <strong>over-fitting</strong>: the model has memorized many variations of the
-training set that could be considered “noisy” because they do not generalize
-to help us make good prediction on the test set.</p>
+<p>However the <strong>significantly larger testing error</strong> tells us that the model is
+<strong>over-fitting</strong>: the model has memorized many variations of the training set
+that could be considered “noisy” because they do not generalize to help us
+make good prediction on the test set.</p>
 </section>
 <section id="validation-curve">
 <h2>Validation curve<a class="headerlink" href="#validation-curve" title="Permalink to this heading">#</a></h2>
 <p>Some model hyperparameters are usually the key to go from a model that
 underfits to a model that overfits, hopefully going through a region were we
-can get a good balance between the two. We can acquire knowledge by plotting
-a curve called the validation curve. This curve can also be applied to the
-above experiment and varies the value of a hyperparameter.</p>
+can get a good balance between the two. We can acquire knowledge by plotting a
+curve called the validation curve. This curve can also be applied to the above
+experiment and varies the value of a hyperparameter.</p>
 <p>For the decision tree, the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter is used to control the
 tradeoff between under-fitting and over-fitting.</p>
 <div class="cell docutils container">
@@ -798,15 +805,22 @@ tradeoff between under-fitting and over-fitting.</p>
 
 <span class="n">max_depth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
 <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span> <span class="n">param_range</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">regressor</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">,</span>
+    <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;max_depth&quot;</span><span class="p">,</span>
+    <span class="n">param_range</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 241 ms, sys: 39.1 ms, total: 280 ms
-Wall time: 10.6 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 227 ms, sys: 22.1 ms, total: 249 ms
+Wall time: 11.5 s
 </pre></div>
 </div>
 </div>
@@ -826,41 +840,48 @@ plotting the training and testing errors (as well as their deviations).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/aa96f026d6c3701d04198c27c83dd5990c0f2b6ea9868cc318ba74271023b2c3.png" src="../_images/aa96f026d6c3701d04198c27c83dd5990c0f2b6ea9868cc318ba74271023b2c3.png" />
+<img alt="../_images/99cf65e0b60feb83cd0404bd240dba08ca616d11083d85945ea32c212d850e79.png" src="../_images/99cf65e0b60feb83cd0404bd240dba08ca616d11083d85945ea32c212d850e79.png" />
 </div>
 </div>
 <p>The validation curve can be divided into three areas:</p>
 <ul class="simple">
 <li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&lt;</span> <span class="pre">10</span></code>, the decision tree underfits. The training error and
-therefore the testing error are both high. The model is too
-constrained and cannot capture much of the variability of the target
-variable.</p></li>
+therefore the testing error are both high. The model is too constrained and
+cannot capture much of the variability of the target variable.</p></li>
 <li><p>The region around <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code> corresponds to the parameter for which
 the decision tree generalizes the best. It is flexible enough to capture a
 fraction of the variability of the target that generalizes, while not
 memorizing all of the noise in the target.</p></li>
-<li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&gt;</span> <span class="pre">10</span></code>, the decision tree overfits. The training error
-becomes very small, while the testing error increases. In this
-region, the models create decisions specifically for noisy samples harming
-its ability to generalize to test data.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">&gt;</span> <span class="pre">10</span></code>, the decision tree overfits. The training error becomes
+very small, while the testing error increases. In this region, the models
+create decisions specifically for noisy samples harming its ability to
+generalize to test data.</p></li>
 </ul>
 <p>Note that for <code class="docutils literal notranslate"><span class="pre">max_depth</span> <span class="pre">=</span> <span class="pre">10</span></code>, the model overfits a bit as there is a gap
-between the training error and the testing error. It can also
-potentially underfit also a bit at the same time, because the training error
-is still far from zero (more than 30 k$), meaning that the model might
-still be too constrained to model interesting parts of the data. However, the
-testing error is minimal, and this is what really matters. This is the
-best compromise we could reach by just tuning this parameter.</p>
+between the training error and the testing error. It can also potentially
+underfit also a bit at the same time, because the training error is still far
+from zero (more than 30 k$), meaning that the model might still be too
+constrained to model interesting parts of the data. However, the testing error
+is minimal, and this is what really matters. This is the best compromise we
+could reach by just tuning this parameter.</p>
 <p>Be aware that looking at the mean errors is quite limiting. We should also
-look at the standard deviation to assess the dispersion of the score. We
-can repeat the same plot as before but this time, we will add some
-information to show the standard deviation of the errors as well.</p>
+look at the standard deviation to assess the dispersion of the score. We can
+repeat the same plot as before but this time, we will add some information to
+show the standard deviation of the errors as well.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training error&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">yerr</span><span class="o">=</span><span class="n">test_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Testing error&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">max_depth</span><span class="p">,</span>
+    <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training error&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
+    <span class="n">max_depth</span><span class="p">,</span>
+    <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">yerr</span><span class="o">=</span><span class="n">test_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing error&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Maximum depth of decision tree&quot;</span><span class="p">)</span>
@@ -870,7 +891,7 @@ information to show the standard deviation of the errors as well.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bc5cc065cd47fffa2a4cc833730ce35e4c3b057076f501796b0f5a66d529038e.png" src="../_images/bc5cc065cd47fffa2a4cc833730ce35e4c3b057076f501796b0f5a66d529038e.png" />
+<img alt="../_images/42e7e2863730cbddcbc0e5826a10bd7fd502d1d07363b57643e98a8e3d879fb0.png" src="../_images/42e7e2863730cbddcbc0e5826a10bd7fd502d1d07363b57643e98a8e3d879fb0.png" />
 </div>
 </div>
 <p>We were lucky that the variance of the errors was small compared to their
@@ -883,8 +904,7 @@ is not necessarily always the case.</p>
 <ul class="simple">
 <li><p>how to identify whether a model is generalizing, overfitting, or
 underfitting;</p></li>
-<li><p>how to check influence of a hyperparameter on the tradeoff
-underfit/overfit.</p></li>
+<li><p>how to check influence of a hyperparameter on the tradeoff underfit/overfit.</p></li>
 </ul>
 </section>
 </section>
@@ -915,7 +935,10 @@ underfit/overfit.</p></li>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../overfit/learning_validation_curves_slides.html"
@@ -935,7 +958,10 @@ underfit/overfit.</p></li>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -961,7 +987,7 @@ underfit/overfit.</p></li>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1004,7 +1030,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1013,8 +1039,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

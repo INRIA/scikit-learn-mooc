@@ -10,10 +10,10 @@
 #
 # The aim of this exercise is to:
 #
-# * verifying if a random forest or a gradient-boosting decision tree overfit
-#   if the number of estimators is not properly chosen;
-# * use the early-stopping strategy to avoid adding unnecessary trees, to
-#   get the best generalization performances.
+# * verifying if a random forest or a gradient-boosting decision tree overfit if
+#   the number of estimators is not properly chosen;
+# * use the early-stopping strategy to avoid adding unnecessary trees, to get
+#   the best generalization performances.
 #
 # We will use the California housing dataset to conduct our experiments.
 
@@ -24,7 +24,8 @@ from sklearn.model_selection import train_test_split
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 target *= 100  # rescale the target in k$
 data_train, data_test, target_train, target_test = train_test_split(
-    data, target, random_state=0, test_size=0.5)
+    data, target, random_state=0, test_size=0.5
+)
 
 # %% [markdown]
 # ```{note}
@@ -73,7 +74,10 @@ gbdt_train_scores, gbdt_validation_scores = validation_curve(
     scoring="neg_mean_absolute_error",
     n_jobs=2,
 )
-gbdt_train_errors, gbdt_validation_errors = -gbdt_train_scores, -gbdt_validation_scores
+gbdt_train_errors, gbdt_validation_errors = (
+    -gbdt_train_scores,
+    -gbdt_validation_scores,
+)
 
 forest_train_scores, forest_validation_scores = validation_curve(
     forest,
@@ -138,8 +142,8 @@ _ = fig.suptitle("Validation curves", y=1.1)
 # improving for several iterations, it will stop adding trees.
 #
 # Now, create a gradient-boosting model with `n_estimators=1_000`. This number
-# of trees will be too large. Change the parameter `n_iter_no_change` such
-# that the gradient boosting fitting will stop after adding 5 trees that do not
+# of trees will be too large. Change the parameter `n_iter_no_change` such that
+# the gradient boosting fitting will stop after adding 5 trees that do not
 # improve the overall generalization performance.
 
 # %%
@@ -150,19 +154,19 @@ gbdt.n_estimators_
 
 # %% [markdown] tags=["solution"]
 # We see that the number of trees used is far below 1000 with the current
-# dataset. Training the gradient boosting model with the entire 1000 trees
-# would have been useless.
+# dataset. Training the gradient boosting model with the entire 1000 trees would
+# have been useless.
 
 # %% [markdown]
-# Estimate the generalization performance of this model again using
-# the `sklearn.metrics.mean_absolute_error` metric but this time using
-# the test set that we held out at the beginning of the notebook.
-# Compare the resulting value with the values observed in the validation
-# curve.
+# Estimate the generalization performance of this model again using the
+# `sklearn.metrics.mean_absolute_error` metric but this time using the test set
+# that we held out at the beginning of the notebook. Compare the resulting value
+# with the values observed in the validation curve.
 
 # %%
 # solution
 from sklearn.metrics import mean_absolute_error
+
 error = mean_absolute_error(target_test, gbdt.predict(data_test))
 print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
 

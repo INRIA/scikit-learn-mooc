@@ -8,12 +8,11 @@
 # %% [markdown]
 # # Working with numerical data
 #
-# In the previous notebook, we trained a k-nearest neighbors model on
-# some data.
+# In the previous notebook, we trained a k-nearest neighbors model on some data.
 #
 # However, we oversimplified the procedure by loading a dataset that contained
-# exclusively numerical data. Besides, we used datasets which were already
-# split into train-test sets.
+# exclusively numerical data. Besides, we used datasets which were already split
+# into train-test sets.
 #
 # In this notebook, we aim at:
 #
@@ -27,8 +26,8 @@
 #
 # ## Loading the entire dataset
 #
-# As in the previous notebook, we rely on pandas to open the CSV file into
-# a pandas dataframe.
+# As in the previous notebook, we rely on pandas to open the CSV file into a
+# pandas dataframe.
 
 # %%
 import pandas as pd
@@ -59,18 +58,17 @@ target
 # ```
 
 # %% [markdown]
-# At this point, we can focus on the data we want to use to train our
-# predictive model.
+# At this point, we can focus on the data we want to use to train our predictive
+# model.
 #
 # ## Identify numerical data
 #
 # Numerical data are represented with numbers. They are linked to measurable
-# (quantitative) data, such as age or the number of hours a person works a
-# week.
+# (quantitative) data, such as age or the number of hours a person works a week.
 #
-# Predictive models are natively designed to work with numerical data.
-# Moreover, numerical data usually requires very little work before getting
-# started with training.
+# Predictive models are natively designed to work with numerical data. Moreover,
+# numerical data usually requires very little work before getting started with
+# training.
 #
 # The first task here will be to identify numerical data in our dataset.
 #
@@ -86,16 +84,16 @@ target
 data.dtypes
 
 # %% [markdown]
-# We seem to have only two data types: `int64` and `object`. We can make
-# sure by checking for unique data types.
+# We seem to have only two data types: `int64` and `object`. We can make sure by
+# checking for unique data types.
 
 # %%
 data.dtypes.unique()
 
 # %% [markdown]
-# Indeed, the only two types in the dataset are integer `int64` and `object`.
-# We can look at the first few lines of the dataframe to understand the
-# meaning of the `object` data type.
+# Indeed, the only two types in the dataset are integer `int64` and `object`. We
+# can look at the first few lines of the dataframe to understand the meaning of
+# the `object` data type.
 
 # %%
 data.head()
@@ -111,9 +109,9 @@ numerical_columns = ["age", "capital-gain", "capital-loss", "hours-per-week"]
 data[numerical_columns].head()
 
 # %% [markdown]
-# Now that we limited the dataset to numerical columns only,
-# we can analyse these numbers to figure out what they represent. We can
-# identify two types of usage.
+# Now that we limited the dataset to numerical columns only, we can analyse
+# these numbers to figure out what they represent. We can identify two types of
+# usage.
 #
 # The first column, `"age"`, is self-explanatory. We can note that the values
 # are continuous, meaning they can take up any number in a given range. Let's
@@ -150,7 +148,8 @@ data_numeric = data[numerical_columns]
 from sklearn.model_selection import train_test_split
 
 data_train, data_test, target_train, target_test = train_test_split(
-    data_numeric, target, random_state=42, test_size=0.25)
+    data_numeric, target, random_state=42, test_size=0.25
+)
 
 # %% [markdown]
 # ```{tip}
@@ -163,18 +162,22 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # When calling the function `train_test_split`, we specified that we would like
 # to have 25% of samples in the testing set while the remaining samples (75%)
-# will be available in the training set. We can check quickly if we got
-# what we expected.
+# will be available in the training set. We can check quickly if we got what we
+# expected.
 
 # %%
-print(f"Number of samples in testing: {data_test.shape[0]} => "
-      f"{data_test.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
-      f" original set")
+print(
+    f"Number of samples in testing: {data_test.shape[0]} => "
+    f"{data_test.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
+    " original set"
+)
 
 # %%
-print(f"Number of samples in training: {data_train.shape[0]} => "
-      f"{data_train.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
-      f" original set")
+print(
+    f"Number of samples in training: {data_train.shape[0]} => "
+    f"{data_train.shape[0] / data_numeric.shape[0] * 100:.1f}% of the"
+    " original set"
+)
 
 # %% [markdown]
 # In the previous notebook, we used a k-nearest neighbors model. While this
@@ -203,17 +206,17 @@ from sklearn.linear_model import LogisticRegression
 model = LogisticRegression()
 
 # %% [markdown]
-# Now that the model has been created, you can use it exactly the same way as
-# we used the k-nearest neighbors model in the previous notebook. In
-# particular, we can use the `fit` method to train the model using the training
-# data and labels:
+# Now that the model has been created, you can use it exactly the same way as we
+# used the k-nearest neighbors model in the previous notebook. In particular, we
+# can use the `fit` method to train the model using the training data and
+# labels:
 
 # %%
 model.fit(data_train, target_train)
 
 # %% [markdown]
-# We can also use the `score` method to check the model generalization performance
-# on the test set.
+# We can also use the `score` method to check the model generalization
+# performance on the test set.
 
 # %%
 accuracy = model.score(data_test, target_test)
@@ -222,16 +225,16 @@ print(f"Accuracy of logistic regression: {accuracy:.3f}")
 # %% [markdown]
 # ## Notebook recap
 #
-# In scikit-learn, the `score` method of a classification model returns the accuracy,
-# i.e. the fraction of correctly classified samples. In this case, around
-# 8 / 10 of the times the logistic regression predicts the right income of a
-# person. Now the real question is: is this generalization performance relevant
-# of a good predictive model? Find out by solving the next exercise!
+# In scikit-learn, the `score` method of a classification model returns the
+# accuracy, i.e. the fraction of correctly classified samples. In this case,
+# around 8 / 10 of the times the logistic regression predicts the right income
+# of a person. Now the real question is: is this generalization performance
+# relevant of a good predictive model? Find out by solving the next exercise!
 #
 # In this notebook, we learned to:
 #
 # * identify numerical data in a heterogeneous dataset;
 # * select the subset of columns corresponding to numerical data;
-# * use the scikit-learn `train_test_split` function to separate data into
-#   a train and a test set;
+# * use the scikit-learn `train_test_split` function to separate data into a
+#   train and a test set;
 # * train and evaluate a logistic regression model.

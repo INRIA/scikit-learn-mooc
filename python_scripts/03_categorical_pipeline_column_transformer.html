@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -756,15 +756,14 @@ model on a dataset that combines both kinds of variables together
 (heterogeneously typed tabular data).</p>
 <p>We first define the columns depending on their data type:</p>
 <ul class="simple">
-<li><p><strong>one-hot encoding</strong> will be applied to categorical columns. Besides, we
-use <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code> to solve the potential issues due to rare
+<li><p><strong>one-hot encoding</strong> will be applied to categorical columns. Besides, we use
+<code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code> to solve the potential issues due to rare
 categories.</p></li>
 <li><p><strong>numerical scaling</strong> numerical features which will be standardized.</p></li>
 </ul>
-<p>Now, we create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying three values:
-the preprocessor name, the transformer, and the columns.
-First, let’s create the preprocessors for the numerical and categorical
-parts.</p>
+<p>Now, we create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying three values: the
+preprocessor name, the transformer, and the columns. First, let’s create the
+preprocessors for the numerical and categorical parts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
@@ -775,15 +774,18 @@ parts.</p>
 </div>
 </div>
 </div>
-<p>Now, we create the transformer and associate each of these preprocessors
-with their respective columns.</p>
+<p>Now, we create the transformer and associate each of these preprocessors with
+their respective columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
 
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;one-hot-encoder&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
-    <span class="p">(</span><span class="s1">&#39;standard_scaler&#39;</span><span class="p">,</span> <span class="n">numerical_preprocessor</span><span class="p">,</span> <span class="n">numerical_columns</span><span class="p">)])</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;one-hot-encoder&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;standard_scaler&quot;</span><span class="p">,</span> <span class="n">numerical_preprocessor</span><span class="p">,</span> <span class="n">numerical_columns</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -796,14 +798,14 @@ with their respective columns.</p>
 <li><p>It <strong>splits the columns</strong> of the original dataset based on the column names
 or indices provided. We will obtain as many subsets as the number of
 transformers passed into the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code>.</p></li>
-<li><p>It <strong>transforms each subsets</strong>. A specific transformer is applied to
-each subset: it will internally call <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> or <code class="docutils literal notranslate"><span class="pre">transform</span></code>. The
-output of this step is a set of transformed datasets.</p></li>
+<li><p>It <strong>transforms each subsets</strong>. A specific transformer is applied to each
+subset: it will internally call <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> or <code class="docutils literal notranslate"><span class="pre">transform</span></code>. The output
+of this step is a set of transformed datasets.</p></li>
 <li><p>It then <strong>concatenates the transformed datasets</strong> into a single dataset.</p></li>
 </ul>
-<p>The important thing is that <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> is like any other
-scikit-learn transformer. In particular it can be combined with a classifier
-in a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>:</p>
+<p>The important thing is that <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> is like any other scikit-learn
+transformer. In particular it can be combined with a classifier in a
+<code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -850,8 +852,8 @@ in a <code class="docutils literal notranslate"><span class="pre">Pipeline</span
                                  [&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;,
                                   &#x27;hours-per-week&#x27;])])</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">one-hot-encoder</label><div class="sk-toggleable__content"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">OneHotEncoder</label><div class="sk-toggleable__content"><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;)</pre></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">standard_scaler</label><div class="sk-toggleable__content"><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">StandardScaler</label><div class="sk-toggleable__content"><pre>StandardScaler()</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label sk-toggleable__label-arrow">LogisticRegression</label><div class="sk-toggleable__content"><pre>LogisticRegression(max_iter=500)</pre></div></div></div></div></div></div></div></div></div>
 </div>
-<p>The final model is more complex than the previous models but still follows
-the same API (the same set of methods that can be called by the user):</p>
+<p>The final model is more complex than the previous models but still follows the
+same API (the same set of methods that can be called by the user):</p>
 <ul class="simple">
 <li><p>the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called to preprocess the data and then train the
 classifier of the preprocessed data;</p></li>
@@ -865,7 +867,8 @@ predictions to the expected test labels to compute the accuracy.</p></li>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -874,9 +877,8 @@ predictions to the expected test labels to compute the accuracy.</p></li>
 <p class="admonition-title">Caution</p>
 <p>Be aware that we use <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> here for didactic purposes, to show
 the scikit-learn API. In a real setting one might prefer to use
-cross-validation to also be able to evaluate the uncertainty of
-our estimation of the generalization performance of a model,
-as previously demonstrated.</p>
+cross-validation to also be able to evaluate the uncertainty of our estimation
+of the generalization performance of a model, as previously demonstrated.</p>
 </div>
 <p>Now, we can train the model on the train set.</p>
 <div class="cell docutils container">
@@ -889,8 +891,7 @@ as previously demonstrated.</p>
 <p>Then, we can send the raw dataset straight to the pipeline. Indeed, we do not
 need to make any manual preprocessing (calling the <code class="docutils literal notranslate"><span class="pre">transform</span></code> or
 <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> methods) as it will be handled when calling the <code class="docutils literal notranslate"><span class="pre">predict</span></code>
-method. As an example, we predict on the five first samples from the test
-set.</p>
+method. As an example, we predict on the five first samples from the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1069,8 +1070,8 @@ scikit-learn as any other predictors:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.82480001, 0.84752774, 0.76499462, 0.82500458, 0.82652307]),
- &#39;score_time&#39;: array([0.03463459, 0.03468728, 0.03450727, 0.0361948 , 0.03471708]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.80870914, 0.83725786, 0.7609067 , 0.8093245 , 0.81369853]),
+ &#39;score_time&#39;: array([0.0346272 , 0.03495693, 0.03356552, 0.03582501, 0.03371692]),
  &#39;test_score&#39;: array([0.8512642 , 0.8498311 , 0.84756347, 0.8523751 , 0.85524161])}
 </pre></div>
 </div>
@@ -1079,8 +1080,10 @@ scikit-learn as any other predictors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;The mean cross-validation accuracy is: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1095,14 +1098,14 @@ used numerical and categorical variables in isolation.</p>
 </section>
 <section id="fitting-a-more-powerful-model">
 <h2>Fitting a more powerful model<a class="headerlink" href="#fitting-a-more-powerful-model" title="Permalink to this heading">#</a></h2>
-<p><strong>Linear models</strong> are nice because they are usually cheap to train,
-<strong>small</strong> to deploy, <strong>fast</strong> to predict and give a <strong>good baseline</strong>.</p>
+<p><strong>Linear models</strong> are nice because they are usually cheap to train, <strong>small</strong>
+to deploy, <strong>fast</strong> to predict and give a <strong>good baseline</strong>.</p>
 <p>However, it is often useful to check whether more complex models such as an
 ensemble of decision trees can lead to higher predictive performance. In this
 section we will use such a model called <strong>gradient-boosting trees</strong> and
-evaluate its generalization performance. More precisely, the scikit-learn model
-we will use is called <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>. Note that boosting
-models will be covered in more detail in a future module.</p>
+evaluate its generalization performance. More precisely, the scikit-learn
+model we will use is called <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>. Note that
+boosting models will be covered in more detail in a future module.</p>
 <p>For tree-based models, the handling of numerical and categorical variables is
 simpler than for linear models:</p>
 <ul class="simple">
@@ -1110,19 +1113,21 @@ simpler than for linear models:</p>
 <li><p>using an <strong>ordinal encoding for the categorical variables</strong> is fine even if
 the encoding results in an arbitrary ordering</p></li>
 </ul>
-<p>Therefore, for <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>, the preprocessing pipeline
-is slightly simpler than the one we saw earlier for the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>:</p>
+<p>Therefore, for <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code>, the preprocessing pipeline is
+slightly simpler than the one we saw earlier for the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
-<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span>
-                                          <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
+    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
 
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">([</span>
-    <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[(</span><span class="s2">&quot;categorical&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
 </pre></div>
@@ -1138,8 +1143,8 @@ is slightly simpler than the one we saw earlier for the <code class="docutils li
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 834 ms, sys: 7.96 ms, total: 842 ms
-Wall time: 841 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 867 ms, sys: 15.8 ms, total: 883 ms
+Wall time: 883 ms
 </pre></div>
 </div>
 </div>
@@ -1151,25 +1156,24 @@ Wall time: 841 ms
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8800262058799443
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8799443125051183
 </pre></div>
 </div>
 </div>
 </div>
 <p>We can observe that we get significantly higher accuracies with the Gradient
-Boosting model. This is often what we observe whenever the dataset has a
-large number of samples and limited number of informative features (e.g. less
-than 1000) with a mix of numerical and categorical variables.</p>
-<p>This explains why Gradient Boosted Machines are very popular among
-datascience practitioners who work with tabular data.</p>
+Boosting model. This is often what we observe whenever the dataset has a large
+number of samples and limited number of informative features (e.g. less than
+1000) with a mix of numerical and categorical variables.</p>
+<p>This explains why Gradient Boosted Machines are very popular among datascience
+practitioners who work with tabular data.</p>
 <p>In this notebook we:</p>
 <ul class="simple">
-<li><p>used a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to apply different preprocessing for
-categorical and numerical variables;</p></li>
-<li><p>used a pipeline to chain the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> preprocessing and
-logistic regression fitting;</p></li>
-<li><p>saw that <strong>gradient boosting methods</strong> can outperform <strong>linear
-models</strong>.</p></li>
+<li><p>used a <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> to apply different preprocessing for categorical
+and numerical variables;</p></li>
+<li><p>used a pipeline to chain the <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> preprocessing and logistic
+regression fitting;</p></li>
+<li><p>saw that <strong>gradient boosting methods</strong> can outperform <strong>linear models</strong>.</p></li>
 </ul>
 </section>
 </section>
@@ -1200,7 +1204,10 @@ models</strong>.</p></li>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="03_categorical_pipeline_sol_01.html"
@@ -1220,7 +1227,10 @@ models</strong>.</p></li>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1247,7 +1257,7 @@ models</strong>.</p></li>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1290,7 +1300,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1299,8 +1309,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

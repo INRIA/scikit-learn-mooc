@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -710,8 +710,8 @@ split.</p></li>
 notebook. For more details about the dataset see
 <a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a>.</p>
 <p>Numerical data is the most natural type of data used in machine learning and
-can (almost) directly be fed into predictive models. We will load a
-subset of the original data with only the numerical columns.</p>
+can (almost) directly be fed into predictive models. We will load a subset of
+the original data with only the numerical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -800,10 +800,9 @@ subset of the original data with only the numerical columns.</p>
 </div></div></div>
 </div>
 <p>We see that this CSV file contains all information: the target that we would
-like to predict (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;class&quot;</span></code>) and the data that we want to use to train
-our predictive model (i.e. the remaining columns). The first step is to
-separate columns to get on one side the target and on the other side the
-data.</p>
+like to predict (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;class&quot;</span></code>) and the data that we want to use to train our
+predictive model (i.e. the remaining columns). The first step is to separate
+columns to get on one side the target and on the other side the data.</p>
 </section>
 <section id="separate-the-data-and-the-target">
 <h2>Separate the data and the target<a class="headerlink" href="#separate-the-data-and-the-target" title="Permalink to this heading">#</a></h2>
@@ -834,7 +833,7 @@ Name: class, Length: 39073, dtype: object
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -921,8 +920,10 @@ samples are available in our dataset.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The dataset contains </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -935,10 +936,10 @@ samples are available in our dataset.</p>
 </section>
 <section id="fit-a-model-and-make-predictions">
 <h2>Fit a model and make predictions<a class="headerlink" href="#fit-a-model-and-make-predictions" title="Permalink to this heading">#</a></h2>
-<p>We will build a classification model using the “K-nearest neighbors”
-strategy. To predict the target of a new sample, a k-nearest neighbors takes
-into account its <code class="docutils literal notranslate"><span class="pre">k</span></code> closest samples in the training set and predicts the
-majority target of these samples.</p>
+<p>We will build a classification model using the “K-nearest neighbors” strategy.
+To predict the target of a new sample, a k-nearest neighbors takes into
+account its <code class="docutils literal notranslate"><span class="pre">k</span></code> closest samples in the training set and predicts the majority
+target of these samples.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
 <p>We use a K-nearest neighbors here. However, be aware that it is seldom useful
@@ -959,11 +960,11 @@ target data.</p>
 </div>
 <p>Learning can be represented as follows:</p>
 <p><img alt="Predictor fit diagram" src="../_images/api_diagram-predictor.fit.svg" /></p>
-<p>The method <code class="docutils literal notranslate"><span class="pre">fit</span></code> is composed of two elements: (i) a <strong>learning algorithm</strong>
-and (ii) some <strong>model states</strong>. The learning algorithm takes the training
-data and training target as input and sets the model states. These model
-states will be used later to either predict (for classifiers and regressors)
-or transform data (for transformers).</p>
+<p>The method <code class="docutils literal notranslate"><span class="pre">fit</span></code> is composed of two elements: (i) a <strong>learning algorithm</strong> and
+(ii) some <strong>model states</strong>. The learning algorithm takes the training data and
+training target as input and sets the model states. These model states will be
+used later to either predict (for classifiers and regressors) or transform
+data (for transformers).</p>
 <p>Both the learning algorithm and the type of model states are specific to each
 type of model.</p>
 <div class="admonition note">
@@ -985,8 +986,8 @@ commonly called <code class="docutils literal notranslate"><span class="pre">y</
 <p>To predict, a model uses a <strong>prediction function</strong> that will use the input
 data together with the model states. As for the learning algorithm and the
 model states, the prediction function is specific for each type of model.</p>
-<p>Let’s now have a look at the computed predictions. For the sake of
-simplicity, we will look at the five first predicted targets.</p>
+<p>Let’s now have a look at the computed predictions. For the sake of simplicity,
+we will look at the five first predicted targets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
@@ -1037,8 +1038,10 @@ Name: class, dtype: bool
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of correct prediction: &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> / 5&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Number of correct prediction: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">target</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> / 5&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1063,27 +1066,25 @@ sample.</p>
 </div>
 </div>
 </div>
-<p>This result means that the model makes a correct prediction for
-approximately 82 samples out of 100. Note that we used the same data
-to train and evaluate our model. Can this evaluation be trusted or is
-it too good to be true?</p>
+<p>This result means that the model makes a correct prediction for approximately
+82 samples out of 100. Note that we used the same data to train and evaluate
+our model. Can this evaluation be trusted or is it too good to be true?</p>
 </section>
 <section id="train-test-data-split">
 <h2>Train-test data split<a class="headerlink" href="#train-test-data-split" title="Permalink to this heading">#</a></h2>
 <p>When building a machine learning model, it is important to evaluate the
 trained model on data that was not used to fit it, as <strong>generalization</strong> is
 more than memorization (meaning we want a rule that generalizes to new data,
-without comparing to data we memorized).
-It is harder to conclude on never-seen instances than on already seen ones.</p>
+without comparing to data we memorized). It is harder to conclude on
+never-seen instances than on already seen ones.</p>
 <p>Correct evaluation is easily done by leaving out a subset of the data when
-training the model and using it afterwards for model evaluation.
-The data used to fit a model is called training data while the data used to
-assess a model is called testing data.</p>
-<p>We can load more data, which was actually left-out from the original data
-set.</p>
+training the model and using it afterwards for model evaluation. The data used
+to fit a model is called training data while the data used to assess a model
+is called testing data.</p>
+<p>We can load more data, which was actually left-out from the original data set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../datasets/adult-census-numeric-test.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census-numeric-test.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1093,7 +1094,7 @@ as in the beginning of this notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
-<span class="n">data_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="p">])</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">adult_census_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1101,8 +1102,10 @@ as in the beginning of this notebook.</p>
 <p>We can check the number of features and samples available in this new set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The testing dataset contains </span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The testing dataset contains </span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> samples and &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> features&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1112,16 +1115,15 @@ as in the beginning of this notebook.</p>
 </div>
 </div>
 </div>
-<p>Instead of computing the prediction and manually computing the average
-success rate, we can use the method <code class="docutils literal notranslate"><span class="pre">score</span></code>. When dealing with classifiers
-this method returns their performance metric.</p>
+<p>Instead of computing the prediction and manually computing the average success
+rate, we can use the method <code class="docutils literal notranslate"><span class="pre">score</span></code>. When dealing with classifiers this method
+returns their performance metric.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="n">model_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy using a </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is &quot;</span>
-      <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy using a </span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1133,12 +1135,12 @@ this method returns their performance metric.</p>
 </div>
 <p>Let’s check the underlying mechanism when the <code class="docutils literal notranslate"><span class="pre">score</span></code> method is called:</p>
 <p><img alt="Predictor score diagram" src="../_images/api_diagram-predictor.score.svg" /></p>
-<p>To compute the score, the predictor first computes the predictions (using
-the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method) and then uses a scoring function to compare the
-true target <code class="docutils literal notranslate"><span class="pre">y</span></code> and the predictions. Finally, the score is returned.</p>
-<p>If we compare with the accuracy obtained by wrongly evaluating the model
-on the training set, we find that this evaluation was indeed optimistic
-compared to the score obtained on a held-out test set.</p>
+<p>To compute the score, the predictor first computes the predictions (using the
+<code class="docutils literal notranslate"><span class="pre">predict</span></code> method) and then uses a scoring function to compare the true target
+<code class="docutils literal notranslate"><span class="pre">y</span></code> and the predictions. Finally, the score is returned.</p>
+<p>If we compare with the accuracy obtained by wrongly evaluating the model on
+the training set, we find that this evaluation was indeed optimistic compared
+to the score obtained on a held-out test set.</p>
 <p>It shows the importance to always testing the generalization performance of
 predictive models on a different set than the one used to train these models.
 We will discuss later in more detail how predictive models should be
@@ -1161,8 +1163,8 @@ or using it to make predictions.</p>
 <li><p>fitted a <strong>k-nearest neighbors</strong> model on a training dataset;</p></li>
 <li><p>evaluated its generalization performance on the testing data;</p></li>
 <li><p>introduced the scikit-learn API <code class="docutils literal notranslate"><span class="pre">.fit(X,</span> <span class="pre">y)</span></code> (to train a model),
-<code class="docutils literal notranslate"><span class="pre">.predict(X)</span></code> (to make predictions) and <code class="docutils literal notranslate"><span class="pre">.score(X,</span> <span class="pre">y)</span></code>
-(to evaluate a model).</p></li>
+<code class="docutils literal notranslate"><span class="pre">.predict(X)</span></code> (to make predictions) and <code class="docutils literal notranslate"><span class="pre">.score(X,</span> <span class="pre">y)</span></code> (to evaluate a
+model).</p></li>
 </ul>
 </section>
 </section>
@@ -1193,7 +1195,10 @@ or using it to make predictions.</p>
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html"
@@ -1213,7 +1218,10 @@ or using it to make predictions.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -1241,7 +1249,7 @@ or using it to make predictions.</p>
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -1284,7 +1292,7 @@ By scikit-learn developers
 </div>
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -1293,8 +1301,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>

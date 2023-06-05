@@ -247,9 +247,9 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # line. `SVR(kernel="linear")` is indeed yet another example of a linear model.
 #
 # The estimator can also be configured to use a non-linear kernel. Then, it can
-# learn a prediction function that computes non-linear interaction between
-# samples for which we want to make a prediction and selected samples from the
-# training set.
+# learn a prediction function that computes non-linear relations between samples
+# for which we want to make a prediction and selected samples from the training
+# set.
 #
 # The result is another kind of non-linear regression model with a similar
 # expressivity as our previous polynomial regression pipeline:

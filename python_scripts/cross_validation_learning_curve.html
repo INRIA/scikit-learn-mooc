@@ -697,8 +697,8 @@ document.write(`
 and how to assess if a predictive model is underfitting, overfitting, or
 generalizing. Besides these aspects, it is also important to understand how
 the different errors are influenced by the number of samples available.</p>
-<p>In this notebook, we will show this aspect by looking a the variability of the
-different errors.</p>
+<p>In this notebook, we will show this aspect by looking a the variability of
+the different errors.</p>
 <p>Let’s first load the data and create the same model as in the previous
 notebook.</p>
 <div class="cell docutils container">
@@ -736,10 +736,10 @@ and check the training and testing errors.</p>
 the experiment. The training and testing scores can be plotted similarly to
 the validation curve, but instead of varying a hyperparameter, we vary the
 number of training samples. This curve is called the <strong>learning curve</strong>.</p>
-<p>It gives information regarding the benefit of adding new training samples to
-improve a model’s generalization performance.</p>
-<p>Let’s compute the learning curve for a decision tree and vary the proportion
-of the training set from 10% to 100%.</p>
+<p>It gives information regarding the benefit of adding new training samples
+to improve a model’s generalization performance.</p>
+<p>Let’s compute the learning curve for a decision tree and vary the
+proportion of the training set from 10% to 100%.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -768,62 +768,38 @@ of the training set from 10% to 100%.</p>
 <p>Now, we are all set to carry out the experiment.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">learning_curve</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">LearningCurveDisplay</span>
 
-<span class="n">results</span> <span class="o">=</span> <span class="n">learning_curve</span><span class="p">(</span>
+<span class="n">display</span> <span class="o">=</span> <span class="n">LearningCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">regressor</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">train_sizes</span><span class="o">=</span><span class="n">train_sizes</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">score_type</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span>  <span class="c1"># both train and test errors</span>
     <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">negate_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># to use when metric starts with &quot;neg_&quot;</span>
+    <span class="n">log_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># sets log scale for the x-axis</span>
+    <span class="n">score_name</span><span class="o">=</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">,</span>
+    <span class="n">std_display_style</span><span class="o">=</span><span class="s2">&quot;errorbar&quot;</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">train_size</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="n">test_scores</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
-<span class="c1"># Convert the scores into errors</span>
-<span class="n">train_errors</span><span class="p">,</span> <span class="n">test_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">train_scores</span><span class="p">,</span> <span class="o">-</span><span class="n">test_scores</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now, we can plot the curve.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
-    <span class="n">train_size</span><span class="p">,</span>
-    <span class="n">train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">yerr</span><span class="o">=</span><span class="n">train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training error&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
-    <span class="n">train_size</span><span class="p">,</span>
-    <span class="n">test_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">yerr</span><span class="o">=</span><span class="n">test_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Testing error&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples in the training set&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Learning curve for decision tree&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">display</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Learning curve for decision tree&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b84da0a9693727e82b8bc8c57668247b7130725708d0a81e1dd1f8721d05ad9c.png" src="../_images/b84da0a9693727e82b8bc8c57668247b7130725708d0a81e1dd1f8721d05ad9c.png" />
+<img alt="../_images/76a4f1f5201ae9d2df4e8e454ef10e9994f519752015abeb758494561c647e63.png" src="../_images/76a4f1f5201ae9d2df4e8e454ef10e9994f519752015abeb758494561c647e63.png" />
 </div>
 </div>
 <p>Looking at the training error alone, we see that we get an error of 0 k$. It
 means that the trained model (i.e. decision tree) is clearly overfitting the
 training data.</p>
-<p>Looking at the testing error alone, we observe that the more samples are added
-into the training set, the lower the testing error becomes. Also, we are
-searching for the plateau of the testing error for which there is no benefit
-to adding samples anymore or assessing the potential gain of adding more
-samples into the training set.</p>
+<p>Looking at the testing error alone, we observe that the more samples are
+added into the training set, the lower the testing error becomes. Also, we
+are searching for the plateau of the testing error for which there is no
+benefit to adding samples anymore or assessing the potential gain of adding
+more samples into the training set.</p>
 <p>If we achieve a plateau and adding new samples in the training set does not
 reduce the testing error, we might have reached the Bayes error rate using the
 available model. Using a more complex model might be the only possibility to

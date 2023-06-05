@@ -102,7 +102,7 @@ target = blood_transfusion["Class"]
 # %% [markdown]
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize. Compute the learning curve
-# (using [`sklearn.model_selection.learning_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.learning_curve.html))
+# (using [`sklearn.model_selection.LearningCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html))
 # by computing the train and test scores for different training dataset size.
 # Plot the train and test scores with respect to the number of samples.
 

@@ -24,8 +24,9 @@ from docutils.core import publish_from_doctree
 
 from bs4 import BeautifulSoup
 
-from myst_parser.main import MdParserConfig, default_parser
-
+from myst_parser.parsers.mdit import create_md_parser
+from myst_parser.config.main import MdParserConfig
+from myst_parser.mdit_to_docutils.base import DocutilsRenderer
 import jupytext
 
 
@@ -88,20 +89,23 @@ def admonition_html(doc):
     html_node = convert_to_html(doc, "div.admonition")
     bootstrap_class = sphinx_name_to_bootstrap[adm_node.tagname]
     html_node.attrs["class"] += [f"alert alert-{bootstrap_class}"]
-    html_node.select_one(".admonition-title").attrs["style"] = "font-weight: bold;"
+    html_node.select_one(".admonition-title").attrs[
+        "style"
+    ] = "font-weight: bold;"
 
     return str(html_node)
 
 
 def replace_admonition_in_cell_source(cell_str):
-    """Returns cell source with admonition replaced by its generated HTML.
-    """
-    config = MdParserConfig(renderer="docutils")
-    parser = default_parser(config)
+    """Returns cell source with admonition replaced by its generated HTML."""
+    config = MdParserConfig()
+    parser = create_md_parser(config, renderer=DocutilsRenderer)
     tokens = parser.parse(cell_str)
 
     admonition_tokens = [
-        t for t in tokens if t.type == "fence" and t.info in all_directive_names
+        t
+        for t in tokens
+        if t.type == "fence" and t.info in all_directive_names
     ]
 
     cell_lines = cell_str.splitlines()
@@ -118,8 +122,7 @@ def replace_admonition_in_cell_source(cell_str):
 
 
 def replace_admonitions(nb):
-    """Replaces all admonitions by its generated HTML in a notebook object.
-    """
+    """Replaces all admonitions by its generated HTML in a notebook object."""
     # FIXME this would not work with advanced syntax for admonition with
     # ::: but we are not using it for now. We could parse all the markdowns
     # cell, a bit wasteful, but probably good enough
@@ -137,7 +140,7 @@ def replace_admonitions(nb):
 
 
 def replace_escaped_dollars(nb):
-    """Replace escaped dollar to make Jupyter notebook interfaces happy.
+    r"""Replace escaped dollar to make Jupyter notebook interfaces happy.
 
     Jupyter interfaces wants \\$, JupyterBook wants \$. See
     https://github.com/jupyterlab/jupyterlab/issues/8645 for more details.

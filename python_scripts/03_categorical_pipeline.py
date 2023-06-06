@@ -171,14 +171,14 @@ print(f"The dataset encoded contains {data_encoded.shape[1]} features")
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
-encoder = OneHotEncoder(sparse=False)
+encoder = OneHotEncoder(sparse_output=False)
 education_encoded = encoder.fit_transform(education_column)
 education_encoded
 
 # %% [markdown]
 # ```{note}
-# `sparse=False` is used in the `OneHotEncoder` for didactic purposes, namely
-# easier visualization of the data.
+# `sparse_output=False` is used in the `OneHotEncoder` for didactic purposes,
+# namely easier visualization of the data.
 #
 # Sparse matrices are efficient data structures when most of your matrix
 # elements are zero. They won't be covered in detail in this course. If you

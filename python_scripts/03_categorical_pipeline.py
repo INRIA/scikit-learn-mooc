@@ -291,11 +291,11 @@ data["native-country"].value_counts()
 # * set the parameter `handle_unknown="ignore"`, i.e. if an unknown category is
 #   encountered during transform, the resulting one-hot encoded columns for this
 #   feature will be all zeros.
-# * set `min_frequency` to a non-default value to collapse the rarest categories
-#   observed on the training data into a last one-hot encoded feature. When this
-#   option is enabled, it is then possible to also set
-#   `handle_unknown="infrequent_if_exist"` to also encode the unknown categories
-#   (categories only observed at predict time) as ones in that last column.
+# * adjust the `min_frequency` parameter to collapse the rarest categories
+#   observed in the training data into a single one-hot encoded feature. If you
+#   enable this option, you can also set `handle_unknown="infrequent_if_exist"`
+#   to encode the unknown categories (categories only observed at predict time)
+#   as ones in that last column.
 #
 # Here we demo the second option, but feel free to evaluate the alternatives.
 

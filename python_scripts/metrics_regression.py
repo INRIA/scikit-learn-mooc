@@ -156,29 +156,29 @@ print(
 )
 
 # %% [markdown]
-# In addition of metrics, we can visually represent the results by plotting the
+# In addition to using metrics, we can visualize the results by plotting the
 # predicted values versus the true values.
 #
-# In the hypothetical case wher all the variations of `y` could be perfectly
-# explained by `X` (no unobserved factor of variations) and if we had chosen
-# an optimal regressor class and hyper-parameters then we would expect all
-# its predictions to lie on the diagonal line of the first plot below.
+# In an ideal scenario where all variations in the target could be perfectly
+# explained by the obseved features (i.e. without any unobserved factors of
+# variations), and we have chosen an optimal model, we would expect all
+# predictions to fall along the diagonal line of the first plot below.
 #
 # In the real life, this is almost never the case: some unknown fraction of the
-# variations in `y` cannot be explained by variations in `X`: they stem from
-# external factors not represented by the columns `X`.
+# variations in the target cannot be explained by variations in data: they stem
+# from external factors not represented by the observed features.
 #
-# Therefore the best we can hope for, is that the predictions of our model
-# lie in a cloud of points approximately symmetrically distributed around
-# the diagonal, and hopefully close enough to it for the model to be useful.
+# Therefore, the best we can hope for is that our model's predictions form a
+# cloud of points symmetrically distributed around the diagonal line, ideally
+# close enough to it for the model to be useful.
 #
-# It can be more informative to instead plot the residuals, that is the difference
-# between the actual and the predicted value, vs. the predicted values as done in the
-# second plot below.
+# To gain more insight, it can be helpful to plot the residuals, which represent
+# the difference between the actual and predicted values, against the predicted
+# values. This is shown in the second plot.
 #
-# Residual plots make it easier to assess whether the residuals have a variance that
-# is independent of the house values and whether or not there is some systematic bias
-# for the lowest or highest predicted values.
+# Residual plots make it easier to assess if the residuals exhibit a variance
+# independent of the target values or if there is any systematic bias of the model
+# associated with the lowest or highest predicted values.
 
 # %%
 import matplotlib.pyplot as plt

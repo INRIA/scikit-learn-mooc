@@ -177,8 +177,8 @@ print(
 # values. This is shown in the second plot.
 #
 # Residual plots make it easier to assess if the residuals exhibit a variance
-# independent of the target values or if there is any systematic bias of the model
-# associated with the lowest or highest predicted values.
+# independent of the target values or if there is any systematic bias of the
+# model associated with the lowest or highest predicted values.
 
 # %%
 import matplotlib.pyplot as plt
@@ -216,10 +216,10 @@ _ = fig.suptitle(
 # On these plots, we see that our model tends to under-estimate the price of the
 # house both for the lowest and large True price values. This means that the
 # residuals still hold some **structure typically visible as the "banana" or
-# "smile" shape of the residual plot**. This is often a clue that our model could
-# be improved, either by transforming the features, the target or sometimes
-# changing the model type or its parameters. In this case let's try to see if
-# the model would benefit from a target transformation that monotonically
+# "smile" shape of the residual plot**. This is often a clue that our model
+# could be improved, either by transforming the features, the target or
+# sometimes changing the model type or its parameters. In this case let's try to
+# see if the model would benefit from a target transformation that monotonically
 # reshapes the target variable to follow a normal distribution.
 
 # %%

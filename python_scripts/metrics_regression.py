@@ -158,14 +158,28 @@ print(
 
 # %% [markdown]
 # In addition of metrics, we can visually represent the results by plotting the
-# predicted values versus the true values. On such a plot, correct predictions
-# lie on the diagonal line. This allows us to detect if the model makes errors
-# in a consistent way, i.e. has some bias.
+# predicted values versus the true values.
 #
-# A similar option is to plot  the residuals (i.e. the difference between the
-# actual and the predicted values) vs. the predicted values. This plot makes it
-# easier to visualize whether the residuals have a variance that is independent
-# of the house values.
+# In the hypothetical case wher all the variations of `y` could be perfectly
+# explained by `X` (no unobserved factor of variations) and if we had chosen
+# an optimal regressor class and hyper-parameters then we would expect all
+# its predictions to lie on the diagonal line of the first plot below.
+#
+# In the real life, this is almost never the case: some unknown fraction of the
+# variations in `y` cannot be explained by variations in `X`: they stem from
+# external factors not represented by the columns `X`.
+#
+# Therefore the best we can hope for, is that the predictions of our model
+# lie in a cloud of points approximately symmetrically distributed around
+# the diagonal, and hopefully close enough to it for the model to be useful.
+#
+# It can be more informative to instead plot the residuals, that is the difference
+# between the actual and the predicted value, vs. the predicted values as done in the
+# second plot below.
+#
+# Residual plots make it easier to assess whether the residuals have a variance that
+# is independent of the house values and whether or not there is some systematic bias
+# for the lowest or highest predicted values.
 
 # %%
 import matplotlib.pyplot as plt
@@ -202,8 +216,8 @@ _ = fig.suptitle(
 # %% [markdown]
 # On these plots, we see that our model tends to under-estimate the price of the
 # house both for the lowest and large True price values. This means that the
-# residuals still hold some structure typically visible as the "banana" or
-# "smile" shape of the residual plot. This is often a clue that our model could
+# residuals still hold some **structure typically visible as the "banana" or
+# "smile" shape of the residual plot**. This is often a clue that our model could
 # be improved, either by transforming the features, the target or sometimes
 # changing the model type or its parameters. In this case let's try to see if
 # the model would benefit from a target transformation that monotonically
@@ -290,4 +304,5 @@ print(
 # of this MOOC.
 #
 # The interested readers are encouraged to learn more about those models, in
-# particular by reading the respective user guide linked above.
+# particular by reading their respective docstrings and the linked sections
+# in the scikit-learn user guide reachable from the links above.

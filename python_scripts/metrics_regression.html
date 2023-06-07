@@ -753,8 +753,8 @@ it is optimized by said model.</p>
 </div>
 </div>
 <p>Our linear regression model is minimizing the mean squared error on the
-training set. It means that there is no other set of coefficients which will
-decrease the error.</p>
+training set. It means that there is no other set of coefficients which
+decreases the error.</p>
 <p>Then, we can compute the mean squared error on the test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -879,48 +879,71 @@ Indeed, the mean absolute error is not relative.</p>
 </div>
 </div>
 </div>
-<p>In addition of metrics, we can visually represent the results by plotting the
+<p>In addition to using metrics, we can visualize the results by plotting the
 predicted values versus the true values.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_actual</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;True values (k$)&quot;</span><span class="p">:</span> <span class="n">target_test</span><span class="p">,</span>
-    <span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">:</span> <span class="n">target_predicted</span><span class="p">,</span>
-<span class="p">}</span>
-<span class="n">predicted_actual</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predicted_actual</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>In an ideal scenario where all variations in the target could be perfectly
+explained by the obseved features (i.e. without any unobserved factors of
+variations), and we have chosen an optimal model, we would expect all
+predictions to fall along the diagonal line of the first plot below.</p>
+<p>In the real life, this is almost never the case: some unknown fraction of the
+variations in the target cannot be explained by variations in data: they stem
+from external factors not represented by the observed features.</p>
+<p>Therefore, the best we can hope for is that our model’s predictions form a
+cloud of points symmetrically distributed around the diagonal line, ideally
+close enough to it for the model to be useful.</p>
+<p>To gain more insight, it can be helpful to plot the residuals, which represent
+the difference between the actual and predicted values, against the predicted
+values. This is shown in the second plot.</p>
+<p>Residual plots make it easier to assess if the residuals exhibit a variance
+independent of the target values or if there is any systematic bias of the
+model associated with the lowest or highest predicted values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">PredictionErrorDisplay</span>
 
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">predicted_actual</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;actual_vs_predicted&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axline</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">slope</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Perfect fit&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Regression using a model without </span><span class="se">\n</span><span class="s2">target transformation&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">)</span>
+
+<span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;residual_vs_predicted&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Residual values (k$)&quot;</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+    <span class="s2">&quot;Regression using a model</span><span class="se">\n</span><span class="s2">without target transformation&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8d36b85dcedd58c302f2af46f29f33070e6d4ad128629cb59f1bba0f10685fc5.png" src="../_images/8d36b85dcedd58c302f2af46f29f33070e6d4ad128629cb59f1bba0f10685fc5.png" />
+<img alt="../_images/0134c5d8d7b7710d572f188c564d273bf331e27a45364cd6fc57cf5900b5849b.png" src="../_images/0134c5d8d7b7710d572f188c564d273bf331e27a45364cd6fc57cf5900b5849b.png" />
 </div>
 </div>
-<p>On this plot, correct predictions would lie on the diagonal line. This plot
-allows us to detect if the model makes errors in a consistent way, i.e. has
-some bias.</p>
-<p>On this plot, we see that for the large True price values, our model tends to
-under-estimate the price of the house. Typically, this issue arises when the
-target to predict does not follow a normal distribution. In this case the
-model would benefit from target transformation.</p>
+<p>On these plots, we see that our model tends to under-estimate the price of the
+house both for the lowest and large True price values. This means that the
+residuals still hold some <strong>structure typically visible as the “banana” or
+“smile” shape of the residual plot</strong>. This is often a clue that our model
+could be improved, either by transforming the features, the target or
+sometimes changing the model type or its parameters. In this case let’s try to
+see if the model would benefit from a target transformation that monotonically
+reshapes the target variable to follow a normal distribution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">QuantileTransformer</span>
@@ -934,45 +957,89 @@ model would benefit from target transformation.</p>
 <span class="p">)</span>
 <span class="n">model_transformed_target</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model_transformed_target</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_actual</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;True values (k$)&quot;</span><span class="p">:</span> <span class="n">target_test</span><span class="p">,</span>
-    <span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">:</span> <span class="n">target_predicted</span><span class="p">,</span>
-<span class="p">}</span>
-<span class="n">predicted_actual</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">predicted_actual</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">predicted_actual</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;actual_vs_predicted&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axline</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">slope</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Perfect fit&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
-    <span class="s2">&quot;Regression using a model that</span><span class="se">\n</span><span class="s2">transform the target before fitting&quot;</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">)</span>
+
+<span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;residual_vs_predicted&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Residual values (k$)&quot;</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+    <span class="s2">&quot;Regression using a model that</span><span class="se">\n</span><span class="s2">transforms the target before fitting&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/32e78408ccae91bc17346b70bd104deabad762fd4ecff35aaabef0bacdb95b8f.png" src="../_images/32e78408ccae91bc17346b70bd104deabad762fd4ecff35aaabef0bacdb95b8f.png" />
+<img alt="../_images/a611df1bd45fcb111c23056c6b02313d2f992cd255d0c4fdc08de214d39eda24.png" src="../_images/a611df1bd45fcb111c23056c6b02313d2f992cd255d0c4fdc08de214d39eda24.png" />
 </div>
 </div>
-<p>Thus, once we transformed the target, we see that we corrected some of the
-high values.</p>
+<p>The model with the transformed target seems to exhibit fewer structure in its
+residuals: over-estimation and under-estimation errors seems to be more
+balanced.</p>
+<p>We can confirm this by computing the previously mentioned metrics and observe
+that they all improved w.r.t. the linear regression model without the target
+transformation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Mean absolute error: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Median absolute error: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">median_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Mean absolute percentage error: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean absolute error: 17.406 k$
+Median absolute error: 10.327 k$
+Mean absolute percentage error: 9.919 %
+</pre></div>
+</div>
+</div>
+</div>
+<p>While a common practice, performing such a target transformation for linear
+regression is often disapproved by statisticians. It is mathematically more
+justified to instead adapt the loss function of the regression model itself,
+for instance by fitting a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.PoissonRegressor.html"><code class="docutils literal notranslate"><span class="pre">PoissonRegressor</span></code></a>
+or a
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.TweedieRegressor.html"><code class="docutils literal notranslate"><span class="pre">TweedieRegressor</span></code></a>
+model instead of <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>. In particular those models indeed use an
+internal “log link” function that makes them more suited for this kind of
+positive-only target data distributions, but this analysis is beyond the scope
+of this MOOC.</p>
+<p>The interested readers are encouraged to learn more about those models, in
+particular by reading their respective docstrings and the linked sections
+in the scikit-learn user guide reachable from the links above.</p>
 </section>
 
     <script type="text/x-thebe-config">

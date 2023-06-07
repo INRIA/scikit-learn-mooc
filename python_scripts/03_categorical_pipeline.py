@@ -285,16 +285,17 @@ data["native-country"].value_counts()
 #
 # In scikit-learn, there are some possible solutions to bypass this issue:
 #
-# * list all the possible categories and provide it to the encoder via the
-#   keyword argument `categories`;
+# * list all the possible categories and provide them to the encoder via the
+#   keyword argument `categories` instead of letting the estimator to
+#   automatically determine them from the training data when calling fit;
 # * set the parameter `handle_unknown="ignore"`, i.e. if an unknown category is
 #   encountered during transform, the resulting one-hot encoded columns for this
 #   feature will be all zeros.
-# * set the parameter `handle_unknown="infrequent_if_exist"`, i.e. if one or
-#   more unknown categories are encountered during transform, the resulting
-#   one-hot encoded columns will be mapped to the last position in the encoding.
-#   The notion of what is "infrequent" can be controlled with the
-#   hyper-parameter `min_frequency`.
+# * set `min_frequency` to a non-default value to collapse the rarest categories
+#   observed on the training data into a last one-hot encoded feature. When this
+#   option is enabled, it is then possible to also set
+#   `handle_unknown="infrequent_if_exist"` to also encode the unknown categories
+#   (categories only observed at predict time) as ones in that last column.
 #
 # Here we demo the second option, but feel free to evaluate the alternatives.
 

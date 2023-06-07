@@ -16,9 +16,9 @@
 # it is a continuous variable in regression, while a discrete variable in
 # classification.
 #
-# We will use the Ames housing dataset. The goal is to predict the price
-# of houses in the city of Ames, Iowa. As with classification, we will only use
-# a single train-test split to focus solely on the regression metrics.
+# We will use the Ames housing dataset. The goal is to predict the price of
+# houses in the city of Ames, Iowa. As with classification, we will only use a
+# single train-test split to focus solely on the regression metrics.
 
 # %%
 import pandas as pd
@@ -49,10 +49,9 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Some machine learning models are designed to be solved as an optimization
 # problem: minimizing an error (also known as the loss function) using a
-# training set.
-# A basic loss function used in regression is the mean squared error (MSE).
-# Thus, this metric is sometimes used to evaluate the model since it is
-# optimized by said model.
+# training set. A basic loss function used in regression is the mean squared
+# error (MSE). Thus, this metric is sometimes used to evaluate the model since
+# it is optimized by said model.
 #
 # We will give an example using a linear regression model.
 
@@ -72,7 +71,7 @@ print(
 # %% [markdown]
 # Our linear regression model is minimizing the mean squared error on the
 # training set. It means that there is no other set of coefficients which
-# will decrease the error.
+# decreases the error.
 #
 # Then, we can compute the mean squared error on the test set.
 
@@ -85,10 +84,10 @@ print(
 )
 
 # %% [markdown]
-# The raw MSE can be difficult to interpret. One way is to rescale the MSE
-# by the variance of the target. This score is known as the $R^2$ also called
-# the coefficient of determination. Indeed, this is the default score used
-# in scikit-learn by calling the method `score`.
+# The raw MSE can be difficult to interpret. One way is to rescale the MSE by
+# the variance of the target. This score is known as the $R^2$ also called the
+# coefficient of determination. Indeed, this is the default score used in
+# scikit-learn by calling the method `score`.
 
 # %%
 regressor.score(data_test, target_test)

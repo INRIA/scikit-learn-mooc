@@ -290,7 +290,7 @@ data["native-country"].value_counts()
 #   automatically determine them from the training data when calling fit;
 # * set the parameter `handle_unknown="ignore"`, i.e. if an unknown category is
 #   encountered during transform, the resulting one-hot encoded columns for this
-#   feature will be all zeros.
+#   feature will be all zeros;
 # * adjust the `min_frequency` parameter to collapse the rarest categories
 #   observed in the training data into a single one-hot encoded feature. If you
 #   enable this option, you can also set `handle_unknown="infrequent_if_exist"`

@@ -368,7 +368,6 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # %%
 import numpy as np
 from sklearn.linear_model import RidgeCV
-from sklearn.preprocessing import MinMaxScaler
 
 alphas = np.logspace(-7, 5, num=100)
 ridge = make_pipeline(

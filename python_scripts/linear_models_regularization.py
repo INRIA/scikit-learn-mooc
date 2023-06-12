@@ -18,7 +18,8 @@
 #
 # ## Effect of regularization
 #
-# We will first load the California housing dataset.
+# We load the Ames housing dataset. We retain some specific
+# `features_of_interest`.
 
 # %% [markdown]
 # ```{note}
@@ -27,11 +28,21 @@
 # ```
 
 # %%
-from sklearn.datasets import fetch_california_housing
+import pandas as pd
 
-data, target = fetch_california_housing(as_frame=True, return_X_y=True)
-target *= 100  # rescale the target in k$
-data.head()
+ames_housing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
+features_of_interest = [
+    "LotFrontage",
+    "LotArea",
+    "PoolArea",
+    "YearBuilt",
+    "YrSold",
+]
+target_name = "SalePrice"
+data, target = (
+    ames_housing[features_of_interest],
+    ames_housing[target_name],
+)
 
 # %% [markdown]
 # In one of the previous notebook, we showed that linear models could be used
@@ -50,8 +61,8 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 
 linear_regression = make_pipeline(
-    PolynomialFeatures(degree=2), LinearRegression()
-)
+    PolynomialFeatures(degree=2, include_bias=False), LinearRegression()
+).set_output(transform="pandas")
 cv_results = cross_validate(
     linear_regression,
     data,
@@ -104,9 +115,7 @@ model_first_fold = cv_results["estimator"][0]
 # of the model) to recover the feature names.
 
 # %%
-feature_names = model_first_fold[0].get_feature_names_out(
-    input_features=data.columns
-)
+feature_names = model_first_fold[-1].feature_names_in_
 feature_names
 
 # %% [markdown]
@@ -139,7 +148,9 @@ _ = plt.title("Linear regression coefficients")
 # %%
 from sklearn.linear_model import Ridge
 
-ridge = make_pipeline(PolynomialFeatures(degree=2), Ridge(alpha=100))
+ridge = make_pipeline(
+    PolynomialFeatures(degree=2, include_bias=False), Ridge(alpha=100)
+)
 cv_results = cross_validate(
     ridge,
     data,
@@ -227,13 +238,15 @@ _ = plt.title("Ridge weights")
 # powers of features in the range between zero and one remain in the same range.
 
 # %%
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
-ridge = make_pipeline(
-    PolynomialFeatures(degree=2), StandardScaler(), Ridge(alpha=0.5)
+scaled_ridge = make_pipeline(
+    MinMaxScaler(),
+    PolynomialFeatures(degree=2, include_bias=False),
+    Ridge(alpha=10),
 )
 cv_results = cross_validate(
-    ridge,
+    scaled_ridge,
     data,
     target,
     cv=10,
@@ -276,15 +289,17 @@ _ = plt.title("Ridge weights with data scaling")
 # Compare to the previous plots, we see that now all weight magnitudes are
 # closer and that all features are more equally contributing.
 #
-# In the previous example, we fixed `alpha=0.5`. We will now check the impact of
+# In the previous example, we fixed `alpha=10`. We can now check the impact of
 # the value of `alpha` by increasing its value.
 
 # %%
-ridge = make_pipeline(
-    PolynomialFeatures(degree=2), StandardScaler(), Ridge(alpha=1_000_000)
+ridge_large_alpha = make_pipeline(
+    MinMaxScaler(),
+    PolynomialFeatures(degree=2, include_bias=False),
+    Ridge(alpha=1_000_000),
 )
 cv_results = cross_validate(
-    ridge,
+    ridge_large_alpha,
     data,
     target,
     cv=10,
@@ -353,18 +368,19 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # %%
 import numpy as np
 from sklearn.linear_model import RidgeCV
+from sklearn.preprocessing import MinMaxScaler
 
-alphas = np.logspace(-2, 0, num=21)
+alphas = np.logspace(-7, 5, num=100)
 ridge = make_pipeline(
-    PolynomialFeatures(degree=2),
-    StandardScaler(),
+    MinMaxScaler(),
+    PolynomialFeatures(degree=2, include_bias=False),
     RidgeCV(alphas=alphas, store_cv_values=True),
 )
 
 # %%
 from sklearn.model_selection import ShuffleSplit
 
-cv = ShuffleSplit(n_splits=5, random_state=1)
+cv = ShuffleSplit(n_splits=50, random_state=0)
 cv_results = cross_validate(
     ridge,
     data,
@@ -410,8 +426,8 @@ cv_alphas
 
 # %%
 plt.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
-plt.xlim((0.0, 1.0))
-plt.ylim((4_500, 11_000))
+plt.semilogy()
+plt.semilogx()
 plt.ylabel("Mean squared error\n (lower is better)")
 plt.xlabel("alpha")
 _ = plt.title("Testing error obtained by cross-validation")

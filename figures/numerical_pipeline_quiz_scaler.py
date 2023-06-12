@@ -35,7 +35,7 @@ ax.xaxis.set_major_locator(ticker.FixedLocator(ticks))
 ax.set_yticklabels(ticks)
 ax.yaxis.set_major_locator(ticker.FixedLocator(ticks))
 ax.set_title("Original dataset\n\n\n", loc="center")
-plt.savefig("numerical_pipeline_quiz_scaler_original.png")
+plt.savefig("numerical_pipeline_quiz_scaler_original.png", bbox_inches="tight")
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -77,6 +77,8 @@ for idx, (ax, data) in enumerate(
     ax.set_title(f"Preprocessing {'ABCD'[idx]}\n\n\n")
 
 fig.subplots_adjust(hspace=0.5, wspace=0.5)
-plt.savefig("numerical_pipeline_quiz_scaler_preprocessing.png")
+plt.savefig(
+    "numerical_pipeline_quiz_scaler_preprocessing.png", bbox_inches="tight"
+)
 
 # %%

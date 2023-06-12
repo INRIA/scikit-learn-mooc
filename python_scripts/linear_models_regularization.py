@@ -8,14 +8,12 @@
 # %% [markdown]
 # # Regularization of linear regression model
 #
-# In this notebook, we will see the limitations of linear regression models and
-# the advantage of using regularized models instead.
+# In this notebook, we explore the limitations of linear regression models and
+# demonstrate the benefits of using regularized models instead. Additionally, we
+# discuss the preprocessing steps necessary when working with regularized
+# models, especially when tuning the regularization parameter.
 #
-# Besides, we will also present the preprocessing required when dealing with
-# regularized models, furthermore when the regularization parameter needs to be
-# tuned.
-#
-# We will start by highlighting the over-fitting issue that can arise with a
+# We start by highlighting the problem of overfitting that can occur with a
 # simple linear regression model.
 #
 # ## Effect of regularization
@@ -37,14 +35,13 @@ data.head()
 
 # %% [markdown]
 # In one of the previous notebook, we showed that linear models could be used
-# even in settings where `data` and `target` are not linearly linked.
+# even when there is no linear relationship between the `data` and `target`.
+# For instance, one can use the `PolynomialFeatures` transformer to create
+# additional features that capture some non-linear interactions between them.
 #
-# We showed that one can use the `PolynomialFeatures` transformer to create
-# additional features encoding non-linear interactions between features.
-#
-# Here, we will use this transformer to augment the feature space. Subsequently,
-# we will train a linear regression model. We will use the out-of-sample test
-# set to evaluate the generalization capabilities of our model.
+# Here, we use this transformer to augment the feature space. Subsequently, we
+# train a linear regression model. We use the out-of-sample test set to evaluate
+# the generalization capabilities of our model.
 
 # %%
 from sklearn.model_selection import cross_validate
@@ -84,27 +81,27 @@ print(
 )
 
 # %% [markdown]
-# The score on the training set is much better. This generalization performance
-# gap between the training and testing score is an indication that our model
-# overfitted our training set.
+# The training score is much better than the testing score. Such gap between the
+# training and testing scores is an indication that our model overfitted the
+# training set. Indeed, this is one of the dangers when augmenting the number of
+# features with a `PolynomialFeatures` transformer. One does not expect features
+# such as `PoolArea * YrSold` to be predictive.
 #
-# Indeed, this is one of the danger when augmenting the number of features with
-# a `PolynomialFeatures` transformer. Our model will focus on some specific
-# features. We can check the weights of the model to have a confirmation. Let's
-# create a dataframe: the columns will contain the name of the feature while the
-# line the coefficients values stored by each model during the cross-validation.
+# We can create a dataframe to check the weights of the model: the columns
+# contain the name of the features whereas the rows store the coefficients values
+# of each model during the cross-validation.
 #
-# Since we used a `PolynomialFeatures` to augment the data, we will create
-# feature names representative of the feature combination. Scikit-learn provides
-# a `get_feature_names_out` method for this purpose. First, let's get the first
-# fitted model from the cross-validation.
+# Since we used a `PolynomialFeatures` to augment the data, we extract the
+# feature names representative of each feature combination. Scikit-learn
+# provides a `feature_names_in_` method for this purpose. First, let's get the
+# first fitted model from the cross-validation.
 
 # %%
 model_first_fold = cv_results["estimator"][0]
 
 # %% [markdown]
-# Now, we can access to the fitted `PolynomialFeatures` to generate the feature
-# names:
+# Now, we can access the fitted `LinearRegression` (step `-1` i.e. the last step
+# of the model) to recover the feature names.
 
 # %%
 feature_names = model_first_fold[0].get_feature_names_out(
@@ -113,7 +110,9 @@ feature_names = model_first_fold[0].get_feature_names_out(
 feature_names
 
 # %% [markdown]
-# Finally, we can create the dataframe containing all the information.
+# The following code creates a list by iterating through the estimators and
+# querying their last step for the learned `coef_`. We can then create the
+# dataframe containing all the information.
 
 # %%
 import pandas as pd
@@ -133,9 +132,9 @@ _ = plt.title("Linear regression coefficients")
 
 # %% [markdown]
 # We can force the linear regression model to consider all features in a more
-# homogeneous manner. In fact, we could force large positive or negative weight
-# to shrink toward zero. This is known as regularization. We will use a ridge
-# model which enforces such behavior.
+# homogeneous manner. In fact, we could force large positive or negative weights
+# to shrink toward zero. This is known as regularization. We use a ridge model
+# which enforces such behavior.
 
 # %%
 from sklearn.linear_model import Ridge
@@ -152,9 +151,10 @@ cv_results = cross_validate(
 )
 
 # %% [markdown]
-# The code cell above will generate a couple of warnings because the features
+# The code cell above generates a couple of warnings because the features
 # included both extremely large and extremely small values, which are causing
-# numerical problems when training the predictive model.
+# numerical problems when training the predictive model. We will get to that in
+# a bit.
 #
 # We can explore the train and test scores of this model.
 
@@ -186,10 +186,10 @@ weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
 _ = plt.title("Ridge weights")
 
 # %% [markdown]
-# By comparing the magnitude of the weights on this plot compared to the
-# previous plot, we see that a ridge model will enforce all weights to have a
-# similar magnitude, while the overall magnitude of the weights is shrunk
-# towards zero with respect to the linear regression model.
+# By comparing the order of magnitude of the weights on this plot with respect
+# to the previous plot, we see that a ridge model enforces all weights to lay in
+# a similar scale, while the overall magnitude of the weights is shrunk towards
+# zero with respect to the linear regression model.
 #
 # However, in this example, we omitted two important aspects: (i) the need to
 # scale the data and (ii) the need to search for the best regularization
@@ -203,12 +203,12 @@ _ = plt.title("Ridge weights")
 # feature rescaling has on the final weights also interacts with regularization.
 #
 # Let's consider the case where features live on the same scale/units: if two
-# features are found to be equally important by the model, they will be affected
+# features are found to be equally important by the model, they are be affected
 # similarly by regularization strength.
 #
 # Now, let's consider the scenario where features have completely different data
-# scale (for instance age in years and annual revenue in dollars). If two
-# features are as important, our model will boost the weights of features with
+# scales (for instance age in years and annual revenue in dollars). If two
+# features are as important, our model boosts the weights of features with
 # small scale and reduce the weights of features with high scale.
 #
 # We recall that regularization forces weights to be closer. Therefore, we get
@@ -217,12 +217,14 @@ _ = plt.title("Ridge weights")
 # adequate model.
 #
 # As a side note, some solvers based on gradient computation are expecting such
-# rescaled data. Unscaled data will be detrimental when computing the optimal
+# rescaled data. Unscaled data can be detrimental when computing the optimal
 # weights. Therefore, when working with a linear model and numerical data, it is
 # generally good practice to scale the data.
 #
-# Thus, we will add a `StandardScaler` in the machine learning pipeline. This
-# scaler will be placed just before the regressor.
+# Thus, we add a `MinMaxScaler` in the machine learning pipeline, which scales
+# each feature individually such that its range maps into the range between zero
+# and one. We place it just before the `PolynomialFeatures` transformer as
+# powers of features in the range between zero and one remain in the same range.
 
 # %%
 from sklearn.preprocessing import StandardScaler
@@ -256,7 +258,7 @@ print(
 
 # %% [markdown]
 # We observe that scaling data has a positive impact on the test score and that
-# the test score is closer to the train score. It means that our model is less
+# it is now closer to the train score. It means that our model is less
 # overfitted and that we are getting closer to the best generalization sweet
 # spot.
 #
@@ -301,7 +303,7 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 
 # %% [markdown]
 # Looking specifically to weights values, we observe that increasing the value
-# of `alpha` will decrease the weight values. A negative value of `alpha` would
+# of `alpha` decreases the weight values. A negative value of `alpha` would
 # actually enhance large weights and promote overfitting.
 #
 # ```{note}
@@ -309,25 +311,22 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # generally common to omit scaling when features are encoded with a
 # `OneHotEncoder` since the feature values are already on a similar scale.
 #
-# However, this choice can be questioned since scaling interacts with
-# regularization as well. For instance, scaling categorical features that are
-# imbalanced (e.g. more occurrences of a specific category) would even out the
-# impact of regularization to each category. However, scaling such features in
-# the presence of rare categories could be problematic (i.e. division by a very
+# However, this choice may depend on the scaling method and the user case. For
+# instance, standard scaling categorical features that are imbalanced (e.g. more
+# occurrences of a specific category) would even out the impact of
+# regularization to each category. However, scaling such features in the
+# presence of rare categories could be problematic (i.e. division by a very
 # small standard deviation) and it can therefore introduce numerical issues.
 # ```
 #
-# In the previous analysis, we did not study if the parameter `alpha` will have
-# an effect on the performance. We chose the parameter beforehand and fixed it
-# for the analysis.
+# In the previous analysis, we chose the parameter beforehand and fixed it for
+# the analysis. In the next section, we check how the regularization parameter
+# `alpha` should be tuned.
 #
-# In the next section, we will check the impact of the regularization parameter
-# `alpha` and how it should be tuned.
-#
-# ## Fine tuning the regularization parameter
+# ## Tuning the regularization parameter
 #
 # As mentioned, the regularization parameter needs to be tuned on each dataset.
-# The default parameter will not lead to the optimal model. Therefore, we need
+# The default parameter does not lead to the optimal model. Therefore, we need
 # to tune the `alpha` parameter.
 #
 # Model hyperparameter tuning should be done with care. Indeed, we want to find
@@ -348,8 +347,8 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 #
 # Therefore, we can use this predictor as the last step of the pipeline.
 # Including the pipeline a cross-validation allows to make a nested
-# cross-validation: the inner cross-validation will search for the best alpha,
-# while the outer cross-validation will give an estimate of the testing score.
+# cross-validation: the inner cross-validation searches for the best alpha,
+# while the outer cross-validation gives an estimate of the testing score.
 
 # %%
 import numpy as np
@@ -397,8 +396,8 @@ print(
 #
 # When fitting the ridge regressor, we also requested to store the error found
 # during cross-validation (by setting the parameter `store_cv_values=True`). We
-# will plot the mean squared error for the different `alphas` regularization
-# strength that we tried. The error bars represent one standard deviation of the
+# can plot the mean squared error for the different `alphas` regularization
+# strengths that we tried. The error bars represent one standard deviation of the
 # average mean square error across folds for a given value of `alpha`.
 
 # %%
@@ -440,8 +439,8 @@ print(
 )
 
 # %% [markdown]
-# This range can be reduced by decreasing the spacing between the grid of
-# `alphas`.
+# This range can be reduced depending on the feature engineering and
+# preprocessing.
 #
 # In this notebook, you learned about the concept of regularization and the
 # importance of preprocessing and parameter tuning.

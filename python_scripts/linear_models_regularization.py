@@ -136,7 +136,7 @@ weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
 import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
-weights_linear_regression.plot.box(color=color, vert=False, figsize=(6, 16))
+weights_linear_regression.plot.box(color=color, vert=False, figsize=(6, 10))
 _ = plt.title("Linear regression coefficients")
 
 # %% [markdown]
@@ -193,7 +193,7 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
+weights_ridge.plot.box(color=color, vert=False, figsize=(6, 10))
 _ = plt.title("Ridge weights")
 
 # %% [markdown]
@@ -282,7 +282,7 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
+weights_ridge.plot.box(color=color, vert=False, figsize=(6, 10))
 _ = plt.title("Ridge weights with data scaling")
 
 # %% [markdown]
@@ -313,7 +313,7 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
+weights_ridge.plot.box(color=color, vert=False, figsize=(6, 10))
 _ = plt.title("Ridge weights with data scaling and large alpha")
 
 # %% [markdown]

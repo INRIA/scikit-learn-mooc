@@ -281,15 +281,13 @@ print(
     "Mean absolute error: "
     f"{mean_absolute_error(target_test, target_predicted):.3f} k$"
 )
-
 print(
     "Median absolute error: "
     f"{median_absolute_error(target_test, target_predicted):.3f} k$"
 )
-
 print(
     "Mean absolute percentage error: "
-    f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %"
+    f"{mean_absolute_percentage_error(target_test, target_predicted):.2%}"
 )
 
 # %% [markdown]

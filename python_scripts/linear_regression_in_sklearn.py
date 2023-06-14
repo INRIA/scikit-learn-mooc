@@ -85,8 +85,7 @@ _ = plt.title("Model using LinearRegression from scikit-learn")
 # error](https://scikit-learn.org/stable/modules/model_evaluation.html#mean-squared-error)
 # and (ii) the [mean absolute
 # error](https://scikit-learn.org/stable/modules/model_evaluation.html#mean-absolute-error).
-# These metrics are implemented in scikit-learn and we do not need to use our
-# own implementation.
+# Let's see how to use the implementations from scikit-learn in the following.
 #
 # We can first compute the mean squared error.
 

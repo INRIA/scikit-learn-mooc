@@ -156,39 +156,30 @@ _ = plt.title("Validation score of support vector machine")
 # %% [markdown]
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize. Compute the learning curve
-# (using [`sklearn.model_selection.learning_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.learning_curve.html))
+# (using [`sklearn.model_selection.LearningCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html))
 # by computing the train and test scores for different training dataset size.
 # Plot the train and test scores with respect to the number of samples.
 
 # %%
 # solution
-from sklearn.model_selection import learning_curve
+from sklearn.model_selection import LearningCurveDisplay
 
 train_sizes = np.linspace(0.1, 1, num=10)
-results = learning_curve(
-    model, data, target, train_sizes=train_sizes, cv=cv, n_jobs=2
+LearningCurveDisplay.from_estimator(
+    model,
+    data,
+    target,
+    train_sizes=train_sizes,
+    cv=cv,
+    score_type="both",
+    scoring="accuracy",  # this is already the default for classifiers
+    score_name="Accuracy",
+    std_display_style="errorbar",
+    errorbar_kw={"alpha": 0.7},  # transparency for better visualization
+    n_jobs=2,
 )
-train_size, train_scores, test_scores = results[:3]
 
-# %% tags=["solution"]
-plt.errorbar(
-    train_size,
-    train_scores.mean(axis=1),
-    yerr=train_scores.std(axis=1),
-    alpha=0.95,
-    label="Training score",
-)
-plt.errorbar(
-    train_size,
-    test_scores.mean(axis=1),
-    yerr=test_scores.std(axis=1),
-    alpha=0.5,
-    label="Testing score",
-)
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
-
-plt.xlabel("Number of samples in the training set")
-plt.ylabel("Accuracy")
 _ = plt.title("Learning curve for support vector machine")
 
 # %% [markdown] tags=["solution"]

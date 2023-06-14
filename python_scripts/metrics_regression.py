@@ -8,7 +8,7 @@
 # %% [markdown]
 # # Regression
 #
-# In this notebook, we will present the metrics that can be used in regression.
+# In this notebook, we present the metrics that can be used in regression.
 #
 # A set of metrics are dedicated to regression. Indeed, classification metrics
 # cannot be used to evaluate the generalization performance of regression models
@@ -16,9 +16,9 @@
 # it is a continuous variable in regression, while a discrete variable in
 # classification.
 #
-# We will use the Ames housing dataset. The goal is to predict the price
-# of houses in the city of Ames, Iowa. As with classification, we will only use
-# a single train-test split to focus solely on the regression metrics.
+# We use the Ames housing dataset. The goal is to predict the price of houses in
+# the city of Ames, Iowa. As with classification, we only use a single
+# train-test split to focus solely on the regression metrics.
 
 # %%
 import pandas as pd
@@ -49,12 +49,11 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # Some machine learning models are designed to be solved as an optimization
 # problem: minimizing an error (also known as the loss function) using a
-# training set.
-# A basic loss function used in regression is the mean squared error (MSE).
-# Thus, this metric is sometimes used to evaluate the model since it is
-# optimized by said model.
+# training set. A basic loss function used in regression is the mean squared
+# error (MSE). Thus, this metric is sometimes used to evaluate the model since
+# it is optimized by said model.
 #
-# We will give an example using a linear regression model.
+# We give an example using a linear regression model.
 
 # %%
 from sklearn.linear_model import LinearRegression

@@ -175,7 +175,9 @@ data_train_scaled
 # By default, all scikit-learn transformers output NumPy arrays. Since
 # scikit-learn 1.2, it is possible to set the output to be a pandas dataframe,
 # which makes data exploration easier as it preserves the column names. The
-# method `set_output` controls this behaviour.
+# method `set_output` controls this behaviour. Please refer to this [example from
+# the scikit-learn documentation](https://scikit-learn.org/stable/auto_examples/miscellaneous/plot_set_output.html)
+# for more options to configure the output of transformers.
 # %%
 scaler = StandardScaler().set_output(transform="pandas")
 data_train_scaled = scaler.fit_transform(data_train)

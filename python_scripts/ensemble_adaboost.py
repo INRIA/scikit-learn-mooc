@@ -212,13 +212,6 @@ for boosting_round, tree in enumerate(adaboost.estimators_):
         data=penguins,
         palette=palette,
     )
-    sns.scatterplot(
-        x=culmen_columns[0],
-        y=culmen_columns[1],
-        hue=target_column,
-        data=penguins,
-        palette=palette,
-    )
     plt.legend(bbox_to_anchor=(1.04, 0.5), loc="center left")
     _ = plt.title(f"Decision tree trained at round {boosting_round}")
 

@@ -242,9 +242,10 @@ print(f"The encoded dataset contains {data_encoded.shape[1]} features")
 # a linear model.
 #
 # One-hot encoding categorical variables with high cardinality can cause
-# computational inefficiency in tree-based models. Because of this, it is not recommended
-# to use `OneHotEncoder` in such cases even if the original categories do not
-# have a given order. We will show this in the **final exercise** of this sequence.
+# computational inefficiency in tree-based models. Because of this, it is not
+# recommended to use `OneHotEncoder` in such cases even if the original
+# categories do not have a given order. We will show this in the **final
+# exercise** of this sequence.
 
 # %% [markdown]
 # ## Evaluate our predictive pipeline
@@ -269,8 +270,8 @@ data["native-country"].value_counts()
 # In scikit-learn, there are some possible solutions to bypass this issue:
 #
 # * list all the possible categories and provide them to the encoder via the
-#   keyword argument `categories` instead of letting the estimator
-#   automatically determine them from the training data when calling fit;
+#   keyword argument `categories` instead of letting the estimator automatically
+#   determine them from the training data when calling fit;
 # * set the parameter `handle_unknown="ignore"`, i.e. if an unknown category is
 #   encountered during transform, the resulting one-hot encoded columns for this
 #   feature will be all zeros;
@@ -286,14 +287,13 @@ data["native-country"].value_counts()
 
 # %% [markdown]
 # ```{tip}
-# Be aware the `OrdinalEncoder` exposes a parameter also named
-# `handle_unknown`. It can be set to `use_encoded_value`. If that option is chosen,
-# you can define a fixed value to which all unknowns will be set to during
-# `transform`. For example,
-# `OrdinalEncoder(handle_unknown='use_encoded_value', unknown_value=42)`
-# will set all values encountered during `transform` to `42` which are not part of
-# the data encountered during the `fit` call.
-# You are going to use these parameters in the next exercise.
+# Be aware the `OrdinalEncoder` exposes a parameter also named `handle_unknown`.
+# It can be set to `use_encoded_value`. If that option is chosen, you can define
+# a fixed value to which all unknowns will be set to during `transform`. For
+# example, `OrdinalEncoder(handle_unknown='use_encoded_value',
+# unknown_value=42)` will set all values encountered during `transform` to `42`
+# which are not part of the data encountered during the `fit` call. You are
+# going to use these parameters in the next exercise.
 # ```
 
 # %% [markdown]

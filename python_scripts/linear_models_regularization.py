@@ -53,8 +53,8 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 
 linear_regression = make_pipeline(
-    PolynomialFeatures(degree=2), LinearRegression()
-)
+    PolynomialFeatures(degree=2, include_bias=False), LinearRegression()
+).set_output(transform="pandas")
 cv_results = cross_validate(
     linear_regression,
     data,
@@ -107,9 +107,7 @@ model_first_fold = cv_results["estimator"][0]
 # names:
 
 # %%
-feature_names = model_first_fold[0].get_feature_names_out(
-    input_features=data.columns
-)
+feature_names = model_first_fold[-1].feature_names_in_
 feature_names
 
 # %% [markdown]
@@ -140,7 +138,9 @@ _ = plt.title("Linear regression coefficients")
 # %%
 from sklearn.linear_model import Ridge
 
-ridge = make_pipeline(PolynomialFeatures(degree=2), Ridge(alpha=100))
+ridge = make_pipeline(
+    PolynomialFeatures(degree=2, include_bias=False), Ridge(alpha=100)
+)
 cv_results = cross_validate(
     ridge,
     data,
@@ -228,7 +228,9 @@ _ = plt.title("Ridge weights")
 from sklearn.preprocessing import StandardScaler
 
 ridge = make_pipeline(
-    PolynomialFeatures(degree=2), StandardScaler(), Ridge(alpha=0.5)
+    PolynomialFeatures(degree=2, include_bias=False),
+    StandardScaler(),
+    Ridge(alpha=0.5),
 )
 cv_results = cross_validate(
     ridge,
@@ -279,7 +281,9 @@ _ = plt.title("Ridge weights with data scaling")
 
 # %%
 ridge = make_pipeline(
-    PolynomialFeatures(degree=2), StandardScaler(), Ridge(alpha=1_000_000)
+    PolynomialFeatures(degree=2, include_bias=False),
+    StandardScaler(),
+    Ridge(alpha=1_000_000),
 )
 cv_results = cross_validate(
     ridge,
@@ -357,7 +361,7 @@ from sklearn.linear_model import RidgeCV
 
 alphas = np.logspace(-2, 0, num=21)
 ridge = make_pipeline(
-    PolynomialFeatures(degree=2),
+    PolynomialFeatures(degree=2, include_bias=False),
     StandardScaler(),
     RidgeCV(alphas=alphas, store_cv_values=True),
 )

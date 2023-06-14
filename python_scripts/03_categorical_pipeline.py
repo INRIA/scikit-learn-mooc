@@ -269,7 +269,7 @@ data["native-country"].value_counts()
 # In scikit-learn, there are some possible solutions to bypass this issue:
 #
 # * list all the possible categories and provide them to the encoder via the
-#   keyword argument `categories` instead of letting the estimator to
+#   keyword argument `categories` instead of letting the estimator
 #   automatically determine them from the training data when calling fit;
 # * set the parameter `handle_unknown="ignore"`, i.e. if an unknown category is
 #   encountered during transform, the resulting one-hot encoded columns for this
@@ -280,11 +280,13 @@ data["native-country"].value_counts()
 #   to encode the unknown categories (categories only observed at predict time)
 #   as ones in that last column.
 #
-# Here we demo the second option, but feel free to evaluate the alternatives.
+# In this notebook we only explore the second option, namely
+# `OneHotEncoder(handle_unknown="ignore")`. Feel free to evaluate the
+# alternatives on your own, for instance using a sandbox notebook.
 
 # %% [markdown]
 # ```{tip}
-# Be aware the `OrdinalEncoder` exposes as well a parameter
+# Be aware the `OrdinalEncoder` exposes a parameter also named
 # `handle_unknown`. It can be set to `use_encoded_value`. If that option is chosen,
 # you can define a fixed value to which all unknowns will be set to during
 # `transform`. For example,

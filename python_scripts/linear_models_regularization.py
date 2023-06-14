@@ -8,9 +8,9 @@
 # %% [markdown]
 # # Regularization of linear regression model
 #
-# In this notebook, we explore the limitations of linear regression models and
-# demonstrate the benefits of using regularized models instead. Additionally, we
-# discuss the preprocessing steps necessary when working with regularized
+# In this notebook, we explore some limitations of linear regression models and
+# demonstrate the benefits of using regularized models instead. Additionally,
+# we discuss the importance of scaling the data when working with regularized
 # models, especially when tuning the regularization parameter.
 #
 # We start by highlighting the problem of overfitting that can occur with a
@@ -136,38 +136,50 @@ weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
 import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
-weights_linear_regression.plot.box(color=color, vert=False, figsize=(6, 10))
-_ = plt.title("Linear regression coefficients")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_linear_regression.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Linear regression weights",
+    xscale="symlog",
+)
 
 # %% [markdown]
+#
+# Note that we use a (symmetric) log scale for the bar plot. Observe that some
+# coefficents are extremely large while others are extremely small.
+# Furthermore, the coefficient values can be very unstable accross
+# cross-validation folds.
+#
 # We can force the linear regression model to consider all features in a more
-# homogeneous manner. In fact, we could force large positive or negative weights
-# to shrink toward zero. This is known as regularization. We use a ridge model
-# which enforces such behavior.
+# homogeneous manner. In fact, we could force large positive or negative
+# weights to shrink toward zero. This is known as regularization. We use a
+# ridge model which enforces such behavior.
 
 # %%
 from sklearn.linear_model import Ridge
 
 ridge = make_pipeline(
-    PolynomialFeatures(degree=2, include_bias=False), Ridge(alpha=100)
+    PolynomialFeatures(degree=2, include_bias=False),
+    Ridge(alpha=100, solver="cholesky"),
 )
 cv_results = cross_validate(
     ridge,
     data,
     target,
-    cv=10,
+    cv=20,
     scoring="neg_mean_squared_error",
     return_train_score=True,
     return_estimator=True,
 )
 
 # %% [markdown]
-# The code cell above generates a couple of warnings because the features
-# included both extremely large and extremely small values, which are causing
-# numerical problems when training the predictive model. We will get to that in
-# a bit.
 #
-# We can explore the train and test scores of this model.
+# The code cell above can generate a couple of warnings (depending on the
+# choice of solver) because the features included both extremely large and
+# extremely small values, which are causing numerical problems when training
+# the predictive model. We will get to that in a bit.
+#
+# Let us evaluate the train and test scores of this model.
 
 # %%
 train_error = -cv_results["train_score"]
@@ -193,44 +205,64 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 10))
-_ = plt.title("Ridge weights")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_ridge.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Ridge weights",
+    xscale="symlog",
+)
 
 # %% [markdown]
-# By comparing the order of magnitude of the weights on this plot with respect
-# to the previous plot, we see that a ridge model enforces all weights to lay in
-# a similar scale, while the overall magnitude of the weights is shrunk towards
-# zero with respect to the linear regression model.
 #
-# However, in this example, we omitted two important aspects: (i) the need to
-# scale the data and (ii) the need to search for the best regularization
-# parameter.
+# By comparing the order of magnitude of the weights on this plot with respect
+# to the previous plot, we see that a ridge model enforces all weights to lay
+# in a more similar scale, while the overall magnitude of the weights is shrunk
+# towards zero with respect to the linear regression model.
+#
+# You can observe that the coefficients are still unstable from one fold to
+# another, and finally, the results can vary a lot depending on the choice of
+# the solver (for instance try to set `solver="saga"` or `solver="lsqr"`
+# instead of `solver="cholesky"` and re-run the above cells).
+#
+# In the following we will attempt to resolve those remaining problems, by
+# focussing on two important aspects we omitted so far:
+# - the need to scale the data, and
+# - the need to search for the best regularization parameter.
 #
 # ## Feature scaling and regularization
 #
-# On the one hand, weights define the link between feature values and the
-# predicted target. On the other hand, regularization adds constraints on the
+# On the one hand, weights define the association between feature values and the
+# predicted target, which depends on the scales of both the feature values and
+# the target. On the other hand, regularization adds constraints on the
 # weights of the model through the `alpha` parameter. Therefore, the effect that
-# feature rescaling has on the final weights also interacts with regularization.
+# feature rescaling has on the final weights also interacts with the use of
+# regularization.
 #
 # Let's consider the case where features live on the same scale/units: if two
 # features are found to be equally important by the model, they are be affected
 # similarly by regularization strength.
 #
-# Now, let's consider the scenario where features have completely different data
-# scales (for instance age in years and annual revenue in dollars). If two
-# features are as important, our model boosts the weights of features with
-# small scale and reduce the weights of features with high scale.
+# Now, let's consider the scenario where two features have completely different
+# data scales (for instance age in years and annual revenue in dollars).
+# Furthermore, let's assume that the features are approximately equally
+# predictive (but not too correlated). Fitting a linear regression without
+# scaling and without regularization would give a higher weight to the feature
+# with the smallest natural scale. If we add regularization, the feature with
+# the smallest natural scale will therefore be penalized more than the other
+# feature which is not desirable because all features are equally important we
+# would therefore like the regularization to stay neutral.
 #
-# We recall that regularization forces weights to be closer. Therefore, we get
-# an intuition that if we want to use regularization, dealing with rescaled data
-# would make it easier to find an optimal regularization parameter and thus an
-# adequate model.
+# In practice, we don't know ahead of time which features will be predictive,
+# and therefore we want regularization to treat all features approximately
+# equally by default. This is can therefore be achieved by rescaling the
+# features.
 #
-# As a side note, some solvers based on gradient computation are expecting such
-# rescaled data. Unscaled data can be detrimental when computing the optimal
-# weights. Therefore, when working with a linear model and numerical data, it is
-# generally good practice to scale the data.
+# Furthermore, many numerical solvers used internally in scikit-learn behave
+# better when features are approximately on the same scale. Heterogeneously
+# scaled data can be detrimental when solving for the optimal weights (hence
+# the warnings we tend to get when fitting linear models on raw data). Therefore,
+# when working with a linear model and numerical data, it is generally good
+# practice to scale the data.
 #
 # Thus, we add a `MinMaxScaler` in the machine learning pipeline, which scales
 # each feature individually such that its range maps into the range between zero
@@ -243,7 +275,7 @@ from sklearn.preprocessing import MinMaxScaler
 scaled_ridge = make_pipeline(
     MinMaxScaler(),
     PolynomialFeatures(degree=2, include_bias=False),
-    Ridge(alpha=10),
+    Ridge(alpha=10, solver="cholesky"),
 )
 cv_results = cross_validate(
     scaled_ridge,
@@ -270,20 +302,28 @@ print(
 )
 
 # %% [markdown]
-# We observe that scaling data has a positive impact on the test score and that
-# it is now closer to the train score. It means that our model is less
+# We observe that scaling data has a positive impact on the test error: it is
+# now both lower and closer to the train error. It means that our model is less
 # overfitted and that we are getting closer to the best generalization sweet
 # spot.
+#
+# We also observe that fitting this pipeline no longer generates any warning
+# for any choice of the solver paramerter. Futhermore, changing the solver should
+# no longer result in significant changes in the weights.
 #
 # Let's have an additional look to the different weights.
 
 # %%
 coefs = [est[-1].coef_ for est in cv_results["estimator"]]
-weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 10))
-_ = plt.title("Ridge weights with data scaling")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Ridge weights with data scaling",
+    xscale="symlog",
+)
 
 # %% [markdown]
 # Compare to the previous plots, we see that now all weight magnitudes are
@@ -296,7 +336,7 @@ _ = plt.title("Ridge weights with data scaling")
 ridge_large_alpha = make_pipeline(
     MinMaxScaler(),
     PolynomialFeatures(degree=2, include_bias=False),
-    Ridge(alpha=1_000_000),
+    Ridge(alpha=1_000_000, solver="lsqr"),
 )
 cv_results = cross_validate(
     ridge_large_alpha,
@@ -310,16 +350,19 @@ cv_results = cross_validate(
 
 # %%
 coefs = [est[-1].coef_ for est in cv_results["estimator"]]
-weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 10))
-_ = plt.title("Ridge weights with data scaling and large alpha")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Ridge weights with data scaling and large alpha",
+    xscale="symlog",
+)
 
 # %% [markdown]
 # Looking specifically to weights values, we observe that increasing the value
-# of `alpha` decreases the weight values. A negative value of `alpha` would
-# actually enhance large weights and promote overfitting.
+# of `alpha` decreases the weight values.
 #
 # ```{note}
 # Here, we only focus on numerical features. For categorical features, it is
@@ -424,12 +467,16 @@ cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas
 
 # %%
-plt.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
-plt.semilogy()
-plt.semilogx()
-plt.ylabel("Mean squared error\n (lower is better)")
-plt.xlabel("alpha")
-_ = plt.title("Testing error obtained by cross-validation")
+
+fig, ax = plt.subplots()
+ax.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
+_ = ax.set(
+    xscale="log",
+    xlabel="alpha",
+    yscale="log",
+    ylabel="Mean squared error\n (lower is better)",
+    title="Testing error in RidgeCV's inner cross-validation",
+)
 
 # %% [markdown]
 # As we can see, regularization is just like salt in cooking: one must balance

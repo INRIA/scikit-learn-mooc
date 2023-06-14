@@ -56,8 +56,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/matomo.js"></script>
     <script src="../_static/sklearn_mooc.js"></script>
+    <script src="../_static/matomo.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -823,8 +823,8 @@ set to evaluate the generalization capabilities of our model.</p>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 
 <span class="n">linear_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="p">)</span>
+    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">linear_regression</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
@@ -897,15 +897,13 @@ fitted model from the cross-validation.</p>
 names:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">model_first_fold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
-    <span class="n">input_features</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">model_first_fold</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">feature_names_in_</span>
 <span class="n">feature_names</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;1&#39;, &#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;,
        &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;, &#39;MedInc^2&#39;, &#39;MedInc HouseAge&#39;,
        &#39;MedInc AveRooms&#39;, &#39;MedInc AveBedrms&#39;, &#39;MedInc Population&#39;,
        &#39;MedInc AveOccup&#39;, &#39;MedInc Latitude&#39;, &#39;MedInc Longitude&#39;,
@@ -946,7 +944,7 @@ names:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7c88589773691ace1855bb0ca1f518de8007cc3d2f2bbb8b9d5f7781edbb85c3.png" src="../_images/7c88589773691ace1855bb0ca1f518de8007cc3d2f2bbb8b9d5f7781edbb85c3.png" />
+<img alt="../_images/f20e4315396140eebfa893c7bf2fe59079bb9a35bbf852c71189bfa21ccf8261.png" src="../_images/f20e4315396140eebfa893c7bf2fe59079bb9a35bbf852c71189bfa21ccf8261.png" />
 </div>
 </div>
 <p>We can force the linear regression model to consider all features in a more
@@ -957,7 +955,9 @@ model which enforces such behavior.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
 
-<span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">ridge</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
@@ -971,27 +971,27 @@ model which enforces such behavior.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.672e-17): result may not be accurate.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.672e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.67257e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.67257e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.75536e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.75536e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.67367e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.67367e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=3.5546e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=3.5546e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.75974e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.75974e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.82401e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.82401e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=4.96672e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=4.96672e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68318e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68318e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 </pre></div>
 </div>
@@ -1054,7 +1054,7 @@ ridge with the un-regularized linear regression.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d50e64f6cd7de9c4416ad9b7f766ca2c1e621c36251d29218267c49babb0a4e6.png" src="../_images/d50e64f6cd7de9c4416ad9b7f766ca2c1e621c36251d29218267c49babb0a4e6.png" />
+<img alt="../_images/fe5a921dd273539f0c8c488f0efb695fe350d378897973b1ddf71dcad9b2fd91.png" src="../_images/fe5a921dd273539f0c8c488f0efb695fe350d378897973b1ddf71dcad9b2fd91.png" />
 </div>
 </div>
 <p>By comparing the magnitude of the weights on this plot compared to the
@@ -1093,7 +1093,9 @@ scaler will be placed just before the regressor.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">StandardScaler</span><span class="p">(),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">ridge</span><span class="p">,</span>
@@ -1163,7 +1165,7 @@ spot.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ab6358996159e2ac612907fda920d4532485d102762e2659b1f62e32b00f5b6d.png" src="../_images/ab6358996159e2ac612907fda920d4532485d102762e2659b1f62e32b00f5b6d.png" />
+<img alt="../_images/a75a2e99c44961b45de3b9cc0dd2849deff04bf95f06f26a27041205955e9ae4.png" src="../_images/a75a2e99c44961b45de3b9cc0dd2849deff04bf95f06f26a27041205955e9ae4.png" />
 </div>
 </div>
 <p>Compare to the previous plots, we see that now all weight magnitudes are
@@ -1173,7 +1175,9 @@ the value of <code class="docutils literal notranslate"><span class="pre">alpha<
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">)</span>
+    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">StandardScaler</span><span class="p">(),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">ridge</span><span class="p">,</span>
@@ -1204,7 +1208,7 @@ the value of <code class="docutils literal notranslate"><span class="pre">alpha<
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6a75d82613148f24edc5eeb2e2914d6ae665a2eae91b96168f8b8b7ff51501a1.png" src="../_images/6a75d82613148f24edc5eeb2e2914d6ae665a2eae91b96168f8b8b7ff51501a1.png" />
+<img alt="../_images/1df2ac12fe48c226e954bbcd040679f397949ead0104853d27b8b09a43b35994.png" src="../_images/1df2ac12fe48c226e954bbcd040679f397949ead0104853d27b8b09a43b35994.png" />
 </div>
 </div>
 <p>Looking specifically to weights values, we observe that increasing the value
@@ -1257,7 +1261,7 @@ while the outer cross-validation will give an estimate of the testing score.</p>
 
 <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="n">StandardScaler</span><span class="p">(),</span>
     <span class="n">RidgeCV</span><span class="p">(</span><span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">,</span> <span class="n">store_cv_values</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
 <span class="p">)</span>

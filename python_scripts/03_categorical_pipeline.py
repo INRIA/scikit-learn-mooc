@@ -103,7 +103,7 @@ from sklearn.preprocessing import OrdinalEncoder
 
 education_column = data_categorical[["education"]]
 
-encoder = OrdinalEncoder()
+encoder = OrdinalEncoder().set_output(transform="pandas")
 education_encoded = encoder.fit_transform(education_column)
 education_encoded
 
@@ -168,7 +168,7 @@ print(f"The dataset encoded contains {data_encoded.shape[1]} features")
 # %%
 from sklearn.preprocessing import OneHotEncoder
 
-encoder = OneHotEncoder(sparse_output=False)
+encoder = OneHotEncoder(sparse_output=False).set_output(transform="pandas")
 education_encoded = encoder.fit_transform(education_column)
 education_encoded
 
@@ -184,17 +184,8 @@ education_encoded
 # ```
 
 # %% [markdown]
-# We see that encoding a single feature will give a NumPy array full of zeros
-# and ones. We can get a better understanding using the associated feature names
-# resulting from the transformation.
-
-# %%
-feature_names = encoder.get_feature_names_out(input_features=["education"])
-education_encoded = pd.DataFrame(education_encoded, columns=feature_names)
-education_encoded
-
-# %% [markdown]
-# As we can see, each category (unique value) became a column; the encoding
+# We see that encoding a single feature will give a dataframe full of zeros
+# and ones. Each category (unique value) became a column; the encoding
 # returned, for each sample, a 1 to specify which category it belongs to.
 #
 # Let's apply this encoding on the full dataset.
@@ -209,14 +200,6 @@ data_encoded[:5]
 
 # %%
 print(f"The encoded dataset contains {data_encoded.shape[1]} features")
-
-# %% [markdown]
-# Let's wrap this NumPy array in a dataframe with informative column names as
-# provided by the encoder object:
-
-# %%
-columns_encoded = encoder.get_feature_names_out(data_categorical.columns)
-pd.DataFrame(data_encoded, columns=columns_encoded).head()
 
 # %% [markdown]
 # Look at how the `"workclass"` variable of the 3 first records has been encoded

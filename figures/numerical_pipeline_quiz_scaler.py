@@ -30,6 +30,7 @@ ax.set_xticklabels(ticks)
 ax.xaxis.set_major_locator(ticker.FixedLocator(ticks))
 ax.set_yticklabels(ticks)
 ax.yaxis.set_major_locator(ticker.FixedLocator(ticks))
+ax.grid(visible=True)
 ax.set_title("Original dataset\n", loc="center")
 plt.savefig("numerical_pipeline_quiz_scaler_original.png", bbox_inches="tight")
 
@@ -66,6 +67,7 @@ for idx, (ax, data) in enumerate(
     ax.xaxis.set_major_locator(ticker.FixedLocator(ticks))
     ax.set_yticklabels(ticks)
     ax.yaxis.set_major_locator(ticker.FixedLocator(ticks))
+    ax.grid(visible=True)
     ax.set_title(f"Preprocessing {'ABCD'[idx]}\n")
 
 fig.subplots_adjust(hspace=0.6, wspace=0.5)
